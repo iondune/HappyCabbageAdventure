@@ -14,6 +14,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MeshLoaderDemo", "MeshLoade
 		{C0397D79-C283-45CD-B54E-CA0234CAA8EF} = {C0397D79-C283-45CD-B54E-CA0234CAA8EF}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BB29EC0A-4703-4E49-906A-2F40D35A07FF}"
+	ProjectSection(SolutionItems) = preProject
+		Makefile = Makefile
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32

@@ -15,6 +15,10 @@
     <None Include="tree.3ds">
       <Filter>Models</Filter>
     </None>
+    <None Include="spaceshiptexture.bmp">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Makefile" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />

@@ -17,4 +17,7 @@
     <ClCompile Include="CTexture.cpp" />
     <ClCompile Include="CTextureLoader.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+  </ItemGroup>
 </Project>

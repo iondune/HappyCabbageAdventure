@@ -65,10 +65,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="glew32.dll" />
+    <None Include="Makefile" />
     <None Include="SDL.dll" />
     <None Include="Shaders\Lab3_frag.glsl" />
     <None Include="Shaders\Lab3_vert.glsl" />
     <None Include="spaceship.3ds" />
+    <None Include="spaceshiptexture.bmp" />
     <None Include="tree.3ds" />
   </ItemGroup>
   <ItemGroup>
