@@ -4,6 +4,7 @@
 #include "../CabbageCore/SVector3.h"
 #include "CShader.h"
 #include "CMesh.h"
+#include "CTexture.h"
 
 
 class CRenderable
@@ -14,6 +15,7 @@ protected:
 	GLuint PositionBufferHandle;
     GLuint ColorBufferHandle;
 	GLuint IndexBufferHandle;
+	GLuint TexCoordBufferHandle;
 
 	GLsizei IndexCount;
 
@@ -32,6 +34,7 @@ public:
 	void setScale(SVector3 const & scale);
 
 	virtual void draw(CShader const & shader);
+	virtual void draw(CShader const & shader, CTexture const & texture);
 
 };
 

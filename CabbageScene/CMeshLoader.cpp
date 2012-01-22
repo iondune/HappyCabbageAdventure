@@ -43,9 +43,9 @@ CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
 		//getch(); //Insert this command for debug (to wait for keypress for each chuck reading)
 
 		fread (&l_chunk_id, 2, 1, l_file); //Read the chunk header
-		printf("ChunkID: %x\n",l_chunk_id); 
+		//printf("ChunkID: %x\n",l_chunk_id); 
 		fread (&l_chunk_lenght, 4, 1, l_file); //Read the lenght of the chunk
-		printf("ChunkLenght: %x\n",l_chunk_lenght);
+		//printf("ChunkLenght: %x\n",l_chunk_lenght);
 
 		switch (l_chunk_id)
         {
@@ -98,15 +98,15 @@ CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
 			case 0x4110: 
 				fread (&l_qty, sizeof (unsigned short), 1, l_file);
 				Mesh->Vertices.resize(l_qty);
-                printf("Number of vertices: %d\n",l_qty);
+                //printf("Number of vertices: %d\n",l_qty);
                 for (i=0; i<l_qty; i++)
                 {
 					fread (& Mesh->Vertices[i].Position.X, sizeof(float), 1, l_file);
- 					printf("Vertices list x: %f\n",Mesh->Vertices[i].Position.X);
+ 					//printf("Vertices list x: %f\n",Mesh->Vertices[i].Position.X);
                     fread (& Mesh->Vertices[i].Position.Y, sizeof(float), 1, l_file);
- 					printf("Vertices list y: %f\n",Mesh->Vertices[i].Position.Y);
+ 					//printf("Vertices list y: %f\n",Mesh->Vertices[i].Position.Y);
 					fread (& Mesh->Vertices[i].Position.Z, sizeof(float), 1, l_file);
- 					printf("Vertices list z: %f\n",Mesh->Vertices[i].Position.Z);
+ 					//printf("Vertices list z: %f\n",Mesh->Vertices[i].Position.Z);
 				}
 				break;
 
@@ -120,17 +120,17 @@ CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
 			case 0x4120:
 				fread (&l_qty, sizeof (unsigned short), 1, l_file);
                 Mesh->Triangles.resize(l_qty);
-                printf("Number of polygons: %d\n",l_qty); 
+                //printf("Number of polygons: %d\n",l_qty); 
                 for (i=0; i<l_qty; i++)
                 {
 					fread (& Mesh->Triangles[i].Indices[0], sizeof (unsigned short), 1, l_file);
-					printf("Polygon point a: %d\n", Mesh->Triangles[i].Indices[0]);
+					//printf("Polygon point a: %d\n", Mesh->Triangles[i].Indices[0]);
 					fread (& Mesh->Triangles[i].Indices[1], sizeof (unsigned short), 1, l_file);
-					printf("Polygon point b: %d\n", Mesh->Triangles[i].Indices[1]);
+					//printf("Polygon point b: %d\n", Mesh->Triangles[i].Indices[1]);
 					fread (& Mesh->Triangles[i].Indices[2], sizeof (unsigned short), 1, l_file);
-					printf("Polygon point c: %d\n", Mesh->Triangles[i].Indices[2]);
+					//printf("Polygon point c: %d\n", Mesh->Triangles[i].Indices[2]);
 					fread (&l_face_flags, sizeof (unsigned short), 1, l_file);
-					printf("Face flags: %x\n",l_face_flags);
+					//printf("Face flags: %x\n",l_face_flags);
 				}
                 break;
 
@@ -146,9 +146,9 @@ CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
 				for (i=0; i<l_qty; i++)
 				{
 					fread (& Mesh->Vertices[i].TextureCoordinates[0], sizeof (float), 1, l_file);
-					printf("Mapping list u: %f\n", Mesh->Vertices[i].TextureCoordinates[0]);
+					//printf("Mapping list u: %f\n", Mesh->Vertices[i].TextureCoordinates[0]);
                     fread (& Mesh->Vertices[i].TextureCoordinates[1], sizeof (float), 1, l_file);
-					printf("Mapping list v: %f\n", Mesh->Vertices[i].TextureCoordinates[1]);
+					//printf("Mapping list v: %f\n", Mesh->Vertices[i].TextureCoordinates[1]);
 				}
                 break;
 

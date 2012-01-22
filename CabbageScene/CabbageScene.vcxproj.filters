@@ -6,11 +6,15 @@
     <ClInclude Include="CShader.h" />
     <ClInclude Include="SVertex.h" />
     <ClInclude Include="CRenderable.h" />
+    <ClInclude Include="CTexture.h" />
+    <ClInclude Include="CTextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CMesh.cpp" />
     <ClCompile Include="CMeshLoader.cpp" />
     <ClCompile Include="CShader.cpp" />
     <ClCompile Include="CRenderable.cpp" />
+    <ClCompile Include="CTexture.cpp" />
+    <ClCompile Include="CTextureLoader.cpp" />
   </ItemGroup>
 </Project>

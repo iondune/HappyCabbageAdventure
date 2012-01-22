@@ -38,6 +38,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <IncludePath>$(VisualStudioDir)\Projects\glew-1.7.0\include;$(VisualStudioDir)\Projects\SDL-1.2.15\include;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)lib\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -66,6 +67,8 @@
     <ClInclude Include="CMeshLoader.h" />
     <ClInclude Include="CShader.h" />
     <ClInclude Include="CRenderable.h" />
+    <ClInclude Include="CTexture.h" />
+    <ClInclude Include="CTextureLoader.h" />
     <ClInclude Include="SVertex.h" />
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +76,8 @@
     <ClCompile Include="CMeshLoader.cpp" />
     <ClCompile Include="CShader.cpp" />
     <ClCompile Include="CRenderable.cpp" />
+    <ClCompile Include="CTexture.cpp" />
+    <ClCompile Include="CTextureLoader.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
