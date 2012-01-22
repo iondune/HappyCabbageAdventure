@@ -18,7 +18,7 @@ CRenderable::CRenderable(CMesh const & Mesh)
 
 	for(unsigned int i = 0; i < Mesh.Triangles.size(); ++ i) 
 		for (unsigned int j = 0; j < 3; ++ j)
-			Indices.push_back(Mesh.Triangles[i].Indices[1]);
+			Indices.push_back(Mesh.Triangles[i].Indices[j]);
 
 	glGenBuffers(1, & PositionBufferHandle);
 	glBindBuffer(GL_ARRAY_BUFFER, PositionBufferHandle);
@@ -31,6 +31,8 @@ CRenderable::CRenderable(CMesh const & Mesh)
 	glGenBuffers(1, & IndexBufferHandle);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexBufferHandle);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, Indices.size()*sizeof(GLushort), & Indices.front(), GL_STATIC_DRAW);
+
+	IndexCount = Indices.size();
 }
 
 
@@ -68,7 +70,7 @@ void CRenderable::setScale(SVector3 const & scale)
 void CRenderable::draw(CShader const & Shader)
 {
 	CShaderContext ShaderContext(Shader);
-	ShaderContext.bindBuffer("aPosition", PositionBufferHandle, 4);
+	ShaderContext.bindBuffer("aPosition", PositionBufferHandle, 3);
 	ShaderContext.bindBuffer("aColor", ColorBufferHandle, 3);
 	ShaderContext.bindBuffer(IndexBufferHandle);
 

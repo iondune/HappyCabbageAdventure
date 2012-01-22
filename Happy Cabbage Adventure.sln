@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageCore", "CabbageCore\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageScene", "CabbageScene\CabbageScene.vcxproj", "{8389DE31-B188-40BA-983F-D0BB58DDB9FB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MeshLoaderDemo", "MeshLoaderDemo\MeshLoaderDemo.vcxproj", "{4AC7CEE1-BB0E-4A5A-AE62-26A4C3043D56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -19,6 +21,10 @@ Global
 		{8389DE31-B188-40BA-983F-D0BB58DDB9FB}.Debug|Win32.Build.0 = Debug|Win32
 		{8389DE31-B188-40BA-983F-D0BB58DDB9FB}.Release|Win32.ActiveCfg = Release|Win32
 		{8389DE31-B188-40BA-983F-D0BB58DDB9FB}.Release|Win32.Build.0 = Release|Win32
+		{4AC7CEE1-BB0E-4A5A-AE62-26A4C3043D56}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4AC7CEE1-BB0E-4A5A-AE62-26A4C3043D56}.Debug|Win32.Build.0 = Debug|Win32
+		{4AC7CEE1-BB0E-4A5A-AE62-26A4C3043D56}.Release|Win32.ActiveCfg = Release|Win32
+		{4AC7CEE1-BB0E-4A5A-AE62-26A4C3043D56}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

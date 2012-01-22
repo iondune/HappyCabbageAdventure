@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="glew32.dll" />
+    <None Include="SDL.dll" />
+    <None Include="Shaders\Lab3_frag.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\Lab3_vert.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="spaceship.3ds">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="tree.3ds">
+      <Filter>Models</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{a416ddcb-102f-4402-bb4c-0b818aa95159}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Models">
+      <UniqueIdentifier>{f62fb023-4ffd-4f5f-b1c0-0dfa7177d170}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
