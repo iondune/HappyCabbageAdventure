@@ -8,7 +8,7 @@
 #pragma comment(lib, "glew32.lib")
 #pragma comment(lib, "SDL.lib")
 #pragma comment(lib, "SDLmain.lib")
-#pragma comment(lib, "../Debug/CabbageScene.lib")
+#pragma comment(lib, "../lib/CabbageScene.lib")
 #pragma comment(lib, "OpenGL32.lib")
 #pragma comment(lib, "glu32.lib")
 
@@ -20,6 +20,7 @@
 #include "../CabbageScene/CShader.h"
 #include "../CabbageScene/CRenderable.h"
 #include "../CabbageScene/CMeshLoader.h"
+#include "../CabbageScene/CTextureLoader.h"
 
 // Portable version of system("PAUSE")
 void waitForUser() 
@@ -36,6 +37,7 @@ void waitForUser()
 CShader * Shader;
 CMesh * Mesh;
 CRenderable * Renderable;
+CTexture * Texture;
 
 // Information about mesh
 SVector3 Translation, Rotation, Scale(1);
@@ -79,7 +81,7 @@ void Display()
 	glLoadIdentity();
 
 	gluLookAt(
-		0, 0, 5, 
+		0, 0, 2, 
 		0, 0, 0, 
 		0, 1, 0);
 
@@ -98,7 +100,7 @@ void Display()
 	Renderable->setScale(Scale);
 	Renderable->setRotation(Rotation);
 
-	Renderable->draw(* Shader);
+	Renderable->draw(* Shader, * Texture);
 
 	SDL_GL_SwapBuffers();
 }
@@ -190,6 +192,8 @@ int main(int argc, char * argv[])
 	}
 	Shader->loadAttribute("aPosition");
 	Shader->loadAttribute("aColor");
+	Shader->loadAttribute("aTexCoord");
+	Shader->loadUniform("uTexColor");
 
 	// Attempt to load mesh
 	CMesh * Mesh = CMeshLoader::load3dsMesh("spaceship.3ds");
@@ -203,6 +207,14 @@ int main(int argc, char * argv[])
 	Mesh->resizeMesh(SVector3(1));
 	// And center it at the origin
 	Mesh->centerMeshByExtents(SVector3(0));
+
+	Texture = CTextureLoader::loadTexture("spaceshiptexture.bmp");
+	if (! Texture)
+	{
+		std::cerr << "Unable to load necessary texture." << std::endl;
+		waitForUser();
+		return 1;
+	}
 
 	// Now load our mesh into a VBO, retrieving the number of triangles and the handles to each VBO
 	Renderable = new CRenderable(* Mesh);
