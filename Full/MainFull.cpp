@@ -88,96 +88,98 @@ void Initialize()
 	// Start keeping track of time
 	Time0 = (int)SDL_GetTicks();
 
-    SDL_WM_SetCaption( "Happy Cabbage Adventure", NULL );
+   SDL_WM_SetCaption( "Happy Cabbage Adventure", NULL );
 }
 
 // Manages time independant movement and draws the VBO
 void Display()
 {
-	// Determine time since last draw
-	Time1 = (int)SDL_GetTicks();
-	float Delta = (float) (Time1 - Time0) / 1000.f;
-	Time0 = Time1;
+   // Determine time since last draw
+   Time1 = (int)SDL_GetTicks();
+   float Delta = (float) (Time1 - Time0) / 1000.f;
+   Time0 = Time1;
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+   /* Camera Code */
+   glMatrixMode(GL_MODELVIEW);
+   glLoadIdentity();
 
-	gluLookAt(
-		0, 0, 2, 
-		0, 0, 0, 
-		0, 1, 0);
+   gluLookAt(
+         0, 0, 2, 
+         0, 0, 0, 
+         0, 1, 0);
 
-	// Animates the loaded model by modulating it's size
-	static float const ScaleSpeed = 1.f;
-	static float const ScaleThreshold = 0.4f;
-	ScaleTimer += Delta * ScaleSpeed;
-	Scale = SVector3(1) + ScaleThreshold * cos(ScaleTimer);
+   /* World Objects */
+   // Animates the loaded model by modulating it's size
+   static float const ScaleSpeed = 1.f;
+   static float const ScaleThreshold = 0.4f;
+   ScaleTimer += Delta * ScaleSpeed;
+   Scale = SVector3(1) + ScaleThreshold * cos(ScaleTimer);
 
-	// ...and by spinning it around
-	static float const RotationSpeed = 50.f;
-	Rotation.X += RotationSpeed*Delta;
-	Rotation.Y += RotationSpeed*Delta*2;
+   // ...and by spinning it around
+   static float const RotationSpeed = 50.f;
+   Rotation.X += RotationSpeed*Delta;
+   Rotation.Y += RotationSpeed*Delta*2;
 
-	{
-		// Shader context works by cleaning up the shader settings once it
-		// goes out of scope
-		CShaderContext ShaderContext(* Shader);
-		ShaderContext.bindBuffer("aPosition", PositionBufferHandle, 4);
-		ShaderContext.bindBuffer("aColor", ColorBufferHandle, 3);
+   {
+      // Shader context works by cleaning up the shader settings once it
+      // goes out of scope
+      CShaderContext ShaderContext(* Shader);
+      ShaderContext.bindBuffer("aPosition", PositionBufferHandle, 4);
+      ShaderContext.bindBuffer("aColor", ColorBufferHandle, 3);
 
-		glPushMatrix();
+      glPushMatrix();
 
-		glTranslatef(Translation.X, Translation.Y, Translation.Z);
-		glRotatef(Rotation.Z, 0, 0, 1);
-		glRotatef(Rotation.Y, 0, 1, 0);
-		glRotatef(Rotation.X, 1, 0, 0);
-		glScalef(Scale.X, Scale.Y, Scale.Z);
+      glTranslatef(Translation.X, Translation.Y, Translation.Z);
+      glRotatef(Rotation.Z, 0, 0, 1);
+      glRotatef(Rotation.Y, 0, 1, 0);
+      glRotatef(Rotation.X, 1, 0, 0);
+      glScalef(Scale.X, Scale.Y, Scale.Z);
 
-		glDrawArrays(GL_TRIANGLES, 0, TriangleCount*3);
+      glDrawArrays(GL_TRIANGLES, 0, TriangleCount*3);
 
-		glPopMatrix();
-	}
+      glPopMatrix();
+   }
 
-    SDL_GL_SwapBuffers();
+   SDL_GL_SwapBuffers();
 
 }
 
 //unused for now
 void Reshape(int width, int height)								
 {
-  /*
-	glViewport(0, 0, (GLsizei)(width), (GLsizei)(height));
-	WindowWidth = width;
-	WindowHeight = height;
+   /*
+      glViewport(0, 0, (GLsizei)(width), (GLsizei)(height));
+      WindowWidth = width;
+      WindowHeight = height;
 
-	// Set camera projection
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	float AspectRatio = (float)WindowWidth / (float)WindowHeight;
-	gluPerspective(60.0, AspectRatio, 0.01, 100.0);
-    */
+   // Set camera projection
+   glMatrixMode(GL_PROJECTION);
+   glLoadIdentity();
+   float AspectRatio = (float)WindowWidth / (float)WindowHeight;
+   gluPerspective(60.0, AspectRatio, 0.01, 100.0);
+   */
 }
 
 
 int main(int argc, char * argv[])
 {
-	// On Windows, use glew to load shader extensions (OpenGL 2.0 +)
+   // On Windows, use glew to load shader extensions (OpenGL 2.0 +)
 #ifdef _WIN32
-	GLenum err = glewInit();
-	if (GLEW_OK != err)
-	{
-		std::cerr << "Error initializing glew! " << glewGetErrorString(err) << std::endl;
-		waitForUser();
-		return 1;
-	}
+   GLenum err = glewInit();
+   if (GLEW_OK != err)
+   {
+      std::cerr << "Error initializing glew! " << glewGetErrorString(err) << std::endl;
+      waitForUser();
+      return 1;
+   }
 #endif
 
-   	Initialize();
+   Initialize();
 
-	// First create a shader loader and check if our hardware supports shaders
-	CShaderLoader ShaderLoader;
+   // First create a shader loader and check if our hardware supports shaders
+   CShaderLoader ShaderLoader;
 	if (! ShaderLoader.isValid())
 	{
 		std::cerr << "Shaders are not supported by your graphics hardware, or the shader loader was otherwise unable to load." << std::endl;
@@ -187,9 +189,9 @@ int main(int argc, char * argv[])
 
 	// Now attempt to load the shaders
 	Shader = ShaderLoader.loadShader("Shaders/Lab3_vert.glsl", "Shaders/Lab3_frag.glsl");
-	if (! Shader)
-	{
-		std::cerr << "Unable to open or compile necessary shader." << std::endl;
+   if (! Shader)
+   {
+      std::cerr << "Unable to open or compile necessary shader." << std::endl;
 		waitForUser();
 		return 1;
 	}
