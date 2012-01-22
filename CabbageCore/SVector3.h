@@ -22,6 +22,34 @@ public:
 		: X(in_x), Y(in_y), Z(in_z)
 	{}
 
+	float const operator[] (unsigned int i) const
+	{
+		switch (i)
+		{
+		default:
+		case 0:
+			return X;
+		case 1:
+			return Y;
+		case 2:
+			return Z;
+		}
+	}
+
+	float & operator[] (unsigned int i)
+	{
+		switch (i)
+		{
+		default:
+		case 0:
+			return X;
+		case 1:
+			return Y;
+		case 2:
+			return Z;
+		}
+	}
+
 	SVector3 crossProduct(SVector3 const & v) const
 	{
 		return SVector3(Y*v.Z - v.Y*Z, v.X*Z - X*v.Z, X*v.Y - v.X*Y);

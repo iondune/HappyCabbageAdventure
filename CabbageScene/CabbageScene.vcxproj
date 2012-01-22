@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{C0397D79-C283-45CD-B54E-CA0234CAA8EF}</ProjectGuid>
-    <RootNamespace>CabbageCore</RootNamespace>
+    <ProjectGuid>{8389DE31-B188-40BA-983F-D0BB58DDB9FB}</ProjectGuid>
+    <RootNamespace>CabbageScene</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -36,7 +36,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup>
+    <IncludePath>$(VisualStudioDir)\Projects\glew-1.7.0\include;$(VisualStudioDir)\Projects\SDL-1.2.15\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -60,11 +62,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="SColor.h" />
-    <ClInclude Include="SRect2.h" />
-    <ClInclude Include="SVector2.h" />
-    <ClInclude Include="SVector3.h" />
-    <ClInclude Include="Utils.h" />
+    <ClInclude Include="CMesh.h" />
+    <ClInclude Include="CMeshLoader.h" />
+    <ClInclude Include="CShader.h" />
+    <ClInclude Include="CRenderable.h" />
+    <ClInclude Include="SVertex.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CMesh.cpp" />
+    <ClCompile Include="CMeshLoader.cpp" />
+    <ClCompile Include="CShader.cpp" />
+    <ClCompile Include="CRenderable.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

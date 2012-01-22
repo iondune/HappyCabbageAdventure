@@ -16,6 +16,34 @@ public:
         : Red(red), Green(green), Blue(blue)
     {}
 
+	float const operator[] (unsigned int i) const
+	{
+		switch (i)
+		{
+		default:
+		case 0:
+			return Red;
+		case 1:
+			return Green;
+		case 2:
+			return Blue;
+		}
+	}
+
+	float & operator[] (unsigned int i)
+	{
+		switch (i)
+		{
+		default:
+		case 0:
+			return Red;
+		case 1:
+			return Green;
+		case 2:
+			return Blue;
+		}
+	}
+
 };
 
 #endif
