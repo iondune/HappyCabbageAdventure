@@ -1,6 +1,6 @@
 #include "CTextureLoader.h"
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 
 CTexture * const CTextureLoader::loadTexture(std::string const & fileName)
 {

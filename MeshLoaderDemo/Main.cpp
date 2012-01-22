@@ -2,6 +2,7 @@
 
 #ifdef __unix__
 #include <GL/gl.h>
+#include <SDL/SDL.h>
 #endif
 
 #ifdef _WIN32
@@ -12,8 +13,8 @@
 #pragma comment(lib, "OpenGL32.lib")
 #pragma comment(lib, "glu32.lib")
 
-#include <GL\glew.h>
-#include <SDL.h>
+#include <GL/glew.h>
+#include <SDL/SDL.h>
 #endif
 
 // Utility classes for loading shaders/meshes

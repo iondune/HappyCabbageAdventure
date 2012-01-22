@@ -1,3 +1,4 @@
+
 all: CabbageScene MeshLoaderDemo
 
 CabbageScene:
@@ -5,3 +6,4 @@ CabbageScene:
 
 MeshLoaderDemo: CabbageScene
 	@(cd ./MeshLoaderDemo && $(MAKE))
+
