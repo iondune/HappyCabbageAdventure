@@ -17,7 +17,6 @@ namespace CabbageCollider
 	bool CActor::checkCollision(CObject * Object, float const TickTime)
 	{
 		bool Collision = false;
-		Standing = false;
 
 		LastPosition = Area.Position;
 		Movement = Velocity * TickTime;
@@ -66,6 +65,8 @@ namespace CabbageCollider
 		Acceleration.Y -= Gravity * TickTime;
 
 		Velocity += Acceleration * TickTime;
+
+		Standing = false;
 	}
 
 	void CActor::pushIfCollided(CObject * Object, SVector2 const & Movement)

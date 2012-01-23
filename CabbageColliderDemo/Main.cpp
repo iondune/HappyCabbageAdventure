@@ -128,6 +128,9 @@ int main(int argc, char * argv[])
 	CObject * Block = Engine->addObject();
 	Block->setArea(SRect2(-1, -1, 15, 0.9f));
 
+	CObject * Block2 = Engine->addObject();
+	Block2->setArea(SRect2(2, 2, 1, 1.f));
+
 	// Time-independant movement variables
 	int Time0, Time1;
 
@@ -216,6 +219,17 @@ int main(int argc, char * argv[])
 			glVertex3f(15.f, 0.f, 0.f);
 			glVertex3f(15.f, 0.9f, 0.f);
 			glVertex3f(0.f, 0.9f, 0.f);
+		glEnd();
+		glPopMatrix();
+
+		glPushMatrix();
+		glTranslatef(Block2->getArea().Position.X, Block2->getArea().Position.Y, 0);
+
+		glBegin(GL_QUADS);
+			glVertex3f(0.f, 0.f, 0.f);
+			glVertex3f(1.f, 0.f, 0.f);
+			glVertex3f(1.f, 1.f, 0.f);
+			glVertex3f(0.f, 1.f, 0.f);
 		glEnd();
 		glPopMatrix();
 
