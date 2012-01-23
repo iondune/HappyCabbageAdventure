@@ -3,7 +3,7 @@
 
 #include <cmath>
 
-const float RoundingError32 = 0.00001f
+const float RoundingError32 = 0.00001f;
 
 bool const equals(float const a, float const b, float const epsilon = RoundingError32)
 {
