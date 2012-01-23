@@ -25,9 +25,8 @@
 #endif
 
 
-#include "../CabbageCollider/CEngine.h"
-using namespace Cabbage;
-using namespace Collider;
+#include "../CabbageCollider/CCabbageColliderEngine.h"
+using namespace CabbageCollider;
 
 
 void Initialize()

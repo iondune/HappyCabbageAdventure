@@ -10,6 +10,14 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CCabbageColliderActor.h" />
+    <ClInclude Include="CCabbageColliderEngine.h" />
+    <ClInclude Include="CCabbageColliderObject.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CCabbageColliderActor.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{10A797C8-94C1-4EA0-89FF-7E03C5943D82}</ProjectGuid>
     <RootNamespace>CabbageCollider</RootNamespace>
@@ -64,17 +72,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="CActor.h" />
-    <ClInclude Include="CEngine.h" />
-    <ClInclude Include="CObject.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="CActor.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="README" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
