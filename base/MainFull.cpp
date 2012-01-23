@@ -75,13 +75,15 @@ void drawSquare() {
 //draw ground Plane for world
 void drawPlane() {
     glPushMatrix();
-    glColor3f(1, 0, 1);
+    glColor3f(0.3, 0.7, 0.7);
+/*
     glBegin(GL_POLYGON);
         glVertex3f(-25, -1, -25);
         glVertex3f(25, -1, -25);
         glVertex3f(25, -1, 25);
         glVertex3f(-25, -1, 25);
     glEnd();
+*/
 
     glColor3f(0, 0, 0);
     glPointSize(15.f);
@@ -93,6 +95,17 @@ void drawPlane() {
        glVertex3f(25, -.9, i);
     }
     glEnd();
+    glPopMatrix();
+}
+
+void drawBlock() {
+
+   //Block->setArea(SRect2(-15, -1, 1, 5));
+    glPushMatrix();
+       glColor3f(0, 0, 0);
+       glTranslatef(-15, -1, 0);
+       glScalef(1, 5, 1);
+       glutSolidCube(1);
     glPopMatrix();
 }
 
@@ -150,7 +163,7 @@ bool StartSDLnOGL()
 using namespace CabbageCollider;
 CEngine *Engine;
 CActor *Player;
-CObject *Floor;
+CObject *Floor, *Block;
 
 // Manages time independant movement and draws the VBO
 void Display()
@@ -175,6 +188,7 @@ void Display()
 
       // draw the ground plane
       drawPlane();
+      drawBlock();
 
 		glPushMatrix();
       glColor3f(0, 1, 1);
@@ -216,6 +230,9 @@ void EngineInit( void ) {
 
    Floor = Engine->addObject();
    Floor->setArea(SRect2(-25, -1, 50, 0.9f));
+
+   Block = Engine->addObject();
+   Block->setArea(SRect2(-15, -1, 1, 5));
 }
 
 int main(int argc, char * argv[])
@@ -276,6 +293,7 @@ int main(int argc, char * argv[])
       static float const AirMod = 0.25f;
 
 
+      printf("Player->isStanding(): %d\n", Player->isStanding());
       while(SDL_PollEvent( &event ) )
       {
         if(event.type == SDL_QUIT )
