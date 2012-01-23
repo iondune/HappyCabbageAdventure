@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <cstdlib>
-#include "Util/SVector3.h"
+//#include "Util/SVector3.h"
 #include "SDL/SDL.h"
 #include "SDL/SDL_opengl.h"
 #include "FreeType.h"
@@ -10,6 +10,7 @@
 // Utility classes for loading shaders/meshes
 #include "CMeshLoader.h"
 #include "CShader.h"
+#include "CCabbageColliderEngine.h"
 #include "Bunny.h"
 
 // Portable version of system("PAUSE")
@@ -460,6 +461,19 @@ void playerCollision(int size)
     }
 }
 
+using namespace CabbageCollider;
+CEngine *Engine;
+CActor *Player;
+CObject *Floor;
+void EngineInit( void ) {
+   Engine = new CEngine();
+   Player = Engine->addActor();
+   Player->setArea(SRect2(0, 0, 0.3, 0.3));
+
+   Floor = Engine->addObject();
+   Floor->setArea(SRect2(-10, -10, 10, 10));
+}
+
 int main(int argc, char * argv[])
 {
 
@@ -530,6 +544,7 @@ int main(int argc, char * argv[])
     GLdouble y = 0.0;
     GLdouble z = 0.0;
 
+    EngineInit();
 
     while(!finished)
     {
@@ -562,6 +577,13 @@ int main(int argc, char * argv[])
       }
       */
 
+      SVector2 Accel = Player->getAcceleration();
+      Accel.X = 0;
+
+      static float const MoveAccel = 5.8f;
+      static float const JumpSpeed = 5.f;
+      static float const AirMod = 0.25f;
+
 
       while(SDL_PollEvent( &event ) )
       {
@@ -570,77 +592,22 @@ int main(int argc, char * argv[])
           finished = true;
         }
 
-        // convert center and eye to vectors
-        SVector3 center = SVector3(centerX, centerY, centerZ);
-        SVector3 eye = SVector3(eyeX, eyeY, eyeZ);
-
-        // Normalize Vectors
-        SVector3 v = center - eye;
-        SVector3 u = v.crossProduct(SVector3(0.0, 1.0, 0.0));
-
-        // inverse
-        u.X = -u.X;
-        u.Y = -u.Y;
-        u.Z = -u.Z;
-
-        SVector3 dv = normalizeVector(v) * 0.5f;  
-        SVector3 du = normalizeVector(u) * 0.5f;
-        
-        SVector3 nextPos = SVector3();
-        SVector3 nextOrientation = SVector3();
-
-        /*
-        if(event.type == SDL_KEYDOWN){
-          if(event.key.keysym.sym == SDLK_w){
-            eyeXVelo += (GLdouble)dv.X;
-            eyeYVelo  += (GLdouble)dv.Y;
-            eyeZVelo  += (GLdouble)dv.Z;
-            centerXVelo  += (GLdouble)dv.X;
-            centerYVelo  += (GLdouble)dv.Y;
-            centerZVelo  += (GLdouble)dv.Z;
-          }
-          if(event.key.keysym.sym == SDLK_s){
-            eyeXVelo  -= (GLdouble)dv.X;
-            eyeYVelo  -= (GLdouble)dv.Y;
-            eyeZVelo  -= (GLdouble)dv.Z;
-            centerXVelo  -= (GLdouble)dv.X;
-            centerYVelo  -= (GLdouble)dv.Y;
-            centerZVelo  -= (GLdouble)dv.Z;
-          }
-          if(event.key.keysym.sym == SDLK_a){
-            eyeXVelo  += (GLdouble)du.X;
-            eyeYVelo  += (GLdouble)du.Y;
-            eyeZVelo  += (GLdouble)du.Z;
-            centerXVelo  += (GLdouble)du.X;
-            centerYVelo  += (GLdouble)du.Y;
-            centerZVelo  += (GLdouble)du.Z;
-          }
-          if(event.key.keysym.sym == SDLK_d){
-            eyeXVelo -= (GLdouble)du.X;
-            eyeYVelo -= (GLdouble)du.Y;
-            eyeZVelo -= (GLdouble)du.Z;
-            centerXVelo -= (GLdouble)du.X;
-            centerYVelo -= (GLdouble)du.Y;
-            centerZVelo -= (GLdouble)du.Z;
-          }
-        } 
-        */
-
         if(event.type == SDL_KEYDOWN){
           if(event.key.keysym.sym == SDLK_w){
           }
           if(event.key.keysym.sym == SDLK_s){
           }
           if(event.key.keysym.sym == SDLK_a){
-             printf("Being called A: xpos = %0.2f \n", gameObjs[0].bunny.position.X);
-             gameObjs[0].bunny.direction.X -= 0.01;
+             Accel.X += MoveAccel * (Player->isStanding() ? 1 : AirMod);
+             //gameObjs[0].bunny.direction.X -= 0.01;
           }
           if(event.key.keysym.sym == SDLK_d){
-             printf("Being called D: xpos = %0.2f \n", gameObjs[0].bunny.position.X);
-             gameObjs[0].bunny.direction.X += 0.01;
+             Accel.X -= MoveAccel * (Player->isStanding() ? 1 : AirMod);
+             //gameObjs[0].bunny.direction.X += 0.01;
           }
         } 
 
+/*
         if(event.type == SDL_KEYUP){
           if(event.key.keysym.sym == SDLK_w){
           }
@@ -653,124 +620,25 @@ int main(int argc, char * argv[])
              gameObjs[0].bunny.direction.X -= 0.01;
           }
         }
-
+*/
 
         /*
-        if(event.type == SDL_KEYUP){
-
-          if(event.key.keysym.sym == SDLK_a
-             || event.key.keysym.sym == SDLK_s
-             || event.key.keysym.sym == SDLK_d
-             || event.key.keysym.sym == SDLK_w){
-            eyeXVelo = 0.0;
-            eyeYVelo = 0.0;
-            eyeZVelo = 0.0;
-            centerXVelo = 0.0;
-            centerYVelo = 0.0;
-            centerZVelo = 0.0;
-          }
-          if(event.key.keysym.sym == SDLK_HOME)
-          {
-            eyeX = 0.0;
-            eyeY = 0.0;
-            eyeZ = 2.0;
-            centerX = 0.0;
-            centerY = 0.0;
-            centerZ = 1.0;
-          }
-          */
-        /*
-          if(event.key.keysym.sym == SDLK_w){
-            eyeXVelo -= (GLdouble)dv.X;
-            eyeYVelo -= (GLdouble)dv.Y;
-            eyeZVelo -= (GLdouble)dv.Z;
-            centerXVelo -= (GLdouble)dv.X;
-            centerYVelo -= (GLdouble)dv.Y;
-            centerZVelo -= (GLdouble)dv.Z;
-          }
-          if(event.key.keysym.sym == SDLK_s){
-            eyeXVelo += (GLdouble)dv.X;
-            eyeYVelo += (GLdouble)dv.Y;
-            eyeZVelo += (GLdouble)dv.Z;
-            centerXVelo += (GLdouble)dv.X;
-            centerYVelo += (GLdouble)dv.Y;
-            centerZVelo += (GLdouble)dv.Z;
-          }
-          if(event.key.keysym.sym == SDLK_a){
-            eyeXVelo -= (GLdouble)du.X;
-            eyeYVelo -= (GLdouble)du.Y;
-            eyeZVelo -= (GLdouble)du.Z;
-            centerXVelo -= (GLdouble)du.X;
-            centerYVelo -= (GLdouble)du.Y;
-            centerZVelo -= (GLdouble)du.Z;
-          }
-          if(event.key.keysym.sym == SDLK_d){
-            eyeXVelo += (GLdouble)du.X;
-            eyeYVelo += (GLdouble)du.Y;
-             eyeZVelo += (GLdouble)du.Z;
-            centerXVelo += (GLdouble)du.X;
-            centerYVelo += (GLdouble)du.Y;
-            centerZVelo += (GLdouble)du.Z;
-          }
-        } 
-        */
-
         if(event.type == SDL_MOUSEMOTION)
         {
-          if(event.motion.xrel > 1.0)
-          {
-            theta += asin((double)0.025);
-          }
-          else if( event.motion.xrel < -1.0)
-          {
-            theta += asin((double)-0.025);
-          }
-          else
-          {
-            theta += asin((double)event.motion.xrel * 0.025) ;
-          }
-
-          if(event.motion.yrel * -1.0 > 1.0)
-          {
-            phi += asin((double)0.025);
-          } 
-          else if( event.motion.yrel * -1.0 < -1.0)
-          {
-            phi += asin((double)-0.025);
-          }
-          else
-          {
-            phi += asin((double)event.motion.yrel * -0.025);
-          }
-
-          //theta = theta > 2.0 * PI ? 2.0 * PI : theta;
-          
-
-        //     std::cout << "The Theta: " << theta << std::endl ;
-          //   std::cout << "The Phi: " << phi << std::endl ;
-
-          centerX = eyeX + (GLdouble) (cos(phi) * cos(theta));
-          centerY = eyeY + (GLdouble) sin(phi);
-          centerZ = eyeZ + (GLdouble) (cos(phi) * cos(1.570796327 - theta));
-             //std::cout << "The :x " << centerX << std::endl ;
-             //std::cout << "The :y " << centerY << std::endl ;
-             //std::cout << "The :z " << centerZ << std::endl ;
         }
+        */
       }
 
-            eyeX += eyeXVelo * dDeltaSec * 4.5;
-            eyeY += eyeYVelo * dDeltaSec * 4.5;
-            eyeZ += eyeZVelo * dDeltaSec * 4.5;
-            centerX += centerXVelo * dDeltaSec * 4.5;
-            centerY += centerYVelo * dDeltaSec * 4.5;
-            centerZ += centerZVelo * dDeltaSec * 4.5;
+      Player->setAcceleration(Accel);
+      Engine->updateAll((float)delta); //Might be an issue (since updateAll requires float and delta is a UInt32)
 
-            eyeY = eyeY < 0.0 ? 0.0 : eyeY;
 
+      /*
       for(int i = 0; i < gameObjs.size(); i++)
       {
         gameObjs[i].bunny.step((float) delta);
       }
+      */
 
       /*
       loopBunnyCollision(gameObjs.size());
@@ -780,6 +648,12 @@ int main(int argc, char * argv[])
       //std::cout << "The Ticks: " << ((float) delta / 1000.f) << std::endl ;
       Display();
 
+		glPushMatrix();
+      glTranslatef(Player->getArea().Position.X, Player->getArea().Position.Y, 0);
+		
+      glutSolidSphere(0.5, 10, 10);
+		//glDrawArrays(GL_TRIANGLES, 0, TriangleCount*3);
+		glPopMatrix();
 
       //Cap the frame rate
       /*

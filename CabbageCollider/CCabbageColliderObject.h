@@ -1,7 +1,7 @@
 #ifndef _CABBAGECOLLIDER_COBJECT_H_INCLUDED_
 #define _CABBAGECOLLIDER_COBJECT_H_INCLUDED_
 
-#include <Utils/SRect2.h>
+#include "../CabbageCore/SRect2.h"
 
 namespace CabbageCollider
 {

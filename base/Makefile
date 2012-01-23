@@ -1,2 +1,4 @@
+ROOT_CABBAGE_DIR=../
+
 all:
-	g++ `freetype-config --cflags` MainFull.cpp CMeshLoader.cpp CShader.cpp CMesh.cpp Bunny.cpp FreeType.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL -lglut `freetype-config --libs` -g
+	g++ -I${ROOT_CABBAGE_DIR}/CabbageCollider `freetype-config --cflags` MainFull.cpp CMeshLoader.cpp CShader.cpp CMesh.cpp Bunny.cpp FreeType.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL -lglut `freetype-config --libs` -g `find ${ROOT_CABBAGE_DIR}/CabbageCollider | grep 'Actor.cpp$$'`

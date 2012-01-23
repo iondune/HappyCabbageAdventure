@@ -104,7 +104,7 @@ int main()
 
 	CEngine * Engine = new CEngine();
 	Player = Engine->addActor();
-	Player->setArea(SRect2(0, 3, 1, 1));
+	Player->setArea(SRect2(0, 3, 1, 1)); //setArea takes in a SRect2
 
 	CObject * Block = Engine->addObject();
 	Block->setArea(SRect2(-1, -1, 15, 0.9f));
@@ -112,6 +112,7 @@ int main()
   	while (App.IsOpened())
 	{
 		sf::Event Event;
+      //SFML see if keys are down
 		while (App.GetEvent(Event))
 		{
 			// Close window : exit
@@ -162,6 +163,7 @@ int main()
 
 		Draw();
 
+      /* Draw the player */
 		glPushMatrix();
 		glTranslatef(Player->getArea().Position.X, Player->getArea().Position.Y, 0);
 
@@ -180,6 +182,7 @@ int main()
 
 		glColor3f(1, 1, 1);
 
+      /* Draw the block */
 		glPushMatrix();
 		glTranslatef(Block->getArea().Position.X, Block->getArea().Position.Y, 0);
 
