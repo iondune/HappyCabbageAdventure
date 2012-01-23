@@ -20,6 +20,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageCollider", "CabbageCollider\CabbageCollider.vcxproj", "{10A797C8-94C1-4EA0-89FF-7E03C5943D82}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C0397D79-C283-45CD-B54E-CA0234CAA8EF} = {C0397D79-C283-45CD-B54E-CA0234CAA8EF}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageColliderDemo", "CabbageColliderDemo\CabbageColliderDemo.vcxproj", "{DC431D05-0BEE-43B9-BEC1-F618DFE9F802}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C0397D79-C283-45CD-B54E-CA0234CAA8EF} = {C0397D79-C283-45CD-B54E-CA0234CAA8EF}
+		{10A797C8-94C1-4EA0-89FF-7E03C5943D82} = {10A797C8-94C1-4EA0-89FF-7E03C5943D82}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +52,10 @@ Global
 		{10A797C8-94C1-4EA0-89FF-7E03C5943D82}.Debug|Win32.Build.0 = Debug|Win32
 		{10A797C8-94C1-4EA0-89FF-7E03C5943D82}.Release|Win32.ActiveCfg = Release|Win32
 		{10A797C8-94C1-4EA0-89FF-7E03C5943D82}.Release|Win32.Build.0 = Release|Win32
+		{DC431D05-0BEE-43B9-BEC1-F618DFE9F802}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DC431D05-0BEE-43B9-BEC1-F618DFE9F802}.Debug|Win32.Build.0 = Debug|Win32
+		{DC431D05-0BEE-43B9-BEC1-F618DFE9F802}.Release|Win32.ActiveCfg = Release|Win32
+		{DC431D05-0BEE-43B9-BEC1-F618DFE9F802}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
