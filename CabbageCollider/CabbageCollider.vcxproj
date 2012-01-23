@@ -16,12 +16,12 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
@@ -37,8 +37,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(VisualStudioDir)\Projects\CabbageCollider\CabbageCollider\Cabbage;$(VisualStudioDir)\Projects\SFML-1.6\include;$(VisualStudioDir)\Projects\glew-1.7.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(VisualStudioDir)\Projects\glew-1.7.0\lib;$(VisualStudioDir)\Projects\SFML 1.6 Manual\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(VisualStudioDir)\Projects\glew-1.7.0\include;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)lib\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -65,17 +65,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Utils.h" />
-    <ClInclude Include="Cabbage\Utils\SRect2.h" />
-    <ClInclude Include="Cabbage\Utils\SVector2.h" />
-    <ClInclude Include="Cabbage\Utils\SVector3.h" />
-    <ClInclude Include="CCabbageColliderActor.h" />
-    <ClInclude Include="CCabbageColliderEngine.h" />
-    <ClInclude Include="CCabbageColliderObject.h" />
+    <ClInclude Include="CActor.h" />
+    <ClInclude Include="CEngine.h" />
+    <ClInclude Include="CObject.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CCabbageColliderActor.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="CActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README" />
