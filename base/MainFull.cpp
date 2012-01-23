@@ -1,11 +1,11 @@
 #include <iostream>
 #include <cmath>
 #include <cstdlib>
+#include "../CabbageCollider/CCabbageColliderEngine.h"
 #include "SDL/SDL.h"
 #include "SDL/SDL_opengl.h"
 #include "FreeType.h"
 #include <GL/glut.h>
-#include "CCabbageColliderEngine.h"
 
 
 // Portable version of system("PAUSE")
@@ -75,17 +75,24 @@ void drawSquare() {
 //draw ground Plane for world
 void drawPlane() {
     glPushMatrix();
+    glColor3f(1, 0, 1);
+    glBegin(GL_POLYGON);
+        glVertex3f(-25, -1, -25);
+        glVertex3f(25, -1, -25);
+        glVertex3f(25, -1, 25);
+        glVertex3f(-25, -1, 25);
+    glEnd();
 
+    glColor3f(0, 0, 0);
+    glPointSize(15.f);
+    glBegin(GL_LINES);
     for(float i = -25; i < 25; i += 0.5) {
-        for (float j = -25; j < 25; j += 0.5) {
-            glPushMatrix();
-                glTranslatef(i, -1, j);
-                glScalef(0.45, 0.45, 0.45);
-                glRotatef(90.0, 1.0, 0.0, 0.0);
-                drawSquare();
-            glPopMatrix();
-        }
+       glVertex3f(i, -.9, -25);
+       glVertex3f(i, -.9, 25);
+       glVertex3f(-25, -.9, i);
+       glVertex3f(25, -.9, i);
     }
+    glEnd();
     glPopMatrix();
 }
 
@@ -166,8 +173,17 @@ void Display()
       //gameObjs[0].bunny.position.X, gameObjs[0].bunny.position.Y, gameObjs[0].bunny.position.Z, 
 		0, 1, 0);
 
-    // draw the ground plane
-    drawPlane();
+      // draw the ground plane
+      drawPlane();
+
+		glPushMatrix();
+      glColor3f(0, 1, 1);
+      glTranslatef(Player->getArea().Position.X, Player->getArea().Position.Y, 0);
+		
+      glutSolidSphere(0.5, 10, 10);
+		//glDrawArrays(GL_TRIANGLES, 0, TriangleCount*3);
+		glPopMatrix();
+
 
 	 // ...and by spinning it around
 	 static float const RotationSpeed = 50.f;
@@ -196,10 +212,10 @@ void Reshape(int width, int height)
 void EngineInit( void ) {
    Engine = new CEngine();
    Player = Engine->addActor();
-   Player->setArea(SRect2(0, 0, 0.3, 0.3));
+   Player->setArea(SRect2(0, 3, .5, .5));
 
    Floor = Engine->addObject();
-   Floor->setArea(SRect2(-10, -10, 10, 10));
+   Floor->setArea(SRect2(-25, -1, 50, 0.9f));
 }
 
 int main(int argc, char * argv[])
@@ -235,6 +251,7 @@ int main(int argc, char * argv[])
 
     EngineInit();
 
+    int aDown, dDown;
     while(!finished)
     {
       //fps.start();
@@ -251,21 +268,6 @@ int main(int argc, char * argv[])
         finished = true;
         continue;
       }
-
-      /*
-      spawnTimer += delta;
-      if(spawnTimer > spawnRate)
-      {
-        // Create new gameObject
-        gameObject obj1 = {Bunny(randLimitedFloat(), randLimitedFloat(), randFloat(), randFloat()), SVector3(), SVector3()};
-
-
-        gameObjs.push_back(obj1);
-        spawnTimer -= spawnRate;
-        numBunnies++;
-      }
-      */
-
       SVector2 Accel = Player->getAcceleration();
       Accel.X = 0;
 
@@ -287,30 +289,28 @@ int main(int argc, char * argv[])
           if(event.key.keysym.sym == SDLK_s){
           }
           if(event.key.keysym.sym == SDLK_a){
-             Accel.X += MoveAccel * (Player->isStanding() ? 1 : AirMod);
-             //gameObjs[0].bunny.direction.X -= 0.01;
+             aDown = 1;
           }
           if(event.key.keysym.sym == SDLK_d){
-             Accel.X -= MoveAccel * (Player->isStanding() ? 1 : AirMod);
-             //gameObjs[0].bunny.direction.X += 0.01;
+             dDown = 1;
+          }
+          if(event.key.keysym.sym == SDLK_SPACE && Player->isStanding()) {
+             Player->setVelocity(SVector2(Player->getVelocity().X, JumpSpeed));
           }
         } 
 
-/*
         if(event.type == SDL_KEYUP){
           if(event.key.keysym.sym == SDLK_w){
           }
           if(event.key.keysym.sym == SDLK_s){
           }
           if(event.key.keysym.sym == SDLK_a){
-             gameObjs[0].bunny.direction.X += 0.01;
+             aDown = 0;
           }
           if(event.key.keysym.sym == SDLK_d){
-             gameObjs[0].bunny.direction.X -= 0.01;
+             dDown = 0;
           }
         }
-*/
-
         /*
         if(event.type == SDL_MOUSEMOTION)
         {
@@ -318,8 +318,15 @@ int main(int argc, char * argv[])
         */
       }
 
+      if(aDown) {
+          Accel.X -= MoveAccel * (Player->isStanding() ? 1 : AirMod);
+      }
+      if(dDown) {
+          Accel.X += MoveAccel * (Player->isStanding() ? 1 : AirMod);
+      }
+
       Player->setAcceleration(Accel);
-      Engine->updateAll((float)delta); //Might be an issue (since updateAll requires float and delta is a UInt32)
+      Engine->updateAll((float)delta/1000); //Might be an issue (since updateAll requires float and delta is a UInt32)
 
 
       /*
@@ -336,13 +343,6 @@ int main(int argc, char * argv[])
 
       //std::cout << "The Ticks: " << ((float) delta / 1000.f) << std::endl ;
       Display();
-
-		glPushMatrix();
-      glTranslatef(Player->getArea().Position.X, Player->getArea().Position.Y, 0);
-		
-      glutSolidSphere(0.5, 10, 10);
-		//glDrawArrays(GL_TRIANGLES, 0, TriangleCount*3);
-		glPopMatrix();
 
       //Cap the frame rate
       /*
