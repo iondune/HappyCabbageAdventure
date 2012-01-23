@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-#include "Utils.h"
+#include "../CabbageCore/Utils.h"
 
 namespace CabbageCollider
 {

@@ -83,12 +83,6 @@ void Bunny::step(float delta)
 
 void Bunny::draw(CShader * Shader, GLuint PositionBufferHandle, GLuint ColorBufferHandle, int TriangleCount)
 {
-		// Shader context works by cleaning up the shader settings once it
-		// goes out of scope
-		CShaderContext ShaderContext(* Shader);
-		ShaderContext.bindBuffer("aPosition", PositionBufferHandle, 4);
-		ShaderContext.bindBuffer("aColor", ColorBufferHandle, 3);
-
 		glPushMatrix();
 		glTranslatef(position.X, position.Y, position.Z);
 		//glRotatef(Rotation.Z, 0, 0, 1);

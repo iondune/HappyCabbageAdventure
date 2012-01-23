@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "Util/SVertex.h"
+#include "../CabbageCore/SVertex.h"
 
 
 class CMesh
