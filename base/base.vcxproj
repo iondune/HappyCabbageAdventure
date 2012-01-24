@@ -44,10 +44,15 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -77,9 +82,6 @@
     <ClInclude Include="3dsloader\texture.h" />
     <ClInclude Include="3dsloader\tutorial4.h" />
     <ClInclude Include="Bunny.h" />
-    <ClInclude Include="CMesh.h" />
-    <ClInclude Include="CMeshLoader.h" />
-    <ClInclude Include="CShader.h" />
     <ClInclude Include="FreeType.h" />
   </ItemGroup>
   <ItemGroup>
