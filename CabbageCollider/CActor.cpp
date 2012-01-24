@@ -17,12 +17,33 @@ namespace Cabbage
 namespace Collider
 {
 
+	CActor::SAttributes::SAttributes()
+		: MoveAccel(50.8f), JumpSpeed(8.f), AirMod(0.3f), AirCap(0.97f)
+	{}
+
+
+	CActor::EActionType::EActionType()
+		: Value(Standing)
+	{}
+
+	CActor::EActionType::EActionType(Domain const value)
+		: Value(value)
+	{}
+
+	bool const CActor::EActionType::operator == (Domain const value)
+	{
+		return Value == value;
+	}
+
+
 	CActor::CActor()
 		: Standing(false), Jump(false)
 	{}
 
 	CActor::~CActor()
 	{}
+
+	
 
 	int CActor::checkCollision(CCollideable * Object, float const TickTime)
 	{
@@ -121,6 +142,47 @@ namespace Collider
 		}
 	}
 
+	void CActor::setAcceleration(SVector2 const & accel)
+	{
+		Acceleration = accel;
+	}
+
+	SVector2 const & CActor::getAcceleration() const
+	{
+		return Acceleration;
+	}
+
+	bool const CActor::isStanding() const
+	{
+		return Standing;
+	}
+
+	void CActor::setVelocity(SVector2 const & vel)
+	{
+		Velocity = vel;
+	}
+
+	SVector2 const & CActor::getVelocity() const
+	{
+		return Velocity;
+	}
+
+	CActor::SAttributes const & CActor::getAttributes() const
+	{
+		return Attributes;
+	}
+
+	void CActor::setAction(EActionType const & action)
+	{
+		Action = action;
+	}
+
+	void CActor::jump()
+	{
+		Jump = true;
+	}
+
+
 	bool CActor::updateCollision(CCollideable * Object, float const TickTime)
 	{
 		int CollisionType = checkCollision(Object, TickTime);
@@ -136,23 +198,14 @@ namespace Collider
 
 	void CActor::draw()
 	{
-		glPushMatrix();
-		glTranslatef(Area.Position.X, Area.Position.Y, 0);
-
 		if (Standing)
 			glColor3f(1, 0, 0);
 		else
 			glColor3f(1, 1, 1);
 
-		glBegin(GL_QUADS);
-			glVertex3f(0.f, 0.f, 0.f);
-			glVertex3f(Area.Size.X, 0.f, 0.f);
-			glVertex3f(Area.Size.X, Area.Size.Y, 0.f);
-			glVertex3f(0.f, Area.Size.Y, 0.f);
-		glEnd();
+		CCollideable::draw();
 
 		glColor3f(1, 1, 1);
-		glPopMatrix();
 	}
 
 }

@@ -38,9 +38,7 @@ namespace Collider
 			float AirMod;
 			float AirCap;
 
-			SAttributes()
-				: MoveAccel(50.8f), JumpSpeed(8.f), AirMod(0.3f), AirCap(0.97f)
-			{}
+			SAttributes();
 		};
 
 		class EActionType
@@ -61,18 +59,11 @@ namespace Collider
 
 		public:
 
-			EActionType()
-				: Value(Standing)
-			{}
+			EActionType();
+			EActionType(Domain const value);
 
-			EActionType(Domain const value)
-				: Value(value)
-			{}
+			bool const operator == (Domain const value);
 
-			bool const operator == (Domain const value)
-			{
-				return Value == value;
-			}
 		};
 
 	protected:
@@ -104,49 +95,25 @@ namespace Collider
 
 		void pushIfCollided(CObject * Object, SVector2 const & Movement);
 
-		void setAcceleration(SVector2 const & accel)
-		{
-			Acceleration = accel;
-		}
+		void setAcceleration(SVector2 const & accel);
 
-		SVector2 const & getAcceleration() const
-		{
-			return Acceleration;
-		}
+		SVector2 const & getAcceleration() const;
 
-		bool const isStanding() const
-		{
-			return Standing;
-		}
+		bool const isStanding() const;
 
-		void setVelocity(SVector2 const & vel)
-		{
-			Velocity = vel;
-		}
+		void setVelocity(SVector2 const & vel);
 
-		SVector2 const & getVelocity() const
-		{
-			return Velocity;
-		}
+		SVector2 const & getVelocity() const;
 
-		SAttributes const & getAttributes() const
-		{
-			return Attributes;
-		}
+		SAttributes const & getAttributes() const;
 
-		void setAction(EActionType const & action)
-		{
-			Action = action;
-		}
+		void setAction(EActionType const & action);
 
-		void jump()
-		{
-			Jump = true;
-		}
+		void jump();
 
 		bool updateCollision(CCollideable * Object, float const TickTime);
 
-		void draw();
+		virtual void draw();
 
 	};
 }

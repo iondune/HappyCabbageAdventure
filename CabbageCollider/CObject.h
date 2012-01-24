@@ -14,21 +14,13 @@ namespace Collider
 
 		friend class CEngine;
 
-		CObject()
-		{}
+		CObject();
 
 	public:
 
-		~CObject()
-		{}
+		~CObject();
 
-
-		virtual SVector2 performMovement(float const TickTime)
-		{
-			return SVector2();
-		}
-
-		void draw();
+		virtual SVector2 performMovement(float const TickTime);
 
 	};
 }

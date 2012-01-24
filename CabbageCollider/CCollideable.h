@@ -17,9 +17,7 @@ namespace Collider
 			float Friction;
 			float Elasticity;
 
-			SMaterial()
-				: Friction(1.f), Elasticity(0.f)
-			{}
+			SMaterial();
 		};
 
 	protected:
@@ -30,28 +28,18 @@ namespace Collider
 
 		SRect2 Area;
 
-		CCollideable()
-		{}
+		CCollideable();
 
 	public:
 
-		~CCollideable()
-		{}
+		virtual ~CCollideable();
 
-		SRect2 const & getArea() const
-		{
-			return Area;
-		}
+		SRect2 const & getArea() const;
+		void setArea(SRect2 const & area);
 
-		void setArea(SRect2 const & area)
-		{
-			Area = area;
-		}
+		SMaterial const & getMaterial() const;
 
-		SMaterial const & getMaterial() const
-		{
-			return Material;
-		}
+		virtual void draw();
 
 	};
 }

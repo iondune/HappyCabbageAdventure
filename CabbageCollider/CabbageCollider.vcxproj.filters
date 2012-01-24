@@ -9,5 +9,6 @@
   <ItemGroup>
     <ClCompile Include="CActor.cpp" />
     <ClCompile Include="CObject.cpp" />
+    <ClCompile Include="CCollideable.cpp" />
   </ItemGroup>
 </Project>

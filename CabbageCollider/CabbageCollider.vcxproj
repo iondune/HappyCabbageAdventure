@@ -18,6 +18,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CActor.cpp" />
+    <ClCompile Include="CCollideable.cpp" />
     <ClCompile Include="CObject.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
