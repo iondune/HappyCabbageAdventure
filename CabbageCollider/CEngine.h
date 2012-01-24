@@ -13,10 +13,14 @@ namespace Collider
 	class CEngine
 	{
 
-		typedef std::vector<CObject *> ObjectList;
-		ObjectList Objects;
+	public:
 
+		typedef std::vector<CObject *> ObjectList;
 		typedef std::vector<CActor *> ActorList;
+
+	private:
+
+		ObjectList Objects;
 		ActorList Actors;
 
 		void performTick(float const TickTime)
@@ -30,13 +34,21 @@ namespace Collider
 				bool Alighted = false;
 
 				for (ObjectList::iterator jt = Objects.begin(); jt != Objects.end(); ++ jt)
-					Alighted |= (* it)->checkCollision(* jt, TickTime);
+				{
+					Alighted |= (* it)->updateCollision(* jt, TickTime);
+				}
+
+				for (ActorList::iterator jt = Actors.begin(); jt != Actors.end(); ++ jt)
+				{
+					if (* it != * jt)
+						Alighted |= (* it)->updateCollision(* jt, TickTime);
+				}
 
 				if (Alighted)
-					(* it)->onSurfaceAlight();
+					(* it)->onStanding();
 			}
 
-			/*for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
+			for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
 			{
 				SVector2 Movement = (* it)->performMovement(TickTime);
 
@@ -44,7 +56,7 @@ namespace Collider
 				{
 					(* jt)->pushIfCollided(* it, Movement);
 				}
-			}*/
+			}
 		}
 
 		float Timer;
@@ -82,6 +94,16 @@ namespace Collider
 		{
 			Actors.push_back(new CActor());
 			return Actors.back();
+		}
+
+		ObjectList const & getObjects() const
+		{
+			return Objects;
+		}
+
+		ActorList const & getActors() const
+		{
+			return Actors;
 		}
 
 	};

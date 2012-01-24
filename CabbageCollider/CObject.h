@@ -1,46 +1,34 @@
 #ifndef _CABBAGECOLLIDER_COBJECT_H_INCLUDED_
 #define _CABBAGECOLLIDER_COBJECT_H_INCLUDED_
 
-#include "../CabbageCore/SRect2.h"
+#include "CCollideable.h"
 
 namespace Cabbage
 {
 namespace Collider
 {
-	class CObject
+	class CObject : public CCollideable
 	{
 
-		SRect2 Area;
-		float Friction;
+	protected:
+
+		friend class CEngine;
+
+		CObject()
+		{}
 
 	public:
-
-		CObject(float const friction = 0.9f)
-			: Friction(friction)
-		{}
 
 		~CObject()
 		{}
 
-		SRect2 const & getArea() const
-		{
-			return Area;
-		}
 
 		virtual SVector2 performMovement(float const TickTime)
 		{
 			return SVector2();
 		}
 
-		void setArea(SRect2 const & area)
-		{
-			Area = area;
-		}
-
-		float const getFriction() const
-		{
-			return Friction;
-		}
+		void draw();
 
 	};
 }

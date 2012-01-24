@@ -9,41 +9,100 @@ namespace Cabbage
 {
 namespace Collider
 {
-	class CActor
+
+	class ECollisionType
 	{
 
-		SRect2 Area;
+	public:
+
+		enum Value
+		{
+			None = 0,
+			Up = 1,
+			Down = 2,
+			Left = 4,
+			Right = 8
+		};
+
+	};
+
+	class CActor : public CCollideable
+	{
+
+	public:
+
+		struct SAttributes
+		{
+			float MoveAccel;
+			float JumpSpeed;
+			float AirMod;
+			float AirCap;
+
+			SAttributes()
+				: MoveAccel(50.8f), JumpSpeed(8.f), AirMod(0.3f), AirCap(0.97f)
+			{}
+		};
+
+		class EActionType
+		{
+
+		public:
+
+			enum Domain
+			{
+				Standing,
+				MoveLeft,
+				MoveRight
+			};
+
+		private:
+
+			Domain Value;
+
+		public:
+
+			EActionType()
+				: Value(Standing)
+			{}
+
+			EActionType(Domain const value)
+				: Value(value)
+			{}
+
+			bool const operator == (Domain const value)
+			{
+				return Value == value;
+			}
+		};
+
+	protected:
+
+		friend class CEngine;
+
 		SVector2 Acceleration;
 		SVector2 Velocity;
 		bool Standing;
 
 		SVector2 LastPosition, Movement;
 
-		// Max Velocity <= 0.9f * TickTime * Area.getMaxExtent();
-
-	public:
+		SAttributes Attributes;
+		EActionType Action;
+		bool Jump;
 
 		CActor();
+
+	public:
+		
 		~CActor();
 
 		bool collidesWith(CObject * Object);
 
-		bool checkCollision(CObject * Object, float const TickTime);
-		void onSurfaceAlight();
+		int checkCollision(CCollideable * Object, float const TickTime);
+		void onStanding();
 
 		void updateVectors(float const TickTime);
 
 		void pushIfCollided(CObject * Object, SVector2 const & Movement);
-
-		void setArea(SRect2 const & area)
-		{
-			Area = area;
-		}
-
-		SRect2 const & getArea() const
-		{
-			return Area;
-		}
 
 		void setAcceleration(SVector2 const & accel)
 		{
@@ -69,6 +128,25 @@ namespace Collider
 		{
 			return Velocity;
 		}
+
+		SAttributes const & getAttributes() const
+		{
+			return Attributes;
+		}
+
+		void setAction(EActionType const & action)
+		{
+			Action = action;
+		}
+
+		void jump()
+		{
+			Jump = true;
+		}
+
+		bool updateCollision(CCollideable * Object, float const TickTime);
+
+		void draw();
 
 	};
 }

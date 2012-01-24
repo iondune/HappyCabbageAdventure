@@ -4,8 +4,10 @@
     <ClInclude Include="CActor.h" />
     <ClInclude Include="CEngine.h" />
     <ClInclude Include="CObject.h" />
+    <ClInclude Include="CCollideable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CActor.cpp" />
+    <ClCompile Include="CObject.cpp" />
   </ItemGroup>
 </Project>
