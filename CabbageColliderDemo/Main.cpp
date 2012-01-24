@@ -51,8 +51,8 @@ void Draw()
 	glLoadIdentity();
 
 	gluLookAt(
-		Player->getArea().Position.X, Player->getArea().Position.Y, 8, 
-		Player->getArea().Position.X, Player->getArea().Position.Y, 0, 
+		Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 8, 
+		Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0, 
 		0, 1, 0);
 
 	glPointSize(10.f);
@@ -132,7 +132,9 @@ int main(int argc, char * argv[])
 	CObject * Block = Engine->addObject();
 	Block->setArea(SRect2(-1, -1, 15, 0.9f));
 
-	
+	CActor * Derp = Engine->addActor();
+	Derp->setArea(SRect2(4, 0, 1, 1));
+
 
 	// Time-independant movement variables
 	int Time0, Time1;
@@ -169,72 +171,39 @@ int main(int argc, char * argv[])
 		float Delta = (float) (Time1 - Time0) / 1000.f;
 		Time0 = Time1;
 
-		SVector2 Accel = Player->getAcceleration();
-		Accel.X = 0;
-		static float const MoveAccel = 5.8f;
-		static float const JumpSpeed = 5.f;
-		static float const AirMod = 0.25f;
-
-		if (IsKeyDown[SDLK_d])
+		if (IsKeyDown[SDLK_d] && IsKeyDown[SDLK_a])
 		{
-			Accel.X += MoveAccel * (Player->isStanding() ? 1 : AirMod);
+			Player->setAction(CActor::EActionType::Standing);
+		}
+		else if (IsKeyDown[SDLK_d])
+		{
+			Player->setAction(CActor::EActionType::MoveRight);
+		}
+		else if (IsKeyDown[SDLK_a])
+		{
+			Player->setAction(CActor::EActionType::MoveLeft);
+		}
+		else
+		{
+			Player->setAction(CActor::EActionType::Standing);
 		}
 
-		if (IsKeyDown[SDLK_a])
+		if (IsKeyDown[SDLK_SPACE])
 		{
-			Accel.X -= MoveAccel * (Player->isStanding() ? 1 : AirMod);
+			Player->jump();
 		}
 
-		if (IsKeyDown[SDLK_SPACE] && Player->isStanding())
-		{
-			Player->setVelocity(SVector2(Player->getVelocity().X, JumpSpeed));
-		}
-
-		Player->setAcceleration(Accel);
+		Derp->jump();
 
 		Engine->updateAll(Delta);
 
 		Draw();
 
-		glPushMatrix();
-		glTranslatef(Player->getArea().Position.X, Player->getArea().Position.Y, 0);
+		for (CEngine::ObjectList::const_iterator it = Engine->getObjects().begin(); it != Engine->getObjects().end(); ++ it)
+			(* it)->draw();
 
-		if (Player->isStanding())
-			glColor3f(1.0, 0, 0);
-		else
-			glColor3f(1, 1, 1);
-
-		glBegin(GL_QUADS);
-			glVertex3f(0.f, 0.f, 0.f);
-			glVertex3f(1.f, 0.f, 0.f);
-			glVertex3f(1.f, 1.f, 0.f);
-			glVertex3f(0.f, 1.f, 0.f);
-		glEnd();
-		glPopMatrix();
-
-		glColor3f(1, 1, 1);
-
-		glPushMatrix();
-		glTranslatef(Block->getArea().Position.X, Block->getArea().Position.Y, 0);
-
-		glBegin(GL_QUADS);
-			glVertex3f(0.f, 0.f, 0.f);
-			glVertex3f(15.f, 0.f, 0.f);
-			glVertex3f(15.f, 0.9f, 0.f);
-			glVertex3f(0.f, 0.9f, 0.f);
-		glEnd();
-		glPopMatrix();
-
-		glPushMatrix();
-		glTranslatef(Block2->getArea().Position.X, Block2->getArea().Position.Y, 0);
-
-		glBegin(GL_QUADS);
-			glVertex3f(0.f, 0.f, 0.f);
-			glVertex3f(1.f, 0.f, 0.f);
-			glVertex3f(1.f, 1.f, 0.f);
-			glVertex3f(0.f, 1.f, 0.f);
-		glEnd();
-		glPopMatrix();
+		for (CEngine::ActorList::const_iterator it = Engine->getActors().begin(); it != Engine->getActors().end(); ++ it)
+			(* it)->draw();
 
 		SDL_GL_SwapBuffers();
 	}
