@@ -28,12 +28,14 @@
 
 //Chris Code
 #include "3dsloader/3dsloader.h"
+
+#define NUM_TREES 10
 obj_type object;
 
 void drawTree() {
 
    glPushMatrix();
-   glTranslatef(-5, 1.5, 0);
+
    glRotatef(-90, 1, 0, 0);
    glScalef(2.0, 2.0, 2.0);
    glBegin(GL_TRIANGLES);
@@ -63,6 +65,19 @@ void drawTree() {
    glPopMatrix();
 }
 
+void addTrees(int numTrees) {
+
+   for (int n = 0; n < numTrees; n++) {
+      glPushMatrix();
+      
+      glTranslatef(-25 + n * 5, 1.5, -2);
+      drawTree();
+
+      glPopMatrix();
+   }
+}
+
+
 
 // Portable version of system("PAUSE")
 void waitForUser() 
@@ -82,9 +97,6 @@ const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int SCREEN_BPP = 32;
 const float PI = 3.14159f;
-
-int numBunnies = 0;
-int numDeadBunnies = 0;
 
 Uint32 elapsedTime = 0;
 
@@ -205,10 +217,12 @@ void Display()
       drawPlane();
       glEnable(GL_LIGHTING);
       drawBlock();
-      //Chris Code
-      drawTree();
+      
+      //Chris Code, draw Trees
+      addTrees(NUM_TREES);
 
 
+      //Draw "Cabbage"
 		glPushMatrix();
       glColor3f(0, 1, 1);
       glTranslatef(middleOfPlayer.X, middleOfPlayer.Y, 0);
@@ -223,7 +237,7 @@ void Display()
     //Rotation.X += RotationSpeed*Delta;
     //Rotation.Y += RotationSpeed*Delta*2;
     glLoadIdentity();
-    freetype::print(our_font, 10, SCREEN_HEIGHT-20, "Elapsed Time: %u\nNumber of Bunnies: %d\nDead Bunnies: %d ",elapsedTime/1000, numBunnies, numDeadBunnies );
+    freetype::print(our_font, 10, SCREEN_HEIGHT-20, "Elapsed Time: %u\n ",elapsedTime/1000);
 
 
     SDL_GL_SwapBuffers();
@@ -277,7 +291,7 @@ bool StartSDLnOGL()
   }
 
   //Set caption
-  SDL_WM_SetCaption( "Program 1 GO!!!", NULL );
+  SDL_WM_SetCaption( "Happy Cabbage Adventure", NULL );
 
   return true;
 }
@@ -358,7 +372,6 @@ int main(int argc, char * argv[])
   our_font.init("pirulen.ttf", 16);
 
     // Create new gameObject
-    numBunnies++;
 
     bool finished = false;
     Uint32 start = SDL_GetTicks();
@@ -405,7 +418,7 @@ int main(int argc, char * argv[])
       //printf("Player->isStanding(): %d\n", Player->isStanding());
       while(SDL_PollEvent( &event ) )
       {
-        if(event.type == SDL_QUIT )
+        if(event.type == SDL_QUIT || event.type == SDLK_ESCAPE)
         {
           finished = true;
         }
