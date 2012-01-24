@@ -18,9 +18,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bunny.h" />
-    <ClInclude Include="CMesh.h" />
-    <ClInclude Include="CMeshLoader.h" />
-    <ClInclude Include="CShader.h" />
     <ClInclude Include="FreeType.h" />
     <ClInclude Include="3dsloader\3dsloader.h">
       <Filter>3ds loader</Filter>
