@@ -25,8 +25,9 @@
 #endif
 
 
-#include "../CabbageCollider/CCabbageColliderEngine.h"
-using namespace CabbageCollider;
+#include "../CabbageCollider/CEngine.h"
+using namespace Cabbage;
+using namespace Collider;
 
 
 void Initialize()
@@ -125,11 +126,13 @@ int main(int argc, char * argv[])
 	Player = Engine->addActor();
 	Player->setArea(SRect2(0, 3, 1, 1));
 
+	CObject * Block2 = Engine->addObject();
+	Block2->setArea(SRect2(2, 1.1f, 1, 1.f));
+
 	CObject * Block = Engine->addObject();
 	Block->setArea(SRect2(-1, -1, 15, 0.9f));
 
-	CObject * Block2 = Engine->addObject();
-	Block2->setArea(SRect2(2, 2, 1, 1.f));
+	
 
 	// Time-independant movement variables
 	int Time0, Time1;

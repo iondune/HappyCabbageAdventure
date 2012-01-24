@@ -3,10 +3,12 @@
 
 #include <vector>
 
-#include "CCabbageColliderObject.h"
-#include "CCabbageColliderActor.h"
+#include "CObject.h"
+#include "CActor.h"
 
-namespace CabbageCollider
+namespace Cabbage
+{
+namespace Collider
 {
 	class CEngine
 	{
@@ -25,11 +27,16 @@ namespace CabbageCollider
 			{
 				(* it)->updateVectors(TickTime);
 
+				bool Alighted = false;
+
 				for (ObjectList::iterator jt = Objects.begin(); jt != Objects.end(); ++ jt)
-					(* it)->checkCollision(* jt, TickTime);
+					Alighted |= (* it)->checkCollision(* jt, TickTime);
+
+				if (Alighted)
+					(* it)->onSurfaceAlight();
 			}
 
-			for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
+			/*for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
 			{
 				SVector2 Movement = (* it)->performMovement(TickTime);
 
@@ -37,7 +44,7 @@ namespace CabbageCollider
 				{
 					(* jt)->pushIfCollided(* it, Movement);
 				}
-			}
+			}*/
 		}
 
 		float Timer;
@@ -79,6 +86,6 @@ namespace CabbageCollider
 
 	};
 }
-
+}
 
 #endif

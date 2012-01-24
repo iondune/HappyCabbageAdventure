@@ -11,12 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CCabbageColliderActor.h" />
-    <ClInclude Include="CCabbageColliderEngine.h" />
-    <ClInclude Include="CCabbageColliderObject.h" />
+    <ClInclude Include="CActor.h" />
+    <ClInclude Include="CEngine.h" />
+    <ClInclude Include="CObject.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CCabbageColliderActor.cpp" />
+    <ClCompile Include="CActor.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{10A797C8-94C1-4EA0-89FF-7E03C5943D82}</ProjectGuid>

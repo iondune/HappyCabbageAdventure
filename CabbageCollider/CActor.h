@@ -3,9 +3,11 @@
 
 #include "../CabbageCore/SRect2.h"
 
-#include "CCabbageColliderObject.h"
+#include "CObject.h"
 
-namespace CabbageCollider
+namespace Cabbage
+{
+namespace Collider
 {
 	class CActor
 	{
@@ -27,6 +29,7 @@ namespace CabbageCollider
 		bool collidesWith(CObject * Object);
 
 		bool checkCollision(CObject * Object, float const TickTime);
+		void onSurfaceAlight();
 
 		void updateVectors(float const TickTime);
 
@@ -69,6 +72,6 @@ namespace CabbageCollider
 
 	};
 }
-
+}
 
 #endif

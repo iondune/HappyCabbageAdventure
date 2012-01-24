@@ -1,10 +1,12 @@
-#include "CCabbageColliderActor.h"
+#include "CActor.h"
 
 #include <algorithm>
 
 #include "../CabbageCore/Utils.h"
 
-namespace CabbageCollider
+namespace Cabbage
+{
+namespace Collider
 {
 
 	CActor::CActor()
@@ -16,12 +18,12 @@ namespace CabbageCollider
 
 	bool CActor::checkCollision(CObject * Object, float const TickTime)
 	{
-		bool Collision = false;
-
-		LastPosition = Area.Position;
-		Movement = Velocity * TickTime;
+		bool VerticalCollision = false;
 
 		float const FrictionConstant = Object->getFriction();
+		float const BufferSize = 0.0001f;
+
+		Area.Position = LastPosition;
 
 		for (int i = 0; i < 2; ++ i)
 		{
@@ -29,21 +31,21 @@ namespace CabbageCollider
 
 			if (Area.intersects(Object->getArea()))
 			{
-				Collision = true;
 				if (Movement[i] > 0)
 				{
 					Movement[i] = Object->getArea().Position[i] - (LastPosition + Area.Size)[i];
+					if (Movement[i] < 0)
+						printf("shit");
 				}
 				else if (Movement[i] < 0)
 				{
 					Movement[i] = Object->getArea().otherCorner()[i] - LastPosition[i];
+					if (Movement[i] > 0)
+						printf("shit");
+
 					if (i == 1)
 					{
-						Standing = true;
-						Acceleration.Y = std::max(Acceleration.Y, 0.f);
-						Velocity.Y = std::max(Velocity.Y, 0.f);
-						if (equals(Acceleration.X, 0))
-							Velocity.X *= 0.95f; // Slowdown Constant
+						VerticalCollision = true;
 					}
 				}
 			}
@@ -51,9 +53,17 @@ namespace CabbageCollider
 			Area.Position[i] = LastPosition[i] + Movement[i];
 		}
 
-		return Collision;
+		return VerticalCollision;
 	}
 
+	void CActor::onSurfaceAlight()
+	{
+		Standing = true;
+		Acceleration.Y = std::max(Acceleration.Y, 0.f);
+		Velocity.Y = std::max(Velocity.Y, 0.f);
+		if (equals(Acceleration.X, 0))
+			Velocity.X *= 0.95f; // Slowdown Constant
+	}
 	bool CActor::collidesWith(CObject * Object)
 	{
 		return Area.intersects(Object->getArea());
@@ -67,6 +77,9 @@ namespace CabbageCollider
 		Velocity += Acceleration * TickTime;
 
 		Standing = false;
+
+		LastPosition = Area.Position;
+		Movement = Velocity * TickTime;
 	}
 
 	void CActor::pushIfCollided(CObject * Object, SVector2 const & Movement)
@@ -88,4 +101,4 @@ namespace CabbageCollider
 	}
 
 }
-
+}

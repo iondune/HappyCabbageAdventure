@@ -3,7 +3,9 @@
 
 #include "../CabbageCore/SRect2.h"
 
-namespace CabbageCollider
+namespace Cabbage
+{
+namespace Collider
 {
 	class CObject
 	{
@@ -42,6 +44,6 @@ namespace CabbageCollider
 
 	};
 }
-
+}
 
 #endif
