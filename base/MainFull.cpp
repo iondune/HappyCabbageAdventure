@@ -142,7 +142,7 @@ void drawSquare() {
 
 using namespace Cabbage::Collider;
 CEngine *Engine;
-CActor *Player;
+CActor *Player, *Derp;
 CObject *Floor, *Block;
 
 //draw ground Plane for world
@@ -186,6 +186,9 @@ void EngineInit( void ) {
    Player = Engine->addActor();
    Player->setArea(SRect2(0, 0, 1, 1));
 
+   Derp = Engine->addActor();
+   Derp->setArea(SRect2(3, 0, 1, 1));
+
    Floor = Engine->addObject();
    Floor->setArea(SRect2(-25, -1, 50, 1));
 
@@ -226,6 +229,14 @@ void Display()
 		glPushMatrix();
       glColor3f(0, 1, 1);
       glTranslatef(middleOfPlayer.X, middleOfPlayer.Y, 0);
+		
+      glutSolidSphere(0.5, 10, 10);
+		//glDrawArrays(GL_TRIANGLES, 0, TriangleCount*3);
+		glPopMatrix();
+
+		glPushMatrix();
+      glColor3f(1, 0.6, 0);
+	  glTranslatef(Derp->getArea().getCenter().X, Derp->getArea().getCenter().Y, 0);
 		
       glutSolidSphere(0.5, 10, 10);
 		//glDrawArrays(GL_TRIANGLES, 0, TriangleCount*3);
@@ -407,12 +418,6 @@ int main(int argc, char * argv[])
         finished = true;
         continue;
       }
-      SVector2 Accel = Player->getAcceleration();
-      Accel.X = 0;
-
-      static float const MoveAccel = 5.8f;
-      static float const JumpSpeed = 5.f;
-      static float const AirMod = 0.25f;
 
 
       //printf("Player->isStanding(): %d\n", Player->isStanding());
@@ -470,8 +475,8 @@ int main(int argc, char * argv[])
 	  else {
 		  Player->setAction(CActor::EActionType::Standing);
 	  }
+	  Derp->jump();
 
-      Player->setAcceleration(Accel);
       Engine->updateAll((float)delta/1000); //Might be an issue (since updateAll requires float and delta is a UInt32)
 
 
