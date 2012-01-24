@@ -3,6 +3,7 @@
 #include <algorithm>
 
 #include "../CabbageCore/Utils.h"
+#include <stdio.h>
 
 namespace Cabbage
 {

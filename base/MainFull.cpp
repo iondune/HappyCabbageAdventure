@@ -1,11 +1,48 @@
 #include <iostream>
 #include <cmath>
 #include <cstdlib>
-#include "../CabbageCollider/CCabbageColliderEngine.h"
+#include "../CabbageCollider/CEngine.h"
 #include "SDL/SDL.h"
 #include "SDL/SDL_opengl.h"
 #include "FreeType.h"
 #include <GL/glut.h>
+
+//Chris Code
+#include "3dsloader/3dsloader.h"
+obj_type object;
+
+void drawTree() {
+
+   glPushMatrix();
+   glTranslatef(-5, 1.5, 0);
+   glRotatef(-90, 1, 0, 0);
+   glScalef(2.0, 2.0, 2.0);
+   glBegin(GL_TRIANGLES);
+
+    for (int l_index=0;l_index<object.polygons_qty;l_index++)
+    {
+        //----------------- FIRST VERTEX -----------------
+        // Coordinates of the first vertex
+        glVertex3f( object.vertex[ object.polygon[l_index].a ].x,
+                    object.vertex[ object.polygon[l_index].a ].y,
+                    object.vertex[ object.polygon[l_index].a ].z); //Vertex definition
+
+        //----------------- SECOND VERTEX -----------------
+        // Coordinates of the second vertex
+        glVertex3f( object.vertex[ object.polygon[l_index].b ].x,
+                    object.vertex[ object.polygon[l_index].b ].y,
+                    object.vertex[ object.polygon[l_index].b ].z);
+
+        //----------------- THIRD VERTEX -----------------
+        // Coordinates of the Third vertex
+        glVertex3f( object.vertex[ object.polygon[l_index].c ].x,
+                    object.vertex[ object.polygon[l_index].c ].y,
+                    object.vertex[ object.polygon[l_index].c ].z);
+    }
+
+   glEnd();
+   glPopMatrix();
+}
 
 
 // Portable version of system("PAUSE")
@@ -72,41 +109,105 @@ void drawSquare() {
     glEnd();
 }
 
+using namespace Cabbage::Collider;
+CEngine *Engine;
+CActor *Player;
+CObject *Floor, *Block;
+
 //draw ground Plane for world
 void drawPlane() {
     glPushMatrix();
     glColor3f(0.3, 0.7, 0.7);
-/*
     glBegin(GL_POLYGON);
-        glVertex3f(-25, -1, -25);
-        glVertex3f(25, -1, -25);
-        glVertex3f(25, -1, 25);
-        glVertex3f(-25, -1, 25);
+        glVertex3f(-25, 0, -2.5);
+        glVertex3f(25, 0, -2.5);
+        glVertex3f(25, 0, 2.5);
+        glVertex3f(-25, 0, 2.5);
     glEnd();
-*/
 
     glColor3f(0, 0, 0);
     glPointSize(15.f);
     glBegin(GL_LINES);
     for(float i = -25; i < 25; i += 0.5) {
-       glVertex3f(i, -.9, -25);
-       glVertex3f(i, -.9, 25);
-       glVertex3f(-25, -.9, i);
-       glVertex3f(25, -.9, i);
+       glVertex3f(i, 0.05, -2.5);
+       glVertex3f(i, 0.05, 2.5);
+       if(i <= 2.5 && i >= -2.5) {
+          glVertex3f(-25, 0.05, i);
+          glVertex3f(25, 0.05, i);
+       }
     }
     glEnd();
     glPopMatrix();
 }
 
 void drawBlock() {
-
-   //Block->setArea(SRect2(-15, -1, 1, 5));
+    //Block->setArea(SRect2(-15, -1, 1, 5));
     glPushMatrix();
        glColor3f(0, 0, 0);
-       glTranslatef(-15, -1, 0);
-       glScalef(1, 5, 1);
+       glTranslatef(-14, 0, 0);
+       glScalef(2, 2, 1);
        glutSolidCube(1);
     glPopMatrix();
+}
+
+void EngineInit( void ) {
+   Engine = new CEngine();
+   Player = Engine->addActor();
+   Player->setArea(SRect2(0, 0, 1, 1));
+
+   Floor = Engine->addObject();
+   Floor->setArea(SRect2(-25, -1, 50, 1));
+
+   Block = Engine->addObject();
+   Block->setArea(SRect2(-15, -1, 2, 2));
+}
+
+
+// Manages time independant movement and draws the VBO
+void Display()
+{
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+   SVector2 middleOfPlayer =
+     SVector2(Player->getArea().Position.X + Player->getArea().Size.X/2,
+              Player->getArea().Position.Y + Player->getArea().Size.Y/2);
+
+	gluLookAt(
+         middleOfPlayer.X, middleOfPlayer.Y + 1.3, 6,
+         middleOfPlayer.X, middleOfPlayer.Y, 0,
+      //gameObjs[0].bunny.position.X, gameObjs[0].bunny.position.Y + 1, gameObjs[0].bunny.position.Z + 5, 
+      //gameObjs[0].bunny.position.X, gameObjs[0].bunny.position.Y, gameObjs[0].bunny.position.Z, 
+		0, 1, 0);
+
+      // draw the ground plane
+      glDisable(GL_LIGHTING);
+      drawPlane();
+      glEnable(GL_LIGHTING);
+      drawBlock();
+      //Chris Code
+      drawTree();
+
+
+		glPushMatrix();
+      glColor3f(0, 1, 1);
+      glTranslatef(middleOfPlayer.X, middleOfPlayer.Y, 0);
+		
+      glutSolidSphere(0.5, 10, 10);
+		//glDrawArrays(GL_TRIANGLES, 0, TriangleCount*3);
+		glPopMatrix();
+
+
+	 // ...and by spinning it around
+	 static float const RotationSpeed = 50.f;
+    //Rotation.X += RotationSpeed*Delta;
+    //Rotation.Y += RotationSpeed*Delta*2;
+    glLoadIdentity();
+    freetype::print(our_font, 10, SCREEN_HEIGHT-20, "Elapsed Time: %u\nNumber of Bunnies: %d\nDead Bunnies: %d ",elapsedTime/1000, numBunnies, numDeadBunnies );
+
+
+    SDL_GL_SwapBuffers();
 }
 
 // OpenGL initialization
@@ -114,6 +215,8 @@ bool InitializeOGL()
 {
 	glClearColor(0.52f, 0.8f, 0.9f, 1.0f);
 
+   //Chris Code
+   Load3DS(&object, "3dsloader/tree.3ds");
  	
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
@@ -160,56 +263,6 @@ bool StartSDLnOGL()
   return true;
 }
 
-using namespace CabbageCollider;
-CEngine *Engine;
-CActor *Player;
-CObject *Floor, *Block;
-
-// Manages time independant movement and draws the VBO
-void Display()
-{
-	/*// Determine time since last draw
-	Time1 = glutGet(GLUT_ELAPSED_TIME);
-	float Delta = (float) (Time1 - Time0) / 1000.f;
-	Time0 = Time1;
-    */
-
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	gluLookAt(
-      Player->getArea().Position.X, Player->getArea().Position.Y + 1, 5,
-      Player->getArea().Position.X, Player->getArea().Position.Y, 0,
-      //gameObjs[0].bunny.position.X, gameObjs[0].bunny.position.Y + 1, gameObjs[0].bunny.position.Z + 5, 
-      //gameObjs[0].bunny.position.X, gameObjs[0].bunny.position.Y, gameObjs[0].bunny.position.Z, 
-		0, 1, 0);
-
-      // draw the ground plane
-      drawPlane();
-      drawBlock();
-
-		glPushMatrix();
-      glColor3f(0, 1, 1);
-      glTranslatef(Player->getArea().Position.X, Player->getArea().Position.Y, 0);
-		
-      glutSolidSphere(0.5, 10, 10);
-		//glDrawArrays(GL_TRIANGLES, 0, TriangleCount*3);
-		glPopMatrix();
-
-
-	 // ...and by spinning it around
-	 static float const RotationSpeed = 50.f;
-    //Rotation.X += RotationSpeed*Delta;
-    //Rotation.Y += RotationSpeed*Delta*2;
-    glLoadIdentity();
-    freetype::print(our_font, 10, SCREEN_HEIGHT-20, "Elapsed Time: %u\nNumber of Bunnies: %d\nDead Bunnies: %d ",elapsedTime/1000, numBunnies, numDeadBunnies );
-
-
-    SDL_GL_SwapBuffers();
-}
-
 //TODO support screen reshaping
 void Reshape(int width, int height)								
 {
@@ -223,17 +276,53 @@ void Reshape(int width, int height)
 //	float AspectRatio = (float)WindowWidth / (float)WindowHeight;
 }
 
-void EngineInit( void ) {
-   Engine = new CEngine();
-   Player = Engine->addActor();
-   Player->setArea(SRect2(0, 3, .5, .5));
 
-   Floor = Engine->addObject();
-   Floor->setArea(SRect2(-25, -1, 50, 0.9f));
+void DemoLight(void)
+{
+  glShadeModel(GL_FLAT);
+  glEnable(GL_LIGHTING);
+  glEnable(GL_LIGHT0);
+  glEnable(GL_NORMALIZE);
 
-   Block = Engine->addObject();
-   Block->setArea(SRect2(-15, -1, 1, 5));
+  // Light model parameters:
+  // -------------------------------------------
+
+  GLfloat lmKa[] = {0.0, 0.0, 0.0, 0.0 };
+  glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lmKa);
+
+  //glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, 1.0);
+  //glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, 0.0);
+
+
+  // -------------------------------------------
+  // Lighting parameters:
+
+  GLfloat light_pos[] = {0.0f, 20.0f, 0.0f, 1.0f};
+  GLfloat light_Ka[]  = {0.5f, 0.5f, 0.5f, 1.0f};
+  GLfloat light_Kd[]  = {1.0f, 1.0f, 1.0f, 1.0f};
+  GLfloat light_Ks[]  = {1.0f, 1.0f, 1.0f, 1.0f};
+
+  glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
+  glLightfv(GL_LIGHT0, GL_AMBIENT, light_Ka);
+  glLightfv(GL_LIGHT0, GL_DIFFUSE, light_Kd);
+  glLightfv(GL_LIGHT0, GL_SPECULAR, light_Ks);
+
+  // -------------------------------------------
+  // Material parameters:
+
+  GLfloat material_Ka[] = {0.5f, 0.5f, 0.5f, 1.0f};
+  GLfloat material_Kd[] = {0.4f, 0.4f, 0.5f, 1.0f};
+  GLfloat material_Ks[] = {0.8f, 0.8f, 0.0f, 1.0f};
+  GLfloat material_Ke[] = {0.0f, 0.0f, 0.0f, 0.0f};
+  GLfloat material_Se = 20.0f;
+
+  glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_Ka);
+  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_Kd);
+  glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_Ks);
+  glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, material_Ke);
+  glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, material_Se);
 }
+
 
 int main(int argc, char * argv[])
 {
@@ -267,6 +356,7 @@ int main(int argc, char * argv[])
     GLdouble z = 0.0;
 
     EngineInit();
+    DemoLight();
 
     int aDown, dDown;
     while(!finished)
@@ -293,7 +383,7 @@ int main(int argc, char * argv[])
       static float const AirMod = 0.25f;
 
 
-      printf("Player->isStanding(): %d\n", Player->isStanding());
+      //printf("Player->isStanding(): %d\n", Player->isStanding());
       while(SDL_PollEvent( &event ) )
       {
         if(event.type == SDL_QUIT )
