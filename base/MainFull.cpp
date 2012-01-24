@@ -418,7 +418,7 @@ int main(int argc, char * argv[])
       //printf("Player->isStanding(): %d\n", Player->isStanding());
       while(SDL_PollEvent( &event ) )
       {
-        if(event.type == SDL_QUIT || event.type == SDLK_ESCAPE)
+        if(event.type == SDL_QUIT)
         {
           finished = true;
         }
@@ -436,6 +436,9 @@ int main(int argc, char * argv[])
           }
           if(event.key.keysym.sym == SDLK_SPACE) {
              Player->jump();
+          }
+          if (event.key.keysym.sym == SDLK_ESCAPE) {
+             finished = true;
           }
         } 
 
