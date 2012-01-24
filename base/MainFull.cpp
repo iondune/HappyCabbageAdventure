@@ -2,10 +2,29 @@
 #include <cmath>
 #include <cstdlib>
 #include "../CabbageCollider/CEngine.h"
-#include "SDL/SDL.h"
+
+#ifdef _WIN32
+#pragma comment(lib, "freetype.lib")
+#pragma comment(lib, "glew32.lib")
+#pragma comment(lib, "SDL.lib")
+#pragma comment(lib, "SDLmain.lib")
+#pragma comment(lib, "../lib/CabbageScene.lib")
+#pragma comment(lib, "../lib/CabbageCollider.lib")
+#pragma comment(lib, "OpenGL32.lib")
+#pragma comment(lib, "glu32.lib")
+
+#include <GL/glew.h>
+#endif
+
+#include <SDL/SDL.h>
+
+#ifdef __unix__
 #include "SDL/SDL_opengl.h"
-#include "FreeType.h"
+#endif
+
 #include <GL/glut.h>
+#include <time.h>
+#include "FreeType.h"
 
 //Chris Code
 #include "3dsloader/3dsloader.h"
@@ -62,7 +81,7 @@ freetype::font_data our_font;
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int SCREEN_BPP = 32;
-const float PI = 3.1415926535;
+const float PI = 3.14159f;
 
 int numBunnies = 0;
 int numDeadBunnies = 0;
@@ -117,7 +136,7 @@ CObject *Floor, *Block;
 //draw ground Plane for world
 void drawPlane() {
     glPushMatrix();
-    glColor3f(0.3, 0.7, 0.7);
+    glColor3f(0.3f, 0.7f, 0.7f);
     glBegin(GL_POLYGON);
         glVertex3f(-25, 0, -2.5);
         glVertex3f(25, 0, -2.5);
@@ -358,7 +377,7 @@ int main(int argc, char * argv[])
     EngineInit();
     DemoLight();
 
-    int aDown, dDown;
+    int aDown = 0, dDown = 0;
     while(!finished)
     {
       //fps.start();
@@ -402,8 +421,8 @@ int main(int argc, char * argv[])
           if(event.key.keysym.sym == SDLK_d){
              dDown = 1;
           }
-          if(event.key.keysym.sym == SDLK_SPACE && Player->isStanding()) {
-             Player->setVelocity(SVector2(Player->getVelocity().X, JumpSpeed));
+          if(event.key.keysym.sym == SDLK_SPACE) {
+             Player->jump();
           }
         } 
 
@@ -426,12 +445,18 @@ int main(int argc, char * argv[])
         */
       }
 
-      if(aDown) {
-          Accel.X -= MoveAccel * (Player->isStanding() ? 1 : AirMod);
+	  if(dDown && aDown) {
+		  Player->setAction(CActor::EActionType::Standing);
+	  }
+      else if(aDown) {
+		  Player->setAction(CActor::EActionType::MoveLeft);
       }
-      if(dDown) {
-          Accel.X += MoveAccel * (Player->isStanding() ? 1 : AirMod);
+      else if(dDown) {
+          Player->setAction(CActor::EActionType::MoveRight);
       }
+	  else {
+		  Player->setAction(CActor::EActionType::Standing);
+	  }
 
       Player->setAcceleration(Accel);
       Engine->updateAll((float)delta/1000); //Might be an issue (since updateAll requires float and delta is a UInt32)
@@ -461,6 +486,7 @@ int main(int argc, char * argv[])
       */
 
     }
+
     our_font.clean();
 
     SDL_Quit();

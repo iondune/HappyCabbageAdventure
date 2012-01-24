@@ -4,8 +4,16 @@
 #include <string>
 #include <map>
 #include <vector>
-#include "SDL/SDL.h"
+
+#ifdef _WIN32
+#include <GL/glew.h>
+#endif
+
+#include <SDL/SDL.h>
+
+#ifdef __unix__
 #include "SDL/SDL_opengl.h"
+#endif
 
 
 class CShader

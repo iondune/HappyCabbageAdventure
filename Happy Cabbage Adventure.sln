@@ -30,6 +30,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageColliderDemo", "Cabb
 		{10A797C8-94C1-4EA0-89FF-7E03C5943D82} = {10A797C8-94C1-4EA0-89FF-7E03C5943D82}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "base", "base\base.vcxproj", "{B6C46405-DF2B-4D2A-A760-19ED448B8E41}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8389DE31-B188-40BA-983F-D0BB58DDB9FB} = {8389DE31-B188-40BA-983F-D0BB58DDB9FB}
+		{C0397D79-C283-45CD-B54E-CA0234CAA8EF} = {C0397D79-C283-45CD-B54E-CA0234CAA8EF}
+		{10A797C8-94C1-4EA0-89FF-7E03C5943D82} = {10A797C8-94C1-4EA0-89FF-7E03C5943D82}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -56,6 +63,10 @@ Global
 		{DC431D05-0BEE-43B9-BEC1-F618DFE9F802}.Debug|Win32.Build.0 = Debug|Win32
 		{DC431D05-0BEE-43B9-BEC1-F618DFE9F802}.Release|Win32.ActiveCfg = Release|Win32
 		{DC431D05-0BEE-43B9-BEC1-F618DFE9F802}.Release|Win32.Build.0 = Release|Win32
+		{B6C46405-DF2B-4D2A-A760-19ED448B8E41}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B6C46405-DF2B-4D2A-A760-19ED448B8E41}.Debug|Win32.Build.0 = Debug|Win32
+		{B6C46405-DF2B-4D2A-A760-19ED448B8E41}.Release|Win32.ActiveCfg = Release|Win32
+		{B6C46405-DF2B-4D2A-A760-19ED448B8E41}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

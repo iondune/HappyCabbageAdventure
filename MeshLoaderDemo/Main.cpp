@@ -243,6 +243,8 @@ int main(int argc, char * argv[])
     /* Wait 50ms to avoid using up all the CPU time */
         SDL_Delay( 50 );
     }
+
+	SDL_Quit();
 	
 	// Return 0, not that this will ever be called. Damn you, GLUT!
 	return 0;

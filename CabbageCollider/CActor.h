@@ -82,36 +82,34 @@ namespace Collider
 
 		CActor();
 
+		// Update functions, used by engine
+		void updateVectors(float const TickTime);
+		
+		bool updateCollision(CCollideable * Object, float const TickTime);
+		int checkCollision(CCollideable * Object, float const TickTime);
+		void onStanding();
+
+		void pushIfCollided(CObject * Object, SVector2 const & Movement);
+
 	public:
 		
 		~CActor();
 
 		bool collidesWith(CObject * Object);
 
-		int checkCollision(CCollideable * Object, float const TickTime);
-		void onStanding();
-
-		void updateVectors(float const TickTime);
-
-		void pushIfCollided(CObject * Object, SVector2 const & Movement);
-
 		void setAcceleration(SVector2 const & accel);
-
 		SVector2 const & getAcceleration() const;
 
 		bool const isStanding() const;
 
 		void setVelocity(SVector2 const & vel);
-
 		SVector2 const & getVelocity() const;
 
 		SAttributes const & getAttributes() const;
 
+		// Action control
 		void setAction(EActionType const & action);
-
 		void jump();
-
-		bool updateCollision(CCollideable * Object, float const TickTime);
 
 		virtual void draw();
 

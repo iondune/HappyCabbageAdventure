@@ -2,7 +2,7 @@
 #define _BUNNY_H_INCLUDED_
 
 #include "CShader.h"
-#include "Util/SVector3.h"
+#include "../CabbageCore/SVector3.h"
 #include <GL/glut.h>
 
 class Bunny

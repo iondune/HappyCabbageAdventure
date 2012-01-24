@@ -2,10 +2,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <GL/gl.h>										
-#include <GL/glu.h>										
 
-#include "SDL.h"
+#ifdef _WIN32
+#include <GL/glew.h>
+#endif
+
+#include <SDL/SDL.h>
+
+#ifdef __unix__
+#include <GL/gl.h>										
+#include <GL/glu.h>	
+#endif
+
+									
+
 //#include "tutorial4.h"
 #include "3dsloader.h"
 #include "texture.h"

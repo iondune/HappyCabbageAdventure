@@ -9,8 +9,14 @@
 #include <freetype/fttrigon.h>
 
 //OpenGL Headers 
+#ifdef __unix__
 #include <GL/gl.h>
 #include <GL/glu.h>
+#endif
+
+#ifdef _WIN32
+#include <GL\glew.h>
+#endif
 
 //Some STL headers
 #include <vector>
