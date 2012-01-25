@@ -143,7 +143,8 @@ bool InitializeOGL()
 
    //Chris Code
    Load3DS(&object, "3dsloader/tree.3ds");
-   texture = LoadBitmap("grass.bmp");
+   groundTexture = LoadBitmap("grass.bmp");
+   skyTexture = LoadBitmap("sky.bmp");
  	
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);

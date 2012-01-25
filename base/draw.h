@@ -2,18 +2,26 @@
 obj_type object;
 
 void drawSky() {
+   glEnable(GL_TEXTURE_2D);
    glPushMatrix();
 
-   glColor3f(.04, .3, .43);
+   //glColor3f(.04, .3, .43);
+
+   glBindTexture(GL_TEXTURE_2D, skyTexture);
 
    glBegin(GL_QUADS);
-   glVertex3f(-50, 25, -2.5);
-   glVertex3f(-50, 0, -2.5);
-   glVertex3f(50, 0, -2.5);
-   glVertex3f(50, 25, -2.5);
+   glTexCoord2f(0, 1);
+   glVertex3f(-25, 15, -2.5);
+   glTexCoord2f(0, 0);
+   glVertex3f(-25, -1, -2.5);
+   glTexCoord2f(1, 0);
+   glVertex3f(25, -1, -2.5);
+   glTexCoord2f(1, 1);
+   glVertex3f(25, 15, -2.5);
    glEnd();
 
    glPopMatrix();
+   glDisable(GL_TEXTURE_2D);
 }
 
 void drawTree() {
@@ -23,7 +31,7 @@ void drawTree() {
    glRotatef(-90, 1, 0, 0);
    glScalef(2.0, 2.0, 2.0);
 
-   glBindTexture(GL_TEXTURE_2D, texture);
+   glBindTexture(GL_TEXTURE_2D, groundTexture);
 
    glEnable(GL_TEXTURE_2D);
    glBegin(GL_TRIANGLES);
@@ -85,7 +93,7 @@ void drawPlane() {
 
     //glColor3f(0.3f, 0.7f, 0.7f);
 
-    glBindTexture(GL_TEXTURE_2D, texture);
+    glBindTexture(GL_TEXTURE_2D, groundTexture);
 
 
     glBegin(GL_QUADS);
