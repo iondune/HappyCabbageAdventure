@@ -87,7 +87,7 @@ void ViewInit( void ) {
 void Display()
 {
    Uint32 startclock = SDL_GetTicks();
-   Uint32 currentFPS;
+   Uint32 currentFPS = 0;
 
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -125,7 +125,8 @@ void Display()
 
     glLoadIdentity();
 
-    currentFPS = 1000 / (SDL_GetTicks() - startclock);
+	if (SDL_GetTicks() != startclock)
+		currentFPS = 1000.f / float(SDL_GetTicks() - startclock);
     freetype::print(our_font, 10, SCREEN_HEIGHT-20, "Elapsed Time: %u\n"
          "FPS: %u ", elapsedTime/1000, currentFPS);
 
