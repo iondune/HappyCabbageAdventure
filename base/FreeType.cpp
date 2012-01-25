@@ -89,13 +89,13 @@ void make_dlist ( FT_Face face, char ch, GLuint list_base, GLuint * tex_base ) {
 	//first we need to move over a little so that
 	//the character has the right amount of space
 	//between it and the one before it.
-	glTranslatef(bitmap_glyph->left,0,0);
+	glTranslatef((GLfloat)bitmap_glyph->left,0,0);
 
 	//Now we move down a little in the case that the
 	//bitmap extends past the bottom of the line 
 	//(this is only true for characters like 'g' or 'y'.
 	glPushMatrix();
-	glTranslatef(0,bitmap_glyph->top-bitmap.rows,0);
+	glTranslatef(0,(GLfloat)bitmap_glyph->top-bitmap.rows,0);
 
 	//Now we need to account for the fact that many of
 	//our textures are filled with empty padding space.
@@ -113,13 +113,13 @@ void make_dlist ( FT_Face face, char ch, GLuint list_base, GLuint * tex_base ) {
 	//so we need to link the texture to the quad
 	//so that the result will be properly aligned.
 	glBegin(GL_QUADS);
-	glTexCoord2d(0,0); glVertex2f(0,bitmap.rows);
+	glTexCoord2d(0,0); glVertex2f(0,(GLfloat)bitmap.rows);
 	glTexCoord2d(0,y); glVertex2f(0,0);
-	glTexCoord2d(x,y); glVertex2f(bitmap.width,0);
-	glTexCoord2d(x,0); glVertex2f(bitmap.width,bitmap.rows);
+	glTexCoord2d(x,y); glVertex2f((GLfloat)bitmap.width,0);
+	glTexCoord2d(x,0); glVertex2f((GLfloat)bitmap.width,(GLfloat)bitmap.rows);
 	glEnd();
 	glPopMatrix();
-	glTranslatef(face->glyph->advance.x >> 6 ,0,0);
+	glTranslatef((GLfloat)(face->glyph->advance.x >> 6), 0, 0);
 
 
 	//increment the raster position as if we were a bitmap font.
@@ -136,7 +136,7 @@ void font_data::init(const char * fname, unsigned int h) {
 	//Allocate some memory to store the texture ids.
 	textures = new GLuint[128];
 
-	this->h=h;
+	this->h = (GLfloat) h;
 
 	//Create and initilize a freetype font library.
 	FT_Library library;
