@@ -95,7 +95,8 @@ namespace Collider
 		
 		~CActor();
 
-		bool collidesWith(CObject * Object);
+		bool collidesWith(CObject * Object) const;
+		bool isAbove(CObject * Object, float & height) const;
 
 		void setAcceleration(SVector2 const & accel);
 		SVector2 const & getAcceleration() const;

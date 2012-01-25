@@ -223,10 +223,9 @@ void Display()
 {
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-   SVector2 middleOfPlayer =
-     SVector2(Player->getArea().Position.X + Player->getArea().Size.X/2,
-              Player->getArea().Position.Y + Player->getArea().Size.Y/2);
+   SVector2 middleOfPlayer = Player->getArea().getCenter();
    PlayerView->setMiddle(middleOfPlayer);
+   PlayerView->setGround(Engine->getHeightBelow(Player));
 
 	glMatrixMode(GL_MODELVIEW);
    PlayerView->establishCamera();

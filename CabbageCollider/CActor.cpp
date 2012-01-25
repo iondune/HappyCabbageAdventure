@@ -84,9 +84,22 @@ namespace Collider
 		Velocity.Y = std::max(Velocity.Y, 0.f);
 	}
 
-	bool CActor::collidesWith(CObject * Object)
+	bool CActor::collidesWith(CObject * Object) const
 	{
 		return Area.intersects(Object->getArea());
+	}
+
+	bool CActor::isAbove(CObject * Object, float & height) const
+	{
+		if (Area.getCenter().Y < Object->getArea().otherCorner().Y)
+			return false;
+
+		if (Area.getCenter().X < Object->getArea().Position.X || Area.getCenter().X > Object->getArea().otherCorner().X)
+			return false;
+
+		height = Object->getArea().otherCorner().Y;
+
+		return true;
 	}
 
 	void CActor::updateVectors(float const TickTime)

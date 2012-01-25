@@ -31,7 +31,7 @@ public:
 		return Position + Size / 2.f;
 	}
 
-	bool const intersects(SRect2 const & r)
+	bool const intersects(SRect2 const & r) const
 	{
 		return (otherCorner().Y > r.Position.Y &&
 			Position.Y < r.otherCorner().Y &&

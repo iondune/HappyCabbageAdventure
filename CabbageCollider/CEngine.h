@@ -2,6 +2,7 @@
 #define _CABBAGECOLLIDER_CENGINE_H_INCLUDED_
 
 #include <vector>
+#include <limits>
 
 #include "CObject.h"
 #include "CActor.h"
@@ -82,6 +83,21 @@ namespace Collider
 				Timer -= TimePerTick;
 				performTick(TimePerTick);
 			}
+		}
+
+		float const getHeightBelow(CActor * Actor)
+		{
+			float height = - std::numeric_limits<float>::infinity();
+			float checkHeight;
+
+			for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
+			{
+				if (Actor->isAbove(* it, checkHeight))
+					if (checkHeight > height)
+						height = checkHeight;
+			}
+
+			return height;
 		}
 
 		CObject * addObject()
