@@ -83,6 +83,7 @@ void ViewInit( void ) {
 }
 
 
+double fps = 0.0;
 // Manages time independant movement and draws the VBO
 void Display()
 {
@@ -128,7 +129,7 @@ void Display()
 	if (SDL_GetTicks() != startclock)
 		currentFPS = 1000.f / float(SDL_GetTicks() - startclock);
     freetype::print(our_font, 10, SCREEN_HEIGHT-20, "Elapsed Time: %u\n"
-         "FPS: %u ", elapsedTime/1000, currentFPS);
+         "FPS: %u\nFPS: %0.2f ", elapsedTime/1000, currentFPS, fps);
 
 
     SDL_GL_SwapBuffers();
@@ -249,6 +250,8 @@ void DemoLight(void)
 }
 
 
+Uint32 frame_delta = 0, frames = 0;
+
 int main(int argc, char * argv[])
 {
 
@@ -295,6 +298,21 @@ int main(int argc, char * argv[])
       dDeltaSec = (double) delta / 1000.0;
       start = end;
       elapsedTime += delta;
+
+      //SDL_Delay((Uint32)100);
+
+      //Better framerate calculation?
+      //Still says 1000 on the lab machines
+    frames++;
+    Uint32 newTicks = SDL_GetTicks();
+    if(newTicks - frame_delta >= 100) {
+       //printf("%u\n", frames);
+       fps = (float)frames / (((float)(newTicks - frame_delta))/1000);
+       frames = 0;
+       frame_delta = newTicks;
+    }
+
+
 
       /*
       if(elapsedTime >= finalTime){
