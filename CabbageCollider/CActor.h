@@ -70,7 +70,7 @@ namespace Collider
 
 		friend class CEngine;
 
-		SVector2 Acceleration;
+		float FallAcceleration;
 		SVector2 Velocity;
 		bool Standing;
 

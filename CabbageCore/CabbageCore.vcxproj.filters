@@ -6,5 +6,9 @@
     <ClInclude Include="SVector3.h" />
     <ClInclude Include="SColor.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="CXMLWriter.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CXMLWriter.cpp" />
   </ItemGroup>
 </Project>

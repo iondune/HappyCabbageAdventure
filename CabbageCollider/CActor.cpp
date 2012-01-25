@@ -37,7 +37,7 @@ namespace Collider
 
 
 	CActor::CActor()
-		: Standing(false), Jump(false)
+		: Standing(false), Jump(false), FallAcceleration(0)
 	{}
 
 	CActor::~CActor()
@@ -80,7 +80,7 @@ namespace Collider
 	void CActor::onStanding()
 	{
 		Standing = true;
-		Acceleration.Y = std::max(Acceleration.Y, 0.f);
+		FallAcceleration = 0;
 		Velocity.Y = std::max(Velocity.Y, 0.f);
 	}
 
@@ -105,20 +105,20 @@ namespace Collider
 	void CActor::updateVectors(float const TickTime)
 	{
 		static float const Gravity = 32.f;
-		Acceleration.Y -= Gravity * TickTime;
-		Acceleration.X = 0;
+		FallAcceleration -= Gravity * TickTime;
+		//Acceleration.X = 0;
 
 	
 		Velocity.X *=  (Standing ? 0.95f : Attributes.AirCap); 
 
 		if (Action == EActionType::MoveLeft)
 		{
-			Acceleration.X -= Attributes.MoveAccel * (Standing ? 1 : Attributes.AirMod);
+			//Acceleration.X -= Attributes.MoveAccel * (Standing ? 1 : Attributes.AirMod);
 		}
 
 		if (Action == EActionType::MoveRight)
 		{
-			Acceleration.X += Attributes.MoveAccel * (Standing ? 1 : Attributes.AirMod);
+			//Acceleration.X += Attributes.MoveAccel * (Standing ? 1 : Attributes.AirMod);
 		}
 
 		if (Jump && Standing)
@@ -129,7 +129,7 @@ namespace Collider
 
 		Jump = false;
 
-		Velocity += Acceleration * TickTime;
+		//Velocity += Acceleration * TickTime;
 
 		Standing = false;
 
