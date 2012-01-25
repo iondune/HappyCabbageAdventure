@@ -102,6 +102,7 @@ void Display()
       // draw the ground plane
       glDisable(GL_LIGHTING);
       drawPlane();
+      drawSky();
       glEnable(GL_LIGHTING);
       drawBlock();
       

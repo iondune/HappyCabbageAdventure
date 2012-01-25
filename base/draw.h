@@ -1,6 +1,21 @@
 //For Trees
 obj_type object;
 
+void drawSky() {
+   glPushMatrix();
+
+   glColor3f(.04, .3, .43);
+
+   glBegin(GL_QUADS);
+   glVertex3f(-50, 25, -2.5);
+   glVertex3f(-50, 0, -2.5);
+   glVertex3f(50, 0, -2.5);
+   glVertex3f(50, 25, -2.5);
+   glEnd();
+
+   glPopMatrix();
+}
+
 void drawTree() {
 
    glPushMatrix();
