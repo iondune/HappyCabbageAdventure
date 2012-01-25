@@ -1,3 +1,5 @@
+#ifndef __TEXTURE_HEADER_
+#define __TEXTURE_HEADER_
 /**********************************************************
  *
  * VARIABLES DECLARATION
@@ -32,7 +34,7 @@ typedef struct                       /**** BMP file info structure ****/
     unsigned int   biClrUsed;        /* Number of colors used */
     unsigned int   biClrImportant;   /* Number of important colors */
     char *data;
-    } BITMAPINFOHEADER;
+    } BITMAPINFOHEADER_;
 
 
 int LoadBitmap(char *filename)
@@ -41,7 +43,7 @@ int LoadBitmap(char *filename)
     char temp;
     long i;
 
-    BITMAPINFOHEADER infoheader;
+    BITMAPINFOHEADER_ infoheader;
 
     num_texture++; // The counter of the current texture is increased
 
@@ -113,3 +115,5 @@ int LoadBitmap(char *filename)
 
     return (num_texture); // Returns the current texture OpenGL ID
 }
+
+#endif
