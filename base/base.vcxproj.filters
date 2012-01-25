@@ -36,6 +36,7 @@
       <Filter>3ds loader</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerView.h" />
+    <ClInclude Include="header.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FreeType.cpp" />

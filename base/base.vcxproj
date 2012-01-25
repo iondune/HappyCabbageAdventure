@@ -89,6 +89,7 @@
     <ClInclude Include="Bunny.h" />
     <ClInclude Include="CPlayerView.h" />
     <ClInclude Include="FreeType.h" />
+    <ClInclude Include="header.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3dsloader\3dsloader.cpp" />
