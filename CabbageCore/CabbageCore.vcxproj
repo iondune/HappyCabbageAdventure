@@ -62,15 +62,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CXMLWriter.h" />
     <ClInclude Include="SColor.h" />
     <ClInclude Include="SRect2.h" />
     <ClInclude Include="SVector2.h" />
     <ClInclude Include="SVector3.h" />
     <ClInclude Include="Utils.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="CXMLWriter.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
