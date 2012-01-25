@@ -384,6 +384,7 @@ int main(int argc, char * argv[])
 	  Derp->jump();
 
       Engine->updateAll((float)delta/1000); //Might be an issue (since updateAll requires float and delta is a UInt32)
+      PlayerView->step((float)delta);
 
 
       /*

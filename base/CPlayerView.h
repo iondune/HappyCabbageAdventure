@@ -53,6 +53,7 @@ class CPlayerView {
          yShadow = groundYValue;
       }
       void draw();
+      void step(float delta);
 };
 
 #endif
