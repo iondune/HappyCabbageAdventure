@@ -33,10 +33,12 @@ namespace Collider
 
 		struct SAttributes
 		{
-			float MoveAccel;
-			float JumpSpeed;
-			float AirMod;
-			float AirCap;
+			float JumpAccel;
+			float JumpLength;
+			float MaxWalk;
+			float WalkAccel;
+			float AirControl;
+			float AirSpeedFactor;
 
 			SAttributes();
 		};
@@ -48,7 +50,7 @@ namespace Collider
 
 			enum Domain
 			{
-				Standing,
+				None,
 				MoveLeft,
 				MoveRight
 			};
@@ -78,7 +80,8 @@ namespace Collider
 
 		SAttributes Attributes;
 		EActionType Action;
-		bool Jump;
+		float JumpTimer;
+		bool Jumping;
 
 		CActor();
 
@@ -98,9 +101,6 @@ namespace Collider
 		bool collidesWith(CObject * Object) const;
 		bool isAbove(CObject * Object, float & height) const;
 
-		void setAcceleration(SVector2 const & accel);
-		SVector2 const & getAcceleration() const;
-
 		bool const isStanding() const;
 
 		void setVelocity(SVector2 const & vel);
@@ -110,7 +110,7 @@ namespace Collider
 
 		// Action control
 		void setAction(EActionType const & action);
-		void jump();
+		void setJumping(bool const jumping);
 
 		virtual void draw();
 

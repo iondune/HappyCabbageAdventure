@@ -17,13 +17,15 @@ namespace Cabbage
 namespace Collider
 {
 
+	static float const Gravity = 55.f;
+
 	CActor::SAttributes::SAttributes()
-		: MoveAccel(50.8f), JumpSpeed(8.f), AirMod(0.3f), AirCap(0.97f)
+		: MaxWalk(4.5f), WalkAccel(60.f), JumpAccel(6.4f), JumpLength(0.6f), AirControl(0.75f), AirSpeedFactor(0.7f)
 	{}
 
 
 	CActor::EActionType::EActionType()
-		: Value(Standing)
+		: Value(None)
 	{}
 
 	CActor::EActionType::EActionType(Domain const value)
@@ -37,13 +39,11 @@ namespace Collider
 
 
 	CActor::CActor()
-		: Standing(false), Jump(false), FallAcceleration(0)
+		: Standing(false), JumpTimer(0.f), FallAcceleration(0)
 	{}
 
 	CActor::~CActor()
 	{}
-
-	
 
 	int CActor::checkCollision(CCollideable * Object, float const TickTime)
 	{
@@ -104,32 +104,57 @@ namespace Collider
 
 	void CActor::updateVectors(float const TickTime)
 	{
-		static float const Gravity = 32.f;
 		FallAcceleration -= Gravity * TickTime;
-		//Acceleration.X = 0;
 
-	
-		Velocity.X *=  (Standing ? 0.95f : Attributes.AirCap); 
+		float MaxVelocity = Attributes.MaxWalk * (Standing ? 1.f : Attributes.AirSpeedFactor);
+		bool Moving = false;
 
 		if (Action == EActionType::MoveLeft)
 		{
-			//Acceleration.X -= Attributes.MoveAccel * (Standing ? 1 : Attributes.AirMod);
+			if (Velocity.X > -MaxVelocity)
+			{
+				Velocity.X -= Attributes.WalkAccel * TickTime * (Standing ? 1.f : Attributes.AirControl);
+				if (Velocity.X < -MaxVelocity)
+					Velocity.X = -MaxVelocity;
+			}
+			Moving = true;
 		}
-
-		if (Action == EActionType::MoveRight)
+		else if (Action == EActionType::MoveRight)
 		{
-			//Acceleration.X += Attributes.MoveAccel * (Standing ? 1 : Attributes.AirMod);
+			if (Velocity.X < MaxVelocity)
+			{
+				Velocity.X += Attributes.WalkAccel * TickTime * (Standing ? 1.f : Attributes.AirControl);
+				if (Velocity.X > MaxVelocity)
+					Velocity.X = MaxVelocity;
+			}
+			Moving = true;
 		}
-
-		if (Jump && Standing)
+		else if (Action == EActionType::None)
 		{
-			
-			Velocity.Y = Attributes.JumpSpeed;
 		}
 
-		Jump = false;
+		if (! Moving)
+		{
+			if (Standing)
+				Velocity.X *= 0.95f; // Slowdown factor
+			else
+				Velocity.X *= 0.99f; // Air Slowdown factor
+		}
+		
 
-		//Velocity += Acceleration * TickTime;
+		if (Jumping)
+		{
+			if (JumpTimer > 0)
+			{
+				Velocity.Y = Attributes.JumpAccel;
+				JumpTimer -= TickTime;
+			}
+
+			if (JumpTimer <= 0)
+				Jumping = false;
+		}
+
+		Velocity.Y += FallAcceleration * TickTime;
 
 		Standing = false;
 
@@ -153,16 +178,6 @@ namespace Collider
 				Area.Position[i] -= Area.otherCorner()[i] - Object->getArea().Position[i];
 			}
 		}
-	}
-
-	void CActor::setAcceleration(SVector2 const & accel)
-	{
-		Acceleration = accel;
-	}
-
-	SVector2 const & CActor::getAcceleration() const
-	{
-		return Acceleration;
 	}
 
 	bool const CActor::isStanding() const
@@ -190,31 +205,44 @@ namespace Collider
 		Action = action;
 	}
 
-	void CActor::jump()
+	void CActor::setJumping(bool const jumping)
 	{
-		Jump = true;
-	}
+		if (! Jumping && ! Standing)
+			return; // Can't start jupming unless we are standing
 
+		if (! Jumping && jumping)
+			JumpTimer = Attributes.JumpLength; // Start jumping
+
+		Jumping = jumping;
+		/*if (Standing && ! Jumping)
+		{
+			JumpTimer = Attributes.JumpLength;
+			Jumping = true;
+		}*/
+	}
 
 	bool CActor::updateCollision(CCollideable * Object, float const TickTime)
 	{
 		int CollisionType = checkCollision(Object, TickTime);
 
 		if (CollisionType & ECollisionType::Up)
-			Velocity.Y *= Object->getMaterial().Elasticity;
+		{
+			Velocity.Y *= -Object->getMaterial().Elasticity;
+			Jumping = false;
+		}
 
 		if (CollisionType & ECollisionType::Left || CollisionType & ECollisionType::Right)
-			Velocity.X *= Object->getMaterial().Elasticity;
+			Velocity.X *= -Object->getMaterial().Elasticity;
 
 		return (CollisionType & ECollisionType::Down) != 0;
 	}
 
 	void CActor::draw()
 	{
-		if (Standing)
-			glColor3f(1, 0, 0);
-		else
+		if (! Standing && ! Jumping)
 			glColor3f(1, 1, 1);
+		else
+			glColor3f(Standing ? 1.f : 0.f, 0.f, Jumping ? 1.f : 0.f);
 
 		CCollideable::draw();
 

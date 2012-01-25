@@ -15,6 +15,10 @@
     <None Include="3dsloader\Makefile">
       <Filter>3ds loader</Filter>
     </None>
+    <None Include="freetype6.dll" />
+    <None Include="SDL.dll" />
+    <None Include="zlib1.dll" />
+    <None Include="glut32.dll" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bunny.h" />

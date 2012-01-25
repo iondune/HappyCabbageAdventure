@@ -173,7 +173,7 @@ int main(int argc, char * argv[])
 
 		if (IsKeyDown[SDLK_d] && IsKeyDown[SDLK_a])
 		{
-			Player->setAction(CActor::EActionType::Standing);
+			Player->setAction(CActor::EActionType::None);
 		}
 		else if (IsKeyDown[SDLK_d])
 		{
@@ -185,15 +185,13 @@ int main(int argc, char * argv[])
 		}
 		else
 		{
-			Player->setAction(CActor::EActionType::Standing);
+			Player->setAction(CActor::EActionType::None);
 		}
 
-		if (IsKeyDown[SDLK_SPACE])
-		{
-			Player->jump();
-		}
 
-		Derp->jump();
+		Player->setJumping(IsKeyDown[SDLK_SPACE]);
+
+		Derp->setJumping(true);
 
 		Engine->updateAll(Delta);
 

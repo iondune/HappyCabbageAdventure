@@ -73,8 +73,12 @@
     <None Include="3dsloader\spaceship.3ds" />
     <None Include="3dsloader\spaceshiptexture.bmp" />
     <None Include="3dsloader\tree.3ds" />
+    <None Include="freetype6.dll" />
     <None Include="glew32.dll" />
+    <None Include="glut32.dll" />
     <None Include="Makefile" />
+    <None Include="SDL.dll" />
+    <None Include="zlib1.dll" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3dsloader\3dsloader.h" />

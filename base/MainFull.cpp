@@ -409,7 +409,7 @@ int main(int argc, char * argv[])
     ViewInit();
     DemoLight();
 
-    int aDown = 0, dDown = 0;
+    int aDown = 0, dDown = 0, spaceDown = 0;
     while(!finished)
     {
       //fps.start();
@@ -450,7 +450,7 @@ int main(int argc, char * argv[])
              dDown = 1;
           }
           if(event.key.keysym.sym == SDLK_SPACE) {
-             Player->jump();
+             spaceDown = 1;
           }
           if (event.key.keysym.sym == SDLK_ESCAPE) {
              finished = true;
@@ -468,6 +468,9 @@ int main(int argc, char * argv[])
           if(event.key.keysym.sym == SDLK_d){
              dDown = 0;
           }
+		  if (event.key.keysym.sym = SDLK_SPACE){
+			  spaceDown = 0;
+		  }
         }
         /*
         if(event.type == SDL_MOUSEMOTION)
@@ -480,7 +483,7 @@ int main(int argc, char * argv[])
       PlayerView->setVelocity(Player->getVelocity());
 
 	   if(dDown && aDown) {
-	 	   Player->setAction(CActor::EActionType::Standing);
+	 	   Player->setAction(CActor::EActionType::None);
          PlayerView->setState(CPlayerView::State::Standing);
 	   }
       else if(aDown) {
@@ -492,9 +495,11 @@ int main(int argc, char * argv[])
          PlayerView->setState(CPlayerView::State::MovingRight);
       }
 	   else {
-         Player->setAction(CActor::EActionType::Standing);
+         Player->setAction(CActor::EActionType::None);
          PlayerView->setState(CPlayerView::State::Standing);
 	   }
+
+		  Player->setJumping(spaceDown != 0);
 
       /*
       if(curXVelocity > 0.1) {
@@ -508,7 +513,7 @@ int main(int argc, char * argv[])
       }
       */
 
-	  Derp->jump();
+	  Derp->setJumping(true);
 
       Engine->updateAll((float)delta/1000); //Might be an issue (since updateAll requires float and delta is a UInt32)
 
