@@ -49,7 +49,9 @@ long filelength(int f)
     return(buf.st_size);
 }
 
-
+#ifdef _WIN32
+#pragma warning(disable: 4996)
+#endif
 
 char Load3DS (obj_type_ptr p_object, char const *p_filename)
 {
