@@ -103,6 +103,7 @@ void Display()
       glDisable(GL_LIGHTING);
       drawPlane();
       drawSky();
+      drawDirt();
       glEnable(GL_LIGHTING);
       drawBlock();
       
@@ -145,6 +146,7 @@ bool InitializeOGL()
    Load3DS(&object, "3dsloader/tree.3ds");
    groundTexture = LoadBitmap("grass.bmp");
    skyTexture = LoadBitmap("sky.bmp");
+   dirtTexture = LoadBitmap("dirt.bmp");
  	
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);

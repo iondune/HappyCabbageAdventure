@@ -10,7 +10,7 @@
 int num_texture = -1;
 
 //Texture bind number
-int groundTexture, skyTexture;
+int groundTexture, skyTexture, dirtTexture;
 
 /**********************************************************
  *

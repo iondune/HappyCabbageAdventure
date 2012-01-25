@@ -1,6 +1,30 @@
 //For Trees
 obj_type object;
 
+void drawDirt() {
+   glEnable(GL_TEXTURE_2D);
+   glPushMatrix();
+
+   //glColor3f(.04, .3, .43);
+
+   glBindTexture(GL_TEXTURE_2D, dirtTexture);
+
+   glBegin(GL_QUADS);
+   glTexCoord2f(0, 4);
+   glVertex3f(-25, 0, 2.5);
+   glTexCoord2f(0, 0);
+   glVertex3f(-25, -15, 2.5);
+   glTexCoord2f(25, 0);
+   glVertex3f(25, -15, 2.5);
+   glTexCoord2f(25, 4);
+   glVertex3f(25, 0, 2.5);
+   glEnd();
+
+   glPopMatrix();
+   glDisable(GL_TEXTURE_2D);
+
+}
+
 void drawSky() {
    glEnable(GL_TEXTURE_2D);
    glPushMatrix();
