@@ -59,14 +59,14 @@ namespace Collider
 
 			if (Area.intersects(Object->getArea()))
 			{
-				if (Movement[i] > 0)
+				if (Movement[i] > 0.f)
 				{
-					Movement[i] = Object->getArea().Position[i] - (LastPosition + Area.Size)[i];
+					Movement[i] = std::max(Object->getArea().Position[i] - (LastPosition + Area.Size)[i], 0.f);
 					Out |= (i ? ECollisionType::Up : ECollisionType::Right);
 				}
-				else if (Movement[i] < 0)
+				else if (Movement[i] < 0.f)
 				{
-					Movement[i] = Object->getArea().otherCorner()[i] - LastPosition[i];
+					Movement[i] = std::min(Object->getArea().otherCorner()[i] - LastPosition[i], 0.f);
 					Out |= (i ? ECollisionType::Down : ECollisionType::Left);
 				}
 			}
