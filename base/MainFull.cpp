@@ -1,70 +1,4 @@
-#include <iostream>
-#include <cmath>
-#include <cstdlib>
-#include "../CabbageCollider/CEngine.h"
-#include "CPlayerView.h"
-
-#ifdef _WIN32
-#pragma comment(lib, "freetype.lib")
-#pragma comment(lib, "glew32.lib")
-#pragma comment(lib, "SDL.lib")
-#pragma comment(lib, "SDLmain.lib")
-#pragma comment(lib, "../lib/CabbageScene.lib")
-#pragma comment(lib, "../lib/CabbageCollider.lib")
-#pragma comment(lib, "OpenGL32.lib")
-#pragma comment(lib, "glu32.lib")
-
-#include <GL/glew.h>
-#endif
-
-#include <SDL/SDL.h>
-
-#ifdef __unix__
-#include "SDL/SDL_opengl.h"
-#endif
-
-#include <GL/glut.h>
-#include <time.h>
-#include "FreeType.h"
-
-//Chris Code
-#include "3dsloader/3dsloader.h"
-
-#define NUM_TREES 10
-obj_type object;
-
-void drawTree() {
-
-   glPushMatrix();
-
-   glRotatef(-90, 1, 0, 0);
-   glScalef(2.0, 2.0, 2.0);
-   glBegin(GL_TRIANGLES);
-
-    for (int l_index=0;l_index<object.polygons_qty;l_index++)
-    {
-        //----------------- FIRST VERTEX -----------------
-        // Coordinates of the first vertex
-        glVertex3f( object.vertex[ object.polygon[l_index].a ].x,
-                    object.vertex[ object.polygon[l_index].a ].y,
-                    object.vertex[ object.polygon[l_index].a ].z); //Vertex definition
-
-        //----------------- SECOND VERTEX -----------------
-        // Coordinates of the second vertex
-        glVertex3f( object.vertex[ object.polygon[l_index].b ].x,
-                    object.vertex[ object.polygon[l_index].b ].y,
-                    object.vertex[ object.polygon[l_index].b ].z);
-
-        //----------------- THIRD VERTEX -----------------
-        // Coordinates of the Third vertex
-        glVertex3f( object.vertex[ object.polygon[l_index].c ].x,
-                    object.vertex[ object.polygon[l_index].c ].y,
-                    object.vertex[ object.polygon[l_index].c ].z);
-    }
-
-   glEnd();
-   glPopMatrix();
-}
+#include "header.h"
 
 #define TREE_Y_OFFSET 2.1
 void addTrees(int numTrees) {
@@ -122,80 +56,11 @@ float randLimitedFloat()
  return ((float)rand()/(float)RAND_MAX) * 20 - 10;
 }
 
-// draw an individual square
-void drawSquare() {
-    glColor3f(0.0, 1.0, 0.0);
-    glBegin(GL_POLYGON);
-        glVertex3f(-0.5, -0.5, 0.0);
-        glVertex3f(-0.5, 0.5, 0.0);
-        glVertex3f(0.5, 0.5, 0.0);
-        glVertex3f(0.5, -0.5, 0.0);
-    glEnd();
-
-    glColor3f(0.0, 0.0, 0.0);
-    glBegin(GL_LINE_LOOP);
-        glVertex3f(-0.5, -0.5, 0.0);
-        glVertex3f(-0.5, 0.5, 0.0);
-        glVertex3f(-0.5, 0.5, 0.0);
-        glVertex3f(0.5, 0.5, 0.0);
-        glVertex3f(0.5, 0.5, 0.0);
-        glVertex3f(0.5, -0.5, 0.0);
-        glVertex3f(0.5, -0.5, 0.0);
-        glVertex3f(-0.5, -0.5, 0.0);
-    glEnd();
-}
-
 using namespace Cabbage::Collider;
 CEngine *Engine;
 CActor *Player, *Derp;
 CObject *Floor, *Block;
 CPlayerView *PlayerView;
-
-//draw ground Plane for world
-void drawPlane() {
-    glPushMatrix();
-    glColor3f(0.3f, 0.7f, 0.7f);
-    glBegin(GL_POLYGON);
-        glVertex3f(-25, 0, -2.5);
-        glVertex3f(25, 0, -2.5);
-        glVertex3f(25, 0, 2.5);
-        glVertex3f(-25, 0, 2.5);
-    glEnd();
-    /*
-    glBegin(GL_POLYGON);
-        glVertex3f(-25, 0, 2.5);
-        glVertex3f(25, 0, 2.5);
-        glVertex3f(25, -2, 2.5);
-        glVertex3f(-25, -2, 2.5);
-    glEnd();
-    */
-
-
-    glColor3f(0, 0, 0);
-    glPointSize(15.f);
-    glBegin(GL_LINES);
-    for(float i = -25; i < 25; i += 0.5) {
-       glVertex3f(i, 0.05, -2.5);
-       glVertex3f(i, 0.05, 2.5);
-       if(i <= 2.5 && i >= -2.5) {
-          glVertex3f(-25, 0.05, i);
-          glVertex3f(25, 0.05, i);
-       }
-    }
-    glEnd();
-    glPopMatrix();
-}
-
-void drawBlock() {
-    //Block->setArea(SRect2(-15, -1, 1, 5));
-    glPushMatrix();
-       glColor3f(0, 0, 0);
-       glTranslatef(-14, 2, 0);
-       glScalef(2, 1, 1);
-       //glutWireCube(1);
-       glutSolidCube(1);
-    glPopMatrix();
-}
 
 void EngineInit( void ) {
    Engine = new CEngine();
@@ -221,6 +86,9 @@ void ViewInit( void ) {
 // Manages time independant movement and draws the VBO
 void Display()
 {
+   Uint32 startclock = SDL_GetTicks();
+   Uint32 currentFPS;
+
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    SVector2 middleOfPlayer = Player->getArea().getCenter();
@@ -254,8 +122,12 @@ void Display()
 	 static float const RotationSpeed = 50.f;
     //Rotation.X += RotationSpeed*Delta;
     //Rotation.Y += RotationSpeed*Delta*2;
+
     glLoadIdentity();
-    freetype::print(our_font, 10, SCREEN_HEIGHT-20, "Elapsed Time: %u\n ",elapsedTime/1000);
+
+    currentFPS = 1000 / (SDL_GetTicks() - startclock);
+    freetype::print(our_font, 10, SCREEN_HEIGHT-20, "Elapsed Time: %u\n"
+         "FPS: %u ", elapsedTime/1000, currentFPS);
 
 
     SDL_GL_SwapBuffers();
@@ -268,6 +140,7 @@ bool InitializeOGL()
 
    //Chris Code
    Load3DS(&object, "3dsloader/tree.3ds");
+   texture = LoadBitmap("grass.bmp");
  	
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
@@ -516,6 +389,7 @@ int main(int argc, char * argv[])
 	  Derp->setJumping(true);
 
       Engine->updateAll((float)delta/1000); //Might be an issue (since updateAll requires float and delta is a UInt32)
+      PlayerView->step((float)delta);
 
 
       /*

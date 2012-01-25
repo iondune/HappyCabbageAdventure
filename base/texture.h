@@ -1,32 +1,5 @@
-/*
- * ---------------- www.spacesimulator.net --------------
- *   ---- Space simulators and 3d engine tutorials ----
- *
- * Author: Damiano Vitulli
- *
- * This program is released under the BSD licence
- * By using this program you agree to licence terms on spacesimulator.net copyright page
- *
- *
- * Tutorial 3: 3d engine - Texture mapping with OpenGL!
- *
- * Include File: texture.cpp
- *
- */
-
-/*
-Linux port by Panteleakis Ioannis
-mail: pioann@csd.auth.gr
-
-just run: make and you are done.
-of course you may need to change the makefile
-*/
-
-
-#include "main.h"
-   
-
-
+#ifndef __TEXTURE_HEADER_
+#define __TEXTURE_HEADER_
 /**********************************************************
  *
  * VARIABLES DECLARATION
@@ -34,9 +7,10 @@ of course you may need to change the makefile
  *********************************************************/
 
 /*** Counter to keep track of the last loaded texture ***/
-int num_texture=-1;
+int num_texture = -1;
 
-
+//Texture bind number
+int texture;
 
 /**********************************************************
  *
@@ -45,13 +19,31 @@ int num_texture=-1;
  * This function loads a bitmap file and return the OpenGL reference ID to use that texture
  *
  *********************************************************/
+
+typedef struct                       /**** BMP file info structure ****/
+    {
+    unsigned int   biSize;           /* Size of info header */
+    int            biWidth;          /* Width of image */
+    int            biHeight;         /* Height of image */
+    unsigned short biPlanes;         /* Number of color planes */
+    unsigned short biBitCount;       /* Number of bits per pixel */
+    unsigned int   biCompression;    /* Type of compression to use */
+    unsigned int   biSizeImage;      /* Size of image data */
+    int            biXPelsPerMeter;  /* X pixels per meter */
+    int            biYPelsPerMeter;  /* Y pixels per meter */
+    unsigned int   biClrUsed;        /* Number of colors used */
+    unsigned int   biClrImportant;   /* Number of important colors */
+    char *data;
+    } BITMAPINFOHEADER_;
+
+
 int LoadBitmap(char *filename)
 {
     FILE * file;
     char temp;
     long i;
 
-    BITMAPINFOHEADER infoheader;
+    BITMAPINFOHEADER_ infoheader;
 
     num_texture++; // The counter of the current texture is increased
 
@@ -64,8 +56,8 @@ int LoadBitmap(char *filename)
 
     fread(&infoheader.biPlanes, sizeof(short int), 1, file);
     if (infoheader.biPlanes != 1) {
-	    printf("Planes from %s is not 1: %u\n", filename, infoheader.biPlanes);
-	    return 0;
+            printf("Planes from %s is not 1: %u\n", filename, infoheader.biPlanes);
+            return 0;
     }
 
     // read the bpp
@@ -80,19 +72,19 @@ int LoadBitmap(char *filename)
     // read the data.
     infoheader.data = (char *) malloc(infoheader.biWidth * infoheader.biHeight * 3);
     if (infoheader.data == NULL) {
-	    printf("Error allocating memory for color-corrected image data\n");
-	    return 0;
+            printf("Error allocating memory for color-corrected image data\n");
+            return 0;
     }
 
     if ((i = fread(infoheader.data, infoheader.biWidth * infoheader.biHeight * 3, 1, file)) != 1) {
-	    printf("Error reading image data from %s.\n", filename);
-	    return 0;
+            printf("Error reading image data from %s.\n", filename);
+            return 0;
     }
 
     for (i=0; i<(infoheader.biWidth * infoheader.biHeight * 3); i+=3) { // reverse all of the colors. (bgr -> rgb)
-	    temp = infoheader.data[i];
-	    infoheader.data[i] = infoheader.data[i+2];
-	    infoheader.data[i+2] = temp;
+            temp = infoheader.data[i];
+            infoheader.data[i] = infoheader.data[i+2];
+            infoheader.data[i+2] = temp;
     }
 
 
@@ -114,8 +106,14 @@ int LoadBitmap(char *filename)
 
     // And create 2d mipmaps for the minifying function
     gluBuild2DMipmaps(GL_TEXTURE_2D, 3, infoheader.biWidth, infoheader.biHeight, GL_RGB, GL_UNSIGNED_BYTE, infoheader.data);
-    
+
     free(infoheader.data); // Free the memory we used to load the texture
+
+    if (num_texture == -1) {
+       printf("Texture error.  Could not find texture?\n");
+    }
 
     return (num_texture); // Returns the current texture OpenGL ID
 }
+
+#endif
