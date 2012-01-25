@@ -66,15 +66,19 @@ void drawTree() {
    glPopMatrix();
 }
 
+#define TREE_Y_OFFSET 2.1
 void addTrees(int numTrees) {
-
    for (int n = 0; n < numTrees; n++) {
       glPushMatrix();
-      
-      glTranslatef(-25 + n * 5, 1.5, -2);
+      glTranslatef(-25 + n * 5, TREE_Y_OFFSET, -2);
       drawTree();
-
       glPopMatrix();
+      if(n % 3 == 0) {
+         glPushMatrix();
+         glTranslatef(-22 + n * 4.73, TREE_Y_OFFSET, 2);
+         drawTree();
+         glPopMatrix();
+      }
    }
 }
 
@@ -157,6 +161,15 @@ void drawPlane() {
         glVertex3f(25, 0, 2.5);
         glVertex3f(-25, 0, 2.5);
     glEnd();
+    /*
+    glBegin(GL_POLYGON);
+        glVertex3f(-25, 0, 2.5);
+        glVertex3f(25, 0, 2.5);
+        glVertex3f(25, -2, 2.5);
+        glVertex3f(-25, -2, 2.5);
+    glEnd();
+    */
+
 
     glColor3f(0, 0, 0);
     glPointSize(15.f);
@@ -177,8 +190,9 @@ void drawBlock() {
     //Block->setArea(SRect2(-15, -1, 1, 5));
     glPushMatrix();
        glColor3f(0, 0, 0);
-       glTranslatef(-14, 0, 0);
-       glScalef(2, 2, 1);
+       glTranslatef(-14, 2, 0);
+       glScalef(2, 1, 1);
+       //glutWireCube(1);
        glutSolidCube(1);
     glPopMatrix();
 }
@@ -186,16 +200,16 @@ void drawBlock() {
 void EngineInit( void ) {
    Engine = new CEngine();
    Player = Engine->addActor();
-   Player->setArea(SRect2(0, 0, 1, 1));
+   Player->setArea(SRect2(-24.5, 3, 1, 1));
 
    Derp = Engine->addActor();
-   Derp->setArea(SRect2(3, 0, 1, 1));
+   Derp->setArea(SRect2(-17, 0, 1, 1));
 
    Floor = Engine->addObject();
    Floor->setArea(SRect2(-25, -1, 50, 1));
 
    Block = Engine->addObject();
-   Block->setArea(SRect2(-15, -1, 2, 2));
+   Block->setArea(SRect2(-15, 1.5, 2, 1));
 }
 
 
