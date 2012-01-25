@@ -2,6 +2,7 @@
 #include <cmath>
 #include <cstdlib>
 #include "../CabbageCollider/CEngine.h"
+#include "CPlayerView.h"
 
 #ifdef _WIN32
 #pragma comment(lib, "freetype.lib")
@@ -144,6 +145,7 @@ using namespace Cabbage::Collider;
 CEngine *Engine;
 CActor *Player, *Derp;
 CObject *Floor, *Block;
+CPlayerView *PlayerView;
 
 //draw ground Plane for world
 void drawPlane() {
@@ -197,23 +199,23 @@ void EngineInit( void ) {
 }
 
 
+void ViewInit( void ) {
+   PlayerView = new CPlayerView();
+}
+
+
 // Manages time independant movement and draws the VBO
 void Display()
 {
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
    SVector2 middleOfPlayer =
      SVector2(Player->getArea().Position.X + Player->getArea().Size.X/2,
               Player->getArea().Position.Y + Player->getArea().Size.Y/2);
+   PlayerView->setMiddle(middleOfPlayer);
 
-	gluLookAt(
-         middleOfPlayer.X, middleOfPlayer.Y + 1.3, 6,
-         middleOfPlayer.X, middleOfPlayer.Y, 0,
-      //gameObjs[0].bunny.position.X, gameObjs[0].bunny.position.Y + 1, gameObjs[0].bunny.position.Z + 5, 
-      //gameObjs[0].bunny.position.X, gameObjs[0].bunny.position.Y, gameObjs[0].bunny.position.Z, 
-		0, 1, 0);
+	glMatrixMode(GL_MODELVIEW);
+   PlayerView->establishCamera();
 
       // draw the ground plane
       glDisable(GL_LIGHTING);
@@ -223,17 +225,9 @@ void Display()
       
       //Chris Code, draw Trees
       addTrees(NUM_TREES);
+      PlayerView->draw();
 
-
-      //Draw "Cabbage"
-		glPushMatrix();
-      glColor3f(0, 1, 1);
-      glTranslatef(middleOfPlayer.X, middleOfPlayer.Y, 0);
-		
-      glutSolidSphere(0.5, 10, 10);
-		//glDrawArrays(GL_TRIANGLES, 0, TriangleCount*3);
-		glPopMatrix();
-
+      //Draw derp (enemy)
 		glPushMatrix();
       glColor3f(1, 0.6, 0);
 	  glTranslatef(Derp->getArea().getCenter().X, Derp->getArea().getCenter().Y, 0);
@@ -399,6 +393,7 @@ int main(int argc, char * argv[])
     GLdouble z = 0.0;
 
     EngineInit();
+    ViewInit();
     DemoLight();
 
     int aDown = 0, dDown = 0;
@@ -414,10 +409,12 @@ int main(int argc, char * argv[])
       start = end;
       elapsedTime += delta;
 
+      /*
       if(elapsedTime >= finalTime){
         finished = true;
         continue;
       }
+      */
 
 
       //printf("Player->isStanding(): %d\n", Player->isStanding());
@@ -466,18 +463,38 @@ int main(int argc, char * argv[])
         */
       }
 
-	  if(dDown && aDown) {
-		  Player->setAction(CActor::EActionType::Standing);
-	  }
+      float curXVelocity = Player->getVelocity().X;
+      PlayerView->setVelocity(Player->getVelocity());
+
+	   if(dDown && aDown) {
+	 	   Player->setAction(CActor::EActionType::Standing);
+         PlayerView->setState(CPlayerView::State::Standing);
+	   }
       else if(aDown) {
-		  Player->setAction(CActor::EActionType::MoveLeft);
+         Player->setAction(CActor::EActionType::MoveLeft);
+         PlayerView->setState(CPlayerView::State::MovingLeft);
       }
       else if(dDown) {
-          Player->setAction(CActor::EActionType::MoveRight);
+         Player->setAction(CActor::EActionType::MoveRight);
+         PlayerView->setState(CPlayerView::State::MovingRight);
       }
-	  else {
-		  Player->setAction(CActor::EActionType::Standing);
-	  }
+	   else {
+         Player->setAction(CActor::EActionType::Standing);
+         PlayerView->setState(CPlayerView::State::Standing);
+	   }
+
+      /*
+      if(curXVelocity > 0.1) {
+         PlayerView->setState(CPlayerView::State::MovingRight);
+      }
+      else if(curXVelocity < -0.1) {
+         PlayerView->setState(CPlayerView::State::MovingLeft);
+      }
+      else if(Player->isStanding()){
+         PlayerView->setState(CPlayerView::State::Standing);
+      }
+      */
+
 	  Derp->jump();
 
       Engine->updateAll((float)delta/1000); //Might be an issue (since updateAll requires float and delta is a UInt32)
