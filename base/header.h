@@ -31,6 +31,8 @@
 #include "FreeType.h"
 #include "3dsloader/3dsloader.h"
 #include "CPlayerView.h"
+
+#include "texture.h"
 #include "draw.h"
 
 //Global Defines

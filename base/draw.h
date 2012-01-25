@@ -60,22 +60,45 @@ void drawSquare() {
 //draw ground Plane for world
 void drawPlane() {
     glPushMatrix();
-    glColor3f(0.3f, 0.7f, 0.7f);
-    glBegin(GL_POLYGON);
+
+    glEnable (GL_TEXTURE_2D);
+
+    //glColor3f(0.3f, 0.7f, 0.7f);
+
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+
+    glBegin(GL_QUADS);
+
+    glTexCoord2f(0, 0);
+    glVertex3f(-25, 0, -2.5);
+    glTexCoord2f(0, 1);
+    glVertex3f(-25, 0, 2.5);
+    glTexCoord2f(50, 1);
+    glVertex3f(25, 0, 2.5);
+    glTexCoord2f(50, 0);
+    glVertex3f(25, 0, -2.5);
+
+/*
+    glTexCoord2f(0, 0);
+    glVertex3f(-25, 0, -2.5);
+
+    glTexCoord2f(1, 0);
+    glVertex3f(25, 0, -2.5);
+
+    glTexCoord2f(1, 1);
+    glVertex3f(25, 0, 2.5);
+
+    glTexCoord2f(0, 1);
+    glVertex3f(-25, 0, 2.5);*/
+
+    glEnd();
+/*    glBegin(GL_POLYGON);
         glVertex3f(-25, 0, -2.5);
         glVertex3f(25, 0, -2.5);
         glVertex3f(25, 0, 2.5);
         glVertex3f(-25, 0, 2.5);
     glEnd();
-    /*
-    glBegin(GL_POLYGON);
-        glVertex3f(-25, 0, 2.5);
-        glVertex3f(25, 0, 2.5);
-        glVertex3f(25, -2, 2.5);
-        glVertex3f(-25, -2, 2.5);
-    glEnd();
-    */
-
 
     glColor3f(0, 0, 0);
     glPointSize(15.f);
@@ -88,7 +111,9 @@ void drawPlane() {
           glVertex3f(25, 0.05, i);
        }
     }
-    glEnd();
+    glEnd();*/
+
+    glDisable(GL_TEXTURE_2D);
     glPopMatrix();
 }
 
