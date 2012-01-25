@@ -1,11 +1,21 @@
 
-all: CabbageScene MeshLoaderDemo CabbageColliderDemo
+all: build-CabbageScene build-MeshLoaderDemo build-CabbageColliderDemo
 
-CabbageScene:
-	@(cd ./CabbageScene && $(MAKE))
+build-CabbageScene:
+	cd ./CabbageScene && $(MAKE)
 
-MeshLoaderDemo: CabbageScene
-	@(cd ./MeshLoaderDemo && $(MAKE))
+build-CabbageCollider:
+	cd ./CabbageCollider && $(MAKE)
 
-CabbageColliderDemo:
-	@(cd ./CabbageColliderDemo && $(MAKE))
+build-MeshLoaderDemo: build-CabbageScene
+	cd ./MeshLoaderDemo && $(MAKE)
+
+build-CabbageColliderDemo: build-CabbageCollider build-CabbageScene
+	cd ./CabbageColliderDemo && $(MAKE)
+
+build-base: build-CabbageCollider build-CabbageScene
+	cd ./base && $(MAKE)
+
+clean:
+	cd ./CabbageScene && $(MAKE) $@ && cd ../CabbageCollider && $(MAKE) $@ && cd ../MeshLoaderDemo && $(MAKE) $@ && cd ../CabbageColliderDemo && $(MAKE) $@
+

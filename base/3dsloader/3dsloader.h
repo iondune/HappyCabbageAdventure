@@ -37,5 +37,5 @@ of course you may need to change the makefile
 
 #include "tutorial4.h"
 
-extern char Load3DS (obj_type_ptr ogg, char *filename);
+extern char Load3DS (obj_type_ptr ogg, char const *filename);
 

@@ -37,7 +37,7 @@ typedef struct                       /**** BMP file info structure ****/
     } BITMAPINFOHEADER_;
 
 
-int LoadBitmap(char *filename)
+int LoadBitmap(char const *filename)
 {
     FILE * file;
     char temp;

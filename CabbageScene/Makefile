@@ -31,3 +31,7 @@ CTextureLoader.o: CTextureLoader.cpp
 	mkdir -p ../lib
 	ar cq $@ $(OFILES)
 
+clean:
+	rm -f $(OFILES)
+	rm -f ../lib/libCabbageScene.a
+

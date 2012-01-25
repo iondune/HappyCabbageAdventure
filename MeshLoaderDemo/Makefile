@@ -8,3 +8,5 @@ CABBAGE = -lCabbageScene
 MeshLoaderDemo: $(FILES)
 	g++ -o $@ $(FILES) $(DIRECTORIES) $(OPENGL) $(CABBAGE)
 
+clean:
+	rm -f MeshLoaderDemo

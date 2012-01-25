@@ -51,7 +51,7 @@ long filelength(int f)
 
 
 
-char Load3DS (obj_type_ptr p_object, char *p_filename)
+char Load3DS (obj_type_ptr p_object, char const *p_filename)
 {
 	int i; //Index variable
 	
@@ -67,7 +67,7 @@ char Load3DS (obj_type_ptr p_object, char *p_filename)
 
 	if ((l_file=fopen (p_filename, "rb"))== NULL) return 0; //Open the file
 
-	while (ftell (l_file) < filelength (_fileno (l_file))) //Loop to scan the whole file
+	while (ftell (l_file) < filelength (fileno (l_file))) //Loop to scan the whole file
 	//while(!EOF)
 	{
 		//getch(); //Insert this command for debug (to wait for keypress for each chuck reading)

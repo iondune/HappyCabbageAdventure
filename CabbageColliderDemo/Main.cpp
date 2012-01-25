@@ -7,8 +7,8 @@
 
 
 #ifdef __unix__
-#include <GL/gl.h>
 #include <SDL/SDL.h>
+#include <SDL/SDL_opengl.h>
 #endif
 
 #ifdef _WIN32
@@ -106,6 +106,7 @@ int main(int argc, char * argv[])
         exit(1);
     }
 
+#ifdef _WIN32
 	// Load OpenGL Extensions
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
@@ -114,6 +115,7 @@ int main(int argc, char * argv[])
 		system("PAUSE");
 		return 1;
 	}
+#endif
 
    	Initialize();
 
