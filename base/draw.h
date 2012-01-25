@@ -7,6 +7,10 @@ void drawTree() {
 
    glRotatef(-90, 1, 0, 0);
    glScalef(2.0, 2.0, 2.0);
+
+   glBindTexture(GL_TEXTURE_2D, texture);
+
+   glEnable(GL_TEXTURE_2D);
    glBegin(GL_TRIANGLES);
 
     for (int l_index=0;l_index<object.polygons_qty;l_index++)
@@ -31,6 +35,7 @@ void drawTree() {
     }
 
    glEnd();
+glDisable(GL_TEXTURE_2D);
    glPopMatrix();
 }
 
