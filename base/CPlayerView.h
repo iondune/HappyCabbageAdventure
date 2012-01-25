@@ -3,7 +3,15 @@
 
 #include "../CabbageCore/SVector2.h"
 #include <math.h>
+
+#ifdef _WIN32
+#include <GL/glew.h>
+#endif
+
+#ifdef __unix__
 #include <GL/gl.h>
+#endif
+
 
 class CPlayerView {
    SVector2 CenterPosition;
