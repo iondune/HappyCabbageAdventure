@@ -4,22 +4,24 @@
 void CPlayerView::setState(CPlayerView::State const value) {
    curState = value;
 }
-void CPlayerView::draw() {
-   glPushMatrix();
+void CPlayerView::step(float delta) {
    if(!(Velocity.Y > 0.01 || Velocity.Y < -0.01)) {
       if(curState == CPlayerView::State::Standing) {
          ySineValue = 0;
       }
       else if(curState == CPlayerView::State::MovingLeft) {
-         ySineValue += 0.01;
+         ySineValue += 0.01*delta;
       }
       else if(curState == CPlayerView::State::MovingRight) {
-         ySineValue -= 0.01;
+         ySineValue -= 0.01*delta;
       }
    }
    else {
          ySineValue = 0;
    }
+}
+void CPlayerView::draw() {
+   glPushMatrix();
    glTranslatef(CenterPosition.X, CenterPosition.Y + 0.065*sin(ySineValue), 0);
    if(!(Velocity.Y > 0.01 || Velocity.Y < -0.01)) {
       glRotatef(15*sin(ySineValue/2), 1, 0, 0);
@@ -46,9 +48,9 @@ void CPlayerView::draw() {
          angle=(float)(((double)i)/57.29577957795135);   
          x=ox+(radius*(float)sin((double)angle));
          z=oz+(radius*(float)cos((double)angle));      
-         glVertex3d(ox,0,oz);
-         glVertex3d(x1,0,z1);
-         glVertex3d(x,0,z);
+         glVertex3f(ox,0,oz);
+         glVertex3f(x1,0,z1);
+         glVertex3f(x,0,z);
          z1=z;
          x1=x; 
       }
