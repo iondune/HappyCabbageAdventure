@@ -56,10 +56,18 @@ public:
 				}
 				else
 				{
-					if (PlayerRecovering <= 0.f)
+					if (isPlayerAlive() && PlayerRecovering <= 0.f)
 					{
 						-- PlayerHealth;
 						PlayerRecovering = 1.5f;
+
+						float const KnockbackSpeed = 7.f;
+						float const KnockbackDuration = 0.2f;
+
+						if (PlayerActor->getArea().getCenter().X > Other->getArea().getCenter().X)
+							PlayerActor->setImpulse(SVector2(1.f, 1.f) * KnockbackSpeed, KnockbackDuration);
+						else
+							PlayerActor->setImpulse(SVector2(-1.f, 1.f) * KnockbackSpeed, KnockbackDuration);
 					}
 				}
 				break;
@@ -90,12 +98,19 @@ public:
 
 		for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
 		{
-			if (PlayerActor->getArea().getCenter().X < it->Actor->getArea().getCenter().X)
-				it->Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveLeft);
+			if (isPlayerAlive())
+			{
+				if (PlayerActor->getArea().getCenter().X < it->Actor->getArea().getCenter().X)
+					it->Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveLeft);
+				else
+					it->Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
+			}
 			else
-				it->Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
-			if (rand()%1000 == 1)
-				it->Actor->setJumping(true);
+			{
+				it->Actor->setAction(Cabbage::Collider::CActor::EActionType::None);
+			}
+			//if (rand()%1000 == 1)
+			//	it->Actor->setJumping(true);
 		}
 	}
 

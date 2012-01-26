@@ -96,6 +96,10 @@ namespace Collider
 
 		void pushIfCollided(CObject * Object, SVector2 const & Movement);
 
+		bool Impulse;
+		float ImpulseTimer;
+		SVector2 ImpulseVelocity;
+
 	public:
 		
 		~CActor();
@@ -116,6 +120,8 @@ namespace Collider
 		void setJumping(bool const jumping);
 
 		virtual void draw();
+
+		void setImpulse(SVector2 const & velocity, float const duration = 0.3f);
 
 	};
 }

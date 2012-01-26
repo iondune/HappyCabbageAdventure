@@ -40,7 +40,7 @@ namespace Collider
 
 
 	CActor::CActor()
-		: Standing(false), JumpTimer(0.f), FallAcceleration(0)
+		: Standing(false), JumpTimer(0.f), FallAcceleration(0), Impulse(false)
 	{}
 
 	CActor::~CActor()
@@ -155,6 +155,18 @@ namespace Collider
 				Jumping = false;
 		}
 
+		if (Impulse)
+		{
+			if (ImpulseTimer > 0)
+			{
+				Velocity = ImpulseVelocity;
+				ImpulseTimer -= TickTime;
+			}
+
+			if (ImpulseTimer <= 0)
+				Jumping = false;
+		}
+
 		Velocity.Y += FallAcceleration * TickTime;
 
 		Standing = false;
@@ -256,6 +268,13 @@ namespace Collider
 		CCollideable::draw();
 
 		glColor3f(1, 1, 1);
+	}
+
+	void CActor::setImpulse(SVector2 const & velocity, float const duration)
+	{
+		Impulse = true;
+		ImpulseTimer = duration;
+		ImpulseVelocity = velocity;
 	}
 
 }
