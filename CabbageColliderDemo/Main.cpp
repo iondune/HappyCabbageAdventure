@@ -131,6 +131,7 @@ int main(int argc, char * argv[])
 
 	CObject * Block = Engine->addObject();
 	Block->setArea(SRect2(-1, -1, 15, 0.9f));
+	Block->getMaterial().Friction = 0.4;
 
 	CActor * Derp = Engine->addActor();
 	Derp->setArea(SRect2(4, 0, 1, 1));

@@ -38,6 +38,11 @@ namespace Collider
 		return Material;
 	}
 
+	CCollideable::SMaterial & CCollideable::getMaterial()
+	{
+		return Material;
+	}
+
 	void CCollideable::draw()
 	{
 		glPushMatrix();
