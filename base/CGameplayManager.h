@@ -66,9 +66,9 @@ public:
 						PlayerRecovering = KnockbackDuration;
 
 						if (PlayerActor->getArea().getCenter().X > Other->getArea().getCenter().X)
-							PlayerActor->setImpulse(SVector2(1.f, 1.f) * KnockbackSpeed, KnockbackDuration);
+							PlayerActor->setImpulse(SVector2(1.f, 0.5f) * KnockbackSpeed, KnockbackDuration);
 						else
-							PlayerActor->setImpulse(SVector2(-1.f, 1.f) * KnockbackSpeed, KnockbackDuration);
+							PlayerActor->setImpulse(SVector2(-1.f, 0.5f) * KnockbackSpeed, KnockbackDuration);
 					}
 				}
 				break;
