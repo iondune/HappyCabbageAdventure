@@ -61,6 +61,7 @@ CEngine *Engine;
 CActor *Player, *Derp;
 CObject *Floor, *Block;
 CPlayerView *PlayerView;
+CGameplayManager * GameplayManager;
 
 void EngineInit( void ) {
    Engine = new CEngine();
@@ -75,6 +76,10 @@ void EngineInit( void ) {
 
    Block = Engine->addObject();
    Block->setArea(SRect2(-15, 1.5, 2, 1));
+
+   GameplayManager = new CGameplayManager(Player, Engine);
+   GameplayManager->addEnemy(SVector2(-10, 4));
+   GameplayManager->addEnemy(SVector2(-5, 4));
 }
 
 
@@ -120,6 +125,16 @@ void Display()
 		//glDrawArrays(GL_TRIANGLES, 0, TriangleCount*3);
 		glPopMatrix();
 
+		for (CGameplayManager::EnemyList::iterator it = GameplayManager->Enemies.begin(); it != GameplayManager->Enemies.end(); ++ it)
+		{
+			glPushMatrix();
+			glColor3f(1, 0.6, 0);
+			glTranslatef(it->Actor->getArea().getCenter().X, it->Actor->getArea().getCenter().Y, 0);
+		
+			glutSolidSphere(0.5, 10, 10);
+			glPopMatrix();
+        }
+
 
 	 // ...and by spinning it around
 	 static float const RotationSpeed = 50.f;
@@ -131,7 +146,10 @@ void Display()
 	if (SDL_GetTicks() != startclock)
 		currentFPS = 1000.f / float(SDL_GetTicks() - startclock);
     freetype::print(our_font, 10, SCREEN_HEIGHT-20, "Elapsed Time: %u\n"
-         "FPS: %u\nFPS: %0.2f ", elapsedTime/1000, currentFPS, fps);
+		"FPS: %u\nFPS: %0.2f\n\nHealth: %d", elapsedTime/1000, currentFPS, fps, GameplayManager->getPlayerHealth());
+
+	if (! GameplayManager->isPlayerAlive())
+		freetype::print(our_font, 50, SCREEN_HEIGHT - 50, "GAME OVER! YOU ARE DEAD");
 
 
     SDL_GL_SwapBuffers();
@@ -378,6 +396,8 @@ int main(int argc, char * argv[])
       float curXVelocity = Player->getVelocity().X;
       PlayerView->setVelocity(Player->getVelocity());
 
+	  if (GameplayManager->isPlayerAlive())
+	  {
 	   if(dDown && aDown) {
 	 	   Player->setAction(CActor::EActionType::None);
          PlayerView->setState(CPlayerView::State::Standing);
@@ -395,7 +415,15 @@ int main(int argc, char * argv[])
          PlayerView->setState(CPlayerView::State::Standing);
 	   }
 
-		  Player->setJumping(spaceDown != 0);
+	   Player->setJumping(spaceDown != 0);
+	  }
+	  else
+	  {
+		  Player->setAction(CActor::EActionType::None);
+          PlayerView->setState(CPlayerView::State::Standing);
+		  Player->setJumping(false);
+	  }
+		  
 
       /*
       if(curXVelocity > 0.1) {
@@ -414,6 +442,7 @@ int main(int argc, char * argv[])
       Engine->updateAll((float)delta/1000); //Might be an issue (since updateAll requires float and delta is a UInt32)
       PlayerView->step((float)delta);
 
+	  GameplayManager->run((float)delta/1000);
 
       /*
       for(int i = 0; i < gameObjs.size(); i++)

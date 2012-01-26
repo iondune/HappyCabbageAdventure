@@ -37,6 +37,7 @@
     </ClInclude>
     <ClInclude Include="CPlayerView.h" />
     <ClInclude Include="header.h" />
+    <ClInclude Include="CGameplayManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FreeType.cpp" />

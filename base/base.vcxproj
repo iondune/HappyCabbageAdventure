@@ -87,6 +87,7 @@
     <ClInclude Include="3dsloader\texture.h" />
     <ClInclude Include="3dsloader\tutorial4.h" />
     <ClInclude Include="Bunny.h" />
+    <ClInclude Include="CGameplayManager.h" />
     <ClInclude Include="CPlayerView.h" />
     <ClInclude Include="FreeType.h" />
     <ClInclude Include="header.h" />

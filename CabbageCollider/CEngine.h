@@ -11,6 +11,16 @@ namespace Cabbage
 {
 namespace Collider
 {
+
+	class ICollisionResponder
+	{
+
+	public:
+
+		virtual void OnCollision(CCollideable * Object, CCollideable * With) =0;
+
+	};
+
 	class CEngine
 	{
 
@@ -24,6 +34,8 @@ namespace Collider
 		ObjectList Objects;
 		ActorList Actors;
 
+		ICollisionResponder * CollisionResponder;
+
 		void performTick(float const TickTime)
 		{
 			// Perform actor update
@@ -36,13 +48,13 @@ namespace Collider
 
 				for (ObjectList::iterator jt = Objects.begin(); jt != Objects.end(); ++ jt)
 				{
-					Alighted |= (* it)->updateCollision(* jt, TickTime);
+					Alighted |= (* it)->updateCollision(* jt, TickTime, CollisionResponder);
 				}
 
 				for (ActorList::iterator jt = Actors.begin(); jt != Actors.end(); ++ jt)
 				{
 					if (* it != * jt)
-						Alighted |= (* it)->updateCollision(* jt, TickTime);
+						Alighted |= (* it)->updateCollision(* jt, TickTime, CollisionResponder);
 				}
 
 				if (Alighted)
@@ -65,11 +77,26 @@ namespace Collider
 	public:
 
 		CEngine()
-			: Timer(0.f)
+			: Timer(0.f), CollisionResponder(0)
 		{}
 
 		~CEngine()
 		{}
+
+		void setCollisionResponder(ICollisionResponder * collisionResponder)
+		{
+			CollisionResponder = collisionResponder;
+		}
+
+		void removeActor(CActor * Actor)
+		{
+			for (ActorList::iterator it = Actors.begin(); it != Actors.end(); ++ it)
+				if (* it == Actor)
+				{
+					Actors.erase(it);
+					return;
+				}
+		}
 
 		void updateAll(float const Elapsed)
 		{

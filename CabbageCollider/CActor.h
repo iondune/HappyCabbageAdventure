@@ -10,6 +10,8 @@ namespace Cabbage
 namespace Collider
 {
 
+	class ICollisionResponder;
+
 	class ECollisionType
 	{
 
@@ -88,7 +90,7 @@ namespace Collider
 		// Update functions, used by engine
 		void updateVectors(float const TickTime);
 		
-		bool updateCollision(CCollideable * Object, float const TickTime);
+		bool updateCollision(CCollideable * Object, float const TickTime, ICollisionResponder * CollisionResponder);
 		int checkCollision(CCollideable * Object, float const TickTime);
 		void onStanding();
 
@@ -107,6 +109,7 @@ namespace Collider
 		SVector2 const & getVelocity() const;
 
 		SAttributes const & getAttributes() const;
+		SAttributes & getAttributes();
 
 		// Action control
 		void setAction(EActionType const & action);

@@ -3,6 +3,7 @@
 #include <algorithm>
 
 #include "../CabbageCore/Utils.h"
+#include "CEngine.h"
 
 #ifdef __unix__
 #include <GL/gl.h>
@@ -200,6 +201,11 @@ namespace Collider
 		return Attributes;
 	}
 
+	CActor::SAttributes & CActor::getAttributes()
+	{
+		return Attributes;
+	}
+
 	void CActor::setAction(EActionType const & action)
 	{
 		Action = action;
@@ -221,9 +227,12 @@ namespace Collider
 		}*/
 	}
 
-	bool CActor::updateCollision(CCollideable * Object, float const TickTime)
+	bool CActor::updateCollision(CCollideable * Object, float const TickTime, ICollisionResponder * CollisionResponder)
 	{
 		int CollisionType = checkCollision(Object, TickTime);
+
+		if (CollisionResponder && CollisionType)
+			CollisionResponder->OnCollision(this, Object);
 
 		if (CollisionType & ECollisionType::Up)
 		{

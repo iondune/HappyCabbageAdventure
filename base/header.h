@@ -38,3 +38,4 @@
 //Global Defines
 #define NUM_TREES 10
 
+#include "CGameplayManager.h"
