@@ -186,10 +186,15 @@ void Display()
 
       drawTree(christmasTree);
 
-      glTranslatef(15, 0, 2.5);
+     glPopMatrix();
+
+     glPushMatrix();
+
+      glTranslatef(7, TREE_Y_OFFSET - .7, 2.0);
+
       drawTree(christmasTree);
 
-      glTranslatef(4, 0, 0);
+      glTranslatef(7, 0, 0);
       drawTree(christmasTree);
 
       glPopMatrix();
