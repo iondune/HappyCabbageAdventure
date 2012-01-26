@@ -17,6 +17,7 @@
 class CPlayerView {
    SVector2 CenterPosition;
    SVector2 Velocity;
+   float recovering;
    private:
    public:
       class State {
@@ -41,6 +42,9 @@ class CPlayerView {
       CPlayerView() {
          ySineValue = 0;
          yShadow = 0;
+      }
+      void setRecovering(float recovVal) {
+         recovering = recovVal;
       }
       void setState(State const value);
       void setVelocity(SVector2 vel) {

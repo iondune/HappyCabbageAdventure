@@ -211,13 +211,16 @@ void Display()
    //glDrawArrays(GL_TRIANGLES, 0, TriangleCount*3);
    glPopMatrix();
 
+   setMaterial(PURPLE_MATTE);
    for (CGameplayManager::EnemyList::iterator it = GameplayManager->Enemies.begin(); it != GameplayManager->Enemies.end(); ++ it)
    {
       glPushMatrix();
       glColor3f(1, 0.6, 0);
       glTranslatef(it->Actor->getArea().getCenter().X, it->Actor->getArea().getCenter().Y, 0);
+      glScalef(1,2.4,1);
+      glRotatef(-90, 1, 0, 0);
 
-      glutSolidSphere(0.5, 10, 10);
+      glutSolidTorus(.2, .5,10,10);
       glPopMatrix();
    }
 
@@ -232,7 +235,7 @@ void Display()
    if (SDL_GetTicks() != startclock)
       currentFPS = 1000.f / float(SDL_GetTicks() - startclock);
    freetype::print(our_font, 10, SCREEN_HEIGHT-40, "Elapsed Time: %u\n"
-         "FPS: %0.0f \n\nHealth: %d", elapsedTime/1000, fps, GameplayManager->getPlayerHealth());
+         "FPS: %0.0f \nHealth: %d", elapsedTime/1000, fps, GameplayManager->getPlayerHealth());
 
    if (! GameplayManager->isPlayerAlive())
       freetype::print(our_font, 50, SCREEN_HEIGHT - 240, "GAME OVER! YOU ARE DEAD");
@@ -495,6 +498,7 @@ int main(int argc, char * argv[])
          PlayerView->setState(CPlayerView::State::Standing);
          Player->setJumping(false);
       }
+      PlayerView->setRecovering(GameplayManager->getRecovering());
 
 
       /*

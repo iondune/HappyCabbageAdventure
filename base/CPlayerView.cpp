@@ -33,15 +33,17 @@ void CPlayerView::step(float delta) {
 }
 void CPlayerView::draw() {
    glEnable(GL_LIGHTING);
-   glPushMatrix();
-   setMaterial(LIGHT_GREEN_MATTE);
-   glTranslatef(CenterPosition.X, CenterPosition.Y + 0.065*sin(ySineValue), 0);
-   if(!(Velocity.Y > 0.01 || Velocity.Y < -0.01)) {
-      glRotatef(15*sin(ySineValue/2), 1, 0, 0);
+   if(!(recovering > 0 && (int)(recovering *100) % 2 != 0)) {
+      glPushMatrix();
+      setMaterial(LIGHT_GREEN_MATTE);
+      glTranslatef(CenterPosition.X, CenterPosition.Y + 0.065*sin(ySineValue), 0);
+      if(!(Velocity.Y > 0.01 || Velocity.Y < -0.01)) {
+         glRotatef(15*sin(ySineValue/2), 1, 0, 0);
+      }
+      glutSolidSphere(0.5, 10, 10);
+      //glDrawArrays(GL_TRIANGLES, 0, TriangleCount*3);
+      glPopMatrix();
    }
-   glutSolidSphere(0.5, 10, 10);
-   //glDrawArrays(GL_TRIANGLES, 0, TriangleCount*3);
-   glPopMatrix();
 
    glDisable(GL_LIGHTING);
    //Draw Shadow

@@ -85,6 +85,8 @@ public:
 		return PlayerHealth;
 	}
 
+   float getRecovering() {return PlayerRecovering;}
+
 	void run(float const TickTime)
 	{
 		if (PlayerRecovering > 0.f)
