@@ -63,6 +63,7 @@ CObject *Floor, *Block;
 CPlayerView *PlayerView;
 CGameplayManager * GameplayManager;
 
+std::vector<SRect2> blocks;
 void EngineInit( void ) {
    Engine = new CEngine();
    Player = Engine->addActor();
@@ -74,12 +75,58 @@ void EngineInit( void ) {
    Floor = Engine->addObject();
    Floor->setArea(SRect2(-25, -1, 50, 1));
 
-   Block = Engine->addObject();
-   Block->setArea(SRect2(-15, 1.5, 2, 1));
+   SRect2 area;
+
+   int i = 0;
+   float j = 0;
+
+   for(j = 0; j < 10; j+=2.5) {
+      Block = Engine->addObject();
+      area = SRect2(-15 + j, 1.5 + j, 2, 1);
+      Block->setArea(area);
+      blocks.push_back(area);
+   }
+
 
    GameplayManager = new CGameplayManager(Player, Engine);
    GameplayManager->addEnemy(SVector2(-10, 4));
    GameplayManager->addEnemy(SVector2(-5, 4));
+   Block = Engine->addObject();
+   area = SRect2(-22, 7, 6, 0.2);
+   Block->setArea(area);
+   blocks.push_back(area);
+
+   Block = Engine->addObject();
+   area = SRect2(-22, 7, 0.2, 3);
+   Block->setArea(area);
+   blocks.push_back(area);
+
+   for(; i < 12; i++) {
+      Block = Engine->addObject();
+      area = SRect2(-i + 5, 0, 1, i+1);
+      Block->setArea(area);
+      blocks.push_back(area);
+   }
+
+   for(i=0; i < 7; i++) {
+      Block = Engine->addObject();
+      area = SRect2(i + 15, 0, 1, i+1);
+      Block->setArea(area);
+      blocks.push_back(area);
+   }
+
+   for(i=0; i < 2; i++) {
+      Block = Engine->addObject();
+      area = SRect2(24, 2+i*4, 2, 1);
+      Block->setArea(area);
+      blocks.push_back(area);
+   }
+
+   Block = Engine->addObject();
+   area = SRect2(27.5, 4, 2, 1);
+   Block->setArea(area);
+   blocks.push_back(area);
+
 }
 
 
@@ -110,7 +157,13 @@ void Display()
       drawSky();
       drawDirt();
       glEnable(GL_LIGHTING);
-      drawBlock();
+      setMaterial(BROWN_MATTE);
+
+      std::vector<SRect2>::iterator itr;
+      for (itr = blocks.begin(); itr < blocks.end(); ++itr) {
+         SRect2 block = (*itr);
+         drawBlock(block.Position.X, block.Position.Y, block.Size.X, block.Size.Y); 
+      }
       
       //Chris Code, draw Trees
       addTrees(NUM_TREES);
@@ -119,7 +172,7 @@ void Display()
       //Draw derp (enemy)
 		glPushMatrix();
       glColor3f(1, 0.6, 0);
-	  glTranslatef(Derp->getArea().getCenter().X, Derp->getArea().getCenter().Y, 0);
+      glTranslatef(Derp->getArea().getCenter().X, Derp->getArea().getCenter().Y, 0);
 		
       glutSolidSphere(0.5, 10, 10);
 		//glDrawArrays(GL_TRIANGLES, 0, TriangleCount*3);
@@ -145,7 +198,8 @@ void Display()
 
 	if (SDL_GetTicks() != startclock)
 		currentFPS = 1000.f / float(SDL_GetTicks() - startclock);
-    freetype::print(our_font, 10, SCREEN_HEIGHT-20, "Elapsed Time: %u\n"
+    freetype::print(our_font, 10, SCREEN_HEIGHT-40, "Elapsed Time: %u\n"
+         "FPS: %0.0f ", elapsedTime/1000, fps);
 		"FPS: %u\nFPS: %0.2f\n\nHealth: %d", elapsedTime/1000, currentFPS, fps, GameplayManager->getPlayerHealth());
 
 	if (! GameplayManager->isPlayerAlive())
@@ -247,28 +301,13 @@ void DemoLight(void)
 
   GLfloat light_pos[] = {0.0f, 20.0f, 0.0f, 1.0f};
   GLfloat light_Ka[]  = {0.5f, 0.5f, 0.5f, 1.0f};
-  GLfloat light_Kd[]  = {1.0f, 1.0f, 1.0f, 1.0f};
+  GLfloat light_Kd[]  = {.8f, 1.0f, .8f, 1.0f};
   GLfloat light_Ks[]  = {1.0f, 1.0f, 1.0f, 1.0f};
 
   glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
   glLightfv(GL_LIGHT0, GL_AMBIENT, light_Ka);
   glLightfv(GL_LIGHT0, GL_DIFFUSE, light_Kd);
   glLightfv(GL_LIGHT0, GL_SPECULAR, light_Ks);
-
-  // -------------------------------------------
-  // Material parameters:
-
-  GLfloat material_Ka[] = {0.5f, 0.5f, 0.5f, 1.0f};
-  GLfloat material_Kd[] = {0.4f, 0.4f, 0.5f, 1.0f};
-  GLfloat material_Ks[] = {0.8f, 0.8f, 0.0f, 1.0f};
-  GLfloat material_Ke[] = {0.0f, 0.0f, 0.0f, 0.0f};
-  GLfloat material_Se = 20.0f;
-
-  glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_Ka);
-  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_Kd);
-  glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_Ks);
-  glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, material_Ke);
-  glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, material_Se);
 }
 
 
@@ -286,7 +325,7 @@ int main(int argc, char * argv[])
 
   srand(time(NULL));
 
-  our_font.init("pirulen.ttf", 16);
+  our_font.init("WIFFLES_.TTF", 30);
 
     // Create new gameObject
 

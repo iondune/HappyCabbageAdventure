@@ -1,3 +1,4 @@
+#include "../CabbageCore/SVector3.h"
 //For Trees
 obj_type object;
 
@@ -48,22 +49,46 @@ void drawSky() {
    glDisable(GL_TEXTURE_2D);
 }
 
+#include "Materials.h"
 void drawTree() {
 
    glPushMatrix();
+   setMaterial(DARK_GREEN_MATTE);
 
    glRotatef(-90, 1, 0, 0);
    glScalef(2.0, 2.0, 2.0);
 
-   glBindTexture(GL_TEXTURE_2D, groundTexture);
+glBindTexture(GL_TEXTURE_2D, groundTexture);
 
-   glEnable(GL_TEXTURE_2D);
+//   glEnable(GL_TEXTURE_2D);
+   glEnable(GL_LIGHTING);
    glBegin(GL_TRIANGLES);
 
     for (int l_index=0;l_index<object.polygons_qty;l_index++)
     {
+        //Calculate the normals for the tree
+        //TODO: cache the normals so we don't calculate them every time a tree is rendered. this is a horrible performance hit as is :(
+        SVector3 a = SVector3(
+              object.vertex[ object.polygon[l_index].a ].x,
+              object.vertex[ object.polygon[l_index].a ].y,
+              object.vertex[ object.polygon[l_index].a ].z),
+                 b = SVector3(
+              object.vertex[ object.polygon[l_index].b ].x,
+              object.vertex[ object.polygon[l_index].b ].y,
+              object.vertex[ object.polygon[l_index].b ].z),
+                 c = SVector3(
+              object.vertex[ object.polygon[l_index].c ].x,
+              object.vertex[ object.polygon[l_index].c ].y,
+              object.vertex[ object.polygon[l_index].c ].z);
+        SVector3 edge1 = a - b,
+                 edge2 = a - c;
+        SVector3 normal = edge1.crossProduct(edge2);
+        //SVector3 normal = edge2.crossProduct(edge1);
+        glNormal3f(normal.X, normal.Y, normal.Z);
+
         //----------------- FIRST VERTEX -----------------
         // Coordinates of the first vertex
+
         glVertex3f( object.vertex[ object.polygon[l_index].a ].x,
                     object.vertex[ object.polygon[l_index].a ].y,
                     object.vertex[ object.polygon[l_index].a ].z); //Vertex definition
@@ -82,7 +107,8 @@ void drawTree() {
     }
 
    glEnd();
-glDisable(GL_TEXTURE_2D);
+   glDisable(GL_LIGHTING);
+//glDisable(GL_TEXTURE_2D);
    glPopMatrix();
 }
 
@@ -169,12 +195,15 @@ void drawPlane() {
     glPopMatrix();
 }
 
-void drawBlock() {
-    //Block->setArea(SRect2(-15, -1, 1, 5));
+
+
+
+void drawBlock(float x, float y, float w, float h) {
     glPushMatrix();
        glColor3f(0, 0, 0);
-       glTranslatef(-14, 2, 0);
-       glScalef(2, 1, 1);
+       //We want the center of the block
+       glTranslatef((x+(x+w))/2, (y+(y+h))/2, 0);
+       glScalef(w, h, 1);
        //glutWireCube(1);
        glutSolidCube(1);
     glPopMatrix();
