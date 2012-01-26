@@ -103,6 +103,25 @@ void EngineInit( void ) {
       blocks.push_back(area);
    }
 
+   for(i=0; i < 7; i++) {
+      Block = Engine->addObject();
+      area = SRect2(i + 15, 0, 1, i+1);
+      Block->setArea(area);
+      blocks.push_back(area);
+   }
+
+   for(i=0; i < 2; i++) {
+      Block = Engine->addObject();
+      area = SRect2(24, 2+i*4, 2, 1);
+      Block->setArea(area);
+      blocks.push_back(area);
+   }
+
+   Block = Engine->addObject();
+   area = SRect2(27.5, 4, 2, 1);
+   Block->setArea(area);
+   blocks.push_back(area);
+
 }
 
 
