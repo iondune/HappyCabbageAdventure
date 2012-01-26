@@ -5,12 +5,12 @@ void addTrees(int numTrees, obj_type object) {
    for (int n = 0; n < numTrees; n++) {
       glPushMatrix();
       glTranslatef(-25 + n * 5, TREE_Y_OFFSET, -2);
-      drawTree(object);
+      drawTree(object, DARK_GREEN_MATTE);
       glPopMatrix();
       if(n % 3 == 0) {
          glPushMatrix();
          glTranslatef(-22 + n * 4.73, TREE_Y_OFFSET, 2);
-         drawTree(object);
+         drawTree(object, DARK_GREEN_MATTE);
          glPopMatrix();
       }
    }
@@ -184,7 +184,7 @@ void Display()
    glTranslatef(-12.5, TREE_Y_OFFSET - .1, -2);
    glScalef(1.5, 1.5, 1.5);
 
-   drawTree(christmasTree);
+   drawTree(christmasTree, DARK_GREEN_SHINY);
 
    glPopMatrix();
 
@@ -192,10 +192,10 @@ void Display()
 
    glTranslatef(10, TREE_Y_OFFSET - .7, 2.0);
 
-   drawTree(christmasTree);
+   drawTree(christmasTree, DARK_GREEN_SHINY);
 
    glTranslatef(7, 0, 0);
-   drawTree(christmasTree);
+   drawTree(christmasTree, DARK_GREEN_SHINY);
 
    glPopMatrix();
 

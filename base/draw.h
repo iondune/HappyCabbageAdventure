@@ -51,10 +51,10 @@ void drawSky() {
 }
 
 #include "Materials.h"
-void drawTree(obj_type object) {
+void drawTree(obj_type object, int material) {
 
    glPushMatrix();
-   setMaterial(DARK_GREEN_MATTE);
+   setMaterial(material);
 
    glRotatef(-90, 1, 0, 0);
    glScalef(2.0, 2.0, 2.0);

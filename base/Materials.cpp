@@ -15,6 +15,11 @@ struct MATERIAL m_Array[NUM_MATERIALS] = {
       {0.1f, 0.4f, 0.1f, 1.0f},
       {0.0f, 0.0f, 0.0f, 1.0f},
       {0.0f, 0.0f, 0.0f, 0.0f}, 10},
+   //DARK_GREEN_SHINY
+   {{0.1f, 0.5f, 0.1f, 1.0f},
+      {0.1f, 0.4f, 0.1f, 1.0f},
+      {0.6f, 0.8f, 0.6f, 1.0f},
+      {0.0f, 0.0f, 0.0f, 0.0f}, 40},
    //DARK_BROWN_MATTE
    {{0.8f, 0.52f, 0.25f, 1.0f},
       {0.8f, 0.52f, 0.25f, 1.0f},

@@ -11,10 +11,11 @@
 
 #define LIGHT_GREEN_MATTE 1
 #define DARK_GREEN_MATTE 2
-#define BROWN_MATTE 3
+#define DARK_GREEN_SHINY 3
+#define BROWN_MATTE 4
 
 //Increment this when you add a new material!
-#define NUM_MATERIALS 3
+#define NUM_MATERIALS 4
 
 void setMaterial(int num);
 
