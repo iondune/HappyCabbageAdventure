@@ -131,8 +131,8 @@ void Display()
 
 	if (SDL_GetTicks() != startclock)
 		currentFPS = 1000.f / float(SDL_GetTicks() - startclock);
-    freetype::print(our_font, 10, SCREEN_HEIGHT-20, "Elapsed Time: %u\n"
-         "FPS: %u\nFPS: %0.2f ", elapsedTime/1000, currentFPS, fps);
+    freetype::print(our_font, 10, SCREEN_HEIGHT-40, "Elapsed Time: %u\n"
+         "FPS: %0.0f ", elapsedTime/1000, fps);
 
 
     SDL_GL_SwapBuffers();
@@ -254,7 +254,7 @@ int main(int argc, char * argv[])
 
   srand(time(NULL));
 
-  our_font.init("pirulen.ttf", 16);
+  our_font.init("WIFFLES_.TTF", 30);
 
     // Create new gameObject
 
