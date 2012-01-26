@@ -149,7 +149,7 @@ void Display()
 		"FPS: %u\nFPS: %0.2f\n\nHealth: %d", elapsedTime/1000, currentFPS, fps, GameplayManager->getPlayerHealth());
 
 	if (! GameplayManager->isPlayerAlive())
-		freetype::print(our_font, 50, SCREEN_HEIGHT - 50, "GAME OVER! YOU ARE DEAD");
+		freetype::print(our_font, 50, SCREEN_HEIGHT - 170, "GAME OVER! YOU ARE DEAD");
 
 
     SDL_GL_SwapBuffers();

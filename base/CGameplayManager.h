@@ -59,10 +59,11 @@ public:
 					if (isPlayerAlive() && PlayerRecovering <= 0.f)
 					{
 						-- PlayerHealth;
-						PlayerRecovering = 1.5f;
 
 						float const KnockbackSpeed = 7.f;
 						float const KnockbackDuration = 0.2f;
+
+						PlayerRecovering = KnockbackDuration;
 
 						if (PlayerActor->getArea().getCenter().X > Other->getArea().getCenter().X)
 							PlayerActor->setImpulse(SVector2(1.f, 1.f) * KnockbackSpeed, KnockbackDuration);
