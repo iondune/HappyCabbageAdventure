@@ -1,6 +1,7 @@
 #include "../CabbageCore/SVector3.h"
 //For Trees
-obj_type object;
+obj_type basicTree;
+obj_type christmasTree;
 
 void drawDirt() {
    glEnable(GL_TEXTURE_2D);
@@ -36,13 +37,13 @@ void drawSky() {
 
    glBegin(GL_QUADS);
    glTexCoord2f(0, 1);
-   glVertex3f(-25, 15, -2.5);
+   glVertex3f(-25, 20, -2.5);
    glTexCoord2f(0, 0);
    glVertex3f(-25, -1, -2.5);
    glTexCoord2f(1, 0);
    glVertex3f(25, -1, -2.5);
    glTexCoord2f(1, 1);
-   glVertex3f(25, 15, -2.5);
+   glVertex3f(25, 20, -2.5);
    glEnd();
 
    glPopMatrix();
@@ -50,7 +51,7 @@ void drawSky() {
 }
 
 #include "Materials.h"
-void drawTree() {
+void drawTree(obj_type object) {
 
    glPushMatrix();
    setMaterial(DARK_GREEN_MATTE);
