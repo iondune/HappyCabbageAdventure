@@ -105,6 +105,7 @@ void Display()
       drawSky();
       drawDirt();
       glEnable(GL_LIGHTING);
+      setMaterial(BROWN_MATTE);
       drawBlock();
       
       //Chris Code, draw Trees
@@ -229,28 +230,13 @@ void DemoLight(void)
 
   GLfloat light_pos[] = {0.0f, 20.0f, 0.0f, 1.0f};
   GLfloat light_Ka[]  = {0.5f, 0.5f, 0.5f, 1.0f};
-  GLfloat light_Kd[]  = {1.0f, 1.0f, 1.0f, 1.0f};
+  GLfloat light_Kd[]  = {.8f, 1.0f, .8f, 1.0f};
   GLfloat light_Ks[]  = {1.0f, 1.0f, 1.0f, 1.0f};
 
   glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
   glLightfv(GL_LIGHT0, GL_AMBIENT, light_Ka);
   glLightfv(GL_LIGHT0, GL_DIFFUSE, light_Kd);
   glLightfv(GL_LIGHT0, GL_SPECULAR, light_Ks);
-
-  // -------------------------------------------
-  // Material parameters:
-
-  GLfloat material_Ka[] = {0.5f, 0.5f, 0.5f, 1.0f};
-  GLfloat material_Kd[] = {0.4f, 0.4f, 0.5f, 1.0f};
-  GLfloat material_Ks[] = {0.8f, 0.8f, 0.0f, 1.0f};
-  GLfloat material_Ke[] = {0.0f, 0.0f, 0.0f, 0.0f};
-  GLfloat material_Se = 20.0f;
-
-  glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_Ka);
-  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_Kd);
-  glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_Ks);
-  glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, material_Ke);
-  glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, material_Se);
 }
 
 
