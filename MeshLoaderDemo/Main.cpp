@@ -9,6 +9,7 @@
 #pragma comment(lib, "glew32.lib")
 #pragma comment(lib, "SDL.lib")
 #pragma comment(lib, "SDLmain.lib")
+#pragma comment(lib, "SDL_image.lib")
 #pragma comment(lib, "../lib/CabbageScene.lib")
 #pragma comment(lib, "OpenGL32.lib")
 #pragma comment(lib, "glu32.lib")
@@ -205,7 +206,7 @@ int main(int argc, char * argv[])
 		return 1;
 	}
 	// Make out mesh fit within camera view
-	Mesh->resizeMesh(SVector3(1));
+	Mesh->resizeMesh(SVector3(1.5));
 	// And center it at the origin
 	Mesh->centerMeshByExtents(SVector3(0));
 
