@@ -63,7 +63,7 @@ public:
 						float const KnockbackSpeed = 7.f;
 						float const KnockbackDuration = 0.2f;
 
-						PlayerRecovering = KnockbackDuration;
+						PlayerRecovering = KnockbackDuration*3;
 
 						if (PlayerActor->getArea().getCenter().X > Other->getArea().getCenter().X)
 							PlayerActor->setImpulse(SVector2(1.f, 0.5f) * KnockbackSpeed, KnockbackDuration);
