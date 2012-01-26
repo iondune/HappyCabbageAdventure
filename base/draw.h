@@ -195,12 +195,15 @@ void drawPlane() {
     glPopMatrix();
 }
 
-void drawBlock() {
-    //Block->setArea(SRect2(-15, -1, 1, 5));
+
+
+
+void drawBlock(float x, float y, float w, float h) {
     glPushMatrix();
        glColor3f(0, 0, 0);
-       glTranslatef(-14, 2, 0);
-       glScalef(2, 1, 1);
+       //We want the center of the block
+       glTranslatef((x+(x+w))/2, (y+(y+h))/2, 0);
+       glScalef(w, h, 1);
        //glutWireCube(1);
        glutSolidCube(1);
     glPopMatrix();

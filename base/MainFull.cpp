@@ -62,6 +62,7 @@ CActor *Player, *Derp;
 CObject *Floor, *Block;
 CPlayerView *PlayerView;
 
+std::vector<SRect2> blocks;
 void EngineInit( void ) {
    Engine = new CEngine();
    Player = Engine->addActor();
@@ -73,8 +74,35 @@ void EngineInit( void ) {
    Floor = Engine->addObject();
    Floor->setArea(SRect2(-25, -1, 50, 1));
 
+   SRect2 area;
+
+   int i = 0;
+   float j = 0;
+
+   for(j = 0; j < 10; j+=2.5) {
+      Block = Engine->addObject();
+      area = SRect2(-15 + j, 1.5 + j, 2, 1);
+      Block->setArea(area);
+      blocks.push_back(area);
+   }
+
    Block = Engine->addObject();
-   Block->setArea(SRect2(-15, 1.5, 2, 1));
+   area = SRect2(-22, 7, 6, 0.2);
+   Block->setArea(area);
+   blocks.push_back(area);
+
+   Block = Engine->addObject();
+   area = SRect2(-22, 7, 0.2, 3);
+   Block->setArea(area);
+   blocks.push_back(area);
+
+   for(; i < 12; i++) {
+      Block = Engine->addObject();
+      area = SRect2(-i + 5, 0, 1, i+1);
+      Block->setArea(area);
+      blocks.push_back(area);
+   }
+
 }
 
 
@@ -106,7 +134,12 @@ void Display()
       drawDirt();
       glEnable(GL_LIGHTING);
       setMaterial(BROWN_MATTE);
-      drawBlock();
+
+      std::vector<SRect2>::iterator itr;
+      for (itr = blocks.begin(); itr < blocks.end(); ++itr) {
+         SRect2 block = (*itr);
+         drawBlock(block.Position.X, block.Position.Y, block.Size.X, block.Size.Y); 
+      }
       
       //Chris Code, draw Trees
       addTrees(NUM_TREES);
@@ -115,7 +148,7 @@ void Display()
       //Draw derp (enemy)
 		glPushMatrix();
       glColor3f(1, 0.6, 0);
-	  glTranslatef(Derp->getArea().getCenter().X, Derp->getArea().getCenter().Y, 0);
+      glTranslatef(Derp->getArea().getCenter().X, Derp->getArea().getCenter().Y, 0);
 		
       glutSolidSphere(0.5, 10, 10);
 		//glDrawArrays(GL_TRIANGLES, 0, TriangleCount*3);
