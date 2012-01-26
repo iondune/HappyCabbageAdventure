@@ -1,13 +1,14 @@
 #include "CTextureLoader.h"
 
 #include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
 
 CTexture * const CTextureLoader::loadTexture(std::string const & fileName)
 {
 	SDL_Surface * Surface;
 	GLenum Format;
 
-	Surface = SDL_LoadBMP(fileName.c_str());
+	Surface = IMG_Load(fileName.c_str());
 
 	if (! Surface)
 		return 0;
