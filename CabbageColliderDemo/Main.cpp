@@ -133,7 +133,7 @@ int main(int argc, char * argv[])
 
 	CObject * Block = Engine->addObject();
 	Block->setArea(SRect2(-1, -1, 15, 0.9f));
-	Block->getMaterial().Friction = 0.4;
+	Block->getMaterial().Friction = 0.4f;
 
 	CActor * Derp = Engine->addActor();
 	Derp->setArea(SRect2(4, 0, 1, 1));
@@ -160,6 +160,8 @@ int main(int argc, char * argv[])
 
 			case SDL_KEYDOWN:
 				IsKeyDown[event.key.keysym.sym] = true;
+				if (event.key.keysym.sym == SDLK_ESCAPE)
+					exit(0);
 				break;
 
 			case SDL_KEYUP:

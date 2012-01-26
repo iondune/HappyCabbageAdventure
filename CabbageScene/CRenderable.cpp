@@ -15,11 +15,11 @@ CRenderable::CRenderable(CMesh const & Mesh)
 			Vertices.push_back(Mesh.Vertices[i].Position[j]);
 		for (unsigned int j = 0; j < 3; ++ j)
 			Colors.push_back(Mesh.Vertices[i].Color[j]);
-		TexCoords.push_back(Mesh.Vertices[i].TextureCoordinates[0]);
-		TexCoords.push_back(1.f - Mesh.Vertices[i].TextureCoordinates[1]);
+		for (unsigned int j = 0; j < 2; ++ j)
+			TexCoords.push_back(Mesh.Vertices[i].TextureCoordinates[j]);
 	}
 
-	for(unsigned int i = 0; i < Mesh.Triangles.size(); ++ i) 
+	for(unsigned int i = 0; i < Mesh.Triangles.size(); ++ i)
 		for (unsigned int j = 0; j < 3; ++ j)
 			Indices.push_back(Mesh.Triangles[i].Indices[j]);
 

@@ -11,17 +11,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{B6C46405-DF2B-4D2A-A760-19ED448B8E41}</ProjectGuid>
-    <RootNamespace>base</RootNamespace>
+    <ProjectGuid>{C8987DB4-983C-4801-BBBE-072704FAF615}</ProjectGuid>
+    <RootNamespace>CabbageFramework</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
@@ -37,23 +37,17 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(VisualStudioDir)\Projects\glew-1.7.0\include;$(VisualStudioDir)\Projects\SDL-1.2.15\include;$(VisualStudioDir)\Projects\freetype-2.4.8\include;$(VisualStudioDir)\Projects\glut-3.7.6\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(VisualStudioDir)\Projects\glew-1.7.0\lib;$(VisualStudioDir)\Projects\SDL-1.2.15\lib\x86;$(VisualStudioDir)\Projects\freetype-2.4.8\lib;$(VisualStudioDir)\Projects\glut-3.7.6\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(VisualStudioDir)\Projects\glew-1.7.0\include;$(VisualStudioDir)\Projects\SDL-1.2.15\include;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)lib\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Console</SubSystem>
-      <IgnoreSpecificDefaultLibraries>
-      </IgnoreSpecificDefaultLibraries>
-      <IgnoreAllDefaultLibraries>
-      </IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -70,38 +64,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="3dsloader\Makefile" />
-    <None Include="3dsloader\spaceship.3ds" />
-    <None Include="3dsloader\spaceshiptexture.bmp" />
-    <None Include="3dsloader\tree.3ds" />
-    <None Include="freetype6.dll" />
-    <None Include="glew32.dll" />
-    <None Include="glut32.dll" />
-    <None Include="Makefile" />
-    <None Include="SDL.dll" />
-    <None Include="zlib1.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="3dsloader\3dsloader.h" />
-    <ClInclude Include="3dsloader\main.h" />
-    <ClInclude Include="3dsloader\texture.h" />
-    <ClInclude Include="3dsloader\tutorial4.h" />
-    <ClInclude Include="Bunny.h" />
-    <ClInclude Include="CGameplayManager.h" />
-    <ClInclude Include="CPlayerView.h" />
-    <ClInclude Include="draw.h" />
-    <ClInclude Include="FreeType.h" />
-    <ClInclude Include="header.h" />
-    <ClInclude Include="Materials.h" />
-    <ClInclude Include="sound.h" />
-    <ClInclude Include="texture.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="3dsloader\3dsloader.cpp" />
-    <ClCompile Include="CPlayerView.cpp" />
-    <ClCompile Include="FreeType.cpp" />
-    <ClCompile Include="MainFull.cpp" />
-    <ClCompile Include="Materials.cpp" />
+    <ClCompile Include="CApplication.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

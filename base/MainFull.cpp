@@ -32,8 +32,8 @@ freetype::font_data our_font;
 
 // Window information
 //int WindowWidth = 400, WindowHeight = 400;
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 600;
+const int SCREEN_WIDTH = 1024;
+const int SCREEN_HEIGHT = 768;
 const int SCREEN_BPP = 32;
 const float PI = 3.14159f;
 

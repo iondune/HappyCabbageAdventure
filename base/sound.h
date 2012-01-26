@@ -19,7 +19,7 @@ void mixaudio(void *unused, Uint8 *stream, int len)
   Uint32 amount;
   for ( i=0; i<NUM_SOUNDS; ++i ) {
     amount = (sounds[i].dlen-sounds[i].dpos);
-    if ( amount > len ) {
+    if ( amount > (unsigned int)len ) {
       amount = len;
     }
     SDL_MixAudio(stream, &sounds[i].data[sounds[i].dpos],

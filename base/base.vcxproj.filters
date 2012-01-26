@@ -39,6 +39,9 @@
     <ClInclude Include="header.h" />
     <ClInclude Include="CGameplayManager.h" />
     <ClInclude Include="Materials.h" />
+    <ClInclude Include="draw.h" />
+    <ClInclude Include="sound.h" />
+    <ClInclude Include="texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FreeType.cpp" />
