@@ -38,6 +38,7 @@ namespace Collider
 		void setArea(SRect2 const & area);
 
 		SMaterial const & getMaterial() const;
+		SMaterial & getMaterial();
 
 		virtual void draw();
 
