@@ -1,16 +1,16 @@
 #include "header.h"
 
 #define TREE_Y_OFFSET 2.1
-void addTrees(int numTrees) {
+void addTrees(int numTrees, obj_type object) {
    for (int n = 0; n < numTrees; n++) {
       glPushMatrix();
       glTranslatef(-25 + n * 5, TREE_Y_OFFSET, -2);
-      drawTree();
+      drawTree(object);
       glPopMatrix();
       if(n % 3 == 0) {
          glPushMatrix();
          glTranslatef(-22 + n * 4.73, TREE_Y_OFFSET, 2);
-         drawTree();
+         drawTree(object);
          glPopMatrix();
       }
    }
@@ -177,7 +177,24 @@ void Display()
       }
       
       //Chris Code, draw Trees
-      addTrees(NUM_TREES);
+      addTrees(NUM_TREES, basicTree);
+
+      glPushMatrix();
+ 
+      glTranslatef(-12.5, TREE_Y_OFFSET - .1, -2);
+      glScalef(1.5, 1.5, 1.5);
+
+      drawTree(christmasTree);
+
+      glTranslatef(15, 0, 2.5);
+      drawTree(christmasTree);
+
+      glTranslatef(4, 0, 0);
+      drawTree(christmasTree);
+
+      glPopMatrix();
+
+
       PlayerView->draw();
 
       //Draw derp (enemy)
@@ -225,7 +242,8 @@ bool InitializeOGL()
 	glClearColor(0.52f, 0.8f, 0.9f, 1.0f);
 
    //Chris Code
-   Load3DS(&object, "3dsloader/tree.3ds");
+   Load3DS(&basicTree, "3dsloader/tree.3ds");
+   Load3DS(&christmasTree, "3dsloader/christmasTree.3ds");
    groundTexture = LoadBitmap("grass.bmp");
    skyTexture = LoadBitmap("sky.bmp");
    dirtTexture = LoadBitmap("dirt.bmp");
