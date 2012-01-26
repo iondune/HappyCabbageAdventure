@@ -164,7 +164,7 @@ namespace Collider
 			}
 
 			if (ImpulseTimer <= 0)
-				Jumping = false;
+				Impulse = false;
 		}
 
 		Velocity.Y += FallAcceleration * TickTime;

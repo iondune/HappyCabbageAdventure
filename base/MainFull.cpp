@@ -90,7 +90,18 @@ void EngineInit( void ) {
 
    GameplayManager = new CGameplayManager(Player, Engine);
    GameplayManager->addEnemy(SVector2(-10, 4));
-   GameplayManager->addEnemy(SVector2(-5, 4));
+   GameplayManager->addEnemy(SVector2(-5, 40));
+   GameplayManager->addEnemy(SVector2(0, 40));
+   GameplayManager->addEnemy(SVector2(5, 40));
+   GameplayManager->addEnemy(SVector2(10, 40));
+   GameplayManager->addEnemy(SVector2(15, 40));
+   GameplayManager->addEnemy(SVector2(20, 40));
+   GameplayManager->addEnemy(SVector2(25, 40));
+   GameplayManager->addEnemy(SVector2(25, 45));
+   GameplayManager->addEnemy(SVector2(25, 50));
+
+
+
    Block = Engine->addObject();
    area = SRect2(-22, 7, 6, 0.2);
    Block->setArea(area);
@@ -199,8 +210,7 @@ void Display()
 	if (SDL_GetTicks() != startclock)
 		currentFPS = 1000.f / float(SDL_GetTicks() - startclock);
     freetype::print(our_font, 10, SCREEN_HEIGHT-40, "Elapsed Time: %u\n"
-         "FPS: %0.0f ", elapsedTime/1000, fps);
-		"FPS: %u\nFPS: %0.2f\n\nHealth: %d", elapsedTime/1000, currentFPS, fps, GameplayManager->getPlayerHealth());
+         "FPS: %0.0f \n\nHealth: %d", elapsedTime/1000, fps, GameplayManager->getPlayerHealth());
 
 	if (! GameplayManager->isPlayerAlive())
 		freetype::print(our_font, 50, SCREEN_HEIGHT - 170, "GAME OVER! YOU ARE DEAD");

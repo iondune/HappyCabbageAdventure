@@ -1,5 +1,16 @@
 #include "CPlayerView.h"
+
+
+#ifdef _WIN32
+#include <GL/glew.h>
 #include <GL/glut.h>
+#endif
+
+#ifdef __unix__
+#include <GL/glut.h>
+#endif
+
+
 #define PI 3.1415
 void CPlayerView::setState(CPlayerView::State const value) {
    curState = value;

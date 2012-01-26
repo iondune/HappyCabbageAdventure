@@ -91,12 +91,14 @@
     <ClInclude Include="CPlayerView.h" />
     <ClInclude Include="FreeType.h" />
     <ClInclude Include="header.h" />
+    <ClInclude Include="Materials.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3dsloader\3dsloader.cpp" />
     <ClCompile Include="CPlayerView.cpp" />
     <ClCompile Include="FreeType.cpp" />
     <ClCompile Include="MainFull.cpp" />
+    <ClCompile Include="Materials.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

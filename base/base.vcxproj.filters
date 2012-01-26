@@ -38,6 +38,7 @@
     <ClInclude Include="CPlayerView.h" />
     <ClInclude Include="header.h" />
     <ClInclude Include="CGameplayManager.h" />
+    <ClInclude Include="Materials.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FreeType.cpp" />
@@ -46,6 +47,7 @@
     </ClCompile>
     <ClCompile Include="MainFull.cpp" />
     <ClCompile Include="CPlayerView.cpp" />
+    <ClCompile Include="Materials.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="3ds loader">
