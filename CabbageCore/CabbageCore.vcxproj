@@ -62,7 +62,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CabbageCore.h" />
     <ClInclude Include="SColor.h" />
+    <ClInclude Include="SPosition2.h" />
     <ClInclude Include="SRect2.h" />
     <ClInclude Include="SVector2.h" />
     <ClInclude Include="SVector3.h" />

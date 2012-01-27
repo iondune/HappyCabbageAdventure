@@ -6,5 +6,7 @@
     <ClInclude Include="SVector3.h" />
     <ClInclude Include="SColor.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="SPosition2.h" />
+    <ClInclude Include="CabbageCore.h" />
   </ItemGroup>
 </Project>
