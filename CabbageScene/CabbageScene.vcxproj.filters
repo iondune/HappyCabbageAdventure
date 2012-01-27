@@ -8,6 +8,7 @@
     <ClInclude Include="CRenderable.h" />
     <ClInclude Include="CTexture.h" />
     <ClInclude Include="CTextureLoader.h" />
+    <ClInclude Include="CabbageScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CMesh.cpp" />
