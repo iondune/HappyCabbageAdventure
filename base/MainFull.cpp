@@ -474,7 +474,7 @@ int main(int argc, char * argv[])
             if(event.key.keysym.sym == SDLK_d){
                dDown = 0;
             }
-            if (event.key.keysym.sym = SDLK_SPACE){
+            if (event.key.keysym.sym == SDLK_SPACE){
                spaceDown = 0;
             }
          }
