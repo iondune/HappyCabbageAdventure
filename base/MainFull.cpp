@@ -418,7 +418,7 @@ int main(int argc, char * argv[])
         SDL_GetError());
    }
 
-   //PlaySound("SMW.wav");
+   PlaySound("SMW.wav");
 
    SDL_PauseAudio(0);
 
