@@ -1,9 +1,10 @@
 ROOT_CABBAGE_DIR=../
 SOURCES=MainFull.cpp ../CabbageCollider/CActor.cpp ../CabbageCollider/CCollideable.cpp ../CabbageCollider/CObject.cpp CPlayerView.cpp Materials.cpp 3dsloader/3dsloader.cpp FreeType.cpp
 OBJECTS=`echo "${SOURCES}" | sed "s/\.cpp/\.o/g" | sed "s/ [^ ]*\// /g"`
+OUTPUT_NAME=cabbage
 
 all: MainFull.o CActor.o CCollideable.o CObject.o CPlayerView.o Materials.o 3dsloader.o FreeType.o
-	g++ ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL -lglut `sdl-config --cflags` `freetype-config --libs` -g 
+	g++ ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL -lglut `sdl-config --cflags` `freetype-config --libs` -g -o ${OUTPUT_NAME} 
 
 #For printing out ${OBJECTS} to paste them after all:
 print:
@@ -27,7 +28,7 @@ FreeType.o: FreeType.cpp FreeType.h
 	g++ `freetype-config --cflags` -c FreeType.cpp
 
 clean:
-	rm *.o a.out
+	rm *.o a.out cabbage
 
-mingw:
-	g++ `freetype-config --cflags` `sdl-config --cflags` -mwindows ${SOURCES} -DGL_GLEXT_PROTOTYPES -lopengl32 -lglu32 -lglut32 `sdl-config --libs` `freetype-config --libs` -g -L/lib/ -lglew32
+mingw: MainFull.o CActor.o CCollideable.o CObject.o CPlayerView.o Materials.o 3dsloader.o FreeType.o
+	g++ `sdl-config --cflags` -mwindows ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lopengl32 -lglu32 -lglut32 `sdl-config --libs` `freetype-config --libs` -g -L/lib/ -lglew32 ${OUTPUT_NAME}
