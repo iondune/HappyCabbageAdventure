@@ -36,6 +36,16 @@ public:
 	void OnRenderStart(float const Elapsed);
 	void OnRenderEnd(float const Elapsed);
 
+	template <class StateClass>
+	void setState()
+	{
+		CurrentState->end();
+
+		CurrentState = StateClass::get();
+
+		CurrentState->begin();
+	}
+
 };
 
 #endif

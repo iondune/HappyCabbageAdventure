@@ -40,6 +40,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "base", "base\base.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageFramework", "CabbageFramework\CabbageFramework.vcxproj", "{C8987DB4-983C-4801-BBBE-072704FAF615}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test Sandbox", "Test Sandbox\Test Sandbox.vcxproj", "{A67571C4-6961-4BF2-94FF-1B2832CF6EEB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -74,6 +76,10 @@ Global
 		{C8987DB4-983C-4801-BBBE-072704FAF615}.Debug|Win32.Build.0 = Debug|Win32
 		{C8987DB4-983C-4801-BBBE-072704FAF615}.Release|Win32.ActiveCfg = Release|Win32
 		{C8987DB4-983C-4801-BBBE-072704FAF615}.Release|Win32.Build.0 = Release|Win32
+		{A67571C4-6961-4BF2-94FF-1B2832CF6EEB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A67571C4-6961-4BF2-94FF-1B2832CF6EEB}.Debug|Win32.Build.0 = Debug|Win32
+		{A67571C4-6961-4BF2-94FF-1B2832CF6EEB}.Release|Win32.ActiveCfg = Release|Win32
+		{A67571C4-6961-4BF2-94FF-1B2832CF6EEB}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
