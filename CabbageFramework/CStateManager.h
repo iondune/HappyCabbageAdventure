@@ -19,6 +19,20 @@ public:
 
 };
 
+template <class TImplementation>
+class CState : public IState
+{
+
+public:
+
+	static TImplementation & get()
+	{
+		static TImplementation Instance;
+		return Instance;
+	}
+
+};
+
 class CStateManager : public sigslot::has_slots<>
 {
 
@@ -39,9 +53,10 @@ public:
 	template <class StateClass>
 	void setState()
 	{
-		CurrentState->end();
+		if (CurrentState)
+			CurrentState->end();
 
-		CurrentState = StateClass::get();
+		CurrentState = & StateClass::get();
 
 		CurrentState->begin();
 	}

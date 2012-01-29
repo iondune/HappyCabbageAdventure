@@ -1,5 +1,11 @@
 #include "CApplication.h"
 
+#ifdef _WIN32
+#include <GL/glew.h>
+#endif
+
+#include <iostream>
+
 CApplication::CApplication()
 {}
 
@@ -10,7 +16,8 @@ void CApplication::setupRenderContext()
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
         fprintf(stderr, "Couldn't initialize SDL: %s\n", SDL_GetError());
-        exit(1);
+        waitForUser();
+		exit(1);
     }
         
     atexit(SDL_Quit);
@@ -19,7 +26,8 @@ void CApplication::setupRenderContext()
     if(video == NULL)
 	{
         fprintf(stderr, "Couldn't get video information: %s\n", SDL_GetError());
-        exit(1);
+        waitForUser();
+		exit(2);
     }
 
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
@@ -31,13 +39,26 @@ void CApplication::setupRenderContext()
     if(! SDL_SetVideoMode(WindowSize.X, WindowSize.Y, video->vfmt->BitsPerPixel, SDL_OPENGL))
 	{
         fprintf(stderr, "Couldn't set video mode: %s\n", SDL_GetError());
-        exit(1);
+        waitForUser();
+		exit(1);
     }
+
+#ifdef _WIN32
+	GLenum err = glewInit();
+	if (GLEW_OK != err)
+	{
+		std::cerr << "Error initializing glew! " << glewGetErrorString(err) << std::endl;
+		waitForUser();
+		exit(3);
+	}
+#endif
 }
 
 
-void CApplication::init(SPosition2 const & WindowSize)
+void CApplication::init(SPosition2 const & windowSize)
 {
+	WindowSize = windowSize;
+
 	EventManager = new CEventManager();
 	StateManager = new CStateManager();
 
@@ -56,9 +77,14 @@ CApplication & CApplication::get()
 	return SingletonInstance;
 }
 
-CEventManager const & CApplication::getEventManager()
+CEventManager & CApplication::getEventManager()
 {
 	return * EventManager;
+}
+
+CStateManager & CApplication::getStateManager()
+{
+	return * StateManager;
 }
 
 void CApplication::run()

@@ -18,6 +18,10 @@ struct SBitmapInfo
 	char *data;
 };
 
+#ifdef _WIN32
+#pragma warning(disable: 4996)
+#endif
+
 CTexture * const CTextureLoader::loadTexture(std::string const & fileName)
 {
 	static int TextureCounter = 0;

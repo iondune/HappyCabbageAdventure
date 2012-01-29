@@ -26,10 +26,10 @@ public:
 
 	static CApplication & get();
 
-	void init(SPosition2 const & WindowSize);
+	void init(SPosition2 const & windowSize);
 
-	CEventManager const & getEventManager();
-	CStateManager const & getStateManager();
+	CEventManager & getEventManager();
+	CStateManager & getStateManager();
 
 	void run();
 
