@@ -1,21 +1,65 @@
-#include <Gwen/Renderers/OpenGL.h>
-#include <Gwen/Controls/Canvas.h>
-#include <Gwen/Skins/Simple.h>
 
-#pragma comment (lib,"GWEN-Renderer-OpenGL.lib")
-#pragma comment (lib,"OpenGL32.lib")
-#pragma comment (lib,"FreeImage.lib")
+/*
+#pragma comment(lib, "../lib/CabbageScene.lib")
+#pragma comment(lib, "OpenGL32.lib")
+#pragma comment(lib, "glu32.lib")
+*/
 
-int main() 
+#pragma comment(lib, "glew32.lib")
+#pragma comment(lib, "SDL.lib")
+#pragma comment(lib, "SDLmain.lib")
+#pragma comment(lib, "../lib/CabbageFramework.lib")
+
+
+#include "../CabbageFramework/CApplication.h"
+
+class SampleState : public CState<SampleState>
 {
-	Gwen::Renderer::OpenGL * pRenderer = new Gwen::Renderer::OpenGL();
 
-	Gwen::Skin::Simple skin;
-	skin.SetRender (pRenderer);
+public:
 
-	Gwen::Controls::Canvas * pCanvas = new Gwen::Controls::Canvas(&skin);
-	pCanvas->SetSize(1024, 512);
+	void begin()
+	{
+	}
+
+	void end()
+	{
+	}
 
 
-	pCanvas->RenderCanvas();
+	void OnGameTickStart(float const Elapsed)
+	{
+	}
+
+	void OnGameTickEnd(float const Elapsed)
+	{
+	}
+
+
+	void OnRenderStart(float const Elapsed)
+	{
+	}
+
+	void OnRenderEnd(float const Elapsed)
+	{
+	}
+
+};
+
+int main(int argc, char * argv[]) 
+{
+	// Setup application
+	CApplication & Application = CApplication::get();
+	Application.init(SPosition2(200, 200));
+
+	CStateManager & StateManager = Application.getStateManager();
+	StateManager.setState<SampleState>();
+
+	// Setup gui
+
+
+	// run program
+	Application.run();
+
+	return 0;
 }

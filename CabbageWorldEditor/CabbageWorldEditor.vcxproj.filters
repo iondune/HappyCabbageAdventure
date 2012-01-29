@@ -3,4 +3,8 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="glew32.dll" />
+    <None Include="SDL.dll" />
+  </ItemGroup>
 </Project>
