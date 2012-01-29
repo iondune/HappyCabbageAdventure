@@ -204,6 +204,7 @@ void Display()
 
    //Draw derp (enemy)
    glPushMatrix();
+   setMaterial(LIGHT_GREEN_MATTE);
    glColor3f(1, 0.6, 0);
    glTranslatef(Derp->getArea().getCenter().X, Derp->getArea().getCenter().Y, 0);
 
