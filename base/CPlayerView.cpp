@@ -74,11 +74,19 @@ void CPlayerView::draw() {
       glPopMatrix();
    glEnable(GL_LIGHTING);
 }
-void CPlayerView::establishCamera() {
+void CPlayerView::establishCamera(int backwards) {
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
-   gluLookAt(
-         CenterPosition.X, CenterPosition.Y + 1.3, 6,
-         CenterPosition.X, CenterPosition.Y, 0,
-         0, 1, 0);
+   if(!backwards) {
+      gluLookAt(
+            CenterPosition.X, CenterPosition.Y + 1.3, 6,
+            CenterPosition.X, CenterPosition.Y, 0,
+            0, 1, 0);
+   }
+   else {
+      gluLookAt(
+            CenterPosition.X, CenterPosition.Y + 1.3, -6,
+            CenterPosition.X, CenterPosition.Y, 0,
+            0, 1, 0);
+   }
 }

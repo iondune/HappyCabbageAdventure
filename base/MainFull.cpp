@@ -146,6 +146,7 @@ void ViewInit( void ) {
 }
 
 
+int kDown = 0;
 double fps = 0.0;
 // Manages time independant movement and draws the VBO
 void Display()
@@ -160,20 +161,40 @@ void Display()
    PlayerView->setGround(Engine->getHeightBelow(Player));
 
    glMatrixMode(GL_MODELVIEW);
-   PlayerView->establishCamera();
+   PlayerView->establishCamera(kDown);
 
    // draw the ground plane
    glDisable(GL_LIGHTING);
    drawPlane();
-   drawSky();
-   drawDirt();
+   drawSky(kDown);
+   drawDirt(kDown);
    glEnable(GL_LIGHTING);
    setMaterial(BROWN_MATTE);
 
    std::vector<SRect2>::iterator itr;
+   int i = 0;
    for (itr = blocks.begin(); itr < blocks.end(); ++itr) {
       SRect2 block = (*itr);
       drawBlock(block.Position.X, block.Position.Y, block.Size.X, block.Size.Y); 
+      if(i % 2 == 0) {
+         //Draw block in front at 0
+         if(i % 6 == 0) {
+            drawZBlock(block.Position.X, 0, block.Size.X, 1, 1); 
+         }
+         //Draw block in front at top
+         else if(i % 6 == 2) {
+            drawZBlock(block.Position.X, block.Position.Y+block.Size.Y-1, block.Size.X, 1, 1); 
+         }
+         //Draw block behind at 0
+         else if(i % 6 == 4) {
+            drawZBlock(block.Position.X, 0, block.Size.X, 1, -1); 
+         }
+         //Draw block behind at top
+         else {
+            drawZBlock(block.Position.X, block.Position.Y+block.Size.Y-1, block.Size.X, 1, -1); 
+         }
+      }
+      i++;
    }
 
    //Chris Code, draw Trees
@@ -397,7 +418,7 @@ int main(int argc, char * argv[])
         SDL_GetError());
    }
 
-   PlaySound("SMW.wav");
+   //PlaySound("SMW.wav");
 
    SDL_PauseAudio(0);
 
@@ -456,6 +477,9 @@ int main(int argc, char * argv[])
             if(event.key.keysym.sym == SDLK_d){
                dDown = 1;
             }
+            if(event.key.keysym.sym == SDLK_k){
+               kDown = 1;
+            }
             if(event.key.keysym.sym == SDLK_SPACE) {
                spaceDown = 1;
             }
@@ -474,6 +498,9 @@ int main(int argc, char * argv[])
             }
             if(event.key.keysym.sym == SDLK_d){
                dDown = 0;
+            }
+            if(event.key.keysym.sym == SDLK_k){
+               kDown = 0;
             }
             if (event.key.keysym.sym == SDLK_SPACE){
                spaceDown = 0;
@@ -495,11 +522,11 @@ int main(int argc, char * argv[])
             Player->setAction(CActor::EActionType::None);
             PlayerView->setState(CPlayerView::State::Standing);
          }
-         else if(aDown) {
+         else if((aDown && !kDown) || (dDown && kDown)) {
             Player->setAction(CActor::EActionType::MoveLeft);
             PlayerView->setState(CPlayerView::State::MovingLeft);
          }
-         else if(dDown) {
+         else if((dDown && !kDown) || (aDown && kDown)) {
             Player->setAction(CActor::EActionType::MoveRight);
             PlayerView->setState(CPlayerView::State::MovingRight);
          }

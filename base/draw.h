@@ -3,7 +3,7 @@
 obj_type basicTree;
 obj_type christmasTree;
 
-void drawDirt() {
+void drawDirt(int backwards) {
    glEnable(GL_TEXTURE_2D);
    glPushMatrix();
 
@@ -12,14 +12,26 @@ void drawDirt() {
    glBindTexture(GL_TEXTURE_2D, dirtTexture);
 
    glBegin(GL_QUADS);
-   glTexCoord2f(0, 4);
-   glVertex3f(-25, 0, 2.5);
-   glTexCoord2f(0, 0);
-   glVertex3f(-25, -15, 2.5);
-   glTexCoord2f(25, 0);
-   glVertex3f(25, -15, 2.5);
-   glTexCoord2f(25, 4);
-   glVertex3f(25, 0, 2.5);
+   if(!backwards) {
+      glTexCoord2f(0, 4);
+      glVertex3f(-25, 0, 2.5);
+      glTexCoord2f(0, 0);
+      glVertex3f(-25, -15, 2.5);
+      glTexCoord2f(25, 0);
+      glVertex3f(25, -15, 2.5);
+      glTexCoord2f(25, 4);
+      glVertex3f(25, 0, 2.5);
+   }
+   else {
+      glTexCoord2f(0, 4);
+      glVertex3f(-25, 0, -2.5);
+      glTexCoord2f(0, 0);
+      glVertex3f(-25, -15, -2.5);
+      glTexCoord2f(25, 0);
+      glVertex3f(25, -15, -2.5);
+      glTexCoord2f(25, 4);
+      glVertex3f(25, 0, -2.5);
+   }
    glEnd();
 
    glPopMatrix();
@@ -27,7 +39,7 @@ void drawDirt() {
 
 }
 
-void drawSky() {
+void drawSky(int backwards) {
    glEnable(GL_TEXTURE_2D);
    glPushMatrix();
 
@@ -36,14 +48,26 @@ void drawSky() {
    glBindTexture(GL_TEXTURE_2D, skyTexture);
 
    glBegin(GL_QUADS);
-   glTexCoord2f(0, 1);
-   glVertex3f(-25, 20, -2.5);
-   glTexCoord2f(0, 0);
-   glVertex3f(-25, -1, -2.5);
-   glTexCoord2f(1, 0);
-   glVertex3f(25, -1, -2.5);
-   glTexCoord2f(1, 1);
-   glVertex3f(25, 20, -2.5);
+   if(!backwards) {
+      glTexCoord2f(0, 1);
+      glVertex3f(-25, 20, -2.5);
+      glTexCoord2f(0, 0);
+      glVertex3f(-25, -1, -2.5);
+      glTexCoord2f(1, 0);
+      glVertex3f(25, -1, -2.5);
+      glTexCoord2f(1, 1);
+      glVertex3f(25, 20, -2.5);
+   }
+   else {
+      glTexCoord2f(0, 1);
+      glVertex3f(-25, 20, 2.5);
+      glTexCoord2f(0, 0);
+      glVertex3f(-25, -1, 2.5);
+      glTexCoord2f(1, 0);
+      glVertex3f(25, -1, 2.5);
+      glTexCoord2f(1, 1);
+      glVertex3f(25, 20, 2.5);
+   }
    glEnd();
 
    glPopMatrix();
@@ -198,6 +222,17 @@ void drawPlane() {
 
 
 
+
+void drawZBlock(float x, float y, float w, float h, float z) {
+    glPushMatrix();
+       glColor3f(0, 0, 0);
+       //We want the center of the block
+       glTranslatef((x+(x+w))/2, (y+(y+h))/2, z);
+       glScalef(w, h, 1);
+       //glutWireCube(1);
+       glutSolidCube(1);
+    glPopMatrix();
+}
 
 void drawBlock(float x, float y, float w, float h) {
     glPushMatrix();
