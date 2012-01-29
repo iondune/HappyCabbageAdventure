@@ -29,6 +29,7 @@ public:
 	void init(SPosition2 const & WindowSize);
 
 	CEventManager const & getEventManager();
+	CStateManager const & getStateManager();
 
 	void run();
 
