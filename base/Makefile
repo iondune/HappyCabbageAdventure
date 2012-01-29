@@ -11,7 +11,7 @@ print:
 	echo ${OBJECTS}
 
 MainFull.o: MainFull.cpp draw.h header.h
-	g++ `freetype-config --cflags` -c MainFull.cpp
+	g++ `sdl-config --cflags` `freetype-config --cflags` -c MainFull.cpp
 CActor.o: ../CabbageCollider/CActor.cpp ../CabbageCollider/CActor.h
 	g++ -c ../CabbageCollider/CActor.cpp
 CCollideable.o: ../CabbageCollider/CCollideable.cpp ../CabbageCollider/CCollideable.h
@@ -23,7 +23,7 @@ CPlayerView.o: CPlayerView.cpp CPlayerView.h
 Materials.o: Materials.cpp Materials.h
 	g++ -c Materials.cpp
 3dsloader.o: 3dsloader/3dsloader.cpp 3dsloader/3dsloader.h
-	g++ -c 3dsloader/3dsloader.cpp
+	g++ `sdl-config --cflags` -c 3dsloader/3dsloader.cpp
 FreeType.o: FreeType.cpp FreeType.h
 	g++ `freetype-config --cflags` -c FreeType.cpp
 
@@ -31,4 +31,4 @@ clean:
 	rm *.o a.out cabbage
 
 mingw: MainFull.o CActor.o CCollideable.o CObject.o CPlayerView.o Materials.o 3dsloader.o FreeType.o
-	g++ `sdl-config --cflags` -mwindows ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lopengl32 -lglu32 -lglut32 `sdl-config --libs` `freetype-config --libs` -g -L/lib/ -lglew32 ${OUTPUT_NAME}
+	g++ `sdl-config --cflags` -mwindows ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lopengl32 -lglu32 -lglut32 `sdl-config --libs` `freetype-config --libs` -g -L/lib/ -lglew32 -o ${OUTPUT_NAME}
