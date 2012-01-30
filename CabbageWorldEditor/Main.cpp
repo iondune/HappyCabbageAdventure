@@ -49,39 +49,39 @@ public:
 
 int main(int argc, char * argv[]) 
 {
-	// Setup application
-	CApplication & Application = CApplication::get();
-	Application.init(SPosition2(200, 200));
+    // Setup application
+    CApplication & Application = CApplication::get();
+    Application.init(SPosition2(200, 200));
 
-	CStateManager & StateManager = Application.getStateManager();
-	StateManager.setState<SampleState>();
+    CStateManager & StateManager = Application.getStateManager();
+    StateManager.setState<SampleState>();
 
-	GLfloat win[3];
-	GLdouble obj[3];
-	GLint viewpoint[4];
-	GLdouble modelview[16];
-	GLdouble pro[16];
-	
-	SPosition2 point;
+    GLfloat win[3];
+    GLdouble obj[3];
+    GLint viewpoint[4];
+    GLdouble modelview[16];
+    GLdouble pro[16];
 
-	glGetDoublev (GL_MODELVIEW_MATRIX, modelview);
-	glGetDoublev (GL_PROJECTION_MATRIX, pro);
-	glGetIntegerv (GL_VIEWPORT, viewpoint);
+    SPosition2 point;
 
-	point = Application.getEventManager().MouseLocation;
+    glGetDoublev (GL_MODELVIEW_MATRIX, modelview);
+    glGetDoublev (GL_PROJECTION_MATRIX, pro);
+    glGetIntegerv (GL_VIEWPORT, viewpoint);
 
-	win[0] = (float)point.X;
-	win[1] = (float)point.Y;
-	win[2] = (float)viewpoint[3] - win[1];
+    point = Application.getEventManager().MouseLocation;
 
-	glReadPixels(win[0], win[1], 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &win[2]);
-	
-	gluUnProject(win[0], win[1], win[2], modelview, pro, viewpoint, &obj[0], &obj[1], &obj[2]);
-	// Setup gui
+    win[0] = (float)point.X;
+    win[1] = (float)point.Y;
+    win[2] = (float)viewpoint[3] - win[1];
+
+    glReadPixels((GLint)win[0], (GLint)win[1], 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &win[2]);
+
+    gluUnProject(win[0], win[1], win[2], modelview, pro, viewpoint, & obj[0], & obj[1], & obj[2]);
+    // Setup gui
 
 
-	// run program
-	Application.run();
+    // run program
+    Application.run();
 
-	return 0;
+    return 0;
 }

@@ -565,7 +565,7 @@ int main(int argc, char * argv[])
             }
          }
 
-         Player->setJumping(spaceDown);
+         Player->setJumping(spaceDown != 0);
       }
       else
       {
