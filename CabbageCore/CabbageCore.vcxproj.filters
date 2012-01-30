@@ -8,5 +8,6 @@
     <ClInclude Include="Utils.h" />
     <ClInclude Include="SPosition2.h" />
     <ClInclude Include="CabbageCore.h" />
+    <ClInclude Include="SLine3.h" />
   </ItemGroup>
 </Project>

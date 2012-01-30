@@ -12,6 +12,7 @@
 #endif
 
 #include "../CabbageCore/SVector2.h"
+#include "CImage.h"
 
 class CTexture
 {
@@ -19,13 +20,13 @@ class CTexture
 	friend class CTextureLoader;
 	friend class CRenderable;
 
-	GLuint const TextureHandle;
+	GLuint TextureHandle;
 	int Width;
 	int Height;
 
-	CTexture(GLuint const textureHandle, int width, int height);
-
 public:
+
+    CTexture(CImage * image);
 
 	int const getWidth();
 	int const getHeight();

@@ -12,6 +12,8 @@ public:
 
 	static CMesh * const load3dsMesh(std::string const & fileName);
 
+    static CMesh * const createCubeMesh();
+
 };
 
 #endif

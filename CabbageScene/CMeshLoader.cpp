@@ -21,21 +21,21 @@ long filelength(int f)
 // TODO: Rewrite this horrendous pile of C nonsense
 CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
 {
-	int i; //Index variable
+    int i; //Index variable
 	
-	FILE *l_file; //File pointer
+    FILE *l_file; //File pointer
 	
-	unsigned short l_chunk_id; //Chunk identifier
-	unsigned int l_chunk_lenght; //Chunk lenght
+    unsigned short l_chunk_id; //Chunk identifier
+    unsigned int l_chunk_lenght; //Chunk lenght
 
-	unsigned char l_char; //Char variable
-	unsigned short l_qty; //Number of elements in each chunk
+    unsigned char l_char; //Char variable
+    unsigned short l_qty; //Number of elements in each chunk
 
-	unsigned short l_face_flags; //Flag that stores some face information
+    unsigned short l_face_flags; //Flag that stores some face information
 
-	if ((l_file=fopen (fileName.c_str(), "rb"))== NULL) return 0; //Open the file
+    if ((l_file=fopen (fileName.c_str(), "rb"))== NULL) return 0; //Open the file
 
-	CMesh * Mesh = new CMesh();
+    CMesh * Mesh = new CMesh();
 
 	while (ftell (l_file) < filelength (fileno (l_file))) //Loop to scan the whole file
 	//while(!EOF)
@@ -163,4 +163,70 @@ CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
 	}
 	fclose (l_file); // Closes the file stream
 	return Mesh; // Returns ok
+}
+
+CMesh * const CMeshLoader::createCubeMesh()
+{
+    CMesh * Mesh = new CMesh();
+    Mesh->Vertices.resize(8);
+    Mesh->Vertices[0].Position = SVector3(-0.5, -0.5, -0.5);
+    Mesh->Vertices[0].Position = SVector3(-0.5,  0.5, -0.5);
+    Mesh->Vertices[0].Position = SVector3( 0.5,  0.5, -0.5);
+    Mesh->Vertices[0].Position = SVector3( 0.5, -0.5, -0.5);
+    Mesh->Vertices[0].Position = SVector3(-0.5, -0.5,  0.5);
+    Mesh->Vertices[0].Position = SVector3(-0.5,  0.5,  0.5);
+    Mesh->Vertices[0].Position = SVector3( 0.5,  0.5,  0.5);
+    Mesh->Vertices[0].Position = SVector3( 0.5, -0.5,  0.5);
+
+    Mesh->Triangles.resize(12);
+    Mesh->Triangles[0].Indices[0] = 0;
+    Mesh->Triangles[0].Indices[1] = 1;
+    Mesh->Triangles[0].Indices[2] = 2;
+
+    Mesh->Triangles[1].Indices[0] = 0;
+    Mesh->Triangles[1].Indices[1] = 2;
+    Mesh->Triangles[1].Indices[2] = 3;
+
+    Mesh->Triangles[2].Indices[0] = 7;
+    Mesh->Triangles[2].Indices[1] = 6;
+    Mesh->Triangles[2].Indices[2] = 4;
+
+    Mesh->Triangles[3].Indices[0] = 4;
+    Mesh->Triangles[3].Indices[1] = 6;
+    Mesh->Triangles[3].Indices[2] = 5;
+
+    Mesh->Triangles[4].Indices[0] = 0;
+    Mesh->Triangles[4].Indices[1] = 3;
+    Mesh->Triangles[4].Indices[2] = 7;
+
+    Mesh->Triangles[5].Indices[0] = 0;
+    Mesh->Triangles[5].Indices[1] = 7;
+    Mesh->Triangles[5].Indices[2] = 4;
+
+    Mesh->Triangles[6].Indices[0] = 4;
+    Mesh->Triangles[6].Indices[1] = 5;
+    Mesh->Triangles[6].Indices[2] = 1;
+
+    Mesh->Triangles[7].Indices[0] = 4;
+    Mesh->Triangles[7].Indices[1] = 1;
+    Mesh->Triangles[7].Indices[2] = 0;
+
+    Mesh->Triangles[8].Indices[0] = 3;
+    Mesh->Triangles[8].Indices[1] = 2;
+    Mesh->Triangles[8].Indices[2] = 2;
+
+    Mesh->Triangles[9].Indices[0] = 3;
+    Mesh->Triangles[9].Indices[1] = 6;
+    Mesh->Triangles[9].Indices[2] = 7;
+
+    Mesh->Triangles[10].Indices[0] = 1;
+    Mesh->Triangles[10].Indices[1] = 5;
+    Mesh->Triangles[10].Indices[2] = 6;
+
+    Mesh->Triangles[11].Indices[0] = 1;
+    Mesh->Triangles[11].Indices[1] = 6;
+    Mesh->Triangles[11].Indices[2] = 2;
+
+   return Mesh;
+
 }

@@ -65,21 +65,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CabbageScene.h" />
+    <ClInclude Include="CImage.h" />
     <ClInclude Include="CMesh.h" />
     <ClInclude Include="CMeshLoader.h" />
     <ClInclude Include="CShader.h" />
     <ClInclude Include="CRenderable.h" />
     <ClInclude Include="CTexture.h" />
-    <ClInclude Include="CTextureLoader.h" />
+    <ClInclude Include="CImageLoader.h" />
     <ClInclude Include="SVertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CImage.cpp" />
     <ClCompile Include="CMesh.cpp" />
     <ClCompile Include="CMeshLoader.cpp" />
     <ClCompile Include="CShader.cpp" />
     <ClCompile Include="CRenderable.cpp" />
     <ClCompile Include="CTexture.cpp" />
-    <ClCompile Include="CTextureLoader.cpp" />
+    <ClCompile Include="CImageLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />

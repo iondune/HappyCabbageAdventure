@@ -6,6 +6,7 @@
 #include "SRect2.h"
 #include "SVector2.h"
 #include "SVector3.h"
+#include "SLine3.h"
 #include "Utils.h"
 
 #endif

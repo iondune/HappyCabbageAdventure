@@ -22,7 +22,7 @@
 #include "../CabbageScene/CShader.h"
 #include "../CabbageScene/CRenderable.h"
 #include "../CabbageScene/CMeshLoader.h"
-#include "../CabbageScene/CTextureLoader.h"
+#include "../CabbageScene/CImageLoader.h"
 
 // Portable version of system("PAUSE")
 void waitForUser() 
@@ -155,12 +155,12 @@ int main(int argc, char * argv[])
      * SDL_GL_DOUBLEBUFFER attribute.
      */
     if( SDL_SetVideoMode( WindowWidth, WindowHeight, video->vfmt->BitsPerPixel, SDL_OPENGL ) == 0 )
-	{
+    {
         fprintf(stderr, "Couldn't set video mode: %s\n", SDL_GetError());
         exit(1);
     }
 
-	Reshape(WindowWidth, WindowHeight);
+    Reshape(WindowWidth, WindowHeight);
 
 	// On Windows, use glew to load shader extensions (OpenGL 2.0 +)
 #ifdef _WIN32
@@ -184,39 +184,40 @@ int main(int argc, char * argv[])
 		return 1;
 	}
 
-	// Now attempt to load the shaders
-	Shader = ShaderLoader.loadShader("Shaders/Lab3_vert.glsl", "Shaders/Lab3_frag.glsl");
-	if (! Shader)
-	{
-		std::cerr << "Unable to open or compile necessary shader." << std::endl;
-		waitForUser();
-		return 1;
-	}
-	Shader->loadAttribute("aPosition");
-	Shader->loadAttribute("aColor");
-	Shader->loadAttribute("aTexCoord");
-	Shader->loadUniform("uTexColor");
+    // Now attempt to load the shaders
+    Shader = ShaderLoader.loadShader("Shaders/Lab3_vert.glsl", "Shaders/Lab3_frag.glsl");
+    if (! Shader)
+    {
+        std::cerr << "Unable to open or compile necessary shader." << std::endl;
+        waitForUser();
+        return 1;
+    }
+    Shader->loadAttribute("aPosition");
+    Shader->loadAttribute("aColor");
+    Shader->loadAttribute("aTexCoord");
+    Shader->loadUniform("uTexColor");
 
-	// Attempt to load mesh
-	CMesh * Mesh = CMeshLoader::load3dsMesh("spaceship.3ds");
-	if (! Mesh)
-	{
-		std::cerr << "Unable to load necessary mesh." << std::endl;
-		waitForUser();
-		return 1;
-	}
-	// Make out mesh fit within camera view
-	Mesh->resizeMesh(SVector3(1.5));
-	// And center it at the origin
-	Mesh->centerMeshByExtents(SVector3(0));
+    // Attempt to load mesh
+    CMesh * Mesh = CMeshLoader::load3dsMesh("spaceship.3ds");
+    if (! Mesh)
+    {
+        std::cerr << "Unable to load necessary mesh." << std::endl;
+        waitForUser();
+        return 1;
+    }
+    // Make out mesh fit within camera view
+    Mesh->resizeMesh(SVector3(1.5));
+    // And center it at the origin
+    Mesh->centerMeshByExtents(SVector3(0));
 
-	Texture = CTextureLoader::loadTexture("spaceshiptexture.bmp");
-	if (! Texture)
-	{
-		std::cerr << "Unable to load necessary texture." << std::endl;
-		waitForUser();
-		return 1;
-	}
+    CImage * Image = CImageLoader::loadImage("spaceshiptexture.bmp");
+    if (! Image)
+    {
+        std::cerr << "Unable to load necessary texture." << std::endl;
+        waitForUser();
+        return 1;
+    }
+    Texture = new CTexture(Image);
 
 	// Now load our mesh into a VBO, retrieving the number of triangles and the handles to each VBO
 	Renderable = new CRenderable(* Mesh);
