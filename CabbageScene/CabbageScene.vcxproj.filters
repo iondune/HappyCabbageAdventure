@@ -36,6 +36,7 @@
     <ClInclude Include="CTexturedMeshRenderable.h">
       <Filter>Scene Objects</Filter>
     </ClInclude>
+    <ClInclude Include="CSceneManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CImage.cpp">
@@ -71,6 +72,7 @@
     <ClCompile Include="CTexturedMeshRenderable.cpp">
       <Filter>Scene Objects</Filter>
     </ClCompile>
+    <ClCompile Include="CSceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />

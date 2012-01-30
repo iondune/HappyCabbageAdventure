@@ -61,6 +61,7 @@ void CApplication::init(SPosition2 const & windowSize)
 
 	EventManager = new CEventManager();
 	StateManager = new CStateManager();
+    SceneManager = new CSceneManager();
 
 	EventManager->OnGameTickStart.connect(StateManager, & CStateManager::OnGameTickStart);
 	EventManager->OnGameTickEnd.connect(StateManager, & CStateManager::OnGameTickEnd);
@@ -85,6 +86,11 @@ CEventManager & CApplication::getEventManager()
 CStateManager & CApplication::getStateManager()
 {
 	return * StateManager;
+}
+
+CSceneManager & CApplication::getSceneManager()
+{
+	return * SceneManager;
 }
 
 void CApplication::run()

@@ -2,6 +2,7 @@
 #define _CABBAGECOLLIDER_CAPPLICATION_H_INCLUDED_
 
 #include "../CabbageCore/CabbageCore.h"
+#include "../CabbageScene/CabbageScene.h"
 
 #include "CEventManager.h"
 #include "CStateManager.h"
@@ -12,6 +13,7 @@ class CApplication
     // Managers
     CEventManager * EventManager;
     CStateManager * StateManager;
+    CSceneManager * SceneManager;
 
     // Attributes
     SPosition2 WindowSize;
@@ -30,6 +32,7 @@ public:
 
     CEventManager & getEventManager();
     CStateManager & getStateManager();
+    CSceneManager & getSceneManager();
 
     void run();
 

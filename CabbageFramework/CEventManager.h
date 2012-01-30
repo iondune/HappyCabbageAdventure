@@ -9,8 +9,8 @@
 
 struct SKeyboardEvent
 {
-	bool Pressed;
-	SDLKey Key;
+    bool Pressed;
+    SDLKey Key;
 };
 
 struct SMouseEvent

@@ -13,5 +13,6 @@
 #include "CImageLoader.h"
 #include "CTexture.h"
 #include "SVertex.h"
+#include "CSceneManager.h"
 
 #endif
