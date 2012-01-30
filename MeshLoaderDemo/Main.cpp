@@ -35,7 +35,7 @@ void waitForUser()
 // Shader and Mesh utility classes
 CShader * Shader;
 CMesh * Mesh;
-CTexturedRenderable * Renderable;
+CTexturedMeshRenderable * Renderable;
 CTexture * Texture;
 
 // Information about mesh
@@ -57,64 +57,64 @@ float ScaleTimer;
 // OpenGL initialization
 void Initialize()
 {
-	glClearColor(0.6f, 0.3f, 0.9f, 1.0f);
- 	
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL);
+    glClearColor(0.6f, 0.3f, 0.9f, 1.0f);
 
-	// Start keeping track of time
-	Time0 = SDL_GetTicks();
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+
+    // Start keeping track of time
+    Time0 = SDL_GetTicks();
 }
 
 // Manages time independant movement and draws the VBO
 void Display()
 {
-	// Determine time since last draw
-	Time1 = SDL_GetTicks();
-	float Delta = (float) (Time1 - Time0) / 1000.f;
-	Time0 = Time1;
+    // Determine time since last draw
+    Time1 = SDL_GetTicks();
+    float Delta = (float) (Time1 - Time0) / 1000.f;
+    Time0 = Time1;
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
-	gluLookAt(
-		0, 0, 2, 
-		0, 0, 0, 
-		0, 1, 0);
+    gluLookAt(
+        0, 0, 2, 
+        0, 0, 0, 
+        0, 1, 0);
 
-	// Animates the loaded model by modulating it's size
-	static float const ScaleSpeed = 1.f;
-	static float const ScaleThreshold = 0.4f;
-	ScaleTimer += Delta * ScaleSpeed;
-	Scale = SVector3(1) + ScaleThreshold * cos(ScaleTimer);
+    // Animates the loaded model by modulating it's size
+    static float const ScaleSpeed = 1.f;
+    static float const ScaleThreshold = 0.4f;
+    ScaleTimer += Delta * ScaleSpeed;
+    Scale = SVector3(1) + ScaleThreshold * cos(ScaleTimer);
 
-	// ...and by spinning it around
-	static float const RotationSpeed = 50.f;
-	Rotation.X += RotationSpeed*Delta;
-	Rotation.Y += RotationSpeed*Delta*2;
+    // ...and by spinning it around
+    static float const RotationSpeed = 50.f;
+    Rotation.X += RotationSpeed*Delta;
+    Rotation.Y += RotationSpeed*Delta*2;
 
-	Renderable->setTranslation(Translation);
-	Renderable->setScale(Scale);
-	Renderable->setRotation(Rotation);
+    Renderable->setTranslation(Translation);
+    Renderable->setScale(Scale);
+    Renderable->setRotation(Rotation);
 
-	Renderable->draw();
+    Renderable->draw();
 
-	SDL_GL_SwapBuffers();
+    SDL_GL_SwapBuffers();
 }
 
-void Reshape(int width, int height)								
+void Reshape(int width, int height)
 {
-	glViewport(0, 0, (GLsizei)(width), (GLsizei)(height));
-	WindowWidth = width;
-	WindowHeight = height;
+    glViewport(0, 0, (GLsizei)(width), (GLsizei)(height));
+    WindowWidth = width;
+    WindowHeight = height;
 
-	// Set camera projection
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	float AspectRatio = (float)WindowWidth / (float)WindowHeight;
-	gluPerspective(60.0, AspectRatio, 0.01, 100.0);
+    // Set camera projection
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    float AspectRatio = (float)WindowWidth / (float)WindowHeight;
+    gluPerspective(60.0, AspectRatio, 0.01, 100.0);
 }
 
 
@@ -217,7 +217,7 @@ int main(int argc, char * argv[])
     Texture = new CTexture(Image);
 
     // Now load our mesh into a VBO, retrieving the number of triangles and the handles to each VBO
-    Renderable = new CTexturedRenderable(* Mesh);
+    Renderable = new CTexturedMeshRenderable(* Mesh);
     Renderable->setTexture(Texture);
     Renderable->setShader(Shader);
 

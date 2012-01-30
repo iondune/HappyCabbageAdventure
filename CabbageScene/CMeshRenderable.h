@@ -9,7 +9,7 @@
 #include "IRenderable.h"
 
 
-class CTexturedRenderable : public IRenderable
+class CMeshRenderable : public IRenderable
 {
 
 protected:
@@ -17,22 +17,18 @@ protected:
     GLuint PositionBufferHandle;
     GLuint ColorBufferHandle;
     GLuint IndexBufferHandle;
-    GLuint TexCoordBufferHandle;
 
     GLsizei IndexCount;
 
     CShader * Shader;
-    CTexture * Texture;
 
 public:
 
-    CTexturedRenderable(CMesh const & Mesh);
+    CMeshRenderable(CMesh const & Mesh);
 
     CShader * getShader();
-    CTexture * getTexture();
 
     void setShader(CShader * shader);
-    void setTexture(CTexture * texture);
 
     virtual void draw();
 
