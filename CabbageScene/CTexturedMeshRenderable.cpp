@@ -1,10 +1,10 @@
-#include "CTexturedRenderable.h"
+#include "CTexturedMeshRenderable.h"
 
 
 #include"CShaderContext.h"
 
 
-CTexturedRenderable::CTexturedRenderable(CMesh const & Mesh)
+CTexturedMeshRenderable::CTexturedMeshRenderable(CMesh const & Mesh)
 {
 	std::vector<GLfloat> Vertices;
 	std::vector<GLfloat> Colors;
@@ -44,28 +44,28 @@ CTexturedRenderable::CTexturedRenderable(CMesh const & Mesh)
 	IndexCount = Indices.size();
 }
 
-CShader * CTexturedRenderable::getShader()
+CShader * CTexturedMeshRenderable::getShader()
 {
     return Shader;
 }
 
-CTexture * CTexturedRenderable::getTexture()
+CTexture * CTexturedMeshRenderable::getTexture()
 {
     return Texture;
 }
 
 
-void CTexturedRenderable::setShader(CShader * shader)
+void CTexturedMeshRenderable::setShader(CShader * shader)
 {
     Shader = shader;
 }
 
-void CTexturedRenderable::setTexture(CTexture * texture)
+void CTexturedMeshRenderable::setTexture(CTexture * texture)
 {
     Texture = texture;
 }
 
-void CTexturedRenderable::draw()
+void CTexturedMeshRenderable::draw()
 {
     CShaderContext ShaderContext(* Shader);
     ShaderContext.bindBuffer("aPosition", PositionBufferHandle, 3);

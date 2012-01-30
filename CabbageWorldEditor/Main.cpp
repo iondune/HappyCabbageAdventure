@@ -10,6 +10,7 @@
 #pragma comment(lib, "SDL.lib")
 #pragma comment(lib, "SDLmain.lib")
 #pragma comment(lib, "../lib/CabbageFramework.lib")
+#pragma comment(lib, "../lib/CabbageScene.lib")
 
 #include <GL/glew.h>
 #include "../CabbageFramework/CApplication.h"

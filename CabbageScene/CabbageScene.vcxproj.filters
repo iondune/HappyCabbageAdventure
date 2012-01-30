@@ -30,9 +30,13 @@
     <ClInclude Include="IRenderable.h">
       <Filter>Scene Objects</Filter>
     </ClInclude>
-    <ClInclude Include="CTexturedRenderable.h">
+    <ClInclude Include="CMeshRenderable.h">
       <Filter>Scene Objects</Filter>
     </ClInclude>
+    <ClInclude Include="CTexturedMeshRenderable.h">
+      <Filter>Scene Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CImage.cpp">
@@ -62,9 +66,13 @@
     <ClCompile Include="IRenderable.cpp">
       <Filter>Scene Objects</Filter>
     </ClCompile>
-    <ClCompile Include="CTexturedRenderable.cpp">
+    <ClCompile Include="CMeshRenderable.cpp">
       <Filter>Scene Objects</Filter>
     </ClCompile>
+    <ClCompile Include="CTexturedMeshRenderable.cpp">
+      <Filter>Scene Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />

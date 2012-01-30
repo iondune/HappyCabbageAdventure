@@ -2,9 +2,13 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="CLevelManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll" />
     <None Include="SDL.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CLevelManager.h" />
   </ItemGroup>
 </Project>
