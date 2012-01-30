@@ -15,77 +15,78 @@ struct SKeyboardEvent
 
 struct SMouseEvent
 {
-	class EButton
-	{
-		
-	public:
+    class EButton
+    {
 
-		enum Domain
-		{
-			Left,
-			Right,
-			Middle
-		};
+    public:
 
-		Domain Value;
+    enum Domain
+    {
+        Left,
+        Right,
+        Middle
+    };
 
-		EButton();
+    Domain Value;
 
-		EButton(Domain const value);
+    EButton();
 
-	};
+    EButton(Domain const value);
 
-	class EType
-	{
-		
-	public:
+    };
 
-		enum Domain
-		{
-			Move,
-			Click
-		};
+    class EType
+    {
 
-		Domain Value;
+    public:
 
-		EType();
+    enum Domain
+    {
+        Move,
+        Click
+    };
 
-		EType(Domain const value);
+    Domain Value;
 
-	};
+    EType();
 
-	SPosition2 Location, Movement;
-	EButton Button;
-	EType Type;
-	bool Pressed;
+    EType(Domain const value);
+
+    };
+
+    SPosition2 Location, Movement;
+    EButton Button;
+    EType Type;
+    bool Pressed;
+
 };
 
 class CEventManager
 {
 
-	friend class CApplication;
+    friend class CApplication;
 
-	CEventManager();
+    CEventManager();
 
-	bool KeyStates[SDLK_LAST];
-	SPosition2 MousePositionState;
+    bool KeyStates[SDLK_LAST];
+    SPosition2 MousePositionState;
 
 public:	
 
-	sigslot::signal1<SKeyboardEvent const &> OnKeyboardEvent;
-	sigslot::signal1<SMouseEvent const &> OnMouseEvent;
+    sigslot::signal1<SKeyboardEvent const &> OnKeyboardEvent;
+    sigslot::signal1<SMouseEvent const &> OnMouseEvent;
 
-	sigslot::signal1<float const> OnGameTickStart;
-	sigslot::signal1<float const> OnGameTickEnd;
+    sigslot::signal1<float const> OnGameTickStart;
+    sigslot::signal1<float const> OnGameTickEnd;
 
-	sigslot::signal1<float const> OnRenderStart;
-	sigslot::signal1<float const> OnRenderEnd;
+    sigslot::signal1<float const> OnRenderStart;
+    sigslot::signal1<float const> OnRenderEnd;
 
-	sigslot::signal0<> OnApplicationExit;
+    sigslot::signal0<> OnApplicationExit;
 
-	bool const (& IsKeyDown)[SDLK_LAST];
+    bool const (& IsKeyDown)[SDLK_LAST];
 
-	SPosition2 const & MouseLocation;
+    SPosition2 const & MouseLocation;
 
 };
 
