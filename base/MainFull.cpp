@@ -1,6 +1,10 @@
 #include "header.h"
 
 #define TREE_Y_OFFSET 2.1
+#define ANGLE(j,k) (j==2?3:(j?2:(k?1:0)))
+#define NEXT(j) (j==2?0:(j?2:1))
+int aDown = 0, dDown = 0, spaceDown = 0, wDown = 0, sDown = 0;
+int backwardsView = 0, overView = 0;
 void addTrees(int numTrees, obj_type object) {
    for (int n = 0; n < numTrees; n++) {
       glPushMatrix();
@@ -146,7 +150,6 @@ void ViewInit( void ) {
 }
 
 
-int kDown = 0;
 double fps = 0.0;
 // Manages time independant movement and draws the VBO
 void Display()
@@ -161,13 +164,13 @@ void Display()
    PlayerView->setGround(Engine->getHeightBelow(Player));
 
    glMatrixMode(GL_MODELVIEW);
-   PlayerView->establishCamera(kDown);
+   PlayerView->establishCamera(ANGLE(overView, backwardsView));
 
    // draw the ground plane
    glDisable(GL_LIGHTING);
    drawPlane();
-   drawSky(kDown);
-   drawDirt(kDown);
+   drawSky(backwardsView);
+   drawDirt(backwardsView);
    glEnable(GL_LIGHTING);
    setMaterial(BROWN_MATTE);
 
@@ -257,7 +260,7 @@ void Display()
    if (SDL_GetTicks() != startclock)
       currentFPS = 1000.f / float(SDL_GetTicks() - startclock);
    freetype::print(our_font, 10, SCREEN_HEIGHT-40, "Elapsed Time: %u\n"
-         "FPS: %0.0f \nHealth: %d", elapsedTime/1000, fps, GameplayManager->getPlayerHealth());
+         "FPS: %0.0f \nHealth: %d\nspaceDown: %d\nwDown: %d\nsDown: %d\noverView: %d ", elapsedTime/1000, fps, GameplayManager->getPlayerHealth(), spaceDown, wDown, sDown, overView);
 
    if (! GameplayManager->isPlayerAlive())
       freetype::print(our_font, 50, SCREEN_HEIGHT - 240, "GAME OVER! YOU ARE DEAD");
@@ -422,7 +425,6 @@ int main(int argc, char * argv[])
 
    SDL_PauseAudio(0);
 
-   int aDown = 0, dDown = 0, spaceDown = 0;
    while(!finished)
    {
       //fps.start();
@@ -468,8 +470,10 @@ int main(int argc, char * argv[])
 
          if(event.type == SDL_KEYDOWN){
             if(event.key.keysym.sym == SDLK_w){
+               wDown = 1;
             }
             if(event.key.keysym.sym == SDLK_s){
+               sDown = 1;
             }
             if(event.key.keysym.sym == SDLK_a){
                aDown = 1;
@@ -478,20 +482,25 @@ int main(int argc, char * argv[])
                dDown = 1;
             }
             if(event.key.keysym.sym == SDLK_k){
-               kDown = 1;
+               backwardsView = !backwardsView;
+            }
+            if(event.key.keysym.sym == SDLK_j){
+               overView = NEXT(overView);
             }
             if(event.key.keysym.sym == SDLK_SPACE) {
                spaceDown = 1;
             }
-            if (event.key.keysym.sym == SDLK_ESCAPE) {
+            if(event.key.keysym.sym == SDLK_ESCAPE) {
                finished = true;
             }
          } 
 
          if(event.type == SDL_KEYUP){
             if(event.key.keysym.sym == SDLK_w){
+               wDown = 0;
             }
             if(event.key.keysym.sym == SDLK_s){
+               sDown = 0;
             }
             if(event.key.keysym.sym == SDLK_a){
                aDown = 0;
@@ -500,9 +509,10 @@ int main(int argc, char * argv[])
                dDown = 0;
             }
             if(event.key.keysym.sym == SDLK_k){
-               kDown = 0;
             }
-            if (event.key.keysym.sym == SDLK_SPACE){
+            if(event.key.keysym.sym == SDLK_j){
+            }
+            if(event.key.keysym.sym == SDLK_SPACE){
                spaceDown = 0;
             }
          }
@@ -518,24 +528,44 @@ int main(int argc, char * argv[])
 
       if (GameplayManager->isPlayerAlive())
       {
-         if(dDown && aDown) {
-            Player->setAction(CActor::EActionType::None);
-            PlayerView->setState(CPlayerView::State::Standing);
-         }
-         else if((aDown && !kDown) || (dDown && kDown)) {
-            Player->setAction(CActor::EActionType::MoveLeft);
-            PlayerView->setState(CPlayerView::State::MovingLeft);
-         }
-         else if((dDown && !kDown) || (aDown && kDown)) {
-            Player->setAction(CActor::EActionType::MoveRight);
-            PlayerView->setState(CPlayerView::State::MovingRight);
+         if(!overView) {
+            if(dDown && aDown) {
+               Player->setAction(CActor::EActionType::None);
+               PlayerView->setState(CPlayerView::State::Standing);
+            }
+            else if((aDown && !backwardsView) || (dDown && backwardsView)) {
+               Player->setAction(CActor::EActionType::MoveLeft);
+               PlayerView->setState(CPlayerView::State::MovingLeft);
+            }
+            else if((dDown && !backwardsView) || (aDown && backwardsView)) {
+               Player->setAction(CActor::EActionType::MoveRight);
+               PlayerView->setState(CPlayerView::State::MovingRight);
+            }
+            else {
+               Player->setAction(CActor::EActionType::None);
+               PlayerView->setState(CPlayerView::State::Standing);
+            }
          }
          else {
-            Player->setAction(CActor::EActionType::None);
-            PlayerView->setState(CPlayerView::State::Standing);
+            if(sDown && wDown) {
+               Player->setAction(CActor::EActionType::None);
+               PlayerView->setState(CPlayerView::State::Standing);
+            }
+            else if(((wDown && overView == 1)) || (sDown && overView == 2)) {
+               Player->setAction(CActor::EActionType::MoveRight);
+               PlayerView->setState(CPlayerView::State::MovingRight);
+            }
+            else if((sDown && overView == 1) || (wDown && overView == 2)) {
+               Player->setAction(CActor::EActionType::MoveLeft);
+               PlayerView->setState(CPlayerView::State::MovingLeft);
+            }
+            else {
+               Player->setAction(CActor::EActionType::None);
+               PlayerView->setState(CPlayerView::State::Standing);
+            }
          }
 
-         Player->setJumping(spaceDown != 0);
+         Player->setJumping(spaceDown);
       }
       else
       {
