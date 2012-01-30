@@ -9,29 +9,29 @@
 class CApplication
 {
 
-	// Managers
-	CEventManager * EventManager;
-	CStateManager * StateManager;
+    // Managers
+    CEventManager * EventManager;
+    CStateManager * StateManager;
 
-	// Attributes
-	SPosition2 WindowSize;
+    // Attributes
+    SPosition2 WindowSize;
 
-	// Helper functions
-	void setupRenderContext();
+    // Helper functions
+    void setupRenderContext();
 
-	// Private ctor - singleton
-	CApplication();
+    // Private ctor - singleton
+    CApplication();
 
 public:
 
-	static CApplication & get();
+    static CApplication & get();
 
-	void init(SPosition2 const & windowSize);
+    void init(SPosition2 const & windowSize);
 
-	CEventManager & getEventManager();
-	CStateManager & getStateManager();
+    CEventManager & getEventManager();
+    CStateManager & getStateManager();
 
-	void run();
+    void run();
 
 };
 

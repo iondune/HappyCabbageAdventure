@@ -1,9 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="CShader.h" />
     <ClInclude Include="SVertex.h" />
-    <ClInclude Include="CRenderable.h" />
     <ClInclude Include="CabbageScene.h" />
     <ClInclude Include="CImage.h">
       <Filter>Textures</Filter>
@@ -20,10 +18,14 @@
     <ClInclude Include="CMesh.h">
       <Filter>Meshes</Filter>
     </ClInclude>
+    <ClInclude Include="CRenderable.h">
+      <Filter>Scene Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CShader.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CShader.cpp" />
-    <ClCompile Include="CRenderable.cpp" />
     <ClCompile Include="CImage.cpp">
       <Filter>Textures</Filter>
     </ClCompile>
@@ -39,6 +41,12 @@
     <ClCompile Include="CMeshLoader.cpp">
       <Filter>Meshes</Filter>
     </ClCompile>
+    <ClCompile Include="CRenderable.cpp">
+      <Filter>Scene Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CShader.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
@@ -52,6 +60,9 @@
     </Filter>
     <Filter Include="Scene Objects">
       <UniqueIdentifier>{12200784-2b7a-459c-a97f-350cbcf5a528}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{1708e28c-7514-436a-aba5-5dcab6e9442f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
