@@ -19,10 +19,7 @@
 #endif
 
 // Utility classes for loading shaders/meshes
-#include "../CabbageScene/CShader.h"
-#include "../CabbageScene/CRenderable.h"
-#include "../CabbageScene/CMeshLoader.h"
-#include "../CabbageScene/CImageLoader.h"
+#include "../CabbageScene/CabbageScene.h"
 
 // Portable version of system("PAUSE")
 void waitForUser() 

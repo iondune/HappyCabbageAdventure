@@ -1,6 +1,9 @@
 #include "CRenderable.h"
 
 
+#include"CShaderContext.h"
+
+
 CRenderable::CRenderable(CMesh const & Mesh)
 	: Scale(1)
 {

@@ -5,8 +5,11 @@
 #include "CMeshLoader.h"
 #include "CRenderable.h"
 #include "CShader.h"
+#include "CShaderLoader.h"
+#include "CShaderContext.h"
+#include "CImage.h"
+#include "CImageLoader.h"
 #include "CTexture.h"
-#include "CTextureLoader.h"
 #include "SVertex.h"
 
 #endif
