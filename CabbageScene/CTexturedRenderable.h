@@ -21,8 +21,6 @@ protected:
 
     GLsizei IndexCount;
 
-    SVector3 Translation, Rotation, Scale;
-
     CShader * Shader;
     CTexture * Texture;
 

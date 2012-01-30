@@ -216,20 +216,20 @@ int main(int argc, char * argv[])
     }
     Texture = new CTexture(Image);
 
-	// Now load our mesh into a VBO, retrieving the number of triangles and the handles to each VBO
-	Renderable = new CTexturedRenderable(* Mesh);
+    // Now load our mesh into a VBO, retrieving the number of triangles and the handles to each VBO
+    Renderable = new CTexturedRenderable(* Mesh);
     Renderable->setTexture(Texture);
     Renderable->setShader(Shader);
 
-	SDL_Event event;
+    SDL_Event event;
 
     while (1)
-	{
+    {
         /* process pending events */
         while( SDL_PollEvent( &event ) )
-		{
+        {
             switch( event.type )
-			{
+            {
 
             case SDL_QUIT:
                 exit (0);
@@ -245,8 +245,7 @@ int main(int argc, char * argv[])
         SDL_Delay( 50 );
     }
 
-	SDL_Quit();
-	
-	// Return 0, not that this will ever be called. Damn you, GLUT!
-	return 0;
+    SDL_Quit();
+    // Return 0, not that this will ever be called. Damn you, GLUT!
+    return 0;
 }
