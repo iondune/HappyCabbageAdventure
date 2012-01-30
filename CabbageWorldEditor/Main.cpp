@@ -13,6 +13,9 @@
 
 #include <GL/glew.h>
 #include "../CabbageFramework/CApplication.h"
+#include <string>
+#include "../SFML world loader/SFML world loader/levelReader.h"
+#include "../SFML world loader/SFML world loader/xmlToCode.cpp"
 
 class SampleState : public CState<SampleState>
 {
@@ -46,7 +49,22 @@ public:
 	}
 
 };
+void loadLevel(std::string const & level) 
+{
+    std::vector<plat> list;
+    std::vector<obj> character;
+    xmlLevReader(list,character, level);
 
+    for (int i = 0; i < list.size(); i++)
+    {
+        //do stuff
+    }
+    for (int i = 0; i < character.size(); i++)
+    {
+        //do stuff
+    }
+
+}
 int main(int argc, char * argv[]) 
 {
     // Setup application
