@@ -35,7 +35,7 @@ void waitForUser()
 // Shader and Mesh utility classes
 CShader * Shader;
 CMesh * Mesh;
-CRenderable * Renderable;
+CTexturedRenderable * Renderable;
 CTexture * Texture;
 
 // Information about mesh
@@ -99,7 +99,7 @@ void Display()
 	Renderable->setScale(Scale);
 	Renderable->setRotation(Rotation);
 
-	Renderable->draw(* Shader, * Texture);
+	Renderable->draw();
 
 	SDL_GL_SwapBuffers();
 }
@@ -217,7 +217,9 @@ int main(int argc, char * argv[])
     Texture = new CTexture(Image);
 
 	// Now load our mesh into a VBO, retrieving the number of triangles and the handles to each VBO
-	Renderable = new CRenderable(* Mesh);
+	Renderable = new CTexturedRenderable(* Mesh);
+    Renderable->setTexture(Texture);
+    Renderable->setShader(Shader);
 
 	SDL_Event event;
 

@@ -69,7 +69,7 @@
     <ClInclude Include="CMesh.h" />
     <ClInclude Include="CMeshLoader.h" />
     <ClInclude Include="CShader.h" />
-    <ClInclude Include="CRenderable.h" />
+    <ClInclude Include="CTexturedRenderable.h" />
     <ClInclude Include="CShaderContext.h" />
     <ClInclude Include="CShaderLoader.h" />
     <ClInclude Include="CTexture.h" />
@@ -82,7 +82,7 @@
     <ClCompile Include="CMesh.cpp" />
     <ClCompile Include="CMeshLoader.cpp" />
     <ClCompile Include="CShader.cpp" />
-    <ClCompile Include="CRenderable.cpp" />
+    <ClCompile Include="CTexturedRenderable.cpp" />
     <ClCompile Include="CShaderContext.cpp" />
     <ClCompile Include="CShaderLoader.cpp" />
     <ClCompile Include="CTexture.cpp" />

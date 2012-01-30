@@ -18,9 +18,6 @@
     <ClInclude Include="CMesh.h">
       <Filter>Meshes</Filter>
     </ClInclude>
-    <ClInclude Include="CRenderable.h">
-      <Filter>Scene Objects</Filter>
-    </ClInclude>
     <ClInclude Include="CShader.h">
       <Filter>Shaders</Filter>
     </ClInclude>
@@ -31,6 +28,9 @@
       <Filter>Shaders</Filter>
     </ClInclude>
     <ClInclude Include="IRenderable.h">
+      <Filter>Scene Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CTexturedRenderable.h">
       <Filter>Scene Objects</Filter>
     </ClInclude>
   </ItemGroup>
@@ -50,9 +50,6 @@
     <ClCompile Include="CMeshLoader.cpp">
       <Filter>Meshes</Filter>
     </ClCompile>
-    <ClCompile Include="CRenderable.cpp">
-      <Filter>Scene Objects</Filter>
-    </ClCompile>
     <ClCompile Include="CShader.cpp">
       <Filter>Shaders</Filter>
     </ClCompile>
@@ -63,6 +60,9 @@
       <Filter>Shaders</Filter>
     </ClCompile>
     <ClCompile Include="IRenderable.cpp">
+      <Filter>Scene Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CTexturedRenderable.cpp">
       <Filter>Scene Objects</Filter>
     </ClCompile>
   </ItemGroup>

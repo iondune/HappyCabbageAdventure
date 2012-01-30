@@ -11,6 +11,8 @@ protected:
 
     SVector3 Translation, Rotation, Scale;
 
+    IRenderable();
+
 public:
 
     SVector3 const & getTranslation() const;

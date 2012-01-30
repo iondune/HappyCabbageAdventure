@@ -17,19 +17,18 @@
 class CTexture
 {
 
-	friend class CTextureLoader;
-	friend class CRenderable;
-
-	GLuint TextureHandle;
-	int Width;
-	int Height;
+    GLuint TextureHandle;
+    int Width;
+    int Height;
 
 public:
 
     CTexture(CImage * image);
 
-	int const getWidth();
-	int const getHeight();
+    GLuint const getTextureHandle() const;
+
+    int const getWidth() const;
+    int const getHeight() const;
 
 };
 

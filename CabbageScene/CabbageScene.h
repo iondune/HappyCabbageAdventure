@@ -3,7 +3,8 @@
 
 #include "CMesh.h"
 #include "CMeshLoader.h"
-#include "CRenderable.h"
+#include "IRenderable.h"
+#include "CTexturedRenderable.h"
 #include "CShader.h"
 #include "CShaderLoader.h"
 #include "CShaderContext.h"

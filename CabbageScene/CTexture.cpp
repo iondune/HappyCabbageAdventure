@@ -24,12 +24,17 @@ CTexture::CTexture(CImage * image)
     gluBuild2DMipmaps(GL_TEXTURE_2D, 3, Width, Height, GL_RGB, GL_UNSIGNED_BYTE, image->getImageData());
 }
 
-int const CTexture::getWidth()
+GLuint const CTexture::getTextureHandle() const
+{
+    return TextureHandle;
+}
+
+int const CTexture::getWidth() const
 {
     return Width;
 }
 
-int const CTexture::getHeight()
+int const CTexture::getHeight() const
 {
     return Height;
 }

@@ -1,33 +1,38 @@
 #include "IRenderable.h"
 
 
+IRenderable::IRenderable()
+    : Scale(1)
+{}
+
+
 SVector3 const & IRenderable::getTranslation() const
 {
-	return Translation;
+    return Translation;
 }
 
 SVector3 const & IRenderable::getRotation() const
 {
-	return Rotation;
+    return Rotation;
 }
 
 SVector3 const & IRenderable::getScale() const
 {
-	return Scale;
+    return Scale;
 }
 
 
 void IRenderable::setTranslation(SVector3 const & translation)
 {
-	Translation = translation;
+    Translation = translation;
 }
 
 void IRenderable::setRotation(SVector3 const & rotation)
 {
-	Rotation = rotation;
+    Rotation = rotation;
 }
 
 void IRenderable::setScale(SVector3 const & scale)
 {
-	Scale = scale;
+    Scale = scale;
 }
