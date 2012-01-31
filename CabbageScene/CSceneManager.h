@@ -13,6 +13,8 @@ class CSceneManager
 
     std::list<IRenderable *> Renderables;
 
+    CCamera * ActiveCamera;
+
 public:
 
     CSceneManager();
@@ -23,6 +25,9 @@ public:
     void drawAll();
 
     IRenderable * const pickRenderable(SLine3 const & ViewLine);
+
+    CCamera * const getActiveCamera();
+    void setActiveCamera(CCamera * const activeCamera);
 
 };
 

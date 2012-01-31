@@ -34,7 +34,7 @@ public:
     void setShader(CShader * shader);
     void setTexture(CTexture * texture);
 
-    virtual void draw();
+    virtual void draw(CCamera const & Camera);
 
 };
 

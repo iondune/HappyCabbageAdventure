@@ -1,7 +1,8 @@
 #include "CMeshRenderable.h"
 
-
 #include"CShaderContext.h"
+
+#include "../CabbageCore/glm/gtc/matrix_transform.hpp"
 
 
 CMeshRenderable::CMeshRenderable(CMesh const & Mesh)
@@ -49,22 +50,21 @@ void CMeshRenderable::setShader(CShader * shader)
 }
 
 
-void CMeshRenderable::draw()
+void CMeshRenderable::draw(CCamera const & Camera)
 {
     CShaderContext ShaderContext(* Shader);
     ShaderContext.bindBuffer("aPosition", PositionBufferHandle, 3);
     ShaderContext.bindBuffer("aColor", ColorBufferHandle, 3);
     ShaderContext.bindBuffer(IndexBufferHandle);
 
-    glPushMatrix();
+    glm::mat4 Transformation = glm::translate(glm::mat4(1.0f), Translation.getGLMVector());
+    Transformation = glm::rotate(Transformation, Rotation.X, glm::vec3(1, 0, 0));
+    Transformation = glm::rotate(Transformation, Rotation.Y, glm::vec3(0, 1, 0));
+    Transformation = glm::rotate(Transformation, Rotation.Z, glm::vec3(0, 0, 1));
+    Transformation = glm::scale(Transformation, Scale.getGLMVector());
+    ShaderContext.uniform("uModelMatrix", Transformation);
+    ShaderContext.uniform("uViewMatrix", Camera.getViewMatrix());
+    ShaderContext.uniform("uProjMatrix", Camera.getProjectionMatrix());
 
-        glTranslatef(Translation.X, Translation.Y, Translation.Z);
-        glRotatef(Rotation.Z, 0, 0, 1);
-        glRotatef(Rotation.Y, 0, 1, 0);
-        glRotatef(Rotation.X, 1, 0, 0);
-        glScalef(Scale.X, Scale.Y, Scale.Z);
-
-        glDrawElements(GL_TRIANGLES, IndexCount, GL_UNSIGNED_SHORT, 0);
-
-    glPopMatrix();
+    glDrawElements(GL_TRIANGLES, IndexCount, GL_UNSIGNED_SHORT, 0);
 }

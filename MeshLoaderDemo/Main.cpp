@@ -37,6 +37,7 @@ CShader * Shader;
 CMesh * Mesh;
 CTexturedMeshRenderable * Renderable;
 CTexture * Texture;
+CCamera * Camera;
 
 // Information about mesh
 SVector3 Translation, Rotation, Scale(1);
@@ -79,10 +80,9 @@ void Display()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    gluLookAt(
-        0, 0, 2, 
-        0, 0, 0, 
-        0, 1, 0);
+    Camera->setPosition(SVector3(0, 0, 2));
+    Camera->setLookDirection(SVector3(0, 0, -1));
+    Camera->recalculateViewMatrix();
 
     // Animates the loaded model by modulating it's size
     static float const ScaleSpeed = 1.f;
@@ -99,7 +99,7 @@ void Display()
     Renderable->setScale(Scale);
     Renderable->setRotation(Rotation);
 
-    Renderable->draw();
+    Renderable->draw(* Camera);
 
     SDL_GL_SwapBuffers();
 }
@@ -111,10 +111,8 @@ void Reshape(int width, int height)
     WindowHeight = height;
 
     // Set camera projection
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
     float AspectRatio = (float)WindowWidth / (float)WindowHeight;
-    gluPerspective(60.0, AspectRatio, 0.01, 100.0);
+    Camera = new CCamera(AspectRatio, 0.01f, 100.f, 60.f);
 }
 
 
@@ -193,6 +191,9 @@ int main(int argc, char * argv[])
     Shader->loadAttribute("aColor");
     Shader->loadAttribute("aTexCoord");
     Shader->loadUniform("uTexColor");
+    Shader->loadUniform("uModelMatrix");
+    Shader->loadUniform("uViewMatrix");
+    Shader->loadUniform("uProjMatrix");
 
     // Attempt to load mesh
     CMesh * Mesh = CMeshLoader::load3dsMesh("spaceship.3ds");

@@ -30,7 +30,7 @@ public:
 
     void setShader(CShader * shader);
 
-    virtual void draw();
+    virtual void draw(CCamera const & Camera);
 
 };
 

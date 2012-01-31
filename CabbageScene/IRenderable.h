@@ -3,6 +3,7 @@
 
 #include "../CabbageCore/SVector3.h"
 
+#include "CCamera.h"
 
 class IRenderable
 {
@@ -23,7 +24,7 @@ public:
     void setRotation(SVector3 const & rotation);
     void setScale(SVector3 const & scale);
 
-    virtual void draw() =0;
+    virtual void draw(CCamera const & Camera) =0;
 
 };
 

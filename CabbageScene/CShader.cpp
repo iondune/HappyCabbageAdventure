@@ -13,7 +13,7 @@ CShader::CShader()
 
 bool const CShader::loadAttribute(std::string const & label)
 {
-	GLuint AttributeHandle = glGetAttribLocation(Handle, label.c_str());
+	GLint AttributeHandle = glGetAttribLocation(Handle, label.c_str());
 
 	if (AttributeHandle < 0)
 	{
@@ -27,7 +27,7 @@ bool const CShader::loadAttribute(std::string const & label)
 
 bool const CShader::loadUniform(std::string const & label)
 {
-	GLuint UniformHandle = glGetUniformLocation(Handle, label.c_str());
+	GLint UniformHandle = glGetUniformLocation(Handle, label.c_str());
 
 	if (UniformHandle < 0)
 	{

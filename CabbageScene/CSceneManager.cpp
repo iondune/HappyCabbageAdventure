@@ -4,7 +4,9 @@
 
 
 CSceneManager::CSceneManager()
+    : ActiveCamera(0)
 {
+    ActiveCamera = new CCamera();
 }
 
 void CSceneManager::addRenderable(IRenderable * Renderable)
@@ -19,11 +21,23 @@ void CSceneManager::removeRenderable(IRenderable * Renderable)
 
 void CSceneManager::drawAll()
 {
+    ActiveCamera->recalculateViewMatrix();
+
     for (std::list<IRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
-        (* it)->draw();
+        (* it)->draw(* ActiveCamera);
 }
 
 IRenderable * const CSceneManager::pickRenderable(SLine3 const & ViewLine)
 {
     return 0;
+}
+
+CCamera * const CSceneManager::getActiveCamera()
+{
+    return ActiveCamera;
+}
+
+void CSceneManager::setActiveCamera(CCamera * const activeCamera)
+{
+    ActiveCamera = activeCamera;
 }

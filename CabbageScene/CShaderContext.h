@@ -3,6 +3,8 @@
 
 #include "CShader.h"
 
+#include "../CabbageCore/glm/glm.hpp"
+
 class CShaderContext
 {
 
@@ -35,6 +37,7 @@ public:
 
     void uniform(std::string const & label, float const uniform);
     void uniform(std::string const & label, int const uniform);
+    void uniform(std::string const & labal, glm::mat4 const & uniform);
 
 };
 

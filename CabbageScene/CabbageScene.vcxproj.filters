@@ -37,6 +37,9 @@
       <Filter>Scene Objects</Filter>
     </ClInclude>
     <ClInclude Include="CSceneManager.h" />
+    <ClInclude Include="CCamera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CImage.cpp">
@@ -73,6 +76,9 @@
       <Filter>Scene Objects</Filter>
     </ClCompile>
     <ClCompile Include="CSceneManager.cpp" />
+    <ClCompile Include="CCamera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
@@ -89,6 +95,9 @@
     </Filter>
     <Filter Include="Shaders">
       <UniqueIdentifier>{1708e28c-7514-436a-aba5-5dcab6e9442f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{c1d26830-6476-405b-8d0a-3cce26f3f79b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

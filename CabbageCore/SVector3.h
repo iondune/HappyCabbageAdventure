@@ -3,6 +3,8 @@
 
 #include <cmath>
 
+#include "glm/glm.hpp"
+
 class SVector3
 {
 
@@ -21,6 +23,11 @@ public:
 	SVector3(float in_x, float in_y, float in_z)
 		: X(in_x), Y(in_y), Z(in_z)
 	{}
+
+    glm::vec3 const getGLMVector() const
+    {
+        return glm::vec3(X, Y, Z);
+    }
 
 	float const operator[] (unsigned int i) const
 	{
