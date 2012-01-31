@@ -1,0 +1,1 @@
+gcc -g test.c `sdl-config --cflags --libs` -L$HOME/cpe476/happycabbageadventure/lib -Wl,-rpath=$HOME/cpe476/happycabbageadventure/lib -lSDL_mixer
