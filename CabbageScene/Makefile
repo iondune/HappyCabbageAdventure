@@ -1,4 +1,4 @@
-FILES = CMesh.cpp CMeshLoader.cpp CRenderable.cpp CShader.cpp CTexture.cpp CTextureLoader.cpp
+FILES = CMesh.cpp CMeshLoader.cpp IRenderable.cpp CShader.cpp CTexture.cpp CImageLoader.cpp CImage.cpp CShaderLoader.cpp CCamera.cpp CLightedTexturedMeshRenderable.cpp CShaderContext.cpp
 
 OFILES = $(FILES:%.cpp=%.o)
 
@@ -11,11 +11,29 @@ all: ../lib/libCabbageScene.a
 CMesh.o: CMesh.cpp
 	g++ -o CMesh.o CMesh.cpp -c $(DIRECTORIES) $(OPENGL)
 
+CShaderContext.o: CShaderContext.cpp
+	g++ -o CShaderContext.o CShaderContext.cpp -c $(DIRECTORIES) $(OPENGL)
+
+
+CShaderLoader.o: CShaderLoader.cpp
+	g++ -o CShaderLoader.o CShaderLoader.cpp -c $(DIRECTORIES) $(OPENGL)
+
+CCamera.o: CCamera.cpp
+	g++ -o CCamera.o CCamera.cpp -c $(DIRECTORIES) $(OPENGL)
+
+CLightedTexturedMeshRenderable.o: CLightedTexturedMeshRenderable.cpp
+	g++ -o CLightedTexturedMeshRenderable.o CLightedTexturedMeshRenderable.cpp -c $(DIRECTORIES) $(OPENGL)
+
+
+
+CImage.o: CImage.cpp
+	g++ -o CImage.o CImage.cpp -c $(DIRECTORIES) $(OPENGL)
+
 CMeshLoader.o: CMeshLoader.cpp
 	g++ -o CMeshLoader.o CMeshLoader.cpp -c $(DIRECTORIES) $(OPENGL)
 
-CRenderable.o: CRenderable.cpp
-	g++ -o CRenderable.o CRenderable.cpp -c $(DIRECTORIES) $(OPENGL)
+IRenderable.o: IRenderable.cpp
+	g++ -o IRenderable.o IRenderable.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CShader.o: CShader.cpp
 	g++ -o CShader.o CShader.cpp -c $(DIRECTORIES) $(OPENGL)
@@ -23,8 +41,8 @@ CShader.o: CShader.cpp
 CTexture.o: CTexture.cpp
 	g++ -o CTexture.o CTexture.cpp -c $(DIRECTORIES) $(OPENGL)
 
-CTextureLoader.o: CTextureLoader.cpp
-	g++ -o CTextureLoader.o CTextureLoader.cpp -c $(DIRECTORIES) $(OPENGL)
+CImageLoader.o: CImageLoader.cpp
+	g++ -o CImageLoader.o CImageLoader.cpp -c $(DIRECTORIES) $(OPENGL)
 
 ../lib/libCabbageScene.a: $(OFILES)
 	rm -f $@
