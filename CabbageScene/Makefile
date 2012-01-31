@@ -14,7 +14,6 @@ CMesh.o: CMesh.cpp
 CShaderContext.o: CShaderContext.cpp
 	g++ -o CShaderContext.o CShaderContext.cpp -c $(DIRECTORIES) $(OPENGL)
 
-
 CShaderLoader.o: CShaderLoader.cpp
 	g++ -o CShaderLoader.o CShaderLoader.cpp -c $(DIRECTORIES) $(OPENGL)
 
@@ -23,8 +22,6 @@ CCamera.o: CCamera.cpp
 
 CLightedTexturedMeshRenderable.o: CLightedTexturedMeshRenderable.cpp
 	g++ -o CLightedTexturedMeshRenderable.o CLightedTexturedMeshRenderable.cpp -c $(DIRECTORIES) $(OPENGL)
-
-
 
 CImage.o: CImage.cpp
 	g++ -o CImage.o CImage.cpp -c $(DIRECTORIES) $(OPENGL)

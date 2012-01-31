@@ -1,34 +1,30 @@
 ROOT_CABBAGE_DIR=../
-SOURCES=MainFull.cpp ../CabbageCollider/CActor.cpp ../CabbageCollider/CCollideable.cpp ../CabbageCollider/CObject.cpp CPlayerView.cpp Materials.cpp 3dsloader/3dsloader.cpp FreeType.cpp
-OBJECTS=`echo "${SOURCES}" | sed "s/\.cpp/\.o/g" | sed "s/ [^ ]*\// /g"`
-OUTPUT_NAME=cabbage
+SOURCES=MainFull.cpp CPlayerView.cpp Materials.cpp 3dsloader/3dsloader.cpp FreeType.cpp
+OBJECTS=$(SOURCES:%.cpp=%.o)
+CABBAGE=-L../lib/ -lCabbageCollider
 
-all: MainFull.o CActor.o CCollideable.o CObject.o CPlayerView.o Materials.o 3dsloader.o FreeType.o
-	g++ ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL -lglut `sdl-config --cflags` `freetype-config --libs` -g -o ${OUTPUT_NAME} 
+all: cabbage 
 
-#For printing out ${OBJECTS} to paste them after all:
-print:
-	echo ${OBJECTS}
+cabbage: ${OBJECTS}
+	g++ ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL -lglut `sdl-config --cflags` ${CABBAGE} `freetype-config --libs` -g -o $@
 
 MainFull.o: MainFull.cpp draw.h header.h
 	g++ `sdl-config --cflags` `freetype-config --cflags` -c MainFull.cpp
-CActor.o: ../CabbageCollider/CActor.cpp ../CabbageCollider/CActor.h
-	g++ -c ../CabbageCollider/CActor.cpp
-CCollideable.o: ../CabbageCollider/CCollideable.cpp ../CabbageCollider/CCollideable.h
-	g++ -c ../CabbageCollider/CCollideable.cpp
-CObject.o: ../CabbageCollider/CObject.cpp ../CabbageCollider/CObject.h 
-	g++ -c ../CabbageCollider/CObject.cpp 
 CPlayerView.o: CPlayerView.cpp CPlayerView.h
 	g++ -c CPlayerView.cpp
 Materials.o: Materials.cpp Materials.h
 	g++ -c Materials.cpp
 3dsloader.o: 3dsloader/3dsloader.cpp 3dsloader/3dsloader.h
 	g++ `sdl-config --cflags` -c 3dsloader/3dsloader.cpp
+3dsloader/3dsloader.o: 3dsloader.o
+	cp 3dsloader.o 3dsloader/3dsloader.o
 FreeType.o: FreeType.cpp FreeType.h
 	g++ `freetype-config --cflags` -c FreeType.cpp
 
 clean:
-	rm *.o a.out cabbage
+	rm *.o a.out cabbage 3dsloader/3dsloader.o
 
-mingw: MainFull.o CActor.o CCollideable.o CObject.o CPlayerView.o Materials.o 3dsloader.o FreeType.o
-	g++ `sdl-config --cflags` -mwindows ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lopengl32 -lglu32 -lglut32 `sdl-config --libs` `freetype-config --libs` -g -L/lib/ -lglew32 -o ${OUTPUT_NAME}
+mingw: cabbage.exe
+
+cabbage.exe: ${OBJECTS}
+	g++ `sdl-config --cflags` -mwindows ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lopengl32 -lglu32 -lglut32 `sdl-config --libs` ${CABBAGE} `freetype-config --libs` -g -L/lib/ -lglew32 -o $@ 
