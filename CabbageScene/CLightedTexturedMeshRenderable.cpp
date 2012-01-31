@@ -1,13 +1,14 @@
-#include "CTexturedMeshRenderable.h"
+#include "CLightedTexturedMeshRenderable.h"
 
 #include"CShaderContext.h"
 
 #include "../CabbageCore/glm/gtc/matrix_transform.hpp"
 
 
-CTexturedMeshRenderable::CTexturedMeshRenderable(CMesh const & Mesh)
+CLightedTexturedMeshRenderable::CLightedTexturedMeshRenderable(CMesh const & Mesh)
 {
     std::vector<GLfloat> Vertices;
+    std::vector<GLfloat> Normals;
     std::vector<GLfloat> Colors;
     std::vector<GLushort> Indices;
     std::vector<GLfloat> TexCoords;
@@ -16,6 +17,8 @@ CTexturedMeshRenderable::CTexturedMeshRenderable(CMesh const & Mesh)
     {
         for (unsigned int j = 0; j < 3; ++ j)
             Vertices.push_back(Mesh.Vertices[i].Position[j]);
+        for (unsigned int j = 0; j < 3; ++ j)
+            Normals.push_back(Mesh.Vertices[i].Normal[j]);
         for (unsigned int j = 0; j < 3; ++ j)
             Colors.push_back(Mesh.Vertices[i].Color[j]);
         for (unsigned int j = 0; j < 2; ++ j)
@@ -29,6 +32,10 @@ CTexturedMeshRenderable::CTexturedMeshRenderable(CMesh const & Mesh)
     glGenBuffers(1, & PositionBufferHandle);
     glBindBuffer(GL_ARRAY_BUFFER, PositionBufferHandle);
     glBufferData(GL_ARRAY_BUFFER, Vertices.size()*sizeof(GLfloat), & Vertices.front(), GL_STATIC_DRAW);
+
+    glGenBuffers(1, & NormalBufferHandle);
+    glBindBuffer(GL_ARRAY_BUFFER, NormalBufferHandle);
+    glBufferData(GL_ARRAY_BUFFER, Normals.size()*sizeof(GLfloat), & Normals.front(), GL_STATIC_DRAW);
 
     glGenBuffers(1, & ColorBufferHandle);
     glBindBuffer(GL_ARRAY_BUFFER, ColorBufferHandle);
@@ -45,31 +52,32 @@ CTexturedMeshRenderable::CTexturedMeshRenderable(CMesh const & Mesh)
     IndexCount = Indices.size();
 }
 
-CShader * CTexturedMeshRenderable::getShader()
+CShader * CLightedTexturedMeshRenderable::getShader()
 {
     return Shader;
 }
 
-CTexture * CTexturedMeshRenderable::getTexture()
+CTexture * CLightedTexturedMeshRenderable::getTexture()
 {
     return Texture;
 }
 
 
-void CTexturedMeshRenderable::setShader(CShader * shader)
+void CLightedTexturedMeshRenderable::setShader(CShader * shader)
 {
     Shader = shader;
 }
 
-void CTexturedMeshRenderable::setTexture(CTexture * texture)
+void CLightedTexturedMeshRenderable::setTexture(CTexture * texture)
 {
     Texture = texture;
 }
 
-void CTexturedMeshRenderable::draw(CCamera const & Camera)
+void CLightedTexturedMeshRenderable::draw(CCamera const & Camera)
 {
     CShaderContext ShaderContext(* Shader);
     ShaderContext.bindBuffer("aPosition", PositionBufferHandle, 3);
+    ShaderContext.bindBuffer("aNormal", PositionBufferHandle, 3);
     ShaderContext.bindBuffer("aColor", ColorBufferHandle, 3);
     ShaderContext.bindBuffer("aTexCoord", TexCoordBufferHandle, 2);
     ShaderContext.bindBuffer(IndexBufferHandle);

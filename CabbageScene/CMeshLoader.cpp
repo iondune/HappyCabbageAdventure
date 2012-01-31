@@ -123,6 +123,9 @@ CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
                 //printf("Number of polygons: %d\n",l_qty); 
                 for (i=0; i<l_qty; i++)
                 {
+                    Mesh->Triangles[i].Indices[0] = 0;
+                    Mesh->Triangles[i].Indices[1] = 0;
+                    Mesh->Triangles[i].Indices[2] = 0;
 					fread (& Mesh->Triangles[i].Indices[0], sizeof (unsigned short), 1, l_file);
 					//printf("Polygon point a: %d\n", Mesh->Triangles[i].Indices[0]);
 					fread (& Mesh->Triangles[i].Indices[1], sizeof (unsigned short), 1, l_file);

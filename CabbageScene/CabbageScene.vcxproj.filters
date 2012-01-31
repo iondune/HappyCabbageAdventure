@@ -40,6 +40,9 @@
     <ClInclude Include="CCamera.h">
       <Filter>Camera</Filter>
     </ClInclude>
+    <ClInclude Include="CLightedTexturedMeshRenderable.h">
+      <Filter>Scene Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CImage.cpp">
@@ -78,6 +81,9 @@
     <ClCompile Include="CSceneManager.cpp" />
     <ClCompile Include="CCamera.cpp">
       <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CLightedTexturedMeshRenderable.cpp">
+      <Filter>Scene Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

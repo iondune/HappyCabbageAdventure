@@ -94,3 +94,30 @@ SVector3 const CMesh::getExtent() const
 
     return (Max - Min);
 }
+
+void CMesh::calculateNormalsPerFace()
+{
+    for (std::vector<STriangle>::iterator it = Triangles.begin(); it != Triangles.end(); ++ it)
+    {
+        it->Normal = Vertices[it->Indices[0]].Position.crossProduct(Vertices[it->Indices[1]].Position);
+    }
+}
+
+void CMesh::calculateNormalsPerVertex()
+{
+    calculateNormalsPerFace();
+
+    std::vector<int> FaceCounts(Vertices.size());
+    for (std::vector<STriangle>::iterator it = Triangles.begin(); it != Triangles.end(); ++ it)
+    {
+        for (int i = 0; i < 3; ++ i)
+        {
+            ++ FaceCounts[it->Indices[i]];
+            Vertices[it->Indices[i]].Normal += it->Normal;
+        }
+    }
+
+    int i;
+    for (std::vector<SVertex>::iterator it = Vertices.begin(); it != Vertices.end(); ++ it, ++ i)
+        it->Normal /= (float) FaceCounts[i];
+}

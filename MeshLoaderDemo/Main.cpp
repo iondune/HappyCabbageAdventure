@@ -35,7 +35,7 @@ void waitForUser()
 // Shader and Mesh utility classes
 CShader * Shader;
 CMesh * Mesh;
-CTexturedMeshRenderable * Renderable;
+CLightedTexturedMeshRenderable * Renderable;
 CTexture * Texture;
 CCamera * Camera;
 
@@ -168,16 +168,16 @@ int main(int argc, char * argv[])
 	}
 #endif
 
-   	Initialize();
+    Initialize();
 
-	// First create a shader loader and check if our hardware supports shaders
-	CShaderLoader ShaderLoader;
-	if (! ShaderLoader.isValid())
-	{
-		std::cerr << "Shaders are not supported by your graphics hardware, or the shader loader was otherwise unable to load." << std::endl;
-		waitForUser();
-		return 1;
-	}
+    // First create a shader loader and check if our hardware supports shaders
+    CShaderLoader ShaderLoader;
+    if (! ShaderLoader.isValid())
+    {
+        std::cerr << "Shaders are not supported by your graphics hardware, or the shader loader was otherwise unable to load." << std::endl;
+        waitForUser();
+        return 1;
+    }
 
     // Now attempt to load the shaders
     Shader = ShaderLoader.loadShader("Shaders/Lab3_vert.glsl", "Shaders/Lab3_frag.glsl");
@@ -188,6 +188,7 @@ int main(int argc, char * argv[])
         return 1;
     }
     Shader->loadAttribute("aPosition");
+    Shader->loadAttribute("aNormal");
     Shader->loadAttribute("aColor");
     Shader->loadAttribute("aTexCoord");
     Shader->loadUniform("uTexColor");
@@ -218,7 +219,8 @@ int main(int argc, char * argv[])
     Texture = new CTexture(Image);
 
     // Now load our mesh into a VBO, retrieving the number of triangles and the handles to each VBO
-    Renderable = new CTexturedMeshRenderable(* Mesh);
+    Mesh->calculateNormalsPerFace();
+    Renderable = new CLightedTexturedMeshRenderable(* Mesh);
     Renderable->setTexture(Texture);
     Renderable->setShader(Shader);
 

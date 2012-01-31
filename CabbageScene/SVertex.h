@@ -11,6 +11,7 @@ class SVertex
 public:
 
 	SVector3 Position;
+    SVector3 Normal;
 	SVector2 TextureCoordinates;
 
 	SColor Color;

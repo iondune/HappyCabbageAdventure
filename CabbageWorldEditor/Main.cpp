@@ -23,44 +23,45 @@ class SampleState : public CState<SampleState>
 
 public:
 
-	void begin()
-	{
-	}
+    void begin()
+    {
+    }
 
-	void end()
-	{
-	}
-
-
-	void OnGameTickStart(float const Elapsed)
-	{
-	}
-
-	void OnGameTickEnd(float const Elapsed)
-	{
-	}
+    void end()
+    {
+    }
 
 
-	void OnRenderStart(float const Elapsed)
-	{
-	}
+    void OnGameTickStart(float const Elapsed)
+    {
+    }
 
-	void OnRenderEnd(float const Elapsed)
-	{
-	}
+    void OnGameTickEnd(float const Elapsed)
+    {
+    }
+
+
+    void OnRenderStart(float const Elapsed)
+    {
+    }
+
+    void OnRenderEnd(float const Elapsed)
+    {
+    }
 
 };
+
 void loadLevel(std::string const & level) 
 {
     std::vector<plat> list;
     std::vector<obj> character;
     xmlLevReader(list,character, level);
 
-    for (int i = 0; i < list.size(); i++)
+    for (unsigned int i = 0; i < list.size(); i++)
     {
         //do stuff
     }
-    for (int i = 0; i < character.size(); i++)
+    for (unsigned int i = 0; i < character.size(); i++)
     {
         //do stuff
     }

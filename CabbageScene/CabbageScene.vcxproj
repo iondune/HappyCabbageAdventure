@@ -67,6 +67,7 @@
     <ClInclude Include="CabbageScene.h" />
     <ClInclude Include="CCamera.h" />
     <ClInclude Include="CImage.h" />
+    <ClInclude Include="CLightedTexturedMeshRenderable.h" />
     <ClInclude Include="CMesh.h" />
     <ClInclude Include="CMeshLoader.h" />
     <ClInclude Include="CMeshRenderable.h" />
@@ -83,6 +84,7 @@
   <ItemGroup>
     <ClCompile Include="CCamera.cpp" />
     <ClCompile Include="CImage.cpp" />
+    <ClCompile Include="CLightedTexturedMeshRenderable.cpp" />
     <ClCompile Include="CMesh.cpp" />
     <ClCompile Include="CMeshLoader.cpp" />
     <ClCompile Include="CMeshRenderable.cpp" />

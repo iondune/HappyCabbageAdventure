@@ -10,9 +10,10 @@ class CMesh
 
 public:
 
-	struct STriangle
+    struct STriangle
     {
-		unsigned int Indices[3];
+        unsigned int Indices[3];
+        SVector3 Normal;
     };
 
     std::vector<SVertex> Vertices;
@@ -21,12 +22,15 @@ public:
     CMesh();
     ~CMesh();
 
-	void centerMeshByAverage(SVector3 const & CenterLocation);
-	void centerMeshByExtents(SVector3 const & CenterLocation);
+    void centerMeshByAverage(SVector3 const & CenterLocation);
+    void centerMeshByExtents(SVector3 const & CenterLocation);
 
-	void resizeMesh(SVector3 const & Scale);
+    void resizeMesh(SVector3 const & Scale);
 
-	SVector3 const getExtent() const;
+    SVector3 const getExtent() const;
+
+    void calculateNormalsPerFace();
+    void calculateNormalsPerVertex();
 
 };
 

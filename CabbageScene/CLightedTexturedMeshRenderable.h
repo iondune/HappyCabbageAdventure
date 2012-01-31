@@ -1,5 +1,5 @@
-#ifndef _CABBAGE_SCENE_CMESHRENDERABLE_H_INCLUDED_
-#define _CABBAGE_SCENE_CMESHRENDERABLE_H_INCLUDED_
+#ifndef _CABBAGE_SCENE_CLIGHTEDTEXTUREDRENDERABLE_H_INCLUDED_
+#define _CABBAGE_SCENE_CLIGHTEDTEXTUREDRENDERABLE_H_INCLUDED_
 
 #include "../CabbageCore/SVector3.h"
 #include "CShader.h"
@@ -9,7 +9,7 @@
 #include "IRenderable.h"
 
 
-class CMeshRenderable : public IRenderable
+class CLightedTexturedMeshRenderable : public IRenderable
 {
 
 protected:
@@ -17,18 +17,23 @@ protected:
     GLuint PositionBufferHandle;
     GLuint ColorBufferHandle;
     GLuint IndexBufferHandle;
+    GLuint TexCoordBufferHandle;
+    GLuint NormalBufferHandle;
 
     GLsizei IndexCount;
 
     CShader * Shader;
+    CTexture * Texture;
 
 public:
 
-    CMeshRenderable(CMesh const & Mesh);
+    CLightedTexturedMeshRenderable(CMesh const & Mesh);
 
     CShader * getShader();
+    CTexture * getTexture();
 
     void setShader(CShader * shader);
+    void setTexture(CTexture * texture);
 
     virtual void draw(CCamera const & Camera);
 
