@@ -63,6 +63,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CabbageCore.h" />
+    <ClInclude Include="SBoundingBox3.h" />
     <ClInclude Include="SColor.h" />
     <ClInclude Include="SLine3.h" />
     <ClInclude Include="SPosition2.h" />

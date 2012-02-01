@@ -9,5 +9,6 @@
     <ClInclude Include="SPosition2.h" />
     <ClInclude Include="CabbageCore.h" />
     <ClInclude Include="SLine3.h" />
+    <ClInclude Include="SBoundingBox3.h" />
   </ItemGroup>
 </Project>
