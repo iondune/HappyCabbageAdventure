@@ -69,6 +69,7 @@
     <ClCompile Include="CStateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CabbageFramework.h" />
     <ClInclude Include="CApplication.h" />
     <ClInclude Include="CEventManager.h" />
     <ClInclude Include="CStateManager.h" />

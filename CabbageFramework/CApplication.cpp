@@ -11,23 +11,23 @@ CApplication::CApplication()
 
 void CApplication::setupRenderContext()
 {
-	SDL_VideoInfo const * video;
+    SDL_VideoInfo const * video;
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
-	{
+    {
         fprintf(stderr, "Couldn't initialize SDL: %s\n", SDL_GetError());
         waitForUser();
-		exit(1);
+        exit(1);
     }
         
     atexit(SDL_Quit);
 
     video = SDL_GetVideoInfo();
     if(video == NULL)
-	{
+    {
         fprintf(stderr, "Couldn't get video information: %s\n", SDL_GetError());
         waitForUser();
-		exit(2);
+        exit(2);
     }
 
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
@@ -37,45 +37,45 @@ void CApplication::setupRenderContext()
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
     if(! SDL_SetVideoMode(WindowSize.X, WindowSize.Y, video->vfmt->BitsPerPixel, SDL_OPENGL))
-	{
+    {
         fprintf(stderr, "Couldn't set video mode: %s\n", SDL_GetError());
         waitForUser();
-		exit(1);
+        exit(1);
     }
 
 #ifdef _WIN32
-	GLenum err = glewInit();
-	if (GLEW_OK != err)
-	{
-		std::cerr << "Error initializing glew! " << glewGetErrorString(err) << std::endl;
-		waitForUser();
-		exit(3);
-	}
+    GLenum err = glewInit();
+    if (GLEW_OK != err)
+    {
+        std::cerr << "Error initializing glew! " << glewGetErrorString(err) << std::endl;
+        waitForUser();
+        exit(3);
+    }
 #endif
 }
 
 
 void CApplication::init(SPosition2 const & windowSize)
 {
-	WindowSize = windowSize;
+    WindowSize = windowSize;
 
-	EventManager = new CEventManager();
-	StateManager = new CStateManager();
+    EventManager = new CEventManager();
+    StateManager = new CStateManager();
     SceneManager = new CSceneManager();
 
-	EventManager->OnGameTickStart.connect(StateManager, & CStateManager::OnGameTickStart);
-	EventManager->OnGameTickEnd.connect(StateManager, & CStateManager::OnGameTickEnd);
-	EventManager->OnRenderStart.connect(StateManager, & CStateManager::OnRenderStart);
-	EventManager->OnRenderEnd.connect(StateManager, & CStateManager::OnRenderEnd);
+    EventManager->OnGameTickStart.connect(StateManager, & CStateManager::OnGameTickStart);
+    EventManager->OnGameTickEnd.connect(StateManager, & CStateManager::OnGameTickEnd);
+    EventManager->OnRenderStart.connect(StateManager, & CStateManager::OnRenderStart);
+    EventManager->OnRenderEnd.connect(StateManager, & CStateManager::OnRenderEnd);
 
-	setupRenderContext();
+    setupRenderContext();
 }
 
 CApplication & CApplication::get()
 {
-	static CApplication SingletonInstance;
+    static CApplication SingletonInstance;
 
-	return SingletonInstance;
+    return SingletonInstance;
 }
 
 CEventManager & CApplication::getEventManager()

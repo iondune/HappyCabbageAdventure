@@ -3,6 +3,9 @@
 
 #include "sigslot/sigslot.h"
 
+#include "CEventManager.h"
+
+
 class IState
 {
 
@@ -17,6 +20,9 @@ public:
     virtual void OnRenderStart(float const Elapsed) =0;
     virtual void OnRenderEnd(float const Elapsed) =0;
 
+    virtual void OnMouseEvent(SMouseEvent const & Event) =0;
+    virtual void OnKeyboardEvent(SKeyboardEvent const & Event) =0;
+
 };
 
 template <class TImplementation>
@@ -30,6 +36,29 @@ public:
         static TImplementation Instance;
         return Instance;
     }
+
+    virtual void begin()
+    {}
+    virtual void end()
+    {}
+
+
+    virtual void OnGameTickStart(float const Elapsed)
+    {}
+    virtual void OnGameTickEnd(float const Elapsed)
+    {}
+
+
+    virtual void OnRenderStart(float const Elapsed)
+    {}
+    virtual void OnRenderEnd(float const Elapsed)
+    {}
+
+
+    virtual void OnMouseEvent(SMouseEvent const & Event)
+    {}
+    virtual void OnKeyboardEvent(SKeyboardEvent const & Event)
+    {}
 
 };
 

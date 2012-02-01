@@ -20,52 +20,54 @@
 
 // Utility classes for loading shaders/meshes
 #include "../CabbageScene/CabbageScene.h"
+#include "../CabbageFramework/CabbageFramework.h"
 
-// Portable version of system("PAUSE")
-void waitForUser() 
+class CMainState : public CState<CMainState>
 {
-	std::cout << "Press [Enter] to continue . . .";
-	std::cin.get();
-}
 
-/********************
- * Global Varaibles *
- ********************/
+public:
 
-// Shader and Mesh utility classes
-CShader * Shader;
-CMesh * Mesh;
-CLightedTexturedMeshRenderable * Renderable;
-CTexture * Texture;
-CCamera * Camera;
+    CMainState()
+        : WindowWidth(1440), WindowHeight(900), Scale(1)
+    {}
 
-// Information about mesh
-SVector3 Translation, Rotation, Scale(1);
-int TriangleCount;
+    void begin()
+    {
+        glClearColor(0.6f, 0.3f, 0.9f, 1.0f);
 
-// Window information
-int WindowWidth = 400, WindowHeight = 400;
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LEQUAL);
 
-// Time-independant movement variables
-int Time0, Time1;
-float ScaleTimer;
+        // Start keeping track of time
+        Time0 = SDL_GetTicks();
+    }
 
+    // Shader and Mesh utility classes
+    CShader * Shader;
+    CMesh * Mesh;
+    CLightedTexturedMeshRenderable * Renderable;
+    CTexture * Texture;
+    CCamera * Camera;
+
+    // Information about mesh
+    SVector3 Translation, Rotation, Scale;
+    int TriangleCount;
+
+    // Window information
+    int WindowWidth, WindowHeight;
+
+    // Time-independant movement variables
+    int Time0, Time1;
+    float ScaleTimer;
+
+};
 
 /***************************
  * GLUT Callback Functions *
  ***************************/
 
 // OpenGL initialization
-void Initialize()
-{
-    glClearColor(0.6f, 0.3f, 0.9f, 1.0f);
 
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
-
-    // Start keeping track of time
-    Time0 = SDL_GetTicks();
-}
 
 // Manages time independant movement and draws the VBO
 void Display()

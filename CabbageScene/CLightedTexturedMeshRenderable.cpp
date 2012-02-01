@@ -78,7 +78,7 @@ void CLightedTexturedMeshRenderable::draw(CCamera const & Camera)
     CShaderContext ShaderContext(* Shader);
     ShaderContext.bindBuffer("aPosition", PositionBufferHandle, 3);
     ShaderContext.bindBuffer("aNormal", PositionBufferHandle, 3);
-    ShaderContext.bindBuffer("aColor", ColorBufferHandle, 3);
+    //ShaderContext.bindBuffer("aColor", ColorBufferHandle, 3);
     ShaderContext.bindBuffer("aTexCoord", TexCoordBufferHandle, 2);
     ShaderContext.bindBuffer(IndexBufferHandle);
 
