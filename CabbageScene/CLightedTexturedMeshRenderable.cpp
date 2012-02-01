@@ -76,11 +76,11 @@ void CLightedTexturedMeshRenderable::setTexture(CTexture * texture)
 void CLightedTexturedMeshRenderable::draw(CCamera const & Camera)
 {
     CShaderContext ShaderContext(* Shader);
-    ShaderContext.bindBuffer("aPosition", PositionBufferHandle, 3);
-    ShaderContext.bindBuffer("aNormal", PositionBufferHandle, 3);
-    ShaderContext.bindBuffer("aColor", ColorBufferHandle, 3);
-    ShaderContext.bindBuffer("aTexCoord", TexCoordBufferHandle, 2);
-    ShaderContext.bindBuffer(IndexBufferHandle);
+    ShaderContext.bindBufferObject("aPosition", PositionBufferHandle, 3);
+    ShaderContext.bindBufferObject("aNormal", PositionBufferHandle, 3);
+    ShaderContext.bindBufferObject("aColor", ColorBufferHandle, 3);
+    ShaderContext.bindBufferObject("aTexCoord", TexCoordBufferHandle, 2);
+    ShaderContext.bindIndexBufferObject(IndexBufferHandle);
 
     ShaderContext.uniform("uTexColor", 0);
 

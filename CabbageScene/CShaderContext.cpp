@@ -24,9 +24,9 @@ CShaderContext::~CShaderContext()
     glUseProgram(0);
 }
 
-void CShaderContext::bindBuffer(std::string const & label, GLuint const BufferHandle, GLuint const ElementSize)
+void CShaderContext::bindBufferObject(std::string const & label, GLuint const BufferHandle, GLuint const ElementSize)
 {
-    std::map<std::string, GLuint>::const_iterator it = Shader.AttributeHandles.find(label);
+    std::map<std::string, SShaderVariable>::const_iterator it = Shader.AttributeHandles.find(label);
 
     if (it == Shader.AttributeHandles.end())
     {
@@ -35,21 +35,21 @@ void CShaderContext::bindBuffer(std::string const & label, GLuint const BufferHa
         return;
     }
 
-    glEnableVertexAttribArray(it->second);
+    glEnableVertexAttribArray(it->second.Handle);
     glBindBuffer(GL_ARRAY_BUFFER, BufferHandle);
-    glVertexAttribPointer(it->second, ElementSize, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(it->second.Handle, ElementSize, GL_FLOAT, GL_FALSE, 0, 0);
 
-    EnabledVertexAttribArrays.push_back(it->second);
+    EnabledVertexAttribArrays.push_back(it->second.Handle);
 }
 
-void CShaderContext::bindBuffer(GLuint const BufferHandle)
+void CShaderContext::bindIndexBufferObject(GLuint const BufferHandle)
 {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, BufferHandle);
 }
 
 void CShaderContext::uniform(std::string const & label, float const uniform)
 {
-    std::map<std::string, GLuint>::const_iterator it = Shader.UniformHandles.find(label);
+    std::map<std::string, SShaderVariable>::const_iterator it = Shader.UniformHandles.find(label);
 
     if (it == Shader.UniformHandles.end())
     {
@@ -58,12 +58,12 @@ void CShaderContext::uniform(std::string const & label, float const uniform)
         return;
     }
 
-    glUniform1f(it->second, uniform);
+    glUniform1f(it->second.Handle, uniform);
 }
 
 void CShaderContext::uniform(std::string const & label, int const uniform)
 {
-    std::map<std::string, GLuint>::const_iterator it = Shader.UniformHandles.find(label);
+    std::map<std::string, SShaderVariable>::const_iterator it = Shader.UniformHandles.find(label);
 
     if (it == Shader.UniformHandles.end())
     {
@@ -72,12 +72,12 @@ void CShaderContext::uniform(std::string const & label, int const uniform)
         return;
     }
 
-    glUniform1i(it->second, uniform);
+    glUniform1i(it->second.Handle, uniform);
 }
 
 void CShaderContext::uniform(std::string const & label, glm::mat4 const & uniform)
 {
-    std::map<std::string, GLuint>::const_iterator it = Shader.UniformHandles.find(label);
+    std::map<std::string, SShaderVariable>::const_iterator it = Shader.UniformHandles.find(label);
 
     if (it == Shader.UniformHandles.end())
     {
@@ -86,5 +86,5 @@ void CShaderContext::uniform(std::string const & label, glm::mat4 const & unifor
         return;
     }
 
-    glUniformMatrix4fv(it->second, 1, GL_FALSE, glm::value_ptr(uniform));
+    glUniformMatrix4fv(it->second.Handle, 1, GL_FALSE, glm::value_ptr(uniform));
 }

@@ -14,6 +14,18 @@
 #include <GL\glew.h>
 #endif
 
+struct SShaderVariable
+{
+    GLuint Handle;
+    GLenum Type;
+
+    SShaderVariable()
+    {}
+
+    SShaderVariable(GLuint const handle, GLenum const type)
+        : Handle(handle), Type(type)
+    {}
+};
 
 class CShader
 {
@@ -22,8 +34,8 @@ class CShader
     friend class CShaderContext;
 
     GLuint Handle;
-    std::map<std::string, GLuint> AttributeHandles;
-    std::map<std::string, GLuint> UniformHandles;
+    std::map<std::string, SShaderVariable> AttributeHandles;
+    std::map<std::string, SShaderVariable> UniformHandles;
 
     CShader();
 
@@ -31,8 +43,8 @@ public:
 
     GLuint const getProgramHandle() const;
 
-    std::map<std::string, GLuint> const & getAttributeHandles() const;
-    std::map<std::string, GLuint> const & getUniformHandles() const;
+    std::map<std::string, SShaderVariable> const & getAttributeHandles() const;
+    std::map<std::string, SShaderVariable> const & getUniformHandles() const;
 
 };
 

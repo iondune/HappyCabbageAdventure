@@ -28,13 +28,16 @@ public:
     /*!
      * Binds a shader attribute variable to a VBO.
      */
-    void bindBuffer(std::string const & label, GLuint const BufferHandle, GLuint const ElementSize);
+    void bindBufferObject(std::string const & label, GLuint const BufferHandle, GLuint const ElementSize);
 
     /*!
      * Binds an element array buffer
      */
-    void bindBuffer(GLuint const BufferHandle);
+    void bindIndexBufferObject(GLuint const BufferHandle);
 
+    /*!
+     * Send uniform variables to shader
+     */
     void uniform(std::string const & label, float const uniform);
     void uniform(std::string const & label, int const uniform);
     void uniform(std::string const & labal, glm::mat4 const & uniform);

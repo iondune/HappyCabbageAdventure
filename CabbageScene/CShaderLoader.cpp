@@ -171,7 +171,7 @@ CShader * const CShaderLoader::loadShader(std::string const & vertFileName, std:
         glGetActiveAttrib(Shader->Handle, i, longestName, & nameLenth, & variableSize, & dataType, nameBuffer);
         nameBuffer[nameLenth] = 0;
         GLuint variableLocation = glGetAttribLocation(Shader->Handle, nameBuffer);
-        Shader->AttributeHandles[nameBuffer] = variableLocation;
+        Shader->AttributeHandles[nameBuffer] = SShaderVariable(variableLocation, dataType);
         delete nameBuffer;
     }
 
@@ -188,7 +188,7 @@ CShader * const CShaderLoader::loadShader(std::string const & vertFileName, std:
         glGetActiveUniform(Shader->Handle, i, longestName, & nameLenth, & variableSize, & dataType, nameBuffer);
         nameBuffer[nameLenth] = 0;
         GLuint variableLocation = glGetUniformLocation(Shader->Handle, nameBuffer);
-        Shader->UniformHandles[nameBuffer] = variableLocation;
+        Shader->UniformHandles[nameBuffer] = SShaderVariable(variableLocation, dataType);
         delete nameBuffer;
     }
 

@@ -53,9 +53,9 @@ void CMeshRenderable::setShader(CShader * shader)
 void CMeshRenderable::draw(CCamera const & Camera)
 {
     CShaderContext ShaderContext(* Shader);
-    ShaderContext.bindBuffer("aPosition", PositionBufferHandle, 3);
-    ShaderContext.bindBuffer("aColor", ColorBufferHandle, 3);
-    ShaderContext.bindBuffer(IndexBufferHandle);
+    ShaderContext.bindBufferObject("aPosition", PositionBufferHandle, 3);
+    ShaderContext.bindBufferObject("aColor", ColorBufferHandle, 3);
+    ShaderContext.bindIndexBufferObject(IndexBufferHandle);
 
     glm::mat4 Transformation = glm::translate(glm::mat4(1.0f), Translation.getGLMVector());
     Transformation = glm::rotate(Transformation, Rotation.X, glm::vec3(1, 0, 0));
