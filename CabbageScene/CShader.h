@@ -29,15 +29,7 @@ class CShader
 
 public:
 
-	/*!
-	 * Queries the shader program for an attribute variable of the given name.
-	 */
-	bool const loadAttribute(std::string const & label);
-
-	/*!
-	 * Queries the shader program for a uniform variable of the given name.
-	 */
-	bool const loadUniform(std::string const & label);
+    GLuint const getProgramHandle() const;
 
 };
 

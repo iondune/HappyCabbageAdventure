@@ -53,15 +53,6 @@ public:
             exit(1);
         }
 
-        Shader->loadAttribute("aPosition");
-        Shader->loadAttribute("aNormal");
-        Shader->loadAttribute("aColor");
-        Shader->loadAttribute("aTexCoord");
-        Shader->loadUniform("uTexColor");
-        Shader->loadUniform("uModelMatrix");
-        Shader->loadUniform("uViewMatrix");
-        Shader->loadUniform("uProjMatrix");
-
 
         // Attempt to load mesh
         CMesh * Mesh = CMeshLoader::load3dsMesh("spaceship.3ds");
@@ -87,7 +78,7 @@ public:
         Texture = new CTexture(Image);
 
         // Now load our mesh into a VBO, retrieving the number of triangles and the handles to each VBO
-        Mesh->calculateNormalsPerFace();
+        Mesh->calculateNormalsPerVertex();
         Renderable = new CLightedTexturedMeshRenderable(* Mesh);
         Renderable->setTexture(Texture);
         Renderable->setShader(Shader);
