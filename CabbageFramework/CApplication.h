@@ -24,6 +24,8 @@ class CApplication
     // Private ctor - singleton
     CApplication();
 
+    float ElapsedTime;
+
 public:
 
     static CApplication & get();
@@ -35,6 +37,8 @@ public:
     CSceneManager & getSceneManager();
 
     void run();
+
+    float const getElapsedTime() const;
 
 };
 

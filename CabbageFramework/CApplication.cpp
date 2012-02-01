@@ -5,6 +5,8 @@
 #endif
 
 #include <iostream>
+#include <iomanip>
+
 
 CApplication::CApplication()
 {}
@@ -52,6 +54,14 @@ void CApplication::setupRenderContext()
         exit(3);
     }
 #endif
+
+    double const VersionNumber = std::atof((char const *)glGetString(GL_VERSION));
+    if (VersionNumber < 2.0)
+    {
+        std::cerr << "Your OpenGL Version Number (" << std::setprecision(2) << VersionNumber << ") is not high enough for shaders. Please download and install the latest drivers for your graphics hardware.";
+    }
+
+    std::cerr << "Your OpenGL Version Number: " << std::setprecision(2) << VersionNumber << std::endl;
 }
 
 
@@ -151,13 +161,13 @@ void CApplication::run()
 			case SDL_MOUSEMOTION:
 				{
 
-					SMouseEvent MouseEvent;
-					MouseEvent.Type = SMouseEvent::EType::Move;
-					MouseEvent.Location = EventManager->MousePositionState = SPosition2(Event.motion.x, Event.motion.y);
-					MouseEvent.Movement = SPosition2(Event.motion.xrel, Event.motion.yrel);
-					EventManager->OnMouseEvent(MouseEvent);
+                    SMouseEvent MouseEvent;
+                    MouseEvent.Type = SMouseEvent::EType::Move;
+                    MouseEvent.Location = EventManager->MousePositionState = SPosition2(Event.motion.x, Event.motion.y);
+                    MouseEvent.Movement = SPosition2(Event.motion.xrel, Event.motion.yrel);
+                    EventManager->OnMouseEvent(MouseEvent);
 
-					break;
+                    break;
 
 				}
 
@@ -165,26 +175,31 @@ void CApplication::run()
 			case SDL_KEYUP:
 				{
 
-					SKeyboardEvent KeyEvent;
-					KeyEvent.Pressed = Event.key.state == SDL_PRESSED;
-					KeyEvent.Key = Event.key.keysym.sym;
-					EventManager->OnKeyboardEvent(KeyEvent);
+                    SKeyboardEvent KeyEvent;
+                    KeyEvent.Pressed = Event.key.state == SDL_PRESSED;
+                    KeyEvent.Key = Event.key.keysym.sym;
+                    EventManager->OnKeyboardEvent(KeyEvent);
 
-					break;
+                    break;
 
 				}
             } // switch (Event.type)
         } // while (SDL_PollEvent(& Event))
 
-		Time1 = SDL_GetTicks();
-		float Delta = (float) (Time1 - Time0) / 1000.f;
-		Time0 = Time1;
+        Time1 = SDL_GetTicks();
+        ElapsedTime = (float) (Time1 - Time0) / 1000.f;
+        Time0 = Time1;
 
-		EventManager->OnGameTickStart(Delta);
-		EventManager->OnGameTickEnd(Delta);
+        EventManager->OnGameTickStart(ElapsedTime);
+        EventManager->OnGameTickEnd(ElapsedTime);
 
-		EventManager->OnRenderStart(Delta);
-		EventManager->OnRenderEnd(Delta);
+        EventManager->OnRenderStart(ElapsedTime);
+        EventManager->OnRenderEnd(ElapsedTime);
 
     } // while (Running)
+}
+
+float const CApplication::getElapsedTime() const
+{
+    return ElapsedTime;
 }

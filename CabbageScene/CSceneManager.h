@@ -14,6 +14,7 @@ class CSceneManager
     std::list<IRenderable *> Renderables;
 
     CCamera * ActiveCamera;
+    CCamera DefaultCamera;
 
 public:
 

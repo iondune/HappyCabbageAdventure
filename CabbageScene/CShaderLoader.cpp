@@ -8,24 +8,6 @@
 #include <cstdlib>
 
 
-CShaderLoader::CShaderLoader()
-	: Valid(true)
-{
-	double const VersionNumber = std::atof((char const *)glGetString(GL_VERSION));
-	if (VersionNumber < 2.0)
-	{
-		std::cerr << "Your OpenGL Version Number (" << std::setprecision(2) << VersionNumber << ") is not high enough for shaders. Please download and install the latest drivers for your graphics hardware.";
-		Valid = false;
-	}
-
-	std::cerr << "Your OpenGL Version Number: " << std::setprecision(2) << VersionNumber << std::endl;
-}
-
-bool const CShaderLoader::isValid()
-{
-	return Valid;
-}
-
 static inline bool printOpenGLErrors()
 {
 	bool Succeeded = true;

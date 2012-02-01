@@ -6,7 +6,7 @@
 CSceneManager::CSceneManager()
     : ActiveCamera(0)
 {
-    ActiveCamera = new CCamera();
+    ActiveCamera = & DefaultCamera;
 }
 
 void CSceneManager::addRenderable(IRenderable * Renderable)

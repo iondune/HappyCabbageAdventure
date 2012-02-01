@@ -11,24 +11,14 @@ class CShaderLoader
 public:
 
     /*!
-     * Initializes the shader loader by checking that the graphic hardware can load shaders.
-     */
-    CShaderLoader();
-
-    /*!
-     * Check to see if our system can load shaders.
-     */
-    bool const isValid();
-
-    /*!
      * Load a vertex shader.
      */
-    CShader * const loadShader(std::string const & vertFileName);
+    static CShader * const loadShader(std::string const & vertFileName);
 
     /*!
      * Load a vertex shader and fragment shader.
      */
-    CShader * const loadShader(std::string const & vertFileName, std::string const & fragFileName);
+    static CShader * const loadShader(std::string const & vertFileName, std::string const & fragFileName);
 
 };
 
