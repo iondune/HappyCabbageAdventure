@@ -15,32 +15,6 @@ class SampleState : public CState<SampleState>
 
 public:
 
-    void begin()
-    {
-    }
-
-    void end()
-    {
-    }
-
-
-    void OnGameTickStart(float const Elapsed)
-    {
-    }
-
-    void OnGameTickEnd(float const Elapsed)
-    {
-    }
-
-
-    void OnRenderStart(float const Elapsed)
-    {
-    }
-
-    void OnRenderEnd(float const Elapsed)
-    {
-    }
-
 };
 
 int main(int argc, char * argv[])

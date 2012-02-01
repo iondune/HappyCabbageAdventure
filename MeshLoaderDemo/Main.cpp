@@ -44,7 +44,7 @@ SVector3 Translation, Rotation, Scale(1);
 int TriangleCount;
 
 // Window information
-int WindowWidth = 400, WindowHeight = 400;
+int WindowWidth = 1440, WindowHeight = 900;
 
 // Time-independant movement variables
 int Time0, Time1;

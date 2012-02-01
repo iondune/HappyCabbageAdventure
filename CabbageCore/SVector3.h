@@ -29,33 +29,33 @@ public:
         return glm::vec3(X, Y, Z);
     }
 
-	float const operator[] (unsigned int i) const
-	{
-		switch (i)
-		{
-		default:
-		case 0:
-			return X;
-		case 1:
-			return Y;
-		case 2:
-			return Z;
-		}
-	}
+    float const operator[] (unsigned int i) const
+    {
+        switch (i)
+        {
+        default:
+        case 0:
+            return X;
+        case 1:
+            return Y;
+        case 2:
+            return Z;
+        }
+    }
 
-	float & operator[] (unsigned int i)
-	{
-		switch (i)
-		{
-		default:
-		case 0:
-			return X;
-		case 1:
-			return Y;
-		case 2:
-			return Z;
-		}
-	}
+    float & operator[] (unsigned int i)
+    {
+	    switch (i)
+	    {
+	    default:
+	    case 0:
+		    return X;
+	    case 1:
+		    return Y;
+	    case 2:
+		    return Z;
+	    }
+    }
 
 	SVector3 crossProduct(SVector3 const & v) const
 	{
@@ -66,6 +66,15 @@ public:
 	{
 		return X*v.X + Y*v.Y + Z*v.Z;
 	}
+
+    void normalize()
+    {
+        float const len = length();
+
+        X /= len;
+        Y /= len;
+        Z /= len;
+    }
 
 	float length() const
 	{
