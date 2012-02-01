@@ -29,3 +29,15 @@ void CStateManager::OnRenderEnd(float const Elapsed)
 	if (CurrentState)
 		CurrentState->OnRenderEnd(Elapsed);
 }
+
+void CStateManager::OnMouseEvent(SMouseEvent const & Event)
+{
+    if (CurrentState)
+        CurrentState->OnMouseEvent(Event);
+}
+
+void CStateManager::OnKeyboardEvent(SKeyboardEvent const & Event)
+{
+    if (CurrentState)
+        CurrentState->OnKeyboardEvent(Event);
+}

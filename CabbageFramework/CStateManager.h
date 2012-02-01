@@ -79,6 +79,9 @@ public:
     void OnRenderStart(float const Elapsed);
     void OnRenderEnd(float const Elapsed);
 
+    void OnMouseEvent(SMouseEvent const & Event);
+    void OnKeyboardEvent(SKeyboardEvent const & Event);
+
     template <class StateClass>
     void setState()
     {
