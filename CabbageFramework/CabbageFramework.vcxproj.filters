@@ -17,5 +17,6 @@
     <ClInclude Include="CApplication.h" />
     <ClInclude Include="CEventManager.h" />
     <ClInclude Include="CStateManager.h" />
+    <ClInclude Include="CabbageFramework.h" />
   </ItemGroup>
 </Project>
