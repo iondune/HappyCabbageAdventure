@@ -66,6 +66,7 @@ public:
         Mesh->resizeMesh(SVector3(1.5));
         // And center it at the origin
         Mesh->centerMeshByExtents(SVector3(0));
+        Mesh->calculateNormalsPerVertex();
 
 
         CImage * Image = CImageLoader::loadImage("spaceshiptexture.bmp");
@@ -78,7 +79,6 @@ public:
         Texture = new CTexture(Image);
 
         // Now load our mesh into a VBO, retrieving the number of triangles and the handles to each VBO
-        Mesh->calculateNormalsPerVertex();
         Renderable = new CLightedTexturedMeshRenderable(* Mesh);
         Renderable->setTexture(Texture);
         Renderable->setShader(Shader);

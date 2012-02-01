@@ -18,18 +18,21 @@
 class CShader
 {
 
-	friend class CShaderLoader;
-	friend class CShaderContext;
+    friend class CShaderLoader;
+    friend class CShaderContext;
 
-	GLuint Handle;
-	std::map<std::string, GLuint> AttributeHandles;
-	std::map<std::string, GLuint> UniformHandles;
+    GLuint Handle;
+    std::map<std::string, GLuint> AttributeHandles;
+    std::map<std::string, GLuint> UniformHandles;
 
-	CShader();
+    CShader();
 
 public:
 
     GLuint const getProgramHandle() const;
+
+    std::map<std::string, GLuint> const & getAttributeHandles() const;
+    std::map<std::string, GLuint> const & getUniformHandles() const;
 
 };
 
