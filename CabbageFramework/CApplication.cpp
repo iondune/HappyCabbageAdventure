@@ -62,6 +62,8 @@ void CApplication::setupRenderContext()
     }
 
     std::cerr << "Your OpenGL Version Number: " << std::setprecision(2) << VersionNumber << std::endl;
+
+    glViewport(0, 0, (GLsizei)(WindowSize.X), (GLsizei)(WindowSize.Y));
 }
 
 
@@ -90,22 +92,22 @@ CApplication & CApplication::get()
 
 CEventManager & CApplication::getEventManager()
 {
-	return * EventManager;
+    return * EventManager;
 }
 
 CStateManager & CApplication::getStateManager()
 {
-	return * StateManager;
+    return * StateManager;
 }
 
 CSceneManager & CApplication::getSceneManager()
 {
-	return * SceneManager;
+    return * SceneManager;
 }
 
 void CApplication::run()
 {
-	bool Running = true;
+    bool Running = true;
 
 	unsigned int Time0, Time1;
 	Time0 = SDL_GetTicks();
