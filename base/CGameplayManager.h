@@ -53,6 +53,7 @@ public:
 				{
 					KillList.push_back(* it);
 					Enemies.erase(it);
+                                        Mix_PlayChannel(-1, killEnemy, 0);
 				}
 				else
 				{
