@@ -282,11 +282,11 @@ bool InitializeOGL()
    glClearColor(0.52f, 0.8f, 0.9f, 1.0f);
 
    //Chris Code
-   Load3DS(&basicTree, "3dsloader/tree.3ds");
-   Load3DS(&christmasTree, "3dsloader/christmasTree.3ds");
-   groundTexture = LoadBitmap("grass.bmp");
-   skyTexture = LoadBitmap("sky.bmp");
-   dirtTexture = LoadBitmap("dirt.bmp");
+   Load3DS(&basicTree, "Models/tree.3ds");
+   Load3DS(&christmasTree, "Models/christmasTree.3ds");
+   groundTexture = LoadBitmap("Textures/grass.bmp");
+   skyTexture = LoadBitmap("Textures/sky.bmp");
+   dirtTexture = LoadBitmap("Textures/dirt.bmp");
 
    glEnable(GL_DEPTH_TEST);
    glDepthFunc(GL_LEQUAL);
