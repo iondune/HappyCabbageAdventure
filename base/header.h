@@ -12,6 +12,7 @@
 #pragma comment(lib, "glew32.lib")
 #pragma comment(lib, "SDL.lib")
 #pragma comment(lib, "SDLmain.lib")
+#pragma comment(lib, "SDL_mixer.lib")
 #pragma comment(lib, "../lib/CabbageScene.lib")
 #pragma comment(lib, "../lib/CabbageCollider.lib")
 #pragma comment(lib, "OpenGL32.lib")

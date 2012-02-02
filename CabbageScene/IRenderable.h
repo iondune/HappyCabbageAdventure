@@ -113,8 +113,36 @@ protected:
 
     IRenderable();
 
-    std::map<std::string, IAttribute *> Attributes;
-    std::map<std::string, IUniform *> Uniforms;
+    struct SAttribute
+    {
+        GLint Handle;
+        IAttribute * Value;
+
+        SAttribute()
+            : Value(0), Handle(-1)
+        {}
+
+        SAttribute(IAttribute * value)
+            : Value(value), Handle(-1)
+        {}
+    };
+
+    struct SUniform
+    {
+        GLint Handle;
+        IUniform * Value;
+
+        SUniform()
+            : Value(0), Handle(-1)
+        {}
+
+        SUniform(IUniform * value)
+            : Value(value), Handle(-1)
+        {}
+    };
+
+    std::map<std::string, SAttribute> Attributes;
+    std::map<std::string, SUniform> Uniforms;
 
     CShader * Shader;
 

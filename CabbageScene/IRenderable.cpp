@@ -39,8 +39,18 @@ void IRenderable::setScale(SVector3 const & scale)
 
 void IRenderable::draw(CCamera const & Camera)
 {
-    //CShaderContext ShaderContext(* Shader);
-    //for (std::map<std::string, IAttribute *>::iterator it = Attributes.begin(); 
+    CShaderContext ShaderContext(* Shader);
+    for (std::map<std::string, SAttribute>::iterator it = Attributes.begin(); it != Attributes.end(); ++ it)
+    {
+        if (it->second.Handle >= 0)
+            it->second.Value->bindTo(it->second.Handle, ShaderContext);
+    }
+
+    for (std::map<std::string, SUniform>::iterator it = Uniforms.begin(); it != Uniforms.end(); ++ it)
+    {
+        if (it->second.Handle >= 0)
+            it->second.Value->bindTo(it->second.Handle, ShaderContext);
+    }
 }
 
 SBoundingBox3 const & IRenderable::getBoundingBox() const
@@ -55,24 +65,24 @@ SBoundingBox3 & IRenderable::getBoundingBox()
 
 void IRenderable::addAttribute(std::string const & label, IAttribute * attribute)
 {
-    std::map<std::string, IAttribute *>::iterator it = Attributes.find(label);
+    std::map<std::string, SAttribute>::iterator it = Attributes.find(label);
 
     if (it != Attributes.end())
     {
-        delete it->second;
+        delete it->second.Value;
     }
 
-    Attributes[label] = attribute;
+    Attributes[label] = SAttribute(attribute);
 }
 
 void IRenderable::addUniform(std::string const & label, IUniform * uniform)
 {
-    std::map<std::string, IUniform *>::iterator it = Uniforms.find(label);
+    std::map<std::string, SUniform>::iterator it = Uniforms.find(label);
 
     if (it != Uniforms.end())
     {
-        delete it->second;
+        delete it->second.Value;
     }
 
-    Uniforms[label] = uniform;
+    Uniforms[label] = SUniform(uniform);
 }
