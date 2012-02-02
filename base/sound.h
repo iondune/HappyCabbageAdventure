@@ -7,7 +7,7 @@ Mix_Music *music = NULL;
 Mix_Chunk *die = NULL;
 Mix_Chunk *jump = NULL;
 Mix_Chunk *takeDmg = NULL;
-Mix_Chunk *hitEnemy = NULL;
+Mix_Chunk *killEnemy = NULL;
 
 //Misc Sound Variables
 bool playDead = true;
@@ -30,7 +30,7 @@ void setupSoundtrack() {
    die = Mix_LoadWAV("sounds/death.wav");
    jump = Mix_LoadWAV("sounds/jump.wav");
    takeDmg = Mix_LoadWAV("sounds/takeDmg.wav");
-   hitEnemy = Mix_LoadWAV("sounds/hitEnemy.wav");
+   killEnemy = Mix_LoadWAV("sounds/hitEnemy.wav");
 
    Mix_PlayMusic(music, -1);
 }
