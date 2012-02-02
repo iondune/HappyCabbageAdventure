@@ -16,6 +16,10 @@ public:
 		: X(0), Y(0), Z(0)
 	{}
 
+    SVector3(glm::vec3 const & vec)
+        : X(vec.x), Y(vec.y), Z(vec.z)
+    {}
+
 	SVector3(float in)
 		: X(in), Y(in), Z(in)
 	{}
@@ -76,104 +80,104 @@ public:
         Z /= len;
     }
 
-	float length() const
-	{
-		return sqrtf(X*X + Y*Y + Z*Z);
-	}
+    float length() const
+    {
+	    return sqrtf(X*X + Y*Y + Z*Z);
+    }
 
-	SVector3 operator + (SVector3 const & v) const
-	{
-		return SVector3(X+v.X, Y+v.Y, Z+v.Z);
-	}
+    SVector3 operator + (SVector3 const & v) const
+    {
+	    return SVector3(X+v.X, Y+v.Y, Z+v.Z);
+    }
 
-	SVector3 & operator += (SVector3 const & v)
-	{
-		X += v.X;
-		Y += v.Y;
-		Z += v.Z;
+    SVector3 & operator += (SVector3 const & v)
+    {
+	    X += v.X;
+	    Y += v.Y;
+	    Z += v.Z;
 
-		return * this;
-	}
+	    return * this;
+    }
 
-	SVector3 operator - (SVector3 const & v) const
-	{
-		return SVector3(X-v.X, Y-v.Y, Z-v.Z);
-	}
+    SVector3 operator - (SVector3 const & v) const
+    {
+	    return SVector3(X-v.X, Y-v.Y, Z-v.Z);
+    }
 
-	SVector3 & operator -= (SVector3 const & v)
-	{
-		X -= v.X;
-		Y -= v.Y;
-		Z -= v.Z;
+    SVector3 & operator -= (SVector3 const & v)
+    {
+	    X -= v.X;
+	    Y -= v.Y;
+	    Z -= v.Z;
 
-		return * this;
-	}
+	    return * this;
+    }
 
-	SVector3 operator * (SVector3 const & v) const
-	{
-		return SVector3(X*v.X, Y*v.Y, Z*v.Z);
-	}
+    SVector3 operator * (SVector3 const & v) const
+    {
+	    return SVector3(X*v.X, Y*v.Y, Z*v.Z);
+    }
 
-	SVector3 & operator *= (SVector3 const & v)
-	{
-		X *= v.X;
-		Y *= v.Y;
-		Z *= v.Z;
+    SVector3 & operator *= (SVector3 const & v)
+    {
+	    X *= v.X;
+	    Y *= v.Y;
+	    Z *= v.Z;
 
-		return * this;
-	}
+	    return * this;
+    }
 
-	SVector3 operator / (SVector3 const & v) const
-	{
-		return SVector3(X/v.X, Y/v.Y, Z/v.Z);
-	}
+    SVector3 operator / (SVector3 const & v) const
+    {
+	    return SVector3(X/v.X, Y/v.Y, Z/v.Z);
+    }
 
-	SVector3 & operator /= (SVector3 const & v)
-	{
-		X /= v.X;
-		Y /= v.Y;
-		Z /= v.Z;
+    SVector3 & operator /= (SVector3 const & v)
+    {
+        X /= v.X;
+        Y /= v.Y;
+        Z /= v.Z;
 
-		return * this;
-	}
+        return * this;
+    }
 
-	SVector3 operator * (float const s) const
-	{
-		return SVector3(X*s, Y*s, Z*s);
-	}
+    SVector3 operator * (float const s) const
+    {
+	    return SVector3(X*s, Y*s, Z*s);
+    }
 
-	SVector3 & operator *= (float const s)
-	{
-		X *= s;
-		Y *= s;
-		Z *= s;
+    SVector3 & operator *= (float const s)
+    {
+	    X *= s;
+	    Y *= s;
+	    Z *= s;
 
-		return * this;
-	}
+	    return * this;
+    }
 
-	SVector3 operator / (float const s) const
-	{
-		return SVector3(X/s, Y/s, Z/s);
-	}
+    SVector3 operator / (float const s) const
+    {
+	    return SVector3(X/s, Y/s, Z/s);
+    }
 
-	SVector3 & operator /= (float const s)
-	{
-		X /= s;
-		Y /= s;
-		Z /= s;
+    SVector3 & operator /= (float const s)
+    {
+	    X /= s;
+	    Y /= s;
+	    Z /= s;
 
-		return * this;
-	}
+	    return * this;
+    }
 
-	bool const operator <= (SVector3 const & v) const
-	{
-		return (X < v.X && Y < v.Y && Z < v.Z);
-	}
+    bool const operator <= (SVector3 const & v) const
+    {
+	    return (X < v.X && Y < v.Y && Z < v.Z);
+    }
 
-	bool const operator >= (SVector3 const & v) const
-	{
-		return (X > v.X && Y > v.Y && Z > v.Z);
-	}
+    bool const operator >= (SVector3 const & v) const
+    {
+	    return (X > v.X && Y > v.Y && Z > v.Z);
+    }
 
 };
 

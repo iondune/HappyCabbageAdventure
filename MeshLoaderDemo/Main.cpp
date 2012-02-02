@@ -38,6 +38,8 @@ public:
 
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_BACK);
 
         // Setup camera
         float AspectRatio = (float)WindowWidth / (float)WindowHeight;
