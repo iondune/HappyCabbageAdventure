@@ -36,6 +36,7 @@ public:
     CBufferObject<float> * makePositionBuffer();
     CBufferObject<float> * makeColorBuffer();
     CBufferObject<float> * makeNormalBuffer();
+    CBufferObject<float> * makeNormalLineBuffer();
     CBufferObject<float> * makeTexCoordBuffer();
     CBufferObject<unsigned short> * makeIndexBuffer();
 

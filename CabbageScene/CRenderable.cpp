@@ -142,6 +142,10 @@ void CRenderable::draw(CCamera const & Camera)
 
     glDrawElements(GL_TRIANGLES, IndexBufferObject->getElements().size(), GL_UNSIGNED_SHORT, 0);
 
+
+    //Attributes["aNormalLine"].Value->bindTo(Attributes["aPosition"].Handle, ShaderContext);
+    //glDrawArrays(GL_LINES, 0, 1298);
+
     for (std::set<GLenum const>::iterator it = RenderModes.begin(); it != RenderModes.end(); ++ it)
         glDisable(* it);
 }

@@ -68,7 +68,7 @@ public:
         Mesh->resizeMesh(SVector3(1.5));
         // And center it at the origin
         Mesh->centerMeshByExtents(SVector3(0));
-        Mesh->calculateNormalsPerVertex();
+        Mesh->calculateNormalsPerFace();
 
 
         CImage * Image = CImageLoader::loadImage("spaceshiptexture.bmp");

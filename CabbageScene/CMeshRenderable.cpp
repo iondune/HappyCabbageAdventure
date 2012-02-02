@@ -26,6 +26,7 @@ void CMeshRenderable::setMesh(CMesh * mesh)
     addAttribute("aPosition", new CFloatVecAttribute(Mesh->makePositionBuffer(), 3));
     addAttribute("aColor", new CFloatVecAttribute(Mesh->makeColorBuffer(), 3));
     addAttribute("aNormal", new CFloatVecAttribute(Mesh->makeNormalBuffer(), 3));
+    addAttribute("aNormalLine", new CFloatVecAttribute(Mesh->makeNormalLineBuffer(), 3));
     addAttribute("aTexCoord", new CFloatVecAttribute(Mesh->makeTexCoordBuffer(), 2));
     addUniform("uTexColor", new CIntUniform(0));
 
