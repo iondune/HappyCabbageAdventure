@@ -6,7 +6,7 @@
 
 
 CRenderable::CRenderable()
-    : Scale(1), Shader(0), Texture(0)
+    : Scale(1), Shader(0), Texture(0), DrawType(GL_TRIANGLES), NormalObject(0)
 {}
 
 
@@ -85,6 +85,16 @@ void CRenderable::setTexture(CTexture * texture)
     Texture = texture;
 }
 
+GLenum const CRenderable::getDrawType() const
+{
+    return DrawType;
+}
+
+void CRenderable::setDrawType(GLenum const drawType)
+{
+    DrawType = drawType;
+}
+
 CBufferObject<GLushort> * CRenderable::getIndexBufferObject()
 {
     return IndexBufferObject;
@@ -140,11 +150,15 @@ void CRenderable::draw(CCamera const & Camera)
 
     ShaderContext.bindIndexBufferObject(IndexBufferObject->getHandle());
 
-    glDrawElements(GL_TRIANGLES, IndexBufferObject->getElements().size(), GL_UNSIGNED_SHORT, 0);
+    glDrawElements(DrawType, IndexBufferObject->getElements().size(), GL_UNSIGNED_SHORT, 0);
 
-
-    //Attributes["aNormalLine"].Value->bindTo(Attributes["aPosition"].Handle, ShaderContext);
-    //glDrawArrays(GL_LINES, 0, 1298);
+    if (NormalObject)
+    {
+        NormalObject->setTranslation(Translation);
+        NormalObject->setScale(Scale);
+        NormalObject->setRotation(Rotation);
+        NormalObject->draw(Camera);
+    }
 
     for (std::set<GLenum const>::iterator it = RenderModes.begin(); it != RenderModes.end(); ++ it)
         glDisable(* it);

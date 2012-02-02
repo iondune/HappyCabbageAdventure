@@ -116,8 +116,6 @@ protected:
     SVector3 Translation, Rotation, Scale;
     SBoundingBox3 BoundingBox;
 
-    CRenderable();
-
     struct SAttribute
     {
         GLint Handle;
@@ -154,7 +152,13 @@ protected:
     CShader * Shader;
     CTexture * Texture;
 
+    CRenderable * NormalObject;
+
+    GLenum DrawType;
+
 public:
+
+    CRenderable();
 
     SVector3 const & getTranslation() const;
     SVector3 const & getRotation() const;
@@ -172,6 +176,9 @@ public:
 
     CBufferObject<GLushort> * getIndexBufferObject();
     void setIndexBufferObject(CBufferObject<GLushort> * indexBufferObject);
+
+    GLenum const getDrawType() const;
+    void setDrawType(GLenum const drawType);
 
     void draw(CCamera const & Camera);
 

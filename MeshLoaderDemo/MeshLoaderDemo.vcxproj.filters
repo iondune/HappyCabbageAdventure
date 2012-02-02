@@ -19,6 +19,12 @@
       <Filter>Models</Filter>
     </None>
     <None Include="Makefile" />
+    <None Include="Shaders\simple.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\simple.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />

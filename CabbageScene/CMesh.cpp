@@ -162,24 +162,6 @@ CBufferObject<float> * CMesh::makeNormalBuffer()
     return Buffer;
 }
 
-CBufferObject<float> * CMesh::makeNormalLineBuffer()
-{
-    CBufferObject<float> * Buffer = new CBufferObject<float>();
-
-    for (unsigned int i = 0; i < Vertices.size(); ++ i)
-    {
-        for (unsigned int j = 0; j < 3; ++ j)
-        {
-            Buffer->push_back(Vertices[i].Position[j]);
-            
-        }
-        for (unsigned int j = 0; j < 3; ++ j)
-        Buffer->push_back(Vertices[i].Position[j] + Vertices[i].Normal[j]*0.05f);
-    }
-
-    return Buffer;
-}
-
 CBufferObject<float> * CMesh::makeTexCoordBuffer()
 {
     CBufferObject<float> * Buffer = new CBufferObject<float>();
@@ -196,9 +178,56 @@ CBufferObject<float> * CMesh::makeTexCoordBuffer()
 CBufferObject<unsigned short> * CMesh::makeIndexBuffer()
 {
     CBufferObject<unsigned short> * Buffer = new CBufferObject<unsigned short>();
+
     for(unsigned int i = 0; i < Triangles.size(); ++ i)
         for (unsigned int j = 0; j < 3; ++ j)
             Buffer->push_back(Triangles[i].Indices[j]);
+
+    Buffer->setIsIndexBuffer(true);
+
+    return Buffer;
+}
+
+CBufferObject<float> * CMesh::makeNormalLineBuffer()
+{
+    CBufferObject<float> * Buffer = new CBufferObject<float>();
+
+    for (unsigned int i = 0; i < Vertices.size(); ++ i)
+    {
+        for (unsigned int j = 0; j < 3; ++ j)
+            Buffer->push_back(Vertices[i].Position[j]);
+        for (unsigned int j = 0; j < 3; ++ j)
+            Buffer->push_back(Vertices[i].Position[j] + Vertices[i].Normal[j]*0.05f);
+    }
+
+    return Buffer;
+}
+
+CBufferObject<float> * CMesh::makeNormalColorBuffer()
+{
+    CBufferObject<float> * Buffer = new CBufferObject<float>();
+
+    for (unsigned int i = 0; i < Vertices.size(); ++ i)
+    {
+        for (unsigned int j = 0; j < 3; ++ j)
+            Buffer->push_back(Vertices[i].Color[j]);
+
+        for (unsigned int j = 0; j < 3; ++ j)
+            Buffer->push_back(Vertices[i].Color[j]);
+    }
+
+    return Buffer;
+}
+
+CBufferObject<unsigned short> * CMesh::makeNormalIndexBuffer()
+{
+    CBufferObject<unsigned short> * Buffer = new CBufferObject<unsigned short>();
+
+    for (unsigned int i = 0; i < Vertices.size(); ++ i)
+    {
+        for (unsigned int j = 0; j < 2; ++ j)
+            Buffer->push_back(i*2 + j);
+    }
 
     Buffer->setIsIndexBuffer(true);
 
