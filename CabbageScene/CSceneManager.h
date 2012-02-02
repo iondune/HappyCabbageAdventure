@@ -3,7 +3,7 @@
 
 #include <list>
 
-#include "IRenderable.h"
+#include "CRenderable.h"
 
 #include "../CabbageCore/SLine3.h"
 
@@ -11,7 +11,7 @@
 class CSceneManager
 {
 
-    std::list<IRenderable *> Renderables;
+    std::list<CRenderable *> Renderables;
 
     CCamera * ActiveCamera;
     CCamera DefaultCamera;
@@ -20,12 +20,12 @@ public:
 
     CSceneManager();
 
-    void addRenderable(IRenderable * Renderable);
-    void removeRenderable(IRenderable * Renderable);
+    void addRenderable(CRenderable * Renderable);
+    void removeRenderable(CRenderable * Renderable);
 
     void drawAll();
 
-    IRenderable * const pickRenderable(SLine3 const & ViewLine);
+    CRenderable * const pickRenderable(SLine3 const & ViewLine);
 
     CCamera * const getActiveCamera();
     void setActiveCamera(CCamera * const activeCamera);

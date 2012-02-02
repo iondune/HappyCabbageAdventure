@@ -2,6 +2,7 @@
 #define _CABBAGE_SCENE_CMESH_H_INCLUDED_
 
 #include "SVertex.h"
+#include "CBufferObject.h"
 
 #include <vector>
 
@@ -31,6 +32,12 @@ public:
 
     void calculateNormalsPerFace();
     void calculateNormalsPerVertex();
+
+    CBufferObject<float> * makePositionBuffer();
+    CBufferObject<float> * makeColorBuffer();
+    CBufferObject<float> * makeNormalBuffer();
+    CBufferObject<float> * makeTexCoordBuffer();
+    CBufferObject<unsigned short> * makeIndexBuffer();
 
 };
 

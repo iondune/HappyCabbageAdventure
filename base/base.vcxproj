@@ -79,6 +79,7 @@
     <None Include="glut32.dll" />
     <None Include="Makefile" />
     <None Include="SDL.dll" />
+    <None Include="SDL_mixer.dll" />
     <None Include="zlib1.dll" />
   </ItemGroup>
   <ItemGroup>

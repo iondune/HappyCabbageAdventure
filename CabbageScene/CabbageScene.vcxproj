@@ -65,37 +65,34 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CabbageScene.h" />
+    <ClInclude Include="CBufferObject.h" />
     <ClInclude Include="CCamera.h" />
     <ClInclude Include="CImage.h" />
-    <ClInclude Include="CLightedTexturedMeshRenderable.h" />
     <ClInclude Include="CMesh.h" />
     <ClInclude Include="CMeshLoader.h" />
     <ClInclude Include="CMeshRenderable.h" />
     <ClInclude Include="CSceneManager.h" />
     <ClInclude Include="CShader.h" />
-    <ClInclude Include="CTexturedMeshRenderable.h" />
     <ClInclude Include="CShaderContext.h" />
     <ClInclude Include="CShaderLoader.h" />
     <ClInclude Include="CTexture.h" />
     <ClInclude Include="CImageLoader.h" />
-    <ClInclude Include="IRenderable.h" />
+    <ClInclude Include="CRenderable.h" />
     <ClInclude Include="SVertex.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCamera.cpp" />
     <ClCompile Include="CImage.cpp" />
-    <ClCompile Include="CLightedTexturedMeshRenderable.cpp" />
     <ClCompile Include="CMesh.cpp" />
     <ClCompile Include="CMeshLoader.cpp" />
     <ClCompile Include="CMeshRenderable.cpp" />
     <ClCompile Include="CSceneManager.cpp" />
     <ClCompile Include="CShader.cpp" />
-    <ClCompile Include="CTexturedMeshRenderable.cpp" />
     <ClCompile Include="CShaderContext.cpp" />
     <ClCompile Include="CShaderLoader.cpp" />
     <ClCompile Include="CTexture.cpp" />
     <ClCompile Include="CImageLoader.cpp" />
-    <ClCompile Include="IRenderable.cpp" />
+    <ClCompile Include="CRenderable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />

@@ -19,6 +19,7 @@
     <None Include="SDL.dll" />
     <None Include="zlib1.dll" />
     <None Include="glut32.dll" />
+    <None Include="SDL_mixer.dll" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bunny.h" />

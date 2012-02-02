@@ -3,9 +3,7 @@
 
 #include "CMesh.h"
 #include "CMeshLoader.h"
-#include "IRenderable.h"
-#include "CTexturedMeshRenderable.h"
-#include "CLightedTexturedMeshRenderable.h"
+#include "CRenderable.h"
 #include "CMeshRenderable.h"
 #include "CShader.h"
 #include "CShaderLoader.h"
@@ -15,5 +13,6 @@
 #include "CTexture.h"
 #include "SVertex.h"
 #include "CSceneManager.h"
+#include "CBufferObject.h"
 
 #endif

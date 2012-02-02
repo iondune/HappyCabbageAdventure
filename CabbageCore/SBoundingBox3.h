@@ -37,6 +37,23 @@ public:
             MinCorner.Z < r.MaxCorner.Z);
     }
 
+    void addInternalPoint(SVector3 const & v)
+    {
+        if (v.X > MaxCorner.X)
+            MaxCorner.X = v.X;
+        if (v.Y > MaxCorner.Y)
+            MaxCorner.Y = v.Y;
+        if (v.Z > MaxCorner.Z)
+            MaxCorner.Z = v.Z;
+
+        if (v.X < MinCorner.X)
+            MinCorner.X = v.X;
+        if (v.Y < MinCorner.Y)
+            MinCorner.Y = v.Y;
+        if (v.Z < MinCorner.Z)
+            MinCorner.Z = v.Z;
+    }
+
 };
 
 #endif

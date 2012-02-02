@@ -6,31 +6,22 @@
 #include "CMesh.h"
 #include "CTexture.h"
 
-#include "IRenderable.h"
+#include "CRenderable.h"
 
 
-class CMeshRenderable : public IRenderable
+class CMeshRenderable : public CRenderable
 {
 
 protected:
 
-    GLuint PositionBufferHandle;
-    GLuint ColorBufferHandle;
-    GLuint IndexBufferHandle;
-
-    GLsizei IndexCount;
-
-    CShader * Shader;
+    CMesh * Mesh;
 
 public:
 
-    CMeshRenderable(CMesh const & Mesh);
+    CMeshRenderable();
 
-    CShader * getShader();
-
-    void setShader(CShader * shader);
-
-    virtual void draw(CCamera const & Camera);
+    CMesh * getMesh();
+    void setMesh(CMesh * mesh);
 
 };
 
