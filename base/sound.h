@@ -32,6 +32,9 @@ void setupSoundtrack() {
    jump = Mix_LoadWAV("sounds/jump.wav");
    takeDmg = Mix_LoadWAV("sounds/takeDmg.wav");
    killEnemy = Mix_LoadWAV("sounds/hitEnemy.wav");
+
+   //Decrease volume of jump
+   printf("Prev Volume: %d\n", Mix_VolumeChunk(jump, 64));
 }
 
 void startSoundtrack() {
