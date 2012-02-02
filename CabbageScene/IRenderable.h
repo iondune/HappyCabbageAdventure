@@ -4,9 +4,11 @@
 #include <map>
 
 #include "../CabbageCore/SVector3.h"
+#include "../CabbageCore/SBoundingBox3.h"
 
 #include "CBufferObject.h"
 #include "CCamera.h"
+#include "CShader.h"
 #include "CShaderContext.h"
 
 class IAttribute
@@ -107,11 +109,14 @@ class IRenderable
 protected:
 
     SVector3 Translation, Rotation, Scale;
+    SBoundingBox3 BoundingBox;
 
     IRenderable();
 
     std::map<std::string, IAttribute *> Attributes;
     std::map<std::string, IUniform *> Uniforms;
+
+    CShader * Shader;
 
 public:
 
@@ -123,7 +128,17 @@ public:
     void setRotation(SVector3 const & rotation);
     void setScale(SVector3 const & scale);
 
-    virtual void draw(CCamera const & Camera) =0;
+    CShader * getShader();
+    void setShader(CShader * shader);
+
+    void draw(CCamera const & Camera);
+
+    SBoundingBox3 const & getBoundingBox() const;
+    SBoundingBox3 & getBoundingBox();
+    void setBoundingBox(SBoundingBox3 const & boundingBox);
+
+    void addAttribute(std::string const & label, IAttribute * attribute);
+    void addUniform(std::string const & label, IUniform * uniform);
 
 };
 
