@@ -86,8 +86,8 @@ void CLightedTexturedMeshRenderable::draw(CCamera const & Camera)
 
     glEnable(GL_TEXTURE_2D);
 
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, Texture->getTextureHandle());
+        //glActiveTexture(GL_TEXTURE0);
+        //glBindTexture(GL_TEXTURE_2D, Texture->getTextureHandle());
 
         glm::mat4 Transformation = glm::translate(glm::mat4(1.0f), Translation.getGLMVector());
         Transformation = glm::rotate(Transformation, Rotation.X, glm::vec3(1, 0, 0));

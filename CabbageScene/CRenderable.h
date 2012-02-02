@@ -10,6 +10,7 @@
 #include "CBufferObject.h"
 #include "CCamera.h"
 #include "CShader.h"
+#include "CTexture.h"
 #include "CShaderContext.h"
 
 class IAttribute
@@ -32,6 +33,9 @@ public:
 
     void bindTo(GLuint const attribHandle, CShaderContext & shaderContext)
     {
+        if (BufferObject->isDirty())
+            BufferObject->syncData();
+
         shaderContext.bindBufferObject(attribHandle, BufferObject->getHandle(), Size);
     }
 
@@ -146,7 +150,9 @@ protected:
     std::map<std::string, SUniform> Uniforms;
     std::set<GLenum const> RenderModes;
 
+    CBufferObject<GLushort> * IndexBufferObject;
     CShader * Shader;
+    CTexture * Texture;
 
 public:
 
@@ -160,6 +166,9 @@ public:
 
     CShader * getShader();
     void setShader(CShader * shader);
+
+    CTexture * getTexture();
+    void setTexture(CTexture * texture);
 
     void draw(CCamera const & Camera);
 
