@@ -13,6 +13,7 @@ Mix_Chunk *killEnemy = NULL;
 bool playDead = true;
 bool playTakeDmg = true;
 bool playJump = true;
+bool musicOn = true;
 
 void musicDone();
 

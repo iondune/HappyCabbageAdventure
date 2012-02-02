@@ -470,6 +470,16 @@ int main(int argc, char * argv[])
             if(event.key.keysym.sym == SDLK_j){
                overView = NEXT(overView);
             }
+            if(event.key.keysym.sym == SDLK_m){
+               if(musicOn) {
+                  musicOn = false;
+                  Mix_HaltMusic();
+               }
+               else {
+                  musicOn = true;
+                  Mix_PlayMusic(music, -1);
+               }
+            }
             if(event.key.keysym.sym == SDLK_SPACE) {
                spaceDown = 1;
                
