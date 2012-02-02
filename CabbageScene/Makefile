@@ -1,4 +1,4 @@
-FILES = CMesh.cpp CMeshLoader.cpp IRenderable.cpp CShader.cpp CTexture.cpp CImageLoader.cpp CImage.cpp CShaderLoader.cpp CCamera.cpp CLightedTexturedMeshRenderable.cpp CShaderContext.cpp
+FILES = CMesh.cpp CMeshLoader.cpp CRenderable.cpp CShader.cpp CTexture.cpp CImageLoader.cpp CImage.cpp CShaderLoader.cpp CCamera.cpp CLightedTexturedMeshRenderable.cpp CShaderContext.cpp
 
 OFILES = $(FILES:%.cpp=%.o)
 
@@ -29,8 +29,8 @@ CImage.o: CImage.cpp
 CMeshLoader.o: CMeshLoader.cpp
 	g++ -o CMeshLoader.o CMeshLoader.cpp -c $(DIRECTORIES) $(OPENGL)
 
-IRenderable.o: IRenderable.cpp
-	g++ -o IRenderable.o IRenderable.cpp -c $(DIRECTORIES) $(OPENGL)
+CRenderable.o: CRenderable.cpp
+	g++ -o CRenderable.o CRenderable.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CShader.o: CShader.cpp
 	g++ -o CShader.o CShader.cpp -c $(DIRECTORIES) $(OPENGL)

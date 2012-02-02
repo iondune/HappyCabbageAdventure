@@ -6,10 +6,10 @@
 #include "CMesh.h"
 #include "CTexture.h"
 
-#include "IRenderable.h"
+#include "CRenderable.h"
 
 
-class CTexturedMeshRenderable : public IRenderable
+class CTexturedMeshRenderable : public CRenderable
 {
 
 protected:

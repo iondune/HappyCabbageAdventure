@@ -3,7 +3,7 @@
 
 #include "CMesh.h"
 #include "CMeshLoader.h"
-#include "IRenderable.h"
+#include "CRenderable.h"
 #include "CTexturedMeshRenderable.h"
 #include "CLightedTexturedMeshRenderable.h"
 #include "CMeshRenderable.h"

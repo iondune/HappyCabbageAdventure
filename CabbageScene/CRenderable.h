@@ -1,7 +1,8 @@
-#ifndef _CABBAGE_SCENE_IRENDERABLE_H_INCLUDED_
-#define _CABBAGE_SCENE_IRENDERABLE_H_INCLUDED_
+#ifndef _CABBAGE_SCENE_CRENDERABLE_H_INCLUDED_
+#define _CABBAGE_SCENE_CRENDERABLE_H_INCLUDED_
 
 #include <map>
+#include <set>
 
 #include "../CabbageCore/SVector3.h"
 #include "../CabbageCore/SBoundingBox3.h"
@@ -103,7 +104,7 @@ public:
 };
 
 
-class IRenderable
+class CRenderable
 {
 
 protected:
@@ -111,7 +112,7 @@ protected:
     SVector3 Translation, Rotation, Scale;
     SBoundingBox3 BoundingBox;
 
-    IRenderable();
+    CRenderable();
 
     struct SAttribute
     {
@@ -143,6 +144,7 @@ protected:
 
     std::map<std::string, SAttribute> Attributes;
     std::map<std::string, SUniform> Uniforms;
+    std::set<GLenum const> RenderModes;
 
     CShader * Shader;
 
@@ -167,6 +169,11 @@ public:
 
     void addAttribute(std::string const & label, IAttribute * attribute);
     void addUniform(std::string const & label, IUniform * uniform);
+    void removeAttribute(std::string const & label);
+    void removeUniform(std::string const & label);
+
+    void addRenderMode(GLenum const mode);
+    void removeRenderMode(GLenum const mode);
 
 };
 
