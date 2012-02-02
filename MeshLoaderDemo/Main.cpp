@@ -120,6 +120,23 @@ public:
         SDL_GL_SwapBuffers();
     }
 
+    void OnKeyboardEvent(SKeyboardEvent const & Event)
+    {
+        switch (Event.Key)
+        {
+
+        case SDLK_n:
+
+            if (Event.Pressed)
+                Renderable->enableDebugData(EDebugData::Normals);
+            else
+                Renderable->disableDebugData(EDebugData::Normals);
+
+            break;
+
+        }
+    }
+
     // Shader and Mesh utility classes
     CShader * Shader;
     CMesh * Mesh;

@@ -1,6 +1,7 @@
 #include "CMeshRenderable.h"
 
-#include"CShaderContext.h"
+#include "CShaderContext.h"
+#include "CShaderLoader.h"
 
 #include "../CabbageCore/glm/gtc/matrix_transform.hpp"
 
@@ -33,4 +34,13 @@ void CMeshRenderable::setMesh(CMesh * mesh)
     setIndexBufferObject(Mesh->makeIndexBuffer());
 
     addRenderMode(GL_TEXTURE_2D);
+
+    if (NormalObject)
+        delete NormalObject;
+    NormalObject = new CRenderable();
+    NormalObject->addAttribute("aPosition", new CFloatVecAttribute(Mesh->makeNormalLineBuffer(), 3));
+    NormalObject->addAttribute("aColor", new CFloatVecAttribute(Mesh->makeNormalColorBuffer(), 3));
+    NormalObject->setIndexBufferObject(Mesh->makeNormalIndexBuffer());
+    NormalObject->setShader(CShaderLoader::loadShader("Shaders/simple.vert", "Shaders/simple.frag"));
+    NormalObject->setDrawType(GL_LINES);
 }

@@ -20,18 +20,18 @@ struct SMouseEvent
 
     public:
 
-    enum Domain
-    {
-        Left,
-        Right,
-        Middle
-    };
+        enum Domain
+        {
+            Left,
+            Right,
+            Middle
+        };
 
-    Domain Value;
+        Domain Value;
 
-    EButton();
+        EButton();
 
-    EButton(Domain const value);
+        EButton(Domain const value);
 
     };
 
@@ -40,17 +40,17 @@ struct SMouseEvent
 
     public:
 
-    enum Domain
-    {
-        Move,
-        Click
-    };
+        enum Domain
+        {
+            Move,
+            Click
+        };
 
-    Domain Value;
+        Domain Value;
 
-    EType();
+        EType();
 
-    EType(Domain const value);
+        EType(Domain const value);
 
     };
 
