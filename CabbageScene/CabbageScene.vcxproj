@@ -65,6 +65,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CabbageScene.h" />
+    <ClInclude Include="CBufferObject.h" />
     <ClInclude Include="CCamera.h" />
     <ClInclude Include="CImage.h" />
     <ClInclude Include="CLightedTexturedMeshRenderable.h" />

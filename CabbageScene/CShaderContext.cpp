@@ -42,6 +42,15 @@ void CShaderContext::bindBufferObject(std::string const & label, GLuint const Bu
     EnabledVertexAttribArrays.push_back(it->second.Handle);
 }
 
+void CShaderContext::bindBufferObject(GLuint const attribHandle, GLuint const bufferHandle, GLuint const elementSize)
+{
+    glEnableVertexAttribArray(attribHandle);
+    glBindBuffer(GL_ARRAY_BUFFER, bufferHandle);
+    glVertexAttribPointer(attribHandle, elementSize, GL_FLOAT, GL_FALSE, 0, 0);
+
+    EnabledVertexAttribArrays.push_back(attribHandle);
+}
+
 void CShaderContext::bindIndexBufferObject(GLuint const BufferHandle)
 {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, BufferHandle);
@@ -87,4 +96,19 @@ void CShaderContext::uniform(std::string const & label, glm::mat4 const & unifor
     }
 
     glUniformMatrix4fv(it->second.Handle, 1, GL_FALSE, glm::value_ptr(uniform));
+}
+
+void CShaderContext::uniform(GLuint const uniformHandle, float const uniform)
+{
+    glUniform1f(uniformHandle, uniform);
+}
+
+void CShaderContext::uniform(GLuint const uniformHandle, int const uniform)
+{
+    glUniform1i(uniformHandle, uniform);
+}
+
+void CShaderContext::uniform(GLuint const uniformHandle, glm::mat4 const & uniform)
+{
+    glUniformMatrix4fv(uniformHandle, 1, GL_FALSE, glm::value_ptr(uniform));
 }
