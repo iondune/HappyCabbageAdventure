@@ -417,6 +417,7 @@ int main(int argc, char * argv[])
 
    //Chris Code: Start music
    setupSoundtrack();
+   startSoundtrack();
 
    while(!finished)
    {
@@ -625,7 +626,7 @@ int main(int argc, char * argv[])
    }
 
    //Chris Code; Stop Music
-
+   stopSoundtrack();
    Mix_CloseAudio();
 
    our_font.clean();
