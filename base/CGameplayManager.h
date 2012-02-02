@@ -60,6 +60,11 @@ public:
 					{
 						-- PlayerHealth;
 
+                                                //Chris Code.  Damage Sound plays here
+                                                if(playTakeDmg) {
+                                                   Mix_PlayChannel(-1, takeDmg, 0);
+                                                }
+
 						float const KnockbackSpeed = 7.f;
 						float const KnockbackDuration = 0.2f;
 
