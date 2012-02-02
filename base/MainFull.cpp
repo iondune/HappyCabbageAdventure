@@ -450,16 +450,6 @@ int main(int argc, char * argv[])
          frame_delta = newTicks;
       }
 
-
-
-      /*
-         if(elapsedTime >= finalTime){
-         finished = true;
-         continue;
-         }
-       */
-
-
       //printf("Player->isStanding(): %d\n", Player->isStanding());
       while(SDL_PollEvent( &event ) )
       {

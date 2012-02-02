@@ -3,7 +3,7 @@
 top_builddir = .
 srcdir  = .
 objects = build
-prefix = /home/ccolwell/bin
+prefix = /home/knuckles
 exec_prefix = ${prefix}
 bindir	= $(DESTDIR)${exec_prefix}/bin
 libdir  = $(DESTDIR)${exec_prefix}/lib
@@ -18,20 +18,20 @@ distfile = $(distdir).tar.gz
 
 
 EXE	= 
-SHELL	= /bin/sh
+SHELL	= /bin/bash
 CC      = gcc
 CXX     = g++
 CFLAGS  = -g -O2 
 EXTRA_CFLAGS =  -D_GNU_SOURCE=1 -D_GNU_SOURCE=1 -D_REENTRANT -I/usr/include/SDL   -fvisibility=hidden -DHAVE_FORK -DCMD_MUSIC -DWAV_MUSIC -DMID_MUSIC -DUSE_TIMIDITY_MIDI -I$(srcdir)/timidity -DHAVE_SIGNAL_H -DHAVE_SETBUF
 LDFLAGS = 
-EXTRA_LDFLAGS =  -lSDL -lpthread   -lm
+EXTRA_LDFLAGS =  -lSDL   -lm
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 INSTALL = /usr/bin/install -c
 AR	= ar
 RANLIB	= ranlib
 WINDRES	= 
 SDL_CFLAGS = -D_GNU_SOURCE=1 -D_REENTRANT -I/usr/include/SDL  
-SDL_LIBS = -lSDL -lpthread  
+SDL_LIBS = -lSDL  
 
 TARGET  = libSDL_mixer.la
 OBJECTS = $(objects)/effect_position.lo $(objects)/effect_stereoreverse.lo $(objects)/effects_internal.lo $(objects)/load_aiff.lo $(objects)/load_voc.lo $(objects)/mixer.lo $(objects)/music.lo $(objects)/music_cmd.lo $(objects)/wavestream.lo $(objects)/common.lo $(objects)/ctrlmode.lo $(objects)/filter.lo $(objects)/instrum.lo $(objects)/mix.lo $(objects)/output.lo $(objects)/playmidi.lo $(objects)/readmidi.lo $(objects)/resample.lo $(objects)/sdl_a.lo $(objects)/sdl_c.lo $(objects)/tables.lo $(objects)/timidity.lo 

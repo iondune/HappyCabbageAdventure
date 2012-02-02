@@ -3,6 +3,14 @@ SOURCES=MainFull.cpp CPlayerView.cpp Materials.cpp 3dsloader/3dsloader.cpp FreeT
 OBJECTS=$(SOURCES:%.cpp=%.o)
 CABBAGE=-L../lib/ -lCabbageCollider
 
+#Chris Code.  Adding check for 32 or 64 bit
+LBITS:=$(shell getconf LONG_BIT)
+ifeq ($(LBITS),64)
+MIXLIB=../lib/x64
+else
+MIXLIB=../lib/x86
+endif
+
 all: cabbage 
 
 cabbage: ${OBJECTS}

@@ -1,4 +1,4 @@
-prefix=/home/ccolwell/bin
+prefix=/home/knuckles
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
