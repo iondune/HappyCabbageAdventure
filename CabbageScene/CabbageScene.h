@@ -15,5 +15,6 @@
 #include "CTexture.h"
 #include "SVertex.h"
 #include "CSceneManager.h"
+#include "CBufferObject.h"
 
 #endif
