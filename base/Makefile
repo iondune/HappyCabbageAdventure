@@ -6,15 +6,15 @@ CABBAGE=-L../lib/ -lCabbageCollider
 #Chris Code.  Adding check for 32 or 64 bit
 LBITS:=$(shell getconf LONG_BIT)
 ifeq ($(LBITS),64)
-MIXLIB=../lib/x64
+MIXLIB=-L../lib/x64 -lSDL_mixer -Wl,-rpath=../lib/x64
 else
-MIXLIB=../lib/x86
+MIXLIB=-L../lib/x86 -lSDL_mixer -Wl,-rpath=../lib/x86
 endif
 
 all: cabbage 
 
 cabbage: ${OBJECTS}
-	g++ ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL -lglut `sdl-config --cflags` ${CABBAGE} `freetype-config --libs` -g -o $@
+	g++ ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL -lglut `sdl-config --cflags --libs` ${CABBAGE} ${MIXLIB} `freetype-config --libs` -g -o $@
 
 MainFull.o: MainFull.cpp draw.h header.h
 	g++ `sdl-config --cflags` `freetype-config --cflags` -c MainFull.cpp

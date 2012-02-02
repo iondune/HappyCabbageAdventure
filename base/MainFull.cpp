@@ -409,21 +409,7 @@ int main(int argc, char * argv[])
    DemoLight();
 
    //Chris Code: Start music
-   fmt.freq = 22050;
-   fmt.format = AUDIO_S16;
-   fmt.channels = 2;
-   fmt.samples = 512;
-   fmt.callback = mixaudio;
-   fmt.userdata = NULL;
-
-   if (SDL_OpenAudio (&fmt, NULL) < 0) {
-      fprintf(stderr, "Unable to open audio: %s\n",
-        SDL_GetError());
-   }
-
-   PlaySound("SMW.wav");
-
-   SDL_PauseAudio(0);
+   setupSoundtrack();
 
    while(!finished)
    {
