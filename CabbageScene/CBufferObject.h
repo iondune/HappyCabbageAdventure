@@ -1,6 +1,8 @@
 #ifndef _CABBAGE_SCENE_CBUFFEROBJECT_H_INCLUDED_
 #define _CABBAGE_SCENE_CBUFFEROBJECT_H_INCLUDED_
 
+#include <vector>
+
 #ifdef __unix__
 #include<GL/gl.h>
 #include<GL/glu.h>
@@ -9,6 +11,7 @@
 #ifdef _WIN32
 #include <GL\glew.h>
 #endif
+
 
 template <typename T>
 class CBufferObject
@@ -106,7 +109,7 @@ public:
             if (Elements.size() <= AllocatedSize)
             {
                 glBindBuffer(IndexBuffer ? GL_ELEMENT_ARRAY_BUFFER : GL_ARRAY_BUFFER, Handle);
-                glBufferSubData(IndexBuffer ? GL_ELEMENT_ARRAY_BUFFER : GL_ARRAY_BUFFER, Elements.size() * sizeof(T), & Elements[0], GL_STATIC_DRAW);
+                glBufferSubData(IndexBuffer ? GL_ELEMENT_ARRAY_BUFFER : GL_ARRAY_BUFFER, 0, Elements.size() * sizeof(T), & Elements[0]);
             }
             else
             {
@@ -114,6 +117,7 @@ public:
             }
         }
     }
+
 };
 
 #endif
