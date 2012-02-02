@@ -35,11 +35,12 @@ void CMeshRenderable::setMesh(CMesh * mesh)
 
     addRenderMode(GL_TEXTURE_2D);
 
-    CRenderable * Normals = new CRenderable();
-    Normals->addAttribute("aPosition", new CFloatVecAttribute(Mesh->makeNormalLineBuffer(), 3));
-    Normals->addAttribute("aColor", new CFloatVecAttribute(Mesh->makeNormalColorBuffer(), 3));
-    Normals->setIndexBufferObject(Mesh->makeNormalIndexBuffer());
-    Normals->setShader(CShaderLoader::loadShader("Shaders/simple.vert", "Shaders/simple.frag"));
-    Normals->setDrawType(GL_LINES);
-    NormalObject = Normals;
+    if (NormalObject)
+        delete NormalObject;
+    NormalObject = new CRenderable();
+    NormalObject->addAttribute("aPosition", new CFloatVecAttribute(Mesh->makeNormalLineBuffer(), 3));
+    NormalObject->addAttribute("aColor", new CFloatVecAttribute(Mesh->makeNormalColorBuffer(), 3));
+    NormalObject->setIndexBufferObject(Mesh->makeNormalIndexBuffer());
+    NormalObject->setShader(CShaderLoader::loadShader("Shaders/simple.vert", "Shaders/simple.frag"));
+    NormalObject->setDrawType(GL_LINES);
 }

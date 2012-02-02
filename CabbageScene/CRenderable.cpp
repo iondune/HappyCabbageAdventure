@@ -5,10 +5,67 @@
 #include "../CabbageCore/glm/gtc/matrix_transform.hpp"
 
 
-CRenderable::CRenderable()
-    : Scale(1), Shader(0), Texture(0), DrawType(GL_TRIANGLES), NormalObject(0)
+CFloatVecAttribute::CFloatVecAttribute(CBufferObject<float> * bufferObject, int const size)
+    : BufferObject(bufferObject), Size(size)
 {}
 
+void CFloatVecAttribute::bindTo(GLuint const attribHandle, CShaderContext & shaderContext)
+{
+    if (BufferObject->isDirty())
+        BufferObject->syncData();
+
+    shaderContext.bindBufferObject(attribHandle, BufferObject->getHandle(), Size);
+}
+
+CFloatUniform::CFloatUniform(float const value)
+    : Value(value)
+{}
+
+void CFloatUniform::bindTo(GLuint const uniformHandle, CShaderContext & shaderContext)
+{
+    shaderContext.uniform(uniformHandle, Value);
+}
+
+CIntUniform::CIntUniform(int const value)
+    : Value(value)
+{}
+
+void CIntUniform::bindTo(GLuint const uniformHandle, CShaderContext & shaderContext)
+{
+    shaderContext.uniform(uniformHandle, Value);
+}
+
+CMat4Uniform::CMat4Uniform(glm::mat4 const & value)
+    : Value(value)
+{}
+
+void CMat4Uniform::bindTo(GLuint const uniformHandle, CShaderContext & shaderContext)
+{
+    shaderContext.uniform(uniformHandle, Value);
+}
+
+
+CRenderable::SAttribute::SAttribute()
+    : Value(0), Handle(-1)
+{}
+
+CRenderable::SAttribute::SAttribute(IAttribute * value)
+    : Value(value), Handle(-1)
+{}
+
+
+CRenderable::SUniform::SUniform()
+    : Value(0), Handle(-1)
+{}
+
+CRenderable::SUniform::SUniform(IUniform * value)
+    : Value(value), Handle(-1)
+{}
+
+
+CRenderable::CRenderable()
+    : Scale(1), Shader(0), Texture(0), DrawType(GL_TRIANGLES), NormalObject(0), DebugDataFlags(0)
+{}
 
 SVector3 const & CRenderable::getTranslation() const
 {
@@ -55,6 +112,9 @@ void CRenderable::setShader(CShader * shader)
         it->second.Handle = -1;
 
     Shader = shader;
+
+    if (! Shader)
+        return;
 
     for (std::map<std::string, SShaderVariable>::const_iterator it = Shader->getAttributeHandles().begin(); it != Shader->getAttributeHandles().end(); ++ it)
     {
@@ -152,7 +212,7 @@ void CRenderable::draw(CCamera const & Camera)
 
     glDrawElements(DrawType, IndexBufferObject->getElements().size(), GL_UNSIGNED_SHORT, 0);
 
-    if (NormalObject)
+    if (isDebugDataEnabled(EDebugData::Normals) && NormalObject)
     {
         NormalObject->setTranslation(Translation);
         NormalObject->setScale(Scale);
@@ -228,4 +288,25 @@ void CRenderable::addRenderMode(GLenum const mode)
 void CRenderable::removeRenderMode(GLenum const mode)
 {
     RenderModes.erase(mode);
+}
+
+bool const CRenderable::isDebugDataEnabled(EDebugData::Domain const type) const
+{
+    return (type & DebugDataFlags) != 0;
+}
+
+void CRenderable::enableDebugData(EDebugData::Domain const type)
+{
+    if (type == EDebugData::None)
+        DebugDataFlags = 0;
+    else
+        DebugDataFlags |= type;
+}
+
+void CRenderable::disableDebugData(EDebugData::Domain const type)
+{
+    if (type == EDebugData::None)
+        DebugDataFlags = 0;
+    else
+        DebugDataFlags ^= type;
 }

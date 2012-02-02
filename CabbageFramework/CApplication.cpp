@@ -79,6 +79,8 @@ void CApplication::init(SPosition2 const & windowSize)
     EventManager->OnGameTickEnd.connect(StateManager, & CStateManager::OnGameTickEnd);
     EventManager->OnRenderStart.connect(StateManager, & CStateManager::OnRenderStart);
     EventManager->OnRenderEnd.connect(StateManager, & CStateManager::OnRenderEnd);
+    EventManager->OnKeyboardEvent.connect(StateManager, & CStateManager::OnKeyboardEvent);
+    EventManager->OnMouseEvent.connect(StateManager, & CStateManager::OnMouseEvent);
 
     setupRenderContext();
 }
@@ -171,11 +173,11 @@ void CApplication::run()
 
                     break;
 
-				}
+                }
 
-			case SDL_KEYDOWN:
-			case SDL_KEYUP:
-				{
+            case SDL_KEYDOWN:
+            case SDL_KEYUP:
+                {
 
                     SKeyboardEvent KeyEvent;
                     KeyEvent.Pressed = Event.key.state == SDL_PRESSED;
@@ -184,7 +186,7 @@ void CApplication::run()
 
                     break;
 
-				}
+                }
             } // switch (Event.type)
         } // while (SDL_PollEvent(& Event))
 
