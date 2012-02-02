@@ -473,14 +473,6 @@ int main(int argc, char * argv[])
             if(event.key.keysym.sym == SDLK_SPACE) {
                spaceDown = 1;
                
-               if (Player->isStanding()) {
-                  playJump = true;
-               }
-
-               if (playJump) {
-                  Mix_PlayChannel(-1, jump, 0);
-                  playJump = false;
-               }
             }
             if(event.key.keysym.sym == SDLK_ESCAPE) {
                finished = true;
@@ -557,7 +549,17 @@ int main(int argc, char * argv[])
             }
          }
 
+         if (Player->isStanding() && spaceDown != 0) {
+            playJump = true;
+         }
+
          Player->setJumping(spaceDown != 0);
+
+         if (playJump) {
+            Mix_PlayChannel(-1, jump, 0);
+            playJump = false;
+         }
+
       }
       else
       {
