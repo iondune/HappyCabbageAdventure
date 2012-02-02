@@ -118,3 +118,67 @@ void CMesh::calculateNormalsPerVertex()
     for (std::vector<SVertex>::iterator it = Vertices.begin(); it != Vertices.end(); ++ it)
         it->Normal.normalize();
 }
+
+CBufferObject<float> * CMesh::makePositionBuffer()
+{
+    CBufferObject<float> * Buffer = new CBufferObject<float>();
+
+    for (unsigned int i = 0; i < Vertices.size(); ++ i)
+    {
+        for (unsigned int j = 0; j < 3; ++ j)
+            Buffer->push_back(Vertices[i].Position[j]);
+    }
+
+    return Buffer;
+}
+
+CBufferObject<float> * CMesh::makeColorBuffer()
+{
+    CBufferObject<float> * Buffer = new CBufferObject<float>();
+
+    for (unsigned int i = 0; i < Vertices.size(); ++ i)
+    {
+        for (unsigned int j = 0; j < 3; ++ j)
+            Buffer->push_back(Vertices[i].Color[j]);
+    }
+
+    return Buffer;
+}
+
+CBufferObject<float> * CMesh::makeNormalBuffer()
+{
+    CBufferObject<float> * Buffer = new CBufferObject<float>();
+
+    for (unsigned int i = 0; i < Vertices.size(); ++ i)
+    {
+        for (unsigned int j = 0; j < 3; ++ j)
+            Buffer->push_back(Vertices[i].Normal[j]);
+    }
+
+    return Buffer;
+}
+
+CBufferObject<float> * CMesh::makeTexCoordBuffer()
+{
+    CBufferObject<float> * Buffer = new CBufferObject<float>();
+
+    for (unsigned int i = 0; i < Vertices.size(); ++ i)
+    {
+        for (unsigned int j = 0; j < 2; ++ j)
+            Buffer->push_back(Vertices[i].TextureCoordinates[j]);
+    }
+
+    return Buffer;
+}
+
+CBufferObject<unsigned short> * CMesh::makeIndexBuffer()
+{
+    CBufferObject<unsigned short> * Buffer = new CBufferObject<unsigned short>();
+    for(unsigned int i = 0; i < Triangles.size(); ++ i)
+        for (unsigned int j = 0; j < 3; ++ j)
+            Buffer->push_back(Triangles[i].Indices[j]);
+
+    Buffer->setIsIndexBuffer(true);
+
+    return Buffer;
+}

@@ -53,7 +53,7 @@ public:
 
 };
 
-class CFloatUniform
+class CFloatUniform : public IUniform
 {
 
 public:
@@ -71,7 +71,7 @@ public:
 
 };
 
-class CIntUniform
+class CIntUniform : public IUniform
 {
 
 public:
@@ -89,7 +89,7 @@ public:
 
 };
 
-class CMat4Uniform
+class CMat4Uniform : public IUniform
 {
 
 public:
@@ -169,6 +169,9 @@ public:
 
     CTexture * getTexture();
     void setTexture(CTexture * texture);
+
+    CBufferObject<GLushort> * getIndexBufferObject();
+    void setIndexBufferObject(CBufferObject<GLushort> * indexBufferObject);
 
     void draw(CCamera const & Camera);
 

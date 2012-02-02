@@ -4,8 +4,6 @@
 #include "CMesh.h"
 #include "CMeshLoader.h"
 #include "CRenderable.h"
-#include "CTexturedMeshRenderable.h"
-#include "CLightedTexturedMeshRenderable.h"
 #include "CMeshRenderable.h"
 #include "CShader.h"
 #include "CShaderLoader.h"

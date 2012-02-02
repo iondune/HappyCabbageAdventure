@@ -73,6 +73,16 @@ public:
         return Elements[i];
     }
 
+    void push_back(T const element)
+    {
+        Elements.push_back(element);
+    }
+
+    unsigned int const size() const
+    {
+        return Elements.size();
+    }
+
     bool const isIndexBuffer() const
     {
         return IndexBuffer;
@@ -102,7 +112,7 @@ public:
     {
         if (! Handle)
         {
-            allocate(Elements.size());
+            allocate(Elements.size(), & Elements[0]);
         }
         else
         {
@@ -116,6 +126,8 @@ public:
                 reallocate(Elements.size(), & Elements[0]);
             }
         }
+
+        Dirty = false;
     }
 
 };

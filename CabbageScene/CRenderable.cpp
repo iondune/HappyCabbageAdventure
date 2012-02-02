@@ -1,5 +1,7 @@
 #include "CRenderable.h"
 
+#include <iostream>
+
 #include "../CabbageCore/glm/gtc/matrix_transform.hpp"
 
 
@@ -46,7 +48,31 @@ CShader * CRenderable::getShader()
 
 void CRenderable::setShader(CShader * shader)
 {
+    for (std::map<std::string, SAttribute>::iterator it = Attributes.begin(); it != Attributes.end(); ++ it)
+        it->second.Handle = -1;
+
+    for (std::map<std::string, SUniform>::iterator it = Uniforms.begin(); it != Uniforms.end(); ++ it)
+        it->second.Handle = -1;
+
     Shader = shader;
+
+    for (std::map<std::string, SShaderVariable>::const_iterator it = Shader->getAttributeHandles().begin(); it != Shader->getAttributeHandles().end(); ++ it)
+    {
+        std::map<std::string, SAttribute>::iterator jt = Attributes.find(it->first);
+        if (jt != Attributes.end())
+            jt->second.Handle = it->second.Handle;
+        else
+            std::cout << "Attribute required by shader but not found in renderable: " << it->first << std::endl;
+    }
+
+    for (std::map<std::string, SShaderVariable>::const_iterator it = Shader->getUniformHandles().begin(); it != Shader->getUniformHandles().end(); ++ it)
+    {
+        std::map<std::string, SUniform>::iterator jt = Uniforms.find(it->first);
+        if (jt != Uniforms.end())
+            jt->second.Handle = it->second.Handle;
+        else
+            std::cout << "Uniform required by shader but not found in renderable: " << it->first << std::endl;
+    }
 }
 
 CTexture * CRenderable::getTexture()
@@ -57,6 +83,16 @@ CTexture * CRenderable::getTexture()
 void CRenderable::setTexture(CTexture * texture)
 {
     Texture = texture;
+}
+
+CBufferObject<GLushort> * CRenderable::getIndexBufferObject()
+{
+    return IndexBufferObject;
+}
+
+void CRenderable::setIndexBufferObject(CBufferObject<GLushort> * indexBufferObject)
+{
+    IndexBufferObject = indexBufferObject;
 }
 
 void CRenderable::draw(CCamera const & Camera)
@@ -94,6 +130,15 @@ void CRenderable::draw(CCamera const & Camera)
     Transformation = glm::rotate(Transformation, Rotation.Y, glm::vec3(0, 1, 0));
     Transformation = glm::rotate(Transformation, Rotation.Z, glm::vec3(0, 0, 1));
     Transformation = glm::scale(Transformation, Scale.getGLMVector());
+
+    ShaderContext.uniform("uModelMatrix", Transformation);
+    ShaderContext.uniform("uViewMatrix", Camera.getViewMatrix());
+    ShaderContext.uniform("uProjMatrix", Camera.getProjectionMatrix());
+
+    if (IndexBufferObject->isDirty())
+        IndexBufferObject->syncData();
+
+    ShaderContext.bindIndexBufferObject(IndexBufferObject->getHandle());
 
     glDrawElements(GL_TRIANGLES, IndexBufferObject->getElements().size(), GL_UNSIGNED_SHORT, 0);
 
@@ -142,9 +187,8 @@ void CRenderable::removeAttribute(std::string const & label)
     if (it != Attributes.end())
     {
         delete it->second.Value;
+        Attributes.erase(it);
     }
-
-    Attributes.erase(it);
 }
 
 void CRenderable::removeUniform(std::string const & label)
@@ -154,9 +198,8 @@ void CRenderable::removeUniform(std::string const & label)
     if (it != Uniforms.end())
     {
         delete it->second.Value;
+        Uniforms.erase(it);
     }
-
-    Uniforms.erase(it);
 }
 
 void CRenderable::addRenderMode(GLenum const mode)

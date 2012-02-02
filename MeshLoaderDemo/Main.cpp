@@ -79,7 +79,8 @@ public:
         Texture = new CTexture(Image);
 
         // Now load our mesh into a VBO, retrieving the number of triangles and the handles to each VBO
-        Renderable = new CLightedTexturedMeshRenderable(* Mesh);
+        Renderable = new CMeshRenderable();
+        Renderable->setMesh(Mesh);
         Renderable->setTexture(Texture);
         Renderable->setShader(Shader);
     }
@@ -120,7 +121,7 @@ public:
     // Shader and Mesh utility classes
     CShader * Shader;
     CMesh * Mesh;
-    CLightedTexturedMeshRenderable * Renderable;
+    CMeshRenderable * Renderable;
     CTexture * Texture;
     CCamera * Camera;
 

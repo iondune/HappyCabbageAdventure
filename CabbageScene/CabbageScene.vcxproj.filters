@@ -30,15 +30,9 @@
     <ClInclude Include="CMeshRenderable.h">
       <Filter>Scene Objects</Filter>
     </ClInclude>
-    <ClInclude Include="CTexturedMeshRenderable.h">
-      <Filter>Scene Objects</Filter>
-    </ClInclude>
     <ClInclude Include="CSceneManager.h" />
     <ClInclude Include="CCamera.h">
       <Filter>Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="CLightedTexturedMeshRenderable.h">
-      <Filter>Scene Objects</Filter>
     </ClInclude>
     <ClInclude Include="CBufferObject.h">
       <Filter>Meshes</Filter>
@@ -75,15 +69,9 @@
     <ClCompile Include="CMeshRenderable.cpp">
       <Filter>Scene Objects</Filter>
     </ClCompile>
-    <ClCompile Include="CTexturedMeshRenderable.cpp">
-      <Filter>Scene Objects</Filter>
-    </ClCompile>
     <ClCompile Include="CSceneManager.cpp" />
     <ClCompile Include="CCamera.cpp">
       <Filter>Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="CLightedTexturedMeshRenderable.cpp">
-      <Filter>Scene Objects</Filter>
     </ClCompile>
     <ClCompile Include="CRenderable.cpp">
       <Filter>Scene Objects</Filter>
