@@ -35,7 +35,7 @@ void waitForUser()
 freetype::font_data our_font;
 
 // Window information
-//int WindowWidth = 400, WindowHeight = 400;
+//int WindowWidth = 1024, WindowHeight = 768;
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 768;
 const int SCREEN_BPP = 32;
@@ -262,8 +262,15 @@ void Display()
    freetype::print(our_font, 10, SCREEN_HEIGHT-40, "Elapsed Time: %u\n"
          "FPS: %0.0f \nHealth: %d\nspaceDown: %d\nwDown: %d\nsDown: %d\noverView: %d ", elapsedTime/1000, fps, GameplayManager->getPlayerHealth(), spaceDown, wDown, sDown, overView);
 
-   if (! GameplayManager->isPlayerAlive())
+   if (! GameplayManager->isPlayerAlive()) {
+      //Chris Code.  Play Death Sound
+      if (playDead) {
+         Mix_HaltMusic();
+         Mix_PlayChannel(-1, die, 0); //Only play once
+         playDead = false;
+      }
       freetype::print(our_font, 50, SCREEN_HEIGHT - 240, "GAME OVER! YOU ARE DEAD");
+   }
 
 
    SDL_GL_SwapBuffers();
@@ -465,6 +472,15 @@ int main(int argc, char * argv[])
             }
             if(event.key.keysym.sym == SDLK_SPACE) {
                spaceDown = 1;
+               
+               if (Player->isStanding()) {
+                  playJump = true;
+               }
+
+               if (playJump) {
+                  Mix_PlayChannel(-1, jump, 0);
+                  playJump = false;
+               }
             }
             if(event.key.keysym.sym == SDLK_ESCAPE) {
                finished = true;
@@ -598,7 +614,7 @@ int main(int argc, char * argv[])
 
    //Chris Code; Stop Music
 
-   SDL_CloseAudio();
+   Mix_CloseAudio();
 
    our_font.clean();
 

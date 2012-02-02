@@ -223,6 +223,11 @@ namespace Collider
 		Action = action;
 	}
 
+        bool CActor::isJumping()
+        {
+           return Jumping;
+        }
+
 	void CActor::setJumping(bool const jumping)
 	{
 		if (! Jumping && ! Standing)
