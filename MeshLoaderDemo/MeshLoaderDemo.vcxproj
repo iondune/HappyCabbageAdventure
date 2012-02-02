@@ -71,6 +71,8 @@
     <None Include="SDL.dll" />
     <None Include="Shaders\Lab3_frag.glsl" />
     <None Include="Shaders\Lab3_vert.glsl" />
+    <None Include="Shaders\simple.frag" />
+    <None Include="Shaders\simple.vert" />
     <None Include="spaceship.3ds" />
     <None Include="spaceshiptexture.bmp" />
     <None Include="tree.3ds" />

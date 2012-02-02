@@ -13,6 +13,7 @@
 #include "CTexture.h"
 #include "CShaderContext.h"
 
+
 class IAttribute
 {
 
@@ -27,17 +28,8 @@ class CFloatVecAttribute : public IAttribute
 
 public:
 
-    CFloatVecAttribute(CBufferObject<float> * bufferObject, int const size)
-        : BufferObject(bufferObject), Size(size)
-    {}
-
-    void bindTo(GLuint const attribHandle, CShaderContext & shaderContext)
-    {
-        if (BufferObject->isDirty())
-            BufferObject->syncData();
-
-        shaderContext.bindBufferObject(attribHandle, BufferObject->getHandle(), Size);
-    }
+    CFloatVecAttribute(CBufferObject<float> * bufferObject, int const size);
+    void bindTo(GLuint const attribHandle, CShaderContext & shaderContext);
 
     CBufferObject<float> * BufferObject;
     int Size;
@@ -58,14 +50,8 @@ class CFloatUniform : public IUniform
 
 public:
 
-    CFloatUniform(float const value)
-        : Value(value)
-    {}
-
-    void bindTo(GLuint const uniformHandle, CShaderContext & shaderContext)
-    {
-        shaderContext.uniform(uniformHandle, Value);
-    }
+    CFloatUniform(float const value);
+    void bindTo(GLuint const uniformHandle, CShaderContext & shaderContext);
 
     float Value;
 
@@ -76,14 +62,8 @@ class CIntUniform : public IUniform
 
 public:
 
-    CIntUniform(int const value)
-        : Value(value)
-    {}
-
-    void bindTo(GLuint const uniformHandle, CShaderContext & shaderContext)
-    {
-        shaderContext.uniform(uniformHandle, Value);
-    }
+    CIntUniform(int const value);
+    void bindTo(GLuint const uniformHandle, CShaderContext & shaderContext);
 
     int Value;
 
@@ -94,19 +74,26 @@ class CMat4Uniform : public IUniform
 
 public:
 
-    CMat4Uniform(glm::mat4 const & value)
-        : Value(value)
-    {}
-
-    void bindTo(GLuint const uniformHandle, CShaderContext & shaderContext)
-    {
-        shaderContext.uniform(uniformHandle, Value);
-    }
+    CMat4Uniform(glm::mat4 const & value);
+    void bindTo(GLuint const uniformHandle, CShaderContext & shaderContext);
 
     glm::mat4 Value;
 
 };
 
+
+class EDebugData
+{
+
+public:
+
+    enum Domain
+    {
+        None = 0,
+        Normals = 1
+    };
+
+};
 
 class CRenderable
 {
@@ -116,20 +103,13 @@ protected:
     SVector3 Translation, Rotation, Scale;
     SBoundingBox3 BoundingBox;
 
-    CRenderable();
-
     struct SAttribute
     {
         GLint Handle;
         IAttribute * Value;
 
-        SAttribute()
-            : Value(0), Handle(-1)
-        {}
-
-        SAttribute(IAttribute * value)
-            : Value(value), Handle(-1)
-        {}
+        SAttribute();
+        SAttribute(IAttribute * value);
     };
 
     struct SUniform
@@ -137,13 +117,8 @@ protected:
         GLint Handle;
         IUniform * Value;
 
-        SUniform()
-            : Value(0), Handle(-1)
-        {}
-
-        SUniform(IUniform * value)
-            : Value(value), Handle(-1)
-        {}
+        SUniform();
+        SUniform(IUniform * value);
     };
 
     std::map<std::string, SAttribute> Attributes;
@@ -154,7 +129,14 @@ protected:
     CShader * Shader;
     CTexture * Texture;
 
+    CRenderable * NormalObject;
+
+    GLenum DrawType;
+    int DebugDataFlags;
+
 public:
+
+    CRenderable();
 
     SVector3 const & getTranslation() const;
     SVector3 const & getRotation() const;
@@ -173,6 +155,9 @@ public:
     CBufferObject<GLushort> * getIndexBufferObject();
     void setIndexBufferObject(CBufferObject<GLushort> * indexBufferObject);
 
+    GLenum const getDrawType() const;
+    void setDrawType(GLenum const drawType);
+
     void draw(CCamera const & Camera);
 
     SBoundingBox3 const & getBoundingBox() const;
@@ -186,6 +171,10 @@ public:
 
     void addRenderMode(GLenum const mode);
     void removeRenderMode(GLenum const mode);
+
+    bool const isDebugDataEnabled(EDebugData::Domain const type) const;
+    void enableDebugData(EDebugData::Domain const type);
+    void disableDebugData(EDebugData::Domain const type);
 
 };
 
