@@ -7,8 +7,6 @@ void drawDirt(int backwards) {
    glEnable(GL_TEXTURE_2D);
    glPushMatrix();
 
-   //glColor3f(.04, .3, .43);
-
    glBindTexture(GL_TEXTURE_2D, dirtTexture);
 
    glBegin(GL_QUADS);
@@ -43,20 +41,18 @@ void drawSky(int backwards) {
    glEnable(GL_TEXTURE_2D);
    glPushMatrix();
 
-   //glColor3f(.04, .3, .43);
-
    glBindTexture(GL_TEXTURE_2D, skyTexture);
 
    glBegin(GL_QUADS);
    if(!backwards) {
       glTexCoord2f(0, 1);
-      glVertex3f(-25, 20, -2.5);
+      glVertex3f(-25, 22, -2.5);
       glTexCoord2f(0, 0);
       glVertex3f(-25, -1, -2.5);
       glTexCoord2f(1, 0);
       glVertex3f(25, -1, -2.5);
       glTexCoord2f(1, 1);
-      glVertex3f(25, 20, -2.5);
+      glVertex3f(25, 22, -2.5);
    }
    else {
       glTexCoord2f(0, 1);
@@ -182,39 +178,7 @@ void drawPlane() {
     glTexCoord2f(50, 0);
     glVertex3f(25, 0, -2.5);
 
-/*
-    glTexCoord2f(0, 0);
-    glVertex3f(-25, 0, -2.5);
-
-    glTexCoord2f(1, 0);
-    glVertex3f(25, 0, -2.5);
-
-    glTexCoord2f(1, 1);
-    glVertex3f(25, 0, 2.5);
-
-    glTexCoord2f(0, 1);
-    glVertex3f(-25, 0, 2.5);*/
-
     glEnd();
-/*    glBegin(GL_POLYGON);
-        glVertex3f(-25, 0, -2.5);
-        glVertex3f(25, 0, -2.5);
-        glVertex3f(25, 0, 2.5);
-        glVertex3f(-25, 0, 2.5);
-    glEnd();
-
-    glColor3f(0, 0, 0);
-    glPointSize(15.f);
-    glBegin(GL_LINES);
-    for(float i = -25; i < 25; i += 0.5) {
-       glVertex3f(i, 0.05, -2.5);
-       glVertex3f(i, 0.05, 2.5);
-       if(i <= 2.5 && i >= -2.5) {
-          glVertex3f(-25, 0.05, i);
-          glVertex3f(25, 0.05, i);
-       }
-    }
-    glEnd();*/
 
     glDisable(GL_TEXTURE_2D);
     glPopMatrix();
