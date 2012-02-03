@@ -233,3 +233,16 @@ CBufferObject<unsigned short> * CMesh::makeNormalIndexBuffer()
 
     return Buffer;
 }
+
+SBoundingBox3 const CMesh::getBoundingBox() const
+{
+    if (! Vertices.size())
+        return SBoundingBox3();
+
+    SBoundingBox3 Box(Vertices[0].Position);
+
+    for (int i = 1; i != Vertices.size(); ++ i)
+        Box.addInternalPoint(Vertices[i].Position);
+
+    return Box;
+}

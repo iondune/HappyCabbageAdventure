@@ -1,6 +1,8 @@
 #ifndef _CABBAGE_SCENE_CMESH_H_INCLUDED_
 #define _CABBAGE_SCENE_CMESH_H_INCLUDED_
 
+#include "../CabbageCore/SBoundingBox3.h"
+
 #include "SVertex.h"
 #include "CBufferObject.h"
 
@@ -42,6 +44,8 @@ public:
     CBufferObject<float> * makeNormalLineBuffer();
     CBufferObject<float> * makeNormalColorBuffer();
     CBufferObject<unsigned short> * makeNormalIndexBuffer();
+
+    SBoundingBox3 const getBoundingBox() const;
 
 };
 

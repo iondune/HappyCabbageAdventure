@@ -18,6 +18,10 @@ public:
         : MinCorner(min), MaxCorner(max)
     {}
 
+    SBoundingBox3(SVector3 const & v)
+        : MinCorner(v), MaxCorner(v)
+    {}
+
     SVector3 const getExtent() const
     {
         return MaxCorner - MinCorner;

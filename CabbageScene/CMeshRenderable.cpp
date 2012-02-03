@@ -41,6 +41,9 @@ void CMeshRenderable::setMesh(CMesh * mesh)
         // Add mesh index buffer
         setIndexBufferObject(Mesh->makeIndexBuffer());
 
+        // Set bounding box
+        BoundingBox = Mesh->getBoundingBox();
+
         // Add normal debugging object
         NormalObject = new CRenderable();
         NormalObject->addAttribute("aPosition", new CFloatVecAttribute(Mesh->makeNormalLineBuffer(), 3));
