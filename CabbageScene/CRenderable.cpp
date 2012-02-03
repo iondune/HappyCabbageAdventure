@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "../CabbageCore/glm/gtc/matrix_transform.hpp"
+//#include "../CabbageCore/glm/gtx/inverse_transpose.hpp"
 
 #include "CShaderLoader.h"
 
@@ -132,7 +133,7 @@ void CRenderable::setShader(CShader * shader)
         std::map<std::string, SUniform>::iterator jt = Uniforms.find(it->first);
         if (jt != Uniforms.end())
             jt->second.Handle = it->second.Handle;
-        else if (it->first != "uModelMatrix" && it->first != "uProjMatrix" && it->first != "uViewMatrix")
+        else if (it->first != "uModelMatrix" && it->first != "uProjMatrix" && it->first != "uViewMatrix" && it->first != "uNormalMatrix")
             std::cout << "Uniform required by shader but not found in renderable: " << it->first << std::endl;
     }
 }
@@ -215,6 +216,7 @@ void CRenderable::draw(CCamera const & Camera)
     ShaderContext.uniform("uModelMatrix", Transformation);
     ShaderContext.uniform("uViewMatrix", Camera.getViewMatrix());
     ShaderContext.uniform("uProjMatrix", Camera.getProjectionMatrix());
+    ShaderContext.uniform("uNormalMatrix", glm::transpose(glm::inverse(Transformation)));
 
     if (IndexBufferObject->isDirty())
         IndexBufferObject->syncData();
