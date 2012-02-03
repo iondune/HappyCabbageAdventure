@@ -10,23 +10,23 @@ class SVector3
 
 public:
 
-	float X, Y, Z;
+    float X, Y, Z;
 
-	SVector3()
-		: X(0), Y(0), Z(0)
-	{}
+    SVector3()
+        : X(0), Y(0), Z(0)
+    {}
 
     SVector3(glm::vec3 const & vec)
         : X(vec.x), Y(vec.y), Z(vec.z)
     {}
 
-	SVector3(float in)
-		: X(in), Y(in), Z(in)
-	{}
+    SVector3(float in)
+        : X(in), Y(in), Z(in)
+    {}
 
-	SVector3(float in_x, float in_y, float in_z)
-		: X(in_x), Y(in_y), Z(in_z)
-	{}
+    SVector3(float in_x, float in_y, float in_z)
+        : X(in_x), Y(in_y), Z(in_z)
+    {}
 
     glm::vec3 const getGLMVector() const
     {
@@ -49,27 +49,27 @@ public:
 
     float & operator[] (unsigned int i)
     {
-	    switch (i)
-	    {
-	    default:
-	    case 0:
-		    return X;
-	    case 1:
-		    return Y;
-	    case 2:
-		    return Z;
-	    }
+        switch (i)
+        {
+        default:
+        case 0:
+            return X;
+        case 1:
+            return Y;
+        case 2:
+            return Z;
+        }
     }
 
-	SVector3 crossProduct(SVector3 const & v) const
-	{
-		return SVector3(Y*v.Z - v.Y*Z, v.X*Z - X*v.Z, X*v.Y - v.X*Y);
-	}
+    SVector3 crossProduct(SVector3 const & v) const
+    {
+        return SVector3(Y*v.Z - v.Y*Z, v.X*Z - X*v.Z, X*v.Y - v.X*Y);
+    }
 
-	float dotProduct(SVector3 const & v) const
-	{
-		return X*v.X + Y*v.Y + Z*v.Z;
-	}
+    float dotProduct(SVector3 const & v) const
+    {
+        return X*v.X + Y*v.Y + Z*v.Z;
+    }
 
     void normalize()
     {
@@ -80,56 +80,63 @@ public:
         Z /= len;
     }
 
+    SVector3 const getNormalized() const
+    {
+        SVector3 copy(* this);
+        copy.normalize();
+        return copy;
+    }
+
     float length() const
     {
-	    return sqrtf(X*X + Y*Y + Z*Z);
+        return sqrtf(X*X + Y*Y + Z*Z);
     }
 
     SVector3 operator + (SVector3 const & v) const
     {
-	    return SVector3(X+v.X, Y+v.Y, Z+v.Z);
+        return SVector3(X+v.X, Y+v.Y, Z+v.Z);
     }
 
     SVector3 & operator += (SVector3 const & v)
     {
-	    X += v.X;
-	    Y += v.Y;
-	    Z += v.Z;
+        X += v.X;
+        Y += v.Y;
+        Z += v.Z;
 
-	    return * this;
+        return * this;
     }
 
     SVector3 operator - (SVector3 const & v) const
     {
-	    return SVector3(X-v.X, Y-v.Y, Z-v.Z);
+        return SVector3(X-v.X, Y-v.Y, Z-v.Z);
     }
 
     SVector3 & operator -= (SVector3 const & v)
     {
-	    X -= v.X;
-	    Y -= v.Y;
-	    Z -= v.Z;
+        X -= v.X;
+        Y -= v.Y;
+        Z -= v.Z;
 
-	    return * this;
+        return * this;
     }
 
     SVector3 operator * (SVector3 const & v) const
     {
-	    return SVector3(X*v.X, Y*v.Y, Z*v.Z);
+        return SVector3(X*v.X, Y*v.Y, Z*v.Z);
     }
 
     SVector3 & operator *= (SVector3 const & v)
     {
-	    X *= v.X;
-	    Y *= v.Y;
-	    Z *= v.Z;
+        X *= v.X;
+        Y *= v.Y;
+        Z *= v.Z;
 
-	    return * this;
+        return * this;
     }
 
     SVector3 operator / (SVector3 const & v) const
     {
-	    return SVector3(X/v.X, Y/v.Y, Z/v.Z);
+        return SVector3(X/v.X, Y/v.Y, Z/v.Z);
     }
 
     SVector3 & operator /= (SVector3 const & v)
@@ -143,40 +150,40 @@ public:
 
     SVector3 operator * (float const s) const
     {
-	    return SVector3(X*s, Y*s, Z*s);
+        return SVector3(X*s, Y*s, Z*s);
     }
 
     SVector3 & operator *= (float const s)
     {
-	    X *= s;
-	    Y *= s;
-	    Z *= s;
+        X *= s;
+        Y *= s;
+        Z *= s;
 
-	    return * this;
+        return * this;
     }
 
     SVector3 operator / (float const s) const
     {
-	    return SVector3(X/s, Y/s, Z/s);
+        return SVector3(X/s, Y/s, Z/s);
     }
 
     SVector3 & operator /= (float const s)
     {
-	    X /= s;
-	    Y /= s;
-	    Z /= s;
+        X /= s;
+        Y /= s;
+        Z /= s;
 
-	    return * this;
+        return * this;
     }
 
     bool const operator <= (SVector3 const & v) const
     {
-	    return (X < v.X && Y < v.Y && Z < v.Z);
+        return (X < v.X && Y < v.Y && Z < v.Z);
     }
 
     bool const operator >= (SVector3 const & v) const
     {
-	    return (X > v.X && Y > v.Y && Z > v.Z);
+        return (X > v.X && Y > v.Y && Z > v.Z);
     }
 
 };

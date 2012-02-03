@@ -2,6 +2,7 @@
 #define _CABBAGE_CORE_SBOUNDINGBOX2_H_INCLUDED_
 
 #include "SVector3.h"
+#include "SLine3.h"
 
 class SBoundingBox3
 {
@@ -52,6 +53,38 @@ public:
             MinCorner.Y = v.Y;
         if (v.Z < MinCorner.Z)
             MinCorner.Z = v.Z;
+    }
+
+    // These intersect methods direct copies from irrlicht engine
+    bool intersectsWithLine(SLine3 const & line) const
+    {
+        return intersectsWithLine(line.getMiddle(), line.getVector().getNormalized(), line.length() * 0.5f);
+    }
+
+    // These intersect methods direct copies from irrlicht engine
+    bool intersectsWithLine(SVector3 const & linemiddle, SVector3 const & linevect, float halflength) const
+    {
+        const SVector3 e = getExtent() * 0.5f;
+        const SVector3 t = getCenter() - linemiddle;
+
+        if ((fabs(t.X) > e.X + halflength * fabs(linevect.X)) ||
+            (fabs(t.Y) > e.Y + halflength * fabs(linevect.Y)) ||
+            (fabs(t.Z) > e.Z + halflength * fabs(linevect.Z)))
+            return false;
+
+        float r = e.Y * fabs(linevect.Z) + e.Z * fabs(linevect.Y);
+        if (fabs(t.Y*linevect.Z - t.Z*linevect.Y) > r)
+            return false;
+
+        r = e.X * fabs(linevect.Z) + e.Z * fabs(linevect.X);
+        if (fabs(t.Z*linevect.X - t.X*linevect.Z) > r)
+            return false;
+
+        r = e.X * fabs(linevect.Y) + e.Y * fabs(linevect.X);
+        if (fabs(t.X*linevect.Y - t.Y*linevect.X) > r)
+            return false;
+
+        return true;
     }
 
 };

@@ -17,6 +17,21 @@ public:
         : Start(start), End(end)
     {}
 
+    SVector3 const getMiddle() const
+    {
+        return (Start + End) / 2.f;;;
+    }
+
+    SVector3 const getVector() const
+    {
+        return Start - End;
+    }
+
+    float const length() const
+    {
+        return getVector().length();
+    }
+
 };
 
 #endif
