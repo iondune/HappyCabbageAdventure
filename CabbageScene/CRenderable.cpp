@@ -67,7 +67,7 @@ CRenderable::SUniform::SUniform(IUniform * value)
 
 
 CRenderable::CRenderable()
-    : Scale(1), Shader(0), Texture(0), DrawType(GL_TRIANGLES), NormalObject(0), DebugDataFlags(0), NormalColorShader(0)
+    : Scale(1), Shader(0), Texture(0), DrawType(GL_TRIANGLES), NormalObject(0), DebugDataFlags(0), NormalColorShader(0), IndexBufferObject(0)
 {}
 
 SVector3 const & CRenderable::getTranslation() const
