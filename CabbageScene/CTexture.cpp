@@ -1,5 +1,9 @@
 #include "CTexture.h"
 
+#ifdef __unix__
+#include <GL/glu.h>
+#endif
+
 CTexture::CTexture(CImage * image)
     : Width(image->getWidth()), Height(image->getHeight())
 {
