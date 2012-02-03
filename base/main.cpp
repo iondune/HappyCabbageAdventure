@@ -10,6 +10,13 @@
 //#include "../CabbageScene/CabbageScene.h"
 //#include "../CabbageFramework/CabbageFramework.h"
 
+//Variables need to create VBOs of meshes, textures, and shaders
+CShader *Shader, *Diffuse;  //Use Diffuse for trees (doesn't need texture)
+CImage *grassImg, *skyImg, *dirtImg;
+CTexture grassTexture, skyTexture, dirtTexture;
+CMesh *basicTreeMesh, *christmasTreeMesh;
+CMeshRenderable renderChristmasTree, renderBasicTree;
+
 
 class CGameState : public CState<CGameState>
 {
@@ -47,8 +54,10 @@ class CGameState : public CState<CGameState>
          float AspectRatio = (float)WindowWidth/(float)Windowheight;
          //Camera = new CCamera(AspectRatio, ...
 
+
+//This code should all be working.  Commented out so can make sure have the basics working first
          //Load shader and attributes
-         //Shader = CShaderLoader::loadShader(Shaders/Diffuse);
+         //Diffuse = CShaderLoader::loadShader(Shaders/Diffuse);
 
          //Load3DS();
          //LoadTextures();
@@ -139,7 +148,7 @@ class CGameState : public CState<CGameState>
 
 int main (int argc, char *argv[])
 {
-   CApplication & Application = CApplication::get();
+   CApplication & Application = Application.get();
    Application.init(SPosition2(1024, 768));
    
    Application.getStateManager().setState<CMainState>();
@@ -152,14 +161,14 @@ int main (int argc, char *argv[])
 
 void Load3DS()
 {
-   CMesh *basicTree = load3dsMesh("Models/tree.3ds");
+   *basicTreeMesh = load3dsMesh("Models/tree.3ds");
    //Mesh->resizeMesh();
-   Mesh->centerMeshByExtents(SVector3(0));
-   Mesh->calculateNormalsPerFace();
+   basicTreeMesh->centerMeshByExtents(SVector3(0));
+   basicTreeMesh->calculateNormalsPerFace();
 
-   CMesh *christmasTree = load3dsMesh("Models/christmasTree.3ds");
-   Mesh->centerMeshByExtents(SVector3(0));
-   Mesh->calculateNormalsPerFace();
+   *christmasTreeMesh = load3dsMesh("Models/christmasTree.3ds");
+   christmasTreeMesh->centerMeshByExtents(SVector3(0));
+   christmasTreeMesh->calculateNormalsPerFace();
 }
 
 void LoadTextures()
@@ -175,7 +184,13 @@ void LoadTextures()
 
 void PrepMeshes(std::vector<CMesh*> meshes, std::vector<CTexture*> textures, std::vector<CMeshRenderable> renderables)
 {
-   for (std::vector<CMeshRenderable>::iterator render =  renderables.begin(),
+
+   renderBasicTree = new CMeshRenderable();
+   renderBasicTree->setMesh(*basicTree);
+   renderBasicTree->setShader(Diffuse);
+
+//My attempt at a for loop.  Not sure if it's actually worth doing
+/*   for (std::vector<CMeshRenderable>::iterator render =  renderables.begin(),
         std::vector<CMesh*>::iterator mesh,
         std::vector<CTexture*>::iterator texture;
          itr != renderables.end(); itr++, mesh++, texture++)
