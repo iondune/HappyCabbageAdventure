@@ -2,6 +2,7 @@
 
 #ifdef __unix__
 #include <GL/gl.h>
+#include <GL/glu.h>
 #include <SDL/SDL.h>
 #endif
 

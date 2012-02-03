@@ -1,10 +1,10 @@
-FILES = CMesh.cpp CMeshLoader.cpp CRenderable.cpp CShader.cpp CTexture.cpp CImageLoader.cpp CImage.cpp CShaderLoader.cpp CCamera.cpp CShaderContext.cpp
+FILES = CMesh.cpp CMeshLoader.cpp CRenderable.cpp CShader.cpp CTexture.cpp CImageLoader.cpp CImage.cpp CShaderLoader.cpp CCamera.cpp CShaderContext.cpp CSceneManager.cpp CMeshRenderable.cpp
 
 OFILES = $(FILES:%.cpp=%.o)
 
 DIRECTORIES = -I../CabbageCore/
 
-OPENGL = -DGL_GLEXT_PROTOTYPES
+OPENGL = -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL
 
 all: ../lib/libCabbageScene.a
 
@@ -37,6 +37,12 @@ CTexture.o: CTexture.cpp
 
 CImageLoader.o: CImageLoader.cpp
 	g++ -o CImageLoader.o CImageLoader.cpp -c $(DIRECTORIES) $(OPENGL)
+
+CSceneManager.o: CSceneManager.cpp
+	g++ -o $@ CSceneManager.cpp -c $(DIRECTORES) $(OPENGL)
+
+CMeshRenderable.o: CMeshRenderable.cpp
+	g++ -o $@ CMeshRenderable.cpp -c $(DIRECTORES) $(OPENGL)
 
 ../lib/libCabbageScene.a: $(OFILES)
 	rm -f $@
