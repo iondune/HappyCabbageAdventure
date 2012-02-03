@@ -5,6 +5,11 @@
 #include <SDL/SDL.h>
 #endif
 
+#include "header.h"
+
+//#include "../CabbageScene/CabbageScene.h"
+//#include "../CabbageFramework/CabbageFramework.h"
+
 
 class CGameState : public CState<CGameState>
 {
@@ -29,9 +34,9 @@ class CGameState : public CState<CGameState>
          our_font.init("WIFFLES_.TTF", 30);
 
          //Initialize Fxns
-         EngineInit();
-         ViewInit();
-         DemoLight();
+         //EngineInit();
+         //ViewInit();
+         //DemoLight();
          setupSoundtrack();
          startSoundtrack();
 
@@ -40,16 +45,13 @@ class CGameState : public CState<CGameState>
          //Camera = new CCamera(AspectRatio, ...
 
          //Load shader and attributes
-         Shader = CShaderLoader::loadShader(,);
+         //Shader = CShaderLoader::loadShader(Shaders/Diffuse);
 
-         //CMesh *Mesh = CMeshLoader::load3dsMesh("");
-         //CImage * Image = CImageLoader::loadImage("");
-         //Texture = new CTexture(Image);
-         Load3DS();
-         LoadTextures();
+         //Load3DS();
+         //LoadTextures();
 
          //Load the meshes into VBOs
-         PrepMeshes();
+         //PrepMeshes();
       }
 
       //Runs at very start of display
@@ -57,11 +59,73 @@ class CGameState : public CState<CGameState>
       {
       }
 
-      //
+      //Sends event every time key pressed (also when held)
       void OnKeyboardEvent(SKeyboardEvent const & Event)
       {
+         if(event.type == SDL_KEYDOWN){
+            if(event.key.keysym.sym == SDLK_w){
+               wDown = 1;
+            }
+            if(event.key.keysym.sym == SDLK_s){
+               sDown = 1;
+            }
+            if(event.key.keysym.sym == SDLK_a){
+               aDown = 1;
+            }
+            if(event.key.keysym.sym == SDLK_d){
+               dDown = 1;
+            }
+            if(event.key.keysym.sym == SDLK_k){
+               backwardsView = !backwardsView;
+            }
+            if(event.key.keysym.sym == SDLK_j){
+               overView = NEXT(overView);
+            }
+            if(event.key.keysym.sym == SDLK_m){
+               if(musicOn) {
+                  musicOn = false;
+                  Mix_HaltMusic();
+               }
+               else {
+                  musicOn = true;
+                  Mix_PlayMusic(music, -1);
+               }
+            }
+            if(event.key.keysym.sym == SDLK_SPACE) {
+               spaceDown = 1;
+
+            }
+            if(event.key.keysym.sym == SDLK_ESCAPE) {
+               finished = true;
+            }
+         }
+
+
+         //Check if key let go, Not sure if this will work in here.
+         if(event.type == SDL_KEYUP){
+            if(event.key.keysym.sym == SDLK_w){
+               wDown = 0;
+            }
+            if(event.key.keysym.sym == SDLK_s){
+               sDown = 0;
+            }
+            if(event.key.keysym.sym == SDLK_a){
+               aDown = 0;
+            }
+            if(event.key.keysym.sym == SDLK_d){
+               dDown = 0;
+            }
+            if(event.key.keysym.sym == SDLK_k){
+            }
+            if(event.key.keysym.sym == SDLK_j){
+            }
+            if(event.key.keysym.sym == SDLK_SPACE){
+               spaceDown = 0;
+            }
+         }
       }
 
+      //Runs at program close (currently not implemented)
       void end()
       {
          stopSoundtrack();
@@ -69,6 +133,19 @@ class CGameState : public CState<CGameState>
          our_font.clean();
       }
 }
+
+int main (int argc, char *argv[])
+{
+   CApplication & Application = CApplication::get();
+   Application.init(SPosition2(1024, 768));
+   
+   Application.getStateManager().setState<CMainState>();
+
+   Application.run();
+
+   return 0;
+}
+
 
 void Load3DS()
 {
@@ -95,7 +172,7 @@ void LoadTextures()
 
 void PrepMeshes(std::vector<CMesh*> meshes, std::vector<CTexture*> textures, std::vector<CMeshRenderable> renderables)
 {
-   /*for (std::vector<CMeshRenderable>::iterator render =  renderables.begin(),
+   for (std::vector<CMeshRenderable>::iterator render =  renderables.begin(),
         std::vector<CMesh*>::iterator mesh,
         std::vector<CTexture*>::iterator texture;
          itr != renderables.end(); itr++, mesh++, texture++)
