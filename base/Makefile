@@ -1,5 +1,5 @@
 ROOT_CABBAGE_DIR=../
-SOURCES=MainFull.cpp CPlayerView.cpp Materials.cpp 3dsloader/3dsloader.cpp FreeType.cpp
+SOURCES=main.cpp CPlayerView.cpp Materials.cpp 3dsloader/3dsloader.cpp FreeType.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o)
 CABBAGE=-L../lib/ -lCabbageCollider
 
@@ -16,8 +16,8 @@ all: cabbage
 cabbage: ${OBJECTS}
 	g++ ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL -lglut `sdl-config --cflags --libs` ${CABBAGE} ${MIXLIB} `freetype-config --libs` -g -o $@
 
-MainFull.o: MainFull.cpp draw.h header.h
-	g++ `sdl-config --cflags` `freetype-config --cflags` -c MainFull.cpp
+main.o: main.cpp draw.h header.h
+	g++ `sdl-config --cflags` `freetype-config --cflags` -c main.cpp
 CPlayerView.o: CPlayerView.cpp CPlayerView.h
 	g++ -c CPlayerView.cpp
 Materials.o: Materials.cpp Materials.h

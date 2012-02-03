@@ -7,13 +7,13 @@
 
 #include "header.h"
 
-//#include "../CabbageScene/CabbageScene.h"
-//#include "../CabbageFramework/CabbageFramework.h"
+#include "../CabbageScene/CabbageScene.h"
+#include "../CabbageFramework/CabbageFramework.h"
 
 //Variables need to create VBOs of meshes, textures, and shaders
 CShader *Shader, *Diffuse;  //Use Diffuse for trees (doesn't need texture)
 CImage *grassImg, *skyImg, *dirtImg;
-CTexture grassTexture, skyTexture, dirtTexture;
+CTexture grassTxt, skyTxt, dirtTxt;
 CMesh *basicTreeMesh, *christmasTreeMesh;
 CMeshRenderable renderChristmasTree, renderBasicTree;
 
@@ -25,7 +25,7 @@ class CGameState : public CState<CGameState>
 
    public:
       CGameState()
-         : WindowWidth(1024), WindowHeight(768), Scale(1), Application(CApplication::get())
+         : Application(CApplication::get())
       {}
 
       //Initalizer fxn
@@ -51,7 +51,7 @@ class CGameState : public CState<CGameState>
          startSoundtrack();
 
          //Set up camera  I DON'T KNOW WHAT TO DO HERE!
-         float AspectRatio = (float)WindowWidth/(float)Windowheight;
+         //float AspectRatio = (float)WindowWidth/(float)Windowheight;
          //Camera = new CCamera(AspectRatio, ...
 
 
@@ -74,26 +74,26 @@ class CGameState : public CState<CGameState>
       //Sends event every time key pressed (also when held)
       void OnKeyboardEvent(SKeyboardEvent const & Event)
       {
-         if(event.type == SDL_KEYDOWN){
-            if(event.key.keysym.sym == SDLK_w){
+         if(Event.Pressed){
+            if(Event.Key == SDLK_w){
                wDown = 1;
             }
-            if(event.key.keysym.sym == SDLK_s){
+            if(Event.Key == SDLK_s){
                sDown = 1;
             }
-            if(event.key.keysym.sym == SDLK_a){
+            if(Event.Key == SDLK_a){
                aDown = 1;
             }
-            if(event.key.keysym.sym == SDLK_d){
+            if(Event.Key == SDLK_d){
                dDown = 1;
             }
-            if(event.key.keysym.sym == SDLK_k){
+            if(Event.Key == SDLK_k){
                backwardsView = !backwardsView;
             }
-            if(event.key.keysym.sym == SDLK_j){
+            if(Event.Key == SDLK_j){
                overView = NEXT(overView);
             }
-            if(event.key.keysym.sym == SDLK_m){
+            if(Event.Key == SDLK_m){
                if(musicOn) {
                   musicOn = false;
                   Mix_HaltMusic();
@@ -103,35 +103,33 @@ class CGameState : public CState<CGameState>
                   Mix_PlayMusic(music, -1);
                }
             }
-            if(event.key.keysym.sym == SDLK_SPACE) {
+            if(Event.Key == SDLK_SPACE) {
                spaceDown = 1;
 
             }
-            if(event.key.keysym.sym == SDLK_ESCAPE) {
+            if(Event.Key == SDLK_ESCAPE) {
                finished = true;
             }
          }
-
-
          //Check if key let go, Not sure if this will work in here.
-         if(event.type == SDL_KEYUP){
-            if(event.key.keysym.sym == SDLK_w){
+         else  {
+            if(Event.Key == SDLK_w){
                wDown = 0;
             }
-            if(event.key.keysym.sym == SDLK_s){
+            if(Event.Key == SDLK_s){
                sDown = 0;
             }
-            if(event.key.keysym.sym == SDLK_a){
+            if(Event.Key == SDLK_a){
                aDown = 0;
             }
-            if(event.key.keysym.sym == SDLK_d){
+            if(Event.Key == SDLK_d){
                dDown = 0;
             }
-            if(event.key.keysym.sym == SDLK_k){
+            if(Event.Key == SDLK_k){
             }
-            if(event.key.keysym.sym == SDLK_j){
+            if(Event.Key == SDLK_j){
             }
-            if(event.key.keysym.sym == SDLK_SPACE){
+            if(Event.Key == SDLK_SPACE){
                spaceDown = 0;
             }
          }
@@ -177,9 +175,9 @@ void LoadTextures()
    CImage *skyImg = CImageLoader::loadImage("Textures/sky.bmp");
    CImage *dirtImg = CImageLoader::loadImage("Textures/dirt.bmp");
 
-   grassTexture = new CTexture(grassImg);
-   skyTexture = new CTexture(skyImg);
-   dirtTexture = new CTexture(dirtImg);
+   grassTxt = new CTexture(grassImg);
+   skyTxt = new CTexture(skyImg);
+   dirtTxt = new CTexture(dirtImg);
 }
 
 void PrepMeshes(std::vector<CMesh*> meshes, std::vector<CTexture*> textures, std::vector<CMeshRenderable> renderables)
