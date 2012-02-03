@@ -178,6 +178,8 @@ public:
     void enableDebugData(EDebugData::Domain const type);
     void disableDebugData(EDebugData::Domain const type);
 
+    bool const intersectsWithLine(SLine3 const & line) const;
+
 };
 
 #endif

@@ -349,3 +349,8 @@ void CRenderable::disableDebugData(EDebugData::Domain const type)
     else
         DebugDataFlags ^= type;
 }
+
+bool const CRenderable::intersectsWithLine(SLine3 const & line) const
+{
+    return BoundingBox.intersectsWithLine(line);
+}
