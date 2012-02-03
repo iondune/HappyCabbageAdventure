@@ -198,7 +198,7 @@ void CRenderable::draw(CCamera const & Camera)
             it->second.Value->bindTo(it->second.Handle, ShaderContext);
     }
 
-    for (std::set<GLenum const>::iterator it = RenderModes.begin(); it != RenderModes.end(); ++ it)
+    for (std::set<GLenum>::iterator it = RenderModes.begin(); it != RenderModes.end(); ++ it)
         glEnable(* it);
 
     if (Texture)
@@ -233,7 +233,7 @@ void CRenderable::draw(CCamera const & Camera)
         NormalObject->draw(Camera);
     }
 
-    for (std::set<GLenum const>::iterator it = RenderModes.begin(); it != RenderModes.end(); ++ it)
+    for (std::set<GLenum>::iterator it = RenderModes.begin(); it != RenderModes.end(); ++ it)
         glDisable(* it);
 
     if (isDebugDataEnabled(EDebugData::NormalColors))
