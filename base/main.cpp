@@ -9,23 +9,41 @@
 
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
+#include "3dsloader/3dsloader.h"
+
+#define TREE_Y_OFFSET 2.1
+#define ANGLE(j,k) (j==2?3:(j?2:(k?1:0)))
+#define NEXT(j) (j==2?0:(j?2:1))
+
+//Boolean integers for keypressing
+int aDown = 0, dDown = 0, spaceDown = 0, wDown = 0, sDown = 0;
+int backwardsView = 0, overView = 0;
+
+
+freetype::font_data our_font;
 
 //Variables need to create VBOs of meshes, textures, and shaders
 CShader *Shader, *Diffuse;  //Use Diffuse for trees (doesn't need texture)
 CImage *grassImg, *skyImg, *dirtImg;
-CTexture grassTxt, skyTxt, dirtTxt;
+CTexture *grassTxt, *skyTxt, *dirtTxt;
 CMesh *basicTreeMesh, *christmasTreeMesh;
-CMeshRenderable renderChristmasTree, renderBasicTree;
+CMeshRenderable *renderChristmasTree, *renderBasicTree;
+
+int WindowWidth, WindowHeight;
+
+void Load3DS();
+void LoadTextures();
+void PrepMeshes();
 
 
 class CGameState : public CState<CGameState>
 {
 
-    CApplication & Application;
+   CApplication & Application;
 
    public:
       CGameState()
-         : Application(CApplication::get())
+         : Application (CApplication::get())
       {}
 
       //Initalizer fxn
@@ -43,6 +61,8 @@ class CGameState : public CState<CGameState>
          //Initialize Font
          our_font.init("WIFFLES_.TTF", 30);
 
+         Camera = new CCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
+
          //Initialize Fxns
          //EngineInit();
          //ViewInit();
@@ -57,18 +77,39 @@ class CGameState : public CState<CGameState>
 
 //This code should all be working.  Commented out so can make sure have the basics working first
          //Load shader and attributes
-         //Diffuse = CShaderLoader::loadShader(Shaders/Diffuse);
+         Diffuse = CShaderLoader::loadShader("Shaders/Diffuse");
 
-         //Load3DS();
-         //LoadTextures();
+         Load3DS();
+         LoadTextures();
 
          //Load the meshes into VBOs
-         //PrepMeshes();
+         PrepMeshes();
       }
 
+      CCamera *Camera;
       //Runs at very start of display
       void OnRenderStart(float const Elapsed)
       {
+         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+         glMatrixMode(GL_MODELVIEW);
+         glLoadIdentity();
+
+         Camera->setPosition(SVector3(0, 0, 2));
+         Camera->setLookDirection(SVector3(0, 0, -1));
+         Camera->recalculateViewMatrix();
+
+         SVector3 zero = SVector3(0,0,0);
+         renderBasicTree->setTranslation(SVector3(1, 0, 0));
+         //renderBasicTree->setScale(zero);
+         renderBasicTree->setRotation(SVector3(-90, 0, 0));
+
+         renderChristmasTree->setTranslation(SVector3(-1, 0, 0));
+         renderChristmasTree->setRotation(SVector3(-90, 0, 0));
+
+         renderBasicTree->draw(*Camera);
+         renderChristmasTree->draw(*Camera);
+
+         SDL_GL_SwapBuffers();
       }
 
       //Sends event every time key pressed (also when held)
@@ -108,7 +149,8 @@ class CGameState : public CState<CGameState>
 
             }
             if(Event.Key == SDLK_ESCAPE) {
-               finished = true;
+               //TODO: Replace with an event/signal to end the game world 
+               //finished = true;
             }
          }
          //Check if key let go, Not sure if this will work in here.
@@ -142,14 +184,14 @@ class CGameState : public CState<CGameState>
          Mix_CloseAudio();
          our_font.clean();
       }
-}
+};
 
 int main (int argc, char *argv[])
 {
    CApplication & Application = Application.get();
-   Application.init(SPosition2(1024, 768));
+   Application.init(SPosition2(WindowWidth = 1024, WindowHeight = 768));
    
-   Application.getStateManager().setState<CMainState>();
+   Application.getStateManager().setState<CGameState>();
 
    Application.run();
 
@@ -159,14 +201,25 @@ int main (int argc, char *argv[])
 
 void Load3DS()
 {
-   *basicTreeMesh = load3dsMesh("Models/tree.3ds");
-   //Mesh->resizeMesh();
-   basicTreeMesh->centerMeshByExtents(SVector3(0));
-   basicTreeMesh->calculateNormalsPerFace();
+   basicTreeMesh = CMeshLoader::load3dsMesh("Models/tree.3ds");
+   if (basicTreeMesh) {
+      basicTreeMesh->resizeMesh(SVector3(0.5));
+      basicTreeMesh->centerMeshByExtents(SVector3(0));
+      basicTreeMesh->calculateNormalsPerFace();
+   }
+   else {
+      fprintf(stderr, "Failed to load the basic tree mesh\n");
+   }
 
-   *christmasTreeMesh = load3dsMesh("Models/christmasTree.3ds");
-   christmasTreeMesh->centerMeshByExtents(SVector3(0));
-   christmasTreeMesh->calculateNormalsPerFace();
+   christmasTreeMesh = CMeshLoader::load3dsMesh("Models/christmasTree.3ds");
+   if (christmasTreeMesh) {
+      christmasTreeMesh->resizeMesh(SVector3(0.5));
+      christmasTreeMesh->centerMeshByExtents(SVector3(0));
+      christmasTreeMesh->calculateNormalsPerFace();
+   }
+   else {
+      fprintf(stderr, "Failed to load the christmas tree mesh\n");
+   }
 }
 
 void LoadTextures()
@@ -175,17 +228,25 @@ void LoadTextures()
    CImage *skyImg = CImageLoader::loadImage("Textures/sky.bmp");
    CImage *dirtImg = CImageLoader::loadImage("Textures/dirt.bmp");
 
+   if(!grassImg)
+      printf("ERROR!!!!\n");
    grassTxt = new CTexture(grassImg);
    skyTxt = new CTexture(skyImg);
    dirtTxt = new CTexture(dirtImg);
 }
 
-void PrepMeshes(std::vector<CMesh*> meshes, std::vector<CTexture*> textures, std::vector<CMeshRenderable> renderables)
-{
 
+void PrepMeshes()
+{
    renderBasicTree = new CMeshRenderable();
-   renderBasicTree->setMesh(*basicTree);
+   renderBasicTree->setMesh(basicTreeMesh);
+   renderBasicTree->setTexture(grassTxt);
    renderBasicTree->setShader(Diffuse);
+
+   renderChristmasTree = new CMeshRenderable();
+   renderChristmasTree->setMesh(christmasTreeMesh);
+   renderChristmasTree->setTexture(grassTxt);
+   renderChristmasTree->setShader(Diffuse);
 
 //My attempt at a for loop.  Not sure if it's actually worth doing
 /*   for (std::vector<CMeshRenderable>::iterator render =  renderables.begin(),

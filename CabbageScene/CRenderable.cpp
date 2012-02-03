@@ -170,15 +170,20 @@ void CRenderable::setIndexBufferObject(CBufferObject<GLushort> * indexBufferObje
     IndexBufferObject = indexBufferObject;
 }
 
+#include <stdio.h>
 void CRenderable::draw(CCamera const & Camera)
 {
     // If no shader or ibo loaded, we can't draw anything
-    if (! Shader || ! IndexBufferObject)
+    if (! Shader || ! IndexBufferObject) {
+        fprintf(stderr, "No shader? %d. No IBO? %d.\n", !Shader, !IndexBufferObject);
         return;
+    }
 
     // If the ibo loaded hasn't been synced as an index buffer object, 
-    if (! IndexBufferObject->isIndexBuffer())
+    if (! IndexBufferObject->isIndexBuffer()) {
+        fprintf(stderr, "isIndexBuffer? %d.\n", !IndexBufferObject->isIndexBuffer());
         return;
+    }
 
     // Copy the current shader so it can be restored if changed
     CShader * CopyShader = Shader;

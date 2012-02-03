@@ -34,8 +34,11 @@ of course you may need to change the makefile
  * multi objects, materials, lights and so on, you must insert other chunk parsers.
  *
  *********************************************************/
+#ifndef __3DSLOADER_H_INCLUDE__
+#define __3DSLOADER_H_INCLUDE__
 
 #include "tutorial4.h"
 
 extern char Load3DS (obj_type_ptr ogg, char const *filename);
 
+#endif
