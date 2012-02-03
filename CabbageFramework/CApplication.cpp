@@ -183,6 +183,7 @@ void CApplication::run()
                     KeyEvent.Pressed = Event.key.state == SDL_PRESSED;
                     KeyEvent.Key = Event.key.keysym.sym;
                     EventManager->OnKeyboardEvent(KeyEvent);
+                    EventManager->KeyStates[KeyEvent.Key] = KeyEvent.Pressed;
 
                     break;
 

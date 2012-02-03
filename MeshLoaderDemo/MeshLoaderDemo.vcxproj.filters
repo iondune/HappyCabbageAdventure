@@ -3,12 +3,6 @@
   <ItemGroup>
     <None Include="glew32.dll" />
     <None Include="SDL.dll" />
-    <None Include="Shaders\Lab3_frag.glsl">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="Shaders\Lab3_vert.glsl">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="spaceship.3ds">
       <Filter>Models</Filter>
     </None>
@@ -23,6 +17,33 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="Shaders\simple.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\normalColor.frag">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Shaders\normalColor.vert">
+      <Filter>Models</Filter>
+    </None>
+    <None Include="Shaders\DiffuseTexture.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\DiffuseTexture.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\DiffuseTexture.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\Diffuse.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\Diffuse.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\Flat.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\Flat.frag">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

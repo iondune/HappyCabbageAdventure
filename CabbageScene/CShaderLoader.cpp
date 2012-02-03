@@ -57,13 +57,20 @@ static inline void printProgramInfoLog (GLuint programHandle)
     }
 }
 
-CShader * const CShaderLoader::loadShader(std::string const & vertFileName)
-{
-    return 0;
-}
+std::map<std::string, CShader *> CShaderLoader::LoadedShaders;
 
-CShader * const CShaderLoader::loadShader(std::string const & vertFileName, std::string const & fragFileName)
+CShader * const CShaderLoader::loadShader(std::string const & name)
 {
+    std::map<std::string, CShader *>::iterator it = LoadedShaders.find(name);
+
+    if (it != LoadedShaders.end())
+    {
+        return it->second;
+    }
+
+    std::string const vertFileName = name + ".vert";
+    std::string const fragFileName = name + ".frag";
+
     // Create OpenGL Shader objects
     GLuint VS = glCreateShader(GL_VERTEX_SHADER);
     GLuint FS = glCreateShader(GL_FRAGMENT_SHADER);
@@ -192,5 +199,6 @@ CShader * const CShaderLoader::loadShader(std::string const & vertFileName, std:
         delete nameBuffer;
     }
 
+    LoadedShaders[name] = Shader;
     return Shader;
 }

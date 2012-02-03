@@ -28,7 +28,7 @@ class CMainState : public CState<CMainState>
 public:
 
     CMainState()
-        : WindowWidth(1440), WindowHeight(900), Scale(1)
+        : WindowWidth(1440), WindowHeight(900), Scale(1), Animate(false)
     {}
 
     void begin()
@@ -47,7 +47,7 @@ public:
         CApplication::get().getSceneManager().setActiveCamera(Camera);
 
         // Attempt to load shader and attributes
-        Shader = CShaderLoader::loadShader("Shaders/Lab3_vert.glsl", "Shaders/Lab3_frag.glsl");
+        Shader = CShaderLoader::loadShader("Shaders/Diffuse");
         if (! Shader)
         {
             std::cerr << "Unable to open or compile necessary shader." << std::endl;
@@ -57,18 +57,21 @@ public:
 
 
         // Attempt to load mesh
-        CMesh * Mesh = CMeshLoader::load3dsMesh("spaceship.3ds");
-        if (! Mesh)
+        MeshFace = CMeshLoader::loadAsciiMesh("Models/bunny500.m");//load3dsMesh("spaceship.3ds");
+        if (MeshFace)
         {
-            std::cerr << "Unable to load necessary mesh." << std::endl;
-            waitForUser();
-            exit(1);
+            MeshFace->resizeMesh(SVector3(1.5));
+            MeshFace->centerMeshByExtents(SVector3(0));
+            MeshFace->calculateNormalsPerFace();
         }
-        // Make out mesh fit within camera view
-        Mesh->resizeMesh(SVector3(1.5));
-        // And center it at the origin
-        Mesh->centerMeshByExtents(SVector3(0));
-        Mesh->calculateNormalsPerFace();
+
+        MeshVertex = CMeshLoader::loadAsciiMesh("Models/bunny500.m");//load3dsMesh("spaceship.3ds");
+        if (MeshVertex)
+        {
+            MeshVertex->resizeMesh(SVector3(1.5));
+            MeshVertex->centerMeshByExtents(SVector3(0));
+            MeshVertex->calculateNormalsPerVertex();
+        }
 
 
         CImage * Image = CImageLoader::loadImage("spaceshiptexture.bmp");
@@ -82,7 +85,7 @@ public:
 
         // Now load our mesh into a VBO, retrieving the number of triangles and the handles to each VBO
         Renderable = new CMeshRenderable();
-        Renderable->setMesh(Mesh);
+        Renderable->setMesh(MeshFace);
         Renderable->setTexture(Texture);
         Renderable->setShader(Shader);
     }
@@ -103,13 +106,17 @@ public:
         // Animates the loaded model by modulating it's size
         static float const ScaleSpeed = 1.f;
         static float const ScaleThreshold = 0.4f;
-        ScaleTimer += Elapsed * ScaleSpeed;
+        if (Animate)
+            ScaleTimer += Elapsed * ScaleSpeed;
         Scale = SVector3(1) + ScaleThreshold * cos(ScaleTimer);
 
         // ...and by spinning it around
         static float const RotationSpeed = 50.f;
-        Rotation.X += RotationSpeed*Elapsed;
-        Rotation.Y += RotationSpeed*Elapsed*2;
+        if (Animate)
+        {
+            Rotation.X += RotationSpeed*Elapsed;
+            Rotation.Y += RotationSpeed*Elapsed*2;
+        }
 
         Renderable->setTranslation(Translation);
         Renderable->setScale(Scale);
@@ -134,12 +141,54 @@ public:
 
             break;
 
+        case SDLK_m:
+
+            if (Event.Pressed)
+                Renderable->enableDebugData(EDebugData::NormalColors);
+            else
+                Renderable->disableDebugData(EDebugData::NormalColors);
+
+            break;
+
+        case SDLK_f:
+
+            if (! Event.Pressed)
+                Renderable->setMesh(MeshFace);
+
+            break;
+
+        case SDLK_v:
+
+            if (! Event.Pressed)
+                Renderable->setMesh(MeshVertex);
+
+            break;
+
+        case SDLK_g:
+
+            if (! Event.Pressed)
+                Renderable->setShader(CShaderLoader::loadShader("Shaders/Flat"));
+
+            break;
+
+        case SDLK_b:
+
+            if (! Event.Pressed)
+                Renderable->setShader(CShaderLoader::loadShader("Shaders/Diffuse"));
+
+            break;
+
+        case SDLK_j:
+
+            if (! Event.Pressed)
+                Animate = ! Animate;
+
         }
     }
 
     // Shader and Mesh utility classes
     CShader * Shader;
-    CMesh * Mesh;
+    CMesh * MeshFace, * MeshVertex;
     CMeshRenderable * Renderable;
     CTexture * Texture;
     CCamera * Camera;
@@ -153,6 +202,7 @@ public:
 
     // Time-independant movement variables
     float ScaleTimer;
+    bool Animate;
 
 };
 

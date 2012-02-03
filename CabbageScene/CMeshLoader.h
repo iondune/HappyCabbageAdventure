@@ -10,7 +10,9 @@ class CMeshLoader
 
 public:
 
-	static CMesh * const load3dsMesh(std::string const & fileName);
+    static CMesh * const load3dsMesh(std::string const & fileName);
+
+    static CMesh * const loadAsciiMesh(std::string const & fileName);
 
     static CMesh * const createCubeMesh();
 

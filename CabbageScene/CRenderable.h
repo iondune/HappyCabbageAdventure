@@ -90,7 +90,8 @@ public:
     enum Domain
     {
         None = 0,
-        Normals = 1
+        Normals = 1,
+        NormalColors = 2
     };
 
 };
@@ -127,6 +128,7 @@ protected:
 
     CBufferObject<GLushort> * IndexBufferObject;
     CShader * Shader;
+    CShader * NormalColorShader;
     CTexture * Texture;
 
     CRenderable * NormalObject;

@@ -8,17 +8,11 @@ class CShaderLoader
 
     bool Valid;
 
+    static std::map<std::string, CShader *> LoadedShaders;
+
 public:
 
-    /*!
-     * Load a vertex shader.
-     */
-    static CShader * const loadShader(std::string const & vertFileName);
-
-    /*!
-     * Load a vertex shader and fragment shader.
-     */
-    static CShader * const loadShader(std::string const & vertFileName, std::string const & fragFileName);
+    static CShader * const loadShader(std::string const & name);
 
 };
 

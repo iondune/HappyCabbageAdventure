@@ -19,4 +19,7 @@ SMouseEvent::EType::EType(Domain const value)
 
 CEventManager::CEventManager()
 	: IsKeyDown(KeyStates), MouseLocation(MousePositionState)
-{}
+{
+    for (unsigned int i = 0; i < SDLK_LAST; ++ i)
+        KeyStates[i] = false;
+}

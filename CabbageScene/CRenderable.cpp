@@ -4,6 +4,8 @@
 
 #include "../CabbageCore/glm/gtc/matrix_transform.hpp"
 
+#include "CShaderLoader.h"
+
 
 CFloatVecAttribute::CFloatVecAttribute(CBufferObject<float> * bufferObject, int const size)
     : BufferObject(bufferObject), Size(size)
@@ -64,7 +66,7 @@ CRenderable::SUniform::SUniform(IUniform * value)
 
 
 CRenderable::CRenderable()
-    : Scale(1), Shader(0), Texture(0), DrawType(GL_TRIANGLES), NormalObject(0), DebugDataFlags(0)
+    : Scale(1), Shader(0), Texture(0), DrawType(GL_TRIANGLES), NormalObject(0), DebugDataFlags(0), NormalColorShader(0)
 {}
 
 SVector3 const & CRenderable::getTranslation() const
@@ -130,7 +132,7 @@ void CRenderable::setShader(CShader * shader)
         std::map<std::string, SUniform>::iterator jt = Uniforms.find(it->first);
         if (jt != Uniforms.end())
             jt->second.Handle = it->second.Handle;
-        else
+        else if (it->first != "uModelMatrix" && it->first != "uProjMatrix" && it->first != "uViewMatrix")
             std::cout << "Uniform required by shader but not found in renderable: " << it->first << std::endl;
     }
 }
@@ -167,6 +169,15 @@ void CRenderable::setIndexBufferObject(CBufferObject<GLushort> * indexBufferObje
 
 void CRenderable::draw(CCamera const & Camera)
 {
+    CShader * CopyShader = Shader;
+
+    if (isDebugDataEnabled(EDebugData::NormalColors))
+    {
+        if (! NormalColorShader)
+            NormalColorShader = CShaderLoader::loadShader("Shaders/normalColor");
+        setShader(NormalColorShader);
+    }
+
     if (! Shader || ! IndexBufferObject)
         return;
 
@@ -222,6 +233,9 @@ void CRenderable::draw(CCamera const & Camera)
 
     for (std::set<GLenum const>::iterator it = RenderModes.begin(); it != RenderModes.end(); ++ it)
         glDisable(* it);
+
+    if (isDebugDataEnabled(EDebugData::NormalColors))
+        setShader(CopyShader);
 }
 
 SBoundingBox3 const & CRenderable::getBoundingBox() const

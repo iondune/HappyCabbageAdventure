@@ -41,6 +41,8 @@ void CMeshRenderable::setMesh(CMesh * mesh)
     NormalObject->addAttribute("aPosition", new CFloatVecAttribute(Mesh->makeNormalLineBuffer(), 3));
     NormalObject->addAttribute("aColor", new CFloatVecAttribute(Mesh->makeNormalColorBuffer(), 3));
     NormalObject->setIndexBufferObject(Mesh->makeNormalIndexBuffer());
-    NormalObject->setShader(CShaderLoader::loadShader("Shaders/simple.vert", "Shaders/simple.frag"));
+    NormalObject->setShader(CShaderLoader::loadShader("Shaders/simple"));
     NormalObject->setDrawType(GL_LINES);
+
+    setShader(Shader);
 }
