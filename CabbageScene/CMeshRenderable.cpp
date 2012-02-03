@@ -16,6 +16,7 @@ CMesh * CMeshRenderable::getMesh()
 
 void CMeshRenderable::setMesh(CMesh * mesh)
 {
+    // Remove any attributes which might have been set by a previous mesh
     removeAttribute("aPosition");
     removeAttribute("aColor");
     removeAttribute("aNormal");
@@ -24,21 +25,21 @@ void CMeshRenderable::setMesh(CMesh * mesh)
 
     Mesh = mesh;
 
+    // Remove any previous normal debugging object
     if (NormalObject)
         delete NormalObject;
 
     if (Mesh)
     {
+        // Add mesh attributes
         addAttribute("aPosition", new CFloatVecAttribute(Mesh->makePositionBuffer(), 3));
         addAttribute("aColor", new CFloatVecAttribute(Mesh->makeColorBuffer(), 3));
         addAttribute("aNormal", new CFloatVecAttribute(Mesh->makeNormalBuffer(), 3));
-        addAttribute("aNormalLine", new CFloatVecAttribute(Mesh->makeNormalLineBuffer(), 3));
         addAttribute("aTexCoord", new CFloatVecAttribute(Mesh->makeTexCoordBuffer(), 2));
         addUniform("uTexColor", new CIntUniform(0));
 
+        // Add mesh index buffer
         setIndexBufferObject(Mesh->makeIndexBuffer());
-
-        addRenderMode(GL_TEXTURE_2D);
 
         NormalObject = new CRenderable();
         NormalObject->addAttribute("aPosition", new CFloatVecAttribute(Mesh->makeNormalLineBuffer(), 3));

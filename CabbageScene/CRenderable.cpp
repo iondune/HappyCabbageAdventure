@@ -203,6 +203,7 @@ void CRenderable::draw(CCamera const & Camera)
 
     if (Texture)
     {
+        glEnable(GL_TEXTURE_2D);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, Texture->getTextureHandle());
     }
@@ -231,6 +232,11 @@ void CRenderable::draw(CCamera const & Camera)
         NormalObject->setScale(Scale);
         NormalObject->setRotation(Rotation);
         NormalObject->draw(Camera);
+    }
+
+    if (Texture)
+    {
+        glDisable(GL_TEXTURE_2D);
     }
 
     for (std::set<GLenum>::iterator it = RenderModes.begin(); it != RenderModes.end(); ++ it)
