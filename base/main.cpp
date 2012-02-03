@@ -13,9 +13,12 @@
 
 class CGameState : public CState<CGameState>
 {
+
+    CApplication & Application;
+
    public:
       CGameState()
-         : WindowWidth(1024), WindowHeight(768), Scale(1)
+         : WindowWidth(1024), WindowHeight(768), Scale(1), Application(CApplication::get())
       {}
 
       //Initalizer fxn
