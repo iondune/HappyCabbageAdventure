@@ -124,7 +124,7 @@ protected:
 
     std::map<std::string, SAttribute> Attributes;
     std::map<std::string, SUniform> Uniforms;
-    std::set<GLenum const> RenderModes;
+    std::set<GLenum> RenderModes;
 
     CBufferObject<GLushort> * IndexBufferObject;
     CShader * Shader;
