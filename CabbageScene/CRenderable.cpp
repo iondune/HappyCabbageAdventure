@@ -108,9 +108,9 @@ CShader * CRenderable::getShader()
 
 void CRenderable::setShader(CShader * shader)
 {
+    // Remove any handles a previous shader might have set
     for (std::map<std::string, SAttribute>::iterator it = Attributes.begin(); it != Attributes.end(); ++ it)
         it->second.Handle = -1;
-
     for (std::map<std::string, SUniform>::iterator it = Uniforms.begin(); it != Uniforms.end(); ++ it)
         it->second.Handle = -1;
 
@@ -119,6 +119,7 @@ void CRenderable::setShader(CShader * shader)
     if (! Shader)
         return;
 
+    // Check the existence of all required shader attributes
     for (std::map<std::string, SShaderVariable>::const_iterator it = Shader->getAttributeHandles().begin(); it != Shader->getAttributeHandles().end(); ++ it)
     {
         std::map<std::string, SAttribute>::iterator jt = Attributes.find(it->first);
@@ -128,6 +129,7 @@ void CRenderable::setShader(CShader * shader)
             std::cout << "Attribute required by shader but not found in renderable: " << it->first << std::endl;
     }
 
+    // Check the existences of all required uniform uniforms - skipping implicit uniforms
     for (std::map<std::string, SShaderVariable>::const_iterator it = Shader->getUniformHandles().begin(); it != Shader->getUniformHandles().end(); ++ it)
     {
         std::map<std::string, SUniform>::iterator jt = Uniforms.find(it->first);
@@ -170,8 +172,18 @@ void CRenderable::setIndexBufferObject(CBufferObject<GLushort> * indexBufferObje
 
 void CRenderable::draw(CCamera const & Camera)
 {
+    // If no shader or ibo loaded, we can't draw anything
+    if (! Shader || ! IndexBufferObject)
+        return;
+
+    // If the ibo loaded hasn't been synced as an index buffer object, 
+    if (! IndexBufferObject->isIndexBuffer())
+        return;
+
+    // Copy the current shader so it can be restored if changed
     CShader * CopyShader = Shader;
 
+    // If normal colors are being shown, switch to the normal color shader
     if (isDebugDataEnabled(EDebugData::NormalColors))
     {
         if (! NormalColorShader)
@@ -179,28 +191,24 @@ void CRenderable::draw(CCamera const & Camera)
         setShader(NormalColorShader);
     }
 
-    if (! Shader || ! IndexBufferObject)
-        return;
-
-    if (! IndexBufferObject->isIndexBuffer())
-        return;
-
+    // Create shader context and link all variables required by the shader
     CShaderContext ShaderContext(* Shader);
     for (std::map<std::string, SAttribute>::iterator it = Attributes.begin(); it != Attributes.end(); ++ it)
     {
         if (it->second.Handle >= 0)
             it->second.Value->bindTo(it->second.Handle, ShaderContext);
     }
-
     for (std::map<std::string, SUniform>::iterator it = Uniforms.begin(); it != Uniforms.end(); ++ it)
     {
         if (it->second.Handle >= 0)
             it->second.Value->bindTo(it->second.Handle, ShaderContext);
     }
 
+    // Enable all specified render modes
     for (std::set<GLenum>::iterator it = RenderModes.begin(); it != RenderModes.end(); ++ it)
         glEnable(* it);
 
+    // Set up texturing if a texture was supplied
     if (Texture)
     {
         glEnable(GL_TEXTURE_2D);
@@ -208,24 +216,30 @@ void CRenderable::draw(CCamera const & Camera)
         glBindTexture(GL_TEXTURE_2D, Texture->getTextureHandle());
     }
 
+    // Set up transform matrices
     glm::mat4 Transformation = glm::translate(glm::mat4(1.0f), Translation.getGLMVector());
     Transformation = glm::rotate(Transformation, Rotation.X, glm::vec3(1, 0, 0));
     Transformation = glm::rotate(Transformation, Rotation.Y, glm::vec3(0, 1, 0));
     Transformation = glm::rotate(Transformation, Rotation.Z, glm::vec3(0, 0, 1));
     Transformation = glm::scale(Transformation, Scale.getGLMVector());
 
+    // Pass transform matrices to shader
     ShaderContext.uniform("uModelMatrix", Transformation);
     ShaderContext.uniform("uViewMatrix", Camera.getViewMatrix());
     ShaderContext.uniform("uProjMatrix", Camera.getProjectionMatrix());
     ShaderContext.uniform("uNormalMatrix", glm::transpose(glm::inverse(Transformation)));
 
+    // If the ibo is dirty, sync it!
     if (IndexBufferObject->isDirty())
         IndexBufferObject->syncData();
 
+    // And bind the synced buffer object to shader...
     ShaderContext.bindIndexBufferObject(IndexBufferObject->getHandle());
 
+    // Finally draw!
     glDrawElements(DrawType, IndexBufferObject->getElements().size(), GL_UNSIGNED_SHORT, 0);
 
+    // Draw the normal object if it is enabled
     if (isDebugDataEnabled(EDebugData::Normals) && NormalObject)
     {
         NormalObject->setTranslation(Translation);
@@ -234,14 +248,17 @@ void CRenderable::draw(CCamera const & Camera)
         NormalObject->draw(Camera);
     }
 
+    // Cleanup the texture if it was used
     if (Texture)
     {
         glDisable(GL_TEXTURE_2D);
     }
 
+    // Clean up all draw modes used
     for (std::set<GLenum>::iterator it = RenderModes.begin(); it != RenderModes.end(); ++ it)
         glDisable(* it);
 
+    // Switch back to our old shader if it was changed
     if (isDebugDataEnabled(EDebugData::NormalColors))
         setShader(CopyShader);
 }
