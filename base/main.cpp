@@ -159,7 +159,7 @@ void EngineInit( void ) {
       //Initalizer fxn
       void begin()
       {
-         glClearColor(0.6f, 0.3f, 0.9f, 1.0f);
+         glClearColor(0,0,0,0);
 
          glEnable(GL_DEPTH_TEST);
          glDepthFunc(GL_LEQUAL);
