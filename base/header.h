@@ -35,7 +35,6 @@
 
 #include "Materials.h"
 #include "texture.h"
-#include "draw.h"
 #include "sound.h"
 
 //Global Defines

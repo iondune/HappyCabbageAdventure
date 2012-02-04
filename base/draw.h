@@ -184,9 +184,6 @@ void drawPlane() {
     glPopMatrix();
 }
 
-
-
-
 void drawZBlock(float x, float y, float w, float h, float z) {
     glPushMatrix();
        glColor3f(0, 0, 0);
