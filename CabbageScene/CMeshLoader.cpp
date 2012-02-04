@@ -317,7 +317,7 @@ CMesh * const CMeshLoader::createCubeMesh()
 
     Mesh->Triangles[8].Indices[0] = 3;
     Mesh->Triangles[8].Indices[1] = 2;
-    Mesh->Triangles[8].Indices[2] = 2;
+    Mesh->Triangles[8].Indices[2] = 6;
 
     Mesh->Triangles[9].Indices[0] = 3;
     Mesh->Triangles[9].Indices[1] = 6;
@@ -331,6 +331,5 @@ CMesh * const CMeshLoader::createCubeMesh()
     Mesh->Triangles[11].Indices[1] = 6;
     Mesh->Triangles[11].Indices[2] = 2;
 
-   return Mesh;
-
+    return Mesh;
 }
