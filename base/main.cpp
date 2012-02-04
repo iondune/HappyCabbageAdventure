@@ -23,7 +23,7 @@ int backwardsView = 0, overView = 0;
 freetype::font_data our_font;
 
 //Variables need to create VBOs of meshes, textures, and shaders
-CShader *Shader, *Diffuse;  //Use Diffuse for trees (doesn't need texture)
+CShader *Shader, *Diffuse, *DiffuseTexture;  //Use Diffuse for trees (doesn't need texture)
 CImage *grassImg, *skyImg, *dirtImg;
 CTexture *grassTxt, *skyTxt, *dirtTxt;
 CMesh *basicTreeMesh, *christmasTreeMesh;
@@ -35,16 +35,109 @@ void Load3DS();
 void LoadTextures();
 void PrepMeshes();
 
+using namespace Cabbage::Collider;
+CEngine *Engine;
+CActor *Player, *Derp;
+CObject *Floor, *Block;
+CPlayerView *PlayerView;
+
+CGameplayManager * GameplayManager;
+
+std::vector<CMeshRenderable*> blocks;
+
+void ViewInit( void ) {
+   PlayerView = new CPlayerView();
+}
+
+CMesh *cubeMesh;
+void BlockMesh() {
+   cubeMesh = CMeshLoader::createCubeMesh();
+}
+
 
 class CGameState : public CState<CGameState>
 {
-
    CApplication & Application;
 
    public:
       CGameState()
          : Application (CApplication::get())
       {}
+
+void EngineInit( void ) {
+   Engine = new CEngine();
+   Player = Engine->addActor();
+   Player->setArea(SRect2(-24.5, 3, 1, 1));
+
+   Derp = Engine->addActor();
+   Derp->setArea(SRect2(-17, 0, 1, 1));
+
+   Floor = Engine->addObject();
+   Floor->setArea(SRect2(-25, -1, 50, 1));
+   PrepBlock(-25, -1, 50, 1);
+
+   SRect2 area;
+
+   GameplayManager = new CGameplayManager(Player, Engine);
+   /*
+   GameplayManager->addEnemy(SVector2(-10, 4));
+   GameplayManager->addEnemy(SVector2(-5, 40));
+   GameplayManager->addEnemy(SVector2(0, 40));
+   GameplayManager->addEnemy(SVector2(5, 40));
+   GameplayManager->addEnemy(SVector2(10, 40));
+   GameplayManager->addEnemy(SVector2(15, 40));
+   GameplayManager->addEnemy(SVector2(20, 40));
+   GameplayManager->addEnemy(SVector2(25, 40));
+   GameplayManager->addEnemy(SVector2(25, 45));
+   GameplayManager->addEnemy(SVector2(25, 50));
+   */
+
+   float i = 0;
+   float j = 0;
+
+   for(j = 0; j < 10; j+=2.5) {
+      Block = Engine->addObject();
+      area = SRect2(-15 + j, 1.5 + j, 2, 1);
+      PrepBlock(-15 + j, 1.5 + j, 2, 1);
+      Block->setArea(area);
+   }
+
+   Block = Engine->addObject();
+   area = SRect2(-22, 7, 6, 0.2);
+   PrepBlock(-22, 7, 6, 0.2);
+   Block->setArea(area);
+
+   Block = Engine->addObject();
+   area = SRect2(-22, 7, 0.2, 3);
+   PrepBlock(-22, 7, 0.2, 3);
+   Block->setArea(area);
+
+   for(; i < 12; i++) {
+      Block = Engine->addObject();
+      area = SRect2(-i + 5, 0, 1, i+1);
+      PrepBlock(-i + 5, 0, 1, i+1);
+      Block->setArea(area);
+   }
+
+   for(i=0; i < 7; i++) {
+      Block = Engine->addObject();
+      area = SRect2(i + 15, 0, 1, i+1);
+      PrepBlock(i + 15, 0, 1, i+1);
+      Block->setArea(area);
+   }
+
+   for(i=0; i < 2; i++) {
+      Block = Engine->addObject();
+      area = SRect2(24, 2+i*4, 2, 1);
+      PrepBlock(24, 2+i*4, 2, 1);
+      Block->setArea(area);
+   }
+
+   Block = Engine->addObject();
+   area = SRect2(27.5, 4, 2, 1);
+   PrepBlock(27.5, 4, 2, 1);
+   Block->setArea(area);
+}
 
       //Initalizer fxn
       void begin()
@@ -62,10 +155,13 @@ class CGameState : public CState<CGameState>
          our_font.init("WIFFLES_.TTF", 30);
 
          Camera = new CCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
+         CApplication::get().getSceneManager().setActiveCamera(Camera);
 
-         //Initialize Fxns
-         //EngineInit();
-         //ViewInit();
+//This code should all be working.  Commented out so can make sure have the basics working first
+         //Load shader and attributes
+         Diffuse = CShaderLoader::loadShader("Shaders/Diffuse");
+         DiffuseTexture = CShaderLoader::loadShader("Shaders/DiffuseTexture");
+
          //DemoLight();
          setupSoundtrack();
          startSoundtrack();
@@ -74,19 +170,169 @@ class CGameState : public CState<CGameState>
          //float AspectRatio = (float)WindowWidth/(float)Windowheight;
          //Camera = new CCamera(AspectRatio, ...
 
-
-//This code should all be working.  Commented out so can make sure have the basics working first
-         //Load shader and attributes
-         Diffuse = CShaderLoader::loadShader("Shaders/Diffuse");
-
          Load3DS();
          LoadTextures();
+         BlockMesh();
 
          //Load the meshes into VBOs
          PrepMeshes();
+         Application.getSceneManager().addRenderable(renderBasicTree);
+         Application.getSceneManager().addRenderable(renderChristmasTree);
+         //Initialize Fxns
+         EngineInit();
+         ViewInit();
+
       }
 
       CCamera *Camera;
+
+      void oldDisplay() {
+         float curXVelocity = Player->getVelocity().X;
+         PlayerView->setVelocity(Player->getVelocity());
+
+         if (GameplayManager->isPlayerAlive())
+         {
+            if(!overView) {
+               if(dDown && aDown) {
+                  Player->setAction(CActor::EActionType::None);
+                  PlayerView->setState(CPlayerView::State::Standing);
+               }
+               else if((aDown && !backwardsView) || (dDown && backwardsView)) {
+                  Player->setAction(CActor::EActionType::MoveLeft);
+                  PlayerView->setState(CPlayerView::State::MovingLeft);
+               }
+               else if((dDown && !backwardsView) || (aDown && backwardsView)) {
+                  Player->setAction(CActor::EActionType::MoveRight);
+                  PlayerView->setState(CPlayerView::State::MovingRight);
+               }
+               else {
+                  Player->setAction(CActor::EActionType::None);
+                  PlayerView->setState(CPlayerView::State::Standing);
+               }
+            }
+            else {
+               if(sDown && wDown) {
+                  Player->setAction(CActor::EActionType::None);
+                  PlayerView->setState(CPlayerView::State::Standing);
+               }
+               else if(((wDown && overView == 1)) || (sDown && overView == 2)) {
+                  Player->setAction(CActor::EActionType::MoveRight);
+                  PlayerView->setState(CPlayerView::State::MovingRight);
+               }
+               else if((sDown && overView == 1) || (wDown && overView == 2)) {
+                  Player->setAction(CActor::EActionType::MoveLeft);
+                  PlayerView->setState(CPlayerView::State::MovingLeft);
+               }
+               else {
+                  Player->setAction(CActor::EActionType::None);
+                  PlayerView->setState(CPlayerView::State::Standing);
+               }
+            }
+
+            if (Player->isStanding() && spaceDown != 0) {
+               playJump = true;
+            }
+
+            Player->setJumping(spaceDown != 0);
+
+            if (playJump) {
+               Mix_PlayChannel(-1, jump, 0);
+               playJump = false;
+            }
+
+         }
+         else
+         {
+            Player->setAction(CActor::EActionType::None);
+            PlayerView->setState(CPlayerView::State::Standing);
+            Player->setJumping(false);
+         }
+         PlayerView->setRecovering(GameplayManager->getRecovering());
+
+         Derp->setJumping(true);
+
+         Engine->updateAll(Application.getElapsedTime()); //Might be an issue (since updateAll requires float and delta is a UInt32)
+         PlayerView->step(Application.getElapsedTime()*1000);
+
+         GameplayManager->run(Application.getElapsedTime());
+
+         SVector2 middleOfPlayer = Player->getArea().getCenter();
+         //printf("%0.2f, %0.2f\n", Player->getArea().getCenter().X, Player->getArea().getCenter().Y);
+         PlayerView->setMiddle(middleOfPlayer);
+         PlayerView->setGround(Engine->getHeightBelow(Player));
+
+         PlayerView->establishCamera(Camera, ANGLE(overView, backwardsView));
+
+         //draw the ground plane
+         //drawPlane();
+         //drawSky(backwardsView);
+         //drawDirt(backwardsView);
+
+         /*
+         //Chris Code, draw Trees
+   addTrees(NUM_TREES, basicTree);
+
+   glPushMatrix();
+
+   glTranslatef(-12.5, TREE_Y_OFFSET - .1, -2);
+   glScalef(1.5, 1.5, 1.5);
+
+   drawTree(christmasTree, DARK_GREEN_SHINY);
+
+   glPopMatrix();
+
+   glPushMatrix();
+
+   glTranslatef(10, TREE_Y_OFFSET - .7, 2.0);
+
+   drawTree(christmasTree, DARK_GREEN_SHINY);
+
+   glTranslatef(7, 0, 0);
+   drawTree(christmasTree, DARK_GREEN_SHINY);
+
+   glPopMatrix();
+   */
+
+   PlayerView->draw();
+
+   //Draw derp (enemy)
+   renderBasicTree->setTranslation(SVector3(Derp->getArea().getCenter().X, Derp->getArea().getCenter().Y, 0));
+   renderBasicTree->setScale(SVector3(0.5));
+   renderBasicTree->setRotation(SVector3(-90, 0, -90));
+
+   /*
+   //ENEMY DISPLAY
+   for (CGameplayManager::EnemyList::iterator it = GameplayManager->Enemies.begin(); it != GameplayManager->Enemies.end(); ++ it)
+   {
+      //glColor3f(1, 0.6, 0);
+      renderBasicTree->setTranslation(SVector3(it->Actor->getArea().getCenter().X, it->Actor->getArea().getCenter().Y, 0));
+      renderBasicTree->setScale(SVector3(0.3));
+      renderBasicTree->setRotation(SVector3(-90, 0, 0));
+   }
+   */
+
+
+   // ...and by spinning it around
+   static float const RotationSpeed = 50.f;
+   //Rotation.X += RotationSpeed*Delta;
+   //Rotation.Y += RotationSpeed*Delta*2;
+
+   glLoadIdentity();
+
+   freetype::print(our_font, 10, WindowHeight-40, "Elapsed Time: %f\n"
+         "Health: %d\nspaceDown: %d\nwDown: %d\nsDown: %d\noverView: %d ", Application.getElapsedTime(), GameplayManager->getPlayerHealth(), spaceDown, wDown, sDown, overView);
+
+   if (! GameplayManager->isPlayerAlive()) {
+      //Chris Code.  Play Death Sound
+      if (playDead) {
+         Mix_HaltMusic();
+         Mix_PlayChannel(-1, die, 0); //Only play once
+         playDead = false;
+      }
+      freetype::print(our_font, 50, WindowHeight - 240, "GAME OVER! YOU ARE DEAD");
+   }
+}
+
       //Runs at very start of display
       void OnRenderStart(float const Elapsed)
       {
@@ -94,20 +340,9 @@ class CGameState : public CState<CGameState>
          glMatrixMode(GL_MODELVIEW);
          glLoadIdentity();
 
-         Camera->setPosition(SVector3(0, 0, 2));
-         Camera->setLookDirection(SVector3(0, 0, -1));
-         Camera->recalculateViewMatrix();
+         oldDisplay();
 
-         SVector3 zero = SVector3(0,0,0);
-         renderBasicTree->setTranslation(SVector3(1, 0, 0));
-         //renderBasicTree->setScale(zero);
-         renderBasicTree->setRotation(SVector3(-90, 0, 0));
-
-         renderChristmasTree->setTranslation(SVector3(-1, 0, 0));
-         renderChristmasTree->setRotation(SVector3(-90, 0, 0));
-
-         renderBasicTree->draw(*Camera);
-         renderChristmasTree->draw(*Camera);
+         Application.getSceneManager().drawAll();
 
          SDL_GL_SwapBuffers();
       }
@@ -133,6 +368,7 @@ class CGameState : public CState<CGameState>
             }
             if(Event.Key == SDLK_j){
                overView = NEXT(overView);
+               //printf("Angle: %d\n", ANGLE(overView, backwardsView));
             }
             if(Event.Key == SDLK_m){
                if(musicOn) {
@@ -183,6 +419,18 @@ class CGameState : public CState<CGameState>
          stopSoundtrack();
          Mix_CloseAudio();
          our_font.clean();
+      }
+
+      void PrepBlock(float x, float y, float w, float h) {
+         CMeshRenderable *tempBlock;
+         blocks.push_back(tempBlock = new CMeshRenderable());
+         tempBlock->setMesh(cubeMesh);
+         tempBlock->setTexture(dirtTxt);
+         tempBlock->setShader(Diffuse);
+         tempBlock->setTranslation(SVector3(x, y, 0));
+         tempBlock->setScale(SVector3(w, h, 1));
+         tempBlock->setRotation(SVector3(0, 0, 0));
+         Application.getSceneManager().addRenderable(tempBlock);
       }
 };
 
@@ -235,30 +483,13 @@ void LoadTextures()
    dirtTxt = new CTexture(dirtImg);
 }
 
-
 void PrepMeshes()
 {
    renderBasicTree = new CMeshRenderable();
    renderBasicTree->setMesh(basicTreeMesh);
-   renderBasicTree->setTexture(grassTxt);
    renderBasicTree->setShader(Diffuse);
 
    renderChristmasTree = new CMeshRenderable();
    renderChristmasTree->setMesh(christmasTreeMesh);
-   renderChristmasTree->setTexture(grassTxt);
    renderChristmasTree->setShader(Diffuse);
-
-//My attempt at a for loop.  Not sure if it's actually worth doing
-/*   for (std::vector<CMeshRenderable>::iterator render =  renderables.begin(),
-        std::vector<CMesh*>::iterator mesh,
-        std::vector<CTexture*>::iterator texture;
-         itr != renderables.end(); itr++, mesh++, texture++)
-   {
-      *itr = new CMeshRenderable();
-      itr->setMesh();
-      itr->setMesh(*mesh);
-      itr->setTexture(*texture);
-      itr->setShader(Shader);
-   }*/
-
 }

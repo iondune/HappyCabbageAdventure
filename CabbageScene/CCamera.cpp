@@ -9,8 +9,10 @@ CCamera::CCamera(float const AspectRatio, float const Near, float const Far, flo
     setProjection(FOV, AspectRatio, Near, Far);
 }
 
+#include <stdio.h>
 void CCamera::recalculateViewMatrix()
 {
+    //printf("Camera position: <%0.2f, %0.2f, %0.2f>; Camera lookat: <%0.2f, %0.2f, %0.2f>\n", Position.X, Position.Y, Position.Z, LookDirection.X, LookDirection.Y, LookDirection.Z);
     ViewMatrix = glm::lookAt(Position.getGLMVector(), (Position + LookDirection).getGLMVector(), glm::vec3(0, 1, 0));
 }
 

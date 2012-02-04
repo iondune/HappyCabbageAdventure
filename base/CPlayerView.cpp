@@ -32,6 +32,7 @@ void CPlayerView::step(float delta) {
    }
 }
 void CPlayerView::draw() {
+   /*
    glEnable(GL_LIGHTING);
    if(!(recovering > 0 && (int)(recovering *100) % 2 != 0)) {
       glPushMatrix();
@@ -52,7 +53,7 @@ void CPlayerView::draw() {
       glTranslatef(CenterPosition.X, yShadow + 0.01, 0);
       glScalef(-0.05*sin(ySineValue)+1, 1, -0.05*sin(ySineValue)+1);
 
-      /* draw a solid disc from a bunch of triangles */
+      // draw a solid disc from a bunch of triangles //
       float z1,x1,x,z,ox=0,oz=0,angle,radius=0.5;
       z1=oz;
       x1=ox;
@@ -70,37 +71,28 @@ void CPlayerView::draw() {
          x1=x; 
       }
       glEnd();
-
       glPopMatrix();
    glEnable(GL_LIGHTING);
+   */
 }
-void CPlayerView::establishCamera(int angle) {
-   glMatrixMode(GL_MODELVIEW);
-   glLoadIdentity();
 
+void CPlayerView::establishCamera(CCamera *Camera, int angle) {
+   SVector3 camPos, camLook;
+
+   camLook = SVector3(CenterPosition.X, CenterPosition.Y, -1);
    if(angle == 0) {
-      gluLookAt(
-            CenterPosition.X, CenterPosition.Y + 1.3, 6,
-            CenterPosition.X, CenterPosition.Y, 0,
-            0, 1, 0);
+      camPos = SVector3(CenterPosition.X, CenterPosition.Y + 1.3, 6);
    }
    else if(angle == 1) {
-      gluLookAt(
-            CenterPosition.X, CenterPosition.Y + 1.3, -6,
-            CenterPosition.X, CenterPosition.Y, 0,
-            0, 1, 0);
+      camPos = SVector3(CenterPosition.X, CenterPosition.Y + 1.3, -6);
    }
    else if(angle == 2) {
-      gluLookAt(
-            CenterPosition.X - 4, CenterPosition.Y + 4, 1, 
-            CenterPosition.X, CenterPosition.Y, 0,
-            0, 1, 0);
+      camPos = SVector3(CenterPosition.X - 4, CenterPosition.Y + 4, 1);
    }
    else {
-      gluLookAt(
-            CenterPosition.X + 4, CenterPosition.Y + 4, 1, 
-            CenterPosition.X, CenterPosition.Y, 0,
-            0, 1, 0);
-
+      camPos = SVector3(CenterPosition.X + 4, CenterPosition.Y + 4, 1);
    }
+   Camera->setPosition(camPos);
+   Camera->setLookDirection(camLook);
+   Camera->recalculateViewMatrix();
 }

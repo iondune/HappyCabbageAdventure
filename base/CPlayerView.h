@@ -13,6 +13,7 @@
 #include <GL/gl.h>
 #endif
 
+#include "../CabbageScene/CCamera.h"
 
 class CPlayerView {
    SVector2 CenterPosition;
@@ -50,7 +51,7 @@ class CPlayerView {
       void setVelocity(SVector2 vel) {
          Velocity = vel;
       }
-      void establishCamera(int);
+      void establishCamera(CCamera*,int);
       void setMiddle(SVector2 middle) {
          CenterPosition = middle;
       }
