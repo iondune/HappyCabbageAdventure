@@ -322,7 +322,7 @@ CMesh * const CMeshLoader::createCubeMesh()
     Mesh->Triangles[9].Indices[0] = 3;
     Mesh->Triangles[9].Indices[1] = 6;
     Mesh->Triangles[9].Indices[2] = 7;
-    
+
     Mesh->Triangles[10].Indices[0] = 1;
     Mesh->Triangles[10].Indices[1] = 5;
     Mesh->Triangles[10].Indices[2] = 6;
