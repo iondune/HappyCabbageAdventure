@@ -9,6 +9,7 @@
 
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
+#include "CGameEventManager.h"
 
 #define TREE_Y_OFFSET 2.1
 #define ANGLE(j,k) (j==2?3:(j?2:(k?1:0)))
@@ -63,431 +64,445 @@ void BlockMesh() {
 
 std::vector<CMeshRenderable*> enemies;
 
+int numKilled = 0;
+
+class CGameEventFunctions : public sigslot::has_slots<> {
+   friend class CGameState;
+   CGameEventFunctions() {
+      fprintf(stderr, "Constructor: %d\n", &CGameEventFunctions::OnEnemyDeath);
+   }
+   public:
+      void OnEnemyDeath(SEnemyDeathEvent const & Event) {
+         CApplication::get().getSceneManager().removeRenderable((CMeshRenderable*)Event.Renderable);
+         numKilled++;
+      }
+};
+
+
 class CGameState : public CState<CGameState>
 {
    CApplication & Application;
+   CGameEventManager GameEventManager;
+   CGameEventFunctions *GameEventFunctions;
 
    public:
-      CGameState()
-         : Application (CApplication::get())
-      {}
+   CGameState()
+      : Application (CApplication::get())
+   {}
 
-void EngineInit( void ) {
-   Engine = new CEngine();
-   Player = Engine->addActor();
-   Player->setArea(SRect2(-24.5, 3, 1, 1));
+   void EngineInit( void ) {
+      Engine = new CEngine();
+      Player = Engine->addActor();
+      Player->setArea(SRect2(-24.5, 3, 1, 1));
 
-   Derp = Engine->addActor();
-   Derp->setArea(SRect2(-17, 0, 1, 1));
+      Derp = Engine->addActor();
+      Derp->setArea(SRect2(-17, 0, 1, 1));
 
-   Floor = Engine->addObject();
-   Floor->setArea(SRect2(-25, -1, 50, 1));
-   PrepBlock(-25, -1, 50, 1);
+      Floor = Engine->addObject();
+      Floor->setArea(SRect2(-25, -1, 50, 1));
+      PrepBlock(-25, -1, 50, 1);
 
-   SRect2 area;
+      SRect2 area;
 
-   GameplayManager = new CGameplayManager(Player, Engine);
-   GameplayManager->addEnemy(SVector2(-10, 4));
-   GameplayManager->addEnemy(SVector2(-5, 40));
-   GameplayManager->addEnemy(SVector2(0, 40));
-   GameplayManager->addEnemy(SVector2(5, 40));
-   GameplayManager->addEnemy(SVector2(10, 40));
-   GameplayManager->addEnemy(SVector2(15, 40));
-   GameplayManager->addEnemy(SVector2(20, 40));
-   GameplayManager->addEnemy(SVector2(25, 40));
-   GameplayManager->addEnemy(SVector2(25, 45));
-   GameplayManager->addEnemy(SVector2(25, 50));
-   PrepEnemy(-10, 4);
-   PrepEnemy(-5, 40);
-   PrepEnemy(0, 40);
-   PrepEnemy(5, 40);
-   PrepEnemy(10, 40);
-   PrepEnemy(15, 40);
-   PrepEnemy(20, 40);
-   PrepEnemy(25, 40);
-   PrepEnemy(25, 45);
-   PrepEnemy(25, 50);
+      GameplayManager = new CGameplayManager(Player, Engine);
+      GameplayManager->addEnemy(SVector2(-10, 4), PrepEnemy(-10,4));
+      GameplayManager->addEnemy(SVector2(-5, 40), PrepEnemy(-5, 40));
+      GameplayManager->addEnemy(SVector2(0, 40), PrepEnemy(0, 40));
+      GameplayManager->addEnemy(SVector2(5, 40), PrepEnemy(5, 40));
+      GameplayManager->addEnemy(SVector2(10, 40), PrepEnemy(10, 40));
+      GameplayManager->addEnemy(SVector2(15, 40), PrepEnemy(15, 40));
+      GameplayManager->addEnemy(SVector2(20, 40), PrepEnemy(20, 40));
+      GameplayManager->addEnemy(SVector2(25, 40), PrepEnemy(25, 40));
+      GameplayManager->addEnemy(SVector2(25, 45), PrepEnemy(25, 45));
+      GameplayManager->addEnemy(SVector2(25, 50), PrepEnemy(25, 50));
 
+      GameEventFunctions = new CGameEventFunctions();
+      fprintf(stderr, "Established: %d\n", &CGameEventFunctions::OnEnemyDeath);
+      GameEventManager = GameplayManager->getGameEventManager();
+      GameEventManager.OnEnemyDeath.connect(GameEventFunctions, & CGameEventFunctions::OnEnemyDeath);
+      fprintf(stderr, "After: %d\n", &GameEventManager.OnEnemyDeath);
 
-   float i = 0;
-   float j = 0;
+      float i = 0;
+      float j = 0;
 
-   for(j = 0; j < 10; j+=2.5) {
+      for(j = 0; j < 10; j+=2.5) {
+         Block = Engine->addObject();
+         area = SRect2(-15 + j, 1.5 + j, 2, 1);
+         PrepBlock(-15 + j, 1.5 + j, 2, 1);
+         Block->setArea(area);
+      }
+
       Block = Engine->addObject();
-      area = SRect2(-15 + j, 1.5 + j, 2, 1);
-      PrepBlock(-15 + j, 1.5 + j, 2, 1);
+      area = SRect2(-22, 7, 6, 0.2);
+      PrepBlock(-22, 7, 6, 0.2);
+      Block->setArea(area);
+
+      Block = Engine->addObject();
+      area = SRect2(-22, 7, 0.2, 3);
+      PrepBlock(-22, 7, 0.2, 3);
+      Block->setArea(area);
+
+      for(; i < 12; i++) {
+         Block = Engine->addObject();
+         area = SRect2(-i + 5, 0, 1, i+1);
+         PrepBlock(-i + 5, 0, 1, i+1);
+         Block->setArea(area);
+      }
+
+      for(i=0; i < 7; i++) {
+         Block = Engine->addObject();
+         area = SRect2(i + 15, 0, 1, i+1);
+         PrepBlock(i + 15, 0, 1, i+1);
+         Block->setArea(area);
+      }
+
+      for(i=0; i < 2; i++) {
+         Block = Engine->addObject();
+         area = SRect2(24, 2+i*4, 2, 1);
+         PrepBlock(24, 2+i*4, 2, 1);
+         Block->setArea(area);
+      }
+
+      Block = Engine->addObject();
+      area = SRect2(27.5, 4, 2, 1);
+      PrepBlock(27.5, 4, 2, 1);
       Block->setArea(area);
    }
 
-   Block = Engine->addObject();
-   area = SRect2(-22, 7, 6, 0.2);
-   PrepBlock(-22, 7, 6, 0.2);
-   Block->setArea(area);
+   //Initalizer fxn
+   void begin()
+   {
+      glClearColor(0,0,0,0);
 
-   Block = Engine->addObject();
-   area = SRect2(-22, 7, 0.2, 3);
-   PrepBlock(-22, 7, 0.2, 3);
-   Block->setArea(area);
+      glEnable(GL_DEPTH_TEST);
+      glDepthFunc(GL_LEQUAL);
+      //glEnable(GL_CULL_FACE);
+      //glCullFace(GL_BACK);
 
-   for(; i < 12; i++) {
-      Block = Engine->addObject();
-      area = SRect2(-i + 5, 0, 1, i+1);
-      PrepBlock(-i + 5, 0, 1, i+1);
-      Block->setArea(area);
+      SDL_WM_SetCaption("Happy Cabbage Adventure", NULL);
+
+      //Initialize Font
+      our_font.init("WIFFLES_.TTF", 30);
+
+      Camera = new CCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
+      CApplication::get().getSceneManager().setActiveCamera(Camera);
+
+      //This code should all be working.  Commented out so can make sure have the basics working first
+      //Load shader and attributes
+      Flat = CShaderLoader::loadShader("Shaders/Flat");
+      Diffuse = CShaderLoader::loadShader("Shaders/Diffuse");
+      DiffuseTexture = CShaderLoader::loadShader("Shaders/DiffuseTexture");
+      normalColor = CShaderLoader::loadShader("Shaders/normalColor");
+
+      //DemoLight();
+      soundInit();
+      setupSoundtrack();
+      startSoundtrack();
+
+      //Set up camera  I DON'T KNOW WHAT TO DO HERE!
+      //float AspectRatio = (float)WindowWidth/(float)Windowheight;
+      //Camera = new CCamera(AspectRatio, ...
+
+      Load3DS();
+      LoadTextures();
+      BlockMesh();
+
+      //Load the meshes into VBOs
+      PrepMeshes();
+      Application.getSceneManager().addRenderable(renderBasicTree);
+      Application.getSceneManager().addRenderable(renderChristmasTree);
+      //Initialize Fxns
+      EngineInit();
+      ViewInit();
+      fps = timeTotal = 0;
+      numFrames = 0;
    }
 
-   for(i=0; i < 7; i++) {
-      Block = Engine->addObject();
-      area = SRect2(i + 15, 0, 1, i+1);
-      PrepBlock(i + 15, 0, 1, i+1);
-      Block->setArea(area);
-   }
+   CCamera *Camera;
+   float fps, timeTotal;
+   int numFrames;
 
-   for(i=0; i < 2; i++) {
-      Block = Engine->addObject();
-      area = SRect2(24, 2+i*4, 2, 1);
-      PrepBlock(24, 2+i*4, 2, 1);
-      Block->setArea(area);
-   }
+   void oldDisplay() {
+      float curXVelocity = Player->getVelocity().X;
+      PlayerView->setVelocity(Player->getVelocity());
 
-   Block = Engine->addObject();
-   area = SRect2(27.5, 4, 2, 1);
-   PrepBlock(27.5, 4, 2, 1);
-   Block->setArea(area);
-}
-
-      //Initalizer fxn
-      void begin()
+      if (GameplayManager->isPlayerAlive())
       {
-         glClearColor(0,0,0,0);
+         if(!overView) {
+            if(dDown && aDown) {
+               Player->setAction(CActor::EActionType::None);
+               PlayerView->setState(CPlayerView::State::Standing);
+            }
+            else if((aDown && !backwardsView) || (dDown && backwardsView)) {
+               Player->setAction(CActor::EActionType::MoveLeft);
+               PlayerView->setState(CPlayerView::State::MovingLeft);
+            }
+            else if((dDown && !backwardsView) || (aDown && backwardsView)) {
+               Player->setAction(CActor::EActionType::MoveRight);
+               PlayerView->setState(CPlayerView::State::MovingRight);
+            }
+            else {
+               Player->setAction(CActor::EActionType::None);
+               PlayerView->setState(CPlayerView::State::Standing);
+            }
+         }
+         else {
+            if(sDown && wDown) {
+               Player->setAction(CActor::EActionType::None);
+               PlayerView->setState(CPlayerView::State::Standing);
+            }
+            else if(((wDown && overView == 1)) || (sDown && overView == 2)) {
+               Player->setAction(CActor::EActionType::MoveRight);
+               PlayerView->setState(CPlayerView::State::MovingRight);
+            }
+            else if((sDown && overView == 1) || (wDown && overView == 2)) {
+               Player->setAction(CActor::EActionType::MoveLeft);
+               PlayerView->setState(CPlayerView::State::MovingLeft);
+            }
+            else {
+               Player->setAction(CActor::EActionType::None);
+               PlayerView->setState(CPlayerView::State::Standing);
+            }
+         }
 
-         glEnable(GL_DEPTH_TEST);
-         glDepthFunc(GL_LEQUAL);
-         //glEnable(GL_CULL_FACE);
-         //glCullFace(GL_BACK);
-         
-         SDL_WM_SetCaption("Happy Cabbage Adventure", NULL);
+         if (Player->isStanding() && spaceDown != 0) {
+            playJump = true;
+         }
 
-         //Initialize Font
-         our_font.init("WIFFLES_.TTF", 30);
+         Player->setJumping(spaceDown != 0);
 
-         Camera = new CCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
-         CApplication::get().getSceneManager().setActiveCamera(Camera);
+         if (playJump) {
+            Mix_PlayChannel(-1, jump, 0);
+            playJump = false;
+         }
 
-//This code should all be working.  Commented out so can make sure have the basics working first
-         //Load shader and attributes
-         Flat = CShaderLoader::loadShader("Shaders/Flat");
-         Diffuse = CShaderLoader::loadShader("Shaders/Diffuse");
-         DiffuseTexture = CShaderLoader::loadShader("Shaders/DiffuseTexture");
-         normalColor = CShaderLoader::loadShader("Shaders/normalColor");
+      }
+      else
+      {
+         Player->setAction(CActor::EActionType::None);
+         PlayerView->setState(CPlayerView::State::Standing);
+         Player->setJumping(false);
+      }
+      PlayerView->setRecovering(GameplayManager->getRecovering());
 
-         //DemoLight();
-         soundInit();
-         setupSoundtrack();
-         startSoundtrack();
+      Derp->setJumping(true);
 
-         //Set up camera  I DON'T KNOW WHAT TO DO HERE!
-         //float AspectRatio = (float)WindowWidth/(float)Windowheight;
-         //Camera = new CCamera(AspectRatio, ...
+      Engine->updateAll(Application.getElapsedTime());
+      GameplayManager->run(Application.getElapsedTime());
+      PlayerView->step(Application.getElapsedTime()*1000);
 
-         Load3DS();
-         LoadTextures();
-         BlockMesh();
+      SVector2 middleOfPlayer = Player->getArea().getCenter();
+      //printf("%0.2f, %0.2f\n", Player->getArea().getCenter().X, Player->getArea().getCenter().Y);
+      PlayerView->setMiddle(middleOfPlayer);
+      PlayerView->setGround(Engine->getHeightBelow(Player));
 
-         //Load the meshes into VBOs
-         PrepMeshes();
-         Application.getSceneManager().addRenderable(renderBasicTree);
-         Application.getSceneManager().addRenderable(renderChristmasTree);
-         //Initialize Fxns
-         EngineInit();
-         ViewInit();
-         fps = timeTotal = 0;
+      PlayerView->establishCamera(Camera, ANGLE(overView, backwardsView));
+
+      //draw the ground plane
+      //drawPlane();
+      //drawSky(backwardsView);
+      //drawDirt(backwardsView);
+
+      /*
+      //Chris Code, draw Trees
+      addTrees(NUM_TREES, basicTree);
+
+      glPushMatrix();
+
+      glTranslatef(-12.5, TREE_Y_OFFSET - .1, -2);
+      glScalef(1.5, 1.5, 1.5);
+
+      drawTree(christmasTree, DARK_GREEN_SHINY);
+
+      glPopMatrix();
+
+      glPushMatrix();
+
+      glTranslatef(10, TREE_Y_OFFSET - .7, 2.0);
+
+      drawTree(christmasTree, DARK_GREEN_SHINY);
+
+      glTranslatef(7, 0, 0);
+      drawTree(christmasTree, DARK_GREEN_SHINY);
+
+      glPopMatrix();
+       */
+
+      PlayerView->draw();
+
+      //Draw derp (enemy)
+      renderBasicTree->setTranslation(SVector3(Derp->getArea().getCenter().X, Derp->getArea().getCenter().Y, 0));
+      renderBasicTree->setScale(SVector3(0.5));
+      renderBasicTree->setRotation(SVector3(-90, 0, -90));
+
+      //ENEMY DISPLAY
+      int i = 0;
+      for (CGameplayManager::EnemyList::iterator it = GameplayManager->Enemies.begin(); it != GameplayManager->Enemies.end(); ++ it)
+      {
+         enemies[i]->setTranslation(SVector3(it->Actor->getArea().getCenter().X, it->Actor->getArea().getCenter().Y, 0));
+         i++;
+      }
+
+
+
+      // ...and by spinning it around
+      static float const RotationSpeed = 50.f;
+      //Rotation.X += RotationSpeed*Delta;
+      //Rotation.Y += RotationSpeed*Delta*2;
+
+      glLoadIdentity();
+   }
+
+   //Runs at very start of display
+   void OnRenderStart(float const Elapsed)
+   {
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      glMatrixMode(GL_MODELVIEW);
+      glLoadIdentity();
+
+      oldDisplay();
+
+      Application.getSceneManager().drawAll();
+
+      /* Draw the text */
+      if (! GameplayManager->isPlayerAlive()) {
+         //Chris Code.  Play Death Sound
+         if (playDead) {
+            Mix_HaltMusic();
+            Mix_PlayChannel(-1, die, 0); //Only play once
+            playDead = false;
+         }
+         freetype::print(our_font, 50, WindowHeight - 240, "GAME OVER! YOU ARE DEAD");
+      }
+
+      timeTotal += Application.getElapsedTime();
+      numFrames++;
+      if(timeTotal >= 0.1) {
+         fps = numFrames / timeTotal;
+         timeTotal = 0;
          numFrames = 0;
       }
 
-      CCamera *Camera;
-      float fps, timeTotal;
-      int numFrames;
 
-      void oldDisplay() {
-         float curXVelocity = Player->getVelocity().X;
-         PlayerView->setVelocity(Player->getVelocity());
+      freetype::print(our_font, 10, WindowHeight-40, "Elapsed Time: %0.0f\n"
+            "Health: %d\nnumKilled: %d\nFPS: %0.2f ", Application.getRunTime(), GameplayManager->getPlayerHealth(), numKilled, fps);
 
-         if (GameplayManager->isPlayerAlive())
-         {
-            if(!overView) {
-               if(dDown && aDown) {
-                  Player->setAction(CActor::EActionType::None);
-                  PlayerView->setState(CPlayerView::State::Standing);
-               }
-               else if((aDown && !backwardsView) || (dDown && backwardsView)) {
-                  Player->setAction(CActor::EActionType::MoveLeft);
-                  PlayerView->setState(CPlayerView::State::MovingLeft);
-               }
-               else if((dDown && !backwardsView) || (aDown && backwardsView)) {
-                  Player->setAction(CActor::EActionType::MoveRight);
-                  PlayerView->setState(CPlayerView::State::MovingRight);
-               }
-               else {
-                  Player->setAction(CActor::EActionType::None);
-                  PlayerView->setState(CPlayerView::State::Standing);
-               }
-            }
-            else {
-               if(sDown && wDown) {
-                  Player->setAction(CActor::EActionType::None);
-                  PlayerView->setState(CPlayerView::State::Standing);
-               }
-               else if(((wDown && overView == 1)) || (sDown && overView == 2)) {
-                  Player->setAction(CActor::EActionType::MoveRight);
-                  PlayerView->setState(CPlayerView::State::MovingRight);
-               }
-               else if((sDown && overView == 1) || (wDown && overView == 2)) {
-                  Player->setAction(CActor::EActionType::MoveLeft);
-                  PlayerView->setState(CPlayerView::State::MovingLeft);
-               }
-               else {
-                  Player->setAction(CActor::EActionType::None);
-                  PlayerView->setState(CPlayerView::State::Standing);
-               }
-            }
 
-            if (Player->isStanding() && spaceDown != 0) {
-               playJump = true;
-            }
-
-            Player->setJumping(spaceDown != 0);
-
-            if (playJump) {
-               Mix_PlayChannel(-1, jump, 0);
-               playJump = false;
-            }
-
-         }
-         else
-         {
-            Player->setAction(CActor::EActionType::None);
-            PlayerView->setState(CPlayerView::State::Standing);
-            Player->setJumping(false);
-         }
-         PlayerView->setRecovering(GameplayManager->getRecovering());
-
-         Derp->setJumping(true);
-
-         Engine->updateAll(Application.getElapsedTime());
-         GameplayManager->run(Application.getElapsedTime());
-         PlayerView->step(Application.getElapsedTime()*1000);
-
-         SVector2 middleOfPlayer = Player->getArea().getCenter();
-         //printf("%0.2f, %0.2f\n", Player->getArea().getCenter().X, Player->getArea().getCenter().Y);
-         PlayerView->setMiddle(middleOfPlayer);
-         PlayerView->setGround(Engine->getHeightBelow(Player));
-
-         PlayerView->establishCamera(Camera, ANGLE(overView, backwardsView));
-
-         //draw the ground plane
-         //drawPlane();
-         //drawSky(backwardsView);
-         //drawDirt(backwardsView);
-
-         /*
-         //Chris Code, draw Trees
-   addTrees(NUM_TREES, basicTree);
-
-   glPushMatrix();
-
-   glTranslatef(-12.5, TREE_Y_OFFSET - .1, -2);
-   glScalef(1.5, 1.5, 1.5);
-
-   drawTree(christmasTree, DARK_GREEN_SHINY);
-
-   glPopMatrix();
-
-   glPushMatrix();
-
-   glTranslatef(10, TREE_Y_OFFSET - .7, 2.0);
-
-   drawTree(christmasTree, DARK_GREEN_SHINY);
-
-   glTranslatef(7, 0, 0);
-   drawTree(christmasTree, DARK_GREEN_SHINY);
-
-   glPopMatrix();
-   */
-
-   PlayerView->draw();
-
-   //Draw derp (enemy)
-   renderBasicTree->setTranslation(SVector3(Derp->getArea().getCenter().X, Derp->getArea().getCenter().Y, 0));
-   renderBasicTree->setScale(SVector3(0.5));
-   renderBasicTree->setRotation(SVector3(-90, 0, -90));
-
-   //ENEMY DISPLAY
-   int i = 0;
-   for (CGameplayManager::EnemyList::iterator it = GameplayManager->Enemies.begin(); it != GameplayManager->Enemies.end(); ++ it)
-   {
-      enemies[i]->setTranslation(SVector3(it->Actor->getArea().getCenter().X, it->Actor->getArea().getCenter().Y, 0));
-      i++;
+      SDL_GL_SwapBuffers();
    }
 
 
-
-   // ...and by spinning it around
-   static float const RotationSpeed = 50.f;
-   //Rotation.X += RotationSpeed*Delta;
-   //Rotation.Y += RotationSpeed*Delta*2;
-
-   glLoadIdentity();
-}
-
-      //Runs at very start of display
-      void OnRenderStart(float const Elapsed)
-      {
-         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-         glMatrixMode(GL_MODELVIEW);
-         glLoadIdentity();
-
-         oldDisplay();
-
-         Application.getSceneManager().drawAll();
-
-         /* Draw the text */
-         if (! GameplayManager->isPlayerAlive()) {
-            //Chris Code.  Play Death Sound
-            if (playDead) {
+   //Sends event every time key pressed (also when held)
+   void OnKeyboardEvent(SKeyboardEvent const & Event)
+   {
+      if(Event.Pressed){
+         if(Event.Key == SDLK_w){
+            wDown = 1;
+         }
+         if(Event.Key == SDLK_s){
+            sDown = 1;
+         }
+         if(Event.Key == SDLK_a){
+            aDown = 1;
+         }
+         if(Event.Key == SDLK_d){
+            dDown = 1;
+         }
+         if(Event.Key == SDLK_k){
+            backwardsView = !backwardsView;
+         }
+         if(Event.Key == SDLK_j){
+            overView = NEXT(overView);
+            //printf("Angle: %d\n", ANGLE(overView, backwardsView));
+         }
+         if(Event.Key == SDLK_m){
+            if(musicOn) {
+               musicOn = false;
                Mix_HaltMusic();
-               Mix_PlayChannel(-1, die, 0); //Only play once
-               playDead = false;
             }
-            freetype::print(our_font, 50, WindowHeight - 240, "GAME OVER! YOU ARE DEAD");
-         }
-
-         timeTotal += Application.getElapsedTime();
-         numFrames++;
-         if(timeTotal >= 0.1) {
-            fps = numFrames / timeTotal;
-            timeTotal = 0;
-            numFrames = 0;
-         }
-
-
-         freetype::print(our_font, 10, WindowHeight-40, "Elapsed Time: %0.0f\n"
-               "Health: %d\nspaceDown: %d\nwDown: %d\nsDown: %d\noverView: %d\nFPS: %0.2f ", Application.getRunTime(), GameplayManager->getPlayerHealth(), spaceDown, wDown, sDown, overView, fps);
-
-
-         SDL_GL_SwapBuffers();
-      }
-
-      //Sends event every time key pressed (also when held)
-      void OnKeyboardEvent(SKeyboardEvent const & Event)
-      {
-         if(Event.Pressed){
-            if(Event.Key == SDLK_w){
-               wDown = 1;
-            }
-            if(Event.Key == SDLK_s){
-               sDown = 1;
-            }
-            if(Event.Key == SDLK_a){
-               aDown = 1;
-            }
-            if(Event.Key == SDLK_d){
-               dDown = 1;
-            }
-            if(Event.Key == SDLK_k){
-               backwardsView = !backwardsView;
-            }
-            if(Event.Key == SDLK_j){
-               overView = NEXT(overView);
-               //printf("Angle: %d\n", ANGLE(overView, backwardsView));
-            }
-            if(Event.Key == SDLK_m){
-               if(musicOn) {
-                  musicOn = false;
-                  Mix_HaltMusic();
-               }
-               else {
-                  musicOn = true;
-                  Mix_PlayMusic(music, -1);
-               }
-            }
-            if(Event.Key == SDLK_SPACE) {
-               spaceDown = 1;
-
-            }
-            if(Event.Key == SDLK_ESCAPE) {
-               //TODO: Replace with an event/signal to end the game world 
-               //finished = true;
+            else {
+               musicOn = true;
+               Mix_PlayMusic(music, -1);
             }
          }
-         //Check if key let go, Not sure if this will work in here.
-         else  {
-            if(Event.Key == SDLK_w){
-               wDown = 0;
-            }
-            if(Event.Key == SDLK_s){
-               sDown = 0;
-            }
-            if(Event.Key == SDLK_a){
-               aDown = 0;
-            }
-            if(Event.Key == SDLK_d){
-               dDown = 0;
-            }
-            if(Event.Key == SDLK_k){
-            }
-            if(Event.Key == SDLK_j){
-            }
-            if(Event.Key == SDLK_SPACE){
-               spaceDown = 0;
-            }
+         if(Event.Key == SDLK_SPACE) {
+            spaceDown = 1;
+
+         }
+         if(Event.Key == SDLK_ESCAPE) {
+            //TODO: Replace with an event/signal to end the game world 
+            //finished = true;
          }
       }
-
-      //Runs at program close (currently not implemented)
-      void end()
-      {
-         stopSoundtrack();
-         Mix_CloseAudio();
-         our_font.clean();
+      //Check if key let go, Not sure if this will work in here.
+      else  {
+         if(Event.Key == SDLK_w){
+            wDown = 0;
+         }
+         if(Event.Key == SDLK_s){
+            sDown = 0;
+         }
+         if(Event.Key == SDLK_a){
+            aDown = 0;
+         }
+         if(Event.Key == SDLK_d){
+            dDown = 0;
+         }
+         if(Event.Key == SDLK_k){
+         }
+         if(Event.Key == SDLK_j){
+         }
+         if(Event.Key == SDLK_SPACE){
+            spaceDown = 0;
+         }
       }
+   }
 
-      void PrepBlock(float x, float y, float w, float h) {
-         CMeshRenderable *tempBlock;
-         blocks.push_back(tempBlock = new CMeshRenderable());
-         tempBlock->setMesh(cubeMesh);
-         //tempBlock->setTexture(dirtTxt);
-         tempBlock->setShader(Flat);
-         tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
-         tempBlock->setScale(SVector3(w, h, 1));
-         tempBlock->setRotation(SVector3(0, 0, 0));
-         Application.getSceneManager().addRenderable(tempBlock);
-      }
+   //Runs at program close (currently not implemented)
+   void end()
+   {
+      stopSoundtrack();
+      Mix_CloseAudio();
+      our_font.clean();
+   }
 
-/*
+   void PrepBlock(float x, float y, float w, float h) {
+      CMeshRenderable *tempBlock;
+      blocks.push_back(tempBlock = new CMeshRenderable());
+      tempBlock->setMesh(cubeMesh);
+      //tempBlock->setTexture(dirtTxt);
+      tempBlock->setShader(Flat);
+      tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
+      tempBlock->setScale(SVector3(w, h, 1));
+      tempBlock->setRotation(SVector3(0, 0, 0));
+      Application.getSceneManager().addRenderable(tempBlock);
+   }
+
+   /*
       void PrepElement(float x, float y, float scale, CMesh* model) { 
-         CMeshRenderable *tempElement;
-         elements.push_back(tempElement = new CMeshRenderable());
-         tempElement->setMesh(model);
-         //tempElement->setTexture(dirtTxt);
-         tempElement->setShader(Flat);
-         tempElement->setTranslation(SVector3(x, y, z));
-         tempElement->setScale(SVector3(scale));
-         //TODO: make the rotation an argument?
-         tempElement->setRotation(SVector3(-90, 0, 0));
-         Application.getSceneManager().addRenderable(tempElement);
-      }
-      */
+      CMeshRenderable *tempElement;
+      elements.push_back(tempElement = new CMeshRenderable());
+      tempElement->setMesh(model);
+//tempElement->setTexture(dirtTxt);
+tempElement->setShader(Flat);
+tempElement->setTranslation(SVector3(x, y, z));
+tempElement->setScale(SVector3(scale));
+//TODO: make the rotation an argument?
+tempElement->setRotation(SVector3(-90, 0, 0));
+Application.getSceneManager().addRenderable(tempElement);
+}
+    */
 
 
-      void PrepEnemy(float x, float y) {
-         CMeshRenderable *tempEnemy;
-         enemies.push_back(tempEnemy = new CMeshRenderable());
-         tempEnemy->setMesh(basicTreeMesh);
-         //tempEnemy->setTexture(dirtTxt);
-         tempEnemy->setShader(Flat);
-         Application.getSceneManager().addRenderable(tempEnemy);
-      }
+CMeshRenderable* PrepEnemy(float x, float y) {
+   CMeshRenderable *tempEnemy;
+   enemies.push_back(tempEnemy = new CMeshRenderable());
+   tempEnemy->setMesh(basicTreeMesh);
+   //tempEnemy->setTexture(dirtTxt);
+   tempEnemy->setShader(Flat);
+   Application.getSceneManager().addRenderable(tempEnemy);
+   return tempEnemy;
+}
 
 };
 
@@ -495,7 +510,7 @@ int main (int argc, char *argv[])
 {
    CApplication & Application = Application.get();
    Application.init(SPosition2(WindowWidth = 1024, WindowHeight = 768));
-   
+
    Application.getStateManager().setState<CGameState>();
 
    Application.run();

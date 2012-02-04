@@ -3,12 +3,12 @@
 
 
 #include "../CabbageFramework/sigslot/sigslot.h"
-
 #include "CGameplayManager.h"
 
 struct SEnemyDeathEvent
 {
     CGameplayManager::SEnemy * Enemy;
+    void* Renderable;
 };
 
 struct SEnemyDamagedEvent
@@ -40,6 +40,7 @@ public:
     sigslot::signal1<SPlayerDeathEvent const &> OnPlayerDeath;
 
     sigslot::signal1<SPlayerDamagedEvent const &> OnPlayerDamaged;
+
 
 };
 

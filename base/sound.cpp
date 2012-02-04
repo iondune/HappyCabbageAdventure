@@ -1,5 +1,19 @@
 #include "sound.h"
 
+//Used to run current soundtrack
+Mix_Music *music;
+
+Mix_Chunk *die;
+Mix_Chunk *jump;
+Mix_Chunk *takeDmg;
+Mix_Chunk *killEnemy;
+
+bool playDead;
+bool playTakeDmg;
+bool playJump;
+bool musicOn;
+
+
 void soundInit() {
    //Used to run current soundtrack
    music = NULL;

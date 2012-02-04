@@ -14,6 +14,7 @@ public:
     struct SEnemy
     {
         Cabbage::Collider::CActor * Actor;
+        void* Renderable;
     };
 
     typedef std::vector<SEnemy> EnemyList;
@@ -44,7 +45,7 @@ public:
 
     void run(float const TickTime);
 
-    void addEnemy(SVector2 const & Position);
+    void addEnemy(SVector2 const & Position, void* renderable);
 
     CGameEventManager & getGameEventManager();
 

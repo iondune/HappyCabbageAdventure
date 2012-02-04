@@ -85,6 +85,7 @@ void CGameplayManager::run(float const TickTime)
     {
         SEnemyDeathEvent Event;
         Event.Enemy = & * it;
+        fprintf(stderr, "%d\n", &GameEventManager->OnEnemyDeath);
         GameEventManager->OnEnemyDeath(Event);
 
         Mix_PlayChannel(-1, killEnemy, 0);
@@ -112,12 +113,13 @@ void CGameplayManager::run(float const TickTime)
     }
 }
 
-void CGameplayManager::addEnemy(SVector2 const & Position)
+void CGameplayManager::addEnemy(SVector2 const & Position, void* renderable)
 {
     SEnemy enemy;
     enemy.Actor = Engine->addActor();
     enemy.Actor->setArea(SRect2(Position, 1));
     enemy.Actor->getAttributes().MaxWalk = 1.2f;
+    enemy.Renderable = renderable;
     Enemies.push_back(enemy);
 }
 

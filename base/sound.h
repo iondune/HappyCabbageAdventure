@@ -19,7 +19,7 @@ extern bool playJump;
 extern bool musicOn;
 
 void soundInit();
-void musicDone();
+//void musicDone();
 
 void setupSoundtrack();
 void startSoundtrack();
