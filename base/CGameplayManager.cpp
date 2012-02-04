@@ -22,7 +22,8 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
     float const HitThreshold = 0.05f;
 
     for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end();)
-    if (Other == it->Actor)
+    {
+       if (Other == it->Actor)
     {
         if (PlayerActor->getArea().Position.Y > Other->getArea().otherCorner().Y - HitThreshold)
         {
@@ -66,6 +67,11 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
         }
         break;
     }
+       else
+       {
+          ++ it;
+       }
+    }
 }
 
 bool const CGameplayManager::isPlayerAlive() const
@@ -87,7 +93,7 @@ void CGameplayManager::run(float const TickTime)
     {
         SEnemyDeathEvent Event;
         Event.Enemy = & * it;
-        fprintf(stderr, "%d\n", &GameEventManager->OnEnemyDeath);
+        Event.Renderable = Event.Enemy->Renderable;
         GameEventManager->OnEnemyDeath(Event);
 
         Mix_PlayChannel(-1, killEnemy, 0);

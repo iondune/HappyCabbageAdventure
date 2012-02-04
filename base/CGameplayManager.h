@@ -32,7 +32,6 @@ private:
     CGameEventManager * GameEventManager;
 
 public:
-
     CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CEngine * engine);
 
     void OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With);
