@@ -1,5 +1,5 @@
 
-all: build-CabbageFramework build-CabbageScene build-MeshLoaderDemo build-CabbageColliderDemo
+all: build-CabbageFramework build-CabbageScene build-CabbageCollider build-MeshLoaderDemo build-CabbageColliderDemo
 
 build-CabbageScene:
 	cd ./CabbageScene && $(MAKE)
@@ -20,5 +20,5 @@ build-CabbageFramework:
 	cd ./CabbageFramework && $(MAKE)
 
 clean:
-	cd ./CabbageScene && $(MAKE) $@ && cd ../CabbageCollider && $(MAKE) $@ && cd ../MeshLoaderDemo && $(MAKE) $@ && cd ../CabbageColliderDemo && $(MAKE) $@
+	cd ./CabbageScene && $(MAKE) $@ && cd ../CabbageCollider && $(MAKE) $@ && cd ../MeshLoaderDemo && $(MAKE) $@ && cd ../CabbageColliderDemo && $(MAKE) $@ && cd ../CabbageFramework && $(MAKE) $@
 

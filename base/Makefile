@@ -12,7 +12,13 @@ else
 MIXLIB=-L../lib/x86 -lSDL_mixer -Wl,-rpath=../lib/x86
 endif
 
-all: cabbage 
+ifeq (${__MINGW__},1)
+TARGET=mingw
+else
+TARGET=cabbage
+endif
+
+all: ${TARGET} 
 
 cabbage: ${OBJECTS}
 	g++ ${COMPILER_VERSION} ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL -lglut `sdl-config --cflags --libs` ${CABBAGE} ${MIXLIB} `freetype-config --libs` -g -o $@
