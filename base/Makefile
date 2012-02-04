@@ -20,7 +20,7 @@ cabbage: ${OBJECTS}
 main.o: main.cpp draw.h header.h
 	g++ `sdl-config --cflags` `freetype-config --cflags` -c main.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CPlayerView.o: CPlayerView.cpp CPlayerView.h
-	g++ -c CPlayerView.cpp
+	g++ -c CPlayerView.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 Materials.o: Materials.cpp Materials.h
 	g++ -c Materials.cpp
 FreeType.o: FreeType.cpp FreeType.h

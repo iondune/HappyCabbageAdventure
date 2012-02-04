@@ -65,6 +65,7 @@ CEngine *Engine;
 CActor *Player, *Derp;
 CObject *Floor, *Block;
 CPlayerView *PlayerView;
+
 CGameplayManager * GameplayManager;
 
 std::vector<SRect2> blocks;

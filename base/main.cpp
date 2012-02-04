@@ -47,6 +47,12 @@ std::vector<CMeshRenderable*> blocks;
 
 void ViewInit( void ) {
    PlayerView = new CPlayerView();
+   CMeshRenderable *playerRenderable = new CMeshRenderable();
+   playerRenderable->setMesh(christmasTreeMesh);
+   playerRenderable->setShader(Diffuse);
+   playerRenderable->setScale(SVector3(2));
+   CApplication::get().getSceneManager().addRenderable(playerRenderable);
+   PlayerView->setRenderable(playerRenderable);
 }
 
 CMesh *cubeMesh;
@@ -79,7 +85,6 @@ void EngineInit( void ) {
    SRect2 area;
 
    GameplayManager = new CGameplayManager(Player, Engine);
-   /*
    GameplayManager->addEnemy(SVector2(-10, 4));
    GameplayManager->addEnemy(SVector2(-5, 40));
    GameplayManager->addEnemy(SVector2(0, 40));
@@ -90,7 +95,17 @@ void EngineInit( void ) {
    GameplayManager->addEnemy(SVector2(25, 40));
    GameplayManager->addEnemy(SVector2(25, 45));
    GameplayManager->addEnemy(SVector2(25, 50));
-   */
+   PrepEnemy(-10, 4);
+   PrepEnemy(-5, 40);
+   PrepEnemy(0, 40);
+   PrepEnemy(5, 40);
+   PrepEnemy(10, 40);
+   PrepEnemy(15, 40);
+   PrepEnemy(20, 40);
+   PrepEnemy(25, 40);
+   PrepEnemy(25, 45);
+   PrepEnemy(25, 50);
+
 
    float i = 0;
    float j = 0;
@@ -300,16 +315,14 @@ void EngineInit( void ) {
    renderBasicTree->setScale(SVector3(0.5));
    renderBasicTree->setRotation(SVector3(-90, 0, -90));
 
-   /*
    //ENEMY DISPLAY
+   int i = 0;
    for (CGameplayManager::EnemyList::iterator it = GameplayManager->Enemies.begin(); it != GameplayManager->Enemies.end(); ++ it)
    {
-      //glColor3f(1, 0.6, 0);
-      renderBasicTree->setTranslation(SVector3(it->Actor->getArea().getCenter().X, it->Actor->getArea().getCenter().Y, 0));
-      renderBasicTree->setScale(SVector3(0.3));
-      renderBasicTree->setRotation(SVector3(-90, 0, 0));
+      enemies[i]->setTranslate(SVector3(it->Actor->getArea().getCenter().X, it->Actor->getArea().getCenter().Y, 0));
+      i++;
    }
-   */
+
 
 
    // ...and by spinning it around
@@ -425,13 +438,23 @@ void EngineInit( void ) {
          CMeshRenderable *tempBlock;
          blocks.push_back(tempBlock = new CMeshRenderable());
          tempBlock->setMesh(cubeMesh);
-         tempBlock->setTexture(dirtTxt);
+         //tempBlock->setTexture(dirtTxt);
          tempBlock->setShader(Diffuse);
-         tempBlock->setTranslation(SVector3(x, y, 0));
+         tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
          tempBlock->setScale(SVector3(w, h, 1));
          tempBlock->setRotation(SVector3(0, 0, 0));
          Application.getSceneManager().addRenderable(tempBlock);
       }
+
+      void PrepEnemy(float x, float y) {
+         CMeshRenderable *tempEnemy;
+         enemies.push_back(tempEnemy = new CMeshRenderable());
+         tempEnemy->setMesh(basicTreeMesh);
+         //tempEnemy->setTexture(dirtTxt);
+         tempEnemy->setShader(Diffuse);
+         Application.getSceneManager().addRenderable(tempEnemy);
+      }
+
 };
 
 int main (int argc, char *argv[])
@@ -468,6 +491,9 @@ void Load3DS()
    else {
       fprintf(stderr, "Failed to load the christmas tree mesh\n");
    }
+
+   /* Load cabbage mesh */
+   /* Load enemy mesh */
 }
 
 void LoadTextures()

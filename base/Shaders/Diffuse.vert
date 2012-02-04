@@ -18,6 +18,6 @@ void main()
     vColor = vec3(aColor.r, aColor.g, aColor.b);
     vNormal = vec3(uNormalMatrix * vec4(aNormal, 0.0));
     vec3 vertex = vec3(uModelMatrix * vec4(aPosition, 1));
-    vLightDir = vec3(vec3(1,2,1) - vertex);
+    vLightDir = vec3(vec3(1,10,5) - vertex);
     //vEyeVec = -vertex;
 }

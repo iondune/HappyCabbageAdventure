@@ -13,11 +13,12 @@
 #include <GL/gl.h>
 #endif
 
-#include "../CabbageScene/CCamera.h"
+#include "../CabbageScene/CabbageScene.h"
 
 class CPlayerView {
    SVector2 CenterPosition;
    SVector2 Velocity;
+   CMeshRenderable *PlayerRenderable;
    float recovering;
    private:
    public:
@@ -43,6 +44,9 @@ class CPlayerView {
       CPlayerView() {
          ySineValue = 0;
          yShadow = 0;
+      }
+      void setRenderable(CMeshRenderable *render) {
+         PlayerRenderable = render;
       }
       void setRecovering(float recovVal) {
          recovering = recovVal;

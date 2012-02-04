@@ -31,25 +31,18 @@ void CPlayerView::step(float delta) {
          ySineValue = 0;
    }
 }
+
 void CPlayerView::draw() {
-   /*
-   glEnable(GL_LIGHTING);
    if(!(recovering > 0 && (int)(recovering *100) % 2 != 0)) {
-      glPushMatrix();
       setMaterial(LIGHT_GREEN_MATTE);
-      glTranslatef(CenterPosition.X, CenterPosition.Y + 0.065*sin(ySineValue), 0);
+      PlayerRenderable->setTranslation(SVector3(CenterPosition.X, CenterPosition.Y + 0.065*sin(ySineValue), 0));
       if(!(Velocity.Y > 0.01 || Velocity.Y < -0.01)) {
-         glRotatef(15*sin(ySineValue/2), 1, 0, 0);
+         PlayerRenderable->setRotation(SVector3(15*sin(ySineValue/2)-90, 0, 0));
       }
-      glutSolidSphere(0.5, 10, 10);
-      //glDrawArrays(GL_TRIANGLES, 0, TriangleCount*3);
-      glPopMatrix();
    }
 
-   glDisable(GL_LIGHTING);
    //Draw Shadow
    glPushMatrix();
-      glColor3f(0.2,0.2,0.2);
       glTranslatef(CenterPosition.X, yShadow + 0.01, 0);
       glScalef(-0.05*sin(ySineValue)+1, 1, -0.05*sin(ySineValue)+1);
 
@@ -71,15 +64,12 @@ void CPlayerView::draw() {
          x1=x; 
       }
       glEnd();
-      glPopMatrix();
-   glEnable(GL_LIGHTING);
-   */
+   glPopMatrix();
 }
 
 void CPlayerView::establishCamera(CCamera *Camera, int angle) {
    SVector3 camPos, camLook;
 
-   camLook = SVector3(0, 0, -1);
    if(angle == 0) {
       camPos = SVector3(CenterPosition.X, CenterPosition.Y + 1.3, 6);
    }
@@ -92,6 +82,7 @@ void CPlayerView::establishCamera(CCamera *Camera, int angle) {
    else {
       camPos = SVector3(CenterPosition.X + 4, CenterPosition.Y + 4, 1);
    }
+   camLook = SVector3(CenterPosition.X, CenterPosition.Y, 0) - camPos;
    Camera->setPosition(camPos);
    Camera->setLookDirection(camLook);
    Camera->recalculateViewMatrix();
