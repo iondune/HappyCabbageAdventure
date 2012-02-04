@@ -33,6 +33,8 @@ void CPlayerView::step(float delta) {
 }
 
 void CPlayerView::draw() {
+
+   //Set player's current position
    if(!(recovering > 0 && (int)(recovering *100) % 2 != 0)) {
       setMaterial(LIGHT_GREEN_MATTE);
       PlayerRenderable->setTranslation(SVector3(CenterPosition.X, CenterPosition.Y + 0.065*sin(ySineValue), 0));
@@ -41,8 +43,18 @@ void CPlayerView::draw() {
       }
    }
 
+   printf("Setting shadow\n");
+
+   //Set player's shadow
+   renderShadow->setTranslation(SVector3(CenterPosition.X, yShadow + .01, 0));
+   renderShadow->setScale(SVector3(-.05*sin(ySineValue)+1, 1,
+     -0.05*sin(ySineValue)+1));
+
+   printf("Shadow set\n");
+
+
    //Draw Shadow
-   glPushMatrix();
+   /*glPushMatrix();
       glTranslatef(CenterPosition.X, yShadow + 0.01, 0);
       glScalef(-0.05*sin(ySineValue)+1, 1, -0.05*sin(ySineValue)+1);
 
@@ -64,7 +76,7 @@ void CPlayerView::draw() {
          x1=x; 
       }
       glEnd();
-   glPopMatrix();
+   glPopMatrix();*/
 }
 
 void CPlayerView::establishCamera(CCamera *Camera, int angle) {

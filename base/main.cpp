@@ -27,14 +27,19 @@ freetype::font_data our_font;
 CShader *Shader, *Flat, *Diffuse, *DiffuseTexture, *normalColor;  //Use Diffuse for trees (doesn't need texture)
 CImage *grassImg, *skyImg, *dirtImg;
 CTexture *grassTxt, *skyTxt, *dirtTxt;
-CMesh *basicTreeMesh, *cabbageMesh;
-CMeshRenderable *renderChristmasTree, *renderBasicTree;
+CMesh *basicTreeMesh, *cabbageMesh, *christmasTreeMesh, *cubeMesh, *discMesh;
+CMeshRenderable *renderShadow, *playerRenderable, *renderChristmasTree, 
+  *renderBasicTree;
+
+std::vector<CMeshRenderable*> blocks, enemies;
 
 int WindowWidth, WindowHeight;
 
 void Load3DS();
+void LoadShaders();
 void LoadTextures();
 void PrepMeshes();
+void EngineInit();
 
 using namespace Cabbage::Collider;
 CEngine *Engine;
@@ -42,28 +47,24 @@ CActor *Player, *Derp;
 CObject *Floor, *Block;
 CPlayerView *PlayerView;
 
-CGameplayManager * GameplayManager;
-
-std::vector<CMeshRenderable*> blocks;
+CGameplayManager *GameplayManager;
 
 void ViewInit( void ) {
    PlayerView = new CPlayerView();
-   CMeshRenderable *playerRenderable = new CMeshRenderable();
-   playerRenderable->setMesh(cabbageMesh);
-   playerRenderable->setShader(Flat);
-   playerRenderable->setScale(SVector3(2));
-   CApplication::get().getSceneManager().addRenderable(playerRenderable);
-   PlayerView->setRenderable(playerRenderable);
+   PlayerView->setRenderable(playerRenderable, renderShadow);
 }
 
-CMesh *cubeMesh;
 void BlockMesh() {
    cubeMesh = CMeshLoader::createCubeMesh();
    cubeMesh->linearizeIndices();
    cubeMesh->calculateNormalsPerFace();
 }
 
-std::vector<CMeshRenderable*> enemies;
+void DiscMesh() {
+   discMesh = CMeshLoader::createDiscMesh();
+   discMesh->linearizeIndices();
+   discMesh->calculateNormalsPerFace();
+}
 
 class CGameState : public CState<CGameState>
 {
@@ -86,7 +87,7 @@ class CGameState : public CState<CGameState>
 
       Floor = Engine->addObject();
       Floor->setArea(SRect2(-25, -1, 50, 1));
-      PrepBlock(-25, -1, 50, 1);
+      PrepGrass(-25, -1, 50, 1);
 
       SRect2 area;
 
@@ -168,37 +169,40 @@ class CGameState : public CState<CGameState>
       our_font.init("WIFFLES_.TTF", 30);
 
       Camera = new CCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
-      CApplication::get().getSceneManager().setActiveCamera(Camera);
+      Application.getSceneManager().setActiveCamera(Camera);
 
-      //This code should all be working.  Commented out so can make sure have the basics working first
-      //Load shader and attributes
-      Flat = CShaderLoader::loadShader("Shaders/Flat");
-      Diffuse = CShaderLoader::loadShader("Shaders/Diffuse");
-      DiffuseTexture = CShaderLoader::loadShader("Shaders/DiffuseTexture");
-      normalColor = CShaderLoader::loadShader("Shaders/normalColor");
 
-      //DemoLight();
+      LoadShaders();
+
       soundInit();
       setupSoundtrack();
       startSoundtrack();
-
-      //Set up camera  I DON'T KNOW WHAT TO DO HERE!
-      //float AspectRatio = (float)WindowWidth/(float)Windowheight;
-      //Camera = new CCamera(AspectRatio, ...
 
       Load3DS();
       LoadTextures();
       BlockMesh();
 
+      DiscMesh();
+
       //Load the meshes into VBOs
       PrepMeshes();
+
+      printf("Before prepShadow\n");
+      PrepShadow();
+
       Application.getSceneManager().addRenderable(renderBasicTree);
       Application.getSceneManager().addRenderable(renderChristmasTree);
+      Application.getSceneManager().addRenderable(playerRenderable);
+
+      printf("Before viewInit\n\n\n");
+
       //Initialize Fxns
       EngineInit();
       ViewInit();
       fps = timeTotal = 0;
       numFrames = 0;
+
+      printf("END OF BEGIN\n");
    }
 
    CCamera *Camera;
@@ -347,7 +351,6 @@ class CGameState : public CState<CGameState>
 
       Application.getSceneManager().drawAll();
 
-      /* Draw the text */
       if (! GameplayManager->isPlayerAlive()) {
          //Chris Code.  Play Death Sound
          if (playDead) {
@@ -358,6 +361,7 @@ class CGameState : public CState<CGameState>
          freetype::print(our_font, 50, WindowHeight - 240, "GAME OVER! YOU ARE DEAD");
       }
 
+      //Calculate FPS
       timeTotal += Application.getElapsedTime();
       numFrames++;
       if(timeTotal >= 0.1) {
@@ -366,7 +370,9 @@ class CGameState : public CState<CGameState>
          numFrames = 0;
       }
 
+ 
 
+      //Draw Text
       freetype::print(our_font, 10, WindowHeight-40, "Elapsed Time: %0.0f\n"
             "Health: %d\nnumKilled: %d\nFPS: %0.2f ", Application.getRunTime(), GameplayManager->getPlayerHealth(), numKilled, fps);
 
@@ -449,6 +455,15 @@ class CGameState : public CState<CGameState>
       our_font.clean();
    }
 
+   void PrepShadow() {
+      renderShadow->setMesh(discMesh);
+      //renderShadow->setShader(Diffuse);
+
+      printf("Got to here");
+
+      Application.getSceneManager().addRenderable(renderShadow);
+   }
+
    void PrepBlock(float x, float y, float w, float h) {
       CMeshRenderable *tempBlock;
       blocks.push_back(tempBlock = new CMeshRenderable());
@@ -459,6 +474,18 @@ class CGameState : public CState<CGameState>
       tempBlock->setScale(SVector3(w, h, 1));
       tempBlock->setRotation(SVector3(0, 0, 0));
       Application.getSceneManager().addRenderable(tempBlock);
+   }
+
+   void PrepGrass(float x, float y, float w, float h) {
+      CMeshRenderable *tempBlock;
+      blocks.push_back(tempBlock = new CMeshRenderable());
+      tempBlock->setMesh(cubeMesh);
+      //tempBlock->setTexture(grassTxt);
+      tempBlock->setShader(Diffuse);
+      tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
+      tempBlock->setScale(SVector3(w, h, 1));
+      Application.getSceneManager().addRenderable(tempBlock);
+
    }
 
    /*
@@ -499,6 +526,13 @@ int main (int argc, char *argv[])
    Application.run();
 
    return 0;
+}
+
+void LoadShaders() {
+   Flat = CShaderLoader::loadShader("Shaders/Flat");
+   Diffuse = CShaderLoader::loadShader("Shaders/Diffuse");
+   DiffuseTexture = CShaderLoader::loadShader("Shaders/DiffuseTexture");
+    normalColor = CShaderLoader::loadShader("Shaders/normalColor");
 }
 
 
@@ -550,4 +584,9 @@ void PrepMeshes()
    renderChristmasTree = new CMeshRenderable();
    renderChristmasTree->setMesh(cabbageMesh);
    renderChristmasTree->setShader(Flat);
+
+   playerRenderable = new CMeshRenderable();
+   playerRenderable->setMesh(cabbageMesh);
+   playerRenderable->setShader(Flat);
+   playerRenderable->setScale(SVector3(2));
 }
