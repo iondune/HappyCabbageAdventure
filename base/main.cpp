@@ -25,7 +25,7 @@ freetype::font_data our_font;
 CShader *Shader, *Flat, *Diffuse, *DiffuseTexture, *normalColor;  //Use Diffuse for trees (doesn't need texture)
 CImage *grassImg, *skyImg, *dirtImg;
 CTexture *grassTxt, *skyTxt, *dirtTxt;
-CMesh *basicTreeMesh, *christmasTreeMesh;
+CMesh *basicTreeMesh, *cabbageMesh;
 CMeshRenderable *renderChristmasTree, *renderBasicTree;
 
 int WindowWidth, WindowHeight;
@@ -47,7 +47,7 @@ std::vector<CMeshRenderable*> blocks;
 void ViewInit( void ) {
    PlayerView = new CPlayerView();
    CMeshRenderable *playerRenderable = new CMeshRenderable();
-   playerRenderable->setMesh(christmasTreeMesh);
+   playerRenderable->setMesh(cabbageMesh);
    playerRenderable->setShader(Flat);
    playerRenderable->setScale(SVector3(2));
    CApplication::get().getSceneManager().addRenderable(playerRenderable);
@@ -273,10 +273,9 @@ void EngineInit( void ) {
 
          Derp->setJumping(true);
 
-         Engine->updateAll(Application.getElapsedTime()); //Might be an issue (since updateAll requires float and delta is a UInt32)
-         PlayerView->step(Application.getElapsedTime()*1000);
-
+         Engine->updateAll(Application.getElapsedTime());
          GameplayManager->run(Application.getElapsedTime());
+         PlayerView->step(Application.getElapsedTime()*1000);
 
          SVector2 middleOfPlayer = Player->getArea().getCenter();
          //printf("%0.2f, %0.2f\n", Player->getArea().getCenter().X, Player->getArea().getCenter().Y);
@@ -464,6 +463,20 @@ void EngineInit( void ) {
          Application.getSceneManager().addRenderable(tempBlock);
       }
 
+      void PrepElement(float x, float y, float scale, CMesh* model) { 
+         CMeshRenderable *tempElement;
+         elements.push_back(tempElement = new CMeshRenderable());
+         tempElement->setMesh(model);
+         //tempElement->setTexture(dirtTxt);
+         tempElement->setShader(Flat);
+         tempElement->setTranslation(SVector3(x, y, z));
+         tempElement->setScale(SVector3(scale));
+         //TODO: make the rotation an argument?
+         tempElement->setRotation(SVector3(-90, 0, 0));
+         Application.getSceneManager().addRenderable(tempElement);
+      }
+
+
       void PrepEnemy(float x, float y) {
          CMeshRenderable *tempEnemy;
          enemies.push_back(tempEnemy = new CMeshRenderable());
@@ -500,11 +513,11 @@ void Load3DS()
       fprintf(stderr, "Failed to load the basic tree mesh\n");
    }
 
-   christmasTreeMesh = CMeshLoader::load3dsMesh("Models/crappycabbage.3ds");
-   if (christmasTreeMesh) {
-      christmasTreeMesh->resizeMesh(SVector3(0.5));
-      christmasTreeMesh->centerMeshByExtents(SVector3(0));
-      christmasTreeMesh->calculateNormalsPerFace();
+   cabbageMesh = CMeshLoader::load3dsMesh("Models/crappycabbage.3ds");
+   if (cabbageMesh) {
+      cabbageMesh->resizeMesh(SVector3(0.5));
+      cabbageMesh->centerMeshByExtents(SVector3(0));
+      cabbageMesh->calculateNormalsPerFace();
    }
    else {
       fprintf(stderr, "Failed to load the christmas tree mesh\n");
@@ -534,6 +547,6 @@ void PrepMeshes()
    renderBasicTree->setShader(Flat);
 
    renderChristmasTree = new CMeshRenderable();
-   renderChristmasTree->setMesh(christmasTreeMesh);
+   renderChristmasTree->setMesh(cabbageMesh);
    renderChristmasTree->setShader(Flat);
 }
