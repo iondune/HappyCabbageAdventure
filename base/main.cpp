@@ -338,26 +338,6 @@ void EngineInit( void ) {
    //Rotation.Y += RotationSpeed*Delta*2;
 
    glLoadIdentity();
-
-   timeTotal += Application.getElapsedTime();
-   numFrames++;
-   if(timeTotal >= 0.1) {
-      fps = numFrames / timeTotal;
-      timeTotal = 0;
-      numFrames = 0;
-   }
-   freetype::print(our_font, 10, WindowHeight-40, "Elapsed Time: %0.0f\n"
-         "Health: %d\nspaceDown: %d\nwDown: %d\nsDown: %d\noverView: %d\nFPS: %0.2f ", Application.getRunTime(), GameplayManager->getPlayerHealth(), spaceDown, wDown, sDown, overView, fps);
-
-   if (! GameplayManager->isPlayerAlive()) {
-      //Chris Code.  Play Death Sound
-      if (playDead) {
-         Mix_HaltMusic();
-         Mix_PlayChannel(-1, die, 0); //Only play once
-         playDead = false;
-      }
-      freetype::print(our_font, 50, WindowHeight - 240, "GAME OVER! YOU ARE DEAD");
-   }
 }
 
       //Runs at very start of display
@@ -370,6 +350,30 @@ void EngineInit( void ) {
          oldDisplay();
 
          Application.getSceneManager().drawAll();
+
+         /* Draw the text */
+         if (! GameplayManager->isPlayerAlive()) {
+            //Chris Code.  Play Death Sound
+            if (playDead) {
+               Mix_HaltMusic();
+               Mix_PlayChannel(-1, die, 0); //Only play once
+               playDead = false;
+            }
+            freetype::print(our_font, 50, WindowHeight - 240, "GAME OVER! YOU ARE DEAD");
+         }
+
+         timeTotal += Application.getElapsedTime();
+         numFrames++;
+         if(timeTotal >= 0.1) {
+            fps = numFrames / timeTotal;
+            timeTotal = 0;
+            numFrames = 0;
+         }
+
+
+         freetype::print(our_font, 10, WindowHeight-40, "Elapsed Time: %0.0f\n"
+               "Health: %d\nspaceDown: %d\nwDown: %d\nsDown: %d\noverView: %d\nFPS: %0.2f ", Application.getRunTime(), GameplayManager->getPlayerHealth(), spaceDown, wDown, sDown, overView, fps);
+
 
          SDL_GL_SwapBuffers();
       }
