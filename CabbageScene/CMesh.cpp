@@ -246,3 +246,27 @@ SBoundingBox3 const CMesh::getBoundingBox() const
 
     return Box;
 }
+
+void CMesh::linearizeIndices()
+{
+    std::vector<SVertex> newVertices;
+    std::vector<STriangle> newTriangles;
+
+    for (std::vector<STriangle>::iterator it = Triangles.begin(); it != Triangles.end(); ++ it)
+    {
+        for (int i = 0; i < 3; ++ i)
+            newVertices.push_back(Vertices[it->Indices[i]]);
+    }
+
+    for (unsigned int i = 0; i < newVertices.size()/3; ++ i)
+    {
+        STriangle tri;
+        tri.Indices[0] = i*3;
+        tri.Indices[1] = i*3 + 1;
+        tri.Indices[2] = i*3 + 2;
+        newTriangles.push_back(tri);
+    }
+
+    Vertices = newVertices;
+    Triangles = newTriangles;
+}

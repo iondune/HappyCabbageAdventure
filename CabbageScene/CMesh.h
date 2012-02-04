@@ -47,6 +47,8 @@ public:
 
     SBoundingBox3 const getBoundingBox() const;
 
+    void linearizeIndices();
+
 };
 
 #endif
