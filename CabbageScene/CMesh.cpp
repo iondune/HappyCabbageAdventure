@@ -99,7 +99,8 @@ void CMesh::calculateNormalsPerFace()
 {
     for (std::vector<STriangle>::iterator it = Triangles.begin(); it != Triangles.end(); ++ it)
     {
-        it->Normal = (Vertices[it->Indices[1]].Position - Vertices[it->Indices[0]].Position).crossProduct(Vertices[it->Indices[2]].Position - Vertices[it->Indices[0]].Position);
+        it->Normal = (Vertices[it->Indices[1]].Position - Vertices[it->Indices[0]].Position).
+         crossProduct(Vertices[it->Indices[2]].Position - Vertices[it->Indices[0]].Position);
         Vertices[it->Indices[0]].Normal = Vertices[it->Indices[1]].Normal = Vertices[it->Indices[2]].Normal = it->Normal;
     }
 

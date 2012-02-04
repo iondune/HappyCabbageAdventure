@@ -1,25 +1,29 @@
 attribute vec3 aPosition;
 attribute vec3 aNormal;
-attribute vec3 aColor;
 attribute vec2 aTexCoord;
 
 uniform mat4 uModelMatrix;
 uniform mat4 uProjMatrix;
 uniform mat4 uViewMatrix;
+uniform mat4 uNormalMatrix;
 
-varying vec3 vColor;
+varying vec4 vColor;
+varying vec3 vLight;
+varying vec3 vNormal;
 varying vec2 vTexCoord;
-varying vec3 vNormal, vLightDir;
 
 void main()
 {
-    gl_Position = uProjMatrix * uViewMatrix * uModelMatrix * vec4(aPosition.x, aPosition.y, aPosition.z, 1);
-    gl_FrontColor = vec4(aColor.r, aColor.g, aColor.b, 1.0);
+    const vec3 LightPosition = vec3(1, 2, 1);
 
-    vColor = vec3(aColor.r, aColor.g, aColor.b);
+    vec4 vPosition;
+
+    vPosition = uModelMatrix * vec4(aPosition, 1);
+    vLight = normalize(LightPosition - vec3(vPosition));
+    gl_Position = uProjMatrix * uViewMatrix * vPosition;
+
     vTexCoord = vec2(aTexCoord.x, aTexCoord.y);
-    vNormal = vec3(uModelMatrix * vec4(aNormal, 0.0));
-    vec3 vertex = vec3(uModelMatrix * vec4(aPosition.x, aPosition.y, aPosition.z, 1));
-    vLightDir = vec3(vec3(1,2,1) - vertex);
-    //vEyeVec = -vertex;
+
+    vLight = normalize(LightPosition - vec3(vPosition));
+    vNormal = normalize(vec3(uNormalMatrix * vec4(aNormal, 1)));
 }

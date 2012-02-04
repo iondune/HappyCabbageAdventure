@@ -31,7 +31,6 @@
 //Local Include Section
 #include "../CabbageCollider/CEngine.h"
 #include "FreeType.h"
-#include "3dsloader/3dsloader.h"
 #include "CPlayerView.h"
 
 #include "Materials.h"

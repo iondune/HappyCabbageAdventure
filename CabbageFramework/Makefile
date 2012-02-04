@@ -4,7 +4,12 @@ OFILES = $(FILES:%.cpp=%.o)
 
 DIRECTORIES = -I../CabbageCore/:../CabbageScene/
 
+ifeq (${__MINGW__},1)
+OPENGL = `sdl-config --cflags` -DGL_GLEXT_PROTOTYPES `sdl-config --libs`
+else
 OPENGL = -DGL_GLEXT_PROTOTYPES
+endif
+
 
 all: ../lib/libCabbageFramework.a
 
