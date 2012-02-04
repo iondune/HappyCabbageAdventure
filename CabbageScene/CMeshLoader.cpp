@@ -22,9 +22,9 @@ long filelength(int f)
 CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
 {
     int i; //Index variable
-	
+
     FILE *l_file; //File pointer
-	
+
     unsigned short l_chunk_id; //Chunk identifier
     unsigned int l_chunk_lenght; //Chunk lenght
 
@@ -274,13 +274,13 @@ CMesh * const CMeshLoader::createCubeMesh()
     CMesh * Mesh = new CMesh();
     Mesh->Vertices.resize(8);
     Mesh->Vertices[0].Position = SVector3(-0.5, -0.5, -0.5);
-    Mesh->Vertices[0].Position = SVector3(-0.5,  0.5, -0.5);
-    Mesh->Vertices[0].Position = SVector3( 0.5,  0.5, -0.5);
-    Mesh->Vertices[0].Position = SVector3( 0.5, -0.5, -0.5);
-    Mesh->Vertices[0].Position = SVector3(-0.5, -0.5,  0.5);
-    Mesh->Vertices[0].Position = SVector3(-0.5,  0.5,  0.5);
-    Mesh->Vertices[0].Position = SVector3( 0.5,  0.5,  0.5);
-    Mesh->Vertices[0].Position = SVector3( 0.5, -0.5,  0.5);
+    Mesh->Vertices[1].Position = SVector3(-0.5,  0.5, -0.5);
+    Mesh->Vertices[2].Position = SVector3( 0.5,  0.5, -0.5);
+    Mesh->Vertices[3].Position = SVector3( 0.5, -0.5, -0.5);
+    Mesh->Vertices[4].Position = SVector3(-0.5, -0.5,  0.5);
+    Mesh->Vertices[5].Position = SVector3(-0.5,  0.5,  0.5);
+    Mesh->Vertices[6].Position = SVector3( 0.5,  0.5,  0.5);
+    Mesh->Vertices[7].Position = SVector3( 0.5, -0.5,  0.5);
 
     Mesh->Triangles.resize(12);
     Mesh->Triangles[0].Indices[0] = 0;
@@ -322,7 +322,7 @@ CMesh * const CMeshLoader::createCubeMesh()
     Mesh->Triangles[9].Indices[0] = 3;
     Mesh->Triangles[9].Indices[1] = 6;
     Mesh->Triangles[9].Indices[2] = 7;
-
+    
     Mesh->Triangles[10].Indices[0] = 1;
     Mesh->Triangles[10].Indices[1] = 5;
     Mesh->Triangles[10].Indices[2] = 6;
