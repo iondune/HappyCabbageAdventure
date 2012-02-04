@@ -43,14 +43,11 @@ void CPlayerView::draw() {
       }
    }
 
-   printf("Setting shadow\n");
-
    //Set player's shadow
-   renderShadow->setTranslation(SVector3(CenterPosition.X, yShadow + .01, 0));
+   renderShadow->setTranslation(SVector3(CenterPosition.X, yShadow + 0.01, 0));
    renderShadow->setScale(SVector3(-.05*sin(ySineValue)+1, 1,
      -0.05*sin(ySineValue)+1));
 
-   printf("Shadow set\n");
 
 
    //Draw Shadow
