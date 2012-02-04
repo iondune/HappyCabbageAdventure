@@ -48,7 +48,7 @@ public:
         CApplication::get().getSceneManager().setActiveCamera(Camera);
 
         // Attempt to load shader and attributes
-        Shader = CShaderLoader::loadShader("Shaders/Diffuse");
+        Shader = CShaderLoader::loadShader("Shaders/DiffuseTexture");
         if (! Shader)
         {
             std::cerr << "Unable to open or compile necessary shader." << std::endl;
@@ -58,7 +58,7 @@ public:
 
 
         // Attempt to load mesh
-        MeshFace = CMeshLoader::loadAsciiMesh("Models/bunny10k.m");//createCubeMesh();//load3dsMesh("spaceship.3ds");
+        MeshFace = CMeshLoader::load3dsMesh("spaceship.3ds");
         if (MeshFace)
         {
             MeshFace->linearizeIndices();
@@ -67,7 +67,7 @@ public:
             MeshFace->calculateNormalsPerFace();
         }
 
-        MeshVertex = CMeshLoader::loadAsciiMesh("Models/bunny10k.m");//createCubeMesh();//load3dsMesh("spaceship.3ds");
+        MeshVertex = CMeshLoader::load3dsMesh("spaceship.3ds");
         if (MeshVertex)
         {
             MeshVertex->resizeMesh(SVector3(1.5));
@@ -178,7 +178,7 @@ public:
         case SDLK_b:
 
             if (! Event.Pressed)
-                Renderable->setShader(CShaderLoader::loadShader("Shaders/Diffuse"));
+                Renderable->setShader(CShaderLoader::loadShader("Shaders/DiffuseTexture"));
 
             break;
 
@@ -186,6 +186,8 @@ public:
 
             if (! Event.Pressed)
                 Animate = ! Animate;
+
+            break;
 
         }
     }
