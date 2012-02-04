@@ -187,7 +187,6 @@ class CGameState : public CState<CGameState>
       //Load the meshes into VBOs
       PrepMeshes();
 
-      printf("Before prepShadow\n");
       PrepShadow();
 
       Application.getSceneManager().addRenderable(renderBasicTree);
@@ -456,10 +455,9 @@ class CGameState : public CState<CGameState>
    }
 
    void PrepShadow() {
+      renderShadow = new CMeshRenderable();
       renderShadow->setMesh(discMesh);
-      //renderShadow->setShader(Diffuse);
-
-      printf("Got to here");
+      renderShadow->setShader(Diffuse);
 
       Application.getSceneManager().addRenderable(renderShadow);
    }
