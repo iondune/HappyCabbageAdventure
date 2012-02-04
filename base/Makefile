@@ -1,5 +1,5 @@
 ROOT_CABBAGE_DIR=../
-SOURCES=main.cpp CPlayerView.cpp Materials.cpp FreeType.cpp
+SOURCES=main.cpp CPlayerView.cpp Materials.cpp FreeType.cpp CGameplayManager.cpp sound.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o)
 CABBAGE=-L../lib/ -lCabbageCollider -lCabbageFramework -lCabbageScene
 COMPILER_VERSION=-std=c++0x
@@ -25,8 +25,12 @@ cabbage: ${OBJECTS}
 
 main.o: main.cpp draw.h header.h
 	g++ `sdl-config --cflags` `freetype-config --cflags` -c main.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+sound.o: sound.cpp sound.h
+	g++ `sdl-config --cflags` -c sound.cpp -DGL_GLEXT_PROTOTYPES
 CPlayerView.o: CPlayerView.cpp CPlayerView.h
 	g++ -c CPlayerView.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+CGameplayManager.o: CGameplayManager.cpp CGameplayManager.h
+	g++ `sdl-config --cflags` -c CGameplayManager.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 Materials.o: Materials.cpp Materials.h
 	g++ -c Materials.cpp
 FreeType.o: FreeType.cpp FreeType.h

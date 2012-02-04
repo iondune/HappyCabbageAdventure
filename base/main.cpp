@@ -182,6 +182,7 @@ void EngineInit( void ) {
          normalColor = CShaderLoader::loadShader("Shaders/normalColor");
 
          //DemoLight();
+         soundInit();
          setupSoundtrack();
          startSoundtrack();
 
@@ -463,6 +464,7 @@ void EngineInit( void ) {
          Application.getSceneManager().addRenderable(tempBlock);
       }
 
+/*
       void PrepElement(float x, float y, float scale, CMesh* model) { 
          CMeshRenderable *tempElement;
          elements.push_back(tempElement = new CMeshRenderable());
@@ -475,6 +477,7 @@ void EngineInit( void ) {
          tempElement->setRotation(SVector3(-90, 0, 0));
          Application.getSceneManager().addRenderable(tempElement);
       }
+      */
 
 
       void PrepEnemy(float x, float y) {

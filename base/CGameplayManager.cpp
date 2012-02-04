@@ -1,8 +1,6 @@
 #include "CGameplayManager.h"
 #include "CGameEventManager.h"
 
-#include "sound.h"
-
 CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CEngine * engine)
     : PlayerActor(playerActor), PlayerRecovering(false), PlayerHealth(5), Engine(engine)
 {

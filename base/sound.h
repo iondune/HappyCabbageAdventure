@@ -1,59 +1,30 @@
+#ifndef __SOUND_INCLUDE_H__
+#define  __SOUND_INCLUDE_H__
+
 #include "SDL_mixer.h"
 
 //Used to run current soundtrack
-Mix_Music *music = NULL;
+extern Mix_Music *music;
 
 //Sound Effects
-Mix_Chunk *die = NULL;
-Mix_Chunk *jump = NULL;
-Mix_Chunk *takeDmg = NULL;
-Mix_Chunk *killEnemy = NULL;
+extern Mix_Chunk *die;
+extern Mix_Chunk *jump;
+extern Mix_Chunk *takeDmg;
+extern Mix_Chunk *killEnemy;
 
 //Misc Sound Variables
-bool playDead = true;
-bool playTakeDmg = true;
-bool playJump = true;
-bool musicOn = true;
+extern bool playDead;
+extern bool playTakeDmg;
+extern bool playJump;
+extern bool musicOn;
 
+void soundInit();
 void musicDone();
 
-void setupSoundtrack() {
-   int audio_rate = 22050;
-   Uint16 audio_format = AUDIO_S16;
-   int audio_channels = 2;
-   int audio_buffers = 4096;
+void setupSoundtrack();
+void startSoundtrack();
+void stopSoundtrack();
 
-   if(Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers))
-      printf("Could not open audio!\n");
+void changeSoundtrack(char* changeTo);
 
-   //Pre-load pointers
-   music = Mix_LoadMUS("sounds/SMW.wav");
-   die = Mix_LoadWAV("sounds/death.wav");
-   jump = Mix_LoadWAV("sounds/jump.wav");
-   takeDmg = Mix_LoadWAV("sounds/takeDmg.wav");
-   killEnemy = Mix_LoadWAV("sounds/hitEnemy.wav");
-
-   //Decrease volume of jump
-   printf("Prev Volume: %d\n", Mix_VolumeChunk(jump, 64));
-}
-
-void startSoundtrack() {
-   Mix_PlayMusic(music, -1);
-}
-
-void stopSoundtrack() {
-   musicOn = false;
-   Mix_HaltMusic();
-   Mix_FreeMusic(music);
-}
-
-
-void changeSoundtrack(char* changeTo) {
-   //Stop music from playing (if currently is)
-   if (musicOn)
-      stopSoundtrack();
-
-   music = Mix_LoadMUS(changeTo);
-
-   Mix_PlayMusic(music, -1);
-}
+#endif

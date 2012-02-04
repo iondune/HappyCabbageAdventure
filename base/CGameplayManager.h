@@ -2,6 +2,7 @@
 #define _CGAMEPLAYEMANAGER_H_INCLUDED_
 
 #include "../CabbageCollider/CEngine.h"
+#include "sound.h"
 
 class CGameEventManager;
 
