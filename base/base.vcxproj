@@ -70,10 +70,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="3dsloader\Makefile" />
-    <None Include="3dsloader\spaceship.3ds" />
-    <None Include="3dsloader\spaceshiptexture.bmp" />
-    <None Include="3dsloader\tree.3ds" />
     <None Include="freetype6.dll" />
     <None Include="glew32.dll" />
     <None Include="glut32.dll" />
@@ -83,10 +79,6 @@
     <None Include="zlib1.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="3dsloader\3dsloader.h" />
-    <ClInclude Include="3dsloader\main.h" />
-    <ClInclude Include="3dsloader\texture.h" />
-    <ClInclude Include="3dsloader\tutorial4.h" />
     <ClInclude Include="CGameplayManager.h" />
     <ClInclude Include="CPlayerView.h" />
     <ClInclude Include="draw.h" />
@@ -97,7 +89,6 @@
     <ClInclude Include="texture.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="3dsloader\3dsloader.cpp" />
     <ClCompile Include="CPlayerView.cpp" />
     <ClCompile Include="FreeType.cpp" />
     <ClCompile Include="main.cpp" />
