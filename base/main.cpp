@@ -9,7 +9,6 @@
 
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
-#include "3dsloader/3dsloader.h"
 
 #define TREE_Y_OFFSET 2.1
 #define ANGLE(j,k) (j==2?3:(j?2:(k?1:0)))
@@ -23,7 +22,7 @@ int backwardsView = 0, overView = 0;
 freetype::font_data our_font;
 
 //Variables need to create VBOs of meshes, textures, and shaders
-CShader *Shader, *Diffuse, *DiffuseTexture;  //Use Diffuse for trees (doesn't need texture)
+CShader *Shader, *Flat, *Diffuse, *DiffuseTexture, *normalColor;  //Use Diffuse for trees (doesn't need texture)
 CImage *grassImg, *skyImg, *dirtImg;
 CTexture *grassTxt, *skyTxt, *dirtTxt;
 CMesh *basicTreeMesh, *christmasTreeMesh;
@@ -49,7 +48,7 @@ void ViewInit( void ) {
    PlayerView = new CPlayerView();
    CMeshRenderable *playerRenderable = new CMeshRenderable();
    playerRenderable->setMesh(christmasTreeMesh);
-   playerRenderable->setShader(Diffuse);
+   playerRenderable->setShader(Flat);
    playerRenderable->setScale(SVector3(2));
    CApplication::get().getSceneManager().addRenderable(playerRenderable);
    PlayerView->setRenderable(playerRenderable);
@@ -58,8 +57,11 @@ void ViewInit( void ) {
 CMesh *cubeMesh;
 void BlockMesh() {
    cubeMesh = CMeshLoader::createCubeMesh();
+   cubeMesh->linearizeIndices();
+   cubeMesh->calculateNormalsPerFace();
 }
 
+std::vector<CMeshRenderable*> enemies;
 
 class CGameState : public CState<CGameState>
 {
@@ -174,8 +176,10 @@ void EngineInit( void ) {
 
 //This code should all be working.  Commented out so can make sure have the basics working first
          //Load shader and attributes
+         Flat = CShaderLoader::loadShader("Shaders/Flat");
          Diffuse = CShaderLoader::loadShader("Shaders/Diffuse");
          DiffuseTexture = CShaderLoader::loadShader("Shaders/DiffuseTexture");
+         normalColor = CShaderLoader::loadShader("Shaders/normalColor");
 
          //DemoLight();
          setupSoundtrack();
@@ -196,10 +200,13 @@ void EngineInit( void ) {
          //Initialize Fxns
          EngineInit();
          ViewInit();
-
+         fps = timeTotal = 0;
+         numFrames = 0;
       }
 
       CCamera *Camera;
+      float fps, timeTotal;
+      int numFrames;
 
       void oldDisplay() {
          float curXVelocity = Player->getVelocity().X;
@@ -319,7 +326,7 @@ void EngineInit( void ) {
    int i = 0;
    for (CGameplayManager::EnemyList::iterator it = GameplayManager->Enemies.begin(); it != GameplayManager->Enemies.end(); ++ it)
    {
-      enemies[i]->setTranslate(SVector3(it->Actor->getArea().getCenter().X, it->Actor->getArea().getCenter().Y, 0));
+      enemies[i]->setTranslation(SVector3(it->Actor->getArea().getCenter().X, it->Actor->getArea().getCenter().Y, 0));
       i++;
    }
 
@@ -331,19 +338,6 @@ void EngineInit( void ) {
    //Rotation.Y += RotationSpeed*Delta*2;
 
    glLoadIdentity();
-
-   freetype::print(our_font, 10, WindowHeight-40, "Elapsed Time: %f\n"
-         "Health: %d\nspaceDown: %d\nwDown: %d\nsDown: %d\noverView: %d ", Application.getElapsedTime(), GameplayManager->getPlayerHealth(), spaceDown, wDown, sDown, overView);
-
-   if (! GameplayManager->isPlayerAlive()) {
-      //Chris Code.  Play Death Sound
-      if (playDead) {
-         Mix_HaltMusic();
-         Mix_PlayChannel(-1, die, 0); //Only play once
-         playDead = false;
-      }
-      freetype::print(our_font, 50, WindowHeight - 240, "GAME OVER! YOU ARE DEAD");
-   }
 }
 
       //Runs at very start of display
@@ -356,6 +350,30 @@ void EngineInit( void ) {
          oldDisplay();
 
          Application.getSceneManager().drawAll();
+
+         /* Draw the text */
+         if (! GameplayManager->isPlayerAlive()) {
+            //Chris Code.  Play Death Sound
+            if (playDead) {
+               Mix_HaltMusic();
+               Mix_PlayChannel(-1, die, 0); //Only play once
+               playDead = false;
+            }
+            freetype::print(our_font, 50, WindowHeight - 240, "GAME OVER! YOU ARE DEAD");
+         }
+
+         timeTotal += Application.getElapsedTime();
+         numFrames++;
+         if(timeTotal >= 0.1) {
+            fps = numFrames / timeTotal;
+            timeTotal = 0;
+            numFrames = 0;
+         }
+
+
+         freetype::print(our_font, 10, WindowHeight-40, "Elapsed Time: %0.0f\n"
+               "Health: %d\nspaceDown: %d\nwDown: %d\nsDown: %d\noverView: %d\nFPS: %0.2f ", Application.getRunTime(), GameplayManager->getPlayerHealth(), spaceDown, wDown, sDown, overView, fps);
+
 
          SDL_GL_SwapBuffers();
       }
@@ -439,7 +457,7 @@ void EngineInit( void ) {
          blocks.push_back(tempBlock = new CMeshRenderable());
          tempBlock->setMesh(cubeMesh);
          //tempBlock->setTexture(dirtTxt);
-         tempBlock->setShader(Diffuse);
+         tempBlock->setShader(Flat);
          tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
          tempBlock->setScale(SVector3(w, h, 1));
          tempBlock->setRotation(SVector3(0, 0, 0));
@@ -451,7 +469,7 @@ void EngineInit( void ) {
          enemies.push_back(tempEnemy = new CMeshRenderable());
          tempEnemy->setMesh(basicTreeMesh);
          //tempEnemy->setTexture(dirtTxt);
-         tempEnemy->setShader(Diffuse);
+         tempEnemy->setShader(Flat);
          Application.getSceneManager().addRenderable(tempEnemy);
       }
 
@@ -513,9 +531,9 @@ void PrepMeshes()
 {
    renderBasicTree = new CMeshRenderable();
    renderBasicTree->setMesh(basicTreeMesh);
-   renderBasicTree->setShader(Diffuse);
+   renderBasicTree->setShader(Flat);
 
    renderChristmasTree = new CMeshRenderable();
    renderChristmasTree->setMesh(christmasTreeMesh);
-   renderChristmasTree->setShader(Diffuse);
+   renderChristmasTree->setShader(Flat);
 }

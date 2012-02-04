@@ -208,3 +208,8 @@ float const CApplication::getElapsedTime() const
 {
     return ElapsedTime;
 }
+
+float const CApplication::getRunTime() const
+{
+   return (float) SDL_GetTicks() / 1000.f;
+}

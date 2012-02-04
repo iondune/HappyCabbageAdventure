@@ -10,7 +10,6 @@ varying vec3 vColor;
 void main()
 {
     gl_Position = uProjMatrix * uViewMatrix * uModelMatrix * vec4(aPosition, 1);
-    gl_FrontColor = vec4(aNormal, 1.0);
 
-    vColor = aNormal;
+    vColor = abs(aNormal);
 }
