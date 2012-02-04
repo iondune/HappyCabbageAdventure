@@ -21,13 +21,13 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
 
     float const HitThreshold = 0.05f;
 
-    for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
+    for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end();)
     if (Other == it->Actor)
     {
         if (PlayerActor->getArea().Position.Y > Other->getArea().otherCorner().Y - HitThreshold)
         {
             KillList.push_back(* it);
-            Enemies.erase(it);
+            it = Enemies.erase(it);
         }
         else
         {
@@ -61,6 +61,8 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
                 else
                     PlayerActor->setImpulse(SVector2(-1.f, 0.5f) * KnockbackSpeed, KnockbackDuration);
             }
+
+            ++ it;
         }
         break;
     }
