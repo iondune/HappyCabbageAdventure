@@ -346,8 +346,8 @@ void EngineInit( void ) {
       timeTotal = 0;
       numFrames = 0;
    }
-   freetype::print(our_font, 10, WindowHeight-40, "Elapsed Time: %f\n"
-         "Health: %d\nspaceDown: %d\nwDown: %d\nsDown: %d\noverView: %d\nFPS: %0.2f ", Application.getElapsedTime(), GameplayManager->getPlayerHealth(), spaceDown, wDown, sDown, overView, fps);
+   freetype::print(our_font, 10, WindowHeight-40, "Elapsed Time: %0.0f\n"
+         "Health: %d\nspaceDown: %d\nwDown: %d\nsDown: %d\noverView: %d\nFPS: %0.2f ", Application.getRunTime(), GameplayManager->getPlayerHealth(), spaceDown, wDown, sDown, overView, fps);
 
    if (! GameplayManager->isPlayerAlive()) {
       //Chris Code.  Play Death Sound

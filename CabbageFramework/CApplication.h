@@ -39,6 +39,7 @@ public:
     void run();
 
     float const getElapsedTime() const;
+    float const getRunTime() const;
 
 };
 
