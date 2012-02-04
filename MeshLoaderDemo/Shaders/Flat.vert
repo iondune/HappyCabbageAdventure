@@ -24,6 +24,6 @@ void main()
 
     vNormal = normalize(vec3(uNormalMatrix * vec4(aNormal, 1)));
 
-    vec3 diffuse = DiffuseColor * clamp(dot(vNormal, vLight), 0.0, 1.0);
-    vColor = vec4(diffuse + AmbientColor, 1);
+    vec3 vDiffuse = DiffuseColor * clamp(dot(vNormal, vLight), 0.0, 1.0);
+    vColor = vec4(vDiffuse + AmbientColor, 1);
 }

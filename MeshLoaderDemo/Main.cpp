@@ -58,18 +58,19 @@ public:
 
 
         // Attempt to load mesh
-        MeshFace = CMeshLoader::createCubeMesh();//load3dsMesh("spaceship.3ds");
+        MeshFace = CMeshLoader::loadAsciiMesh("Models/bunny10k.m");//createCubeMesh();//load3dsMesh("spaceship.3ds");
         if (MeshFace)
         {
-            MeshFace->resizeMesh(SVector3(0.6));
+            MeshFace->linearizeIndices();
+            MeshFace->resizeMesh(SVector3(1.5));
             MeshFace->centerMeshByExtents(SVector3(0));
             MeshFace->calculateNormalsPerFace();
         }
 
-        MeshVertex = CMeshLoader::createCubeMesh();//load3dsMesh("spaceship.3ds");
+        MeshVertex = CMeshLoader::loadAsciiMesh("Models/bunny10k.m");//createCubeMesh();//load3dsMesh("spaceship.3ds");
         if (MeshVertex)
         {
-            MeshVertex->resizeMesh(SVector3(0.6));
+            MeshVertex->resizeMesh(SVector3(1.5));
             MeshVertex->centerMeshByExtents(SVector3(0));
             MeshVertex->calculateNormalsPerVertex();
         }

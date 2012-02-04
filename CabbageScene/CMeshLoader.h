@@ -16,6 +16,8 @@ public:
 
     static CMesh * const createCubeMesh();
 
+    static CMesh * const createDiscMesh(unsigned int const Triangles = 40);
+
 };
 
 #endif
