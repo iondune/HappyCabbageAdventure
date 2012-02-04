@@ -9,7 +9,7 @@
 
 #pragma warning(disable: 4996)
 
-long filelength(int f)
+static long filelength(int f)
 {
     struct stat buf;
 

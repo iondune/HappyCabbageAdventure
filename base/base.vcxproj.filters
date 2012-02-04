@@ -22,7 +22,6 @@
     <None Include="SDL_mixer.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bunny.h" />
     <ClInclude Include="FreeType.h" />
     <ClInclude Include="3dsloader\3dsloader.h">
       <Filter>3ds loader</Filter>
@@ -49,9 +48,9 @@
     <ClCompile Include="3dsloader\3dsloader.cpp">
       <Filter>3ds loader</Filter>
     </ClCompile>
-    <ClCompile Include="MainFull.cpp" />
     <ClCompile Include="CPlayerView.cpp" />
     <ClCompile Include="Materials.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="3ds loader">

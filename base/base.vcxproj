@@ -87,7 +87,6 @@
     <ClInclude Include="3dsloader\main.h" />
     <ClInclude Include="3dsloader\texture.h" />
     <ClInclude Include="3dsloader\tutorial4.h" />
-    <ClInclude Include="Bunny.h" />
     <ClInclude Include="CGameplayManager.h" />
     <ClInclude Include="CPlayerView.h" />
     <ClInclude Include="draw.h" />
@@ -101,7 +100,7 @@
     <ClCompile Include="3dsloader\3dsloader.cpp" />
     <ClCompile Include="CPlayerView.cpp" />
     <ClCompile Include="FreeType.cpp" />
-    <ClCompile Include="MainFull.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Materials.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -79,7 +79,7 @@ void CPlayerView::draw() {
 void CPlayerView::establishCamera(CCamera *Camera, int angle) {
    SVector3 camPos, camLook;
 
-   camLook = SVector3(CenterPosition.X, CenterPosition.Y, -1);
+   camLook = SVector3(0, 0, -1);
    if(angle == 0) {
       camPos = SVector3(CenterPosition.X, CenterPosition.Y + 1.3, 6);
    }
