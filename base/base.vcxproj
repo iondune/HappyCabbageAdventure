@@ -79,6 +79,7 @@
     <None Include="zlib1.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CGameEventManager.h" />
     <ClInclude Include="CGameplayManager.h" />
     <ClInclude Include="CPlayerView.h" />
     <ClInclude Include="draw.h" />
@@ -89,6 +90,7 @@
     <ClInclude Include="texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CGameplayManager.cpp" />
     <ClCompile Include="CPlayerView.cpp" />
     <ClCompile Include="FreeType.cpp" />
     <ClCompile Include="main.cpp" />

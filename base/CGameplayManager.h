@@ -3,134 +3,49 @@
 
 #include "../CabbageCollider/CEngine.h"
 
+class CGameEventManager;
+
 class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 {
 
 public:
 
-	struct SEnemy
-	{
-		Cabbage::Collider::CActor * Actor;
-	};
+    struct SEnemy
+    {
+        Cabbage::Collider::CActor * Actor;
+    };
 
-	typedef std::vector<SEnemy> EnemyList;
-	EnemyList Enemies;
-	EnemyList KillList;
+    typedef std::vector<SEnemy> EnemyList;
+    EnemyList Enemies;
+    EnemyList KillList;
 
 private:
 
-	Cabbage::Collider::CActor * PlayerActor;
-	int PlayerHealth;
-	float PlayerRecovering;
+    Cabbage::Collider::CActor * PlayerActor;
+    int PlayerHealth;
+    float PlayerRecovering;
 
-	Cabbage::Collider::CEngine * Engine;
+    Cabbage::Collider::CEngine * Engine;
+
+    CGameEventManager * GameEventManager;
 
 public:
 
-	CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CEngine * engine)
-		: PlayerActor(playerActor), PlayerRecovering(false), PlayerHealth(5), Engine(engine)
-	{
-		Engine->setCollisionResponder(this);
-	}
+    CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CEngine * engine);
 
-	void OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With)
-	{
-		Cabbage::Collider::CCollideable * Other = 0;
-		if (Object == PlayerActor)
-			Other = With;
-		if (With == PlayerActor)
-			Other = Object;
+    void OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With);
 
-		if (! Other)
-			return;
+    bool const isPlayerAlive() const;
+    
+    int const getPlayerHealth() const;
 
-		float const HitThreshold = 0.05f;
+    float getRecovering() {return PlayerRecovering;}
 
-		for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
-			if (Other == it->Actor)
-			{
-				if (PlayerActor->getArea().Position.Y > Other->getArea().otherCorner().Y - HitThreshold)
-				{
-					KillList.push_back(* it);
-					Enemies.erase(it);
-                                        Mix_PlayChannel(-1, killEnemy, 0);
-				}
-				else
-				{
-					if (isPlayerAlive() && PlayerRecovering <= 0.f)
-					{
-						-- PlayerHealth;
+    void run(float const TickTime);
 
-                                                //Chris Code.  Damage Sound plays here
-                                                if(playTakeDmg) {
-                                                   Mix_PlayChannel(-1, takeDmg, 0);
-                                                }
+    void addEnemy(SVector2 const & Position);
 
-						float const KnockbackSpeed = 7.f;
-						float const KnockbackDuration = 0.2f;
-
-						PlayerRecovering = KnockbackDuration*3;
-
-						if (PlayerActor->getArea().getCenter().X > Other->getArea().getCenter().X)
-							PlayerActor->setImpulse(SVector2(1.f, 0.5f) * KnockbackSpeed, KnockbackDuration);
-						else
-							PlayerActor->setImpulse(SVector2(-1.f, 0.5f) * KnockbackSpeed, KnockbackDuration);
-					}
-				}
-				break;
-			}
-	}
-
-	bool const isPlayerAlive() const
-	{
-		return PlayerHealth > 0;
-	}
-	
-	int const getPlayerHealth() const
-	{
-		return PlayerHealth;
-	}
-
-   float getRecovering() {return PlayerRecovering;}
-
-	void run(float const TickTime)
-	{
-		if (PlayerRecovering > 0.f)
-			PlayerRecovering -= TickTime;
-
-		for (EnemyList::iterator it = KillList.begin(); it != KillList.end(); ++ it)
-		{
-			Engine->removeActor(it->Actor);
-		}
-
-		KillList.clear();
-
-		for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
-		{
-			if (isPlayerAlive())
-			{
-				if (PlayerActor->getArea().getCenter().X < it->Actor->getArea().getCenter().X)
-					it->Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveLeft);
-				else
-					it->Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
-			}
-			else
-			{
-				it->Actor->setAction(Cabbage::Collider::CActor::EActionType::None);
-			}
-			//if (rand()%1000 == 1)
-			//	it->Actor->setJumping(true);
-		}
-	}
-
-	void addEnemy(SVector2 const & Position)
-	{
-		SEnemy enemy;
-		enemy.Actor = Engine->addActor();
-		enemy.Actor->setArea(SRect2(Position, 1));
-		enemy.Actor->getAttributes().MaxWalk = 1.2f;
-		Enemies.push_back(enemy);
-	}
+    CGameEventManager & getGameEventManager();
 
 };
 
