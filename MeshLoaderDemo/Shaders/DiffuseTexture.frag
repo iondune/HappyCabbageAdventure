@@ -1,24 +1,15 @@
-varying vec3 vColor;
-varying vec2 vTexCoord;
-
 uniform sampler2D uTexColor;
-varying vec3 vNormal, vLightDir;
+
+varying vec4 vColor;
+varying vec3 vLight;
+varying vec3 vNormal;
+varying vec2 vTexCoord;
 
 void main()
 {
-    //gl_FragColor = texture2D(uTexColor, vTexCoord);
+    const vec3 AmbientColor = vec3(0.2, 0.2, 0.2);
+    const vec3 DiffuseColor = vec3(0.4, 0.4, 0.4);
 
-    // Defining The Material Colors
-    const vec4 AmbientColor = vec4(0.4, 0.4, 0.4, 1.0);
-    const vec4 DiffuseColor = vec4(1.0, 1.0, 1.0, 1.0);
-
-    // Scaling The Input Vector To Length 1
-    vec3 normalized_normal = normalize(vNormal);
-    vec3 normalized_vertex_to_light_vector = normalize(vLightDir);
-
-    // Calculating The Diffuse Term And Clamping It To [0;1]
-    float DiffuseTerm = clamp(dot(vNormal, vLightDir), 0.0, 1.0);
-
-    // Calculating The Final Color
-    gl_FragColor = (AmbientColor + DiffuseColor * DiffuseTerm) * texture2D(uTexColor, vTexCoord);
+    vec3 vDiffuse = DiffuseColor * clamp(dot(vNormal, vLight), 0.0, 1.0);
+    gl_FragColor = vec4(vDiffuse + AmbientColor, 1)  * texture2D(uTexColor, vTexCoord);
 }
