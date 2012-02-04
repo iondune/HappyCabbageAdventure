@@ -32,6 +32,8 @@ Materials.o: Materials.cpp Materials.h
 FreeType.o: FreeType.cpp FreeType.h
 	g++ `freetype-config --cflags` -c FreeType.cpp
 
+qclean:
+	rm cabbage.exe cabbage 2>/dev/null
 clean:
 	rm *.o a.out cabbage cabbage.exe 2>/dev/null
 
