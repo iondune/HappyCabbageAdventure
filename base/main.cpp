@@ -10,6 +10,7 @@
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
 #include "CGameEventManager.h"
+#include "CGameEventReceiver.h"
 
 #define TREE_Y_OFFSET 2.1
 #define ANGLE(j,k) (j==2?3:(j?2:(k?1:0)))
@@ -64,26 +65,11 @@ void BlockMesh() {
 
 std::vector<CMeshRenderable*> enemies;
 
-int numKilled = 0;
-
-class CGameEventFunctions : public sigslot::has_slots<> {
-   friend class CGameState;
-   CGameEventFunctions() {
-      fprintf(stderr, "Constructor: %d\n", &CGameEventFunctions::OnEnemyDeath);
-   }
-   public:
-      void OnEnemyDeath(SEnemyDeathEvent const & Event) {
-         CApplication::get().getSceneManager().removeRenderable((CMeshRenderable*)Event.Renderable);
-         numKilled++;
-      }
-};
-
-
 class CGameState : public CState<CGameState>
 {
    CApplication & Application;
    CGameEventManager GameEventManager;
-   CGameEventFunctions *GameEventFunctions;
+   CGameEventReceiver GameEventReceiver;
 
    public:
    CGameState()
@@ -116,11 +102,8 @@ class CGameState : public CState<CGameState>
       GameplayManager->addEnemy(SVector2(25, 45), PrepEnemy(25, 45));
       GameplayManager->addEnemy(SVector2(25, 50), PrepEnemy(25, 50));
 
-      GameEventFunctions = new CGameEventFunctions();
-      fprintf(stderr, "Established: %d\n", &CGameEventFunctions::OnEnemyDeath);
       GameEventManager = GameplayManager->getGameEventManager();
-      GameEventManager.OnEnemyDeath.connect(GameEventFunctions, & CGameEventFunctions::OnEnemyDeath);
-      fprintf(stderr, "After: %d\n", &GameEventManager.OnEnemyDeath);
+      GameEventManager.OnEnemyDeath.connect(&GameEventReceiver, &CGameEventReceiver::OnEnemyDeath);
 
       float i = 0;
       float j = 0;

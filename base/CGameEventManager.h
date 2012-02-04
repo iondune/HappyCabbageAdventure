@@ -44,6 +44,5 @@ public:
 
 };
 
-typedef sigslot::has_slots<> CGameEventReceiver;
 
 #endif
