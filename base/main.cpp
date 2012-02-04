@@ -9,7 +9,6 @@
 
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
-#include "3dsloader/3dsloader.h"
 
 #define TREE_Y_OFFSET 2.1
 #define ANGLE(j,k) (j==2?3:(j?2:(k?1:0)))
@@ -60,6 +59,7 @@ void BlockMesh() {
    cubeMesh = CMeshLoader::createCubeMesh();
 }
 
+std::vector<CMeshRenderable*> enemies;
 
 class CGameState : public CState<CGameState>
 {
@@ -319,7 +319,7 @@ void EngineInit( void ) {
    int i = 0;
    for (CGameplayManager::EnemyList::iterator it = GameplayManager->Enemies.begin(); it != GameplayManager->Enemies.end(); ++ it)
    {
-      enemies[i]->setTranslate(SVector3(it->Actor->getArea().getCenter().X, it->Actor->getArea().getCenter().Y, 0));
+      enemies[i]->setTranslation(SVector3(it->Actor->getArea().getCenter().X, it->Actor->getArea().getCenter().Y, 0));
       i++;
    }
 
