@@ -68,7 +68,7 @@ std::vector<CMeshRenderable*> enemies;
 class CGameState : public CState<CGameState>
 {
    CApplication & Application;
-   CGameEventManager GameEventManager;
+   CGameEventManager * GameEventManager;
    CGameEventReceiver GameEventReceiver;
 
    public:
@@ -102,8 +102,8 @@ class CGameState : public CState<CGameState>
       GameplayManager->addEnemy(SVector2(25, 45), PrepEnemy(25, 45));
       GameplayManager->addEnemy(SVector2(25, 50), PrepEnemy(25, 50));
 
-      GameEventManager = GameplayManager->getGameEventManager();
-      GameEventManager.OnEnemyDeath.connect(&GameEventReceiver, &CGameEventReceiver::OnEnemyDeath);
+      GameEventManager = & GameplayManager->getGameEventManager();
+      GameEventManager->OnEnemyDeath.connect(& GameEventReceiver, &CGameEventReceiver::OnEnemyDeath);
 
       float i = 0;
       float j = 0;
