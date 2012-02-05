@@ -2,20 +2,26 @@
 
 #include "../CabbageScene/CMeshLoader.h"
 #include "../CabbageScene/CMeshRenderable.h"
+#include "../CabbageScene/CShaderLoader.h"
 
 CLevelManager::CLevelManager(CSceneManager * sceneManager)
     : SceneManager(sceneManager)
 {
 }
 
-void CLevelManager::addBlockObject(SVector2 const & Position, SVector2 const & Size, int const Type)
+void CLevelManager::addBlockObject(SVector2 Position, SVector2 Size, int const Type)
 {
+    Position *= 0.1f;
+    Size *= 0.1f;
+
     CMesh * Mesh = CMeshLoader::createCubeMesh();
     CMeshRenderable * Renderable = new CMeshRenderable();
     Renderable->setMesh(Mesh);
 
     Renderable->setScale(SVector3(Size.X, Size.Y, 1.f));
     Renderable->setTranslation(SVector3(Position.X, Position.Y, 0));
+
+    Renderable->setShader(CShaderLoader::loadShader("Shaders/Flat"));
 
     SceneManager->addRenderable(Renderable);
 }

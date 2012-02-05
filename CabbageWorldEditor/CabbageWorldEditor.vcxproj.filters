@@ -7,8 +7,43 @@
   <ItemGroup>
     <None Include="glew32.dll" />
     <None Include="SDL.dll" />
+    <None Include="Shaders\Diffuse.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\Diffuse.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\DiffuseTexture.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\DiffuseTexture.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\Flat.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\Flat.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\normalColor.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\normalColor.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\simple.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\simple.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLevelManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{93481834-8661-44a7-ad86-6482a59528d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

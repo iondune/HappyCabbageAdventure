@@ -72,6 +72,16 @@
   <ItemGroup>
     <None Include="glew32.dll" />
     <None Include="SDL.dll" />
+    <None Include="Shaders\Diffuse.frag" />
+    <None Include="Shaders\Diffuse.vert" />
+    <None Include="Shaders\DiffuseTexture.frag" />
+    <None Include="Shaders\DiffuseTexture.vert" />
+    <None Include="Shaders\Flat.frag" />
+    <None Include="Shaders\Flat.vert" />
+    <None Include="Shaders\normalColor.frag" />
+    <None Include="Shaders\normalColor.vert" />
+    <None Include="Shaders\simple.frag" />
+    <None Include="Shaders\simple.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLevelManager.h" />

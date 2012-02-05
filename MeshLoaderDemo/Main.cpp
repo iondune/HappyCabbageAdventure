@@ -85,6 +85,7 @@ public:
         }
         Texture = new CTexture(Image);
 
+
         // Now load our mesh into a VBO, retrieving the number of triangles and the handles to each VBO
         Renderable = new CMeshRenderable();
         Renderable->setMesh(MeshFace);

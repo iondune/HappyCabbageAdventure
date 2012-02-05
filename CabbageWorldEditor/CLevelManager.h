@@ -13,7 +13,7 @@ public:
 
     CLevelManager(CSceneManager * sceneManager);
 
-    void addBlockObject(SVector2 const & Position, SVector2 const & Size, int const Type);
+    void addBlockObject(SVector2 Position, SVector2 Size, int const Type);
 
 };
 
