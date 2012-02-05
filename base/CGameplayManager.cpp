@@ -28,6 +28,8 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
             if (PlayerActor->getArea().Position.Y > Other->getArea().otherCorner().Y - HitThreshold)
             {
                 KillList.push_back(* it);
+                fprintf(stderr, "Enemy detected as dead! %d\n", it->Renderable);
+
                 Enemies.erase(it);
             }
             else
@@ -88,8 +90,8 @@ void CGameplayManager::run(float const TickTime)
     {
         SEnemyDeathEvent Event;
         Event.Enemy = & * it;
-        Event.Renderable = Event.Enemy->Renderable;
-        fprintf(stderr, "Before event fire: %d\n", Event.Renderable);
+        Event.Renderable = it->Renderable;
+        fprintf(stderr, "Enemy removed from kill list %d\n", it->Renderable);
         GameEventManager->OnEnemyDeath(Event);
 
         Mix_PlayChannel(-1, killEnemy, 0);
@@ -117,7 +119,7 @@ void CGameplayManager::run(float const TickTime)
     }
 }
 
-void CGameplayManager::addEnemy(SVector2 const & Position, void* renderable)
+void CGameplayManager::addEnemy(SVector2 const & Position, CRenderable * renderable)
 {
     SEnemy enemy;
     enemy.Actor = Engine->addActor();
