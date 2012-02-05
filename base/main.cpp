@@ -25,12 +25,18 @@ freetype::font_data our_font;
 
 //Variables need to create VBOs of meshes, textures, and shaders
 CShader *Shader, *Flat, *Diffuse, *DiffuseTexture, *normalColor;  //Use Diffuse for trees (doesn't need texture)
-CImage *grassImg, *skyImg, *dirtImg, *blueFlwrImg, *pinkFlwrImg;
-CTexture *grassTxt, *skyTxt, *dirtTxt, *blueFlwrTxt, *pinkFlwrTxt;
+
+CImage *grassImg, *skyImg, *dirtImg, *blueFlwrImg, *pinkFlwrImg, *ficusImg,
+       *poinImg;
+
+CTexture *grassTxt, *skyTxt, *dirtTxt, *blueFlwrTxt, *pinkFlwrTxt, *ficusTxt,
+         *poinTxt;
+
 CMesh *basicTreeMesh, *cabbageMesh, *christmasTreeMesh, *cubeMesh, *discMesh,
-      *blueFlwrMesh, *pinkFlwrMesh, *ficusMesh;
+      *blueFlwrMesh, *pinkFlwrMesh, *ficusMesh, *poinMesh;
+
 CMeshRenderable *renderShadow, *playerRenderable, *renderChristmasTree, 
-  *renderBasicTree, *renderBlueFlwr, *renderPinkFlwr;
+  *renderBasicTree, *renderBlueFlwr, *renderPinkFlwr, *renderFicus, *renderPoin;
 
 std::vector<CMeshRenderable*> blocks, enemies;
 
@@ -89,6 +95,7 @@ class CGameState : public CState<CGameState>
       Floor = Engine->addObject();
       Floor->setArea(SRect2(-25, -1, 50, 1));
       PrepGrass(-25, -1, 50, 1);
+      PrepSky();
 
       SRect2 area;
 
@@ -201,6 +208,8 @@ class CGameState : public CState<CGameState>
 
       Application.getSceneManager().addRenderable(renderBlueFlwr);
       Application.getSceneManager().addRenderable(renderPinkFlwr);
+      Application.getSceneManager().addRenderable(renderFicus);
+      Application.getSceneManager().addRenderable(renderPoin);
 
       //Initialize Fxns
       EngineInit();
@@ -325,7 +334,7 @@ class CGameState : public CState<CGameState>
 
       //Draw derp (enemy)
       renderBasicTree->setTranslation(SVector3(Derp->getArea().getCenter().X, Derp->getArea().getCenter().Y, 0));
-      renderBasicTree->setScale(SVector3(0.5));
+      renderBasicTree->setScale(SVector3(1.5));
       renderBasicTree->setRotation(SVector3(-90, 0, -90));
 
       //ENEMY DISPLAY
@@ -427,6 +436,7 @@ class CGameState : public CState<CGameState>
          if(Event.Key == SDLK_ESCAPE) {
             //TODO: Replace with an event/signal to end the game world 
             //finished = true;
+            exit(1);
          }
       }
       //Check if key let go, Not sure if this will work in here.
@@ -489,6 +499,18 @@ class CGameState : public CState<CGameState>
       tempBlock->setShader(DiffuseTexture);
       tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
       tempBlock->setScale(SVector3(w, h, 5));
+      Application.getSceneManager().addRenderable(tempBlock);
+
+   }
+
+   void PrepSky() {
+      CMeshRenderable *tempBlock;
+      blocks.push_back(tempBlock = new CMeshRenderable());
+      tempBlock->setMesh(cubeMesh);
+      tempBlock->setTexture(skyTxt);
+      tempBlock->setShader(DiffuseTexture);
+      tempBlock->setTranslation(SVector3(0, 24, -2.5));
+      tempBlock->setScale(SVector3(100, 50, 1));
       Application.getSceneManager().addRenderable(tempBlock);
 
    }
@@ -587,6 +609,26 @@ void Load3DS()
       fprintf(stderr, "Failed to load pink flower mesh.\n");
    }
 
+   ficusMesh = CMeshLoader::load3dsMesh("Models/ficus.3ds");
+   if (ficusMesh) {
+      ficusMesh->centerMeshByExtents(SVector3(0));
+      ficusMesh->calculateNormalsPerFace();
+   }
+   else {
+      fprintf(stderr, "Failed to load ficus mesh.\n");
+   }
+
+   poinMesh = CMeshLoader::load3dsMesh("Models/poin.3ds");
+   if (poinMesh) {
+      poinMesh->centerMeshByExtents(SVector3(0));
+      poinMesh->calculateNormalsPerFace();
+   }
+   else {
+      fprintf(stderr, "Failed to load poinsetta mesh.\n");
+   }
+
+
+
    /* Load enemy mesh */
 }
 
@@ -597,12 +639,14 @@ void LoadTextures()
    dirtImg = CImageLoader::loadImage("Textures/dirt.bmp");
    blueFlwrImg = CImageLoader::loadImage("Textures/blueFlower.bmp");
    pinkFlwrImg = CImageLoader::loadImage("Textures/pinkFlower.bmp");
+   poinImg = CImageLoader::loadImage("Textures/poin.bmp");
 
    grassTxt = new CTexture(grassImg);
    skyTxt = new CTexture(skyImg);
    dirtTxt = new CTexture(dirtImg);
    blueFlwrTxt = new CTexture(blueFlwrImg);
    pinkFlwrTxt = new CTexture(pinkFlwrImg);
+   poinTxt = new CTexture(poinImg);
 }
 
 void PrepMeshes()
@@ -635,4 +679,20 @@ void PrepMeshes()
    renderPinkFlwr->setScale(SVector3(.36));
    renderPinkFlwr->setRotation(SVector3(-90, 0, 0));
    renderPinkFlwr->setShader(DiffuseTexture);
+
+   renderFicus = new CMeshRenderable();
+   renderFicus->setMesh(ficusMesh);
+   renderFicus->setTranslation(SVector3(-21, .5, 2));
+   renderFicus->setScale(SVector3(1.0));
+   renderFicus->setRotation(SVector3(-90, 0, 0));
+   renderFicus->setTexture(blueFlwrTxt);
+   renderFicus->setShader(DiffuseTexture);
+
+   renderPoin = new CMeshRenderable();
+   renderPoin->setMesh(poinMesh);
+   renderPoin->setTranslation(SVector3(-19, .5, 2));
+   renderPoin->setScale(SVector3(.75));
+   renderPoin->setRotation(SVector3(-90, 0, 0));
+   renderPoin->setTexture(poinTxt);
+   renderPoin->setShader(DiffuseTexture);
 }

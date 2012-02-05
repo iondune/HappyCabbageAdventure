@@ -39,7 +39,7 @@ void CPlayerView::draw() {
       setMaterial(LIGHT_GREEN_MATTE);
       PlayerRenderable->setTranslation(SVector3(CenterPosition.X, CenterPosition.Y + 0.065*sin(ySineValue), 0));
       if(!(Velocity.Y > 0.01 || Velocity.Y < -0.01)) {
-         PlayerRenderable->setRotation(SVector3(15*sin(ySineValue/2)+90, 0, 0));
+         PlayerRenderable->setRotation(SVector3(15*sin(ySineValue/2)-90, 0, 0));
       }
    }
 
