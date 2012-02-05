@@ -89,7 +89,7 @@ void CGameplayManager::run(float const TickTime)
         SEnemyDeathEvent Event;
         Event.Enemy = & * it;
         Event.Renderable = Event.Enemy->Renderable;
-        fprintf(stderr, "%d\n", &GameEventManager->OnEnemyDeath);
+        fprintf(stderr, "Before event fire: %d\n", Event.Renderable);
         GameEventManager->OnEnemyDeath(Event);
 
         Mix_PlayChannel(-1, killEnemy, 0);

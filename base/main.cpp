@@ -92,6 +92,11 @@ class CGameState : public CState<CGameState>
       SRect2 area;
 
       GameplayManager = new CGameplayManager(Player, Engine);
+      GameplayManager->addEnemy(SVector2(-20, 4), PrepEnemy(-20,4));
+      GameplayManager->addEnemy(SVector2(-18, 4), PrepEnemy(-18,4));
+      GameplayManager->addEnemy(SVector2(-16, 4), PrepEnemy(-16,4));
+      GameplayManager->addEnemy(SVector2(-14, 4), PrepEnemy(-14,4));
+      GameplayManager->addEnemy(SVector2(-12, 4), PrepEnemy(-12,4));
       GameplayManager->addEnemy(SVector2(-10, 4), PrepEnemy(-10,4));
       GameplayManager->addEnemy(SVector2(-5, 40), PrepEnemy(-5, 40));
       GameplayManager->addEnemy(SVector2(0, 40), PrepEnemy(0, 40));
@@ -325,7 +330,7 @@ class CGameState : public CState<CGameState>
       int i = 0;
       for (CGameplayManager::EnemyList::iterator it = GameplayManager->Enemies.begin(); it != GameplayManager->Enemies.end(); ++ it)
       {
-         enemies[i]->setTranslation(SVector3(it->Actor->getArea().getCenter().X, it->Actor->getArea().getCenter().Y, 0));
+         ((CMeshRenderable*)(it->Renderable))->setTranslation(SVector3(it->Actor->getArea().getCenter().X, it->Actor->getArea().getCenter().Y, 0));
          i++;
       }
 

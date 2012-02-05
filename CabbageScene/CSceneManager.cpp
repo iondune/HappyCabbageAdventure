@@ -16,13 +16,16 @@ void CSceneManager::addRenderable(CRenderable * Renderable)
 
 void CSceneManager::removeRenderable(CRenderable * Renderable)
 {
-    std::remove(Renderables.begin(), Renderables.end(), Renderable);
+    printf("Removing %d (Renderables size: %d)\n", Renderable, Renderables.size());
+    Renderables.erase(std::remove(Renderables.begin(), Renderables.end(), Renderable), Renderables.end());
+    printf("Removed %d (Renderables size: %d)\n", Renderable, Renderables.size());
 }
 
 void CSceneManager::drawAll()
 {
     ActiveCamera->recalculateViewMatrix();
 
+    //printf("size of renderables list: %d\n", Renderables.size());
     for (std::list<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
         (* it)->draw(* ActiveCamera);
 }
