@@ -34,7 +34,7 @@ void loadLevel(std::string const & level)
 
     for (unsigned int i = 0; i < list.size(); i++)
     {
-        thing->addBlockObject(SVector2(list[i].topX, list[i].topY), SVector2(list[i].height, list[i].width), 0);
+        thing->addBlockObject(SVector2((float)list[i].topX, (float)list[i].topY), SVector2((float)list[i].height, (float)list[i].width), 0);
         //do stuff
     }
     for (unsigned int i = 0; i < character.size(); i++)
