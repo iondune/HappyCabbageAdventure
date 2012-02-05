@@ -36,9 +36,11 @@ CMesh *basicTreeMesh, *cabbageMesh, *christmasTreeMesh, *cubeMesh, *discMesh,
       *blueFlwrMesh, *pinkFlwrMesh, *ficusMesh, *poinMesh;
 
 CMeshRenderable *renderShadow, *playerRenderable, *renderChristmasTree, 
-  *renderBasicTree, *renderBlueFlwr, *renderPinkFlwr, *renderFicus, *renderPoin;
+  *renderBasicTree, *renderBlueFlwr, *renderPinkFlwr, *renderFicus, *renderPoin,
+  *tempRender;
 
-std::vector<CMeshRenderable*> blocks, enemies;
+std::vector<CMeshRenderable*> blocks, enemies, blueFlwrs, pinkFlwrs, ficuses,
+  basicTrees, xmasTrees, poins;
 
 int WindowWidth, WindowHeight;
 
@@ -695,4 +697,23 @@ void PrepMeshes()
    renderPoin->setRotation(SVector3(-90, 0, 0));
    renderPoin->setTexture(poinTxt);
    renderPoin->setShader(DiffuseTexture);
+}
+
+
+void drawBlueFlwr(float x, float y, float z, float scale) {
+
+   if (y == -1) {
+      y = scale / 2.0;
+   }
+
+   blueFlwrs.push_back(tempRender = new CMeshRenderable());
+
+   renderBlueFlwr = new CMeshRenderable();
+   renderBlueFlwr->setMesh(blueFlwrMesh);
+   renderBlueFlwr->setTexture(blueFlwrTxt);
+   renderBlueFlwr->setShader(DiffuseTexture);
+   renderBlueFlwr->setTranslation(SVector3(z, y, z));
+   renderBlueFlwr->setScale(SVector3(scale));
+   renderBlueFlwr->setRotation(SVector3(-90, 0, 0));
+
 }
