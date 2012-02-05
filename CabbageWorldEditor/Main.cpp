@@ -17,6 +17,9 @@
 #include <string>
 #include "../SFML world loader/SFML world loader/levelReader.h"
 #include "../SFML world loader/SFML world loader/xmlToCode.cpp"
+#include "../CabbageCore/CabbageCore.h"
+
+#include "CLevelManager.h"
 
 class SampleState : public CState<SampleState>
 {
@@ -57,8 +60,13 @@ void loadLevel(std::string const & level)
     std::vector<obj> character;
     xmlLevReader(list,character, level);
 
+    CSceneManager & SceneManager = CApplication::get().getSceneManager();
+
+    CLevelManager * thing = new CLevelManager(& SceneManager);
+
     for (unsigned int i = 0; i < list.size(); i++)
     {
+        thing->addBlockObject(SVector2(list[i].topX, list[i].topY), SVector2(list[i].height, list[i].width), 0);
         //do stuff
     }
     for (unsigned int i = 0; i < character.size(); i++)
@@ -71,11 +79,15 @@ int main(int argc, char * argv[])
 {
     // Setup application
     CApplication & Application = CApplication::get();
-    Application.init(SPosition2(200, 200));
+    Application.init(SPosition2(800, 600));
 
     CStateManager & StateManager = Application.getStateManager();
     StateManager.setState<SampleState>();
 
+    Application.getSceneManager().drawAll();
+
+    loadLevel("level2.xml");
+    
     GLfloat win[3];
     GLdouble obj[3];
     GLdouble obj2[3];
