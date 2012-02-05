@@ -4,6 +4,7 @@
 #include <map>
 #include <set>
 
+#include "../CabbageCore/boost/shared_ptr.hpp"
 #include "../CabbageCore/SVector3.h"
 #include "../CabbageCore/SBoundingBox3.h"
 
@@ -97,6 +98,16 @@ public:
 
 };
 
+struct SMaterial
+{
+    CShader * Shader;
+    CTexture * Texture;
+
+    SMaterial();
+};
+
+class CScene;
+
 class CRenderable
 {
 
@@ -106,40 +117,48 @@ protected:
     SVector3 Translation, Rotation, Scale;
 
     // Implicit uniforms
-    CMat4Uniform * uModelMatrix, * uViewMatrix, * uProjMatrix, * uNormalMatrix;
+    boost::shared_ptr<CMat4Uniform> uModelMatrix, uNormalMatrix;
     SBoundingBox3 BoundingBox;
+
+public:
 
     struct SAttribute
     {
         GLint Handle;
-        IAttribute * Value;
+        boost::shared_ptr<IAttribute> Value;
 
         SAttribute();
-        SAttribute(IAttribute * value);
+        SAttribute(boost::shared_ptr<IAttribute> value);
     };
 
     struct SUniform
     {
         GLint Handle;
-        IUniform * Value;
+        boost::shared_ptr<IUniform> Value;
 
         SUniform();
-        SUniform(IUniform * value);
+        SUniform(boost::shared_ptr<IUniform> value);
     };
+
+protected:
 
     std::map<std::string, SAttribute> Attributes;
     std::map<std::string, SUniform> Uniforms;
-    std::set<GLenum> RenderModes;
+    std::map<std::string, SUniform> SceneLoadedUniforms;
 
     CBufferObject<GLushort> * IndexBufferObject;
-    CShader * Shader;
-    CShader * NormalColorShader;
-    CTexture * Texture;
 
+    SMaterial Material;
+
+    CShader * NormalColorShader;
     CRenderable * NormalObject;
 
     GLenum DrawType;
     int DebugDataFlags;
+
+    void loadHandlesFromShader(CShader const * const shader, CScene const * const scene);
+    CScene const * LastLoadedScene;
+    CShader const * LastLoadedShader;
 
 public:
 
@@ -153,11 +172,8 @@ public:
     void setRotation(SVector3 const & rotation);
     void setScale(SVector3 const & scale);
 
-    CShader * getShader();
-    void setShader(CShader * shader);
-
-    CTexture * getTexture();
-    void setTexture(CTexture * texture);
+    SMaterial & getMaterial();
+    SMaterial const & getMaterial() const;
 
     CBufferObject<GLushort> * getIndexBufferObject();
     void setIndexBufferObject(CBufferObject<GLushort> * indexBufferObject);
@@ -165,19 +181,16 @@ public:
     GLenum const getDrawType() const;
     void setDrawType(GLenum const drawType);
 
-    void draw(CCamera const & Camera);
+    void draw(CScene const * const scene);
 
     SBoundingBox3 const & getBoundingBox() const;
     SBoundingBox3 & getBoundingBox();
     void setBoundingBox(SBoundingBox3 const & boundingBox);
 
-    void addAttribute(std::string const & label, IAttribute * attribute);
-    void addUniform(std::string const & label, IUniform * uniform);
+    void addAttribute(std::string const & label, boost::shared_ptr<IAttribute> attribute);
+    void addUniform(std::string const & label, boost::shared_ptr<IUniform> uniform);
     void removeAttribute(std::string const & label);
     void removeUniform(std::string const & label);
-
-    void addRenderMode(GLenum const mode);
-    void removeRenderMode(GLenum const mode);
 
     bool const isDebugDataEnabled(EDebugData::Domain const type) const;
     void enableDebugData(EDebugData::Domain const type);

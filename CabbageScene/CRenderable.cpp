@@ -3,9 +3,9 @@
 #include <iostream>
 
 #include "../CabbageCore/glm/gtc/matrix_transform.hpp"
-//#include "../CabbageCore/glm/gtx/inverse_transpose.hpp"
 
 #include "CShaderLoader.h"
+#include "CSceneManager.h"
 
 
 CFloatVecAttribute::CFloatVecAttribute(CBufferObject<float> * bufferObject, int const size)
@@ -52,34 +52,35 @@ void CMat4Uniform::bindTo(GLuint const uniformHandle, CShaderContext & shaderCon
 
 
 CRenderable::SAttribute::SAttribute()
-    : Value(0), Handle(-1)
+    : Handle(-1)
 {}
 
-CRenderable::SAttribute::SAttribute(IAttribute * value)
+CRenderable::SAttribute::SAttribute(boost::shared_ptr<IAttribute> value)
     : Value(value), Handle(-1)
 {}
 
 
 CRenderable::SUniform::SUniform()
-    : Value(0), Handle(-1)
+    : Handle(-1)
 {}
 
-CRenderable::SUniform::SUniform(IUniform * value)
+CRenderable::SUniform::SUniform(boost::shared_ptr<IUniform> value)
     : Value(value), Handle(-1)
 {}
 
 
+SMaterial::SMaterial()
+    : Shader(0), Texture(0)
+{}
+
+
 CRenderable::CRenderable()
-    : Scale(1), Shader(0), Texture(0), DrawType(GL_TRIANGLES), NormalObject(0), DebugDataFlags(0), NormalColorShader(0), IndexBufferObject(0)
+    : Scale(1), DrawType(GL_TRIANGLES), NormalObject(0), DebugDataFlags(0), NormalColorShader(0), IndexBufferObject(0)
 {
-    uModelMatrix = new CMat4Uniform();
-    uProjMatrix = new CMat4Uniform();
-    uViewMatrix = new CMat4Uniform();
-    uNormalMatrix = new CMat4Uniform();
+    uModelMatrix = boost::shared_ptr<CMat4Uniform>(new CMat4Uniform());
+    uNormalMatrix = boost::shared_ptr<CMat4Uniform>(new CMat4Uniform());
 
     addUniform("uModelMatrix", uModelMatrix);
-    addUniform("uProjMatrix", uProjMatrix);
-    addUniform("uViewMatrix", uViewMatrix);
     addUniform("uNormalMatrix", uNormalMatrix);
 }
 
@@ -114,53 +115,59 @@ void CRenderable::setScale(SVector3 const & scale)
     Scale = scale;
 }
 
-CShader * CRenderable::getShader()
+SMaterial & CRenderable::getMaterial()
 {
-    return Shader;
+    return Material;
 }
 
-void CRenderable::setShader(CShader * shader)
+SMaterial const & CRenderable::getMaterial() const
 {
+    return Material;
+}
+
+void CRenderable::loadHandlesFromShader(CShader const * const shader, CScene const * const scene)
+{
+    if (LastLoadedShader == shader && LastLoadedScene == scene)
+        return;
+
     // Remove any handles a previous shader might have set
     for (std::map<std::string, SAttribute>::iterator it = Attributes.begin(); it != Attributes.end(); ++ it)
         it->second.Handle = -1;
     for (std::map<std::string, SUniform>::iterator it = Uniforms.begin(); it != Uniforms.end(); ++ it)
         it->second.Handle = -1;
+    SceneLoadedUniforms.clear();
 
-    Shader = shader;
+    LastLoadedShader = shader;
+    LastLoadedScene = scene;
 
-    if (! Shader)
+    if (! LastLoadedShader)
         return;
 
     // Check the existence of all required shader attributes
-    for (std::map<std::string, SShaderVariable>::const_iterator it = Shader->getAttributeHandles().begin(); it != Shader->getAttributeHandles().end(); ++ it)
+    for (std::map<std::string, SShaderVariable>::const_iterator it = LastLoadedShader->getAttributeHandles().begin(); it != LastLoadedShader->getAttributeHandles().end(); ++ it)
     {
-        std::map<std::string, SAttribute>::iterator jt = Attributes.find(it->first);
-        if (jt != Attributes.end())
+        std::map<std::string, SAttribute>::iterator jt;
+        if ((jt = Attributes.find(it->first)) != Attributes.end())
             jt->second.Handle = it->second.Handle;
         else
             std::cout << "Attribute required by shader but not found in renderable: " << it->first << std::endl;
     }
 
     // Check the existences of all required uniform uniforms - skipping implicit uniforms
-    for (std::map<std::string, SShaderVariable>::const_iterator it = Shader->getUniformHandles().begin(); it != Shader->getUniformHandles().end(); ++ it)
+    for (std::map<std::string, SShaderVariable>::const_iterator it = LastLoadedShader->getUniformHandles().begin(); it != LastLoadedShader->getUniformHandles().end(); ++ it)
     {
-        std::map<std::string, SUniform>::iterator jt = Uniforms.find(it->first);
-        if (jt != Uniforms.end())
+        std::map<std::string, SUniform>::iterator jt;
+        std::map<std::string, SUniform>::const_iterator kt;
+        if ((jt = Uniforms.find(it->first)) != Uniforms.end())
             jt->second.Handle = it->second.Handle;
+        else if ((kt = scene->getUniforms().find(it->first)) != scene->getUniforms().end())
+        {
+            SceneLoadedUniforms[kt->first] = kt->second;
+            SceneLoadedUniforms[kt->first].Handle = it->second.Handle;
+        }
         else
-            std::cout << "Uniform required by shader but not found in renderable: " << it->first << std::endl;
+            std::cout << "Uniform required by shader but not found in renderable or scene: " << it->first << std::endl;
     }
-}
-
-CTexture * CRenderable::getTexture()
-{
-    return Texture;
-}
-
-void CRenderable::setTexture(CTexture * texture)
-{
-    Texture = texture;
 }
 
 GLenum const CRenderable::getDrawType() const
@@ -183,31 +190,30 @@ void CRenderable::setIndexBufferObject(CBufferObject<GLushort> * indexBufferObje
     IndexBufferObject = indexBufferObject;
 }
 
-#include <stdio.h>
-void CRenderable::draw(CCamera const & Camera)
+void CRenderable::draw(CScene const * const scene)
 {
-    // If no shader or ibo loaded, we can't draw anything
-    if (! Shader || ! IndexBufferObject) {
-        fprintf(stderr, "No shader? %d. No IBO? %d.\n", !Shader, !IndexBufferObject);
-        return;
-    }
-
+    // If no ibo loaded, we can't draw anything
     // If the ibo loaded hasn't been synced as an index buffer object, 
-    if (! IndexBufferObject->isIndexBuffer()) {
-        fprintf(stderr, "isIndexBuffer? %d.\n", !IndexBufferObject->isIndexBuffer());
+    if (! IndexBufferObject || ! IndexBufferObject->isIndexBuffer())
         return;
-    }
 
-    // Copy the current shader so it can be restored if changed
-    CShader * CopyShader = Shader;
+    CShader * ShaderToUse = Material.Shader;
+
+    if (! ShaderToUse)
+        ShaderToUse = CShaderLoader::loadShader("Simple");
 
     // If normal colors are being shown, switch to the normal color shader
     if (isDebugDataEnabled(EDebugData::NormalColors))
     {
         if (! NormalColorShader)
-            NormalColorShader = CShaderLoader::loadShader("Shaders/normalColor");
-        setShader(NormalColorShader);
+            NormalColorShader = CShaderLoader::loadShader("NormalColor");
+        ShaderToUse = NormalColorShader;
     }
+
+    loadHandlesFromShader(ShaderToUse, scene);
+
+    // Create shader context and link all variables required by the shader
+    CShaderContext ShaderContext(* ShaderToUse);
 
     // Set up transform matrices
     uModelMatrix->Value = glm::translate(glm::mat4(1.0f), Translation.getGLMVector());
@@ -217,12 +223,9 @@ void CRenderable::draw(CCamera const & Camera)
     uModelMatrix->Value = glm::scale(uModelMatrix->Value, Scale.getGLMVector());
 
     // Pass transform matrices to shader
-    uViewMatrix->Value = Camera.getViewMatrix();
-    uProjMatrix->Value = Camera.getProjectionMatrix();
     uNormalMatrix->Value = glm::transpose(glm::inverse(uModelMatrix->Value));
 
-    // Create shader context and link all variables required by the shader
-    CShaderContext ShaderContext(* Shader);
+    // Pass values to shader
     for (std::map<std::string, SAttribute>::iterator it = Attributes.begin(); it != Attributes.end(); ++ it)
     {
         if (it->second.Handle >= 0)
@@ -233,17 +236,17 @@ void CRenderable::draw(CCamera const & Camera)
         if (it->second.Handle >= 0)
             it->second.Value->bindTo(it->second.Handle, ShaderContext);
     }
-
-    // Enable all specified render modes
-    for (std::set<GLenum>::iterator it = RenderModes.begin(); it != RenderModes.end(); ++ it)
-        glEnable(* it);
+    for (std::map<std::string, SUniform>::iterator it = SceneLoadedUniforms.begin(); it != SceneLoadedUniforms.end(); ++ it)
+    {
+        it->second.Value->bindTo(it->second.Handle, ShaderContext);
+    }
 
     // Set up texturing if a texture was supplied
-    if (Texture)
+    if (Material.Texture)
     {
         glEnable(GL_TEXTURE_2D);
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, Texture->getTextureHandle());
+        glBindTexture(GL_TEXTURE_2D, Material.Texture->getTextureHandle());
     }
 
     // If the ibo is dirty, sync it!
@@ -262,22 +265,14 @@ void CRenderable::draw(CCamera const & Camera)
         NormalObject->setTranslation(Translation);
         NormalObject->setScale(Scale);
         NormalObject->setRotation(Rotation);
-        NormalObject->draw(Camera);
+        NormalObject->draw(scene);
     }
 
     // Cleanup the texture if it was used
-    if (Texture)
+    if (Material.Texture)
     {
         glDisable(GL_TEXTURE_2D);
     }
-
-    // Clean up all draw modes used
-    for (std::set<GLenum>::iterator it = RenderModes.begin(); it != RenderModes.end(); ++ it)
-        glDisable(* it);
-
-    // Switch back to our old shader if it was changed
-    if (isDebugDataEnabled(EDebugData::NormalColors))
-        setShader(CopyShader);
 }
 
 SBoundingBox3 const & CRenderable::getBoundingBox() const
@@ -290,27 +285,13 @@ SBoundingBox3 & CRenderable::getBoundingBox()
     return BoundingBox;
 }
 
-void CRenderable::addAttribute(std::string const & label, IAttribute * attribute)
+void CRenderable::addAttribute(std::string const & label, boost::shared_ptr<IAttribute> attribute)
 {
-    std::map<std::string, SAttribute>::iterator it = Attributes.find(label);
-
-    if (it != Attributes.end())
-    {
-        delete it->second.Value;
-    }
-
     Attributes[label] = SAttribute(attribute);
 }
 
-void CRenderable::addUniform(std::string const & label, IUniform * uniform)
+void CRenderable::addUniform(std::string const & label, boost::shared_ptr<IUniform> uniform)
 {
-    std::map<std::string, SUniform>::iterator it = Uniforms.find(label);
-
-    if (it != Uniforms.end())
-    {
-        delete it->second.Value;
-    }
-
     Uniforms[label] = SUniform(uniform);
 }
 
@@ -319,10 +300,7 @@ void CRenderable::removeAttribute(std::string const & label)
     std::map<std::string, SAttribute>::iterator it = Attributes.find(label);
 
     if (it != Attributes.end())
-    {
-        delete it->second.Value;
         Attributes.erase(it);
-    }
 }
 
 void CRenderable::removeUniform(std::string const & label)
@@ -330,20 +308,7 @@ void CRenderable::removeUniform(std::string const & label)
     std::map<std::string, SUniform>::iterator it = Uniforms.find(label);
 
     if (it != Uniforms.end())
-    {
-        delete it->second.Value;
         Uniforms.erase(it);
-    }
-}
-
-void CRenderable::addRenderMode(GLenum const mode)
-{
-    RenderModes.insert(mode);
-}
-
-void CRenderable::removeRenderMode(GLenum const mode)
-{
-    RenderModes.erase(mode);
 }
 
 bool const CRenderable::isDebugDataEnabled(EDebugData::Domain const type) const

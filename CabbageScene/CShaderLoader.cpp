@@ -59,6 +59,8 @@ static inline void printProgramInfoLog (GLuint programHandle)
 
 std::map<std::string, CShader *> CShaderLoader::LoadedShaders;
 
+std::string CShaderLoader::ShaderDirectory = "../Shaders/";
+
 CShader * const CShaderLoader::loadShader(std::string const & name)
 {
     std::map<std::string, CShader *>::iterator it = LoadedShaders.find(name);
@@ -68,8 +70,8 @@ CShader * const CShaderLoader::loadShader(std::string const & name)
         return it->second;
     }
 
-    std::string const vertFileName = name + ".vert";
-    std::string const fragFileName = name + ".frag";
+    std::string const vertFileName = ShaderDirectory + name + ".vert";
+    std::string const fragFileName = ShaderDirectory + name + ".frag";
 
     // Create OpenGL Shader objects
     GLuint VS = glCreateShader(GL_VERTEX_SHADER);
@@ -127,7 +129,7 @@ CShader * const CShaderLoader::loadShader(std::string const & name)
         printShaderInfoLog(VS);
         if (! vCompiled)
         {
-            std::cerr << "Error compiling shader: " << vertFileName;
+            std::cerr << "Error compiling shader: " << vertFileName << std::endl;
             glDeleteShader(VS);
             glDeleteShader(FS);
             return 0;
@@ -141,7 +143,7 @@ CShader * const CShaderLoader::loadShader(std::string const & name)
         printShaderInfoLog(FS);
         if (! fCompiled)
         {
-            std::cerr << "Error compiling shader: " << fragFileName;
+            std::cerr << "Error compiling shader: " << fragFileName << std::endl;
             glDeleteShader(VS);
             glDeleteShader(FS);
             return 0;

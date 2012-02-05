@@ -25,9 +25,6 @@
 #include "SDL/SDL_opengl.h"
 #endif
 
-//Will remove later
-#include <GL/glut.h>
-
 //Local Include Section
 #include "../CabbageCollider/CEngine.h"
 #include "FreeType.h"

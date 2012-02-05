@@ -40,14 +40,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "base", "base\base.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageFramework", "CabbageFramework\CabbageFramework.vcxproj", "{C8987DB4-983C-4801-BBBE-072704FAF615}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test Sandbox", "Test Sandbox\Test Sandbox.vcxproj", "{A67571C4-6961-4BF2-94FF-1B2832CF6EEB}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8389DE31-B188-40BA-983F-D0BB58DDB9FB} = {8389DE31-B188-40BA-983F-D0BB58DDB9FB}
-		{C0397D79-C283-45CD-B54E-CA0234CAA8EF} = {C0397D79-C283-45CD-B54E-CA0234CAA8EF}
-		{C8987DB4-983C-4801-BBBE-072704FAF615} = {C8987DB4-983C-4801-BBBE-072704FAF615}
-		{10A797C8-94C1-4EA0-89FF-7E03C5943D82} = {10A797C8-94C1-4EA0-89FF-7E03C5943D82}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageWorldEditor", "CabbageWorldEditor\CabbageWorldEditor.vcxproj", "{00DFEEFB-24BB-46E3-867B-1A7253833D27}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8389DE31-B188-40BA-983F-D0BB58DDB9FB} = {8389DE31-B188-40BA-983F-D0BB58DDB9FB}
@@ -60,6 +52,20 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MainMenu", "MainMenu\MainMe
 		{8389DE31-B188-40BA-983F-D0BB58DDB9FB} = {8389DE31-B188-40BA-983F-D0BB58DDB9FB}
 		{C0397D79-C283-45CD-B54E-CA0234CAA8EF} = {C0397D79-C283-45CD-B54E-CA0234CAA8EF}
 		{C8987DB4-983C-4801-BBBE-072704FAF615} = {C8987DB4-983C-4801-BBBE-072704FAF615}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{22CB5BE8-A32A-4BBC-8A2F-05D7C9C1F292}"
+	ProjectSection(SolutionItems) = preProject
+		Shaders\Diffuse.frag = Shaders\Diffuse.frag
+		Shaders\Diffuse.vert = Shaders\Diffuse.vert
+		Shaders\DiffuseTexture.frag = Shaders\DiffuseTexture.frag
+		Shaders\DiffuseTexture.vert = Shaders\DiffuseTexture.vert
+		Shaders\Flat.frag = Shaders\Flat.frag
+		Shaders\Flat.vert = Shaders\Flat.vert
+		Shaders\NormalColor.frag = Shaders\NormalColor.frag
+		Shaders\NormalColor.vert = Shaders\NormalColor.vert
+		Shaders\Simple.frag = Shaders\Simple.frag
+		Shaders\Simple.vert = Shaders\Simple.vert
 	EndProjectSection
 EndProject
 Global
@@ -96,10 +102,6 @@ Global
 		{C8987DB4-983C-4801-BBBE-072704FAF615}.Debug|Win32.Build.0 = Debug|Win32
 		{C8987DB4-983C-4801-BBBE-072704FAF615}.Release|Win32.ActiveCfg = Release|Win32
 		{C8987DB4-983C-4801-BBBE-072704FAF615}.Release|Win32.Build.0 = Release|Win32
-		{A67571C4-6961-4BF2-94FF-1B2832CF6EEB}.Debug|Win32.ActiveCfg = Debug|Win32
-		{A67571C4-6961-4BF2-94FF-1B2832CF6EEB}.Debug|Win32.Build.0 = Debug|Win32
-		{A67571C4-6961-4BF2-94FF-1B2832CF6EEB}.Release|Win32.ActiveCfg = Release|Win32
-		{A67571C4-6961-4BF2-94FF-1B2832CF6EEB}.Release|Win32.Build.0 = Release|Win32
 		{00DFEEFB-24BB-46E3-867B-1A7253833D27}.Debug|Win32.ActiveCfg = Debug|Win32
 		{00DFEEFB-24BB-46E3-867B-1A7253833D27}.Debug|Win32.Build.0 = Debug|Win32
 		{00DFEEFB-24BB-46E3-867B-1A7253833D27}.Release|Win32.ActiveCfg = Release|Win32

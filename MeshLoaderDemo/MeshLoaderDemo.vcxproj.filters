@@ -13,47 +13,17 @@
       <Filter>Models</Filter>
     </None>
     <None Include="Makefile" />
-    <None Include="Shaders\simple.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="Shaders\simple.vert">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="Shaders\normalColor.frag">
       <Filter>Models</Filter>
     </None>
     <None Include="Shaders\normalColor.vert">
       <Filter>Models</Filter>
     </None>
-    <None Include="Shaders\DiffuseTexture.glsl">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="Shaders\DiffuseTexture.vert">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="Shaders\DiffuseTexture.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="Shaders\Diffuse.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="Shaders\Diffuse.vert">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="Shaders\Flat.vert">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="Shaders\Flat.frag">
-      <Filter>Shaders</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Shaders">
-      <UniqueIdentifier>{a416ddcb-102f-4402-bb4c-0b818aa95159}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Models">
       <UniqueIdentifier>{f62fb023-4ffd-4f5f-b1c0-0dfa7177d170}</UniqueIdentifier>
     </Filter>

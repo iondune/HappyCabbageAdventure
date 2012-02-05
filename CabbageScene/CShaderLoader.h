@@ -6,13 +6,13 @@
 class CShaderLoader
 {
 
-    bool Valid;
-
     static std::map<std::string, CShader *> LoadedShaders;
 
 public:
 
     static CShader * const loadShader(std::string const & name);
+
+    static std::string ShaderDirectory;
 
 };
 

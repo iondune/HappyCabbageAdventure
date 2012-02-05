@@ -48,7 +48,7 @@ public:
         CApplication::get().getSceneManager().setActiveCamera(Camera);
 
         // Attempt to load shader and attributes
-        Shader = CShaderLoader::loadShader("Shaders/DiffuseTexture");
+        Shader = CShaderLoader::loadShader("DiffuseTexture");
         if (! Shader)
         {
             std::cerr << "Unable to open or compile necessary shader." << std::endl;
@@ -89,8 +89,10 @@ public:
         // Now load our mesh into a VBO, retrieving the number of triangles and the handles to each VBO
         Renderable = new CMeshRenderable();
         Renderable->setMesh(MeshFace);
-        Renderable->setTexture(Texture);
-        Renderable->setShader(Shader);
+        Renderable->getMaterial().Texture = Texture;
+        Renderable->getMaterial().Shader = Shader;
+
+        CApplication::get().getSceneManager().addRenderable(Renderable);
     }
 
     // Manages time independant movement and draws the VBO
@@ -127,7 +129,7 @@ public:
         Renderable->setScale(Scale);
         Renderable->setRotation(Rotation);
 
-        Renderable->draw(* Camera);
+        CApplication::get().getSceneManager().drawAll();
 
         SDL_GL_SwapBuffers();
     }
@@ -172,14 +174,14 @@ public:
         case SDLK_g:
 
             if (! Event.Pressed)
-                Renderable->setShader(CShaderLoader::loadShader("Shaders/Flat"));
+                Renderable->getMaterial().Shader = CShaderLoader::loadShader("Flat");
 
             break;
 
         case SDLK_b:
 
             if (! Event.Pressed)
-                Renderable->setShader(CShaderLoader::loadShader("Shaders/DiffuseTexture"));
+                Renderable->getMaterial().Shader = CShaderLoader::loadShader("DiffuseTexture");
 
             break;
 
@@ -199,6 +201,7 @@ public:
     CMeshRenderable * Renderable;
     CTexture * Texture;
     CCamera * Camera;
+    CScene * Scene;
 
     // Information about mesh
     SVector3 Translation, Rotation, Scale;

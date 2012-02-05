@@ -27,16 +27,19 @@ void CMeshRenderable::setMesh(CMesh * mesh)
 
     // Remove any previous normal debugging object
     if (NormalObject)
+    {
         delete NormalObject;
+        NormalObject = 0;
+    }
 
     if (Mesh)
     {
         // Add mesh attributes
-        addAttribute("aPosition", new CFloatVecAttribute(Mesh->makePositionBuffer(), 3));
-        addAttribute("aColor", new CFloatVecAttribute(Mesh->makeColorBuffer(), 3));
-        addAttribute("aNormal", new CFloatVecAttribute(Mesh->makeNormalBuffer(), 3));
-        addAttribute("aTexCoord", new CFloatVecAttribute(Mesh->makeTexCoordBuffer(), 2));
-        addUniform("uTexColor", new CIntUniform(0));
+        addAttribute("aPosition", boost::shared_ptr<IAttribute>(new CFloatVecAttribute(Mesh->makePositionBuffer(), 3)));
+        addAttribute("aColor", boost::shared_ptr<IAttribute>(new CFloatVecAttribute(Mesh->makeColorBuffer(), 3)));
+        addAttribute("aNormal", boost::shared_ptr<IAttribute>(new CFloatVecAttribute(Mesh->makeNormalBuffer(), 3)));
+        addAttribute("aTexCoord", boost::shared_ptr<IAttribute>(new CFloatVecAttribute(Mesh->makeTexCoordBuffer(), 2)));
+        addUniform("uTexColor", boost::shared_ptr<IUniform>(new CIntUniform(0)));
 
         // Add mesh index buffer
         setIndexBufferObject(Mesh->makeIndexBuffer());
@@ -46,14 +49,14 @@ void CMeshRenderable::setMesh(CMesh * mesh)
 
         // Add normal debugging object
         NormalObject = new CRenderable();
-        NormalObject->addAttribute("aPosition", new CFloatVecAttribute(Mesh->makeNormalLineBuffer(), 3));
-        NormalObject->addAttribute("aColor", new CFloatVecAttribute(Mesh->makeNormalColorBuffer(), 3));
+        NormalObject->addAttribute("aPosition", boost::shared_ptr<IAttribute>(new CFloatVecAttribute(Mesh->makeNormalLineBuffer(), 3)));
+        NormalObject->addAttribute("aColor", boost::shared_ptr<IAttribute>(new CFloatVecAttribute(Mesh->makeNormalColorBuffer(), 3)));
         NormalObject->setIndexBufferObject(Mesh->makeNormalIndexBuffer());
-        NormalObject->setShader(CShaderLoader::loadShader("Shaders/simple"));
+        Material.Shader = CShaderLoader::loadShader("Simple");
         NormalObject->setDrawType(GL_LINES);
 
         // Reset the shader to load attributes again
-        setShader(Shader);
+        LastLoadedShader = 0;
     }
 
 }

@@ -3,7 +3,6 @@
 
 #ifdef _WIN32
 #include <GL/glew.h>
-#include <GL/glut.h>
 #endif
 
 #ifdef __unix__
@@ -21,10 +20,10 @@ void CPlayerView::step(float delta) {
          ySineValue = 0;
       }
       else if(curState == CPlayerView::State::MovingLeft) {
-         ySineValue += 0.01*delta;
+         ySineValue += 0.01f*delta;
       }
       else if(curState == CPlayerView::State::MovingRight) {
-         ySineValue -= 0.01*delta;
+         ySineValue -= 0.01f*delta;
       }
    }
    else {
@@ -37,16 +36,16 @@ void CPlayerView::draw() {
    //Set player's current position
    if(!(recovering > 0 && (int)(recovering *100) % 2 != 0)) {
       setMaterial(LIGHT_GREEN_MATTE);
-      PlayerRenderable->setTranslation(SVector3(CenterPosition.X, CenterPosition.Y + 0.065*sin(ySineValue), 0));
-      if(!(Velocity.Y > 0.01 || Velocity.Y < -0.01)) {
-         PlayerRenderable->setRotation(SVector3(15*sin(ySineValue/2)-90, 0, 0));
+      PlayerRenderable->setTranslation(SVector3(CenterPosition.X, CenterPosition.Y + 0.065f*sin(ySineValue), 0));
+      if(!(Velocity.Y > 0.01f || Velocity.Y < -0.01f)) {
+         PlayerRenderable->setRotation(SVector3(15*sin(ySineValue/2)-90.f, 0, 0));
       }
    }
 
    //Set player's shadow
-   renderShadow->setTranslation(SVector3(CenterPosition.X, yShadow + 0.01, 0));
-   renderShadow->setScale(SVector3(-.05*sin(ySineValue)+1, 1,
-     -0.05*sin(ySineValue)+1));
+   renderShadow->setTranslation(SVector3(CenterPosition.X, yShadow + 0.01f, 0));
+   renderShadow->setScale(SVector3(-.05f*sin(ySineValue)+1, 1,
+     -0.05f*sin(ySineValue)+1));
 
 
 
@@ -80,10 +79,10 @@ void CPlayerView::establishCamera(CCamera *Camera, int angle) {
    SVector3 camPos, camLook;
 
    if(angle == 0) {
-      camPos = SVector3(CenterPosition.X, CenterPosition.Y + 1.3, 6);
+      camPos = SVector3(CenterPosition.X, CenterPosition.Y + 1.3f, 6);
    }
    else if(angle == 1) {
-      camPos = SVector3(CenterPosition.X, CenterPosition.Y + 1.3, -6);
+      camPos = SVector3(CenterPosition.X, CenterPosition.Y + 1.3f, -6);
    }
    else if(angle == 2) {
       camPos = SVector3(CenterPosition.X - 4, CenterPosition.Y + 4, 1);

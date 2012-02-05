@@ -21,7 +21,7 @@ void CLevelManager::addBlockObject(SVector2 Position, SVector2 Size, int const T
     Renderable->setScale(SVector3(Size.X, Size.Y, 1.f));
     Renderable->setTranslation(SVector3(Position.X, Position.Y, 0));
 
-    Renderable->setShader(CShaderLoader::loadShader("Shaders/Flat"));
+    Renderable->getMaterial().Shader = CShaderLoader::loadShader("Flat");
 
     SceneManager->addRenderable(Renderable);
 }

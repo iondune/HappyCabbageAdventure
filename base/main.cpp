@@ -124,27 +124,27 @@ class CGameState : public CState<CGameState>
       float i = 0;
       float j = 0;
 
-      for(j = 0; j < 10; j+=2.5) {
+      for(j = 0; j < 10; j+=2.5f) {
          Block = Engine->addObject();
-         area = SRect2(-15 + j, 1.5 + j, 2, 1);
-         PrepBlock(-15 + j, 1.5 + j, 2, 1);
+         area = SRect2(-15.f + j, 1.5f + j, 2.f, 1);
+         PrepBlock(-15.f + j, 1.5f + j, 2.f, 1);
          Block->setArea(area);
       }
 
       Block = Engine->addObject();
-      area = SRect2(-22, 7, 6, 0.2);
-      PrepBlock(-22, 7, 6, 0.2);
+      area = SRect2(-22.f, 7.f, 6.f, 0.2f);
+      PrepBlock(-22.f, 7.f, 6.f, 0.2f);
       Block->setArea(area);
 
       Block = Engine->addObject();
-      area = SRect2(-22, 7, 0.2, 3);
-      PrepBlock(-22, 7, 0.2, 3);
+      area = SRect2(-22.f, 7.f, 0.2f, 3.f);
+      PrepBlock(-22.f, 7.f, 0.2f, 3.f);
       Block->setArea(area);
 
       for(; i < 12; i++) {
          Block = Engine->addObject();
-         area = SRect2(-i + 5, 0, 1, i+1);
-         PrepBlock(-i + 5, 0, 1, i+1);
+         area = SRect2(-i + 5.f, 0.f, 1.f, i+1.f);
+         PrepBlock(-i + 5.f, 0.f, 1.f, i+1.f);
          Block->setArea(area);
       }
 
@@ -375,7 +375,7 @@ class CGameState : public CState<CGameState>
             Mix_PlayChannel(-1, die, 0); //Only play once
             playDead = false;
          }
-         freetype::print(our_font, 50, WindowHeight - 240, "GAME OVER! YOU ARE DEAD");
+         freetype::print(our_font, 50, WindowHeight - 240.f, "GAME OVER! YOU ARE DEAD");
       }
 
       //Calculate FPS
@@ -390,7 +390,7 @@ class CGameState : public CState<CGameState>
  
 
       //Draw Text
-      freetype::print(our_font, 10, WindowHeight-40, "Elapsed Time: %0.0f\n"
+      freetype::print(our_font, 10, WindowHeight-40.f, "Elapsed Time: %0.0f\n"
             "Health: %d\nnumKilled: %d\nFPS: %0.2f ", Application.getRunTime(), GameplayManager->getPlayerHealth(), numKilled, fps);
 
 
@@ -476,7 +476,7 @@ class CGameState : public CState<CGameState>
    void PrepShadow() {
       renderShadow = new CMeshRenderable();
       renderShadow->setMesh(discMesh);
-      renderShadow->setShader(DiffuseTexture);
+      renderShadow->getMaterial().Shader = DiffuseTexture;
 
       Application.getSceneManager().addRenderable(renderShadow);
    }
@@ -485,8 +485,8 @@ class CGameState : public CState<CGameState>
       CMeshRenderable *tempBlock;
       blocks.push_back(tempBlock = new CMeshRenderable());
       tempBlock->setMesh(cubeMesh);
-      tempBlock->setTexture(grassTxt);
-      tempBlock->setShader(DiffuseTexture);
+      tempBlock->getMaterial().Texture = grassTxt;
+      tempBlock->getMaterial().Shader = DiffuseTexture;
       tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
       tempBlock->setScale(SVector3(w, h, 1));
       tempBlock->setRotation(SVector3(0, 0, 0));
@@ -497,8 +497,8 @@ class CGameState : public CState<CGameState>
       CMeshRenderable *tempBlock;
       blocks.push_back(tempBlock = new CMeshRenderable());
       tempBlock->setMesh(cubeMesh);
-      tempBlock->setTexture(dirtTxt);
-      tempBlock->setShader(DiffuseTexture);
+      tempBlock->getMaterial().Texture = dirtTxt;
+      tempBlock->getMaterial().Shader = DiffuseTexture;
       tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
       tempBlock->setScale(SVector3(w, h, 5));
       Application.getSceneManager().addRenderable(tempBlock);
@@ -509,8 +509,8 @@ class CGameState : public CState<CGameState>
       CMeshRenderable *tempBlock;
       blocks.push_back(tempBlock = new CMeshRenderable());
       tempBlock->setMesh(cubeMesh);
-      tempBlock->setTexture(skyTxt);
-      tempBlock->setShader(DiffuseTexture);
+      tempBlock->getMaterial().Texture = skyTxt;
+      tempBlock->getMaterial().Shader = DiffuseTexture;
       tempBlock->setTranslation(SVector3(0, 24, -2.5));
       tempBlock->setScale(SVector3(100, 50, 1));
       Application.getSceneManager().addRenderable(tempBlock);
@@ -538,7 +538,7 @@ CMeshRenderable* PrepEnemy(float x, float y) {
    enemies.push_back(tempEnemy = new CMeshRenderable());
    tempEnemy->setMesh(basicTreeMesh);
    //tempEnemy->setTexture(dirtTxt);
-   tempEnemy->setShader(Flat);
+   tempEnemy->getMaterial().Shader = Flat;
    Application.getSceneManager().addRenderable(tempEnemy);
    return tempEnemy;
 }
@@ -558,10 +558,10 @@ int main (int argc, char *argv[])
 }
 
 void LoadShaders() {
-   Flat = CShaderLoader::loadShader("Shaders/Flat");
-   Diffuse = CShaderLoader::loadShader("Shaders/Diffuse");
-   DiffuseTexture = CShaderLoader::loadShader("Shaders/DiffuseTexture");
-    normalColor = CShaderLoader::loadShader("Shaders/normalColor");
+    Flat = CShaderLoader::loadShader("Flat");
+    Diffuse = CShaderLoader::loadShader("Diffuse");
+    DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture");
+    normalColor = CShaderLoader::loadShader("NormalColor");
 }
 
 
@@ -655,63 +655,63 @@ void PrepMeshes()
 {
    renderBasicTree = new CMeshRenderable();
    renderBasicTree->setMesh(basicTreeMesh);
-   renderBasicTree->setShader(Flat);
+   renderBasicTree->getMaterial().Shader = Flat;
 
    renderChristmasTree = new CMeshRenderable();
    renderChristmasTree->setMesh(cabbageMesh);
-   renderChristmasTree->setShader(Flat);
+   renderChristmasTree->getMaterial().Shader = Flat;
 
    playerRenderable = new CMeshRenderable();
    playerRenderable->setMesh(cabbageMesh);
-   playerRenderable->setShader(Flat);
+   playerRenderable->getMaterial().Shader = Flat;
    playerRenderable->setScale(SVector3(2));
 
    renderBlueFlwr = new CMeshRenderable();
    renderBlueFlwr->setMesh(blueFlwrMesh);
-   renderBlueFlwr->setTexture(blueFlwrTxt);
-   renderBlueFlwr->setShader(DiffuseTexture);
-   renderBlueFlwr->setTranslation(SVector3(-23, .18, 2));
-   renderBlueFlwr->setScale(SVector3(.36));
+   renderBlueFlwr->getMaterial().Texture = blueFlwrTxt;
+   renderBlueFlwr->getMaterial().Shader = DiffuseTexture;
+   renderBlueFlwr->setTranslation(SVector3(-23.f, .18f, 2));
+   renderBlueFlwr->setScale(SVector3(.36f));
    renderBlueFlwr->setRotation(SVector3(-90, 0, 0));
 
    renderPinkFlwr = new CMeshRenderable();
    renderPinkFlwr->setMesh(pinkFlwrMesh);
-   renderPinkFlwr->setTexture(pinkFlwrTxt);
-   renderPinkFlwr->setTranslation(SVector3(-20, .2, 2));
-   renderPinkFlwr->setScale(SVector3(.36));
+   renderPinkFlwr->getMaterial().Texture = pinkFlwrTxt;
+   renderPinkFlwr->setTranslation(SVector3(-20, .2f, 2));
+   renderPinkFlwr->setScale(SVector3(.36f));
    renderPinkFlwr->setRotation(SVector3(-90, 0, 0));
-   renderPinkFlwr->setShader(DiffuseTexture);
+   renderPinkFlwr->getMaterial().Shader = DiffuseTexture;
 
    renderFicus = new CMeshRenderable();
    renderFicus->setMesh(ficusMesh);
-   renderFicus->setTranslation(SVector3(-21, .5, 2));
+   renderFicus->setTranslation(SVector3(-21, .5f, 2));
    renderFicus->setScale(SVector3(1.0));
    renderFicus->setRotation(SVector3(-90, 0, 0));
-   renderFicus->setTexture(blueFlwrTxt);
-   renderFicus->setShader(DiffuseTexture);
+   renderFicus->getMaterial().Texture = blueFlwrTxt;
+   renderFicus->getMaterial().Shader = DiffuseTexture;
 
    renderPoin = new CMeshRenderable();
    renderPoin->setMesh(poinMesh);
-   renderPoin->setTranslation(SVector3(-19, .5, 2));
+   renderPoin->setTranslation(SVector3(-19, .5f, 2));
    renderPoin->setScale(SVector3(.75));
    renderPoin->setRotation(SVector3(-90, 0, 0));
-   renderPoin->setTexture(poinTxt);
-   renderPoin->setShader(DiffuseTexture);
+   renderPoin->getMaterial().Texture = (poinTxt);
+   renderPoin->getMaterial().Shader = DiffuseTexture;
 }
 
 
 void drawBlueFlwr(float x, float y, float z, float scale) {
 
    if (y == -1) {
-      y = scale / 2.0;
+      y = scale / 2.0f;
    }
 
    blueFlwrs.push_back(tempRender = new CMeshRenderable());
 
    renderBlueFlwr = new CMeshRenderable();
    renderBlueFlwr->setMesh(blueFlwrMesh);
-   renderBlueFlwr->setTexture(blueFlwrTxt);
-   renderBlueFlwr->setShader(DiffuseTexture);
+   renderBlueFlwr->getMaterial().Texture = (blueFlwrTxt);
+   renderBlueFlwr->getMaterial().Shader = (DiffuseTexture);
    renderBlueFlwr->setTranslation(SVector3(z, y, z));
    renderBlueFlwr->setScale(SVector3(scale));
    renderBlueFlwr->setRotation(SVector3(-90, 0, 0));

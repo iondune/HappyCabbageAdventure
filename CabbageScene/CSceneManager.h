@@ -8,13 +8,41 @@
 #include "../CabbageCore/SLine3.h"
 
 
-class CSceneManager
+class CScene
+{
+
+protected:
+
+    CCamera DefaultCamera;
+    CCamera * ActiveCamera;
+
+    boost::shared_ptr<CMat4Uniform> uViewMatrix, uProjMatrix;
+
+    std::map<std::string, CRenderable::SUniform> Uniforms;
+
+public:
+
+    CScene();
+
+    CCamera * const getActiveCamera();
+    void setActiveCamera(CCamera * const activeCamera);
+
+    void addUniform(std::string const & label, boost::shared_ptr<IUniform> uniform);
+    void removeUniform(std::string const & label);
+
+    std::map<std::string, CRenderable::SUniform> & getUniforms();
+    std::map<std::string, CRenderable::SUniform> const & getUniforms() const;
+
+    void update();
+
+};
+
+class CSceneManager : public CScene
 {
 
     std::list<CRenderable *> Renderables;
 
-    CCamera * ActiveCamera;
-    CCamera DefaultCamera;
+    CScene * CurrentScene;
 
 public:
 
@@ -26,9 +54,6 @@ public:
     void drawAll();
 
     CRenderable * const pickRenderable(SLine3 const & ViewLine);
-
-    CCamera * const getActiveCamera();
-    void setActiveCamera(CCamera * const activeCamera);
 
 };
 

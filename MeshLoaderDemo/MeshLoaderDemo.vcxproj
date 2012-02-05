@@ -37,7 +37,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(VisualStudioDir)\Projects\glew-1.7.0\include;$(VisualStudioDir)\Projects\SDL-1.2.15\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(VisualStudioDir)\Projects\glew-1.7.0\include;$(VisualStudioDir)\Projects\SDL-1.2.15\include;$(SolutionDir)\CabbageCore;$(IncludePath)</IncludePath>
     <LibraryPath>$(VisualStudioDir)\Projects\glew-1.7.0\lib;$(VisualStudioDir)\Projects\SDL-1.2.15\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -69,16 +69,8 @@
     <None Include="glew32.dll" />
     <None Include="Makefile" />
     <None Include="SDL.dll" />
-    <None Include="Shaders\Diffuse.frag" />
-    <None Include="Shaders\Diffuse.vert" />
-    <None Include="Shaders\DiffuseTexture.frag" />
-    <None Include="Shaders\DiffuseTexture.vert" />
-    <None Include="Shaders\Flat.frag" />
-    <None Include="Shaders\Flat.vert" />
     <None Include="Shaders\normalColor.frag" />
     <None Include="Shaders\normalColor.vert" />
-    <None Include="Shaders\simple.frag" />
-    <None Include="Shaders\simple.vert" />
     <None Include="spaceship.3ds" />
     <None Include="spaceshiptexture.bmp" />
     <None Include="tree.3ds" />
