@@ -25,11 +25,12 @@ freetype::font_data our_font;
 
 //Variables need to create VBOs of meshes, textures, and shaders
 CShader *Shader, *Flat, *Diffuse, *DiffuseTexture, *normalColor;  //Use Diffuse for trees (doesn't need texture)
-CImage *grassImg, *skyImg, *dirtImg;
-CTexture *grassTxt, *skyTxt, *dirtTxt;
-CMesh *basicTreeMesh, *cabbageMesh, *christmasTreeMesh, *cubeMesh, *discMesh;
+CImage *grassImg, *skyImg, *dirtImg, *blueFlwrImg, *pinkFlwrImg;
+CTexture *grassTxt, *skyTxt, *dirtTxt, *blueFlwrTxt, *pinkFlwrTxt;
+CMesh *basicTreeMesh, *cabbageMesh, *christmasTreeMesh, *cubeMesh, *discMesh,
+      *blueFlwrMesh, *pinkFlwrMesh, *ficusMesh;
 CMeshRenderable *renderShadow, *playerRenderable, *renderChristmasTree, 
-  *renderBasicTree;
+  *renderBasicTree, *renderBlueFlwr, *renderPinkFlwr;
 
 std::vector<CMeshRenderable*> blocks, enemies;
 
@@ -56,7 +57,7 @@ void ViewInit( void ) {
 
 void BlockMesh() {
    cubeMesh = CMeshLoader::createCubeMesh();
-   cubeMesh->linearizeIndices();
+   //cubeMesh->linearizeIndices();
    cubeMesh->calculateNormalsPerFace();
 }
 
@@ -198,7 +199,8 @@ class CGameState : public CState<CGameState>
       Application.getSceneManager().addRenderable(renderChristmasTree);
       Application.getSceneManager().addRenderable(playerRenderable);
 
-      printf("Before viewInit\n\n\n");
+      Application.getSceneManager().addRenderable(renderBlueFlwr);
+      Application.getSceneManager().addRenderable(renderPinkFlwr);
 
       //Initialize Fxns
       EngineInit();
@@ -462,7 +464,7 @@ class CGameState : public CState<CGameState>
    void PrepShadow() {
       renderShadow = new CMeshRenderable();
       renderShadow->setMesh(discMesh);
-      renderShadow->setShader(Diffuse);
+      renderShadow->setShader(DiffuseTexture);
 
       Application.getSceneManager().addRenderable(renderShadow);
    }
@@ -471,8 +473,8 @@ class CGameState : public CState<CGameState>
       CMeshRenderable *tempBlock;
       blocks.push_back(tempBlock = new CMeshRenderable());
       tempBlock->setMesh(cubeMesh);
-      //tempBlock->setTexture(dirtTxt);
-      tempBlock->setShader(Flat);
+      tempBlock->setTexture(grassTxt);
+      tempBlock->setShader(DiffuseTexture);
       tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
       tempBlock->setScale(SVector3(w, h, 1));
       tempBlock->setRotation(SVector3(0, 0, 0));
@@ -483,10 +485,10 @@ class CGameState : public CState<CGameState>
       CMeshRenderable *tempBlock;
       blocks.push_back(tempBlock = new CMeshRenderable());
       tempBlock->setMesh(cubeMesh);
-      //tempBlock->setTexture(grassTxt);
-      tempBlock->setShader(Diffuse);
+      tempBlock->setTexture(dirtTxt);
+      tempBlock->setShader(DiffuseTexture);
       tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
-      tempBlock->setScale(SVector3(w, h, 1));
+      tempBlock->setScale(SVector3(w, h, 5));
       Application.getSceneManager().addRenderable(tempBlock);
 
    }
@@ -551,6 +553,8 @@ void Load3DS()
       fprintf(stderr, "Failed to load the basic tree mesh\n");
    }
 
+
+
    cabbageMesh = CMeshLoader::load3dsMesh("Models/crappycabbage.3ds");
    if (cabbageMesh) {
       cabbageMesh->resizeMesh(SVector3(0.5));
@@ -561,21 +565,44 @@ void Load3DS()
       fprintf(stderr, "Failed to load the christmas tree mesh\n");
    }
 
-   /* Load cabbage mesh */
+
+
+   blueFlwrMesh = CMeshLoader::load3dsMesh("Models/blueFlower.3ds");
+   if (blueFlwrMesh) {
+      blueFlwrMesh->centerMeshByExtents(SVector3(0));
+      blueFlwrMesh->calculateNormalsPerFace();
+   }
+   else {
+      fprintf(stderr, "Failed to load blue flower mesh.\n");
+   }
+
+
+
+   pinkFlwrMesh = CMeshLoader::load3dsMesh("Models/pinkFlower.3ds");
+   if (pinkFlwrMesh) {
+      pinkFlwrMesh->centerMeshByExtents(SVector3(0));
+      pinkFlwrMesh->calculateNormalsPerFace();
+   }
+   else {
+      fprintf(stderr, "Failed to load pink flower mesh.\n");
+   }
+
    /* Load enemy mesh */
 }
 
 void LoadTextures()
 {
-   CImage *grassImg = CImageLoader::loadImage("Textures/grass.bmp");
-   CImage *skyImg = CImageLoader::loadImage("Textures/sky.bmp");
-   CImage *dirtImg = CImageLoader::loadImage("Textures/dirt.bmp");
+   grassImg = CImageLoader::loadImage("Textures/grass.bmp");
+   skyImg = CImageLoader::loadImage("Textures/sky.bmp");
+   dirtImg = CImageLoader::loadImage("Textures/dirt.bmp");
+   blueFlwrImg = CImageLoader::loadImage("Textures/blueFlower.bmp");
+   pinkFlwrImg = CImageLoader::loadImage("Textures/pinkFlower.bmp");
 
-   if(!grassImg)
-      printf("ERROR!!!!\n");
    grassTxt = new CTexture(grassImg);
    skyTxt = new CTexture(skyImg);
    dirtTxt = new CTexture(dirtImg);
+   blueFlwrTxt = new CTexture(blueFlwrImg);
+   pinkFlwrTxt = new CTexture(pinkFlwrImg);
 }
 
 void PrepMeshes()
@@ -592,4 +619,20 @@ void PrepMeshes()
    playerRenderable->setMesh(cabbageMesh);
    playerRenderable->setShader(Flat);
    playerRenderable->setScale(SVector3(2));
+
+   renderBlueFlwr = new CMeshRenderable();
+   renderBlueFlwr->setMesh(blueFlwrMesh);
+   renderBlueFlwr->setTexture(blueFlwrTxt);
+   renderBlueFlwr->setShader(DiffuseTexture);
+   renderBlueFlwr->setTranslation(SVector3(-23, .18, 2));
+   renderBlueFlwr->setScale(SVector3(.36));
+   renderBlueFlwr->setRotation(SVector3(-90, 0, 0));
+
+   renderPinkFlwr = new CMeshRenderable();
+   renderPinkFlwr->setMesh(pinkFlwrMesh);
+   renderPinkFlwr->setTexture(pinkFlwrTxt);
+   renderPinkFlwr->setTranslation(SVector3(-20, .2, 2));
+   renderPinkFlwr->setScale(SVector3(.36));
+   renderPinkFlwr->setRotation(SVector3(-90, 0, 0));
+   renderPinkFlwr->setShader(DiffuseTexture);
 }
