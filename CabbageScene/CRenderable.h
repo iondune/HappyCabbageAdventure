@@ -74,6 +74,7 @@ class CMat4Uniform : public IUniform
 
 public:
 
+    CMat4Uniform();
     CMat4Uniform(glm::mat4 const & value);
     void bindTo(GLuint const uniformHandle, CShaderContext & shaderContext);
 
@@ -101,7 +102,11 @@ class CRenderable
 
 protected:
 
+    // Model Transformation
     SVector3 Translation, Rotation, Scale;
+
+    // Implicit uniforms
+    CMat4Uniform * uModelMatrix, * uViewMatrix, * uProjMatrix, * uNormalMatrix;
     SBoundingBox3 BoundingBox;
 
     struct SAttribute

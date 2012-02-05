@@ -278,20 +278,20 @@ CMesh * const CMeshLoader::createCubeMesh()
     Mesh->Vertices[2].Position = SVector3( 0.5,  0.5, -0.5);
     Mesh->Vertices[3].Position = SVector3( 0.5, -0.5, -0.5);
 
-    Mesh->Vertices[4].Position = SVector3( 0.5,  0.5, -0.5);
-    Mesh->Vertices[5].Position = SVector3( 0.5, -0.5, -0.5);
-    Mesh->Vertices[6].Position = SVector3( 0.5, -0.5,  0.5);
-    Mesh->Vertices[7].Position = SVector3( 0.5,  0.5,  0.5);
+    Mesh->Vertices[4].Position = SVector3( 0.5, -0.5, -0.5);
+    Mesh->Vertices[5].Position = SVector3( 0.5, 0.5, -0.5);
+    Mesh->Vertices[6].Position = SVector3( 0.5, 0.5,  0.5);
+    Mesh->Vertices[7].Position = SVector3( 0.5, -0.5,  0.5);
 
     Mesh->Vertices[8].Position = SVector3( 0.5, -0.5,  0.5);
     Mesh->Vertices[9].Position = SVector3( 0.5,  0.5,  0.5);
     Mesh->Vertices[10].Position = SVector3(-0.5,  0.5,  0.5);
     Mesh->Vertices[11].Position = SVector3(-0.5, -0.5,  0.5);
 
-    Mesh->Vertices[12].Position = SVector3(-0.5,  0.5,  0.5);
-    Mesh->Vertices[13].Position = SVector3(-0.5, -0.5,  0.5);
-    Mesh->Vertices[14].Position = SVector3(-0.5, -0.5, -0.5);
-    Mesh->Vertices[15].Position = SVector3(-0.5,  0.5, -0.5);
+    Mesh->Vertices[12].Position = SVector3(-0.5, -0.5,  0.5);
+    Mesh->Vertices[13].Position = SVector3(-0.5,  0.5,  0.5);
+    Mesh->Vertices[14].Position = SVector3(-0.5,  0.5, -0.5);
+    Mesh->Vertices[15].Position = SVector3(-0.5, -0.5, -0.5);
 
     Mesh->Vertices[16].Position = SVector3(-0.5,  0.5, -0.5);
     Mesh->Vertices[17].Position = SVector3(-0.5,  0.5,  0.5);

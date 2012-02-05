@@ -62,7 +62,7 @@ public:
         if (MeshFace)
         {
             MeshFace->linearizeIndices();
-            MeshFace->resizeMesh(SVector3(1.5));
+            MeshFace->resizeMesh(SVector3(0.5));
             MeshFace->centerMeshByExtents(SVector3(0));
             MeshFace->calculateNormalsPerFace();
         }
@@ -70,7 +70,7 @@ public:
         MeshVertex = CMeshLoader::createCubeMesh();//load3dsMesh("spaceship.3ds");
         if (MeshVertex)
         {
-            MeshVertex->resizeMesh(SVector3(1.5));
+            MeshVertex->resizeMesh(SVector3(0.5));
             MeshVertex->centerMeshByExtents(SVector3(0));
             MeshVertex->calculateNormalsPerVertex();
         }
@@ -106,7 +106,7 @@ public:
         Camera->setLookDirection(SVector3(0, 0, -1));
         Camera->recalculateViewMatrix();
 
-        
+
         // Animates the loaded model by modulating it's size
         static float const ScaleSpeed = 1.f;
         static float const ScaleThreshold = 0.4f;

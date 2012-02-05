@@ -38,6 +38,9 @@ void CIntUniform::bindTo(GLuint const uniformHandle, CShaderContext & shaderCont
     shaderContext.uniform(uniformHandle, Value);
 }
 
+CMat4Uniform::CMat4Uniform()
+{}
+
 CMat4Uniform::CMat4Uniform(glm::mat4 const & value)
     : Value(value)
 {}
@@ -68,7 +71,17 @@ CRenderable::SUniform::SUniform(IUniform * value)
 
 CRenderable::CRenderable()
     : Scale(1), Shader(0), Texture(0), DrawType(GL_TRIANGLES), NormalObject(0), DebugDataFlags(0), NormalColorShader(0), IndexBufferObject(0)
-{}
+{
+    uModelMatrix = new CMat4Uniform();
+    uProjMatrix = new CMat4Uniform();
+    uViewMatrix = new CMat4Uniform();
+    uNormalMatrix = new CMat4Uniform();
+
+    addUniform("uModelMatrix", uModelMatrix);
+    addUniform("uProjMatrix", uProjMatrix);
+    addUniform("uViewMatrix", uViewMatrix);
+    addUniform("uNormalMatrix", uNormalMatrix);
+}
 
 SVector3 const & CRenderable::getTranslation() const
 {
@@ -135,7 +148,7 @@ void CRenderable::setShader(CShader * shader)
         std::map<std::string, SUniform>::iterator jt = Uniforms.find(it->first);
         if (jt != Uniforms.end())
             jt->second.Handle = it->second.Handle;
-        else if (it->first != "uModelMatrix" && it->first != "uProjMatrix" && it->first != "uViewMatrix" && it->first != "uNormalMatrix")
+        else
             std::cout << "Uniform required by shader but not found in renderable: " << it->first << std::endl;
     }
 }
@@ -196,6 +209,18 @@ void CRenderable::draw(CCamera const & Camera)
         setShader(NormalColorShader);
     }
 
+    // Set up transform matrices
+    uModelMatrix->Value = glm::translate(glm::mat4(1.0f), Translation.getGLMVector());
+    uModelMatrix->Value = glm::rotate(uModelMatrix->Value, Rotation.X, glm::vec3(1, 0, 0));
+    uModelMatrix->Value = glm::rotate(uModelMatrix->Value, Rotation.Y, glm::vec3(0, 1, 0));
+    uModelMatrix->Value = glm::rotate(uModelMatrix->Value, Rotation.Z, glm::vec3(0, 0, 1));
+    uModelMatrix->Value = glm::scale(uModelMatrix->Value, Scale.getGLMVector());
+
+    // Pass transform matrices to shader
+    uViewMatrix->Value = Camera.getViewMatrix();
+    uProjMatrix->Value = Camera.getProjectionMatrix();
+    uNormalMatrix->Value = glm::transpose(glm::inverse(uModelMatrix->Value));
+
     // Create shader context and link all variables required by the shader
     CShaderContext ShaderContext(* Shader);
     for (std::map<std::string, SAttribute>::iterator it = Attributes.begin(); it != Attributes.end(); ++ it)
@@ -220,19 +245,6 @@ void CRenderable::draw(CCamera const & Camera)
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, Texture->getTextureHandle());
     }
-
-    // Set up transform matrices
-    glm::mat4 Transformation = glm::translate(glm::mat4(1.0f), Translation.getGLMVector());
-    Transformation = glm::rotate(Transformation, Rotation.X, glm::vec3(1, 0, 0));
-    Transformation = glm::rotate(Transformation, Rotation.Y, glm::vec3(0, 1, 0));
-    Transformation = glm::rotate(Transformation, Rotation.Z, glm::vec3(0, 0, 1));
-    Transformation = glm::scale(Transformation, Scale.getGLMVector());
-
-    // Pass transform matrices to shader
-    ShaderContext.uniform("uModelMatrix", Transformation);
-    ShaderContext.uniform("uViewMatrix", Camera.getViewMatrix());
-    ShaderContext.uniform("uProjMatrix", Camera.getProjectionMatrix());
-    ShaderContext.uniform("uNormalMatrix", glm::transpose(glm::inverse(Transformation)));
 
     // If the ibo is dirty, sync it!
     if (IndexBufferObject->isDirty())
