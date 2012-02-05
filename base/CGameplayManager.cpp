@@ -93,6 +93,7 @@ void CGameplayManager::run(float const TickTime)
     {
         SEnemyDeathEvent Event;
         Event.Enemy = & * it;
+        Event.Renderable = Event.Enemy->Renderable;
         fprintf(stderr, "%d\n", &GameEventManager->OnEnemyDeath);
         GameEventManager->OnEnemyDeath(Event);
 
