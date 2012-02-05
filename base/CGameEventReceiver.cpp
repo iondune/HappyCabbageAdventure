@@ -1,11 +1,19 @@
+#include <stdio.h>
+
 #include "CGameEventReceiver.h"
+
 int numKilled;
-CGameEventReceiver::CGameEventReceiver() {
+
+CGameEventReceiver::CGameEventReceiver()
+{
    numKilled = 0;
 }
-#include <stdio.h>
+
 void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
-   printf("Removing %d\n", Event.Renderable);
-   CApplication::get().getSceneManager().removeRenderable((CMeshRenderable*)Event.Renderable);
-   numKilled++;
+    fprintf(stderr, "Removing enemy %d\n", Event.Enemy);
+    fprintf(stderr, "Removing renderable %d\n", Event.Renderable);
+
+    //CApplication::get().getSceneManager().removeRenderable(Event.Renderable);
+    
+    numKilled++;
 }

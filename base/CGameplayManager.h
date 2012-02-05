@@ -5,6 +5,7 @@
 #include "sound.h"
 
 class CGameEventManager;
+class CRenderable;
 
 class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 {
@@ -14,7 +15,7 @@ public:
     struct SEnemy
     {
         Cabbage::Collider::CActor * Actor;
-        void* Renderable;
+        CRenderable * Renderable;
     };
 
     typedef std::vector<SEnemy> EnemyList;
@@ -44,7 +45,7 @@ public:
 
     void run(float const TickTime);
 
-    void addEnemy(SVector2 const & Position, void* renderable);
+    void addEnemy(SVector2 const & Position, CRenderable * renderable);
 
     CGameEventManager & getGameEventManager();
 
