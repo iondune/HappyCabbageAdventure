@@ -320,6 +320,8 @@ CMesh * const CMeshLoader::createCubeMesh()
         Mesh->Triangles[2*i+1].Indices[2] = 4*i + 3;
     }
 
+    Mesh->calculateNormalsPerFace();
+
     return Mesh;
 }
 
@@ -348,6 +350,13 @@ CMesh * const CMeshLoader::createDiscMesh(unsigned int const Triangles)
         Mesh->Triangles[i].Indices[1] = i*3 + 1;
         Mesh->Triangles[i].Indices[2] = i*3 + 2;
     }
+
+    for (unsigned int i = 0; i < Mesh->Vertices.size(); ++ i)
+    {
+        Mesh->Vertices[i].TextureCoordinates = SVector2(Mesh->Vertices[i].Position.X, Mesh->Vertices[i].Position.Y) + SVector2(0.5f);
+    }
+
+    Mesh->calculateNormalsPerFace();
 
     return Mesh;
 }
