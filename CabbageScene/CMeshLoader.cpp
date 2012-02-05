@@ -272,64 +272,53 @@ CMesh * const CMeshLoader::loadAsciiMesh(std::string const & fileName)
 CMesh * const CMeshLoader::createCubeMesh()
 {
     CMesh * Mesh = new CMesh();
-    Mesh->Vertices.resize(8);
+    Mesh->Vertices.resize(24);
     Mesh->Vertices[0].Position = SVector3(-0.5, -0.5, -0.5);
     Mesh->Vertices[1].Position = SVector3(-0.5,  0.5, -0.5);
     Mesh->Vertices[2].Position = SVector3( 0.5,  0.5, -0.5);
     Mesh->Vertices[3].Position = SVector3( 0.5, -0.5, -0.5);
-    Mesh->Vertices[4].Position = SVector3(-0.5, -0.5,  0.5);
-    Mesh->Vertices[5].Position = SVector3(-0.5,  0.5,  0.5);
-    Mesh->Vertices[6].Position = SVector3( 0.5,  0.5,  0.5);
-    Mesh->Vertices[7].Position = SVector3( 0.5, -0.5,  0.5);
+
+    Mesh->Vertices[4].Position = SVector3( 0.5,  0.5, -0.5);
+    Mesh->Vertices[5].Position = SVector3( 0.5, -0.5, -0.5);
+    Mesh->Vertices[6].Position = SVector3( 0.5, -0.5,  0.5);
+    Mesh->Vertices[7].Position = SVector3( 0.5,  0.5,  0.5);
+
+    Mesh->Vertices[8].Position = SVector3( 0.5, -0.5,  0.5);
+    Mesh->Vertices[9].Position = SVector3( 0.5,  0.5,  0.5);
+    Mesh->Vertices[10].Position = SVector3(-0.5,  0.5,  0.5);
+    Mesh->Vertices[11].Position = SVector3(-0.5, -0.5,  0.5);
+
+    Mesh->Vertices[12].Position = SVector3(-0.5,  0.5,  0.5);
+    Mesh->Vertices[13].Position = SVector3(-0.5, -0.5,  0.5);
+    Mesh->Vertices[14].Position = SVector3(-0.5, -0.5, -0.5);
+    Mesh->Vertices[15].Position = SVector3(-0.5,  0.5, -0.5);
+
+    Mesh->Vertices[16].Position = SVector3(-0.5,  0.5, -0.5);
+    Mesh->Vertices[17].Position = SVector3(-0.5,  0.5,  0.5);
+    Mesh->Vertices[18].Position = SVector3( 0.5,  0.5,  0.5);
+    Mesh->Vertices[19].Position = SVector3( 0.5,  0.5, -0.5);
+
+    Mesh->Vertices[20].Position = SVector3( 0.5, -0.5, -0.5);
+    Mesh->Vertices[21].Position = SVector3( 0.5, -0.5,  0.5);
+    Mesh->Vertices[22].Position = SVector3(-0.5, -0.5,  0.5);
+    Mesh->Vertices[23].Position = SVector3(-0.5, -0.5, -0.5);
 
     Mesh->Triangles.resize(12);
-    Mesh->Triangles[0].Indices[0] = 0;
-    Mesh->Triangles[0].Indices[1] = 1;
-    Mesh->Triangles[0].Indices[2] = 2;
+    for (int i = 0; i < 6; ++ i)
+    {
+        Mesh->Vertices[4*i + 0].TextureCoordinates = SVector2(0, 1);
+        Mesh->Vertices[4*i + 1].TextureCoordinates = SVector2(0, 0);
+        Mesh->Vertices[4*i + 2].TextureCoordinates = SVector2(1, 0);
+        Mesh->Vertices[4*i + 3].TextureCoordinates = SVector2(1, 1);
 
-    Mesh->Triangles[1].Indices[0] = 0;
-    Mesh->Triangles[1].Indices[1] = 2;
-    Mesh->Triangles[1].Indices[2] = 3;
+        Mesh->Triangles[2*i].Indices[0] = 4*i + 0;
+        Mesh->Triangles[2*i].Indices[1] = 4*i + 1;
+        Mesh->Triangles[2*i].Indices[2] = 4*i + 2;
 
-    Mesh->Triangles[2].Indices[0] = 7;
-    Mesh->Triangles[2].Indices[1] = 6;
-    Mesh->Triangles[2].Indices[2] = 4;
-
-    Mesh->Triangles[3].Indices[0] = 4;
-    Mesh->Triangles[3].Indices[1] = 6;
-    Mesh->Triangles[3].Indices[2] = 5;
-
-    Mesh->Triangles[4].Indices[0] = 0;
-    Mesh->Triangles[4].Indices[1] = 3;
-    Mesh->Triangles[4].Indices[2] = 7;
-
-    Mesh->Triangles[5].Indices[0] = 0;
-    Mesh->Triangles[5].Indices[1] = 7;
-    Mesh->Triangles[5].Indices[2] = 4;
-
-    Mesh->Triangles[6].Indices[0] = 4;
-    Mesh->Triangles[6].Indices[1] = 5;
-    Mesh->Triangles[6].Indices[2] = 1;
-
-    Mesh->Triangles[7].Indices[0] = 4;
-    Mesh->Triangles[7].Indices[1] = 1;
-    Mesh->Triangles[7].Indices[2] = 0;
-
-    Mesh->Triangles[8].Indices[0] = 3;
-    Mesh->Triangles[8].Indices[1] = 2;
-    Mesh->Triangles[8].Indices[2] = 6;
-
-    Mesh->Triangles[9].Indices[0] = 3;
-    Mesh->Triangles[9].Indices[1] = 6;
-    Mesh->Triangles[9].Indices[2] = 7;
-
-    Mesh->Triangles[10].Indices[0] = 1;
-    Mesh->Triangles[10].Indices[1] = 5;
-    Mesh->Triangles[10].Indices[2] = 6;
-
-    Mesh->Triangles[11].Indices[0] = 1;
-    Mesh->Triangles[11].Indices[1] = 6;
-    Mesh->Triangles[11].Indices[2] = 2;
+        Mesh->Triangles[2*i+1].Indices[0] = 4*i + 0;
+        Mesh->Triangles[2*i+1].Indices[1] = 4*i + 2;
+        Mesh->Triangles[2*i+1].Indices[2] = 4*i + 3;
+    }
 
     return Mesh;
 }
