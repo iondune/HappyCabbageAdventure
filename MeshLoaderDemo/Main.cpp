@@ -58,7 +58,7 @@ public:
 
 
         // Attempt to load mesh
-        MeshFace = CMeshLoader::load3dsMesh("spaceship.3ds");
+        MeshFace = CMeshLoader::createCubeMesh();//("spaceship.3ds");
         if (MeshFace)
         {
             MeshFace->linearizeIndices();
@@ -67,7 +67,7 @@ public:
             MeshFace->calculateNormalsPerFace();
         }
 
-        MeshVertex = CMeshLoader::load3dsMesh("spaceship.3ds");
+        MeshVertex = CMeshLoader::createCubeMesh();//load3dsMesh("spaceship.3ds");
         if (MeshVertex)
         {
             MeshVertex->resizeMesh(SVector3(1.5));
