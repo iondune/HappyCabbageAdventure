@@ -6,13 +6,17 @@
 
 extern int numKilled;
 
-class CGameState;
-class CGameEventReceiver : public sigslot::has_slots<> {
-   friend class CGameState;
-   CGameEventReceiver();
+class CGameEventReceiver : public sigslot::has_slots<>
+{
 
-   public:
-      void OnEnemyDeath(SEnemyDeathEvent const & Event);
+    friend class CGameState;
+
+    CGameEventReceiver();
+
+    public:
+
+        void OnEnemyDeath(SEnemyDeathEvent const & Event);
+
 };
 
 #endif

@@ -21,55 +21,52 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
 
     float const HitThreshold = 0.05f;
 
-    for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end();)
+    for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
     {
-    if (Other == it->Actor)
-    {
-        if (PlayerActor->getArea().Position.Y > Other->getArea().otherCorner().Y - HitThreshold)
+        if (Other == it->Actor)
         {
-            KillList.push_back(* it);
-            it = Enemies.erase(it);
-        }
-        else
-        {
-            if (isPlayerAlive() && PlayerRecovering <= 0.f)
+            if (PlayerActor->getArea().Position.Y > Other->getArea().otherCorner().Y - HitThreshold)
             {
-                SPlayerDamagedEvent Event;
-                Event.DamagedBy = & * it;
-                GameEventManager->OnPlayerDamaged(Event);
+                KillList.push_back(* it);
+                fprintf(stderr, "Enemy detected as dead! %d\n", it->Renderable);
 
-                -- PlayerHealth;
-
-                if (PlayerHealth <= 0)
-                {
-                    SPlayerDeathEvent Event;
-                    Event.KilledBy = & * it;
-                    GameEventManager->OnPlayerDeath(Event);
-                }
-
-                //Chris Code.  Damage Sound plays here
-                if(playTakeDmg) {
-                    Mix_PlayChannel(-1, takeDmg, 0);
-                }
-
-                float const KnockbackSpeed = 7.f;
-                float const KnockbackDuration = 0.2f;
-
-                PlayerRecovering = KnockbackDuration*3;
-
-                if (PlayerActor->getArea().getCenter().X > Other->getArea().getCenter().X)
-                    PlayerActor->setImpulse(SVector2(1.f, 0.5f) * KnockbackSpeed, KnockbackDuration);
-                else
-                    PlayerActor->setImpulse(SVector2(-1.f, 0.5f) * KnockbackSpeed, KnockbackDuration);
+                Enemies.erase(it);
             }
+            else
+            {
+                if (isPlayerAlive() && PlayerRecovering <= 0.f)
+                {
+                    SPlayerDamagedEvent Event;
+                    Event.DamagedBy = & * it;
+                    GameEventManager->OnPlayerDamaged(Event);
 
-            ++ it;
+                    -- PlayerHealth;
+
+                    if (PlayerHealth <= 0)
+                    {
+                        SPlayerDeathEvent Event;
+                        Event.KilledBy = & * it;
+                        GameEventManager->OnPlayerDeath(Event);
+                    }
+
+                    //Chris Code.  Damage Sound plays here
+                    if(playTakeDmg) {
+                        Mix_PlayChannel(-1, takeDmg, 0);
+                    }
+
+                    float const KnockbackSpeed = 7.f;
+                    float const KnockbackDuration = 0.2f;
+
+                    PlayerRecovering = KnockbackDuration*3;
+
+                    if (PlayerActor->getArea().getCenter().X > Other->getArea().getCenter().X)
+                        PlayerActor->setImpulse(SVector2(1.f, 0.5f) * KnockbackSpeed, KnockbackDuration);
+                    else
+                        PlayerActor->setImpulse(SVector2(-1.f, 0.5f) * KnockbackSpeed, KnockbackDuration);
+                }
+            }
+            break;
         }
-        break;
-    }
-    else {
-      ++it;
-    }
     }
 
 }
@@ -93,7 +90,8 @@ void CGameplayManager::run(float const TickTime)
     {
         SEnemyDeathEvent Event;
         Event.Enemy = & * it;
-        fprintf(stderr, "%d\n", &GameEventManager->OnEnemyDeath);
+        Event.Renderable = it->Renderable;
+        fprintf(stderr, "Enemy removed from kill list %d\n", it->Renderable);
         GameEventManager->OnEnemyDeath(Event);
 
         Mix_PlayChannel(-1, killEnemy, 0);
@@ -121,7 +119,7 @@ void CGameplayManager::run(float const TickTime)
     }
 }
 
-void CGameplayManager::addEnemy(SVector2 const & Position, void* renderable)
+void CGameplayManager::addEnemy(SVector2 const & Position, CRenderable * renderable)
 {
     SEnemy enemy;
     enemy.Actor = Engine->addActor();

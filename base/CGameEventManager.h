@@ -5,10 +5,12 @@
 #include "../CabbageFramework/sigslot/sigslot.h"
 #include "CGameplayManager.h"
 
+class CRenderable;
+
 struct SEnemyDeathEvent
 {
     CGameplayManager::SEnemy * Enemy;
-    void* Renderable;
+    CRenderable * Renderable;
 };
 
 struct SEnemyDamagedEvent
