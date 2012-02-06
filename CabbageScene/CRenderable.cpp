@@ -75,44 +75,13 @@ SMaterial::SMaterial()
 
 
 CRenderable::CRenderable()
-    : Scale(1), DrawType(GL_TRIANGLES), NormalObject(0), DebugDataFlags(0), NormalColorShader(0), IndexBufferObject(0)
+    : DrawType(GL_TRIANGLES), NormalObject(0),  NormalColorShader(0), IndexBufferObject(0)
 {
     uModelMatrix = boost::shared_ptr<CMat4Uniform>(new CMat4Uniform());
     uNormalMatrix = boost::shared_ptr<CMat4Uniform>(new CMat4Uniform());
 
     addUniform("uModelMatrix", uModelMatrix);
     addUniform("uNormalMatrix", uNormalMatrix);
-}
-
-SVector3 const & CRenderable::getTranslation() const
-{
-    return Translation;
-}
-
-SVector3 const & CRenderable::getRotation() const
-{
-    return Rotation;
-}
-
-SVector3 const & CRenderable::getScale() const
-{
-    return Scale;
-}
-
-
-void CRenderable::setTranslation(SVector3 const & translation)
-{
-    Translation = translation;
-}
-
-void CRenderable::setRotation(SVector3 const & rotation)
-{
-    Rotation = rotation;
-}
-
-void CRenderable::setScale(SVector3 const & scale)
-{
-    Scale = scale;
 }
 
 SMaterial & CRenderable::getMaterial()
@@ -194,7 +163,7 @@ void CRenderable::draw(CScene const * const scene)
 {
     // If no ibo loaded, we can't draw anything
     // If the ibo loaded hasn't been synced as an index buffer object, 
-    if (! IndexBufferObject || ! IndexBufferObject->isIndexBuffer())
+    if (! IndexBufferObject || ! IndexBufferObject->isIndexBuffer() || ! Visible)
         return;
 
     CShader * ShaderToUse = Material.Shader;
@@ -275,16 +244,6 @@ void CRenderable::draw(CScene const * const scene)
     }
 }
 
-SBoundingBox3 const & CRenderable::getBoundingBox() const
-{
-    return BoundingBox;
-}
-
-SBoundingBox3 & CRenderable::getBoundingBox()
-{
-    return BoundingBox;
-}
-
 void CRenderable::addAttribute(std::string const & label, boost::shared_ptr<IAttribute> attribute)
 {
     Attributes[label] = SAttribute(attribute);
@@ -309,30 +268,4 @@ void CRenderable::removeUniform(std::string const & label)
 
     if (it != Uniforms.end())
         Uniforms.erase(it);
-}
-
-bool const CRenderable::isDebugDataEnabled(EDebugData::Domain const type) const
-{
-    return (type & DebugDataFlags) != 0;
-}
-
-void CRenderable::enableDebugData(EDebugData::Domain const type)
-{
-    if (type == EDebugData::None)
-        DebugDataFlags = 0;
-    else
-        DebugDataFlags |= type;
-}
-
-void CRenderable::disableDebugData(EDebugData::Domain const type)
-{
-    if (type == EDebugData::None)
-        DebugDataFlags = 0;
-    else
-        DebugDataFlags ^= type;
-}
-
-bool const CRenderable::intersectsWithLine(SLine3 const & line) const
-{
-    return BoundingBox.intersectsWithLine(line);
 }

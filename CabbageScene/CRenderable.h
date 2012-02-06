@@ -13,6 +13,7 @@
 #include "CShader.h"
 #include "CTexture.h"
 #include "CShaderContext.h"
+#include "IRenderable.h"
 
 
 class IAttribute
@@ -83,21 +84,6 @@ public:
 
 };
 
-
-class EDebugData
-{
-
-public:
-
-    enum Domain
-    {
-        None = 0,
-        Normals = 1,
-        NormalColors = 2
-    };
-
-};
-
 struct SMaterial
 {
     CShader * Shader;
@@ -106,19 +92,13 @@ struct SMaterial
     SMaterial();
 };
 
-class CScene;
-
-class CRenderable
+class CRenderable : public IRenderable
 {
 
 protected:
 
-    // Model Transformation
-    SVector3 Translation, Rotation, Scale;
-
     // Implicit uniforms
     boost::shared_ptr<CMat4Uniform> uModelMatrix, uNormalMatrix;
-    SBoundingBox3 BoundingBox;
 
 public:
 
@@ -154,7 +134,6 @@ protected:
     CRenderable * NormalObject;
 
     GLenum DrawType;
-    int DebugDataFlags;
 
     void loadHandlesFromShader(CShader const * const shader, CScene const * const scene);
     CScene const * LastLoadedScene;
@@ -163,14 +142,6 @@ protected:
 public:
 
     CRenderable();
-
-    SVector3 const & getTranslation() const;
-    SVector3 const & getRotation() const;
-    SVector3 const & getScale() const;
-
-    void setTranslation(SVector3 const & translation);
-    void setRotation(SVector3 const & rotation);
-    void setScale(SVector3 const & scale);
 
     SMaterial & getMaterial();
     SMaterial const & getMaterial() const;
@@ -183,20 +154,10 @@ public:
 
     void draw(CScene const * const scene);
 
-    SBoundingBox3 const & getBoundingBox() const;
-    SBoundingBox3 & getBoundingBox();
-    void setBoundingBox(SBoundingBox3 const & boundingBox);
-
     void addAttribute(std::string const & label, boost::shared_ptr<IAttribute> attribute);
     void addUniform(std::string const & label, boost::shared_ptr<IUniform> uniform);
     void removeAttribute(std::string const & label);
     void removeUniform(std::string const & label);
-
-    bool const isDebugDataEnabled(EDebugData::Domain const type) const;
-    void enableDebugData(EDebugData::Domain const type);
-    void disableDebugData(EDebugData::Domain const type);
-
-    bool const intersectsWithLine(SLine3 const & line) const;
 
 };
 

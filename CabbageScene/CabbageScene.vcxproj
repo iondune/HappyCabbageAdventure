@@ -78,6 +78,7 @@
     <ClInclude Include="CTexture.h" />
     <ClInclude Include="CImageLoader.h" />
     <ClInclude Include="CRenderable.h" />
+    <ClInclude Include="IRenderable.h" />
     <ClInclude Include="SVertex.h" />
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +94,7 @@
     <ClCompile Include="CTexture.cpp" />
     <ClCompile Include="CImageLoader.cpp" />
     <ClCompile Include="CRenderable.cpp" />
+    <ClCompile Include="IRenderable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
