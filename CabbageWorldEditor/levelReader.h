@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Cimg-1.4.9\CImg.h"
-#include "wmlwriter_src\xmlwriter.h"
+#include "../CabbageScene/CImage.h"
+#include "wmlwriter_src/xmlwriter.h"
 #include <sstream>
 #include <vector>
 #include <stdio.h>
