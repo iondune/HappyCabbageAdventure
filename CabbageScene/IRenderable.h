@@ -38,11 +38,13 @@ protected:
 
     // Model Transformation
     SVector3 Translation, Rotation, Scale;
+    glm::mat4 RotationMatrix;
     SBoundingBox3 BoundingBox;
 
     int DebugDataFlags;
 
     bool Visible;
+    bool UsesRotationMatrix;
 
 public:
 
@@ -50,10 +52,12 @@ public:
 
     SVector3 const & getTranslation() const;
     SVector3 const & getRotation() const;
+    glm::mat4 const & getRotationMatrix() const;
     SVector3 const & getScale() const;
 
     void setTranslation(SVector3 const & translation);
     void setRotation(SVector3 const & rotation);
+    void setRotationMatrix(glm::mat4 const & matrix);
     void setScale(SVector3 const & scale);
 
     void draw(CScene const * const scene);

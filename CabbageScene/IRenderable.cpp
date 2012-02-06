@@ -9,7 +9,7 @@
 
 
 IRenderable::IRenderable()
-    : Scale(1), DebugDataFlags(0)
+    : Scale(1), DebugDataFlags(0), UsesRotationMatrix(false)
 {}
 
 
@@ -21,6 +21,11 @@ SVector3 const & IRenderable::getTranslation() const
 SVector3 const & IRenderable::getRotation() const
 {
     return Rotation;
+}
+
+glm::mat4 const & IRenderable::getRotationMatrix() const
+{
+    return RotationMatrix;
 }
 
 SVector3 const & IRenderable::getScale() const
@@ -36,7 +41,14 @@ void IRenderable::setTranslation(SVector3 const & translation)
 
 void IRenderable::setRotation(SVector3 const & rotation)
 {
+    UsesRotationMatrix = false;
     Rotation = rotation;
+}
+
+void IRenderable::setRotationMatrix(glm::mat4 const & matrix)
+{
+    UsesRotationMatrix = true;
+    RotationMatrix = matrix;
 }
 
 void IRenderable::setScale(SVector3 const & scale)
