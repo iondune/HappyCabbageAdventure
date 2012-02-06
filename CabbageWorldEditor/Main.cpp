@@ -15,8 +15,8 @@
 #include <GL/glew.h>
 #include "../CabbageFramework/CApplication.h"
 #include <string>
-#include "../SFML world loader/SFML world loader/levelReader.h"
-#include "../SFML world loader/SFML world loader/xmlToCode.cpp"
+#include "levelReader.h"
+#include "xmlToCode.cpp"
 #include "../CabbageCore/CabbageCore.h"
 
 #include "CLevelManager.h"
