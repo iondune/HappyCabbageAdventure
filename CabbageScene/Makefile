@@ -44,10 +44,10 @@ CImageLoader.o: CImageLoader.cpp
 	g++ -o CImageLoader.o CImageLoader.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CSceneManager.o: CSceneManager.cpp
-	g++ -o $@ CSceneManager.cpp -c $(DIRECTORES) $(OPENGL)
+	g++ -o $@ CSceneManager.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CMeshRenderable.o: CMeshRenderable.cpp
-	g++ -o $@ CMeshRenderable.cpp -c $(DIRECTORES) $(OPENGL)
+	g++ -o $@ CMeshRenderable.cpp -c $(DIRECTORIES) $(OPENGL)
 
 ../lib/libCabbageScene.a: $(OFILES)
 	rm -f $@

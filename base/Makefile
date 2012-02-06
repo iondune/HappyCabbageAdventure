@@ -3,6 +3,7 @@ SOURCES=main.cpp CPlayerView.cpp Materials.cpp FreeType.cpp CGameplayManager.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o)
 CABBAGE=-L../lib/ -lCabbageCollider -lCabbageFramework -lCabbageScene
 COMPILER_VERSION=-std=c++0x
+INCLUDE=-I../CabbageCore
 
 #Chris Code.  Adding check for 32 or 64 bit
 LBITS:=$(shell getconf LONG_BIT)
@@ -24,13 +25,13 @@ cabbage: ${OBJECTS}
 	g++ ${COMPILER_VERSION} ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL -lglut `sdl-config --cflags --libs` ${CABBAGE} ${MIXLIB} `freetype-config --libs` -g -o $@
 
 main.o: main.cpp draw.h header.h
-	g++ `sdl-config --cflags` `freetype-config --cflags` -c main.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+	g++ $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c main.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 sound.o: sound.cpp sound.h
 	g++ `sdl-config --cflags` -c sound.cpp -DGL_GLEXT_PROTOTYPES
 CPlayerView.o: CPlayerView.cpp CPlayerView.h
-	g++ -c CPlayerView.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+	g++ $(INCLUDE) -c CPlayerView.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CGameEventReceiver.o: CGameEventReceiver.cpp CGameEventReceiver.h
-	g++ `sdl-config --cflags` -c CGameEventReceiver.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+	g++ $(INCLUDE) `sdl-config --cflags` -c CGameEventReceiver.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CGameplayManager.o: CGameplayManager.cpp CGameplayManager.h
 	g++ `sdl-config --cflags` -c CGameplayManager.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 Materials.o: Materials.cpp Materials.h
