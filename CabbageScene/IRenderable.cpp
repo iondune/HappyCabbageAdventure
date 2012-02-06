@@ -45,7 +45,7 @@ void IRenderable::setRotation(SVector3 const & rotation)
     Rotation = rotation;
 }
 
-void IRenderable::setRotationMatrix(glm::mat4 const & matrix)
+void IRenderable::setRotation(glm::mat4 const & matrix)
 {
     UsesRotationMatrix = true;
     RotationMatrix = matrix;

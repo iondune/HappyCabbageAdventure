@@ -140,16 +140,19 @@ void CApplication::run()
 
 					case SDL_BUTTON_LEFT:
 						MouseEvent.Button = SMouseEvent::EButton::Left;
+                        EventManager->MouseStates[SMouseEvent::EButton::Left] = MouseEvent.Pressed;
 						EventManager->OnMouseEvent(MouseEvent);
 						break;
 						
 					case SDL_BUTTON_RIGHT:
 						MouseEvent.Button = SMouseEvent::EButton::Right;
+                        EventManager->MouseStates[SMouseEvent::EButton::Right] = MouseEvent.Pressed;
 						EventManager->OnMouseEvent(MouseEvent);
 						break;
 
 					case SDL_BUTTON_MIDDLE:
 						MouseEvent.Button = SMouseEvent::EButton::Middle;
+                        EventManager->MouseStates[SMouseEvent::EButton::Middle] = MouseEvent.Pressed;
 						EventManager->OnMouseEvent(MouseEvent);
 						break;
 
@@ -212,4 +215,9 @@ float const CApplication::getElapsedTime() const
 float const CApplication::getRunTime() const
 {
    return (float) SDL_GetTicks() / 1000.f;
+}
+
+SPosition2 const & CApplication::getWindowSize() const
+{
+    return WindowSize;
 }

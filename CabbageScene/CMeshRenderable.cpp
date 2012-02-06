@@ -52,7 +52,7 @@ void CMeshRenderable::setMesh(CMesh * mesh)
         NormalObject->addAttribute("aPosition", boost::shared_ptr<IAttribute>(new CFloatVecAttribute(Mesh->makeNormalLineBuffer(), 3)));
         NormalObject->addAttribute("aColor", boost::shared_ptr<IAttribute>(new CFloatVecAttribute(Mesh->makeNormalColorBuffer(), 3)));
         NormalObject->setIndexBufferObject(Mesh->makeNormalIndexBuffer());
-        Material.Shader = CShaderLoader::loadShader("Simple");
+        NormalObject->getMaterial().Shader = CShaderLoader::loadShader("Simple");
         NormalObject->setDrawType(GL_LINES);
 
         // Reset the shader to load attributes again

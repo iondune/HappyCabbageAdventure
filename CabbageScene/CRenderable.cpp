@@ -233,7 +233,10 @@ void CRenderable::draw(CScene const * const scene)
     {
         NormalObject->setTranslation(Translation);
         NormalObject->setScale(Scale);
-        NormalObject->setRotation(Rotation);
+        if (UsesRotationMatrix)
+            NormalObject->setRotation(RotationMatrix);
+        else
+            NormalObject->setRotation(Rotation);
         NormalObject->draw(scene);
     }
 

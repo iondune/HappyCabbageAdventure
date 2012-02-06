@@ -41,6 +41,8 @@ public:
     float const getElapsedTime() const;
     float const getRunTime() const;
 
+    SPosition2 const & getWindowSize() const;
+
 };
 
 #endif

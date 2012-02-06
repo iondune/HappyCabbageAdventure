@@ -57,7 +57,7 @@ public:
 
     void setTranslation(SVector3 const & translation);
     void setRotation(SVector3 const & rotation);
-    void setRotationMatrix(glm::mat4 const & matrix);
+    void setRotation(glm::mat4 const & matrix);
     void setScale(SVector3 const & scale);
 
     void draw(CScene const * const scene);

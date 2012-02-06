@@ -24,7 +24,8 @@ struct SMouseEvent
         {
             Left,
             Right,
-            Middle
+            Middle,
+            Count
         };
 
         Domain Value;
@@ -69,6 +70,7 @@ class CEventManager
     CEventManager();
 
     bool KeyStates[SDLK_LAST];
+    bool MouseStates[SMouseEvent::EButton::Count];
     SPosition2 MousePositionState;
 
 public:	
@@ -85,6 +87,7 @@ public:
     sigslot::signal0<> OnApplicationExit;
 
     bool const (& IsKeyDown)[SDLK_LAST];
+    bool const (& IsMouseDown)[SMouseEvent::EButton::Count];
 
     SPosition2 const & MouseLocation;
 

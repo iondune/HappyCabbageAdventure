@@ -23,13 +23,17 @@
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp" //perspective, trans etc
+#include "glm/gtc/type_ptr.hpp" //value_ptr
+
 class CMainState : public CState<CMainState>
 {
 
 public:
 
     CMainState()
-        : WindowWidth(1440), WindowHeight(900), Scale(1), Animate(false)
+        : WindowWidth(1440), WindowHeight(900), Scale(1), Animate(false), Mode(0)
     {}
 
     void begin()
@@ -48,7 +52,7 @@ public:
         CApplication::get().getSceneManager().setActiveCamera(Camera);
 
         // Attempt to load shader and attributes
-        Shader = CShaderLoader::loadShader("DiffuseTexture");
+        Shader = CShaderLoader::loadShader("Diffuse");
         if (! Shader)
         {
             std::cerr << "Unable to open or compile necessary shader." << std::endl;
@@ -58,19 +62,19 @@ public:
 
 
         // Attempt to load mesh
-        MeshFace = CMeshLoader::createCubeMesh();//("spaceship.3ds");
+        MeshFace = CMeshLoader::loadAsciiMesh("Models/bunny10k.m");
         if (MeshFace)
         {
             MeshFace->linearizeIndices();
-            MeshFace->resizeMesh(SVector3(0.5));
+            MeshFace->resizeMesh(SVector3(1.5));
             MeshFace->centerMeshByExtents(SVector3(0));
             MeshFace->calculateNormalsPerFace();
         }
 
-        MeshVertex = CMeshLoader::createCubeMesh();//load3dsMesh("spaceship.3ds");
+        MeshVertex = CMeshLoader::loadAsciiMesh("Models/bunny10k.m");
         if (MeshVertex)
         {
-            MeshVertex->resizeMesh(SVector3(0.5));
+            MeshVertex->resizeMesh(SVector3(1.5));
             MeshVertex->centerMeshByExtents(SVector3(0));
             MeshVertex->calculateNormalsPerVertex();
         }
@@ -110,7 +114,7 @@ public:
 
 
         // Animates the loaded model by modulating it's size
-        static float const ScaleSpeed = 1.f;
+        /*static float const ScaleSpeed = 1.f;
         static float const ScaleThreshold = 0.4f;
         if (Animate)
             ScaleTimer += Elapsed * ScaleSpeed;
@@ -122,7 +126,7 @@ public:
         {
             Rotation.X += RotationSpeed*Elapsed;
             Rotation.Y += RotationSpeed*Elapsed*2;
-        }
+        }*/
         
 
         Renderable->setTranslation(Translation);
@@ -181,7 +185,7 @@ public:
         case SDLK_b:
 
             if (! Event.Pressed)
-                Renderable->getMaterial().Shader = CShaderLoader::loadShader("DiffuseTexture");
+                Renderable->getMaterial().Shader = CShaderLoader::loadShader("Diffuse");
 
             break;
 
@@ -192,6 +196,119 @@ public:
 
             break;
 
+        case SDLK_r:
+
+            Mode = 0;
+
+            break;
+
+        case SDLK_t:
+
+            Mode = 1;
+
+            break;
+
+        case SDLK_e:
+
+            Mode = 2;
+
+            break;
+
+        }
+    }
+
+    glm::vec3 LastVec;
+
+    glm::vec3 makeSphereVec(int x, int y)
+    {
+        float ix = 2*(x / (float) CApplication::get().getWindowSize().X) - 1.f;
+        float iy = 1.f - 2*(y / (float) CApplication::get().getWindowSize().X);
+
+        float length = sqrt(ix*ix + iy*iy);
+
+        if (length > 1.f)
+        {
+            return glm::vec3(ix / length, iy / length, 0);
+        }
+        else
+        {
+            return glm::vec3(ix, iy, sqrt(1 - ix*ix - iy*iy));
+        }
+    }
+
+    int Mode;
+
+    void OnMouseEvent(SMouseEvent const & Event)
+    {
+        switch (Event.Type.Value)
+        {
+
+        case SMouseEvent::EType::Click:
+
+            LastVec = makeSphereVec(Event.Location.X, Event.Location.Y);
+
+            break;
+
+        case SMouseEvent::EType::Move:
+            {
+                float difX = (float) Event.Movement.X;
+                float difY = (float) Event.Movement.Y;
+                glm::vec3 NewVec = makeSphereVec(Event.Location.X, Event.Location.Y);
+                glm::mat4 ViewMatrix = CApplication::get().getSceneManager().getActiveCamera()->getViewMatrix();
+
+                if (CApplication::get().getEventManager().IsMouseDown[Event.Button.Left])
+                {
+	                if (Mode == 0)
+	                {
+		                glm::vec3 cross = glm::cross(LastVec, NewVec);
+		                glm::vec4 axis(cross.x, cross.y, cross.z, 0);
+		                float dot = 180.f / 3.1415f * acos(glm::dot(LastVec, NewVec));
+
+		                if (cross.x == cross.x && cross.y == cross.y && cross.z == cross.z && dot == dot && (cross.x != 0 || cross.y != 0 || cross.z != 0))
+		                {
+			
+                            glm::mat4 inverse = glm::inverse(ViewMatrix);
+			                axis = inverse * axis;
+
+			                glm::vec3 rotAxis(axis.x, axis.y, axis.z);
+			                Rotation = glm::rotate(glm::mat4(1.f), dot, rotAxis)*Rotation;
+		                }
+		                else
+		                {
+			                printf("NaN! Skipping\n");
+		                }
+	                }
+	                else if (Mode == 1)
+	                {
+		                float const moveSpeed = 0.01f;
+		                glm::vec4 trans(difX*moveSpeed, difY*moveSpeed, 0, 0);
+		                trans = ViewMatrix * trans;
+		                Translation.X += trans.x;
+		                Translation.Y -= trans.y;
+		                Translation.Z -= trans.z;
+	                }
+	                else if (Mode == 2)
+	                {
+		                float const scaleSpeed = 0.01f;
+                        Scale = SVector3(std::max(std::min(Scale.X + difX*scaleSpeed, 2.f), 0.1f));
+	                }
+                }
+
+                if (CApplication::get().getEventManager().IsMouseDown[Event.Button.Right])
+                {
+                    /*Phi -= difY*0.01f;
+                    Theta += difX*0.01f;
+
+                    if (Phi > 1.55)
+                        Phi = 1.55;
+                    if (Phi < -1.55)
+                        Phi = -1.55;*/
+                }
+
+                LastVec = NewVec;
+
+                break;
+            }
         }
     }
 
@@ -204,7 +321,8 @@ public:
     CScene * Scene;
 
     // Information about mesh
-    SVector3 Translation, Rotation, Scale;
+    SVector3 Translation, Scale;
+    glm::mat4 Rotation;
     int TriangleCount;
 
     // Window information
