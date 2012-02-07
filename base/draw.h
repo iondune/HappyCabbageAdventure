@@ -1,5 +1,163 @@
 #include "../CabbageCore/SVector3.h"
-//For Trees
+
+//Variables need to create VBOs of meshes, textures, and shaders
+CShader *Shader, *Flat, *Diffuse, *DiffuseTexture, *normalColor;  //Use Diffuse for trees (doesn't need texture)
+
+CImage *grassImg, *skyImg, *dirtImg, *blueFlwrImg, *pinkFlwrImg, *ficusImg,
+       *poinImg;
+
+CTexture *grassTxt, *skyTxt, *dirtTxt, *blueFlwrTxt, *pinkFlwrTxt, *ficusTxt,
+         *poinTxt;
+
+CMesh *basicTreeMesh, *cabbageMesh, *christmasTreeMesh, *cubeMesh, *discMesh,
+      *blueFlwrMesh, *pinkFlwrMesh, *ficusMesh, *poinMesh, *enemyMesh;
+
+CMeshRenderable *renderShadow, *playerRenderable, *renderChristmasTree,
+  *renderBasicTree, *renderBlueFlwr, *renderPinkFlwr, *renderFicus, *renderPoin,
+  *tempRender;
+
+std::vector<CMeshRenderable*> blocks, enemies, blueFlwrs, pinkFlwrs, ficuses,
+  basicTrees, xmasTrees, poins;
+
+
+void drawBlueFlwr(float x, float y, float z, float scale, CApplication app) {
+
+   if (y == -1) {
+      y = scale / 2.0f;
+   }
+
+   blueFlwrs.push_back(tempRender = new CMeshRenderable());
+
+   renderBlueFlwr = new CMeshRenderable();
+   renderBlueFlwr->setMesh(blueFlwrMesh);
+   renderBlueFlwr->getMaterial().Texture = (blueFlwrTxt);
+   renderBlueFlwr->getMaterial().Shader = (DiffuseTexture);
+   renderBlueFlwr->setTranslation(SVector3(x, y, z));
+   renderBlueFlwr->setScale(SVector3(scale));
+   renderBlueFlwr->setRotation(SVector3(-90, 0, 0));
+
+   app.getSceneManager().addRenderable(renderBlueFlwr);
+}
+
+void drawPinkFlwr(float x, float y, float z, float scale, CApplication app) {
+
+   if (y == -1) {
+      y = scale / 2.0f;
+   }
+
+   pinkFlwrs.push_back(tempRender = new CMeshRenderable());
+
+   renderPinkFlwr = new CMeshRenderable();
+   renderPinkFlwr->setMesh(pinkFlwrMesh);
+   renderPinkFlwr->getMaterial().Texture = (pinkFlwrTxt);
+   renderPinkFlwr->getMaterial().Shader = (DiffuseTexture);
+   renderPinkFlwr->setTranslation(SVector3(x, y, z));
+   renderPinkFlwr->setScale(SVector3(scale));
+   renderPinkFlwr->setRotation(SVector3(-90, 0, 0));
+
+   app.getSceneManager().addRenderable(renderPinkFlwr);
+}
+
+void drawPoin(float x, float y, float z, float scale, CApplication app) {
+
+   if (y == -1) {
+      y = scale / 2.0f;
+   }
+
+   poins.push_back(tempRender = new CMeshRenderable());
+
+   renderPoin = new CMeshRenderable();
+   renderPoin->setMesh(poinMesh);
+   renderPoin->getMaterial().Texture = (poinTxt);
+   renderPoin->getMaterial().Shader = (DiffuseTexture);
+   renderPoin->setTranslation(SVector3(x, y, z));
+   renderPoin->setScale(SVector3(scale));
+   renderPoin->setRotation(SVector3(-90, 0, 0));
+
+   app.getSceneManager().addRenderable(renderPoin);
+}
+
+void drawFicus(float x, float y, float z, float scale, CApplication app) {
+
+   if (y == -1) {
+      y = scale / 2.0f;
+   }
+
+   ficuses.push_back(tempRender = new CMeshRenderable());
+
+   renderFicus = new CMeshRenderable();
+   renderFicus->setMesh(ficusMesh);
+   renderFicus->getMaterial().Texture = (blueFlwrTxt);
+   renderFicus->getMaterial().Shader = (DiffuseTexture);
+   renderFicus->setTranslation(SVector3(x, y, z));
+   renderFicus->setScale(SVector3(scale));
+   renderFicus->setRotation(SVector3(-90, 0, 0));
+
+   app.getSceneManager().addRenderable(renderFicus);
+}
+
+void drawBasicTree(float x, float y, float z, float scale, CApplication app) {
+
+   if (y == -1) {
+      y = scale / 2.0f;
+   }
+
+   basicTrees.push_back(tempRender = new CMeshRenderable());
+
+   renderBasicTree = new CMeshRenderable();
+   renderBasicTree->setMesh(basicTreeMesh);
+   //renderBasicTree->getMaterial().Texture = (basicTreeTxt);
+   renderBasicTree->getMaterial().Shader = (Flat);
+   renderBasicTree->setTranslation(SVector3(x, y, z));
+   renderBasicTree->setScale(SVector3(scale));
+   renderBasicTree->setRotation(SVector3(-90, 0, 0));
+
+   app.getSceneManager().addRenderable(renderBasicTree);
+}
+
+void drawChristmasTree(float x, float y, float z, float scale, CApplication app) {
+
+   if (y == -1) {
+      y = scale / 2.0f;
+   }
+
+   xmasTrees.push_back(tempRender = new CMeshRenderable());
+
+   renderChristmasTree = new CMeshRenderable();
+   renderChristmasTree->setMesh(christmasTreeMesh);
+   //renderChristmasTree->getMaterial().Texture = (basicTreeTxt);
+   renderChristmasTree->getMaterial().Shader = (Flat);
+   renderChristmasTree->setTranslation(SVector3(x, y, z));
+   renderChristmasTree->setScale(SVector3(scale));
+   renderChristmasTree->setRotation(SVector3(-90, 0, 0));
+
+   app.getSceneManager().addRenderable(renderChristmasTree);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*//For Trees
 obj_type basicTree;
 obj_type christmasTree;
 
@@ -204,4 +362,4 @@ void drawBlock(float x, float y, float w, float h) {
        //glutWireCube(1);
        glutSolidCube(1);
     glPopMatrix();
-}
+}*/

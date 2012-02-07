@@ -1,16 +1,7 @@
 #include <iostream>
 
-#ifdef __unix__
-#include <GL/gl.h>
-#include <SDL/SDL.h>
-#endif
-
 #include "header.h"
 
-#include "../CabbageScene/CabbageScene.h"
-#include "../CabbageFramework/CabbageFramework.h"
-#include "CGameEventManager.h"
-#include "CGameEventReceiver.h"
 
 #define TREE_Y_OFFSET 2.1
 #define ANGLE(j,k) (j==2?3:(j?2:(k?1:0)))
@@ -22,25 +13,6 @@ int backwardsView = 0, overView = 0;
 
 
 freetype::font_data our_font;
-
-//Variables need to create VBOs of meshes, textures, and shaders
-CShader *Shader, *Flat, *Diffuse, *DiffuseTexture, *normalColor;  //Use Diffuse for trees (doesn't need texture)
-
-CImage *grassImg, *skyImg, *dirtImg, *blueFlwrImg, *pinkFlwrImg, *ficusImg,
-       *poinImg;
-
-CTexture *grassTxt, *skyTxt, *dirtTxt, *blueFlwrTxt, *pinkFlwrTxt, *ficusTxt,
-         *poinTxt;
-
-CMesh *basicTreeMesh, *cabbageMesh, *christmasTreeMesh, *cubeMesh, *discMesh,
-      *blueFlwrMesh, *pinkFlwrMesh, *ficusMesh, *poinMesh;
-
-CMeshRenderable *renderShadow, *playerRenderable, *renderChristmasTree, 
-  *renderBasicTree, *renderBlueFlwr, *renderPinkFlwr, *renderFicus, *renderPoin,
-  *tempRender;
-
-std::vector<CMeshRenderable*> blocks, enemies, blueFlwrs, pinkFlwrs, ficuses,
-  basicTrees, xmasTrees, poins;
 
 int WindowWidth, WindowHeight;
 
@@ -205,13 +177,14 @@ class CGameState : public CState<CGameState>
       PrepShadow();
 
       Application.getSceneManager().addRenderable(renderBasicTree);
-      Application.getSceneManager().addRenderable(renderChristmasTree);
       Application.getSceneManager().addRenderable(playerRenderable);
 
-      Application.getSceneManager().addRenderable(renderBlueFlwr);
-      Application.getSceneManager().addRenderable(renderPinkFlwr);
-      Application.getSceneManager().addRenderable(renderFicus);
-      Application.getSceneManager().addRenderable(renderPoin);
+      drawBlueFlwr(-23, -1, 2, .36, Application);
+      drawPinkFlwr(-20, -1, 2, .72, Application);
+      drawPoin(-17, -1, 2, 1.0, Application);
+      drawFicus(-15, -1, -2, 2.0, Application);
+      //drawBasicTree(-20, -1, -2, 2.0, Application);
+      drawChristmasTree(-14, 1, 2, 5.0, Application);
 
       //Initialize Fxns
       EngineInit();
@@ -536,9 +509,10 @@ Application.getSceneManager().addRenderable(tempElement);
 CMeshRenderable* PrepEnemy(float x, float y) {
    CMeshRenderable *tempEnemy;
    enemies.push_back(tempEnemy = new CMeshRenderable());
-   tempEnemy->setMesh(basicTreeMesh);
+   tempEnemy->setMesh(enemyMesh);
    //tempEnemy->setTexture(dirtTxt);
    tempEnemy->getMaterial().Shader = Flat;
+   tempEnemy->setRotation(SVector3(-90, 0, 0));
    Application.getSceneManager().addRenderable(tempEnemy);
    return tempEnemy;
 }
@@ -567,6 +541,17 @@ void LoadShaders() {
 
 void Load3DS()
 {
+   enemyMesh = CMeshLoader::load3dsMesh("Models/rabbit.3DS");
+   if(enemyMesh) {
+      enemyMesh->resizeMesh(SVector3(0.5));
+      enemyMesh->centerMeshByExtents(SVector3(0));
+      enemyMesh->calculateNormalsPerFace();
+   }
+
+   else {
+      fprintf(stderr, "Failed to load the enemy mesh\n");
+   }
+
    basicTreeMesh = CMeshLoader::load3dsMesh("Models/tree.3ds");
    if (basicTreeMesh) {
       basicTreeMesh->resizeMesh(SVector3(0.5));
@@ -575,6 +560,16 @@ void Load3DS()
    }
    else {
       fprintf(stderr, "Failed to load the basic tree mesh\n");
+   }
+
+   christmasTreeMesh = CMeshLoader::load3dsMesh("Models/christmasTree.3ds");
+   if (christmasTreeMesh) {
+      christmasTreeMesh->resizeMesh(SVector3(0.5));
+      christmasTreeMesh->centerMeshByExtents(SVector3(0));
+      christmasTreeMesh->calculateNormalsPerFace();
+   }
+   else {
+      fprintf(stderr, "Failed to load the christmas tree mesh\n");
    }
 
 
@@ -586,7 +581,7 @@ void Load3DS()
       cabbageMesh->calculateNormalsPerFace();
    }
    else {
-      fprintf(stderr, "Failed to load the christmas tree mesh\n");
+      fprintf(stderr, "Failed to load the cababge mesh\n");
    }
 
 
@@ -697,23 +692,4 @@ void PrepMeshes()
    renderPoin->setRotation(SVector3(-90, 0, 0));
    renderPoin->getMaterial().Texture = (poinTxt);
    renderPoin->getMaterial().Shader = DiffuseTexture;
-}
-
-
-void drawBlueFlwr(float x, float y, float z, float scale) {
-
-   if (y == -1) {
-      y = scale / 2.0f;
-   }
-
-   blueFlwrs.push_back(tempRender = new CMeshRenderable());
-
-   renderBlueFlwr = new CMeshRenderable();
-   renderBlueFlwr->setMesh(blueFlwrMesh);
-   renderBlueFlwr->getMaterial().Texture = (blueFlwrTxt);
-   renderBlueFlwr->getMaterial().Shader = (DiffuseTexture);
-   renderBlueFlwr->setTranslation(SVector3(z, y, z));
-   renderBlueFlwr->setScale(SVector3(scale));
-   renderBlueFlwr->setRotation(SVector3(-90, 0, 0));
-
 }

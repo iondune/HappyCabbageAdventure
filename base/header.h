@@ -23,7 +23,15 @@
 
 #ifdef __unix__
 #include "SDL/SDL_opengl.h"
+#include <GL/gl.h>
+#include <SDL/SDL.h>
 #endif
+
+#include "../CabbageScene/CabbageScene.h"
+#include "../CabbageFramework/CabbageFramework.h"
+#include "CGameEventManager.h"
+#include "CGameEventReceiver.h"
+
 
 //Local Include Section
 #include "../CabbageCollider/CEngine.h"
@@ -33,6 +41,7 @@
 #include "Materials.h"
 #include "texture.h"
 #include "sound.h"
+#include "draw.h"
 
 //Global Defines
 #define NUM_TREES 10
