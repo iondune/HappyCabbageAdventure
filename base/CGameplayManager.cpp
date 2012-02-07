@@ -100,6 +100,8 @@ void CGameplayManager::run(float const TickTime)
 
     KillList.clear();
 
+
+    //Enemy AI here
     for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
     {
         if (isPlayerAlive())

@@ -87,6 +87,7 @@ void drawFicus(float x, float y, float z, float scale, CApplication app) {
 
    renderFicus = new CMeshRenderable();
    renderFicus->setMesh(ficusMesh);
+   //This is on purpose for now, will hopefully find a better texture later
    renderFicus->getMaterial().Texture = (blueFlwrTxt);
    renderFicus->getMaterial().Shader = (DiffuseTexture);
    renderFicus->setTranslation(SVector3(x, y, z));

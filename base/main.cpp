@@ -179,12 +179,65 @@ class CGameState : public CState<CGameState>
       Application.getSceneManager().addRenderable(renderBasicTree);
       Application.getSceneManager().addRenderable(playerRenderable);
 
-      drawBlueFlwr(-23, -1, 2, .36, Application);
-      drawPinkFlwr(-20, -1, 2, .72, Application);
-      drawPoin(-17, -1, 2, 1.0, Application);
-      drawFicus(-15, -1, -2, 2.0, Application);
+      srand(time(NULL));
+
+      int random;
+
+      for (int n = 0; n < 24; n++) {
+         random = rand() % 8;
+
+         if (n % 2 == 0)
+            if (random < 3 ) {
+               drawBlueFlwr(-22 + n * 2, -1, 2, .6, Application);
+            }
+            else if (random < 6) {
+               drawPinkFlwr(-22 + n * 2, -1, 2, .6, Application);
+            }
+
+            else {
+               drawPoin(-22 + n * 2, -1, 2, 1.0, Application);
+            }
+         else
+            if (random < 3) {
+               drawBlueFlwr(-22 + n * 2, -1, -2, .7, Application);
+            }
+            else if (random < 6) {
+               drawPinkFlwr(-22 + n * 2, -1, -2, .7, Application);
+            }
+            else {
+               drawPoin(-22 + n * 2, .2, -2, 1.0, Application);
+            }
+      }
+
+      for (int n = 0; n < 12; n++) {
+         random = rand() % 3;
+
+         if (n % 2 == 0)
+            if (random < 2) {
+               drawBasicTree(-20.4 + n * 4, 2.0, 2, 8.0, Application);
+            }
+            else if (random == 2) {
+               drawChristmasTree(-20.4 + n * 4, 1.5, 2, 6.0, Application);
+            }
+            else {
+               drawFicus(-21 + n * 4, -1, 2, 1.0, Application);
+            }
+         else {
+
+               if (random < 2) {
+                  drawBasicTree(-22.4 + n * 4, 2.0, -2, 8.0, Application);
+               }
+               else if (random == 2) {
+                  drawChristmasTree(-22.4 + n * 4, 1.4, -2, 6.0, Application);
+               }
+               else {
+                  drawFicus(-21 + n * 4, -1, -2, 5.0, Application);
+               }
+         }
+      }
+      //drawFicus(-15, -1, -2, 2.0, Application);
       //drawBasicTree(-20, -1, -2, 2.0, Application);
-      drawChristmasTree(-14, 1, 2, 5.0, Application);
+      //drawChristmasTree(-14, 1, 2, 5.0, Application);
 
       //Initialize Fxns
       EngineInit();
@@ -458,7 +511,7 @@ class CGameState : public CState<CGameState>
       CMeshRenderable *tempBlock;
       blocks.push_back(tempBlock = new CMeshRenderable());
       tempBlock->setMesh(cubeMesh);
-      tempBlock->getMaterial().Texture = grassTxt;
+      tempBlock->getMaterial().Texture = dirtTxt;
       tempBlock->getMaterial().Shader = DiffuseTexture;
       tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
       tempBlock->setScale(SVector3(w, h, 1));
@@ -470,7 +523,7 @@ class CGameState : public CState<CGameState>
       CMeshRenderable *tempBlock;
       blocks.push_back(tempBlock = new CMeshRenderable());
       tempBlock->setMesh(cubeMesh);
-      tempBlock->getMaterial().Texture = dirtTxt;
+      tempBlock->getMaterial().Texture = grassTxt;
       tempBlock->getMaterial().Shader = DiffuseTexture;
       tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
       tempBlock->setScale(SVector3(w, h, 5));
