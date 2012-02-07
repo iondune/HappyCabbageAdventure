@@ -163,8 +163,10 @@ void CRenderable::draw(CScene const * const scene)
 {
     // If no ibo loaded, we can't draw anything
     // If the ibo loaded hasn't been synced as an index buffer object, 
-    if (! IndexBufferObject || ! IndexBufferObject->isIndexBuffer() || ! Visible)
-        return;
+    if (! IndexBufferObject || ! IndexBufferObject->isIndexBuffer() /*|| !visible*/) {
+  printf("Failed to draw object\n");      
+  return;
+}
 
     CShader * ShaderToUse = Material.Shader;
 

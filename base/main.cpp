@@ -171,7 +171,7 @@ class CGameState : public CState<CGameState>
    //Initalizer fxn
    void begin()
    {
-      glClearColor(0,0,0,0);
+      glClearColor(0.4,0.8,1.0,0);
 
       glEnable(GL_DEPTH_TEST);
       glDepthFunc(GL_LEQUAL);
@@ -561,7 +561,7 @@ void LoadShaders() {
     Flat = CShaderLoader::loadShader("Flat");
     Diffuse = CShaderLoader::loadShader("Diffuse");
     DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture");
-    normalColor = CShaderLoader::loadShader("NormalColor");
+    //normalColor = CShaderLoader::loadShader("NormalColor");
 }
 
 
