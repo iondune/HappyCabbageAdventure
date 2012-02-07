@@ -13,7 +13,7 @@
 #include "../CabbageScene/CabbageScene.h"
 
 #include "../base/texture.h"
-
+#include "../base/CGameState.h"
 
 class CMainMenuState : public CState<CMainMenuState>
 {
@@ -147,6 +147,7 @@ public:
           {
             if(Event.Location.Y >225 && Event.Location.Y < 300)
             {
+              CApplication::get().getStateManager().setState(& CGameState::get());
               printf("top button hit!!\n");
             } 
             else if(Event.Location.Y >330 && Event.Location.Y < 400)
