@@ -27,8 +27,9 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
         {
             if (PlayerActor->getArea().Position.Y > Other->getArea().otherCorner().Y - HitThreshold)
             {
+                Mix_PlayChannel(-1, killEnemy, 0);
                 KillList.push_back(* it);
-                fprintf(stderr, "Enemy detected as dead! %d\n", it->Renderable);
+                //fprintf(stderr, "Enemy detected as dead! %d\n", it->Renderable);
 
                 Enemies.erase(it);
             }
@@ -40,6 +41,11 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
                     Event.DamagedBy = & * it;
                     GameEventManager->OnPlayerDamaged(Event);
 
+                    //Chris Code.  Damage Sound plays here
+                    if(playTakeDmg) {
+                       Mix_PlayChannel(-1, takeDmg, 0);
+                    }
+
                     -- PlayerHealth;
 
                     if (PlayerHealth <= 0)
@@ -47,11 +53,6 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
                         SPlayerDeathEvent Event;
                         Event.KilledBy = & * it;
                         GameEventManager->OnPlayerDeath(Event);
-                    }
-
-                    //Chris Code.  Damage Sound plays here
-                    if(playTakeDmg) {
-                        Mix_PlayChannel(-1, takeDmg, 0);
                     }
 
                     float const KnockbackSpeed = 7.f;
@@ -91,10 +92,8 @@ void CGameplayManager::run(float const TickTime)
         SEnemyDeathEvent Event;
         Event.Enemy = & * it;
         Event.Renderable = it->Renderable;
-        fprintf(stderr, "Enemy removed from kill list %d\n", it->Renderable);
+        //fprintf(stderr, "Enemy removed from kill list %d\n", it->Renderable);
         GameEventManager->OnEnemyDeath(Event);
-
-        Mix_PlayChannel(-1, killEnemy, 0);
 
         Engine->removeActor(it->Actor);
     }
