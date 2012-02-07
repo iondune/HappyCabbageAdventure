@@ -340,7 +340,7 @@ int main(int argc, char * argv[])
     CApplication & Application = CApplication::get();
     Application.init(SPosition2(800, 600));
 
-    Application.getStateManager().setState<CMainState>();
+    Application.getStateManager().setState(& CMainState::get());
 
     Application.run();
 

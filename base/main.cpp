@@ -577,7 +577,7 @@ int main (int argc, char *argv[])
    CApplication & Application = Application.get();
    Application.init(SPosition2(WindowWidth = 1024, WindowHeight = 768));
 
-   Application.getStateManager().setState<CGameState>();
+   Application.getStateManager().setState(& CGameState::get());
 
    Application.run();
 
@@ -594,7 +594,7 @@ void LoadShaders() {
 
 void Load3DS()
 {
-   enemyMesh = CMeshLoader::load3dsMesh("Models/rabbit.3DS");
+   enemyMesh = CMeshLoader::loadAsciiMesh("Models/bunny10k.m");
    if(enemyMesh) {
       enemyMesh->resizeMesh(SVector3(0.5));
       enemyMesh->centerMeshByExtents(SVector3(0));

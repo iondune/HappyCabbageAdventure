@@ -43,7 +43,7 @@ int main(int argc, char * argv[])
     Application.init(SPosition2(200, 200));
 
     CStateManager & StateManager = Application.getStateManager();
-    StateManager.setState<CMainMenuState>();
+    StateManager.setState(& CMainMenuState::get());
 
     Application.run();
 
