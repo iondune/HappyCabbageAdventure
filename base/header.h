@@ -39,9 +39,7 @@
 #include "CPlayerView.h"
 
 #include "Materials.h"
-#include "texture.h"
 #include "sound.h"
-#include "draw.h"
 
 //Global Defines
 #define NUM_TREES 10
