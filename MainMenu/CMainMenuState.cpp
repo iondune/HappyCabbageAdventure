@@ -1,4 +1,5 @@
 #include "CMainMenuState.h"
+#include "../base/texture.h"
 
 void CMainMenuState::setupTextures()
 {
