@@ -82,13 +82,12 @@ public:
     void OnMouseEvent(SMouseEvent const & Event);
     void OnKeyboardEvent(SKeyboardEvent const & Event);
 
-    template <class StateClass>
-    void setState()
+    void setState(IState * State)
     {
         if (CurrentState)
             CurrentState->end();
 
-        CurrentState = & StateClass::get();
+        CurrentState = State;
 
         CurrentState->begin();
     }

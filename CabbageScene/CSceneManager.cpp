@@ -54,7 +54,6 @@ void CScene::update()
     uProjMatrix->Value = ActiveCamera->getProjectionMatrix();
 }
 
-
 CSceneManager::CSceneManager()
 {
     CurrentScene = this;
