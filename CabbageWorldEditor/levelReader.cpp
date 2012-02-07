@@ -4,7 +4,7 @@
 using namespace cimg_library;
 
 void levReader() {
-	CImg<unsigned char> src("level3.bmp");
+	CImg<unsigned char> src("test.bmp");
 	int width = src.width();
 	int height = src.height();
 	int tempWidth = 0;
