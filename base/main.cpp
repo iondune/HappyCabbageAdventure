@@ -1,4 +1,5 @@
 #include "CGameState.h"
+#include "../MainMenu/CMainMenuState.h"
 
 int main(int argc, char *argv[])
 {
