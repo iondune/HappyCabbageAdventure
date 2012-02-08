@@ -84,6 +84,19 @@ public:
 
 };
 
+class CVec3Uniform : public IUniform
+{
+
+public:
+
+    CVec3Uniform();
+    CVec3Uniform(SVector3 const & value);
+    void bindTo(GLuint const uniformHandle, CShaderContext & shaderContext);
+
+    SVector3 Value;
+
+};
+
 struct SMaterial
 {
     CShader * Shader;

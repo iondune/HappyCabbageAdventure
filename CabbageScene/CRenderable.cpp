@@ -50,6 +50,18 @@ void CMat4Uniform::bindTo(GLuint const uniformHandle, CShaderContext & shaderCon
     shaderContext.uniform(uniformHandle, Value);
 }
 
+CVec3Uniform::CVec3Uniform()
+{}
+
+CVec3Uniform::CVec3Uniform(SVector3 const & value)
+    : Value(value)
+{}
+
+void CVec3Uniform::bindTo(GLuint const uniformHandle, CShaderContext & shaderContext)
+{
+    shaderContext.uniform(uniformHandle, Value);
+}
+
 
 CRenderable::SAttribute::SAttribute()
     : Handle(-1)
@@ -126,14 +138,13 @@ void CRenderable::loadHandlesFromShader(CShader const * const shader, CScene con
     for (std::map<std::string, SShaderVariable>::const_iterator it = LastLoadedShader->getUniformHandles().begin(); it != LastLoadedShader->getUniformHandles().end(); ++ it)
     {
         std::map<std::string, SUniform>::iterator jt;
-        SUniform const * SceneUniform = 0;
+        boost::shared_ptr<IUniform> SceneUniform;
         if ((jt = Uniforms.find(it->first)) != Uniforms.end())
             jt->second.Handle = it->second.Handle;
         else if (SceneUniform = scene->getUniform(it->first))
         {
-            SceneLoadedUniforms.push_back(* SceneUniform);
+            SceneLoadedUniforms.push_back(SUniform(SceneUniform));
             SceneLoadedUniforms.back().Handle = it->second.Handle;
-            //SceneLoadedUniforms[kt->first].Handle = it->second.Handle;
         }
         else
             std::cout << "Uniform required by shader but not found in renderable or scene: " << it->first << std::endl;

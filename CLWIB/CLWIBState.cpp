@@ -63,7 +63,7 @@ void CLWIBState::begin()
    SPosition2 size = Application.getWindowSize();
    WindowWidth = size.X;
    WindowHeight = size.Y; 
-   glClearColor(0.4,0.8,1.0,0);
+   glClearColor(0.4f,0.8f,1.f,0);
 
    glEnable(GL_DEPTH_TEST);
    glDepthFunc(GL_LEQUAL);
@@ -119,7 +119,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    Camera->recalculateViewMatrix();
 
    stepCamera(Application.getElapsedTime());
-   PreviewBlock->setTranslation(SVector3(round(eye.X + previewBlockMouseX), 0.5f + round(eye.Y + previewBlockMouseY), 0));
+   PreviewBlock->setTranslation(SVector3((float) round(eye.X + previewBlockMouseX), 0.5f + round(eye.Y + previewBlockMouseY), 0));
 
    Application.getSceneManager().drawAll();
 

@@ -4,6 +4,9 @@
 #include <sstream>
 
 
+SLight const CScene::NullLight;
+
+
 CScene::CScene()
 {
     ActiveCamera = & DefaultCamera;
@@ -49,21 +52,37 @@ void CScene::setActiveCamera(CCamera * const activeCamera)
     ActiveCamera = activeCamera;
 }
 
-CRenderable::SUniform const * const CScene::getUniform(std::string const & label) const
+boost::shared_ptr<IUniform> const CScene::getUniform(std::string const & label) const
 {
     if (label.substr(0, 7) == "uLight[")
     {
         std::stringstream ss(label.substr(7));
         unsigned int index;
         ss >> index;
+        std::string remaining = ss.str();
 
+        if (remaining == ".Color")
+        {
+            if (index >= Lights.size())
+                return NullLight.ColorUniform;
+            else
+                return Lights[index].ColorUniform;
+        }
+        else if (remaining == ".Position")
+        {
+            if (index >= Lights.size())
+                return NullLight.PositionUniform;
+            else
+                return Lights[index].PositionUniform;
+        }
     }
 
     std::map<std::string, CRenderable::SUniform>::const_iterator it = Uniforms.find(label);
 
     if (it != Uniforms.end())
-        return & it->second;
-    return 0;
+        return it->second.Value;
+
+    return boost::shared_ptr<IUniform>();
 }
 
 void CScene::update()

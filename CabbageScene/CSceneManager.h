@@ -11,12 +11,20 @@
 
 struct SLight
 {
-    SVector3 Position;
-    SColor Color;
+    boost::shared_ptr<CVec3Uniform> ColorUniform;
+    boost::shared_ptr<CVec3Uniform> PositionUniform;
+
+    SLight()
+    {
+        ColorUniform = boost::shared_ptr<CVec3Uniform>(new CVec3Uniform());
+        PositionUniform = boost::shared_ptr<CVec3Uniform>(new CVec3Uniform());
+    }
 };
 
 class CScene
 {
+
+    static SLight const NullLight;
 
 protected:
 
@@ -40,7 +48,7 @@ public:
     std::map<std::string, CRenderable::SUniform> & getExplicitUniforms();
     std::map<std::string, CRenderable::SUniform> const & getExplicitUniforms() const;
 
-    CRenderable::SUniform const * const getUniform(std::string const & label) const;
+    boost::shared_ptr<IUniform> const getUniform(std::string const & label) const;
 
     void update();
 
