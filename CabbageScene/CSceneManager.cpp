@@ -9,6 +9,7 @@ CScene::CScene()
 
     uProjMatrix = boost::shared_ptr<CMat4Uniform>(new CMat4Uniform());
     uViewMatrix = boost::shared_ptr<CMat4Uniform>(new CMat4Uniform());
+    
 
     addUniform("uProjMatrix", uProjMatrix);
     addUniform("uViewMatrix", uViewMatrix);
