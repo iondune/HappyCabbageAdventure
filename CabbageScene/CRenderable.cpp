@@ -126,13 +126,14 @@ void CRenderable::loadHandlesFromShader(CShader const * const shader, CScene con
     for (std::map<std::string, SShaderVariable>::const_iterator it = LastLoadedShader->getUniformHandles().begin(); it != LastLoadedShader->getUniformHandles().end(); ++ it)
     {
         std::map<std::string, SUniform>::iterator jt;
-        std::map<std::string, SUniform>::const_iterator kt;
+        SUniform const * SceneUniform = 0;
         if ((jt = Uniforms.find(it->first)) != Uniforms.end())
             jt->second.Handle = it->second.Handle;
-        else if ((kt = scene->getUniforms().find(it->first)) != scene->getUniforms().end())
+        else if (SceneUniform = scene->getUniform(it->first))
         {
-            SceneLoadedUniforms[kt->first] = kt->second;
-            SceneLoadedUniforms[kt->first].Handle = it->second.Handle;
+            SceneLoadedUniforms.push_back(* SceneUniform);
+            SceneLoadedUniforms.back().Handle = it->second.Handle;
+            //SceneLoadedUniforms[kt->first].Handle = it->second.Handle;
         }
         else
             std::cout << "Uniform required by shader but not found in renderable or scene: " << it->first << std::endl;
@@ -207,9 +208,9 @@ void CRenderable::draw(CScene const * const scene)
         if (it->second.Handle >= 0)
             it->second.Value->bindTo(it->second.Handle, ShaderContext);
     }
-    for (std::map<std::string, SUniform>::iterator it = SceneLoadedUniforms.begin(); it != SceneLoadedUniforms.end(); ++ it)
+    for (std::vector<SUniform>::iterator it = SceneLoadedUniforms.begin(); it != SceneLoadedUniforms.end(); ++ it)
     {
-        it->second.Value->bindTo(it->second.Handle, ShaderContext);
+        it->Value->bindTo(it->Handle, ShaderContext);
     }
 
     // Set up texturing if a texture was supplied

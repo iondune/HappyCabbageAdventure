@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="CLWIBState.h" />
+    <ClInclude Include="draw.h" />
+    <ClInclude Include="FreeType.h" />
+    <ClInclude Include="header.h" />
+    <ClInclude Include="Materials.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CLWIBState.cpp" />
+    <ClCompile Include="FreeType.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Materials.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="freetype6.dll" />
+    <None Include="glew32.dll" />
+    <None Include="glut32.dll" />
+    <None Include="SDL.dll" />
+    <None Include="SDL_mixer.dll" />
+    <None Include="zlib1.dll" />
+  </ItemGroup>
+</Project>

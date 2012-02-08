@@ -83,6 +83,7 @@
     <ClInclude Include="CGameEventManager.h" />
     <ClInclude Include="CGameEventReceiver.h" />
     <ClInclude Include="CGameplayManager.h" />
+    <ClInclude Include="CGameState.h" />
     <ClInclude Include="CPlayerView.h" />
     <ClInclude Include="draw.h" />
     <ClInclude Include="FreeType.h" />
@@ -90,11 +91,12 @@
     <ClInclude Include="Materials.h" />
     <ClInclude Include="SDL_mixer.h" />
     <ClInclude Include="sound.h" />
-    <ClInclude Include="texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\MainMenu\CMainMenuState.cpp" />
     <ClCompile Include="CGameEventReceiver.cpp" />
     <ClCompile Include="CGameplayManager.cpp" />
+    <ClCompile Include="CGameState.cpp" />
     <ClCompile Include="CPlayerView.cpp" />
     <ClCompile Include="FreeType.cpp" />
     <ClCompile Include="main.cpp" />

@@ -62,7 +62,7 @@ public:
 
 
         // Attempt to load mesh
-        MeshFace = CMeshLoader::loadAsciiMesh("Models/bunny10k.m");
+        MeshFace = CMeshLoader::loadAsciiMesh("Models/bunny.orig.m");
         if (MeshFace)
         {
             MeshFace->linearizeIndices();
@@ -71,7 +71,7 @@ public:
             MeshFace->calculateNormalsPerFace();
         }
 
-        MeshVertex = CMeshLoader::loadAsciiMesh("Models/bunny10k.m");
+        MeshVertex = CMeshLoader::loadAsciiMesh("Models/bunny.orig.m");
         if (MeshVertex)
         {
             MeshVertex->resizeMesh(SVector3(1.5));
@@ -340,7 +340,7 @@ int main(int argc, char * argv[])
     CApplication & Application = CApplication::get();
     Application.init(SPosition2(800, 600));
 
-    Application.getStateManager().setState<CMainState>();
+    Application.getStateManager().setState(& CMainState::get());
 
     Application.run();
 

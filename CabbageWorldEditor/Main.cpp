@@ -34,7 +34,7 @@ void loadLevel(std::string const & level)
 
     for (unsigned int i = 0; i < list.size(); i++)
     {
-        thing->addBlockObject(SVector2((float)list[i].topX, (float)list[i].topY), SVector2((float)list[i].height, (float)list[i].width), 0);
+        thing->addBlockObject(SVector2((float)list[i].topY, (float)list[i].topX), SVector2((float)list[i].width, (float)list[i].height), 0);
         //do stuff
     }
     for (unsigned int i = 0; i < character.size(); i++)
@@ -65,7 +65,7 @@ public:
         glCullFace(GL_BACK);
 
 
-        loadLevel("level2.xml");
+        loadLevel("text.xml");
     
         GLfloat win[3];
         GLdouble obj[3];
@@ -140,10 +140,10 @@ int main(int argc, char * argv[])
     Application.init(SPosition2(800, 600));
 
     CStateManager & StateManager = Application.getStateManager();
-    StateManager.setState<SampleState>();
+    StateManager.setState(& SampleState::get());
 
 
-    
+    //levReader();
 
     // Setup gui
 

@@ -6,7 +6,14 @@
 #include "CRenderable.h"
 
 #include "../CabbageCore/SLine3.h"
+#include "../CabbageCore/SColor.h"
 
+
+struct SLight
+{
+    SVector3 Position;
+    SColor Color;
+};
 
 class CScene
 {
@@ -30,10 +37,14 @@ public:
     void addUniform(std::string const & label, boost::shared_ptr<IUniform> uniform);
     void removeUniform(std::string const & label);
 
-    std::map<std::string, CRenderable::SUniform> & getUniforms();
-    std::map<std::string, CRenderable::SUniform> const & getUniforms() const;
+    std::map<std::string, CRenderable::SUniform> & getExplicitUniforms();
+    std::map<std::string, CRenderable::SUniform> const & getExplicitUniforms() const;
+
+    CRenderable::SUniform const * const getUniform(std::string const & label) const;
 
     void update();
+
+    std::vector<SLight> Lights;
 
 };
 

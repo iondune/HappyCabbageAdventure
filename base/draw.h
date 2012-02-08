@@ -1,3 +1,5 @@
+#ifndef __DRAW_HEADER_
+#define __DRAW_HEADER_
 #include "../CabbageCore/SVector3.h"
 
 //Variables need to create VBOs of meshes, textures, and shaders
@@ -364,3 +366,4 @@ void drawBlock(float x, float y, float w, float h) {
        glutSolidCube(1);
     glPopMatrix();
 }*/
+#endif

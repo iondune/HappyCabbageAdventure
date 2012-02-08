@@ -17,18 +17,20 @@
     <ClInclude Include="Materials.h" />
     <ClInclude Include="draw.h" />
     <ClInclude Include="sound.h" />
-    <ClInclude Include="texture.h" />
     <ClInclude Include="CGameEventManager.h" />
     <ClInclude Include="CGameEventReceiver.h" />
     <ClInclude Include="SDL_mixer.h" />
+    <ClInclude Include="CGameState.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FreeType.cpp" />
     <ClCompile Include="CPlayerView.cpp" />
     <ClCompile Include="Materials.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CGameplayManager.cpp" />
     <ClCompile Include="CGameEventReceiver.cpp" />
     <ClCompile Include="sound.cpp" />
+    <ClCompile Include="..\MainMenu\CMainMenuState.cpp" />
+    <ClCompile Include="CGameState.cpp" />
+    <ClCompile Include="FreeType.cpp" />
   </ItemGroup>
 </Project>
