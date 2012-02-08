@@ -30,7 +30,7 @@ void main()
     {
         vLight[i] = normalize(uLights[i].Position - vec3(vPosition));
         vLightColor[i] = uLights[i].Color;
-        vEye[i] = -1 * vec3(uViewMatrix * vPosition);
+        vEye[i] = vec3(uViewMatrix * vPosition) * -1.0;
     }
     gl_Position = uProjMatrix * uViewMatrix * vPosition;
 
