@@ -2,6 +2,7 @@
 /* These are here because someone doesn't use extern, or put prototypes in their header files */
 #include "draw.h"
 #include "texture.h"
+#include <cmath>
 
 //Boolean integers for keypressing
 int aDown = 0, dDown = 0, spaceDown = 0, wDown = 0, sDown = 0;
@@ -24,6 +25,7 @@ void EngineInit();
 void PrepPreviewBlock();
 
 float previewBlockMouseX, previewBlockMouseY; 
+float lastBlockPlacedLocationX, lastBlockPlacedLocationY;
 using namespace Cabbage::Collider;
 CActor *Player, *Derp;
 CObject *Floor, *Block;
@@ -44,8 +46,6 @@ void CLWIBState::BlocksInit( void ) {
    PrepSky();
 
    SRect2 area;
-
-   PrepBlock(-22.f, 7.f, 6.f, 0.2f);
 }
 
 //Initalizer fxn
@@ -66,7 +66,7 @@ void CLWIBState::begin()
    //Initialize Font
    our_font.init("WIFFLES_.TTF", 30);
 
-   eye = SVector3(0,0,6);
+   eye = SVector3(0,0,10);
    look = SVector3(0,0,-1);
    Camera = new CCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
    Camera->setPosition(eye);
@@ -97,17 +97,20 @@ void CLWIBState::begin()
 //Runs at very start of display
 void CLWIBState::OnRenderStart(float const Elapsed)
 {
+   glViewport(0, 0, WindowWidth, WindowHeight);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
 
    Camera->setPosition(eye);
    //look.Z = eye.Z;
    Camera->setLookDirection(look - eye);
+   Camera->setProjection(60.f, (float)WindowWidth/(float)WindowHeight, 0.01f, 100.f);
    Camera->recalculateViewMatrix();
 
    stepCamera(Application.getElapsedTime());
-   PreviewBlock->setTranslation(SVector3(eye.X + previewBlockMouseX, eye.Y + previewBlockMouseY, 0));
+   PreviewBlock->setTranslation(SVector3(round(eye.X + previewBlockMouseX), 0.5f + round(eye.Y + previewBlockMouseY), 0));
 
    Application.getSceneManager().drawAll();
 
@@ -116,8 +119,26 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    freetype::print(our_font, (float)WindowWidth/2, (float)WindowHeight/2, "+");
       
 
+   drawSubWindow();
+   Application.getSceneManager().drawAll();
 
    SDL_GL_SwapBuffers();
+}
+
+void CLWIBState::drawSubWindow() {
+   glViewport(WindowWidth-400, WindowHeight-200, 400, 200);
+   glScissor(WindowWidth-400, WindowHeight-200, 400, 200);
+
+   glEnable(GL_SCISSOR_TEST);
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   glDisable(GL_SCISSOR_TEST);
+
+   Camera->setPosition(SVector3(eye.X, eye.Y + 5, 20));
+   Camera->setLookDirection(SVector3(0,0,-1));
+   Camera->recalculateViewMatrix();
+   Camera->setProjection(60.f, 2, 0.01f, 100.f);
+
+   Application.getSceneManager().drawAll();
 }
 
 
@@ -199,16 +220,21 @@ void PrepPreviewBlock() {
 
 
 void CLWIBState::PrepBlock(float x, float y, float w, float h) {
-   CMeshRenderable *tempBlock;
-   blocks.push_back(tempBlock = new CMeshRenderable());
-   tempBlock->setMesh(cubeMesh);
-   tempBlock->getMaterial().Texture = dirtTxt;
-   tempBlock->getMaterial().Shader = DiffuseTexture;
-   //tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
-   tempBlock->setTranslation(SVector3(x, y, 0));
-   tempBlock->setScale(SVector3(w, h, 1));
-   tempBlock->setRotation(SVector3(0, 0, 0));
-   Application.getSceneManager().addRenderable(tempBlock);
+   if(lastBlockPlacedLocationX != x || lastBlockPlacedLocationY != y) {
+      printf("Block placed\n");
+      CMeshRenderable *tempBlock;
+      blocks.push_back(tempBlock = new CMeshRenderable());
+      tempBlock->setMesh(cubeMesh);
+      tempBlock->getMaterial().Texture = dirtTxt;
+      tempBlock->getMaterial().Shader = DiffuseTexture;
+      //tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
+      tempBlock->setTranslation(SVector3(x, y, 0));
+      tempBlock->setScale(SVector3(w, h, 1));
+      tempBlock->setRotation(SVector3(0, 0, 0));
+      Application.getSceneManager().addRenderable(tempBlock);
+      lastBlockPlacedLocationX = x;
+      lastBlockPlacedLocationY = y;
+   }
 }
 
 void CLWIBState::PrepGrass(float x, float y, float w, float h) {
@@ -410,17 +436,24 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
    if(Event.Button.Value == SMouseEvent::EButton::Left) {
       if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
          //printf("Mouseclicked: %d,%d | World points: %0.2f, %0.2f\n", Event.Location.X, Event.Location.Y, xp2w(Event.Location.X), yp2w(Event.Location.Y));
-         PrepBlock(eye.X + 6*tan(30*M_PI/180)*xp2w(Event.Location.X), eye.Y + 6*tan(30*M_PI/180)*yp2w(Event.Location.Y), 1, 1);
+         //
+         
+         mouseDown = 1;
+         PrepBlock(round(eye.X + 12*tan(30*M_PI/180)*xp2w(Event.Location.X)), 0.5f + round(eye.Y + 12*tan(30*M_PI/180)*yp2w(Event.Location.Y)), 1, 1);
          /* Snap camera to where the block was placed
          eye.X = look.X =  eye.X + 6*tan(30*M_PI/180)*xp2w(Event.Location.X);
          eye.Y = look.Y = eye.Y + 6*tan(30*M_PI/180)*yp2w(Event.Location.Y);
          */
       }
       else if(!Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
+         mouseDown = 0;
       }
       if(Event.Type.Value == SMouseEvent::EType::Move) {
-         previewBlockMouseX = 6*tan(30*M_PI/180)*xp2w(Event.Location.X);
-         previewBlockMouseY = 6*tan(30*M_PI/180)*yp2w(Event.Location.Y);
+         previewBlockMouseX = 12*tan(30*M_PI/180)*xp2w(Event.Location.X);
+         previewBlockMouseY = 12*tan(30*M_PI/180)*yp2w(Event.Location.Y);
+         if(mouseDown) {
+            PrepBlock(round(eye.X + 12*tan(30*M_PI/180)*xp2w(Event.Location.X)), 0.5f + round(eye.Y + 12*tan(30*M_PI/180)*yp2w(Event.Location.Y)), 1, 1);
+         }
       }
    }
 }
@@ -493,7 +526,7 @@ void CLWIBState::stepCamera(float delta) {
       eye -= zoom;
    }
    */
-   float factor = 3;
+   float factor = 6;
    //D
    if(dDown) {
       eye.X += delta*factor;
@@ -513,6 +546,9 @@ void CLWIBState::stepCamera(float delta) {
    if(sDown) {
       eye.Y -= delta*factor;
       look.Y -= delta*factor;
+   }
+   if(mouseDown) {
+      PrepBlock(round(eye.X + previewBlockMouseX), 0.5f + round(eye.Y + previewBlockMouseY), 1, 1);
    }
 }
 

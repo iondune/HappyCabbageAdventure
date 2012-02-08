@@ -30,6 +30,8 @@ class CLWIBState : public CState<CLWIBState>
 
    void PrepSky();
 
+   void drawSubWindow();
+
    void BlocksInit( void ); 
 
    void stepCamera(float delta); 
