@@ -16,6 +16,8 @@
 class CMainMenuState : public CState<CMainMenuState>
 {
    public:
+
+      CMainMenuState();
       int woodTexture, skyTexture;
 
       virtual void setupTextures();
