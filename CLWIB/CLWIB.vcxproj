@@ -67,6 +67,7 @@
   <ItemGroup>
     <ClInclude Include="CBlock.h" />
     <ClInclude Include="CLWIBState.h" />
+    <ClInclude Include="CPlaceable.h" />
     <ClInclude Include="draw.h" />
     <ClInclude Include="FreeType.h" />
     <ClInclude Include="header.h" />

@@ -1,10 +1,10 @@
 #ifndef __CBLOCK_H____
 #define __CBLOCK_H____
 
-//#include "CPlaceable.h"
+#include "CPlaceable.h"
 #include <stdio.h>
 
-class CBlock// : public CPlaceable
+class CBlock : public CPlaceable
 {
    float x,y;
    int w,h;

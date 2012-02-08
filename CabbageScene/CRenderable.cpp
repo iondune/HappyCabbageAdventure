@@ -92,8 +92,8 @@ CRenderable::SUniform::SUniform(boost::shared_ptr<IUniform> value)
 SMaterial::SMaterial()
     : Shader(0), Texture(0)
 {
-    AmbientColor = boost::shared_ptr<CVec3Uniform>(new CVec3Uniform());
-    DiffuseColor = boost::shared_ptr<CVec3Uniform>(new CVec3Uniform());
+    AmbientColor = boost::shared_ptr<CVec3Uniform>(new CVec3Uniform(SVector3(0.2f, 0.2f, 0.2f)));
+    DiffuseColor = boost::shared_ptr<CVec3Uniform>(new CVec3Uniform(SVector3(0.8f, 0.8f, 0.8f)));
     Shininess = boost::shared_ptr<CFloatUniform>(new CFloatUniform());
 }
 

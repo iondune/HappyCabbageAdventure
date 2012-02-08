@@ -20,6 +20,7 @@ void EngineInit();
 using namespace Cabbage::Collider;
 CEngine *Engine;
 CActor *Player, *Derp;
+SLight * PlayerLight;
 CObject *Floor, *Block;
 CPlayerView *PlayerView;
 
@@ -148,6 +149,24 @@ void CGameState::begin()
 
    Camera = new CCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
    Application.getSceneManager().setActiveCamera(Camera);
+   float const LightBrightness = 0.2f;
+
+    CSceneManager & SceneManager = Application.getSceneManager();
+    SceneManager.Lights.push_back(SLight());
+    SceneManager.Lights.back().ColorUniform->Value = SVector3(LightBrightness);
+    SceneManager.Lights.back().PositionUniform->Value = SVector3(15.f, 2.f, 3.f);
+
+    SceneManager.Lights.push_back(SLight());
+    SceneManager.Lights.back().ColorUniform->Value = SVector3(LightBrightness);
+    SceneManager.Lights.back().PositionUniform->Value = SVector3(-1.f, -2.f, -3.f);
+
+    SceneManager.Lights.push_back(SLight());
+    SceneManager.Lights.back().ColorUniform->Value = SVector3(LightBrightness);
+    SceneManager.Lights.back().PositionUniform->Value = SVector3(-15.f, 0.f, 0.f);
+
+    SceneManager.Lights.push_back(SLight());
+    SceneManager.Lights.back().ColorUniform->Value = SVector3(LightBrightness);
+    PlayerLight = & SceneManager.Lights.back();
 
 
    LoadShaders();
@@ -170,7 +189,7 @@ void CGameState::begin()
    Application.getSceneManager().addRenderable(renderBasicTree);
    Application.getSceneManager().addRenderable(playerRenderable);
 
-   srand(time(NULL));
+   srand((unsigned int) time(NULL));
 
    int random;
 
@@ -179,24 +198,24 @@ void CGameState::begin()
 
       if (n % 2 == 0)
          if (random < 3 ) {
-            drawBlueFlwr(-22 + n * 2, -1, 2, .6, Application);
+            drawBlueFlwr(-22.f + n * 2, -1, 2, .6f, Application);
          }
          else if (random < 6) {
-            drawPinkFlwr(-22 + n * 2, -1, 2, .6, Application);
+            drawPinkFlwr(-22.f + n * 2, -1, 2, .6f, Application);
          }
 
          else {
-            drawPoin(-22 + n * 2, -1, 2, 1.0, Application);
+            drawPoin(-22.f + n * 2, -1, 2, 1.f, Application);
          }
       else
          if (random < 3) {
-            drawBlueFlwr(-22 + n * 2, -1, -2, .7, Application);
+            drawBlueFlwr(-22.f + n * 2, -1, -2, .7f, Application);
          }
          else if (random < 6) {
-            drawPinkFlwr(-22 + n * 2, -1, -2, .7, Application);
+            drawPinkFlwr(-22.f + n * 2, -1, -2, .7f, Application);
          }
          else {
-            drawPoin(-22 + n * 2, .2, -2, 1.0, Application);
+            drawPoin(-22.f + n * 2, .2f, -2, 1.f, Application);
          }
    }
 
@@ -205,24 +224,24 @@ void CGameState::begin()
 
       if (n % 2 == 0)
          if (random < 2) {
-            drawBasicTree(-20.4 + n * 4, 2.0, 2, 8.0, Application);
+            drawBasicTree(-20.4f + n * 4, 2.0f, 2, 8.0f, Application);
          }
          else if (random == 2) {
-            drawChristmasTree(-20.4 + n * 4, 1.5, 2, 6.0, Application);
+            drawChristmasTree(-20.4f + n * 4, 1.5, 2, 6.0f, Application);
          }
          else {
-            drawFicus(-21 + n * 4, -1, 2, 1.0, Application);
+            drawFicus(-21.f + n * 4, -1, 2, 1.0f, Application);
          }
       else {
 
          if (random < 2) {
-            drawBasicTree(-22.4 + n * 4, 2.0, -2, 8.0, Application);
+            drawBasicTree(-22.4f + n * 4, 2.0f, -2, 8.0f, Application);
          }
          else if (random == 2) {
-            drawChristmasTree(-22.4 + n * 4, 1.4, -2, 6.0, Application);
+            drawChristmasTree(-22.4f + n * 4, 1.4f, -2, 6.0f, Application);
          }
          else {
-            drawFicus(-21 + n * 4, -1, -2, 5.0, Application);
+            drawFicus(-21.f + n * 4, -1, -2, 5.0f, Application);
          }
       }
    }
@@ -377,6 +396,8 @@ void CGameState::OnRenderStart(float const Elapsed)
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
 
+   PlayerLight->PositionUniform->Value = playerRenderable->getTranslation();
+
    oldDisplay();
 
    Application.getSceneManager().drawAll();
@@ -399,8 +420,6 @@ void CGameState::OnRenderStart(float const Elapsed)
       timeTotal = 0;
       numFrames = 0;
    }
-
-
 
    //Draw Text
    freetype::print(our_font, 10, WindowHeight-40.f, "Elapsed Time: %0.0f\n"
@@ -543,7 +562,7 @@ CMeshRenderable* CGameState::PrepEnemy(float x, float y) {
 }
 
 void LoadShaders() {
-   Flat = CShaderLoader::loadShader("Flat");
+   Flat = CShaderLoader::loadShader("Diffuse");
    Diffuse = CShaderLoader::loadShader("Diffuse");
    DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture");
    //normalColor = CShaderLoader::loadShader("NormalColor");
