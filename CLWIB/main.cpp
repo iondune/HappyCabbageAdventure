@@ -1,5 +1,4 @@
-//#include "CGameState.h"
-#include "../MainMenu/CMainMenuState.h"
+#include "CLWIBState.h"
 
 // Old
 /*
@@ -22,7 +21,7 @@ int main(int argc, char * argv[])
     Application.init(SPosition2(1024, 768));
 
     CStateManager & StateManager = Application.getStateManager();
-    StateManager.setState(& CMainMenuState::get());
+    StateManager.setState(& CLWIBState::get());
 
     Application.run();
 

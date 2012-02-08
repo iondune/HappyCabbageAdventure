@@ -1,5 +1,5 @@
 ROOT_CABBAGE_DIR=../
-SOURCES=main.cpp CGameState.cpp CPlayerView.cpp Materials.cpp FreeType.cpp CGameplayManager.cpp sound.cpp CGameEventReceiver.cpp
+SOURCES=main.cpp CLWIBState.cpp Materials.cpp FreeType.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o)
 CABBAGE=-L../lib/ -lCabbageCollider -lCabbageFramework -lCabbageScene
 COMPILER_VERSION=-std=c++0x
@@ -26,16 +26,8 @@ cabbage: ${OBJECTS}
 
 main.o: main.cpp
 	g++ $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c main.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
-CGameState.o: CGameState.cpp draw.h header.h
-	g++ $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c CGameState.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
-sound.o: sound.cpp sound.h
-	g++ `sdl-config --cflags` -c sound.cpp -DGL_GLEXT_PROTOTYPES
-CPlayerView.o: CPlayerView.cpp CPlayerView.h
-	g++ $(INCLUDE) -c CPlayerView.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
-CGameEventReceiver.o: CGameEventReceiver.cpp CGameEventReceiver.h
-	g++ $(INCLUDE) `sdl-config --cflags` -c CGameEventReceiver.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
-CGameplayManager.o: CGameplayManager.cpp CGameplayManager.h
-	g++ `sdl-config --cflags` -c CGameplayManager.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+CLWIBState.o: CLWIBState.cpp draw.h header.h
+	g++ $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c CLWIBState.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 Materials.o: Materials.cpp Materials.h
 	g++ -c Materials.cpp
 FreeType.o: FreeType.cpp FreeType.h

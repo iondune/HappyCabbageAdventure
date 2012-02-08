@@ -29,19 +29,12 @@
 
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
-#include "CGameEventManager.h"
-#include "CGameEventReceiver.h"
-
 
 //Local Include Section
 #include "../CabbageCollider/CEngine.h"
 #include "FreeType.h"
-#include "CPlayerView.h"
 
 #include "Materials.h"
-#include "sound.h"
 
 //Global Defines
 #define NUM_TREES 10
-
-#include "CGameplayManager.h"
