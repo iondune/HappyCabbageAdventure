@@ -9,7 +9,7 @@
 
 
 IRenderable::IRenderable()
-    : Scale(1), DebugDataFlags(0), UsesRotationMatrix(false)
+    : Scale(1), DebugDataFlags(0), UsesRotationMatrix(false), Visible(true)
 {}
 
 

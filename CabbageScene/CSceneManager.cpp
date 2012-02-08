@@ -4,16 +4,20 @@
 #include <sstream>
 
 
+SLight const CScene::NullLight;
+
+
 CScene::CScene()
 {
     ActiveCamera = & DefaultCamera;
 
     uProjMatrix = boost::shared_ptr<CMat4Uniform>(new CMat4Uniform());
     uViewMatrix = boost::shared_ptr<CMat4Uniform>(new CMat4Uniform());
-    
+    uLightCount = boost::shared_ptr<CIntUniform>(new CIntUniform());
 
     addUniform("uProjMatrix", uProjMatrix);
     addUniform("uViewMatrix", uViewMatrix);
+    addUniform("uLightCount", uLightCount);
 }
 
 void CScene::addUniform(std::string const & label, boost::shared_ptr<IUniform> uniform)
@@ -49,21 +53,56 @@ void CScene::setActiveCamera(CCamera * const activeCamera)
     ActiveCamera = activeCamera;
 }
 
-CRenderable::SUniform const * const CScene::getUniform(std::string const & label) const
+unsigned int const digitCount(int n)
 {
-    if (label.substr(0, 7) == "uLight[")
+    int count = 1;
+    if (n < 0)
     {
-        std::stringstream ss(label.substr(7));
+        n *= -1;
+        ++ count;
+    }
+
+    while (n > 10)
+    {
+        ++ count;
+        n /= 10;
+    }
+
+    return count;
+}
+
+boost::shared_ptr<IUniform> const CScene::getUniform(std::string const & label) const
+{
+    if (label.substr(0, 8) == "uLights[")
+    {
+        std::stringstream ss(label.substr(8));
         unsigned int index;
         ss >> index;
+        std::string remaining = ss.str();
+        remaining = remaining.substr(2 + digitCount(index));
 
+        if (remaining == "Color")
+        {
+            if (index >= Lights.size())
+                return NullLight.ColorUniform;
+            else
+                return Lights[index].ColorUniform;
+        }
+        else if (remaining == "Position")
+        {
+            if (index >= Lights.size())
+                return NullLight.PositionUniform;
+            else
+                return Lights[index].PositionUniform;
+        }
     }
 
     std::map<std::string, CRenderable::SUniform>::const_iterator it = Uniforms.find(label);
 
     if (it != Uniforms.end())
-        return & it->second;
-    return 0;
+        return it->second.Value;
+
+    return boost::shared_ptr<IUniform>();
 }
 
 void CScene::update()
@@ -71,6 +110,11 @@ void CScene::update()
     ActiveCamera->recalculateViewMatrix();
     uViewMatrix->Value = ActiveCamera->getViewMatrix();
     uProjMatrix->Value = ActiveCamera->getProjectionMatrix();
+    if (uLightCount->Value != Lights.size())
+    {
+        SceneChanged = true;
+        uLightCount->Value = Lights.size();
+    }
 }
 
 CSceneManager::CSceneManager()

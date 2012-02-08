@@ -50,6 +50,14 @@ public:
         float AspectRatio = (float)WindowWidth / (float)WindowHeight;
         Camera = new CCamera(AspectRatio, 0.01f, 100.f, 60.f);
         CApplication::get().getSceneManager().setActiveCamera(Camera);
+        CSceneManager & SceneManager = CApplication::get().getSceneManager();
+        SceneManager.Lights.push_back(SLight());
+        SceneManager.Lights.back().ColorUniform->Value = SVector3(0.5f, 0.2f, 0.2f);
+        SceneManager.Lights.back().PositionUniform->Value = SVector3(1.f, 2.f, 3.f);
+
+        SceneManager.Lights.push_back(SLight());
+        SceneManager.Lights.back().ColorUniform->Value = SVector3(0.2f, 0.5f, 0.2f);
+        SceneManager.Lights.back().PositionUniform->Value = SVector3(-1.f, -2.f, -3.f);
 
         // Attempt to load shader and attributes
         Shader = CShaderLoader::loadShader("Diffuse");
@@ -60,9 +68,8 @@ public:
             exit(1);
         }
 
-
         // Attempt to load mesh
-        MeshFace = CMeshLoader::loadAsciiMesh("Models/bunny.orig.m");
+        MeshFace = CMeshLoader::loadAsciiMesh("Models/bunny10k.m");
         if (MeshFace)
         {
             MeshFace->linearizeIndices();
@@ -71,7 +78,7 @@ public:
             MeshFace->calculateNormalsPerFace();
         }
 
-        MeshVertex = CMeshLoader::loadAsciiMesh("Models/bunny.orig.m");
+        MeshVertex = CMeshLoader::loadAsciiMesh("Models/bunny10k.m");
         if (MeshVertex)
         {
             MeshVertex->resizeMesh(SVector3(1.5));

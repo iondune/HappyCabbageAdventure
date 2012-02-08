@@ -48,7 +48,7 @@ void CMainMenuState::drawButton()
 
    glBindTexture(GL_TEXTURE_2D, woodTexture->getTextureHandle());
 
-   glScalef(0.65, 0.25, 1.0);
+   glScalef(0.65f, 0.25f, 1.f);
 
    glBegin( GL_QUADS );
    //Draw square

@@ -3,6 +3,7 @@
 
 #include "CShader.h"
 
+#include "../CabbageCore/SVector3.h"
 #include "../CabbageCore/glm/glm.hpp"
 
 class CShaderContext
@@ -42,10 +43,12 @@ public:
     void uniform(GLuint const uniformHandle, float const uniform);
     void uniform(GLuint const uniformHandle, int const uniform);
     void uniform(GLuint const uniformHandle, glm::mat4 const & uniform);
+    void uniform(GLuint const uniformHandle, SVector3 const & uniform);
 
     void uniform(std::string const & label, float const uniform);
     void uniform(std::string const & label, int const uniform);
     void uniform(std::string const & label, glm::mat4 const & uniform);
+    void uniform(std::string const & label, SVector3 const & uniform);
 
 };
 

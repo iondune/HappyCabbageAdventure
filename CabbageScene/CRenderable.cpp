@@ -29,6 +29,10 @@ void CFloatUniform::bindTo(GLuint const uniformHandle, CShaderContext & shaderCo
     shaderContext.uniform(uniformHandle, Value);
 }
 
+CIntUniform::CIntUniform()
+    : Value(0)
+{}
+
 CIntUniform::CIntUniform(int const value)
     : Value(value)
 {}
@@ -46,6 +50,18 @@ CMat4Uniform::CMat4Uniform(glm::mat4 const & value)
 {}
 
 void CMat4Uniform::bindTo(GLuint const uniformHandle, CShaderContext & shaderContext)
+{
+    shaderContext.uniform(uniformHandle, Value);
+}
+
+CVec3Uniform::CVec3Uniform()
+{}
+
+CVec3Uniform::CVec3Uniform(SVector3 const & value)
+    : Value(value)
+{}
+
+void CVec3Uniform::bindTo(GLuint const uniformHandle, CShaderContext & shaderContext)
 {
     shaderContext.uniform(uniformHandle, Value);
 }
@@ -96,7 +112,7 @@ SMaterial const & CRenderable::getMaterial() const
 
 void CRenderable::loadHandlesFromShader(CShader const * const shader, CScene const * const scene)
 {
-    if (LastLoadedShader == shader && LastLoadedScene == scene)
+    if (! scene->SceneChanged && LastLoadedShader == shader && LastLoadedScene == scene)
         return;
 
     // Remove any handles a previous shader might have set
@@ -126,14 +142,13 @@ void CRenderable::loadHandlesFromShader(CShader const * const shader, CScene con
     for (std::map<std::string, SShaderVariable>::const_iterator it = LastLoadedShader->getUniformHandles().begin(); it != LastLoadedShader->getUniformHandles().end(); ++ it)
     {
         std::map<std::string, SUniform>::iterator jt;
-        SUniform const * SceneUniform = 0;
+        boost::shared_ptr<IUniform> SceneUniform;
         if ((jt = Uniforms.find(it->first)) != Uniforms.end())
             jt->second.Handle = it->second.Handle;
         else if (SceneUniform = scene->getUniform(it->first))
         {
-            SceneLoadedUniforms.push_back(* SceneUniform);
+            SceneLoadedUniforms.push_back(SUniform(SceneUniform));
             SceneLoadedUniforms.back().Handle = it->second.Handle;
-            //SceneLoadedUniforms[kt->first].Handle = it->second.Handle;
         }
         else
             std::cout << "Uniform required by shader but not found in renderable or scene: " << it->first << std::endl;
@@ -164,10 +179,11 @@ void CRenderable::draw(CScene const * const scene)
 {
     // If no ibo loaded, we can't draw anything
     // If the ibo loaded hasn't been synced as an index buffer object, 
-    if (! IndexBufferObject || ! IndexBufferObject->isIndexBuffer() /*|| !visible*/) {
-  printf("Failed to draw object\n");      
-  return;
-}
+    if (! IndexBufferObject || ! IndexBufferObject->isIndexBuffer() || ! Visible)
+    {
+        std::cout << "Failed to draw object" << std::endl;
+        return;
+    }
 
     CShader * ShaderToUse = Material.Shader;
 

@@ -11,12 +11,22 @@
 
 struct SLight
 {
-    SVector3 Position;
-    SColor Color;
+    boost::shared_ptr<CVec3Uniform> ColorUniform;
+    boost::shared_ptr<CVec3Uniform> PositionUniform;
+
+    // Todo: change values only through get/set, set scene changed when so
+
+    SLight()
+    {
+        ColorUniform = boost::shared_ptr<CVec3Uniform>(new CVec3Uniform());
+        PositionUniform = boost::shared_ptr<CVec3Uniform>(new CVec3Uniform());
+    }
 };
 
 class CScene
 {
+
+    static SLight const NullLight;
 
 protected:
 
@@ -24,6 +34,7 @@ protected:
     CCamera * ActiveCamera;
 
     boost::shared_ptr<CMat4Uniform> uViewMatrix, uProjMatrix;
+    boost::shared_ptr<CIntUniform> uLightCount;
 
     std::map<std::string, CRenderable::SUniform> Uniforms;
 
@@ -40,11 +51,12 @@ public:
     std::map<std::string, CRenderable::SUniform> & getExplicitUniforms();
     std::map<std::string, CRenderable::SUniform> const & getExplicitUniforms() const;
 
-    CRenderable::SUniform const * const getUniform(std::string const & label) const;
+    boost::shared_ptr<IUniform> const getUniform(std::string const & label) const;
 
     void update();
 
     std::vector<SLight> Lights;
+    bool SceneChanged;
 
 };
 

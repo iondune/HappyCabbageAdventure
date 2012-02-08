@@ -98,6 +98,20 @@ void CShaderContext::uniform(std::string const & label, glm::mat4 const & unifor
     glUniformMatrix4fv(it->second.Handle, 1, GL_FALSE, glm::value_ptr(uniform));
 }
 
+void CShaderContext::uniform(std::string const & label, SVector3 const & uniform)
+{
+    std::map<std::string, SShaderVariable>::const_iterator it = Shader.UniformHandles.find(label);
+
+    if (it == Shader.UniformHandles.end())
+    {
+        std::cerr << "Uniform '" << label << "' was not loaded for shader. Some objects will not draw." << std::endl;
+        Valid = false;
+        return;
+    }
+
+    glUniform3f(it->second.Handle, uniform.X, uniform.Y, uniform.Z);
+}
+
 void CShaderContext::uniform(GLuint const uniformHandle, float const uniform)
 {
     glUniform1f(uniformHandle, uniform);
@@ -111,4 +125,9 @@ void CShaderContext::uniform(GLuint const uniformHandle, int const uniform)
 void CShaderContext::uniform(GLuint const uniformHandle, glm::mat4 const & uniform)
 {
     glUniformMatrix4fv(uniformHandle, 1, GL_FALSE, glm::value_ptr(uniform));
+}
+
+void CShaderContext::uniform(GLuint const uniformHandle, SVector3 const & uniform)
+{
+    glUniform3f(uniformHandle, uniform.X, uniform.Y, uniform.Z);
 }

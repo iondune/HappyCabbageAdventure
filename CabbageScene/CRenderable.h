@@ -64,6 +64,7 @@ class CIntUniform : public IUniform
 
 public:
 
+    CIntUniform();
     CIntUniform(int const value);
     void bindTo(GLuint const uniformHandle, CShaderContext & shaderContext);
 
@@ -81,6 +82,19 @@ public:
     void bindTo(GLuint const uniformHandle, CShaderContext & shaderContext);
 
     glm::mat4 Value;
+
+};
+
+class CVec3Uniform : public IUniform
+{
+
+public:
+
+    CVec3Uniform();
+    CVec3Uniform(SVector3 const & value);
+    void bindTo(GLuint const uniformHandle, CShaderContext & shaderContext);
+
+    SVector3 Value;
 
 };
 
