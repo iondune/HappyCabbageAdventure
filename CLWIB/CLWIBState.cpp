@@ -68,62 +68,7 @@ void CLWIBState::begin()
    SPosition2 size = Application.getWindowSize();
    WindowWidth = size.X;
    WindowHeight = size.Y; 
-   glClearColor(0.4f,0.8f,1.f,0);
-
-   glEnable(GL_DEPTH_TEST);
-   glDepthFunc(GL_LEQUAL);
-   //glEnable(GL_CULL_FACE);
-   //glCullFace(GL_BACK);
-
-   SDL_WM_SetCaption("Happy Cabbage Adventure", NULL);
-
-   //Initialize Font
-   our_font.init("WIFFLES_.TTF", 30);
-
-   eye = SVector3(0,0,10);
-   look = SVector3(0,0,-1);
-   Camera = new CCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
-   Camera->setPosition(eye);
-   Camera->setLookDirection(look - eye);
-   Camera->recalculateViewMatrix();
-
-   Application.getSceneManager().setActiveCamera(Camera);
-
-   LoadShaders();
-
-   Load3DS();
-   LoadTextures();
-   BlockMesh();
-
-   //Load the meshes into VBOs
-   PrepMeshes();
-
-   srand(time(NULL));
-
-   //Initialize Fxns
-   BlocksInit();
-   PrepPreviewBlock();
-
-   printf("END OF BEGIN\n");
-}
-
-
-//Runs at very start of display
-void CLWIBState::OnRenderStart(float const Elapsed)
-{
-   glViewport(0, 0, WindowWidth, WindowHeight);
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-   glMatrixMode(GL_MODELVIEW);
-   glLoadIdentity();
-
-   Camera->setPosition(eye);
-   //look.Z = eye.Z;
-   Camera->setLookDirection(look - eye);
-   Camera->setProjection(60.f, (float)WindowWidth/(float)WindowHeight, 0.01f, 100.f);
-   Camera->recalculateViewMatrix();
-
-   stepCamera(Application.getElapsedTime());
+   glClearColor(0.4,0.8,1.0,0);
 
    glEnable(GL_DEPTH_TEST);
    glDepthFunc(GL_LEQUAL);
