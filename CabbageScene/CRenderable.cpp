@@ -20,6 +20,10 @@ void CFloatVecAttribute::bindTo(GLuint const attribHandle, CShaderContext & shad
     shaderContext.bindBufferObject(attribHandle, BufferObject->getHandle(), Size);
 }
 
+CFloatUniform::CFloatUniform()
+    : Value(0.f)
+{}
+
 CFloatUniform::CFloatUniform(float const value)
     : Value(value)
 {}
@@ -87,7 +91,11 @@ CRenderable::SUniform::SUniform(boost::shared_ptr<IUniform> value)
 
 SMaterial::SMaterial()
     : Shader(0), Texture(0)
-{}
+{
+    AmbientColor = boost::shared_ptr<CVec3Uniform>(new CVec3Uniform());
+    DiffuseColor = boost::shared_ptr<CVec3Uniform>(new CVec3Uniform());
+    Shininess = boost::shared_ptr<CFloatUniform>(new CFloatUniform());
+}
 
 
 CRenderable::CRenderable()
@@ -98,6 +106,9 @@ CRenderable::CRenderable()
 
     addUniform("uModelMatrix", uModelMatrix);
     addUniform("uNormalMatrix", uNormalMatrix);
+    addUniform("uMaterial.AmbientColor", Material.AmbientColor);
+    addUniform("uMaterial.DiffuseColor", Material.DiffuseColor);
+    addUniform("uMaterial.Shininess", Material.Shininess);
 }
 
 SMaterial & CRenderable::getMaterial()

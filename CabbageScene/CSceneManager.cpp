@@ -139,6 +139,8 @@ void CSceneManager::drawAll()
     //printf("size of renderables list: %d\n", Renderables.size());
     for (std::list<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
         (* it)->draw(CurrentScene);
+
+    SceneChanged = false;
 }
 
 CRenderable * const CSceneManager::pickRenderable(SLine3 const & ViewLine)

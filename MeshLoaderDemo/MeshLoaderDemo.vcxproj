@@ -37,8 +37,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(VisualStudioDir)\Projects\glew-1.7.0\include;$(VisualStudioDir)\Projects\SDL-1.2.15\include;$(SolutionDir)\CabbageCore;$(IncludePath)</IncludePath>
-    <LibraryPath>$(VisualStudioDir)\Projects\glew-1.7.0\lib;$(VisualStudioDir)\Projects\SDL-1.2.15\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(VisualStudioDir)\Projects\glew-1.7.0\include;$(VisualStudioDir)\Projects\SDL-1.2.15\include;$(VisualStudioDir)\Projects\freetype-2.4.8\include;$(SolutionDir)\CabbageCore;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VisualStudioDir)\Projects\glew-1.7.0\lib;$(VisualStudioDir)\Projects\SDL-1.2.15\lib\x86;$(VisualStudioDir)\Projects\freetype-2.4.8\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -66,6 +66,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="freetype6.dll" />
     <None Include="glew32.dll" />
     <None Include="Makefile" />
     <None Include="SDL.dll" />
@@ -74,9 +75,14 @@
     <None Include="spaceship.3ds" />
     <None Include="spaceshiptexture.bmp" />
     <None Include="tree.3ds" />
+    <None Include="zlib1.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="FreeType.cpp" />
     <ClCompile Include="Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FreeType.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
