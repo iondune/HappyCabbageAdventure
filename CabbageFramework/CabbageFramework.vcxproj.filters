@@ -4,6 +4,7 @@
     <ClCompile Include="CApplication.cpp" />
     <ClCompile Include="CEventManager.cpp" />
     <ClCompile Include="CStateManager.cpp" />
+    <ClCompile Include="CCameraControl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="sigslot">
@@ -18,6 +19,7 @@
     <ClInclude Include="CEventManager.h" />
     <ClInclude Include="CStateManager.h" />
     <ClInclude Include="CabbageFramework.h" />
+    <ClInclude Include="CCameraControl.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />

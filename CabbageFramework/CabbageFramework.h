@@ -4,6 +4,6 @@
 #include "CApplication.h"
 #include "CEventManager.h"
 #include "CStateManager.h"
+#include "CCameraControl.h"
 
 #endif
-
