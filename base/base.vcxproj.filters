@@ -30,5 +30,6 @@
     <ClCompile Include="CGameplayManager.cpp" />
     <ClCompile Include="CGameEventReceiver.cpp" />
     <ClCompile Include="sound.cpp" />
+    <ClCompile Include="..\MainMenu\CMainMenuState.cpp" />
   </ItemGroup>
 </Project>
