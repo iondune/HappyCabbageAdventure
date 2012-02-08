@@ -1,6 +1,7 @@
 #include "CSceneManager.h"
 
 #include <algorithm>
+#include <sstream>
 
 
 CScene::CScene()
@@ -28,12 +29,12 @@ void CScene::removeUniform(std::string const & label)
         Uniforms.erase(it);
 }
 
-std::map<std::string, CRenderable::SUniform> & CScene::getUniforms()
+std::map<std::string, CRenderable::SUniform> & CScene::getExplicitUniforms()
 {
     return Uniforms;
 }
 
-std::map<std::string, CRenderable::SUniform> const & CScene::getUniforms() const
+std::map<std::string, CRenderable::SUniform> const & CScene::getExplicitUniforms() const
 {
     return Uniforms;
 }
@@ -46,6 +47,23 @@ CCamera * const CScene::getActiveCamera()
 void CScene::setActiveCamera(CCamera * const activeCamera)
 {
     ActiveCamera = activeCamera;
+}
+
+CRenderable::SUniform const * const CScene::getUniform(std::string const & label) const
+{
+    if (label.substr(0, 7) == "uLight[")
+    {
+        std::stringstream ss(label.substr(7));
+        unsigned int index;
+        ss >> index;
+
+    }
+
+    std::map<std::string, CRenderable::SUniform>::const_iterator it = Uniforms.find(label);
+
+    if (it != Uniforms.end())
+        return & it->second;
+    return 0;
 }
 
 void CScene::update()

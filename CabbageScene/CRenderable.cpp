@@ -126,12 +126,12 @@ void CRenderable::loadHandlesFromShader(CShader const * const shader, CScene con
     for (std::map<std::string, SShaderVariable>::const_iterator it = LastLoadedShader->getUniformHandles().begin(); it != LastLoadedShader->getUniformHandles().end(); ++ it)
     {
         std::map<std::string, SUniform>::iterator jt;
-        std::map<std::string, SUniform>::const_iterator kt;
+        SUniform const * SceneUniform = 0;
         if ((jt = Uniforms.find(it->first)) != Uniforms.end())
             jt->second.Handle = it->second.Handle;
-        else if ((kt = scene->getUniforms().find(it->first)) != scene->getUniforms().end())
+        else if (SceneUniform = scene->getUniform(it->first))
         {
-            SceneLoadedUniforms.push_back(kt->second);
+            SceneLoadedUniforms.push_back(* SceneUniform);
             SceneLoadedUniforms.back().Handle = it->second.Handle;
             //SceneLoadedUniforms[kt->first].Handle = it->second.Handle;
         }
