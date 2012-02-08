@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "header.h"
+#include "../MainMenu/CMainMenuState.h"
 
 
 #define TREE_Y_OFFSET 2.1

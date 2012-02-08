@@ -1,7 +1,6 @@
 #include "CGameState.h"
 /* These are here because someone doesn't use extern, or put prototypes in their header files */
 #include "draw.h"
-#include "texture.h"
 
 //Boolean integers for keypressing
 int aDown = 0, dDown = 0, spaceDown = 0, wDown = 0, sDown = 0;
@@ -451,7 +450,8 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_ESCAPE) {
          //TODO: Replace with an event/signal to end the game world 
          //finished = true;
-         exit(1);
+         //exit(1);
+         Application.getStateManager().setState(& CMainMenuState::get());
       }
    }
    //Check if key let go, Not sure if this will work in here.

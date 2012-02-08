@@ -1,11 +1,6 @@
 //#include "CGameState.h"
 #include "../MainMenu/CMainMenuState.h"
 
-
-
-
-
-
 #ifdef _WIN32
 #pragma comment(lib, "freetype.lib")
 #pragma comment(lib, "glew32.lib")
@@ -19,11 +14,6 @@
 #pragma comment(lib, "glu32.lib")
 
 #endif
-
-
-
-
-
 // Old
 /*
 int main(int argc, char *argv[])

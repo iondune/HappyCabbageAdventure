@@ -1,3 +1,6 @@
+#ifndef __CMAIN____MENU_STATE_________H_____________
+#define __CMAIN____MENU_STATE_________H_____________
+
 #ifdef _WIN32
 #pragma comment(lib, "glew32.lib")
 #pragma comment(lib, "SDL.lib")
@@ -34,3 +37,5 @@ class CMainMenuState : public CState<CMainMenuState>
       virtual void OnMouseEvent(SMouseEvent const & Event);
       virtual void OnKeyboardEvent(SKeyboardEvent const & Event);
 };
+
+#endif
