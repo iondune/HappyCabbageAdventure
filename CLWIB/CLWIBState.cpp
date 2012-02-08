@@ -57,9 +57,12 @@ void CLWIBState::BlocksInit( void ) {
    SRect2 area;
 }
 
+void initBlockMap();
+
 //Initalizer fxn
 void CLWIBState::begin()
 {
+   initBlockMap();
    SPosition2 size = Application.getWindowSize();
    WindowWidth = size.X;
    WindowHeight = size.Y; 
@@ -238,27 +241,55 @@ void PrepPreviewBlock() {
    PreviewBlock->getMaterial().Texture = grassTxt;
    PreviewBlock->getMaterial().Shader = DiffuseTexture;
    //PreviewBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
-   PreviewBlock->setScale(SVector3(1, 1, 1));
+   PreviewBlock->setScale(SVector3(3, 3, 1));
    CApplication::get().getSceneManager().addRenderable(PreviewBlock);
 }
 
+//Minblockvalue = -25
+//Heightoffset = 0.5
+bool blockMap[100][100];
 
-void CLWIBState::PrepBlock(float x, float y, float w, float h) {
-   if(lastBlockPlacedLocationX != x || lastBlockPlacedLocationY != y) {
-      CMeshRenderable *tempBlock;
-      blocks.push_back(tempBlock = new CMeshRenderable());
-      tempBlock->setMesh(cubeMesh);
-      tempBlock->getMaterial().Texture = dirtTxt;
-      tempBlock->getMaterial().Shader = DiffuseTexture;
-      //tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
-      tempBlock->setTranslation(SVector3(x, y, 0));
-      tempBlock->setScale(SVector3(w, h, 1));
-      tempBlock->setRotation(SVector3(0, 0, 0));
-      Application.getSceneManager().addRenderable(tempBlock);
-      lastBlockPlacedLocationX = x;
-      lastBlockPlacedLocationY = y;
-      redo.clear();
+void initBlockMap() {
+   int i,j;
+   for(i=0; i<100; i++)
+      for(j=0; j<100; j++)
+         blockMap[i][j]=0;
+}
+
+void CLWIBState::PrepBlock(float x, float y, int w, int h) {
+   if(x < -25 || y < -25)
+      return;
+   int i,j, ret=0;
+   for(i=0;i<w;i++) {
+      for(j=0;j<h;j++) { 
+         if(!blockMap[(int)x+25+i][(int)(y-0.5+25)+j]) {
+            ret = 1;
+            break;
+         }
+      }
+      if(ret)
+         break;
    }
+   if(!ret)
+      return;
+
+   printf("Placed block at %0.2f, %0.2f\n", x, y);
+   CMeshRenderable *tempBlock;
+   blocks.push_back(tempBlock = new CMeshRenderable());
+   tempBlock->setMesh(cubeMesh);
+   tempBlock->getMaterial().Texture = dirtTxt;
+   tempBlock->getMaterial().Shader = DiffuseTexture;
+   //tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
+   tempBlock->setTranslation(SVector3(x, y, 0));
+   tempBlock->setScale(SVector3(w, h, 1));
+   for(i = 0; i < w; i++) {
+      for(j = 0; j < h; j++) {
+         blockMap[(int)x+25+i][(int)(y-0.5+25)+j] = true;
+      }
+   }
+   tempBlock->setRotation(SVector3(0, 0, 0));
+   Application.getSceneManager().addRenderable(tempBlock);
+   redo.clear();
 }
 
 void CLWIBState::PrepGrass(float x, float y, float w, float h) {
@@ -463,7 +494,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          //
          
          mouseDown = 1;
-         PrepBlock(round(eye.X + 12*tan(30*M_PI/180)*xp2w(Event.Location.X)), 0.5f + round(eye.Y + 12*tan(30*M_PI/180)*yp2w(Event.Location.Y)), 1, 1);
+         PrepBlock(round(eye.X + 12*tan(30*M_PI/180)*xp2w(Event.Location.X)), 0.5f + round(eye.Y + 12*tan(30*M_PI/180)*yp2w(Event.Location.Y)), 3, 3);
          /* Snap camera to where the block was placed
          eye.X = look.X =  eye.X + 6*tan(30*M_PI/180)*xp2w(Event.Location.X);
          eye.Y = look.Y = eye.Y + 6*tan(30*M_PI/180)*yp2w(Event.Location.Y);
@@ -476,7 +507,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          previewBlockMouseX = 12*tan(30*M_PI/180)*xp2w(Event.Location.X);
          previewBlockMouseY = 12*tan(30*M_PI/180)*yp2w(Event.Location.Y);
          if(mouseDown) {
-            PrepBlock(round(eye.X + 12*tan(30*M_PI/180)*xp2w(Event.Location.X)), 0.5f + round(eye.Y + 12*tan(30*M_PI/180)*yp2w(Event.Location.Y)), 1, 1);
+            PrepBlock(round(eye.X + 12*tan(30*M_PI/180)*xp2w(Event.Location.X)), 0.5f + round(eye.Y + 12*tan(30*M_PI/180)*yp2w(Event.Location.Y)), 3, 3);
          }
       }
    }
@@ -572,7 +603,7 @@ void CLWIBState::stepCamera(float delta) {
       look.Y -= delta*factor;
    }
    if(mouseDown) {
-      PrepBlock(round(eye.X + previewBlockMouseX), 0.5f + round(eye.Y + previewBlockMouseY), 1, 1);
+      PrepBlock(round(eye.X + previewBlockMouseX), 0.5f + round(eye.Y + previewBlockMouseY), 3, 3);
    }
 }
 

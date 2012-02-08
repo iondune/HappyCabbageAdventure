@@ -25,7 +25,7 @@ class CLWIBState : public CState<CLWIBState>
    void OnMouseEvent(SMouseEvent const & Event);
    void end();
 
-   void PrepBlock(float x, float y, float w, float h); 
+   void PrepBlock(float x, float y, int w, int h); 
    void PrepGrass(float x, float y, float w, float h);
 
    void PrepSky();
