@@ -9,6 +9,8 @@
 
 #pragma warning(disable: 4996)
 
+std::map<std::string, CMesh *> CMeshLoader::LoadedMeshes;
+
 static long filelength(int f)
 {
     struct stat buf;
@@ -21,6 +23,13 @@ static long filelength(int f)
 // TODO: Rewrite this horrendous pile of C nonsense
 CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
 {
+    std::map<std::string, CMesh *>::iterator it = LoadedMeshes.find(fileName);
+
+    if (it != LoadedMeshes.end())
+    {
+        return it->second;
+    }
+
     int i; //Index variable
 
     FILE *l_file; //File pointer
@@ -165,11 +174,20 @@ CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
         } 
     }
     fclose (l_file); // Closes the file stream
+
+    LoadedMeshes[fileName] = Mesh;
     return Mesh; // Returns ok
 }
 
 CMesh * const CMeshLoader::loadAsciiMesh(std::string const & fileName)
 {
+    std::map<std::string, CMesh *>::iterator it = LoadedMeshes.find(fileName);
+
+    if (it != LoadedMeshes.end())
+    {
+        return it->second;
+    }
+
     std::ifstream File;
     File.open(fileName.c_str());
 
@@ -266,6 +284,7 @@ CMesh * const CMeshLoader::loadAsciiMesh(std::string const & fileName)
         return 0;
     }
 
+    LoadedMeshes[fileName] = Mesh;
     return Mesh;
 }
 

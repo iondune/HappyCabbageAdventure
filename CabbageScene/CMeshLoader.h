@@ -4,9 +4,12 @@
 #include "CMesh.h"
 
 #include <string>
+#include <map>
 
 class CMeshLoader
 {
+
+    static std::map<std::string, CMesh *> LoadedMeshes;
 
 public:
 

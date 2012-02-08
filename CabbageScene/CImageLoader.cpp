@@ -22,8 +22,32 @@ struct SBitmapInfo
 #pragma warning(disable: 4996)
 #endif
 
+std::map<std::string, CImage *> CImageLoader::LoadedImages;
+std::map<std::string, CTexture *> CImageLoader::LoadedTextures;
+
+CTexture * const CImageLoader::loadTexture(std::string const & fileName)
+{
+    std::map<std::string, CTexture *>::iterator it = LoadedTextures.find(fileName);
+
+    if (it != LoadedTextures.end())
+    {
+        return it->second;
+    }
+
+    CTexture * Texture = new CTexture(loadImage(fileName));
+    LoadedTextures[fileName] = Texture;
+    return Texture;
+}
+
 CImage * const CImageLoader::loadImage(std::string const & fileName)
 {
+    std::map<std::string, CImage *>::iterator it = LoadedImages.find(fileName);
+
+    if (it != LoadedImages.end())
+    {
+        return it->second;
+    }
+
     FILE * file;
     char temp;
     long i;
@@ -75,6 +99,8 @@ CImage * const CImageLoader::loadImage(std::string const & fileName)
     fclose(file); // Closes the file stream
 
     CImage * Image = new CImage(infoheader.data, infoheader.biWidth, infoheader.biHeight);
+
+    LoadedImages[fileName] = Image;
 
     return Image;
 }
