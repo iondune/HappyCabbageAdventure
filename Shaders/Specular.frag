@@ -12,9 +12,9 @@ struct SMaterial
 
 uniform SMaterial uMaterial;
 
-varying vec3 vLight[10];
-varying vec3 vLightColor[10];
-varying vec3 vEye[10];
+varying vec3 vLight[4];
+varying vec3 vLightColor[4];
+varying vec3 vEye[4];
 
 void main()
 {

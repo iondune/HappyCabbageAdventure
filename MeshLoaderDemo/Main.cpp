@@ -164,12 +164,13 @@ public:
         CApplication::get().getSceneManager().drawAll();
 
         if (ShowHelp)
-            freetype::print(Font, 0, (float)Application.getWindowSize().Y - 10.f, "WASD to control camera\nRight click and hold to pan\n\n"\
+            freetype::print(Font, 0, (float)Application.getWindowSize().Y - 15.f, "WASD to control camera\nRight click and hold to pan\n\n"\
                 "E to choose Scale tool\nR for Rotate\nT for Translate\nLeft click applies tool\n\n"\
-                "F to use flat shading\nV to use phong shading\n\n"\
-                "Z to use vertex-lighting shader\nX to use per-pixel lighting shader without specular\nC to use per-pixel lighting shader with specular\n\n");
+                "F to use flat shading\nV to use smooth shading\n\n"\
+                "Z to use vertex-lighting shader\nX to use per-pixel lighting shader without specular\nC to use per-pixel lighting shader with specular\n\n"\
+                "1, 2, and 3 to change materials\n\n");
         else
-            freetype::print(Font, 0, (float)Application.getWindowSize().Y - 10.f, "Press F1 to view commands");
+            freetype::print(Font, 0, (float)Application.getWindowSize().Y - 15.f, "Press F1 to view commands");
 
         SDL_GL_SwapBuffers();
     }
