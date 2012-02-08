@@ -1,12 +1,13 @@
-FILES = Main.cpp
+FILES = Main.cpp Freetype.cpp
 
 DIRECTORIES = -I../CabbageCore/:../CabbageScene/ -L../lib/
+INCLUDE=-I../CabbageCore
 
 OPENGL = -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL
 CABBAGE = -lCabbageScene -lCabbageFramework
 
 MeshLoaderDemo: $(FILES)
-	g++ -o $@ $(FILES) $(DIRECTORIES) $(CABBAGE) $(OPENGL) 
+	g++ -o $@ $(FILES) $(DIRECTORIES) $(CABBAGE) $(OPENGL) $(INCLUDE) `freetype-config --libs`
 
 clean:
 	rm -f MeshLoaderDemo
