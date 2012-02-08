@@ -124,7 +124,7 @@ protected:
 
     std::map<std::string, SAttribute> Attributes;
     std::map<std::string, SUniform> Uniforms;
-    std::map<std::string, SUniform> SceneLoadedUniforms;
+    std::vector<SUniform> SceneLoadedUniforms;
 
     CBufferObject<GLushort> * IndexBufferObject;
 

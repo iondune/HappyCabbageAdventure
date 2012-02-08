@@ -17,23 +17,23 @@ void CMainMenuState::drawSky(int backwards) {
    glBegin(GL_QUADS);
    if(!backwards) {
       glTexCoord2f(0, 1);
-      glVertex3f(-25, 22, -2.5);
+      glVertex3f(-25, 22, -2.5f);
       glTexCoord2f(0, 0);
-      glVertex3f(-25, -1, -2.5);
+      glVertex3f(-25, -1, -2.5f);
       glTexCoord2f(1, 0);
-      glVertex3f(25, -1, -2.5);
+      glVertex3f(25, -1, -2.5f);
       glTexCoord2f(1, 1);
-      glVertex3f(25, 22, -2.5);
+      glVertex3f(25, 22, -2.5f);
    }
    else {
       glTexCoord2f(0, 1);
-      glVertex3f(-2, 2, 0.01);
+      glVertex3f(-2, 2, 0.01f);
       glTexCoord2f(0, 0);
-      glVertex3f(-2, -2, 0.01);
+      glVertex3f(-2, -2, 0.01f);
       glTexCoord2f(1, 0);
-      glVertex3f(2, -2, 0.01);
+      glVertex3f(2, -2, 0.01f);
       glTexCoord2f(1, 1);
-      glVertex3f(2, 2, 0.01);
+      glVertex3f(2, 2, 0.01f);
    }
    glEnd();
 

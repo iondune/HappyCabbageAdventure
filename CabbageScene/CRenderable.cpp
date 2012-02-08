@@ -131,8 +131,9 @@ void CRenderable::loadHandlesFromShader(CShader const * const shader, CScene con
             jt->second.Handle = it->second.Handle;
         else if ((kt = scene->getUniforms().find(it->first)) != scene->getUniforms().end())
         {
-            SceneLoadedUniforms[kt->first] = kt->second;
-            SceneLoadedUniforms[kt->first].Handle = it->second.Handle;
+            SceneLoadedUniforms.push_back(kt->second);
+            SceneLoadedUniforms.back().Handle = it->second.Handle;
+            //SceneLoadedUniforms[kt->first].Handle = it->second.Handle;
         }
         else
             std::cout << "Uniform required by shader but not found in renderable or scene: " << it->first << std::endl;
@@ -207,9 +208,9 @@ void CRenderable::draw(CScene const * const scene)
         if (it->second.Handle >= 0)
             it->second.Value->bindTo(it->second.Handle, ShaderContext);
     }
-    for (std::map<std::string, SUniform>::iterator it = SceneLoadedUniforms.begin(); it != SceneLoadedUniforms.end(); ++ it)
+    for (std::vector<SUniform>::iterator it = SceneLoadedUniforms.begin(); it != SceneLoadedUniforms.end(); ++ it)
     {
-        it->second.Value->bindTo(it->second.Handle, ShaderContext);
+        it->Value->bindTo(it->Handle, ShaderContext);
     }
 
     // Set up texturing if a texture was supplied
