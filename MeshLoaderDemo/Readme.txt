@@ -9,3 +9,6 @@ F to use flat shading, V to use smooth shading
 Z to use vertex-lighting shader, X to use per-pixel lighting shader without specular, C to use per-pixel lighting shader with specular
 
 Scene contains 3 lights surrounding the bunny, one red one green and one blue
+
+Also note that my mult-light specular shader failed to compile on my laptop, while successfully building
+on my desktop. I'm hoping the OpenGl 4.0+ lab computers will compile it. If not, pressing X will simply hide the bunny.
