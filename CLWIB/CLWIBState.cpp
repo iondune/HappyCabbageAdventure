@@ -62,6 +62,7 @@ void initBlockMap();
 //Initalizer fxn
 void CLWIBState::begin()
 {
+   CBlock * blockn = new CBlock(0,0,0,0);
    initBlockMap();
    blockWidth = 1;
    blockHeight = 1;
@@ -105,6 +106,7 @@ void CLWIBState::begin()
    PrepPreviewBlock();
 
    printf("END OF BEGIN\n");
+
 }
 
 
@@ -166,6 +168,9 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_w){
          wDown = 1;
       }
+      if(Event.Key == SDLK_p){
+         printXML();
+      }
       if(Event.Key == SDLK_s){
          sDown = 1;
       }
@@ -190,17 +195,23 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_u) {
          //3 is the number of static blocks created before the user can add in new blocks (ie unremovable)
-         if(blocks.size() > 3) {
+         if(blocks.size() > 3 && placeables.size() > 0) {
             Application.getSceneManager().removeRenderable(blocks.back());
             redo.push_back(blocks.back());
+            redoPlaceables.push_back(placeables.back());
+
+            placeables.pop_back();
             blocks.pop_back();
          }
       }
       if(Event.Key == SDLK_r) {
-         if(redo.size() > 0) {
+         if(redo.size() > 0 && redoPlaceables.size() > 0) {
             Application.getSceneManager().addRenderable(redo.back());
             blocks.push_back(redo.back());
+            placeables.push_back(redoPlaceables.back());
+
             redo.pop_back();
+            redoPlaceables.pop_back();
          }
       }
       if(Event.Key == SDLK_m){
@@ -243,6 +254,13 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_SPACE){
          spaceDown = 0;
       }
+   }
+}
+
+void CLWIBState::printXML() {
+   std::vector<CBlock*>::iterator it;
+   for(it=placeables.begin();it<placeables.end();it++) {
+      (*it)->printXML();
    }
 }
 
@@ -293,6 +311,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h) {
    printf("Placed block starting at %0.2f, %0.2f\n", x, y);
    CMeshRenderable *tempBlock;
    blocks.push_back(tempBlock = new CMeshRenderable());
+   placeables.push_back(new CBlock(x, y, w, h));
    tempBlock->setMesh(cubeMesh);
    tempBlock->getMaterial().Texture = dirtTxt;
    tempBlock->getMaterial().Shader = DiffuseTexture;
@@ -307,6 +326,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h) {
    tempBlock->setRotation(SVector3(0, 0, 0));
    Application.getSceneManager().addRenderable(tempBlock);
    redo.clear();
+   redoPlaceables.clear();
 }
 
 void CLWIBState::PrepGrass(float x, float y, float w, float h) {
