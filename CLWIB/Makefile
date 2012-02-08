@@ -1,5 +1,5 @@
 ROOT_CABBAGE_DIR=../
-SOURCES=main.cpp CLWIBState.cpp Materials.cpp FreeType.cpp CBlock.cpp
+SOURCES=CLWIBState.cpp Materials.cpp FreeType.cpp CBlock.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o)
 CABBAGE=-L../lib/ -lCabbageCollider -lCabbageFramework -lCabbageScene
 COMPILER_VERSION=-std=c++0x
@@ -20,15 +20,21 @@ TARGET=cabbage
 endif
 
 all: ${TARGET} 
+lib: ../lib/libCLWIB.a $(OBJECTS)
+
+../lib/libCLWIB.a: $(OBJECTS)
+	rm -f $@
+	mkdir -p ../lib
+	ar cq $@ $(OBJECTS)
 
 cabbage: ${OBJECTS} ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a
 	g++ ${COMPILER_VERSION} ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL -lglut `sdl-config --cflags --libs` ${CABBAGE} ${MIXLIB} `freetype-config --libs` -g -o $@
 
 CBlock.o: CBlock.cpp CBlock.h CPlaceable.h
-	g++ -c CBlock.cpp
+	g++ $(INCLUDE) `sdl-config --cflags` -c CBlock.cpp
 main.o: main.cpp
 	g++ $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c main.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
-CLWIBState.o: CLWIBState.cpp draw.h header.h
+CLWIBState.o: CLWIBState.cpp header.h
 	g++ $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c CLWIBState.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 Materials.o: Materials.cpp Materials.h
 	g++ -c Materials.cpp

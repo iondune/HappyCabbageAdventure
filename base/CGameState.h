@@ -5,6 +5,10 @@
 
 #include "header.h"
 #include "../MainMenu/CMainMenuState.h"
+#include "../CLWIB/CLWIBState.h"
+#include "../CLWIB/CBlock.h"
+#include "../CLWIB/CPlaceable.h"
+#include "CGameEventReceiver.h"
 
 
 #define TREE_Y_OFFSET 2.1

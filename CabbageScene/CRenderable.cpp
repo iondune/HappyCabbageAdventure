@@ -188,11 +188,13 @@ void CRenderable::setIndexBufferObject(CBufferObject<GLushort> * indexBufferObje
 
 void CRenderable::draw(CScene const * const scene)
 {
+   if(! Visible)
+      return;
     // If no ibo loaded, we can't draw anything
     // If the ibo loaded hasn't been synced as an index buffer object, 
-    if (! IndexBufferObject || ! IndexBufferObject->isIndexBuffer() || ! Visible)
+    if (! IndexBufferObject || ! IndexBufferObject->isIndexBuffer())
     {
-        std::cout << "Failed to draw object" << std::endl;
+        std::cout << "Failed to draw object: IBO address == " << IndexBufferObject << std::endl;
         return;
     }
 

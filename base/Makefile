@@ -1,7 +1,7 @@
 ROOT_CABBAGE_DIR=../
 SOURCES=main.cpp CGameState.cpp CPlayerView.cpp Materials.cpp FreeType.cpp CGameplayManager.cpp sound.cpp CGameEventReceiver.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o) ../MainMenu/CMainMenuState.o
-CABBAGE=-L../lib/ -lCabbageCollider -lCabbageFramework -lCabbageScene
+CABBAGE=-L../lib/ -lCabbageCollider -lCabbageFramework -lCabbageScene -lCLWIB
 COMPILER_VERSION=-std=c++0x
 INCLUDE=-I../CabbageCore
 
@@ -21,12 +21,12 @@ endif
 
 all: ${TARGET} 
 
-cabbage: ${OBJECTS} ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a
+cabbage: ${OBJECTS} ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCLWIB.a
 	g++ ${COMPILER_VERSION} ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL -lglut `sdl-config --cflags --libs` ${CABBAGE} ${MIXLIB} `freetype-config --libs` -g -o $@
 
 main.o: main.cpp
 	g++ $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c main.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
-CGameState.o: CGameState.cpp draw.h header.h
+CGameState.o: CGameState.cpp header.h
 	g++ $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c CGameState.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 sound.o: sound.cpp sound.h
 	g++ `sdl-config --cflags` -c sound.cpp -DGL_GLEXT_PROTOTYPES
@@ -48,5 +48,5 @@ clean:
 
 mingw: cabbage.exe
 
-cabbage.exe: ${OBJECTS} ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a
+cabbage.exe: ${OBJECTS} ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCLWIB.a
 	g++ ${COMPILER_VERSION} `sdl-config --cflags` -mwindows ${OBJECTS} -DGL_GLEXT_PROTOTYPES ${CABBAGE} ./*.dll -lSDL_mixer -lopengl32 -lglu32 -lglut32 `sdl-config --libs` `freetype-config --libs` -g -L/lib/ -o $@ -lglew32

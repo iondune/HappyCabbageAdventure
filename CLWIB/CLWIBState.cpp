@@ -1,50 +1,17 @@
 #include "CLWIBState.h"
 /* These are here because someone doesn't use extern, or put prototypes in their header files */
-#include "draw.h"
-#include "texture.h"
 #include <cmath>
 
-#ifdef _WIN32
-static inline double round(double val)
-{    
-    return floor(val + 0.5);
-}
 
-#define M_PI 3.14159f
-#endif
-
-//Boolean integers for keypressing
-int aDown = 0, dDown = 0, spaceDown = 0, wDown = 0, sDown = 0, gDown = 0, fDown = 0;
-int backwardsView = 0, overView = 0;
-
-freetype::font_data our_font;
-
-int WindowWidth, WindowHeight;
-
-
-float pointToWorldY(float why, float dist);
-float pointToWorldX(float ex, float dist);
 float x2w(int oldX);
 float yp2w(int oldY);
-void Load3DS();
-void LoadShaders();
-void LoadTextures();
-void PrepMeshes();
 void EngineInit();
 void PrepPreviewBlock();
 
 float previewBlockMouseX, previewBlockMouseY; 
 float lastBlockPlacedLocationX, lastBlockPlacedLocationY;
 using namespace Cabbage::Collider;
-CActor *Player, *Derp;
-CObject *Floor, *Block;
 CMeshRenderable *PreviewBlock;
-
-void BlockMesh() {
-   cubeMesh = CMeshLoader::createCubeMesh();
-   //cubeMesh->linearizeIndices();
-   cubeMesh->calculateNormalsPerFace();
-}
 
 CLWIBState::CLWIBState()
 : Application (CApplication::get())
@@ -62,7 +29,10 @@ void initBlockMap();
 //Initalizer fxn
 void CLWIBState::begin()
 {
-   CBlock * blockn = new CBlock(0,0,0,0);
+   aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0; gDown = 0; fDown = 0;
+   cubeMesh = CMeshLoader::createCubeMesh();
+   cubeMesh->calculateNormalsPerFace();
+
    initBlockMap();
    blockWidth = 1;
    blockHeight = 1;
@@ -90,14 +60,10 @@ void CLWIBState::begin()
 
    Application.getSceneManager().setActiveCamera(Camera);
 
-   LoadShaders();
+   DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture");
 
-   Load3DS();
-   LoadTextures();
-   BlockMesh();
 
    //Load the meshes into VBOs
-   PrepMeshes();
 
    srand(time(NULL));
 
@@ -187,10 +153,8 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
          dDown = 1;
       }
       if(Event.Key == SDLK_k){
-         backwardsView = !backwardsView;
       }
       if(Event.Key == SDLK_j){
-         overView = NEXT(overView);
          //printf("Angle: %d\n", ANGLE(overView, backwardsView));
       }
       if(Event.Key == SDLK_u) {
@@ -258,7 +222,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
 }
 
 void CLWIBState::printXML() {
-   std::vector<CBlock*>::iterator it;
+   std::vector<CPlaceable*>::iterator it;
    for(it=placeables.begin();it<placeables.end();it++) {
       (*it)->printXML();
    }
@@ -273,7 +237,8 @@ void CLWIBState::end()
 void CLWIBState::PrepPreviewBlock() {
    blocks.push_back(PreviewBlock = new CMeshRenderable());
    PreviewBlock->setMesh(cubeMesh);
-   PreviewBlock->getMaterial().Texture = grassTxt;
+
+   PreviewBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/grass.bmp");
    PreviewBlock->getMaterial().Shader = DiffuseTexture;
    //PreviewBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    PreviewBlock->setScale(SVector3(blockWidth, blockHeight, 1));
@@ -313,7 +278,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h) {
    blocks.push_back(tempBlock = new CMeshRenderable());
    placeables.push_back(new CBlock(x, y, w, h));
    tempBlock->setMesh(cubeMesh);
-   tempBlock->getMaterial().Texture = dirtTxt;
+   tempBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/dirt.bmp");;
    tempBlock->getMaterial().Shader = DiffuseTexture;
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    //tempBlock->setTranslation(SVector3(x, y, 0));
@@ -333,7 +298,8 @@ void CLWIBState::PrepGrass(float x, float y, float w, float h) {
    CMeshRenderable *tempBlock;
    blocks.push_back(tempBlock = new CMeshRenderable());
    tempBlock->setMesh(cubeMesh);
-   tempBlock->getMaterial().Texture = grassTxt;
+
+   tempBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/grass.bmp");
    tempBlock->getMaterial().Shader = DiffuseTexture;
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    tempBlock->setScale(SVector3(w, h, 5));
@@ -345,7 +311,7 @@ void CLWIBState::PrepSky() {
    CMeshRenderable *tempBlock;
    blocks.push_back(tempBlock = new CMeshRenderable());
    tempBlock->setMesh(cubeMesh);
-   tempBlock->getMaterial().Texture = skyTxt;
+   tempBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/sky.bmp");
    tempBlock->getMaterial().Shader = DiffuseTexture;
    tempBlock->setTranslation(SVector3(0, 24, -2.5));
    tempBlock->setScale(SVector3(100, 50, 1));
@@ -353,14 +319,7 @@ void CLWIBState::PrepSky() {
 
 }
 
-void LoadShaders() {
-   Flat = CShaderLoader::loadShader("Flat");
-   Diffuse = CShaderLoader::loadShader("Diffuse");
-   DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture");
-   //normalColor = CShaderLoader::loadShader("NormalColor");
-}
-
-
+/*
 void Load3DS()
 {
    basicTreeMesh = CMeshLoader::load3dsMesh("Models/tree.3ds");
@@ -436,7 +395,9 @@ void Load3DS()
    }
 
 }
+*/
 
+/*
 void LoadTextures()
 {
    grassImg = CImageLoader::loadImage("Textures/grass.bmp");
@@ -445,78 +406,16 @@ void LoadTextures()
    blueFlwrImg = CImageLoader::loadImage("Textures/blueFlower.bmp");
    pinkFlwrImg = CImageLoader::loadImage("Textures/pinkFlower.bmp");
    poinImg = CImageLoader::loadImage("Textures/poin.bmp");
-
-   grassTxt = new CTexture(grassImg);
-   skyTxt = new CTexture(skyImg);
-   dirtTxt = new CTexture(dirtImg);
-   blueFlwrTxt = new CTexture(blueFlwrImg);
-   pinkFlwrTxt = new CTexture(pinkFlwrImg);
-   poinTxt = new CTexture(poinImg);
 }
+*/
 
-void PrepMeshes()
-{
-   renderBasicTree = new CMeshRenderable();
-   renderBasicTree->setMesh(basicTreeMesh);
-   renderBasicTree->getMaterial().Shader = Flat;
 
-   renderChristmasTree = new CMeshRenderable();
-   renderChristmasTree->setMesh(cabbageMesh);
-   renderChristmasTree->getMaterial().Shader = Flat;
-
-   playerRenderable = new CMeshRenderable();
-   playerRenderable->setMesh(cabbageMesh);
-   playerRenderable->getMaterial().Shader = Flat;
-   playerRenderable->setScale(SVector3(2));
-
-   renderBlueFlwr = new CMeshRenderable();
-   renderBlueFlwr->setMesh(blueFlwrMesh);
-   renderBlueFlwr->getMaterial().Texture = blueFlwrTxt;
-   renderBlueFlwr->getMaterial().Shader = DiffuseTexture;
-   renderBlueFlwr->setTranslation(SVector3(-23.f, .18f, 2));
-   renderBlueFlwr->setScale(SVector3(.36f));
-   renderBlueFlwr->setRotation(SVector3(-90, 0, 0));
-
-   renderPinkFlwr = new CMeshRenderable();
-   renderPinkFlwr->setMesh(pinkFlwrMesh);
-   renderPinkFlwr->getMaterial().Texture = pinkFlwrTxt;
-   renderPinkFlwr->setTranslation(SVector3(-20, .2f, 2));
-   renderPinkFlwr->setScale(SVector3(.36f));
-   renderPinkFlwr->setRotation(SVector3(-90, 0, 0));
-   renderPinkFlwr->getMaterial().Shader = DiffuseTexture;
-
-   renderFicus = new CMeshRenderable();
-   renderFicus->setMesh(ficusMesh);
-   renderFicus->setTranslation(SVector3(-21, .5f, 2));
-   renderFicus->setScale(SVector3(1.0));
-   renderFicus->setRotation(SVector3(-90, 0, 0));
-   renderFicus->getMaterial().Texture = blueFlwrTxt;
-   renderFicus->getMaterial().Shader = DiffuseTexture;
-
-   renderPoin = new CMeshRenderable();
-   renderPoin->setMesh(poinMesh);
-   renderPoin->setTranslation(SVector3(-19, .5f, 2));
-   renderPoin->setScale(SVector3(.75));
-   renderPoin->setRotation(SVector3(-90, 0, 0));
-   renderPoin->getMaterial().Texture = (poinTxt);
-   renderPoin->getMaterial().Shader = DiffuseTexture;
-}
-
-float pointToWorldX(float ex, float dist)
-{
-   return 0.f;//tan(30*M_PI/180)
-}
-float pointToWorldY(float why, float dist)
-{
-    return 0.f;
-}
-
-float xp2w(int oldX)
+float CLWIBState::xp2w(int oldX)
 {
    return (float)2/WindowWidth * oldX - 1; 
 }
 
-float yp2w(int oldY)
+float CLWIBState::yp2w(int oldY)
 {
    return (float)-2/WindowHeight * oldY + 1; 
 }
