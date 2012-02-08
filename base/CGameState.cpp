@@ -1,7 +1,7 @@
 #include "CGameState.h"
 /* These are here because someone doesn't use extern, or put prototypes in their header files */
 #include "draw.h"
-#include "texture.h"
+
 
 //Boolean integers for keypressing
 int aDown = 0, dDown = 0, spaceDown = 0, wDown = 0, sDown = 0;
