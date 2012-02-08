@@ -17,7 +17,7 @@ class CLWIBState : public CState<CLWIBState>
    CApplication & Application;
 
    public:
-   std::vector<CBlock*> placeables, redoPlaceables;
+   std::vector<CPlaceable*> placeables, redoPlaceables;
    std::vector<CMeshRenderable*> blocks, redo;
    CLWIBState();
    void begin();

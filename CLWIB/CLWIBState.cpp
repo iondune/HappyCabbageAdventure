@@ -4,14 +4,6 @@
 #include "texture.h"
 #include <cmath>
 
-#ifdef _WIN32
-static inline double round(double val)
-{    
-    return floor(val + 0.5);
-}
-
-#define M_PI 3.14159f
-#endif
 
 //Boolean integers for keypressing
 int aDown = 0, dDown = 0, spaceDown = 0, wDown = 0, sDown = 0, gDown = 0, fDown = 0;
@@ -62,7 +54,6 @@ void initBlockMap();
 //Initalizer fxn
 void CLWIBState::begin()
 {
-   CBlock * blockn = new CBlock(0,0,0,0);
    initBlockMap();
    blockWidth = 1;
    blockHeight = 1;
@@ -258,7 +249,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
 }
 
 void CLWIBState::printXML() {
-   std::vector<CBlock*>::iterator it;
+   std::vector<CPlaceable*>::iterator it;
    for(it=placeables.begin();it<placeables.end();it++) {
       (*it)->printXML();
    }
