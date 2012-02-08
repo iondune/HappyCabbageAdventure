@@ -52,6 +52,7 @@ class CFloatUniform : public IUniform
 
 public:
 
+    CFloatUniform();
     CFloatUniform(float const value);
     void bindTo(GLuint const uniformHandle, CShaderContext & shaderContext);
 
@@ -105,6 +106,7 @@ struct SMaterial
 
     boost::shared_ptr<CVec3Uniform> AmbientColor;
     boost::shared_ptr<CVec3Uniform> DiffuseColor;
+    boost::shared_ptr<CFloatUniform> Shininess;
 
     SMaterial();
 };

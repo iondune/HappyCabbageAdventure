@@ -130,15 +130,18 @@ public:
         default:
         case 1:
             Renderable->getMaterial().AmbientColor->Value = SVector3(0.2f);
-            Renderable->getMaterial().DiffuseColor->Value = SVector3(0.7f);
+            Renderable->getMaterial().DiffuseColor->Value = SVector3(0.9f);
+            Renderable->getMaterial().Shininess->Value = 1.f;
             break;
         case 2:
             Renderable->getMaterial().AmbientColor->Value = SVector3(0.2f);
-            Renderable->getMaterial().DiffuseColor->Value = SVector3(0.9f);
+            Renderable->getMaterial().DiffuseColor->Value = SVector3(1.2f);
+            Renderable->getMaterial().Shininess->Value = 2.f;
             break;
         case 3:
             Renderable->getMaterial().AmbientColor->Value = SVector3(0.2f);
             Renderable->getMaterial().DiffuseColor->Value = SVector3(1.4f);
+            Renderable->getMaterial().Shininess->Value = 3.f;
             break;
         }
 
@@ -161,12 +164,12 @@ public:
         CApplication::get().getSceneManager().drawAll();
 
         if (ShowHelp)
-            freetype::print(Font, 0, (float)Application.getWindowSize().Y - 50.f, "WASD to control camera\nRight click and hold to pan\n\n"\
+            freetype::print(Font, 0, (float)Application.getWindowSize().Y - 10.f, "WASD to control camera\nRight click and hold to pan\n\n"\
                 "E to choose Scale tool\nR for Rotate\nT for Translate\nLeft click applies tool\n\n"\
                 "F to use flat shading\nV to use phong shading\n\n"\
                 "Z to use vertex-lighting shader\nX to use per-pixel lighting shader without specular\nC to use per-pixel lighting shader with specular\n\n");
         else
-            freetype::print(Font, 0, (float)Application.getWindowSize().Y - 50.f, "Hello world!");
+            freetype::print(Font, 0, (float)Application.getWindowSize().Y - 10.f, "Press F1 to view commands");
 
         SDL_GL_SwapBuffers();
     }

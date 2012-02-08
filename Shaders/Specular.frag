@@ -7,6 +7,7 @@ struct SMaterial
 {
     vec3 AmbientColor;
     vec3 DiffuseColor;
+    float Shininess;
 };
 
 uniform SMaterial uMaterial;
@@ -29,7 +30,7 @@ void main()
 
         vec3 vReflection = -nLight + 2 * dot(nNormal, nLight) * nNormal;
         vDiffuse += uMaterial.DiffuseColor * clamp(dot(nNormal, nLight), 0.0, 1.0) * vLightColor[i];
-        vSpecular += SpecularColor * clamp(dot(normalize(vEye[i]), normalize(vReflection)), 0.0, 1.0) * vLightColor[i];
+        vSpecular += SpecularColor * pow(clamp(dot(normalize(vEye[i]), normalize(vReflection)), 0.0, 1.0), uMaterial.Shininess) * vLightColor[i];
     }
 
     gl_FragColor = vec4(vDiffuse + vSpecular + uMaterial.AmbientColor, 1);
