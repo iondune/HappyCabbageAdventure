@@ -20,8 +20,7 @@ CMeshRenderable * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngine
    engBlock->setArea(SRect2(x, y, w, h));
 
    CMeshRenderable *tempBlock = new CMeshRenderable();
-   CMesh *mesh = CMeshLoader::createCubeMesh();
-   printf("Mesh: %d\n");
+   CMesh *mesh = CMeshLoader::loadAsciiMesh("Cube");
    mesh->calculateNormalsPerFace();
    tempBlock->setMesh(mesh);
    tempBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/dirt.bmp");
