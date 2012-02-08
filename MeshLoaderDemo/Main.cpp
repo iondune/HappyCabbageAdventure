@@ -103,18 +103,8 @@ public:
         }
 
 
-        CImage * Image = CImageLoader::loadImage("spaceshiptexture.bmp");
-        if (! Image)
-        {
-            std::cerr << "Unable to load necessary texture." << std::endl;
-            waitForUser();
-            exit(1);
-        }
-        Texture = new CTexture(Image);
-
         Renderable = new CMeshRenderable();
         Renderable->setMesh(MeshFace);
-        Renderable->getMaterial().Texture = Texture;
         Renderable->getMaterial().Shader = Shader;
         setMaterial(3);
 
