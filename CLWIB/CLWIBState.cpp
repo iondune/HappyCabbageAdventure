@@ -4,6 +4,15 @@
 #include "texture.h"
 #include <cmath>
 
+#ifdef _WIN32
+static inline double round(double val)
+{    
+    return floor(val + 0.5);
+}
+
+#define M_PI 3.14159f
+#endif
+
 //Boolean integers for keypressing
 int aDown = 0, dDown = 0, spaceDown = 0, wDown = 0, sDown = 0;
 int backwardsView = 0, overView = 0;
@@ -427,11 +436,11 @@ void PrepMeshes()
 
 float pointToWorldX(float ex, float dist)
 {
-   //tan(30*M_PI/180)
+   return 0.f;//tan(30*M_PI/180)
 }
 float pointToWorldY(float why, float dist)
 {
-
+    return 0.f;
 }
 
 float xp2w(int oldX)
