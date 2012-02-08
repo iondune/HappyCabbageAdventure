@@ -2,6 +2,7 @@
 /* These are here because someone doesn't use extern, or put prototypes in their header files */
 #include "draw.h"
 
+
 //Boolean integers for keypressing
 int aDown = 0, dDown = 0, spaceDown = 0, wDown = 0, sDown = 0;
 int backwardsView = 0, overView = 0;
