@@ -21,6 +21,7 @@
     </None>
     <None Include="freetype6.dll" />
     <None Include="zlib1.dll" />
+    <None Include="Readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />

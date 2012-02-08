@@ -69,6 +69,7 @@
     <None Include="freetype6.dll" />
     <None Include="glew32.dll" />
     <None Include="Makefile" />
+    <None Include="Readme.txt" />
     <None Include="SDL.dll" />
     <None Include="Shaders\normalColor.frag" />
     <None Include="Shaders\normalColor.vert" />

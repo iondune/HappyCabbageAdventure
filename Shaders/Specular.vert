@@ -26,7 +26,7 @@ void main()
     vec4 vPosition;
 
     vPosition = uModelMatrix * vec4(aPosition, 1);
-    for (int i = 0; i < 10 && i < uLightCount; ++ i)
+    for (int i = 0; i < 4 && i < uLightCount; ++ i)
     {
         vLight[i] = normalize(uLights[i].Position - vec3(vPosition));
         vLightColor[i] = uLights[i].Color;

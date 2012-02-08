@@ -24,7 +24,7 @@ void main()
 
     vec3 vDiffuse = vec3(0, 0, 0);
     vec3 vSpecular = vec3(0, 0, 0);
-    for (int i = 0; i < 10 && i < uLightCount; ++ i)
+    for (int i = 0; i < 4 && i < uLightCount; ++ i)
     {
         vec3 nLight = normalize(vLight[i]);
 
