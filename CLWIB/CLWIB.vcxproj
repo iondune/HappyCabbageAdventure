@@ -65,6 +65,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CBlock.h" />
     <ClInclude Include="CLWIBState.h" />
     <ClInclude Include="draw.h" />
     <ClInclude Include="FreeType.h" />
@@ -72,6 +73,7 @@
     <ClInclude Include="Materials.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CBlock.cpp" />
     <ClCompile Include="CLWIBState.cpp" />
     <ClCompile Include="FreeType.cpp" />
     <ClCompile Include="main.cpp" />
