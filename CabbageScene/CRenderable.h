@@ -103,6 +103,9 @@ struct SMaterial
     CShader * Shader;
     CTexture * Texture;
 
+    boost::shared_ptr<CVec3Uniform> AmbientColor;
+    boost::shared_ptr<CVec3Uniform> DiffuseColor;
+
     SMaterial();
 };
 

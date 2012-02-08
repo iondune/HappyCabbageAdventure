@@ -87,7 +87,10 @@ CRenderable::SUniform::SUniform(boost::shared_ptr<IUniform> value)
 
 SMaterial::SMaterial()
     : Shader(0), Texture(0)
-{}
+{
+    AmbientColor = boost::shared_ptr<CVec3Uniform>(new CVec3Uniform());
+    DiffuseColor = boost::shared_ptr<CVec3Uniform>(new CVec3Uniform());
+}
 
 
 CRenderable::CRenderable()
@@ -98,6 +101,8 @@ CRenderable::CRenderable()
 
     addUniform("uModelMatrix", uModelMatrix);
     addUniform("uNormalMatrix", uNormalMatrix);
+    addUniform("uMaterial.AmbientColor", Material.AmbientColor);
+    addUniform("uMaterial.DiffuseColor", Material.DiffuseColor);
 }
 
 SMaterial & CRenderable::getMaterial()

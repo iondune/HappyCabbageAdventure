@@ -72,7 +72,7 @@ public:
 
         SceneManager.Lights.push_back(SLight());
         SceneManager.Lights.back().ColorUniform->Value = SVector3(0.2f, 0.2f, 0.5f);
-        SceneManager.Lights.back().PositionUniform->Value = SVector3(-1.f, 2.f, -3.f);
+        SceneManager.Lights.back().PositionUniform->Value = SVector3(-3.f, 0.f, 0.f);
 
 
         // Attempt to load shader and attributes
@@ -116,10 +116,33 @@ public:
         Renderable->setMesh(MeshFace);
         Renderable->getMaterial().Texture = Texture;
         Renderable->getMaterial().Shader = Shader;
+        setMaterial(3);
 
         CApplication::get().getSceneManager().addRenderable(Renderable);
 
         Font.init("Fonts/DejaVuSansMono.ttf", 14);
+    }
+
+    void setMaterial(int const i)
+    {
+        switch (i)
+        {
+        default:
+        case 1:
+            Renderable->getMaterial().AmbientColor->Value = SVector3(0.2f);
+            Renderable->getMaterial().DiffuseColor->Value = SVector3(0.7f);
+            break;
+        case 2:
+            Renderable->getMaterial().AmbientColor->Value = SVector3(0.2f);
+            Renderable->getMaterial().DiffuseColor->Value = SVector3(0.9f);
+            break;
+        case 3:
+            Renderable->getMaterial().AmbientColor->Value = SVector3(0.2f);
+            Renderable->getMaterial().DiffuseColor->Value = SVector3(1.4f);
+            break;
+        }
+
+        CApplication::get().getSceneManager().SceneChanged = true;
     }
 
     void OnRenderStart(float const Elapsed)
@@ -202,34 +225,36 @@ public:
             break;
 
         case SDLK_j:
-
             if (! Event.Pressed)
                 Animate = ! Animate;
-
             break;
 
         case SDLK_r:
-
             Mode = 0;
-
             break;
 
         case SDLK_t:
-
             Mode = 1;
-
             break;
 
         case SDLK_e:
-
             Mode = 2;
+            break;
 
+        case SDLK_1:
+           setMaterial(1);
+            break;
+
+        case SDLK_2:
+           setMaterial(2);
+            break;
+
+        case SDLK_3:
+           setMaterial(3);
             break;
 
         case SDLK_F1:
-
             ShowHelp = Event.Pressed;
-
             break;
 
         }

@@ -16,11 +16,8 @@ varying vec3 vLightColor[10];
 
 void main()
 {
-    const vec3 AmbientColor = vec3(0.4, 0.4, 0.4);
-    const vec3 DiffuseColor = vec3(0.6, 0.6, 0.6);
-
     vec3 vDiffuse = vec3(0, 0, 0);
     for (int i = 0; i < 10 && i < uLightCount; ++ i)
-        vDiffuse += DiffuseColor * clamp(dot(normalize(vNormal), normalize(vLight[i])), 0.0, 1.0) * vLightColor[i];
-    gl_FragColor = vec4(vDiffuse + AmbientColor, 1);
+        vDiffuse += uMaterial.DiffuseColor * clamp(dot(normalize(vNormal), normalize(vLight[i])), 0.0, 1.0) * vLightColor[i];
+    gl_FragColor = vec4(vDiffuse + uMaterial.AmbientColor, 1);
 }
