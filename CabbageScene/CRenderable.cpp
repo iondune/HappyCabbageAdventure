@@ -29,6 +29,10 @@ void CFloatUniform::bindTo(GLuint const uniformHandle, CShaderContext & shaderCo
     shaderContext.uniform(uniformHandle, Value);
 }
 
+CIntUniform::CIntUniform()
+    : Value(0)
+{}
+
 CIntUniform::CIntUniform(int const value)
     : Value(value)
 {}
@@ -108,7 +112,7 @@ SMaterial const & CRenderable::getMaterial() const
 
 void CRenderable::loadHandlesFromShader(CShader const * const shader, CScene const * const scene)
 {
-    if (LastLoadedShader == shader && LastLoadedScene == scene)
+    if (! scene->SceneChanged && LastLoadedShader == shader && LastLoadedScene == scene)
         return;
 
     // Remove any handles a previous shader might have set
@@ -175,10 +179,11 @@ void CRenderable::draw(CScene const * const scene)
 {
     // If no ibo loaded, we can't draw anything
     // If the ibo loaded hasn't been synced as an index buffer object, 
-    if (! IndexBufferObject || ! IndexBufferObject->isIndexBuffer() /*|| !visible*/) {
-  printf("Failed to draw object\n");      
-  return;
-}
+    if (! IndexBufferObject || ! IndexBufferObject->isIndexBuffer() || ! Visible)
+    {
+        std::cout << "Failed to draw object" << std::endl;
+        return;
+    }
 
     CShader * ShaderToUse = Material.Shader;
 

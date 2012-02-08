@@ -64,6 +64,7 @@ class CIntUniform : public IUniform
 
 public:
 
+    CIntUniform();
     CIntUniform(int const value);
     void bindTo(GLuint const uniformHandle, CShaderContext & shaderContext);
 

@@ -14,6 +14,8 @@ struct SLight
     boost::shared_ptr<CVec3Uniform> ColorUniform;
     boost::shared_ptr<CVec3Uniform> PositionUniform;
 
+    // Todo: change values only through get/set, set scene changed when so
+
     SLight()
     {
         ColorUniform = boost::shared_ptr<CVec3Uniform>(new CVec3Uniform());
@@ -32,6 +34,7 @@ protected:
     CCamera * ActiveCamera;
 
     boost::shared_ptr<CMat4Uniform> uViewMatrix, uProjMatrix;
+    boost::shared_ptr<CIntUniform> uLightCount;
 
     std::map<std::string, CRenderable::SUniform> Uniforms;
 
@@ -53,6 +56,7 @@ public:
     void update();
 
     std::vector<SLight> Lights;
+    bool SceneChanged;
 
 };
 

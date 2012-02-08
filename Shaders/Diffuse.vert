@@ -5,6 +5,7 @@ uniform mat4 uModelMatrix;
 uniform mat4 uProjMatrix;
 uniform mat4 uViewMatrix;
 uniform mat4 uNormalMatrix;
+uniform int uLightCount;
 
 struct SLight
 {
@@ -15,19 +16,21 @@ struct SLight
 uniform SLight uLights[10];
 
 varying vec4 vColor;
-varying vec3 vLight;
+varying vec3 vLight[10];
+varying vec3 vLightColor[10];
 varying vec3 vNormal;
 
 void main()
 {
-    const vec3 LightPosition = vec3(1, 2, 1);
-
     vec4 vPosition;
 
     vPosition = uModelMatrix * vec4(aPosition, 1);
-    vLight = normalize(LightPosition - vec3(vPosition));
+    for (int i = 0; i < 10 && i < uLightCount; ++ i)
+    {
+        vLight[i] = normalize(uLights[i].Position - vec3(vPosition));
+        vLightColor[i] = uLights[i].Color;
+    }
     gl_Position = uProjMatrix * uViewMatrix * vPosition;
 
-    vLight = normalize(LightPosition - vec3(vPosition));
     vNormal = normalize(vec3(uNormalMatrix * vec4(aNormal, 1)));
 }
