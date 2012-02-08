@@ -6,8 +6,8 @@ CMainMenuState::CMainMenuState() {}
 void CMainMenuState::setupTextures()
 {
    printf("%d %d\n", woodTexture, skyTexture);
-   woodTexture = LoadBitmap("wood011.bmp");
-   skyTexture = LoadBitmap("sky.bmp");
+   woodTexture = new CTexture(CImageLoader::loadImage("wood011.bmp"));
+   skyTexture = new CTexture(CImageLoader::loadImage("sky.bmp"));
    printf("%d %d\n", woodTexture, skyTexture);
 }
 
@@ -15,7 +15,7 @@ void CMainMenuState::drawSky(int backwards) {
    glEnable(GL_TEXTURE_2D);
    glPushMatrix();
 
-   glBindTexture(GL_TEXTURE_2D, skyTexture);
+   glBindTexture(GL_TEXTURE_2D, skyTexture->getTextureHandle());
 
    glBegin(GL_QUADS);
    if(!backwards) {
@@ -49,7 +49,7 @@ void CMainMenuState::drawButton()
    glEnable(GL_TEXTURE_2D);
    glPushMatrix();
 
-   glBindTexture(GL_TEXTURE_2D, woodTexture);
+   glBindTexture(GL_TEXTURE_2D, woodTexture->getTextureHandle());
 
    glScalef(0.65, 0.25, 1.0);
 

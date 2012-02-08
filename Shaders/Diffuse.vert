@@ -6,6 +6,14 @@ uniform mat4 uProjMatrix;
 uniform mat4 uViewMatrix;
 uniform mat4 uNormalMatrix;
 
+struct SLight
+{
+    vec3 Position;
+    vec3 Color;
+};
+
+uniform SLight uLights[10];
+
 varying vec4 vColor;
 varying vec3 vLight;
 varying vec3 vNormal;

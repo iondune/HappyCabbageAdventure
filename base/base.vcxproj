@@ -93,6 +93,7 @@
     <ClInclude Include="texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\MainMenu\CMainMenuState.cpp" />
     <ClCompile Include="CGameEventReceiver.cpp" />
     <ClCompile Include="CGameplayManager.cpp" />
     <ClCompile Include="CPlayerView.cpp" />

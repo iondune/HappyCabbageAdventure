@@ -6,7 +6,14 @@
 #include "CRenderable.h"
 
 #include "../CabbageCore/SLine3.h"
+#include "../CabbageCore/SColor.h"
 
+
+struct SLight
+{
+    SVector3 Position;
+    SColor Color;
+};
 
 class CScene
 {
@@ -34,6 +41,8 @@ public:
     std::map<std::string, CRenderable::SUniform> const & getUniforms() const;
 
     void update();
+
+    std::vector<SLight> Lights;
 
 };
 
