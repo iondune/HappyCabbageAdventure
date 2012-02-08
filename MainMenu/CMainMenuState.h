@@ -12,6 +12,7 @@
 #include "../CabbageFramework/CabbageFramework.h"
 #include "../CabbageScene/CabbageScene.h"
 
+#include "../base/CGameState.h"
 
 class CMainMenuState : public CState<CMainMenuState>
 {

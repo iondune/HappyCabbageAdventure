@@ -1,5 +1,5 @@
 ROOT_CABBAGE_DIR=../
-SOURCES=main.cpp CGameState.cpp texture.cpp CPlayerView.cpp Materials.cpp FreeType.cpp CGameplayManager.cpp sound.cpp CGameEventReceiver.cpp
+SOURCES=main.cpp CGameState.cpp CPlayerView.cpp Materials.cpp FreeType.cpp CGameplayManager.cpp sound.cpp CGameEventReceiver.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o) ../MainMenu/CMainMenuState.o
 CABBAGE=-L../lib/ -lCabbageCollider -lCabbageFramework -lCabbageScene
 COMPILER_VERSION=-std=c++0x
@@ -38,8 +38,6 @@ CGameplayManager.o: CGameplayManager.cpp CGameplayManager.h
 	g++ `sdl-config --cflags` -c CGameplayManager.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 Materials.o: Materials.cpp Materials.h
 	g++ -c Materials.cpp
-texture.o: texture.cpp texture.h
-	g++ -c texture.cpp
 FreeType.o: FreeType.cpp FreeType.h
 	g++ `freetype-config --cflags` -c FreeType.cpp
 

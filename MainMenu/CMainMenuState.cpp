@@ -1,14 +1,11 @@
 #include "CMainMenuState.h"
-#include "../base/texture.h"
 
 CMainMenuState::CMainMenuState() {}
 
 void CMainMenuState::setupTextures()
 {
-   printf("%d %d\n", woodTexture, skyTexture);
    woodTexture = new CTexture(CImageLoader::loadImage("wood011.bmp"));
    skyTexture = new CTexture(CImageLoader::loadImage("sky.bmp"));
-   printf("%d %d\n", woodTexture, skyTexture);
 }
 
 void CMainMenuState::drawSky(int backwards) {
@@ -114,22 +111,22 @@ void CMainMenuState::OnRenderEnd(float const Elapsed)
 void CMainMenuState::OnMouseEvent(SMouseEvent const & Event)
 {
    if(Event.Type.Value == SMouseEvent::EType::Move){
-      printf("this is mouse move: Location x %d y %d\n",Event.Location.X, Event.Location.Y);
+      //printf("this is mouse move: Location x %d y %d\n",Event.Location.X, Event.Location.Y);
    }
    else if(Event.Type.Value == SMouseEvent::EType::Click){
-      printf("this is mouse click: Location x %d y %d ",Event.Location.X, Event.Location.Y);
-      printf(" Pressed %d ", Event.Pressed);
+      //printf("this is mouse click: Location x %d y %d ",Event.Location.X, Event.Location.Y);
+      //printf(" Pressed %d ", Event.Pressed);
 
       switch (Event.Button.Value){
 
       case SMouseEvent::EButton::Left:
-         printf(" Left\n");
+         //printf(" Left\n");
 
          if(!Event.Pressed && Event.Location.X < 540 && Event.Location.X > 280)
          {
             if(Event.Location.Y >225 && Event.Location.Y < 300)
             {
-               //CApplication::get().getStateManager().setState(& CGameState::get());
+               CApplication::get().getStateManager().setState(& CGameState::get());
                printf("top button hit!!\n");
             } 
             else if(Event.Location.Y >330 && Event.Location.Y < 400)
@@ -143,10 +140,10 @@ void CMainMenuState::OnMouseEvent(SMouseEvent const & Event)
          }
          break;
       case SMouseEvent::EButton::Right:
-         printf(" Right\n", Event.Pressed);
+         //printf(" Right\n", Event.Pressed);
          break;
       case SMouseEvent::EButton::Middle:
-         printf(" Middle\n", Event.Pressed);
+         //printf(" Middle\n", Event.Pressed);
          break;
       }
 
