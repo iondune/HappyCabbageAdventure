@@ -19,13 +19,19 @@
     <None Include="Shaders\normalColor.vert">
       <Filter>Models</Filter>
     </None>
+    <None Include="freetype6.dll" />
+    <None Include="zlib1.dll" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="FreeType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Models">
       <UniqueIdentifier>{f62fb023-4ffd-4f5f-b1c0-0dfa7177d170}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FreeType.h" />
   </ItemGroup>
 </Project>

@@ -14,6 +14,7 @@
 #pragma comment(lib, "../lib/CabbageFramework.lib")
 #pragma comment(lib, "OpenGL32.lib")
 #pragma comment(lib, "glu32.lib")
+#pragma comment(lib, "freetype.lib")
 
 #include <GL/glew.h>
 #include <SDL/SDL.h>
@@ -27,13 +28,19 @@
 #include "glm/gtc/matrix_transform.hpp" //perspective, trans etc
 #include "glm/gtc/type_ptr.hpp" //value_ptr
 
+#include "FreeType.h"
+
 class CMainState : public CState<CMainState>
 {
 
+    CApplication & Application;
+
 public:
 
+    freetype::font_data Font;
+
     CMainState()
-        : WindowWidth(1440), WindowHeight(900), Scale(1), Animate(false), Mode(0)
+        : Application(CApplication::get()), WindowWidth(1440), WindowHeight(900), Scale(1), Animate(false), Mode(0), ShowHelp(false)
     {}
 
     void begin()
@@ -52,6 +59,8 @@ public:
         Camera->setPosition(SVector3(0, 0, 2));
         Camera->setLookDirection(SVector3(0, 0, -1));
         CApplication::get().getSceneManager().setActiveCamera(Camera);
+
+        // Setup scene
         CSceneManager & SceneManager = CApplication::get().getSceneManager();
         SceneManager.Lights.push_back(SLight());
         SceneManager.Lights.back().ColorUniform->Value = SVector3(0.5f, 0.2f, 0.2f);
@@ -64,6 +73,7 @@ public:
         SceneManager.Lights.push_back(SLight());
         SceneManager.Lights.back().ColorUniform->Value = SVector3(0.2f, 0.2f, 0.5f);
         SceneManager.Lights.back().PositionUniform->Value = SVector3(-1.f, 2.f, -3.f);
+
 
         // Attempt to load shader and attributes
         Shader = CShaderLoader::loadShader("Diffuse");
@@ -102,45 +112,24 @@ public:
         }
         Texture = new CTexture(Image);
 
-
-        // Now load our mesh into a VBO, retrieving the number of triangles and the handles to each VBO
         Renderable = new CMeshRenderable();
         Renderable->setMesh(MeshFace);
         Renderable->getMaterial().Texture = Texture;
         Renderable->getMaterial().Shader = Shader;
 
         CApplication::get().getSceneManager().addRenderable(Renderable);
+
+        Font.init("Fonts/DejaVuSansMono.ttf", 14);
     }
 
-    // Manages time independant movement and draws the VBO
     void OnRenderStart(float const Elapsed)
     {
-        // Determine time since last draw
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
 
-        //Camera->setPosition(SVector3(0, 0, 2));
-        //Camera->setLookDirection(SVector3(0, 0, -1));
         Camera->update(Elapsed);
-
-
-        // Animates the loaded model by modulating it's size
-        /*static float const ScaleSpeed = 1.f;
-        static float const ScaleThreshold = 0.4f;
-        if (Animate)
-            ScaleTimer += Elapsed * ScaleSpeed;
-        Scale = SVector3(1) + ScaleThreshold * cos(ScaleTimer);
-
-        // ...and by spinning it around
-        static float const RotationSpeed = 50.f;
-        if (Animate)
-        {
-            Rotation.X += RotationSpeed*Elapsed;
-            Rotation.Y += RotationSpeed*Elapsed*2;
-        }*/
-        
 
         Renderable->setTranslation(Translation);
         Renderable->setScale(Scale);
@@ -148,8 +137,18 @@ public:
 
         CApplication::get().getSceneManager().drawAll();
 
+        if (ShowHelp)
+            freetype::print(Font, 0, (float)Application.getWindowSize().Y - 50.f, "WASD to control camera\nRight click and hold to pan\n\n"\
+                "E to choose Scale tool\nR for Rotate\nT for Translate\nLeft click applies tool\n\n"\
+                "F to use flat shading\nV to use phong shading\n\n"\
+                "G to use vertex-lighting shader\nB to use per-pixel lighting shader\n(only works with phong)\n\n");
+        else
+            freetype::print(Font, 0, (float)Application.getWindowSize().Y - 50.f, "Hello world!");
+
         SDL_GL_SwapBuffers();
     }
+
+    bool ShowHelp;
 
     void OnKeyboardEvent(SKeyboardEvent const & Event)
     {
@@ -224,6 +223,12 @@ public:
         case SDLK_e:
 
             Mode = 2;
+
+            break;
+
+        case SDLK_F1:
+
+            ShowHelp = Event.Pressed;
 
             break;
 
