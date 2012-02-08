@@ -15,16 +15,14 @@
 
 class CMainMenuState : public CState<CMainMenuState>
 {
-
    public:
-
       int woodTexture, skyTexture;
 
-      void setupTextures();
+      virtual void setupTextures();
 
-      void drawSky(int backwards);
+      virtual void drawSky(int backwards);
 
-      void drawButton();
+      virtual void drawButton();
 
       virtual void begin();
       virtual void end();
