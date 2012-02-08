@@ -88,11 +88,11 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 
    drawSky(true);
 
-   glTranslatef(-0.3,0,0);
+   glTranslatef(-0.3f,0,0);
    drawButton();
-   glTranslatef(0,-0.35, 0);
+   glTranslatef(0,-0.35f, 0);
    drawButton();
-   glTranslatef(0,-0.35, 0);
+   glTranslatef(0,-0.35f, 0);
    drawButton();
 
    glPopMatrix();

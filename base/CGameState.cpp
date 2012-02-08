@@ -134,7 +134,7 @@ void CGameState::begin()
    SPosition2 size = Application.getWindowSize();
    WindowWidth = size.X;
    WindowHeight = size.Y; 
-   glClearColor(0.4,0.8,1.0,0);
+   glClearColor(0.4f,0.8f,1.f,0);
 
    glEnable(GL_DEPTH_TEST);
    glDepthFunc(GL_LEQUAL);
