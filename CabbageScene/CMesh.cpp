@@ -1,6 +1,7 @@
 #include "CMesh.h"
 
 CMesh::CMesh()
+    : PositionBuffer(0), ColorBuffer(0), NormalBuffer(0), TexCoordBuffer(0), NormalLineBuffer(0), NormalColorBuffer(0), IndexBuffer(0), NormalIndexBuffer(0)
 {}
 
 CMesh::~CMesh()
@@ -126,113 +127,137 @@ void CMesh::calculateNormalsPerVertex()
 
 CBufferObject<float> * CMesh::makePositionBuffer()
 {
-    CBufferObject<float> * Buffer = new CBufferObject<float>();
+    if (PositionBuffer)
+        return PositionBuffer;
+
+    PositionBuffer = new CBufferObject<float>();
 
     for (unsigned int i = 0; i < Vertices.size(); ++ i)
     {
         for (unsigned int j = 0; j < 3; ++ j)
-            Buffer->push_back(Vertices[i].Position[j]);
+            PositionBuffer->push_back(Vertices[i].Position[j]);
     }
 
-    return Buffer;
+    return PositionBuffer;
 }
 
 CBufferObject<float> * CMesh::makeColorBuffer()
 {
-    CBufferObject<float> * Buffer = new CBufferObject<float>();
+    if (ColorBuffer)
+        return ColorBuffer;
+
+    ColorBuffer = new CBufferObject<float>();
 
     for (unsigned int i = 0; i < Vertices.size(); ++ i)
     {
         for (unsigned int j = 0; j < 3; ++ j)
-            Buffer->push_back(Vertices[i].Color[j]);
+            ColorBuffer->push_back(Vertices[i].Color[j]);
     }
 
-    return Buffer;
+    return ColorBuffer;
 }
 
 CBufferObject<float> * CMesh::makeNormalBuffer()
 {
-    CBufferObject<float> * Buffer = new CBufferObject<float>();
+    if (NormalBuffer)
+        return NormalBuffer;
+
+    NormalBuffer = new CBufferObject<float>();
 
     for (unsigned int i = 0; i < Vertices.size(); ++ i)
     {
         for (unsigned int j = 0; j < 3; ++ j)
-            Buffer->push_back(Vertices[i].Normal[j]);
+            NormalBuffer->push_back(Vertices[i].Normal[j]);
     }
 
-    return Buffer;
+    return NormalBuffer;
 }
 
 CBufferObject<float> * CMesh::makeTexCoordBuffer()
 {
-    CBufferObject<float> * Buffer = new CBufferObject<float>();
+    if (TexCoordBuffer)
+        return TexCoordBuffer;
+
+    TexCoordBuffer = new CBufferObject<float>();
 
     for (unsigned int i = 0; i < Vertices.size(); ++ i)
     {
         for (unsigned int j = 0; j < 2; ++ j)
-            Buffer->push_back(Vertices[i].TextureCoordinates[j]);
+            TexCoordBuffer->push_back(Vertices[i].TextureCoordinates[j]);
     }
 
-    return Buffer;
+    return TexCoordBuffer;
 }
 
 CBufferObject<unsigned short> * CMesh::makeIndexBuffer()
 {
-    CBufferObject<unsigned short> * Buffer = new CBufferObject<unsigned short>();
+    if (IndexBuffer)
+        return IndexBuffer;
+
+    IndexBuffer = new CBufferObject<unsigned short>();
 
     for(unsigned int i = 0; i < Triangles.size(); ++ i)
         for (unsigned int j = 0; j < 3; ++ j)
-            Buffer->push_back(Triangles[i].Indices[j]);
+            IndexBuffer->push_back(Triangles[i].Indices[j]);
 
-    Buffer->setIsIndexBuffer(true);
+    IndexBuffer->setIsIndexBuffer(true);
 
-    return Buffer;
+    return IndexBuffer;
 }
 
 CBufferObject<float> * CMesh::makeNormalLineBuffer()
 {
-    CBufferObject<float> * Buffer = new CBufferObject<float>();
+    if (NormalLineBuffer)
+        return NormalLineBuffer;
+
+    NormalLineBuffer = new CBufferObject<float>();
 
     for (unsigned int i = 0; i < Vertices.size(); ++ i)
     {
         for (unsigned int j = 0; j < 3; ++ j)
-            Buffer->push_back(Vertices[i].Position[j]);
+            NormalLineBuffer->push_back(Vertices[i].Position[j]);
         for (unsigned int j = 0; j < 3; ++ j)
-            Buffer->push_back(Vertices[i].Position[j] + Vertices[i].Normal[j]*0.05f);
+            NormalLineBuffer->push_back(Vertices[i].Position[j] + Vertices[i].Normal[j]*0.05f);
     }
 
-    return Buffer;
+    return NormalLineBuffer;
 }
 
 CBufferObject<float> * CMesh::makeNormalColorBuffer()
 {
-    CBufferObject<float> * Buffer = new CBufferObject<float>();
+    if (NormalColorBuffer)
+        return NormalColorBuffer;
+
+    NormalColorBuffer = new CBufferObject<float>();
 
     for (unsigned int i = 0; i < Vertices.size(); ++ i)
     {
         for (unsigned int j = 0; j < 3; ++ j)
-            Buffer->push_back(Vertices[i].Color[j]);
+            NormalColorBuffer->push_back(Vertices[i].Color[j]);
 
         for (unsigned int j = 0; j < 3; ++ j)
-            Buffer->push_back(Vertices[i].Color[j]);
+            NormalColorBuffer->push_back(Vertices[i].Color[j]);
     }
 
-    return Buffer;
+    return NormalColorBuffer;
 }
 
 CBufferObject<unsigned short> * CMesh::makeNormalIndexBuffer()
 {
-    CBufferObject<unsigned short> * Buffer = new CBufferObject<unsigned short>();
+    if (NormalIndexBuffer)
+        return NormalIndexBuffer;
+
+    NormalIndexBuffer = new CBufferObject<unsigned short>();
 
     for (unsigned int i = 0; i < Vertices.size(); ++ i)
     {
         for (unsigned int j = 0; j < 2; ++ j)
-            Buffer->push_back(i*2 + j);
+            NormalIndexBuffer->push_back(i*2 + j);
     }
 
-    Buffer->setIsIndexBuffer(true);
+    NormalIndexBuffer->setIsIndexBuffer(true);
 
-    return Buffer;
+    return NormalIndexBuffer;
 }
 
 SBoundingBox3 const CMesh::getBoundingBox() const

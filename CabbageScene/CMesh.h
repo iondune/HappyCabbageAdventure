@@ -11,6 +11,9 @@
 class CMesh
 {
 
+    CBufferObject<float> * PositionBuffer, * ColorBuffer, * NormalBuffer, * TexCoordBuffer, * NormalLineBuffer, * NormalColorBuffer;
+    CBufferObject<unsigned short> * IndexBuffer, * NormalIndexBuffer;
+
 public:
 
     struct STriangle

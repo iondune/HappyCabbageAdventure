@@ -77,6 +77,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Materials.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="freetype6.dll" />
+    <None Include="glew32.dll" />
+    <None Include="glut32.dll" />
+    <None Include="SDL.dll" />
+    <None Include="SDL_mixer.dll" />
+    <None Include="zlib1.dll" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
