@@ -14,7 +14,7 @@ static inline double round(double val)
 #endif
 
 //Boolean integers for keypressing
-int aDown = 0, dDown = 0, spaceDown = 0, wDown = 0, sDown = 0;
+int aDown = 0, dDown = 0, spaceDown = 0, wDown = 0, sDown = 0, gDown = 0, fDown = 0;
 int backwardsView = 0, overView = 0;
 
 freetype::font_data our_font;
@@ -63,6 +63,8 @@ void initBlockMap();
 void CLWIBState::begin()
 {
    initBlockMap();
+   blockWidth = 1;
+   blockHeight = 1;
    SPosition2 size = Application.getWindowSize();
    WindowWidth = size.X;
    WindowHeight = size.Y; 
@@ -122,7 +124,10 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    Camera->recalculateViewMatrix();
 
    stepCamera(Application.getElapsedTime());
-   PreviewBlock->setTranslation(SVector3(round(eye.X + previewBlockMouseX), 0.5f + round(eye.Y + previewBlockMouseY), 0));
+   float x=round(eye.X + previewBlockMouseX),y= round(eye.Y + previewBlockMouseY);
+   PreviewBlock->setTranslation(SVector3(x+(float)blockWidth/2,y+(float)blockHeight/2, 0));
+   //PreviewBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
+   //PreviewBlock->setTranslation(SVector3(x,y, 0));
 
    Application.getSceneManager().drawAll();
 
@@ -166,6 +171,12 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_a){
          aDown = 1;
+      }
+      if(Event.Key == SDLK_f){
+         fDown = 1;
+      }
+      if(Event.Key == SDLK_g){
+         gDown = 1;
       }
       if(Event.Key == SDLK_d){
          dDown = 1;
@@ -219,6 +230,12 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_d){
          dDown = 0;
       }
+      if(Event.Key == SDLK_f){
+         fDown = 0;
+      }
+      if(Event.Key == SDLK_g){
+         gDown = 0;
+      }
       if(Event.Key == SDLK_k){
       }
       if(Event.Key == SDLK_j){
@@ -235,13 +252,13 @@ void CLWIBState::end()
    our_font.clean();
 }
 
-void PrepPreviewBlock() {
+void CLWIBState::PrepPreviewBlock() {
    blocks.push_back(PreviewBlock = new CMeshRenderable());
    PreviewBlock->setMesh(cubeMesh);
    PreviewBlock->getMaterial().Texture = grassTxt;
    PreviewBlock->getMaterial().Shader = DiffuseTexture;
    //PreviewBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
-   PreviewBlock->setScale(SVector3(3, 3, 1));
+   PreviewBlock->setScale(SVector3(blockWidth, blockHeight, 1));
    CApplication::get().getSceneManager().addRenderable(PreviewBlock);
 }
 
@@ -273,14 +290,14 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h) {
    if(!ret)
       return;
 
-   printf("Placed block at %0.2f, %0.2f\n", x, y);
+   printf("Placed block starting at %0.2f, %0.2f\n", x, y);
    CMeshRenderable *tempBlock;
    blocks.push_back(tempBlock = new CMeshRenderable());
    tempBlock->setMesh(cubeMesh);
    tempBlock->getMaterial().Texture = dirtTxt;
    tempBlock->getMaterial().Shader = DiffuseTexture;
-   //tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
-   tempBlock->setTranslation(SVector3(x, y, 0));
+   tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
+   //tempBlock->setTranslation(SVector3(x, y, 0));
    tempBlock->setScale(SVector3(w, h, 1));
    for(i = 0; i < w; i++) {
       for(j = 0; j < h; j++) {
@@ -489,12 +506,21 @@ float pitchphi, yawtheta;
 int mouseDown;
 void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
    if(Event.Button.Value == SMouseEvent::EButton::Left) {
+      if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click && fDown) {
+         if(blockWidth < 10)
+            blockWidth++;
+         PreviewBlock->setScale(SVector3(blockWidth, blockHeight, 1));
+         return;
+      }
+      if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click && gDown) {
+         if(blockHeight < 10)
+            blockHeight++;
+         PreviewBlock->setScale(SVector3(blockWidth, blockHeight, 1));
+         return;
+      }
       if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
-         //printf("Mouseclicked: %d,%d | World points: %0.2f, %0.2f\n", Event.Location.X, Event.Location.Y, xp2w(Event.Location.X), yp2w(Event.Location.Y));
-         //
-         
          mouseDown = 1;
-         PrepBlock(round(eye.X + 12*tan(30*M_PI/180)*xp2w(Event.Location.X)), 0.5f + round(eye.Y + 12*tan(30*M_PI/180)*yp2w(Event.Location.Y)), 3, 3);
+         PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight);
          /* Snap camera to where the block was placed
          eye.X = look.X =  eye.X + 6*tan(30*M_PI/180)*xp2w(Event.Location.X);
          eye.Y = look.Y = eye.Y + 6*tan(30*M_PI/180)*yp2w(Event.Location.Y);
@@ -504,11 +530,25 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          mouseDown = 0;
       }
       if(Event.Type.Value == SMouseEvent::EType::Move) {
-         previewBlockMouseX = 12*tan(30*M_PI/180)*xp2w(Event.Location.X);
-         previewBlockMouseY = 12*tan(30*M_PI/180)*yp2w(Event.Location.Y);
+         previewBlockMouseX = 10*((float)WindowWidth/WindowHeight)*tan(30*M_PI/180)*xp2w(Event.Location.X);
+         previewBlockMouseY = 10*tan(30*M_PI/180)*yp2w(Event.Location.Y);
          if(mouseDown) {
-            PrepBlock(round(eye.X + 12*tan(30*M_PI/180)*xp2w(Event.Location.X)), 0.5f + round(eye.Y + 12*tan(30*M_PI/180)*yp2w(Event.Location.Y)), 3, 3);
+            PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight);
          }
+      }
+   }
+   else if(Event.Button.Value == SMouseEvent::EButton::Right) {
+      if(Event.Pressed && fDown) {
+         if(blockWidth > 1)
+            blockWidth--;
+         PreviewBlock->setScale(SVector3(blockWidth, blockHeight, 1));
+         return;
+      }
+      if(Event.Pressed && gDown) {
+         if(blockHeight > 1)
+            blockHeight--;
+         PreviewBlock->setScale(SVector3(blockWidth, blockHeight, 1));
+         return;
       }
    }
 }
@@ -603,7 +643,7 @@ void CLWIBState::stepCamera(float delta) {
       look.Y -= delta*factor;
    }
    if(mouseDown) {
-      PrepBlock(round(eye.X + previewBlockMouseX), 0.5f + round(eye.Y + previewBlockMouseY), 3, 3);
+      PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight);
    }
 }
 

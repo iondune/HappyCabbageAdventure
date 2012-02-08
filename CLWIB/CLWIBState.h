@@ -20,6 +20,8 @@ class CLWIBState : public CState<CLWIBState>
    CCamera *Camera;
    SVector3 eye, look;
 
+
+   int blockWidth, blockHeight;
    void OnRenderStart(float const Elapsed);
    void OnKeyboardEvent(SKeyboardEvent const & Event);
    void OnMouseEvent(SMouseEvent const & Event);
@@ -27,6 +29,7 @@ class CLWIBState : public CState<CLWIBState>
 
    void PrepBlock(float x, float y, int w, int h); 
    void PrepGrass(float x, float y, float w, float h);
+   void PrepPreviewBlock();
 
    void PrepSky();
 
