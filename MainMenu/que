@@ -1,1 +1,1 @@
-g++ -c CMainMenuState.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL -lglut `sdl-config --cflags --libs` `freetype-config --cflags --libs` -L../lib `freetype-config --libs` -g -lCabbageFramework -lCabbageScene
+g++ -c CMainMenuState.cpp -I../CabbageCore -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL -lglut `sdl-config --cflags --libs` `freetype-config --cflags --libs` -L../lib `freetype-config --libs` -g -lCabbageFramework -lCabbageScene
