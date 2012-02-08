@@ -4,6 +4,8 @@
 #include <iostream>
 
 #include "header.h"
+#include "CPlaceable.h"
+#include "CBlock.h"
 
 
 #define TREE_Y_OFFSET 2.1
@@ -15,6 +17,8 @@ class CLWIBState : public CState<CLWIBState>
    CApplication & Application;
 
    public:
+   std::vector<CBlock*> placeables, redoPlaceables;
+   std::vector<CMeshRenderable*> blocks, redo;
    CLWIBState();
    void begin();
    CCamera *Camera;
@@ -32,6 +36,8 @@ class CLWIBState : public CState<CLWIBState>
    void PrepPreviewBlock();
 
    void PrepSky();
+
+   void printXML();
 
    void drawSubWindow();
 
