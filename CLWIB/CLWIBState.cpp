@@ -21,10 +21,13 @@ void LoadShaders();
 void LoadTextures();
 void PrepMeshes();
 void EngineInit();
+void PrepPreviewBlock();
 
+float previewBlockMouseX, previewBlockMouseY; 
 using namespace Cabbage::Collider;
 CActor *Player, *Derp;
 CObject *Floor, *Block;
+CMeshRenderable *PreviewBlock;
 
 void BlockMesh() {
    cubeMesh = CMeshLoader::createCubeMesh();
@@ -85,6 +88,7 @@ void CLWIBState::begin()
 
    //Initialize Fxns
    BlocksInit();
+   PrepPreviewBlock();
 
    printf("END OF BEGIN\n");
 }
@@ -103,6 +107,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    Camera->recalculateViewMatrix();
 
    stepCamera(Application.getElapsedTime());
+   PreviewBlock->setTranslation(SVector3(eye.X + previewBlockMouseX, eye.Y + previewBlockMouseY, 0));
 
    Application.getSceneManager().drawAll();
 
@@ -181,6 +186,17 @@ void CLWIBState::end()
 {
    our_font.clean();
 }
+
+void PrepPreviewBlock() {
+   blocks.push_back(PreviewBlock = new CMeshRenderable());
+   PreviewBlock->setMesh(cubeMesh);
+   PreviewBlock->getMaterial().Texture = grassTxt;
+   PreviewBlock->getMaterial().Shader = DiffuseTexture;
+   //PreviewBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
+   PreviewBlock->setScale(SVector3(1, 1, 1));
+   CApplication::get().getSceneManager().addRenderable(PreviewBlock);
+}
+
 
 void CLWIBState::PrepBlock(float x, float y, float w, float h) {
    CMeshRenderable *tempBlock;
@@ -402,10 +418,10 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
       }
       else if(!Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
       }
-      /*
-      if(mouseDown && Event.Type.Value == SMouseEvent::EType::Move) {
+      if(Event.Type.Value == SMouseEvent::EType::Move) {
+         previewBlockMouseX = 6*tan(30*M_PI/180)*xp2w(Event.Location.X);
+         previewBlockMouseY = 6*tan(30*M_PI/180)*yp2w(Event.Location.Y);
       }
-      */
    }
 }
 
