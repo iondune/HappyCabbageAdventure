@@ -46,7 +46,7 @@ public:
     void begin()
     {
         // OpenGL init
-        glClearColor(0.6f, 0.3f, 0.9f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
@@ -76,7 +76,7 @@ public:
 
 
         // Attempt to load shader and attributes
-        Shader = CShaderLoader::loadShader("Diffuse");
+        Shader = CShaderLoader::loadShader("Flat");
         if (! Shader)
         {
             std::cerr << "Unable to open or compile necessary shader." << std::endl;
@@ -164,7 +164,7 @@ public:
             freetype::print(Font, 0, (float)Application.getWindowSize().Y - 50.f, "WASD to control camera\nRight click and hold to pan\n\n"\
                 "E to choose Scale tool\nR for Rotate\nT for Translate\nLeft click applies tool\n\n"\
                 "F to use flat shading\nV to use phong shading\n\n"\
-                "G to use vertex-lighting shader\nB to use per-pixel lighting shader\n(only works with phong)\n\n");
+                "Z to use vertex-lighting shader\nX to use per-pixel lighting shader without specular\nC to use per-pixel lighting shader with specular\n\n");
         else
             freetype::print(Font, 0, (float)Application.getWindowSize().Y - 50.f, "Hello world!");
 
@@ -210,18 +210,19 @@ public:
 
             break;
 
-        case SDLK_g:
-
+        case SDLK_z:
             if (! Event.Pressed)
                 Renderable->getMaterial().Shader = CShaderLoader::loadShader("Flat");
-
             break;
 
-        case SDLK_b:
-
+        case SDLK_x:
             if (! Event.Pressed)
                 Renderable->getMaterial().Shader = CShaderLoader::loadShader("Diffuse");
+            break;
 
+        case SDLK_c:
+            if (! Event.Pressed)
+                Renderable->getMaterial().Shader = CShaderLoader::loadShader("Specular");
             break;
 
         case SDLK_j:
