@@ -133,6 +133,11 @@ public:
             Renderable->getMaterial().DiffuseColor->Value = SVector3(1.4f);
             Renderable->getMaterial().Shininess->Value = 3.f;
             break;
+        case 4:
+            Renderable->getMaterial().AmbientColor->Value = SVector3(0.2f);
+            Renderable->getMaterial().DiffuseColor->Value = SVector3(1.4f);
+            Renderable->getMaterial().Shininess->Value = 0.1f;
+            break;
         }
 
         CApplication::get().getSceneManager().SceneChanged = true;
@@ -246,6 +251,10 @@ public:
 
         case SDLK_3:
            setMaterial(3);
+            break;
+
+        case SDLK_4:
+           setMaterial(4);
             break;
 
         case SDLK_F1:
