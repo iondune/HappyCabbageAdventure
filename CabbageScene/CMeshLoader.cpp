@@ -188,6 +188,20 @@ CMesh * const CMeshLoader::loadAsciiMesh(std::string const & fileName)
         return it->second;
     }
 
+    if (fileName == "Cube")
+    {
+        CMesh * Mesh = createCubeMesh();
+        LoadedMeshes["Cube"] = Mesh;
+        return Mesh;
+    }
+
+    if (fileName == "Disc")
+    {
+        CMesh * Mesh = createDiscMesh();
+        LoadedMeshes["Disc"] = Mesh;
+        return Mesh;
+    }
+
     std::ifstream File;
     File.open(fileName.c_str());
 
