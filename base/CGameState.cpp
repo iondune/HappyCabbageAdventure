@@ -85,6 +85,9 @@ void CGameState::EngineInit( void ) {
    float i = 0;
    float j = 0;
 
+   CBlock *m_block = new CBlock(0, 0, 3, 5);
+   m_block->setupItem(DiffuseTexture, Engine, GameplayManager);
+
    for(j = 0; j < 10; j+=2.5f) {
       Block = Engine->addObject();
       area = SRect2(-15.f + j, 1.5f + j, 2.f, 1);

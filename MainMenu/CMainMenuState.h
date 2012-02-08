@@ -14,7 +14,7 @@
 #include "../CabbageCore/CabbageCore.h"
 #include "../CabbageFramework/CabbageFramework.h"
 #include "../CabbageScene/CabbageScene.h"
-
+#include "../CLWIB/CLWIBState.h"
 #include "../base/CGameState.h"
 
 class CMainMenuState : public CState<CMainMenuState>

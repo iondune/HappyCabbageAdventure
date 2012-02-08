@@ -1,12 +1,11 @@
-#ifndef __CGAMESTATE_HEADER_
-#define __CGAMESTATE_HEADER_
+#ifndef __CLWIBSTATE_HEADER_
+#define __CLWIBSTATE_HEADER_
 
 #include <iostream>
 
 #include "header.h"
 #include "CPlaceable.h"
 #include "CBlock.h"
-
 
 #define TREE_Y_OFFSET 2.1
 #define ANGLE(j,k) (j==2?3:(j?2:(k?1:0)))
@@ -15,15 +14,31 @@
 class CLWIBState : public CState<CLWIBState>
 {
    CApplication & Application;
+   private:
+
+   //Boolean integers for keypressing
+   int aDown , dDown , spaceDown , wDown , sDown , gDown , fDown ;
+
+   freetype::font_data our_font;
+
+   int WindowWidth, WindowHeight;
+
+
+   CMesh *cubeMesh;
+
+   float xp2w(int oldX);
+   float yp2w(int oldY);
+
 
    public:
-   std::vector<CPlaceable*> placeables, redoPlaceables;
-   std::vector<CMeshRenderable*> blocks, redo;
+      std::vector<CPlaceable*> placeables, redoPlaceables;
+      std::vector<CMeshRenderable*> blocks, redo;
    CLWIBState();
    void begin();
    CCamera *Camera;
    SVector3 eye, look;
 
+   CShader *DiffuseTexture;
 
    int blockWidth, blockHeight;
    void OnRenderStart(float const Elapsed);

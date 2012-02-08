@@ -1,3 +1,6 @@
+#ifndef __HEADER_BASE_INCLUDE_
+#define __HEADER_BASE_INCLUDE_
+
 //System Include Section
 #include <iostream>
 #include <cmath>
@@ -38,3 +41,4 @@
 
 //Global Defines
 #define NUM_TREES 10
+#endif

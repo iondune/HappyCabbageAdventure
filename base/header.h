@@ -1,3 +1,5 @@
+#ifndef __HEADER_BASE_INCLUDE_
+#define __HEADER_BASE_INCLUDE_
 //System Include Section
 #include <iostream>
 #include <cmath>
@@ -45,3 +47,4 @@
 #define NUM_TREES 10
 
 #include "CGameplayManager.h"
+#endif

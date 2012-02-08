@@ -131,6 +131,8 @@ void CMainMenuState::OnMouseEvent(SMouseEvent const & Event)
             } 
             else if(Event.Location.Y >330 && Event.Location.Y < 400)
             {
+               printf("mid button hit (Before)!!\n");
+               CApplication::get().getStateManager().setState(& CLWIBState::get());
                printf("mid button hit!!\n");
             } 
             else if(Event.Location.Y >435  && Event.Location.Y < 510)
