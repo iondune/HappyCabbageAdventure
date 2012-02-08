@@ -21,6 +21,6 @@ void main()
 
     vec3 vDiffuse = vec3(0, 0, 0);
     for (int i = 0; i < 10 && i < uLightCount; ++ i)
-        vDiffuse += DiffuseColor * clamp(dot(normalize(vNormal), normalize(vLight[0])), 0.0, 1.0) * vLightColor[0];
+        vDiffuse += DiffuseColor * clamp(dot(normalize(vNormal), normalize(vLight[i])), 0.0, 1.0) * vLightColor[i];
     gl_FragColor = vec4(vDiffuse + AmbientColor, 1);
 }

@@ -48,7 +48,9 @@ public:
 
         // Setup camera
         float AspectRatio = (float)WindowWidth / (float)WindowHeight;
-        Camera = new CCamera(AspectRatio, 0.01f, 100.f, 60.f);
+        Camera = new CCameraControl();//new CCamera(AspectRatio, 0.01f, 100.f, 60.f);
+        Camera->setPosition(SVector3(0, 0, 2));
+        Camera->setLookDirection(SVector3(0, 0, -1));
         CApplication::get().getSceneManager().setActiveCamera(Camera);
         CSceneManager & SceneManager = CApplication::get().getSceneManager();
         SceneManager.Lights.push_back(SLight());
@@ -58,6 +60,10 @@ public:
         SceneManager.Lights.push_back(SLight());
         SceneManager.Lights.back().ColorUniform->Value = SVector3(0.2f, 0.5f, 0.2f);
         SceneManager.Lights.back().PositionUniform->Value = SVector3(-1.f, -2.f, -3.f);
+
+        SceneManager.Lights.push_back(SLight());
+        SceneManager.Lights.back().ColorUniform->Value = SVector3(0.2f, 0.2f, 0.5f);
+        SceneManager.Lights.back().PositionUniform->Value = SVector3(-1.f, 2.f, -3.f);
 
         // Attempt to load shader and attributes
         Shader = CShaderLoader::loadShader("Diffuse");
@@ -115,9 +121,9 @@ public:
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
 
-        Camera->setPosition(SVector3(0, 0, 2));
-        Camera->setLookDirection(SVector3(0, 0, -1));
-        Camera->recalculateViewMatrix();
+        //Camera->setPosition(SVector3(0, 0, 2));
+        //Camera->setLookDirection(SVector3(0, 0, -1));
+        Camera->update(Elapsed);
 
 
         // Animates the loaded model by modulating it's size
@@ -324,7 +330,7 @@ public:
     CMesh * MeshFace, * MeshVertex;
     CMeshRenderable * Renderable;
     CTexture * Texture;
-    CCamera * Camera;
+    CCameraControl * Camera;
     CScene * Scene;
 
     // Information about mesh
