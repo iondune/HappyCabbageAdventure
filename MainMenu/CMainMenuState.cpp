@@ -1,10 +1,14 @@
 #include "CMainMenuState.h"
 #include "../base/texture.h"
 
+CMainMenuState::CMainMenuState() {}
+
 void CMainMenuState::setupTextures()
 {
+   printf("%d %d\n", woodTexture, skyTexture);
    woodTexture = LoadBitmap("wood011.bmp");
    skyTexture = LoadBitmap("sky.bmp");
+   printf("%d %d\n", woodTexture, skyTexture);
 }
 
 void CMainMenuState::drawSky(int backwards) {
