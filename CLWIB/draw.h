@@ -18,7 +18,7 @@ CMeshRenderable *renderShadow, *playerRenderable, *renderChristmasTree,
   *renderBasicTree, *renderBlueFlwr, *renderPinkFlwr, *renderFicus, *renderPoin,
   *tempRender;
 
-std::vector<CMeshRenderable*> blocks, enemies, blueFlwrs, pinkFlwrs, ficuses,
+std::vector<CMeshRenderable*> blocks, redo, enemies, blueFlwrs, pinkFlwrs, ficuses,
   basicTrees, xmasTrees, poins;
 
 

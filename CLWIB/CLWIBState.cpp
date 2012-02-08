@@ -165,6 +165,21 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
          overView = NEXT(overView);
          //printf("Angle: %d\n", ANGLE(overView, backwardsView));
       }
+      if(Event.Key == SDLK_u) {
+         //3 is the number of static blocks created before the user can add in new blocks (ie unremovable)
+         if(blocks.size() > 3) {
+            Application.getSceneManager().removeRenderable(blocks.back());
+            redo.push_back(blocks.back());
+            blocks.pop_back();
+         }
+      }
+      if(Event.Key == SDLK_r) {
+         if(redo.size() > 0) {
+            Application.getSceneManager().addRenderable(redo.back());
+            blocks.push_back(redo.back());
+            redo.pop_back();
+         }
+      }
       if(Event.Key == SDLK_m){
          
       }
@@ -221,7 +236,6 @@ void PrepPreviewBlock() {
 
 void CLWIBState::PrepBlock(float x, float y, float w, float h) {
    if(lastBlockPlacedLocationX != x || lastBlockPlacedLocationY != y) {
-      printf("Block placed\n");
       CMeshRenderable *tempBlock;
       blocks.push_back(tempBlock = new CMeshRenderable());
       tempBlock->setMesh(cubeMesh);
@@ -234,6 +248,7 @@ void CLWIBState::PrepBlock(float x, float y, float w, float h) {
       Application.getSceneManager().addRenderable(tempBlock);
       lastBlockPlacedLocationX = x;
       lastBlockPlacedLocationY = y;
+      redo.clear();
    }
 }
 
