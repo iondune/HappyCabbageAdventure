@@ -170,7 +170,6 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 void COverworldState::end()
 {
-   playerRender->setScale(SVector3(20));
    Application.getSceneManager().removeAllRenderables();
 }
 
@@ -230,7 +229,7 @@ void COverworldState::PrepMeshes()
    CMesh *playerMesh;
    playerMesh = CMeshLoader::load3dsMesh("Models/crappycabbage.3ds");
    if (playerMesh) {
-      playerMesh->resizeMesh(SVector3(0.1));
+      playerMesh->resizeMesh(SVector3(0.5));
       playerMesh->centerMeshByExtents(SVector3(0));
       playerMesh->calculateNormalsPerFace();
    }
@@ -243,7 +242,7 @@ void COverworldState::PrepMeshes()
    playerRender->getMaterial().Shader = Flat;
    playerRender->setTranslation(playerVector = SVector3(0.9, -0.08, 0.3));
    playerRender->setRotation(SVector3(0, -90, 0));
-   playerRender->setScale(SVector3(1));
+   playerRender->setScale(SVector3(0.18));
 
    CApplication::get().getSceneManager().addRenderable(playerRender);
 }
