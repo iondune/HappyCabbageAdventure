@@ -11,6 +11,23 @@ void CBlock::printXML() {
    printf("X: %0.2f Y: %0.2f W: %d H: %d\n", x,y,w,h);
 }
 
+/*float getX()
+{
+    return x;
+}
+float getY()
+{
+    return y;
+}
+int getWidth()
+{
+    return w;
+}
+int getHeight()
+{
+    return h;
+}*/
+
 void CBlock::moveTo(float x,float y) {
    //For usage in LWIB
 }
@@ -29,4 +46,6 @@ CMeshRenderable * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngine
    tempBlock->setScale(SVector3(w, h, 1));
    tempBlock->setRotation(SVector3(0, 0, 0));
    CApplication::get().getSceneManager().addRenderable(tempBlock);
+
+   return tempBlock;
 }
