@@ -7,8 +7,6 @@
 int aDown = 0, dDown = 0, spaceDown = 0, wDown = 0, sDown = 0;
 int backwardsView = 0, overView = 0;
 
-freetype::font_data our_font;
-
 int WindowWidth, WindowHeight;
 
 void Load3DS();
