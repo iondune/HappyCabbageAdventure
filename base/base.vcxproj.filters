@@ -21,6 +21,7 @@
     <ClInclude Include="CGameEventReceiver.h" />
     <ClInclude Include="SDL_mixer.h" />
     <ClInclude Include="CGameState.h" />
+    <ClInclude Include="irrxml-1.2\src\irrXML.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerView.cpp" />
@@ -32,5 +33,6 @@
     <ClCompile Include="..\MainMenu\CMainMenuState.cpp" />
     <ClCompile Include="CGameState.cpp" />
     <ClCompile Include="FreeType.cpp" />
+    <ClCompile Include="irrxml-1.2\src\irrXML.cpp" />
   </ItemGroup>
 </Project>
