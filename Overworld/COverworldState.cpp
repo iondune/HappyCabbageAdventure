@@ -1,4 +1,5 @@
 #include "COverworldState.h"
+#include "sound.h"
 /* These are here because someone doesn't use extern, or put prototypes in their header files */
 
 COverworldState::COverworldState()
@@ -139,6 +140,7 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_SPACE) {
          Application.getStateManager().setState(& CGameState::get());
          spaceDown = 1;
+         changeSoundtrack("sounds/SMW.wav");
       }
       if(Event.Key == SDLK_ESCAPE) {
          //TODO: Replace with an event/signal to end the game world 

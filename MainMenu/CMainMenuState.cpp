@@ -118,6 +118,7 @@ void CMainMenuState::begin()
    Application.getSceneManager().Lights.back().PositionUniform->Value = SVector3(0.f);
 
    //Sound Setup
+   soundInit();
    setupSoundtrack();
    startSoundtrack();
 
@@ -326,11 +327,11 @@ void CMainMenuState::OnMouseEvent(SMouseEvent const & Event)
             {
                printf("top button hit!!\n");
                CApplication::get().getStateManager().setState(& COverworldState::get());
-               stopSoundtrack();
-               changeSoundtrack("sounds/SMW.wav");
+               //changeSoundtrack("sounds/SMW.wav");
             } 
             else if(Event.Location.Y >330 && Event.Location.Y < 400)
             {
+               stopSoundtrack();
                printf("mid button hit (Before)!!\n");
                CApplication::get().getStateManager().setState(& CLWIBState::get());
                printf("mid button hit!!\n");
