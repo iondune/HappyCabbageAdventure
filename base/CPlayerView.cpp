@@ -38,14 +38,14 @@ void CPlayerView::draw() {
    if(!(recovering > 0 && (int)(recovering *100) % 2 != 0)) {
       PlayerRenderable->setTranslation(SVector3(CenterPosition.X, CenterPosition.Y + 0.065f*sin(ySineValue), 0));
       if(!(Velocity.Y > 0.01f || Velocity.Y < -0.01f)) {
-         PlayerRenderable->setRotation(SVector3(15*sin(ySineValue/2)-90.f, 0, 80.f));
+         PlayerRenderable->setRotation(SVector3(15*sin(ySineValue/2)-90.f, 0, Velocity.X > 0.01f ? 80.f : 0.f));
       }
-      if(Velocity.X > 0.01f) {
+      /*if(Velocity.X > 0.01f) {
          PlayerRenderable->setScale(SVector3(2,2,2));
       }
       else if(Velocity.X < -0.01f) {
          PlayerRenderable->setScale(SVector3(-2,2,2));
-      }
+      }*/
       PlayerRenderable->setVisible(true);
    }
    else
