@@ -21,9 +21,11 @@ void CPlayerView::step(float delta) {
       }
       else if(curState == CPlayerView::State::MovingLeft) {
          ySineValue += 0.01f*delta;
+         lookRight = 0;
       }
       else if(curState == CPlayerView::State::MovingRight) {
          ySineValue -= 0.01f*delta;
+         lookRight = 1;
       }
    }
    else {
@@ -41,7 +43,7 @@ void CPlayerView::draw() {
       if(!(Velocity.Y > 0.01f || Velocity.Y < -0.01f)) {
          rot.X = 15*sin(ySineValue/2)-90.f;
       }
-      rot.Z = Velocity.X > 0.01f ? 80.f : 0.f;
+      rot.Z = lookRight ? 80.f : 0.f;
       PlayerRenderable->setRotation(rot);
       PlayerRenderable->setVisible(true);
    }
