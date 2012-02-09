@@ -114,10 +114,12 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    stepCamera(Application.getElapsedTime());
    float x=round(eye.X + previewBlockMouseX),y= round(eye.Y + previewBlockMouseY);
    PreviewBlock->setTranslation(SVector3(x+(float)blockWidth/2,y+(float)blockHeight/2, 0));
-   if(tDown)
+   if(tDown) {
       PreviewBlock->setVisible(false);
-   else
+   }
+   else {
       PreviewBlock->setVisible(true);
+   }
    //PreviewBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    //PreviewBlock->setTranslation(SVector3(x,y, 0));
 
@@ -529,8 +531,8 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
                   m_qd.r->getMaterial().Shader = DiffuseTextureBright;
                }
             }
-            if(m_qd.o && m_qd.r != lastMouseOveredBlock.r) {
-               m_qd.r->getMaterial().Shader = DiffuseTexture;
+            if(lastMouseOveredBlock.o && m_qd.r != lastMouseOveredBlock.r) {
+               lastMouseOveredBlock.r->getMaterial().Shader = DiffuseTexture;
             }
             if(!tDown && mouseDown) {
                PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight);

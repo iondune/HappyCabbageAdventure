@@ -188,8 +188,10 @@ void CRenderable::setIndexBufferObject(CBufferObject<GLushort> * indexBufferObje
 
 void CRenderable::draw(CScene const * const scene)
 {
-   if(! Visible)
+   if(! Visible) {
+      printf("Not visible item\n");
       return;
+   }
     // If no ibo loaded, we can't draw anything
     // If the ibo loaded hasn't been synced as an index buffer object, 
     if (! IndexBufferObject || ! IndexBufferObject->isIndexBuffer())
