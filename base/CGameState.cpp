@@ -236,6 +236,7 @@ void CGameState::begin()
 
    Application.getSceneManager().addRenderable(renderBasicTree);
    Application.getSceneManager().addRenderable(playerRenderable);
+   Application.getSceneManager().addRenderable(renderFlag);
 
    srand((unsigned int) time(NULL));
 
@@ -623,7 +624,7 @@ void LoadShaders() {
    Flat = CShaderLoader::loadShader("Diffuse");
    Diffuse = CShaderLoader::loadShader("Diffuse");
    DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture");
-   //normalColor = CShaderLoader::loadShader("NormalColor");
+   normalColor = CShaderLoader::loadShader("Simple");
 }
 
 
@@ -712,7 +713,15 @@ void Load3DS()
       fprintf(stderr, "Failed to load poinsetta mesh.\n");
    }
 
+   flagMesh = CMeshLoader::load3dsMesh("Models/flag2.3ds");
+   if (flagMesh) {
+      flagMesh->centerMeshByExtents(SVector3(0));
+      flagMesh->calculateNormalsPerFace();
+   }
 
+   else {
+      fprintf(stderr, "Failed to load flag mesh.\n");
+   }
 
    /* Load enemy mesh */
 }
@@ -780,4 +789,12 @@ void PrepMeshes()
    renderPoin->setRotation(SVector3(-90, 0, 0));
    renderPoin->getMaterial().Texture = (poinTxt);
    renderPoin->getMaterial().Shader = DiffuseTexture;
+
+   renderFlag = new CMeshRenderable();
+   renderFlag->setMesh(flagMesh);
+   renderFlag->setTranslation(SVector3(-25, .5, 1.0));
+   renderFlag->setRotation(SVector3(-90,0,0));
+   renderFlag->setScale(SVector3(.0100, .00025,.0016));
+   //renderFlag->getMaterial().Texture = dirtTxt;
+   renderFlag->getMaterial().Shader = normalColor;//DiffuseTexture;
 }
