@@ -1,32 +1,5 @@
 #include "COverworldState.h"
 /* These are here because someone doesn't use extern, or put prototypes in their header files */
-#include "overworldDraw.h"
-
-//Boolean integers for keypressing
-int aDown = 0, dDown = 0, spaceDown = 0, wDown = 0, sDown = 0;
-int backwardsView = 0, overView = 0;
-
-int WindowWidth, WindowHeight;
-
-std::vector<Node> nodes;
-
-void Load3DS();
-void LoadShaders();
-void LoadTextures();
-void PrepMeshes();
-
-using namespace Cabbage::Collider;
-CEngine *Engine;
-CActor *Player;
-SLight * PlayerLight;
-CPlayerView *PlayerView;
-
-CGameplayManager *GameplayManager;
-
-void ViewInit( void ) {
-   PlayerView = new CPlayerView();
-   PlayerView->setRenderable(playerRenderable, renderShadow);
-}
 
 COverworldState::COverworldState()
 : Application (CApplication::get())
@@ -35,6 +8,7 @@ COverworldState::COverworldState()
 //Initalizer fxn
 void COverworldState::begin()
 {
+   aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0;
    SPosition2 size = Application.getWindowSize();
    WindowWidth = size.X;
    WindowHeight = size.Y; 
@@ -48,7 +22,6 @@ void COverworldState::begin()
    SDL_WM_SetCaption("Happy Cabbage Adventure", NULL);
 
    //Initialize Font
-   our_font.init("WIFFLES_.TTF", 30);
 
    Camera = new CCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
    Application.getSceneManager().setActiveCamera(Camera);
@@ -78,19 +51,13 @@ void COverworldState::begin()
    setupSoundtrack();
    startSoundtrack();*/
 
-   Load3DS();
-   LoadTextures();
-   BlockMesh();
-
-   DiscMesh();
+   //DiscMesh();
 
    //Load the meshes into VBOs
    PrepMeshes();
 
-   Application.getSceneManager().addRenderable(playerRenderable);
 
    //Initialize Fxns
-   ViewInit();
    fps = timeTotal = 0;
    numFrames = 0;
 
@@ -104,7 +71,6 @@ void COverworldState::OnRenderStart(float const Elapsed)
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
 
-   PlayerLight->PositionUniform->Value = playerRenderable->getTranslation();
 
    Application.getSceneManager().drawAll();
 
@@ -117,7 +83,6 @@ void COverworldState::OnRenderStart(float const Elapsed)
       numFrames = 0;
    }
 
-   freetype::print(our_font, 10, WindowHeight-40.f, "Overworld\n");
 
    SDL_GL_SwapBuffers();
 }
@@ -140,14 +105,6 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
          dDown = 1;
       }
       if(Event.Key == SDLK_m){
-         if(musicOn) {
-            musicOn = false;
-            Mix_HaltMusic();
-         }
-         else {
-            musicOn = true;
-            Mix_PlayMusic(music, -1);
-         }
       }
       if(Event.Key == SDLK_SPACE) {
          spaceDown = 1;
@@ -155,7 +112,7 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_ESCAPE) {
          //TODO: Replace with an event/signal to end the game world 
-         Application.getStateManager().setState(& CMainMenuState::get());
+         //Application.getStateManager().setState(& CMainMenuState::get());
       }
    }
    else  {
@@ -183,109 +140,29 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 void COverworldState::end()
 {   
-   stopSoundtrack();
-   Mix_CloseAudio();
-   our_font.clean();
-
    Application.getSceneManager().removeAllRenderables();
 }
 
-CMeshRenderable* COverworldState::PrepEnemy(float x, float y) {
-   CMeshRenderable *tempEnemy;
-   enemies.push_back(tempEnemy = new CMeshRenderable());
-   tempEnemy->setMesh(enemyMesh);
-   //tempEnemy->setTexture(dirtTxt);
-   tempEnemy->getMaterial().Shader = Flat;
-   tempEnemy->setRotation(SVector3(-90, 0, 0));
-   Application.getSceneManager().addRenderable(tempEnemy);
-   return tempEnemy;
-}
 
-void LoadShaders() {
+void COverworldState::LoadShaders() {
    Flat = CShaderLoader::loadShader("Diffuse");
    Diffuse = CShaderLoader::loadShader("Diffuse");
    DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture");
    //normalColor = CShaderLoader::loadShader("NormalColor");
 }
 
-
-void Load3DS()
+void COverworldState::PrepMeshes()
 {
-   enemyMesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
-   if(enemyMesh) {
-      enemyMesh->resizeMesh(SVector3(1));
-      enemyMesh->centerMeshByExtents(SVector3(0));
-      enemyMesh->calculateNormalsPerFace();
-   }
-
-   else {
-      fprintf(stderr, "Failed to load the enemy mesh\n");
-   }
-
-   basicTreeMesh = CMeshLoader::load3dsMesh("Models/tree2.3ds");
-   if (basicTreeMesh) {
-      basicTreeMesh->resizeMesh(SVector3(0.5));
-      basicTreeMesh->centerMeshByExtents(SVector3(0));
-      basicTreeMesh->calculateNormalsPerFace();
-   }
-   else {
-      fprintf(stderr, "Failed to load the basic tree mesh\n");
-   }
-
-   christmasTreeMesh = CMeshLoader::load3dsMesh("Models/christmasTree3.3ds");
-   if (christmasTreeMesh) {
-      christmasTreeMesh->resizeMesh(SVector3(0.5));
-      christmasTreeMesh->centerMeshByExtents(SVector3(0));
-      christmasTreeMesh->calculateNormalsPerFace();
-   }
-   else {
-      fprintf(stderr, "Failed to load the christmas tree mesh\n");
-   }
-
-
-
-   cabbageMesh = CMeshLoader::load3dsMesh("Models/crappycabbage.3ds");
-   if (cabbageMesh) {
-      cabbageMesh->resizeMesh(SVector3(0.5));
-      cabbageMesh->centerMeshByExtents(SVector3(0));
-      cabbageMesh->calculateNormalsPerFace();
-   }
-   else {
-      fprintf(stderr, "Failed to load the cababge mesh\n");
-   }
-}
-
-void LoadTextures()
-{
-   grassImg = CImageLoader::loadImage("Textures/grass.bmp");
-   skyImg = CImageLoader::loadImage("Textures/sky.bmp");
-   dirtImg = CImageLoader::loadImage("Textures/dirt.bmp");
-
-   grassTxt = new CTexture(grassImg);
-   skyTxt = new CTexture(skyImg);
-   dirtTxt = new CTexture(dirtImg);
-}
-
-void PrepMeshes()
-{
-   renderBasicTree = new CMeshRenderable();
-   renderBasicTree->setMesh(basicTreeMesh);
-   renderBasicTree->getMaterial().Shader = Flat;
-
-   renderChristmasTree = new CMeshRenderable();
-   renderChristmasTree->setMesh(cabbageMesh);
-   renderChristmasTree->getMaterial().Shader = Flat;
-
-   playerRenderable = new CMeshRenderable();
-   playerRenderable->setMesh(cabbageMesh);
-   playerRenderable->getMaterial().Shader = Flat;
-   playerRenderable->setScale(SVector3(.75));
-
+   CMesh *mapMesh = CMeshLoader::load3dsMesh("Models/world.3ds");
    renderMap = new CMeshRenderable();
    renderMap->setMesh(mapMesh);
-   renderMap->getMaterial().Shader = Flat;
+   renderMap->getMaterial().Texture = CImageLoader::loadTexture("Models/world.bmp");
+   renderMap->getMaterial().Shader = DiffuseTexture;
+   CApplication::get().getSceneManager().addRenderable(renderMap);
 
+   /*
    renderNode = new CMeshRenderable();
    renderNode->setMesh(discMesh);
    renderNode->getMaterial().Shader = Flat;
+   */
 }

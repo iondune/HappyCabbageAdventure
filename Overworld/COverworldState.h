@@ -3,17 +3,36 @@
 
 #include <iostream>
 
-#include "header.h"
+#include "../CabbageScene/CabbageScene.h"
+#include "../CabbageFramework/CabbageFramework.h"
+/*
+#include "../base/CGameState.h"
 #include "../MainMenu/CMainMenuState.h"
-#include "../CLWIB/CLWIBState.h"
-#include "CGameEventReceiver.h"
+*/
 
 class COverworldState : public CState<COverworldState>
 {
    CApplication & Application;
 //   CGameEventManager * GameEventManager;
 //   CGameEventReceiver GameEventReceiver;
-   freetype::font_data our_font;
+
+//Boolean integers for keypressing
+   int aDown, dDown, spaceDown, wDown, sDown;
+
+   CShader *Flat, *Diffuse, *DiffuseTexture;
+   CMeshRenderable *renderMap;
+   CMesh *mapMesh;
+
+
+
+   int WindowWidth, WindowHeight;
+
+   //std::vector<Node> nodes;
+
+   void LoadShaders();
+   void PrepMeshes();
+
+   SLight * PlayerLight;
 
    public:
    COverworldState();

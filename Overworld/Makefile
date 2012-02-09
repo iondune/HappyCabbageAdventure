@@ -1,7 +1,6 @@
 ROOT_CABBAGE_DIR=../
-SOURCES=main.cpp CGameState.cpp CPlayerView.cpp Materials.cpp FreeType.cpp CGameplayManager.cpp sound.cpp CGameEventReceiver.cpp ./irrxml-1.2/src/irrXML.cpp 
-OBJECTS=$(SOURCES:%.cpp=%.o) ../MainMenu/CMainMenuState.o
-CABBAGE=-L../lib/ -lCabbageCollider -lCabbageFramework -lCabbageScene -lCLWIB
+SOURCES=COverworldState.cpp sound.cpp
+OBJECTS=$(SOURCES:%.cpp=%.o)
 COMPILER_VERSION=-std=c++0x
 INCLUDE=-I../CabbageCore
 
@@ -13,36 +12,19 @@ else
 MIXLIB=-L../lib/x86 -lSDL_mixer -Wl,-rpath=../lib/x86
 endif
 
-ifeq (${__MINGW__},1)
-TARGET=mingw
-else
-TARGET=cabbage
-endif
+TARGET=../lib/libOverworldState.a
 
 all: ${TARGET} 
 
-cabbage: ${OBJECTS} ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCLWIB.a
-	g++ ${COMPILER_VERSION} ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL -lglut `sdl-config --cflags --libs` ${CABBAGE} ${MIXLIB} `freetype-config --libs` -g -o $@
+../lib/libOverworldState.a: ${OBJECTS}
+	rm -f $@
+	mkdir -p ../lib
+	ar cq $@ $(OBJECTS)
 
-./irrxml-1.2/src/irrXML.o: ./irrxml-1.2/src/irrXML.cpp  
-	g++ -I../irrxml-1.2/src/ -o $@ -c ./irrxml-1.2/src/irrXML.cpp
-
-main.o: main.cpp
-	g++ $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c main.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
-CGameState.o: CGameState.cpp header.h
-	g++ $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c CGameState.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+COverworldState.o: COverworldState.cpp header.h
+	g++ $(INCLUDE) `sdl-config --cflags` -c COverworldState.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 sound.o: sound.cpp sound.h
 	g++ `sdl-config --cflags` -c sound.cpp -DGL_GLEXT_PROTOTYPES
-CPlayerView.o: CPlayerView.cpp CPlayerView.h
-	g++ $(INCLUDE) -c CPlayerView.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
-CGameEventReceiver.o: CGameEventReceiver.cpp CGameEventReceiver.h
-	g++ $(INCLUDE) `sdl-config --cflags` -c CGameEventReceiver.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
-CGameplayManager.o: CGameplayManager.cpp CGameplayManager.h
-	g++ `sdl-config --cflags` -c CGameplayManager.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
-Materials.o: Materials.cpp Materials.h
-	g++ -c Materials.cpp
-FreeType.o: FreeType.cpp FreeType.h
-	g++ `freetype-config --cflags` -c FreeType.cpp
 
 qclean:
 	rm cabbage.exe cabbage 2>/dev/null

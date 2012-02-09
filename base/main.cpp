@@ -1,5 +1,6 @@
 //#include "CGameState.h"
 #include "../MainMenu/CMainMenuState.h"
+#include "../Overworld/COverworldState.h"
 
 #ifdef _WIN32
 #pragma comment(lib, "freetype.lib")
@@ -32,11 +33,11 @@ int main(int argc, char *argv[])
 int main(int argc, char * argv[])
 {
     CApplication & Application = CApplication::get();
-    Application.init(SPosition2(800, 600));
+    Application.init(SPosition2(1024, 740));
     //Application.init(SPosition2(1024, 768));
 
     CStateManager & StateManager = Application.getStateManager();
-    StateManager.setState(& CMainMenuState::get());
+    StateManager.setState(& COverworldState::get());
 
     Application.run();
 
