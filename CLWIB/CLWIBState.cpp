@@ -24,11 +24,17 @@ void CLWIBState::BlocksInit( void ) {
    SRect2 area;
 }
 
+struct quickndirty {
+   CMeshRenderable *r;
+   CPlaceable *p;
+   bool o;
+} typedef qd;
+
 void initBlockMap();
 
 //Minblockvalue = -25
 //Heightoffset = 0.5
-bool blockMap[100][100];
+qd blockMap[100][100];
 
 
 //Initalizer fxn
@@ -66,6 +72,7 @@ void CLWIBState::begin()
    Application.getSceneManager().setActiveCamera(Camera);
 
    DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture");
+   DiffuseTextureBright = CShaderLoader::loadShader("DiffuseTextureBright");
 
 
    //Load the meshes into VBOs
@@ -99,6 +106,10 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    stepCamera(Application.getElapsedTime());
    float x=round(eye.X + previewBlockMouseX),y= round(eye.Y + previewBlockMouseY);
    PreviewBlock->setTranslation(SVector3(x+(float)blockWidth/2,y+(float)blockHeight/2, 0));
+   if(tDown)
+      PreviewBlock->setVisible(false);
+   else
+      PreviewBlock->setVisible(true);
    //PreviewBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    //PreviewBlock->setTranslation(SVector3(x,y, 0));
 
@@ -173,7 +184,9 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
             int i,j;
             for(i = 0; i < m_block->w; i++) {
                for(j = 0; j < m_block->h; j++) {
-                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j] = false;
+                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].o = false;
+                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].r = NULL;
+                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].p = NULL;
                }
             }
 
@@ -185,19 +198,25 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
          if(redo.size() > 0 && redoPlaceables.size() > 0) {
             Application.getSceneManager().addRenderable(redo.back());
             CPlaceable *m_block = redoPlaceables.back();
+            CMeshRenderable *m_r = redo.back();
             blocks.push_back(redo.back());
             placeables.push_back(redoPlaceables.back());
 
             int i,j;
             for(i = 0; i < m_block->w; i++) {
                for(j = 0; j < m_block->h; j++) {
-                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j] = true;
+                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].o = true;
+                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].p = m_block;
+                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].r = m_r;
                }
             }
 
             redo.pop_back();
             redoPlaceables.pop_back();
          }
+      }
+      if(Event.Key == SDLK_t){
+         tDown = 1;
       }
       if(Event.Key == SDLK_m){
          
@@ -231,6 +250,9 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_g){
          gDown = 0;
+      }
+      if(Event.Key == SDLK_t){
+         tDown = 0;
       }
       if(Event.Key == SDLK_k){
       }
@@ -269,8 +291,11 @@ void CLWIBState::PrepPreviewBlock() {
 void initBlockMap() {
    int i,j;
    for(i=0; i<100; i++)
-      for(j=0; j<100; j++)
-         blockMap[i][j]=0;
+      for(j=0; j<100; j++) {
+         blockMap[i][j].o = false;
+         blockMap[i][j].p = NULL;
+         blockMap[i][j].r = NULL;
+      }
 }
 
 void CLWIBState::PrepBlock(float x, float y, int w, int h) {
@@ -278,8 +303,8 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h) {
       return;
    int i,j, ret=0;
    for(i=0;i<w;i++) {
-      for(j=0;j<h;j++) { 
-         if(!blockMap[(int)x+25+i][(int)(y-0.5+25)+j]) {
+      for(j=0;j<h;j++) {
+         if(!blockMap[(int)x+25+i][(int)(y-0.5+25)+j].o) {
             ret = 1;
             break;
          }
@@ -292,8 +317,9 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h) {
 
    printf("Placed block starting at %0.2f, %0.2f\n", x, y);
    CMeshRenderable *tempBlock;
+   CBlock *tempPlaceable;
    blocks.push_back(tempBlock = new CMeshRenderable());
-   placeables.push_back(new CBlock(x, y, w, h));
+   placeables.push_back(tempPlaceable = new CBlock(x, y, w, h));
    tempBlock->setMesh(cubeMesh);
    tempBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/dirt.bmp");;
    tempBlock->getMaterial().Shader = DiffuseTexture;
@@ -302,7 +328,9 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h) {
    tempBlock->setScale(SVector3(w, h, 1));
    for(i = 0; i < w; i++) {
       for(j = 0; j < h; j++) {
-         blockMap[(int)x+25+i][(int)(y-0.5+25)+j] = true;
+         blockMap[(int)x+25+i][(int)(y-0.5+25)+j].o = true;
+         blockMap[(int)x+25+i][(int)(y-0.5+25)+j].r = tempBlock;
+         blockMap[(int)x+25+i][(int)(y-0.5+25)+j].p = tempPlaceable;
       }
    }
    tempBlock->setRotation(SVector3(0, 0, 0));
@@ -435,7 +463,7 @@ float CLWIBState::yp2w(int oldY)
 {
    return (float)-2/WindowHeight * oldY + 1; 
 }
-
+qd lastMouseOveredBlock;
 int startx, starty;
 float pitchphi, yawtheta;
 int mouseDown;
@@ -455,7 +483,9 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
       }
       if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
          mouseDown = 1;
-         PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight);
+         if(!tDown)
+            PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight);
+
          /* Snap camera to where the block was placed
          eye.X = look.X =  eye.X + 6*tan(30*M_PI/180)*xp2w(Event.Location.X);
          eye.Y = look.Y = eye.Y + 6*tan(30*M_PI/180)*yp2w(Event.Location.Y);
@@ -465,11 +495,31 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          mouseDown = 0;
       }
       if(Event.Type.Value == SMouseEvent::EType::Move) {
+         float oldPBMX = previewBlockMouseX, oldPBMY = previewBlockMouseY;
          previewBlockMouseX = 10*((float)WindowWidth/WindowHeight)*tan(30*M_PI/180)*xp2w(Event.Location.X);
          previewBlockMouseY = 10*tan(30*M_PI/180)*yp2w(Event.Location.Y);
-         if(mouseDown) {
-            PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight);
-         }
+            float x = round(eye.X + previewBlockMouseX);
+            float y = round(eye.Y + previewBlockMouseY);
+            float oldx = round(eye.X + oldPBMX);
+            float oldy = round(eye.Y + oldPBMY);
+            if(x < -25 || y < -25)
+               return;
+            if(oldx == x && oldy == y)
+               return;
+            qd m_qd;
+            m_qd = blockMap[(int)x+25][(int)(y-0.5+25)];
+            if(tDown) {
+               if(m_qd.o && m_qd.r != lastMouseOveredBlock.r) {
+                  m_qd.r->getMaterial().Shader = DiffuseTextureBright;
+               }
+            }
+            if(m_qd.o && m_qd.r != lastMouseOveredBlock.r) {
+               m_qd.r->getMaterial().Shader = DiffuseTexture;
+            }
+            if(!tDown && mouseDown) {
+               PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight);
+            }
+            lastMouseOveredBlock = m_qd;
       }
    }
    else if(Event.Button.Value == SMouseEvent::EButton::Right) {

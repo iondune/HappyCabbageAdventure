@@ -17,7 +17,7 @@ class CLWIBState : public CState<CLWIBState>
    private:
 
    //Boolean integers for keypressing
-   int aDown , dDown , spaceDown , wDown , sDown , gDown , fDown ;
+   int aDown , dDown , spaceDown , wDown , sDown , gDown , fDown , tDown;
 
    freetype::font_data our_font;
 
@@ -38,7 +38,9 @@ class CLWIBState : public CState<CLWIBState>
    CCamera *Camera;
    SVector3 eye, look;
 
-   CShader *DiffuseTexture;
+   CShader *DiffuseTexture, *DiffuseTextureBright;
+
+   
 
    int blockWidth, blockHeight;
    void OnRenderStart(float const Elapsed);
