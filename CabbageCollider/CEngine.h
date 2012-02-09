@@ -133,17 +133,18 @@ namespace Collider
 			return height;
 		}
 
-		CObject * addObject()
-		{
-			Objects.push_back(new CObject());
-			return Objects.back();
-		}
+      CObject * addObject()
+      {
+         Objects.push_back(new CObject());
+         return Objects.back();
+      }
 
-        CObject * addElevator()
-		{
-			Objects.push_back(new CElevator());
-			return Objects.back();
-		}
+      CElevator * addElevator()
+      {
+         CElevator * cen;
+         Objects.push_back(cen = new CElevator());
+         return cen; 
+      }
 
 		CActor * addActor()
 		{

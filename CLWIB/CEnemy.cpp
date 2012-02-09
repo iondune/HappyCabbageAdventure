@@ -25,7 +25,11 @@ void CEnemy::writeXML(xmlwriter *l) {
 void CEnemy::moveTo(float x,float y) {
    //For usage in LWIB
 }
-CMeshRenderable * CEnemy::setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
+
+void CEnemy::setShader(CShader * chad) {
+   shader = chad;
+}
+CMeshRenderable * CEnemy::setupItem(CShader * chad, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
    CMeshRenderable *tempEnemy = new CMeshRenderable();
    CMesh *mesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
    if(mesh) {

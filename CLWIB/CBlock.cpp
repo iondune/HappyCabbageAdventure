@@ -4,17 +4,26 @@ CBlock::CBlock(float nx, float ny, int width, int height)
 {
    x = nx; y = ny;
    w = width; h = height;
+   Speed = 0;
+   Range = 0;
+   isMovingPlatform = 0;
 }
 
 void CBlock::writeXML(xmlwriter *l) {
-    std::stringstream xValue, yValue, widthValue, heightValue, tagValue;
+    std::stringstream xValue, yValue, widthValue, heightValue, tagValue, isMovingValue, rangeValue, speedValue;
     xValue << x;
     yValue << y;
     widthValue << w;
     heightValue << h;
+    isMovingValue << 0;
+    rangeValue << 0;
+    speedValue << 0;
+
     tagValue << "CBlock";
 
-
+    l->AddAtributes("speed ", speedValue.str());
+    l->AddAtributes("range ", rangeValue.str());
+    l->AddAtributes("isMoving ", isMovingValue.str());
     l->AddAtributes("width ", widthValue.str());
     l->AddAtributes("height ", heightValue.str());
     l->AddAtributes("Y ", yValue.str());
@@ -22,14 +31,21 @@ void CBlock::writeXML(xmlwriter *l) {
     l->Createtag(tagValue.str());
     l->CloseLasttag();
 }
-
 void CBlock::moveTo(float x,float y) {
    //For usage in LWIB
 }
 
 CMeshRenderable * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
-   Cabbage::Collider::CObject *engBlock = Engine->addObject();
-   engBlock->setArea(SRect2(x, y, w, h));
+   if(isMovingPlatform) {
+      Cabbage::Collider::CElevator *engBlock = Engine->addElevator();
+      engBlock->setArea(SRect2(x, y, w, h));
+      engBlock->Speed = Speed;
+      engBlock->Range = Range;
+   }
+   else {
+      Cabbage::Collider::CObject *engBlock = Engine->addObject();
+      engBlock->setArea(SRect2(x, y, w, h));
+   }
 
    CMeshRenderable *tempBlock = new CMeshRenderable();
    CMesh *mesh = CMeshLoader::loadAsciiMesh("Cube");

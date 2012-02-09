@@ -20,6 +20,7 @@ CActor *Player, *Derp;
 SLight * PlayerLight;
 CObject *Floor, *Block;
 CPlayerView *PlayerView;
+std::vector<CElevator*> elevators;
 
 CGameplayManager *GameplayManager;
 
@@ -47,6 +48,7 @@ CGameState::CGameState()
 void CGameState::loadWorld(std::vector<CPlaceable*> *list)
 {
     int x,y,w,h;
+    float spd, rng;
 
     irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader("test.xml");
 	while (xml && xml->read())
@@ -58,20 +60,28 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
       case irr::io::EXN_ELEMENT:
          if(!strcmp("CBlock", xml->getNodeName()))
          {
+            CBlock * ptr;
             // id, X, Y, height, width / from 0,1,2 so on
             x = xml->getAttributeValueAsInt(0);
             y = xml->getAttributeValueAsInt(1);
             h = xml->getAttributeValueAsInt(2);
             w = xml->getAttributeValueAsInt(3);
-            list->push_back(new CBlock((float)x,(float)y,w,h));
+            list->push_back(ptr = new CBlock((float)x,(float)y,w,h));
+            if(xml->getAttributeValueAsInt(4)) {
+               ptr->isMovingPlatform = 1;
+               ptr->Speed = (int) xml->getAttributeValueAsFloat(5); //Speed
+               ptr->Range = (int) xml->getAttributeValueAsFloat(6); //Range
+            }
          }
          if(!strcmp("CEnemy", xml->getNodeName()))
          {
+            CEnemy *cen;
             x = xml->getAttributeValueAsInt(0);
             y = xml->getAttributeValueAsInt(1);
             h = xml->getAttributeValueAsInt(2);
             w = xml->getAttributeValueAsInt(3);
-            list->push_back(new CEnemy((float)x,(float)y,w,h));
+            list->push_back(cen = new CEnemy((float)x,(float)y,w,h));
+            cen->setShader(Diffuse);
          }
          break;
       }
