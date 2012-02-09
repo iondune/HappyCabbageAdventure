@@ -2,7 +2,7 @@ ROOT_CABBAGE_DIR=../
 SOURCES=COverworldState.cpp sound.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o)
 COMPILER_VERSION=-std=c++0x
-INCLUDE=-I../CabbageCore
+INCLUDE=-I../CabbageCore -I../base
 
 #Chris Code.  Adding check for 32 or 64 bit
 LBITS:=$(shell getconf LONG_BIT)
@@ -22,7 +22,7 @@ all: ${TARGET}
 	ar cq $@ $(OBJECTS)
 
 COverworldState.o: COverworldState.cpp header.h
-	g++ $(INCLUDE) `sdl-config --cflags` -c COverworldState.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+	g++ $(INCLUDE) `freetype-config --cflags` `sdl-config --cflags` -c COverworldState.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 sound.o: sound.cpp sound.h
 	g++ `sdl-config --cflags` -c sound.cpp -DGL_GLEXT_PROTOTYPES
 

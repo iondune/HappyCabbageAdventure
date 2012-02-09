@@ -137,8 +137,8 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
          printf("Look coords: %0.2f %0.2f %0.2f\n", look.X, look.Y, look.Z);
       }
       if(Event.Key == SDLK_SPACE) {
+         Application.getStateManager().setState(& CGameState::get());
          spaceDown = 1;
-
       }
       if(Event.Key == SDLK_ESCAPE) {
          //TODO: Replace with an event/signal to end the game world 
@@ -169,7 +169,8 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
 }
 
 void COverworldState::end()
-{   
+{
+   playerRender->setScale(SVector3(20));
    Application.getSceneManager().removeAllRenderables();
 }
 
