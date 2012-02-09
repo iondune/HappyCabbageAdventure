@@ -12,7 +12,7 @@ void CMainMenuState::setupMeshes()
 {
   CShader *Flat;
   Flat = CShaderLoader::loadShader("Diffuse");
-  logoMesh = CMeshLoader::load3dsMesh("../base/Models/HappyLogo1.3ds");
+  logoMesh = CMeshLoader::load3dsMesh("../base/Models/HappyLogo2.3ds");
   if (logoMesh) 
   {
     logoMesh->resizeMesh(SVector3(1.0));
@@ -43,8 +43,8 @@ void CMainMenuState::drawSky(int backwards) {
 
    glBindTexture(GL_TEXTURE_2D, skyTexture->getTextureHandle());
 
-   glTranslatef(0,0,1.01f);
-   //glTranslatef(0,0,1.00f);
+   glTranslatef(0,0,1.01f);//sky not shown
+   //glTranslatef(0,0,1.00f);//sky shown
    glBegin(GL_QUADS);
    if(!backwards) {
       glTexCoord2f(0, 1);
@@ -101,6 +101,11 @@ void CMainMenuState::drawButton()
 void CMainMenuState::begin()
 {
    //glClearColor(1.0f,1.0f,1.0f,0);
+  CApplication & Application = CApplication::get();
+   SPosition2 windowSize = Application.getWindowSize();
+
+   Application.getSceneManager().setActiveCamera(new CCamera((float)windowSize.X/(float)windowSize.Y, 0.01f, 100.f, 60.f));
+
    glClearColor(0,0,0,0);
    setupTextures();
    setupMeshes();
