@@ -30,19 +30,24 @@ class CMainMenuState : public CState<CMainMenuState>
       CMeshRenderable *renderLogo;
 
       CMainMenuState();
-      virtual void setupTextures();
-      virtual void setupMeshes();
+      int mouse_x, mouse_y;
+      char curDirection;
+      float curAngle;
+      
+      void setupTextures();
+      void setupMeshes();
 
-      virtual void drawSky(int backwards);
+      void drawSky(int backwards);
 
-      virtual void drawButton();
+      void drawButton();
+      void rotateButton();
 
-      virtual void begin();
-      virtual void end();
-      virtual void OnRenderStart(float const Elapsed);
-      virtual void OnRenderEnd(float const Elapsed);
-      virtual void OnMouseEvent(SMouseEvent const & Event);
-      virtual void OnKeyboardEvent(SKeyboardEvent const & Event);
+      void begin();
+      void end();
+      void OnRenderStart(float const Elapsed);
+      void OnRenderEnd(float const Elapsed);
+      void OnMouseEvent(SMouseEvent const & Event);
+      void OnKeyboardEvent(SKeyboardEvent const & Event);
 };
 
 #endif

@@ -90,13 +90,11 @@ void make_dlist ( FT_Face face, char ch, GLuint list_base, GLuint * tex_base ) {
 	//the character has the right amount of space
 	//between it and the one before it.
 	glTranslatef((GLfloat)bitmap_glyph->left,0,0);
-
 	//Now we move down a little in the case that the
 	//bitmap extends past the bottom of the line 
 	//(this is only true for characters like 'g' or 'y'.
 	glPushMatrix();
 	glTranslatef(0,(GLfloat)bitmap_glyph->top-bitmap.rows,0);
-
 	//Now we need to account for the fact that many of
 	//our textures are filled with empty padding space.
 	//We figure what portion of the texture is used by 
@@ -112,19 +110,33 @@ void make_dlist ( FT_Face face, char ch, GLuint list_base, GLuint * tex_base ) {
 	//oriented quite like we would like it to be,
 	//so we need to link the texture to the quad
 	//so that the result will be properly aligned.
-	glBegin(GL_QUADS);
-	glTexCoord2d(0,0); glVertex2f(0,(GLfloat)bitmap.rows);
+
+   GLfloat row = (GLfloat)bitmap.width/2.0;
+   GLfloat col = (GLfloat)bitmap.rows/2.0;
+
+   glBegin(GL_QUADS);
+	glTexCoord2d(0,0); glVertex2f(0,col*2.0);
 	glTexCoord2d(0,y); glVertex2f(0,0);
-	glTexCoord2d(x,y); glVertex2f((GLfloat)bitmap.width,0);
-	glTexCoord2d(x,0); glVertex2f((GLfloat)bitmap.width,(GLfloat)bitmap.rows);
+	glTexCoord2d(x,y); glVertex2f(row*2.0,0);
+	glTexCoord2d(x,0); glVertex2f(row*2.0,col*2.0);
 	glEnd();
 	glPopMatrix();
 	glTranslatef((GLfloat)(face->glyph->advance.x >> 6), 0, 0);
 
+/*
+   glBegin(GL_QUADS);
+   glTexCoord2d(0,0); glVertex2f(0,(GLfloat)bitmap.rows);
+   glTexCoord2d(0,y); glVertex2f(0,0);
+   glTexCoord2d(x,y); glVertex2f((GLfloat)bitmap.width,0);
+   glTexCoord2d(x,0); glVertex2f((GLfloat)bitmap.width,(GLfloat)bitmap.rows);
+   glEnd();
+   glPopMatrix();
+   glTranslatef((GLfloat)(face->glyph->advance.x >> 6), 0, 0);
+*/
 
 	//increment the raster position as if we were a bitmap font.
 	//(only needed if you want to calculate text length)
-	//glBitmap(0,0,0,0,face->glyph->advance.x >> 6,0,NULL);
+	glBitmap(0,0,0,0,face->glyph->advance.x >> 6,0,NULL);
 
 	//Finnish the display list
 	glEndList();
@@ -287,11 +299,15 @@ void print(const font_data &ft_font, float x, float y, const char *fmt, ...)  {
 	//  know the length of the text that you are creating.
 	//  If you decide to use it make sure to also uncomment the glBitmap command
 	//  in make_dlist().
-	//	glRasterPos2f(0,0);
+		glRasterPos2f(0,0);
+
 		glCallLists(lines[i].length(), GL_UNSIGNED_BYTE, lines[i].c_str());
-	//	float rpos[4];
-	//	glGetFloatv(GL_CURRENT_RASTER_POSITION ,rpos);
-	//	float len=x-rpos[0];
+
+      float rpos[4];
+      glGetFloatv(GL_CURRENT_RASTER_POSITION ,rpos);
+      float len=x-rpos[0];
+
+      printf("Length is %f\n", len);
 
 		glPopMatrix();
 

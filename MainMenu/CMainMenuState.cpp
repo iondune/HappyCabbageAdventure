@@ -12,7 +12,7 @@ void CMainMenuState::setupMeshes()
 {
   CShader *Flat;
   Flat = CShaderLoader::loadShader("Diffuse");
-  logoMesh = CMeshLoader::load3dsMesh("../base/Models/HappyLogo2.3ds");
+  logoMesh = CMeshLoader::load3dsMesh("../base/Models/HappyLogo1.3ds");
   if (logoMesh) 
   {
     logoMesh->resizeMesh(SVector3(1.0));
@@ -43,8 +43,8 @@ void CMainMenuState::drawSky(int backwards) {
 
    glBindTexture(GL_TEXTURE_2D, skyTexture->getTextureHandle());
 
-   glTranslatef(0,0,1.01f);//sky not shown
-   //glTranslatef(0,0,1.00f);//sky shown
+   glTranslatef(0,0,1.01f);
+   
    glBegin(GL_QUADS);
    if(!backwards) {
       glTexCoord2f(0, 1);
@@ -83,14 +83,14 @@ void CMainMenuState::drawButton()
 
    glBegin( GL_QUADS );
    //Draw square
-   glTexCoord2f(0,0);
-   glVertex3f( 0,0,0 );
-   glTexCoord2f(1,0);
-   glVertex3f( 1, 0,0 );
-   glTexCoord2f(1,1);
-   glVertex3f( 1, 1, 0 );
-   glTexCoord2f(0,1);
-   glVertex3f( 0,1, 0 );
+   glTexCoord2f(-.5,-.5);
+   glVertex3f( -.5,-.5,0 );
+   glTexCoord2f(.5,-.5);
+   glVertex3f( .5, -.5,0 );
+   glTexCoord2f(.5,.5);
+   glVertex3f( .5, .5, 0 );
+   glTexCoord2f(-.5,.5);
+   glVertex3f( -.5,.5, 0 );
    //End quad
    glEnd();
 
@@ -98,18 +98,18 @@ void CMainMenuState::drawButton()
    glDisable(GL_TEXTURE_2D);
 }
 
+
+
 void CMainMenuState::begin()
 {
    //glClearColor(1.0f,1.0f,1.0f,0);
-  CApplication & Application = CApplication::get();
-   SPosition2 windowSize = Application.getWindowSize();
-
-   Application.getSceneManager().setActiveCamera(new CCamera((float)windowSize.X/(float)windowSize.Y, 0.01f, 100.f, 60.f));
-
    glClearColor(0,0,0,0);
    setupTextures();
    setupMeshes();
    our_font.init("WIFFLES_.TTF", 30);
+
+   curAngle = 0;
+   curDirection = 'l';
 }
 void CMainMenuState::end()
 {
@@ -118,7 +118,6 @@ void CMainMenuState::end()
 
 void CMainMenuState::OnRenderStart(float const Elapsed)
 {
-   //Start quad
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glMatrixMode(GL_MODELVIEW);
 
@@ -131,21 +130,148 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 
    drawSky(true);
 
-   glTranslatef(-0.3f,0,0);
-   drawButton();
-   glTranslatef(0,-0.35f, 0);
-   drawButton();
-   glTranslatef(0,-0.35f, 0);
-   drawButton();
+   SDL_GetMouseState(&mouse_x, &mouse_y);
+
+   glTranslatef(.04f, .11, 0);
+
+   if(mouse_x < 540 && mouse_x > 280 && mouse_y >225 && mouse_y < 300)
+   {
+      if (curDirection == 'l' && curAngle <= 20) {
+         glPushMatrix();
+         glRotatef(curAngle+=.1, 0, 0, 1);
+         drawButton();
+         glPopMatrix();
+      }
+
+      else {
+         curDirection = 'r';
+      }
+
+      if (curDirection == 'r' && curAngle >= -20) {
+         glPushMatrix();
+         glRotatef(curAngle-=.1, 0, 0, 1);
+         drawButton();
+         glPopMatrix();
+      }
+
+      else {
+         curDirection = 'l';
+      }
+
+      glPushMatrix();
+      glLoadIdentity();
+      glTranslatef(92, 125, 0);
+      glRotatef(curAngle,0,0,1);
+      glScalef(1,.8+.3*cos(curAngle/5),1);
+      glTranslatef(-80,0,0);
+     freetype::print(our_font, 320, 200, "New Game", curAngle);
+     glPopMatrix();
+   }
+
+   else {
+      drawButton();
+      freetype::print(our_font, 332, 325.f, "New Game");
+   }
+
+   glTranslatef(0, -0.35, 0);
+
+   if(mouse_x < 540 && mouse_x > 280 && mouse_y > 330 && mouse_y < 400)
+   {
+      if (curDirection == 'l' && curAngle <= 20) {
+         glPushMatrix();
+         glRotatef(curAngle+=.1, 0, 0, 1);
+         drawButton();
+         glPopMatrix();
+      }
+
+      else {
+         curDirection = 'r';
+      }
+
+      if (curDirection == 'r' && curAngle >= -20) {
+         glPushMatrix();
+         glRotatef(curAngle-=.1, 0, 0, 1);
+         drawButton();
+         glPopMatrix();
+      }
+
+      else {
+         curDirection = 'l';
+      }
+
+     glPushMatrix();
+      glLoadIdentity();
+      glTranslatef(102, 125, 0);
+      glRotatef(curAngle,0,0,1);
+      glScalef(1,.8+.3*cos(curAngle/5),1);
+      glTranslatef(-90,0,0);
+     freetype::print(our_font, 300, 95, "Stage Editor", curAngle);
+     glPopMatrix();
+   }
+
+   else {
+      drawButton();
+      freetype::print(our_font, 310, 220.f, "Stage Editor");
+   }
+
+   glTranslatef(0, -0.35, 0);
+
+
+   if(mouse_x < 540 && mouse_x > 280 && mouse_y > 435 && mouse_y < 510)
+   {
+      if (curDirection == 'l' && curAngle <= 20) {
+         glPushMatrix();
+         glRotatef(curAngle+=.1, 0, 0, 1);
+         drawButton();
+         glPopMatrix();
+      }
+
+      else {
+         curDirection = 'r';
+      }
+
+      if (curDirection == 'r' && curAngle >= -20) {
+         glPushMatrix();
+         glRotatef(curAngle-=.1, 0, 0, 1);
+         drawButton();
+         glPopMatrix();
+      }
+
+      else {
+         curDirection = 'l';
+      }
+
+     glPushMatrix();
+      glLoadIdentity();
+      glTranslatef(90, 125, 0);
+      glRotatef(curAngle,0,0,1);
+      glScalef(1,.8+.3*cos(curAngle/5),1);
+      glTranslatef(-90,0,0);
+     freetype::print(our_font, 325, -10, "Exit Game", curAngle);
+     glPopMatrix();
+
+   }
+
+   else {
+      drawButton();
+      freetype::print(our_font, 325, 115.f, "Exit Game");
+   }
+
+   //Check if should reset curAngle
+   if (mouse_x >= 540 || mouse_x <= 280 || mouse_y >= 510 || mouse_y <= 225
+      || (mouse_y <= 435 && mouse_y >= 400) || (mouse_y <= 330 && mouse_y >= 300))
+   {
+      curAngle = 0;
+      curDirection = 'l';
+   }
+
+
+
 
    glPopMatrix();
    
 
    glEnable(GL_LIGHTING);
-
-   freetype::print(our_font, 330, 325.f, "New Game");
-   freetype::print(our_font, 310, 220.f, "Stage Editor");
-   freetype::print(our_font, 325, 115.f, "Exit Game");
 
    SDL_GL_SwapBuffers();
 }
