@@ -26,6 +26,8 @@ public:
     {
         std::vector<SVertex> Vertices;
         std::vector<STriangle> Triangles;
+
+        SVector3 DiffuseColor;
     };
 
     std::vector<SMeshBuffer *> MeshBuffers;
