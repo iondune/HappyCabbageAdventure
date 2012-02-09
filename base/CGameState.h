@@ -7,6 +7,7 @@
 #include "../MainMenu/CMainMenuState.h"
 #include "../CLWIB/CLWIBState.h"
 #include "../CLWIB/CBlock.h"
+#include "../CLWIB/CEnemy.h"
 #include "../CLWIB/CPlaceable.h"
 #include "CGameEventReceiver.h"
 #include "irrxml-1.2/src/irrXML.h"
@@ -32,7 +33,7 @@ class CGameState : public CState<CGameState>
    float fps, timeTotal;
    int numFrames;
    void oldDisplay(); 
-   void loadWorld(std::vector<CBlock> *list);
+   void loadWorld(std::vector<CPlaceable*> *list);
    //Runs at very start of display
    void OnRenderStart(float const Elapsed);
    //Sends event every time key pressed (also when held)

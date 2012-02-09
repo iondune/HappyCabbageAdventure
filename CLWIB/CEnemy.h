@@ -1,5 +1,5 @@
-#ifndef __CBLOCK_H____
-#define __CBLOCK_H____
+#ifndef __CENEMY_H____
+#define __CENEMY_H____
 
 #include <stdio.h>
 #include "CPlaceable.h"
