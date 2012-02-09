@@ -38,7 +38,7 @@ CPlayerView.o: CPlayerView.cpp CPlayerView.h
 CGameEventReceiver.o: CGameEventReceiver.cpp CGameEventReceiver.h
 	g++ $(INCLUDE) `sdl-config --cflags` -c CGameEventReceiver.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CGameplayManager.o: CGameplayManager.cpp CGameplayManager.h
-	g++ `sdl-config --cflags` -c CGameplayManager.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+	g++ $(INCLUDE)`sdl-config --cflags` -c CGameplayManager.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 Materials.o: Materials.cpp Materials.h
 	g++ -c Materials.cpp
 FreeType.o: FreeType.cpp FreeType.h
