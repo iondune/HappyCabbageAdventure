@@ -17,7 +17,7 @@ CMesh *basicTreeMesh, *cabbageMesh, *christmasTreeMesh, *cubeMesh, *discMesh,
 
 CMeshRenderable *renderShadow, *playerRenderable, *renderChristmasTree,
   *renderBasicTree, *renderBlueFlwr, *renderPinkFlwr, *renderFicus, *renderPoin,
-  *tempRender, *renderFlag;
+  *tempRender, *renderFlag, *flagLogo;
 
 std::vector<CMeshRenderable*> blocks, enemies, blueFlwrs, pinkFlwrs, ficuses,
   basicTrees, xmasTrees, poins;

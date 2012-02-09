@@ -116,6 +116,7 @@ void CGameState::EngineInit( void ) {
    float j = 0;
 
    std::vector<CPlaceable*> list;
+   CObject *lastOne;
    loadWorld(&list);
 
    std::vector<CPlaceable*>::iterator it;
@@ -124,10 +125,18 @@ void CGameState::EngineInit( void ) {
       printf(" %d\n", (*it)->isMovingPlatform);
       if((*it)->isMovingPlatform) {
          elevators.push_back(((CBlock*)(*it))->elevator);
+         lastOne = ((CBlock*)(*it))->elevator;
          printf("this is a moving platform\n");
       }
       else
          printf("this is NOT a moving platform\n");
+   }
+
+   Block = Engine->addObject();
+   Block->setArea(SRect2(172.f,0.f, 4.f, 10.f));
+   PrepBlock(172,0,4,10);
+   if(lastOne) {
+      GameplayManager->setVictoryFlag(Block);
    }
 
 
@@ -241,6 +250,7 @@ void CGameState::begin()
    Application.getSceneManager().addRenderable(renderBasicTree);
    Application.getSceneManager().addRenderable(playerRenderable);
    Application.getSceneManager().addRenderable(renderFlag);
+   Application.getSceneManager().addRenderable(flagLogo);
 
    srand((unsigned int) time(NULL));
 
@@ -330,6 +340,17 @@ void CGameState::oldDisplay() {
             Player->setAction(CActor::EActionType::MoveRight);
             PlayerView->setState(CPlayerView::State::MovingRight);
          }
+
+         else if (GameplayManager->isWon()) {
+
+            Player->setAction(CActor::EActionType::None);
+
+            PlayerView->setState(CPlayerView::State::Standing);
+
+            Player->setJumping(true);
+
+         }
+
          else {
             Player->setAction(CActor::EActionType::None);
             PlayerView->setState(CPlayerView::State::Standing);
@@ -466,14 +487,23 @@ void CGameState::OnRenderStart(float const Elapsed)
 
    Application.getSceneManager().drawAll();
 
-   if (! GameplayManager->isPlayerAlive()) {
+   if (! GameplayManager->isPlayerAlive() || GameplayManager->isWon()) {
+      if(GameplayManager->isWon()) {
+         if (playVictory) {
+            Mix_HaltMusic();
+            Mix_PlayChannel(-1, victory,0);
+            playVictory = false;
+         }
+         freetype::print(our_font, 50, WindowHeight - 240.f, "CONGRATULATIONS! YOU HAVE WON!");
+      }
       //Chris Code.  Play Death Sound
-      if (playDead) {
+      else if (playDead) {
          Mix_HaltMusic();
          Mix_PlayChannel(-1, die, 0); //Only play once
          playDead = false;
+
+         freetype::print(our_font, 50, WindowHeight - 240.f, "GAME OVER! YOU ARE DEAD");
       }
-      freetype::print(our_font, 50, WindowHeight - 240.f, "GAME OVER! YOU ARE DEAD");
    }
 
    //Calculate FPS
@@ -738,7 +768,7 @@ void LoadTextures()
    blueFlwrImg = CImageLoader::loadImage("Textures/blueFlower.bmp");
    pinkFlwrImg = CImageLoader::loadImage("Textures/pinkFlower.bmp");
    poinImg = CImageLoader::loadImage("Textures/poin.bmp");
-   flagImg = CImageLoader::loadImage("Textures/flag.bmp");
+   flagImg = CImageLoader::loadImage("Textures/white.bmp");
 
    grassTxt = new CTexture(grassImg);
    skyTxt = new CTexture(skyImg);
@@ -798,9 +828,16 @@ void PrepMeshes()
 
    renderFlag = new CMeshRenderable();
    renderFlag->setMesh(flagMesh);
-   renderFlag->setTranslation(SVector3(-25, .5, 1.0));
+   renderFlag->setTranslation(SVector3(170, .5, 1.0));
    renderFlag->setRotation(SVector3(-90,0,0));
-   renderFlag->setScale(SVector3(.0100, .00025,.0016));
+   renderFlag->setScale(SVector3(.0150, .00025,.0016));
    renderFlag->getMaterial().Texture = flagTxt;
    renderFlag->getMaterial().Shader = DiffuseTexture;
+
+   flagLogo = new CMeshRenderable();
+   flagLogo->setMesh(cabbageMesh);
+   flagLogo->setTranslation(SVector3(170, .9, 1.0));
+   flagLogo->setRotation(SVector3(-90,0,0));
+   flagLogo->setScale(SVector3(.75));
+   flagLogo->getMaterial().Shader = Flat;
 }

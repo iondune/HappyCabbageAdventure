@@ -8,6 +8,7 @@ extern Mix_Music *music;
 
 //Sound Effects
 extern Mix_Chunk *die;
+extern Mix_Chunk *victory;
 extern Mix_Chunk *jump;
 extern Mix_Chunk *takeDmg;
 extern Mix_Chunk *killEnemy;
@@ -17,6 +18,7 @@ extern bool playDead;
 extern bool playTakeDmg;
 extern bool playJump;
 extern bool musicOn;
+extern bool playVictory;
 
 void soundInit();
 //void musicDone();

@@ -5,11 +5,13 @@
 Mix_Music *music;
 
 Mix_Chunk *die;
+Mix_Chunk *victory;
 Mix_Chunk *jump;
 Mix_Chunk *takeDmg;
 Mix_Chunk *killEnemy;
 
 bool playDead;
+bool playVictory;
 bool playTakeDmg;
 bool playJump;
 bool musicOn;
@@ -27,6 +29,7 @@ void soundInit() {
 
    //Misc Sound Variables
    playDead = true;
+   playVictory = true;
    playTakeDmg = true;
    playJump = true;
    musicOn = true;
@@ -44,6 +47,7 @@ void setupSoundtrack() {
    //Pre-load pointers
    music = Mix_LoadMUS("sounds/BeginningAnew.mp3");
    die = Mix_LoadWAV("sounds/death.wav");
+   victory = Mix_LoadWAV ("sounds/victory.wav");
    jump = Mix_LoadWAV("sounds/jump.wav");
    takeDmg = Mix_LoadWAV("sounds/takeDmg.wav");
    killEnemy = Mix_LoadWAV("sounds/hitEnemy.wav");
@@ -53,7 +57,8 @@ void setupSoundtrack() {
 }
 
 void startSoundtrack() {
-   Mix_FadeInMusic(music, -1, 1000);
+   musicOn = true;
+   Mix_PlayMusic(music, -1);
 }
 
 void stopSoundtrack() {
@@ -66,11 +71,13 @@ void stopSoundtrack() {
 void changeSoundtrack(char* changeTo) {
    //Stop music from playing (if currently is)
    if (musicOn) {
-      Mix_HaltMusic();
+      Mix_FadeOutMusic(100);
       Mix_FreeMusic(music);
    }
 
    music = Mix_LoadMUS(changeTo);
 
-   Mix_PlayMusic(music, -1);
+   Mix_FadeInMusic(music, -1, 2000);
+
+   musicOn = true;
 }
