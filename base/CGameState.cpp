@@ -242,7 +242,7 @@ void CGameState::begin()
 
    int random;
 
-   for (int n = 0; n < 110; n++) {
+   for (int n = 0; n < 100; n++) {
       random = rand() % 8;
 
       if (n % 2 == 0)
@@ -268,7 +268,7 @@ void CGameState::begin()
          }
    }
 
-   for (int n = 0; n < 55; n++) {
+   for (int n = 0; n < 50; n++) {
       random = rand() % 3;
 
       if (n % 2 == 0)
