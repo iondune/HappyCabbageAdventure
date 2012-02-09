@@ -94,7 +94,7 @@ SMaterial::SMaterial()
 {
     AmbientColor = boost::shared_ptr<CVec3Uniform>(new CVec3Uniform(SVector3(0.08f, 0.08f, 0.08f)));
     DiffuseColor = boost::shared_ptr<CVec3Uniform>(new CVec3Uniform(SVector3(0.95f, 0.95f, 0.95f)));
-    Shininess = boost::shared_ptr<CFloatUniform>(new CFloatUniform());
+    Shininess = boost::shared_ptr<CFloatUniform>(new CFloatUniform(0.3f));
 }
 
 
