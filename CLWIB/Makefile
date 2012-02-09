@@ -31,7 +31,7 @@ cabbage: ${OBJECTS} ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/
 	g++ ${COMPILER_VERSION} ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL -lglut `sdl-config --cflags --libs` ${CABBAGE} ${MIXLIB} `freetype-config --libs` -g -o $@
 
 CBlock.o: CBlock.cpp CBlock.h CPlaceable.h
-	g++ $(INCLUDE) `sdl-config --cflags` -c CBlock.cpp
+	g++ $(INCLUDE) -DGL_GLEXT_PROTOTYPES `sdl-config --cflags` -c CBlock.cpp
 main.o: main.cpp
 	g++ $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c main.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CLWIBState.o: CLWIBState.cpp header.h
