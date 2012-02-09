@@ -14,7 +14,7 @@ void CMainMenuState::setupMeshes()
 {
   CShader *Flat;
   Flat = CShaderLoader::loadShader("Diffuse");
-  logoMesh = CMeshLoader::load3dsMesh("../base/Models/HappyLogo1.3ds");
+  logoMesh = CMeshLoader::load3dsMesh("../base/Models/HappyLogo2.3ds");
   if (logoMesh) 
   {
     logoMesh->resizeMesh(SVector3(1.0));
