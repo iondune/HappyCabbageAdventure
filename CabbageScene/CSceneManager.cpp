@@ -132,6 +132,11 @@ void CSceneManager::removeRenderable(CRenderable * Renderable)
     Renderables.erase(std::remove(Renderables.begin(), Renderables.end(), Renderable), Renderables.end());
 }
 
+void CSceneManager::removeAllRenderables()
+{
+   Renderables.erase(Renderables.begin(), Renderables.end());
+}
+
 void CSceneManager::drawAll()
 {
     CurrentScene->update();
