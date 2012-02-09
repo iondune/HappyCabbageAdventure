@@ -130,6 +130,7 @@ void CMainMenuState::begin()
 
 void CMainMenuState::end()
 {
+    Application.getSceneManager().Lights.clear();
       Application.getSceneManager().removeAllRenderables();
 }
 
