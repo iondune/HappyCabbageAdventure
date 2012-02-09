@@ -20,8 +20,7 @@ class COverworldState : public CState<COverworldState>
    int aDown, dDown, spaceDown, wDown, sDown;
 
    CShader *Flat, *Diffuse, *DiffuseTexture;
-   CMeshRenderable *renderMap;
-   CMesh *mapMesh;
+   CMeshRenderable *renderMap, *discRender, *playerRender;
 
    int startx, starty;
    float pitchphi, yawtheta;
@@ -54,7 +53,9 @@ class COverworldState : public CState<COverworldState>
    void OnKeyboardEvent(SKeyboardEvent const & Event);
    //Runs at program close (currently not implemented)
    void end();
+   /*
    void stepCamera(float delta);
    void OnMouseEvent(SMouseEvent const & Event);
+   */
 };
 #endif
