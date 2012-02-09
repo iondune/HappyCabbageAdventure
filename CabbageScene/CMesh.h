@@ -11,8 +11,8 @@
 class CMesh
 {
 
-    CBufferObject<float> * PositionBuffer, * ColorBuffer, * NormalBuffer, * TexCoordBuffer, * NormalLineBuffer, * NormalColorBuffer;
-    CBufferObject<unsigned short> * IndexBuffer, * NormalIndexBuffer;
+    std::vector<CBufferObject<float> *> PositionBuffers, ColorBuffers, NormalBuffers, TexCoordBuffers, NormalLineBuffers, NormalColorBuffers;
+    std::vector<CBufferObject<unsigned short> *> IndexBuffers, NormalIndexBuffers;
 
 public:
 
@@ -22,11 +22,18 @@ public:
         SVector3 Normal;
     };
 
-    std::vector<SVertex> Vertices;
-    std::vector<STriangle> Triangles;
+    struct SMeshBuffer
+    {
+        std::vector<SVertex> Vertices;
+        std::vector<STriangle> Triangles;
+    };
+
+    std::vector<SMeshBuffer *> MeshBuffers;
 
     CMesh();
     ~CMesh();
+
+    unsigned int const getVertexCount() const;
 
     void centerMeshByAverage(SVector3 const & CenterLocation);
     void centerMeshByExtents(SVector3 const & CenterLocation);
@@ -38,15 +45,15 @@ public:
     void calculateNormalsPerFace();
     void calculateNormalsPerVertex();
 
-    CBufferObject<float> * makePositionBuffer();
-    CBufferObject<float> * makeColorBuffer();
-    CBufferObject<float> * makeNormalBuffer();
-    CBufferObject<float> * makeTexCoordBuffer();
-    CBufferObject<unsigned short> * makeIndexBuffer();
+    std::vector<CBufferObject<float> *> makePositionBuffer();
+    std::vector<CBufferObject<float> *> makeColorBuffer();
+    std::vector<CBufferObject<float> *> makeNormalBuffer();
+    std::vector<CBufferObject<float> *> makeTexCoordBuffer();
+    std::vector<CBufferObject<unsigned short> *> makeIndexBuffer();
 
-    CBufferObject<float> * makeNormalLineBuffer();
-    CBufferObject<float> * makeNormalColorBuffer();
-    CBufferObject<unsigned short> * makeNormalIndexBuffer();
+    std::vector<CBufferObject<float> *> makeNormalLineBuffer(float const lengthFactor = 0.05f);
+    std::vector<CBufferObject<float> *> makeNormalColorBuffer();
+    std::vector<CBufferObject<unsigned short> *> makeNormalIndexBuffer();
 
     SBoundingBox3 const getBoundingBox() const;
 
