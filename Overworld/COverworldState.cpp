@@ -8,6 +8,7 @@ COverworldState::COverworldState()
 //Initalizer fxn
 void COverworldState::begin()
 {
+   curNode = 0;
    aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0;
    camRotValue = 0;
    rot = SVector3(-90, 0, -90);
@@ -91,6 +92,7 @@ void COverworldState::OnRenderStart(float const Elapsed)
    eyeRot.X += 0.2*cos(camRotValue);
    eyeRot.Z += 0.2*(sin(camRotValue) + 1);
    eyeRot.Y += 0.1*(sin(camRotValue) + 1);
+   bouncePlayer();
    Camera->setPosition(eyeRot);
    Camera->setLookDirection(look - eyeRot);
 
@@ -124,9 +126,11 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_a){
          aDown = 1;
+         movePlayer();
       }
       if(Event.Key == SDLK_d){
          dDown = 1;
+         movePlayer();
       }
       if(Event.Key == SDLK_m){
          printf("Eye coords: %0.2f %0.2f %0.2f\n", eye.X, eye.Y, eye.Z);
@@ -201,15 +205,16 @@ void COverworldState::PrepMeshes()
    discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
    discRender->getMaterial().Shader = discShader;
    discRender->setTranslation(SVector3(0.5, -0.13, 0.1));
-   discRender->setScale(SVector3(0.2));
+   discRender->setScale(SVector3(0.1));
    CApplication::get().getSceneManager().addRenderable(discRender);
 
-   discRender = new CMeshRenderable();
+   CMeshRenderable *orangeDisc;
+   orangeDisc = discRender = new CMeshRenderable();
    discRender->setMesh(discMesh);
    discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_orange.bmp");
    discRender->getMaterial().Shader = discShader;
    discRender->setTranslation(SVector3(0.9, -0.12999999, 0.3));
-   discRender->setScale(SVector3(0.19));
+   discRender->setScale(SVector3(0.09));
    CApplication::get().getSceneManager().addRenderable(discRender);
 
    discRender = new CMeshRenderable();
@@ -217,8 +222,9 @@ void COverworldState::PrepMeshes()
    discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
    discRender->getMaterial().Shader = discShader;
    discRender->setTranslation(SVector3(0.9, -0.13, 0.3));
-   discRender->setScale(SVector3(0.2));
+   discRender->setScale(SVector3(0.1));
    CApplication::get().getSceneManager().addRenderable(discRender);
+   discRender = orangeDisc;
    
    CMesh *playerMesh;
    playerMesh = CMeshLoader::load3dsMesh("Models/crappycabbage.3ds");
@@ -234,10 +240,31 @@ void COverworldState::PrepMeshes()
    playerRender = new CMeshRenderable();
    playerRender->setMesh(playerMesh);
    playerRender->getMaterial().Shader = Flat;
-   playerRender->setTranslation(SVector3(0.9, 0, 0.3));
+   playerRender->setTranslation(playerVector = SVector3(0.9, -0.08, 0.3));
+   playerRender->setRotation(SVector3(0, -90, 0));
    playerRender->setScale(SVector3(1));
 
    CApplication::get().getSceneManager().addRenderable(playerRender);
+}
+
+void COverworldState::bouncePlayer() {
+   SVector3 m_base = playerVector;
+   m_base.Y += 0.03*(sin(camRotValue*15)+1);
+   playerRender->setTranslation(m_base);
+}
+
+
+void COverworldState::movePlayer() {
+   if(curNode == 0) {
+      playerVector = SVector3(0.5, -0.08, 0.1);
+      discRender->setTranslation(SVector3(0.5, -0.12999999, 0.1));
+      curNode = 1;
+   }
+   else {
+      playerVector = SVector3(0.9, -0.08, 0.3);
+      discRender->setTranslation(SVector3(0.9, -0.12999999, 0.3));
+      curNode = 0;
+   }
 }
 
 
