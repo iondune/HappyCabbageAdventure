@@ -26,7 +26,7 @@ CLWIBState::CLWIBState()
 {}
 
 void CLWIBState::BlocksInit( void ) {
-   PrepGrass(-25, -1, 50, 1);
+   PrepGrass(-25, -1, 200, 1);
    PrepSky();
 
    SRect2 area;
@@ -459,7 +459,7 @@ void CLWIBState::PrepSky() {
    tempBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/sky.bmp");
    tempBlock->getMaterial().Shader = DiffuseTexture;
    tempBlock->setTranslation(SVector3(0, 24, -2.5));
-   tempBlock->setScale(SVector3(100, 50, 1));
+   tempBlock->setScale(SVector3(400, 50, 1));
    Application.getSceneManager().addRenderable(tempBlock);
 }
 
