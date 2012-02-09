@@ -88,6 +88,11 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
 
 }
 
+void CGameplayManager::setVictoryFlag(Cabbage::Collider::CObject * f) {
+   VictoryFlag = f;
+}
+
+
 bool const CGameplayManager::isWon() const
 {
     return won; 
