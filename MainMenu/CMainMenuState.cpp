@@ -2,11 +2,16 @@
 
 CMainMenuState::CMainMenuState() 
 : Application (CApplication::get())
-{}
+{
+  woodTexture = skyTexture = 0;
+}
 
 void CMainMenuState::setupTextures()
 {
-   woodTexture = new CTexture(CImageLoader::loadImage("wood011.bmp"));
+  if(!woodTexture)
+  {
+    woodTexture = new CTexture(CImageLoader::loadImage("wood011.bmp"));
+  }
    skyTexture = new CTexture(CImageLoader::loadImage("sky.bmp"));
 }
 
@@ -41,7 +46,7 @@ void CMainMenuState::drawSky(int backwards) {
 
    glBindTexture(GL_TEXTURE_2D, skyTexture->getTextureHandle());
 
-   glTranslatef(0,0,1.01f);
+   glTranslatef(0,0,2.99f);
    
    glBegin(GL_QUADS);
    //if(!backwards) {
