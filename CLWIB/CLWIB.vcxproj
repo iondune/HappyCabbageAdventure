@@ -72,6 +72,7 @@
     <ClInclude Include="FreeType.h" />
     <ClInclude Include="header.h" />
     <ClInclude Include="Materials.h" />
+    <ClInclude Include="wmlwriter_src\xmlwriter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CBlock.cpp" />
@@ -79,6 +80,7 @@
     <ClCompile Include="FreeType.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Materials.cpp" />
+    <ClCompile Include="wmlwriter_src\xmlwriter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="freetype6.dll" />
