@@ -63,8 +63,8 @@ namespace Collider
                     }
 				}
 
-                if (Which)
-				    (* it)->onStanding(Which);
+				if (Which)
+					(* it)->onStanding(Which);
 			}
 
 			for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)

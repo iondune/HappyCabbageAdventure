@@ -27,13 +27,16 @@ namespace Collider
     class CElevator : public CObject
 	{
 
-        float time;
+        float Timer;
 
     public:
 
         CElevator();
 
 		virtual SVector2 performMovement(float const TickTime);
+
+        float Speed;
+        float Range;
 
 	};
 }

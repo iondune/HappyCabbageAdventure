@@ -18,15 +18,16 @@ namespace Collider
 
     CElevator::CElevator()
     {
-        time = 0.f;
+        Timer = 0.f;
+        Speed = 0.5f;
+        Range = 0.5f;
     }
 
     SVector2 CElevator::performMovement(float const TickTime)
 	{
         SVector2 Movement;
-        time += TickTime * 0.5f;
-        Movement.Y = TickTime * sin(time) * 0.5f;
-        //Movement.X = TickTime * cos(time) * 0.5f;
+        Timer += TickTime * Speed;
+        Movement.X = TickTime * sin(Timer) * Range;
         Area.Position += Movement;
 		return Movement;
 	}

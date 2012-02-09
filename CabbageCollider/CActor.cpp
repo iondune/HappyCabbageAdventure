@@ -62,12 +62,12 @@ namespace Collider
 			{
 				if (Movement[i] > 0.f)
 				{
-					Movement[i] = std::max(Object->getArea().Position[i] - (LastPosition + Area.Size)[i] - BufferSize, 0.f);
+					Movement[i] = std::max(Object->getArea().Position[i] - (LastPosition + Area.Size)[i], 0.f);
 					Out |= (i ? ECollisionType::Up : ECollisionType::Right);
 				}
 				else if (Movement[i] < 0.f)
 				{
-					Movement[i] = std::min(Object->getArea().otherCorner()[i] - LastPosition[i] + BufferSize, 0.f);
+					Movement[i] = std::min(Object->getArea().otherCorner()[i] - LastPosition[i], 0.f);
 					Out |= (i ? ECollisionType::Down : ECollisionType::Left);
 				}
 			}
@@ -175,12 +175,12 @@ namespace Collider
 		Movement = Velocity * TickTime;
 	}
 
-	void CActor::pushIfCollided(CObject * Object, SVector2 const & oMovement)
+	void CActor::pushIfCollided(CObject * Object, SVector2 const & Movement)
 	{
-        if (! collidesWith(Object) && Object != Standing)
+		if (! collidesWith(Object) && Object != Standing)
 			return;
 
-        Movement += oMovement;
+        Area.Position += Movement;
 
 		/*for (int i = 0; i < 2; ++ i)
 		{
