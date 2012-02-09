@@ -40,7 +40,7 @@ namespace Collider
 
 
 	CActor::CActor()
-		: Standing(false), JumpTimer(0.f), FallAcceleration(0), Impulse(false)
+		: Standing(0), JumpTimer(0.f), FallAcceleration(0), Impulse(false)
 	{}
 
 	CActor::~CActor()
@@ -78,9 +78,9 @@ namespace Collider
 		return Out;
 	}
 
-	void CActor::onStanding()
+	void CActor::onStanding(CCollideable * Object)
 	{
-		Standing = true;
+		Standing = Object;
 		FallAcceleration = 0;
 		Velocity.Y = std::max(Velocity.Y, 0.f);
 	}
@@ -177,10 +177,12 @@ namespace Collider
 
 	void CActor::pushIfCollided(CObject * Object, SVector2 const & Movement)
 	{
-		if (! collidesWith(Object))
+		if (! collidesWith(Object) && Object != Standing)
 			return;
 
-		for (int i = 0; i < 2; ++ i)
+        Area.Position += Movement;
+
+		/*for (int i = 0; i < 2; ++ i)
 		{
 			if (Movement[i] > 0)
 			{
@@ -190,12 +192,12 @@ namespace Collider
 			{
 				Area.Position[i] -= Area.otherCorner()[i] - Object->getArea().Position[i];
 			}
-		}
+		}*/
 	}
 
 	bool const CActor::isStanding() const
 	{
-		return Standing;
+		return Standing != 0;
 	}
 
 	void CActor::setVelocity(SVector2 const & vel)
@@ -223,10 +225,10 @@ namespace Collider
 		Action = action;
 	}
 
-        bool CActor::isJumping()
-        {
-           return Jumping;
-        }
+    bool CActor::isJumping()
+    {
+        return Jumping;
+    }
 
 	void CActor::setJumping(bool const jumping)
 	{

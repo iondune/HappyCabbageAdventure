@@ -45,20 +45,27 @@ namespace Collider
 				(* it)->updateVectors(TickTime);
 
 				bool Alighted = false;
+                CCollideable * Which = 0;
 
 				for (ObjectList::iterator jt = Objects.begin(); jt != Objects.end(); ++ jt)
 				{
 					Alighted |= (* it)->updateCollision(* jt, TickTime, CollisionResponder);
+                    if (Alighted)
+                        Which = (* jt);
 				}
 
 				for (ActorList::iterator jt = Actors.begin(); jt != Actors.end(); ++ jt)
 				{
 					if (* it != * jt)
+                    {
 						Alighted |= (* it)->updateCollision(* jt, TickTime, CollisionResponder);
+                        if (Alighted)
+                            Which = (* jt);
+                    }
 				}
 
 				if (Alighted)
-					(* it)->onStanding();
+					(* it)->onStanding(Which);
 			}
 
 			for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
@@ -130,6 +137,12 @@ namespace Collider
 		CObject * addObject()
 		{
 			Objects.push_back(new CObject());
+			return Objects.back();
+		}
+
+        CObject * addElevator()
+		{
+			Objects.push_back(new CElevator());
 			return Objects.back();
 		}
 
