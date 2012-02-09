@@ -73,6 +73,7 @@ public:
 
     void addRenderable(CRenderable * Renderable);
     void removeRenderable(CRenderable * Renderable);
+    void removeAllRenderables();
 
     void drawAll();
 

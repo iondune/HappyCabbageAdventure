@@ -6,6 +6,7 @@
 #include "header.h"
 #include "CPlaceable.h"
 #include "CBlock.h"
+#include "wmlwriter_src/xmlwriter.h"
 
 #define TREE_Y_OFFSET 2.1
 #define ANGLE(j,k) (j==2?3:(j?2:(k?1:0)))

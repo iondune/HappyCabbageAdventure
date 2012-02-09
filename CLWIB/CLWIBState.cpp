@@ -2,6 +2,14 @@
 /* These are here because someone doesn't use extern, or put prototypes in their header files */
 #include <cmath>
 
+#ifdef _WIN32
+static inline double round(double val)
+{
+    return floor(val + 0.5);
+}
+#define M_PI 3.14159f
+#endif
+
 
 float x2w(int oldX);
 float yp2w(int oldY);
@@ -265,10 +273,18 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
 }
 
 void CLWIBState::printXML() {
-   std::vector<CPlaceable*>::iterator it;
-   for(it=placeables.begin();it<placeables.end();it++) {
-      (*it)->printXML();
-   }
+    xmlwriter worldlist("test.xml");
+    
+    std::vector<CPlaceable*>::iterator it;
+    for(it=placeables.begin();it<placeables.end();it++) {
+        worldlist.AddAtributes("width ", (*it)->getWidth());
+		worldlist.AddAtributes("height ", (*it)->getHeight());
+        worldlist.AddAtributes("Y ", (*it)->getY());
+        worldlist.AddAtributes("X ", (*it)->getX());
+		worldlist.Createtag((*it)->tag());
+		worldlist.CloseLasttag();
+    }
+    worldlist.CloseAlltags();
 }
 
 //Runs at program close (currently not implemented)

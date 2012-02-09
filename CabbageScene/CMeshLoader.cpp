@@ -44,7 +44,10 @@ CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
 
     if ((l_file=fopen (fileName.c_str(), "rb"))== NULL) return 0; //Open the file
 
-    CMesh * Mesh = new CMesh();
+    CMesh * MeshWrapper = new CMesh();
+    CMesh::SMeshBuffer * Mesh = new CMesh::SMeshBuffer();
+
+    int bufferCount = 0;
 
     while (ftell (l_file) < filelength (fileno (l_file))) //Loop to scan the whole file
     //while(!EOF)
@@ -86,7 +89,7 @@ CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
                     fread (&l_char, 1, 1, l_file);
                     //p_object->name[i]=l_char; // Throw out name - why do we care? we don't! bwahahahaha
                     i++;
-                }while(l_char != '\0' && i<20);
+                } while(l_char != '\0' && i < 20);
                 break;
 
             //--------------- OBJ_TRIMESH ---------------
@@ -106,7 +109,13 @@ CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
             //-------------------------------------------
             case 0x4110: 
                 fread (&l_qty, sizeof (unsigned short), 1, l_file);
+                if (bufferCount)
+                {
+                    MeshWrapper->MeshBuffers.push_back(Mesh);
+                    Mesh = new CMesh::SMeshBuffer();
+                }
                 Mesh->Vertices.resize(l_qty);
+                bufferCount++;
                 //printf("Number of vertices: %d\n",l_qty);
                 for (i=0; i<l_qty; i++)
                 {
@@ -173,10 +182,12 @@ CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
                     fseek(l_file, l_chunk_lenght-6, SEEK_CUR);
         } 
     }
-    fclose (l_file); // Closes the file stream
+    fclose (l_file);
 
-    LoadedMeshes[fileName] = Mesh;
-    return Mesh; // Returns ok
+    MeshWrapper->MeshBuffers.push_back(Mesh);
+
+    LoadedMeshes[fileName] = MeshWrapper;
+    return MeshWrapper;
 }
 
 CMesh * const CMeshLoader::loadAsciiMesh(std::string const & fileName)
@@ -202,6 +213,9 @@ CMesh * const CMeshLoader::loadAsciiMesh(std::string const & fileName)
         return Mesh;
     }
 
+    CMesh * MeshWrapper = new CMesh();
+    CMesh::SMeshBuffer * Mesh = new CMesh::SMeshBuffer();
+
     std::ifstream File;
     File.open(fileName.c_str());
 
@@ -210,8 +224,6 @@ CMesh * const CMeshLoader::loadAsciiMesh(std::string const & fileName)
         std::cerr << "Unable to open mesh file: " << fileName << std::endl;
         return 0;
     }
-
-    CMesh * Mesh = new CMesh();
 
     while (File)
     {
@@ -292,19 +304,17 @@ CMesh * const CMeshLoader::loadAsciiMesh(std::string const & fileName)
         }
     }
 
-    if (! Mesh->Triangles.size() || ! Mesh->Vertices.size())
-    {
-        delete Mesh;
-        return 0;
-    }
+    MeshWrapper->MeshBuffers.push_back(Mesh);
 
-    LoadedMeshes[fileName] = Mesh;
-    return Mesh;
+    LoadedMeshes[fileName] = MeshWrapper;
+    return MeshWrapper;
 }
 
 CMesh * const CMeshLoader::createCubeMesh()
 {
-    CMesh * Mesh = new CMesh();
+    CMesh * MeshWrapper = new CMesh();
+    CMesh::SMeshBuffer * Mesh = new CMesh::SMeshBuffer();
+
     Mesh->Vertices.resize(24);
     Mesh->Vertices[0].Position = SVector3(-0.5, -0.5, -0.5);
     Mesh->Vertices[1].Position = SVector3(-0.5,  0.5, -0.5);
@@ -353,14 +363,16 @@ CMesh * const CMeshLoader::createCubeMesh()
         Mesh->Triangles[2*i+1].Indices[2] = 4*i + 3;
     }
 
-    Mesh->calculateNormalsPerFace();
+    MeshWrapper->MeshBuffers.push_back(Mesh);
 
-    return Mesh;
+    MeshWrapper->calculateNormalsPerFace();
+    return MeshWrapper;
 }
 
 CMesh * const CMeshLoader::createDiscMesh(unsigned int const Triangles)
 {
-    CMesh * Mesh = new CMesh();
+    CMesh * MeshWrapper = new CMesh();
+    CMesh::SMeshBuffer * Mesh = new CMesh::SMeshBuffer();
 
     Mesh->Vertices.resize(Triangles * 3);
     Mesh->Triangles.resize(Triangles);
@@ -389,7 +401,8 @@ CMesh * const CMeshLoader::createDiscMesh(unsigned int const Triangles)
         Mesh->Vertices[i].TextureCoordinates = SVector2(Mesh->Vertices[i].Position.X, Mesh->Vertices[i].Position.Y) + SVector2(0.5f);
     }
 
-    Mesh->calculateNormalsPerFace();
+    MeshWrapper->MeshBuffers.push_back(Mesh);
 
-    return Mesh;
+    MeshWrapper->calculateNormalsPerFace();
+    return MeshWrapper;
 }

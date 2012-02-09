@@ -17,9 +17,13 @@
 #include "../CLWIB/CLWIBState.h"
 #include "../base/CGameState.h"
 
+
+
 class CMainMenuState : public CState<CMainMenuState>
 {
    public:
+
+      freetype::font_data our_font;
 
       CMainMenuState();
       CTexture * woodTexture, * skyTexture;

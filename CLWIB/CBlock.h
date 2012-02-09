@@ -9,7 +9,8 @@
 #include "../CabbageCollider/CEngine.h"
 #include "../CabbageCollider/CObject.h"
 #include "../CabbageCollider/CActor.h"
-
+#include <sstream>
+#include <string>
 class CBlock : public CPlaceable
 {
    public:

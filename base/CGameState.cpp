@@ -7,8 +7,6 @@
 int aDown = 0, dDown = 0, spaceDown = 0, wDown = 0, sDown = 0;
 int backwardsView = 0, overView = 0;
 
-freetype::font_data our_font;
-
 int WindowWidth, WindowHeight;
 
 void Load3DS();
@@ -472,8 +470,6 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_ESCAPE) {
          //TODO: Replace with an event/signal to end the game world 
-         //finished = true;
-         //exit(1);
          Application.getStateManager().setState(& CMainMenuState::get());
       }
    }
@@ -501,12 +497,13 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
    }
 }
 
-//Runs at program close (currently not implemented)
 void CGameState::end()
-{
+{   
    stopSoundtrack();
    Mix_CloseAudio();
    our_font.clean();
+
+   Application.getSceneManager().removeAllRenderables();
 }
 
 void CGameState::PrepShadow() {

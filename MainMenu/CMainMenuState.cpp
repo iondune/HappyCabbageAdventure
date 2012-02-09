@@ -71,6 +71,7 @@ void CMainMenuState::begin()
 {
    printf("this begins it\n");
    setupTextures();
+   our_font.init("WIFFLES_.TTF", 30);
 }
 void CMainMenuState::end()
 {
@@ -98,6 +99,10 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
    glPopMatrix();
 
    glEnable(GL_LIGHTING);
+
+   freetype::print(our_font, 330, 325.f, "New Game");
+   freetype::print(our_font, 310, 220.f, "Stage Editor");
+   freetype::print(our_font, 325, 115.f, "Exit Game");
 
    glLoadIdentity();
    SDL_GL_SwapBuffers();
@@ -137,6 +142,8 @@ void CMainMenuState::OnMouseEvent(SMouseEvent const & Event)
             } 
             else if(Event.Location.Y >435  && Event.Location.Y < 510)
             {
+               printf("Exiting program.\n");
+               exit(1);
                printf("bot button hit!!\n");
             }
          }
