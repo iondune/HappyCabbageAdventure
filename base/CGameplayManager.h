@@ -10,46 +10,52 @@ class CRenderable;
 class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 {
 
-public:
+   public:
 
-    struct SEnemy
-    {
-        Cabbage::Collider::CActor * Actor;
-        CRenderable * Renderable;
-        /*Enemy type variable here?*/
-    };
+      struct SEnemy
+      {
+         Cabbage::Collider::CActor * Actor;
+         CRenderable * Renderable;
+         /*Enemy type variable here?*/
+      };
 
-    typedef std::vector<SEnemy> EnemyList;
-    EnemyList Enemies;
-    EnemyList KillList;
+      typedef std::vector<SEnemy> EnemyList;
+      EnemyList Enemies;
+      EnemyList KillList;
 
-private:
+   private:
 
-    Cabbage::Collider::CActor * PlayerActor;
-    int PlayerHealth;
-    float PlayerRecovering;
+      int won;
+      Cabbage::Collider::CActor * PlayerActor;
+      Cabbage::Collider::CObject * Flag;
+      int PlayerHealth;
+      float PlayerRecovering;
 
-    Cabbage::Collider::CEngine * Engine;
+      Cabbage::Collider::CEngine * Engine;
 
-    CGameEventManager * GameEventManager;
+      CGameEventManager * GameEventManager;
 
-public:
-    CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CEngine * engine);
+   public:
+      CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CEngine * engine);
 
-    void OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With);
+      void OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With);
 
-    bool const isPlayerAlive() const;
-    
-    int const getPlayerHealth() const;
+      bool const isPlayerAlive() const;
+      bool const isWon() const;
 
-    float getRecovering() {return PlayerRecovering;}
+      int const getPlayerHealth() const;
 
-    void run(float const TickTime);
+      float getRecovering() {return PlayerRecovering;}
 
-    void addEnemy(SVector2 const & Position, CRenderable * renderable);
+      void run(float const TickTime);
 
-    CGameEventManager & getGameEventManager();
+      void addEnemy(SVector2 const & Position, CRenderable * renderable);
 
+      CGameEventManager & getGameEventManager();
+
+      void setFlag(CabbageCollider::CObject * f) {
+         Flag = f;
+      }
 };
 
 #endif

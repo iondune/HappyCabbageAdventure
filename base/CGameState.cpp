@@ -361,6 +361,11 @@ void CGameState::oldDisplay() {
       }
 
    }
+   else if (GameplayManager->isWon()) {
+      Player->setAction(CActor::EActionType::None);
+      PlayerView->setState(CPlayerView::State::Standing);
+      Player->setJumping(true);
+   }
    else
    {
       Player->setAction(CActor::EActionType::None);
@@ -462,13 +467,19 @@ void CGameState::OnRenderStart(float const Elapsed)
    Application.getSceneManager().drawAll();
 
    if (! GameplayManager->isPlayerAlive()) {
-      //Chris Code.  Play Death Sound
-      if (playDead) {
-         Mix_HaltMusic();
-         Mix_PlayChannel(-1, die, 0); //Only play once
-         playDead = false;
+      if(GameplayManager->isWon()) {
+         //CHRIS INSERT VICTORY NOISE HERE
+         freetype::print(our_font, 50, WindowHeight - 240.f, "CONGRATULATIONS! YOU HAVE WON!");
       }
-      freetype::print(our_font, 50, WindowHeight - 240.f, "GAME OVER! YOU ARE DEAD");
+      else {
+         //Chris Code.  Play Death Sound
+         if (playDead) {
+            Mix_HaltMusic();
+            Mix_PlayChannel(-1, die, 0); //Only play once
+            playDead = false;
+         }
+         freetype::print(our_font, 50, WindowHeight - 240.f, "GAME OVER! YOU ARE DEAD");
+      }
    }
 
    //Calculate FPS
