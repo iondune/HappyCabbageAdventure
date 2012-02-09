@@ -16,12 +16,16 @@ protected:
 
     CMesh * Mesh;
 
+    std::vector<CMeshRenderable *> SubRenderables;
+
 public:
 
     CMeshRenderable();
 
     CMesh * getMesh();
     void setMesh(CMesh * mesh);
+
+    void draw(CScene const * const scene);
 
 };
 
