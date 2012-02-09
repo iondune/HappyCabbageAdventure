@@ -10,11 +10,11 @@ void COverworldState::begin()
 {
    aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0;
    camRotValue = 0;
-   rot = SVector3(-90, 0, 20);
+   rot = SVector3(-90, 0, -90);
    SPosition2 size = Application.getWindowSize();
    WindowWidth = size.X;
    WindowHeight = size.Y; 
-   glClearColor(0.4f,0.8f,1.f,0);
+   glClearColor(0.4f,0.8,1,0);
 
    mouseDown = 0;
 
@@ -28,8 +28,8 @@ void COverworldState::begin()
 
    //Initialize Font
 
-   eye = SVector3(1, 1, -1.5);
-   look = SVector3(-0.06, 0.02, -0.73);
+   eye = SVector3(1.47, 0.33, 0);
+   look = SVector3(0.57, -0.08, 0.19);
    Camera = new CCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
    Application.getSceneManager().setActiveCamera(Camera);
    float const LightBrightness = 0.6f;
@@ -88,8 +88,9 @@ void COverworldState::OnRenderStart(float const Elapsed)
    step(Application.getElapsedTime());
    stepCamera(Application.getElapsedTime());
    SVector3 eyeRot = eye;
-   eyeRot.X += cos(camRotValue);
-   eyeRot.Y += sin(camRotValue);
+   eyeRot.X += 0.2*cos(camRotValue);
+   eyeRot.Z += 0.2*(sin(camRotValue) + 1);
+   eyeRot.Y += 0.1*(sin(camRotValue) + 1);
    Camera->setPosition(eyeRot);
    Camera->setLookDirection(look - eyeRot);
 
