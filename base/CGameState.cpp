@@ -613,7 +613,7 @@ void Load3DS()
       fprintf(stderr, "Failed to load the enemy mesh\n");
    }
 
-   basicTreeMesh = CMeshLoader::load3dsMesh("Models/tree.3ds");
+   basicTreeMesh = CMeshLoader::load3dsMesh("Models/tree2.3ds");
    if (basicTreeMesh) {
       basicTreeMesh->resizeMesh(SVector3(0.5));
       basicTreeMesh->centerMeshByExtents(SVector3(0));
@@ -623,7 +623,7 @@ void Load3DS()
       fprintf(stderr, "Failed to load the basic tree mesh\n");
    }
 
-   christmasTreeMesh = CMeshLoader::load3dsMesh("Models/christmasTree.3ds");
+   christmasTreeMesh = CMeshLoader::load3dsMesh("Models/christmasTree2.3ds");
    if (christmasTreeMesh) {
       christmasTreeMesh->resizeMesh(SVector3(0.5));
       christmasTreeMesh->centerMeshByExtents(SVector3(0));

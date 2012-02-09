@@ -7,6 +7,8 @@
 #include <cstdio>
 #include <sys/stat.h>
 
+#include <limits>
+
 #pragma warning(disable: 4996)
 
 std::map<std::string, CMesh *> CMeshLoader::LoadedMeshes;
@@ -226,11 +228,20 @@ CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
             case 0xA020:
                 {
                     //printf("found diffuse block in %s (%d)!\n", fileName.c_str(), l_chunk_lenght);
-                    unsigned char what[15];
-                    fread(what, 1, 15, l_file);
-                    Materials[currentMat].X = what[6] / 256.f;
-                    Materials[currentMat].Y = what[7] / 256.f;
-                    Materials[currentMat].Z = what[8] / 256.f;
+                    unsigned char what[1000];
+                    fread(what, 1, l_chunk_lenght-6, l_file);
+                    if (l_chunk_lenght == 15)
+                    {
+                        Materials[currentMat].X = what[6] / 256.f;
+                        Materials[currentMat].Y = what[7] / 256.f;
+                        Materials[currentMat].Z = what[8] / 256.f;
+                    }
+                    else if (l_chunk_lenght == 24)
+                    {
+                        Materials[currentMat].X = (*(unsigned short *)& what[6])/ (float) (std::numeric_limits<unsigned short>::max());
+                        Materials[currentMat].Y = (*(unsigned short *)& what[10])/ (float) (std::numeric_limits<unsigned short>::max());
+                        Materials[currentMat].Z = (*(unsigned short *)& what[14])/ (float) (std::numeric_limits<unsigned short>::max());
+                    }
                     //fseek(l_file, l_chunk_lenght-6, SEEK_CUR);
                     break;
                 }

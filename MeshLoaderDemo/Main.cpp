@@ -81,11 +81,12 @@ public:
         {
             std::cerr << "Unable to open or compile necessary shader." << std::endl;
             waitForUser();
+
             exit(1);
         }
 
         // Attempt to load mesh
-        MeshFace = CMeshLoader::load3dsMesh("../models/crappycabbage.3ds");
+        MeshFace = CMeshLoader::load3dsMesh("../base/Models/cube.3ds");
         if (MeshFace)
         {
             MeshFace->linearizeIndices();
@@ -94,7 +95,7 @@ public:
             MeshFace->calculateNormalsPerFace();
         }
 
-        MeshVertex = CMeshLoader::load3dsMesh("../models/crappycabbage.3ds");
+        MeshVertex = CMeshLoader::load3dsMesh("../base/Models/cube.3ds");
         if (MeshVertex)
         {
             MeshVertex->resizeMesh(SVector3(1.5));
