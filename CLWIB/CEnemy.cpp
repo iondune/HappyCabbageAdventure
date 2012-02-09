@@ -39,7 +39,7 @@ CMeshRenderable * CEnemy::setupItem(CShader * shader, Cabbage::Collider::CEngine
    tempEnemy->getMaterial().Shader = shader;
    tempEnemy->setTranslation(SVector3((x+(x+1))/2, (y+(y+1))/2, 0));
    tempEnemy->setScale(SVector3(1, 1, 1));
-   tempEnemy->setRotation(SVector3(0, 0, 0));
+   tempEnemy->setRotation(SVector3(-90, 0, 0));
 
    CApplication::get().getSceneManager().addRenderable(tempEnemy);
    GameplayManager->addEnemy(SVector2(x, y), tempEnemy);

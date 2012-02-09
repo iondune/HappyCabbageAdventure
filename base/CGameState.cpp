@@ -94,21 +94,6 @@ void CGameState::EngineInit( void ) {
    SRect2 area;
 
    GameplayManager = new CGameplayManager(Player, Engine);
-   GameplayManager->addEnemy(SVector2(-20, 4), PrepEnemy(-20,4));
-   GameplayManager->addEnemy(SVector2(-18, 4), PrepEnemy(-18,4));
-   GameplayManager->addEnemy(SVector2(-16, 4), PrepEnemy(-16,4));
-   GameplayManager->addEnemy(SVector2(-14, 4), PrepEnemy(-14,4));
-   GameplayManager->addEnemy(SVector2(-12, 4), PrepEnemy(-12,4));
-   GameplayManager->addEnemy(SVector2(-10, 4), PrepEnemy(-10,4));
-   GameplayManager->addEnemy(SVector2(-5, 40), PrepEnemy(-5, 40));
-   GameplayManager->addEnemy(SVector2(0, 40), PrepEnemy(0, 40));
-   GameplayManager->addEnemy(SVector2(5, 40), PrepEnemy(5, 40));
-   GameplayManager->addEnemy(SVector2(10, 40), PrepEnemy(10, 40));
-   GameplayManager->addEnemy(SVector2(15, 40), PrepEnemy(15, 40));
-   GameplayManager->addEnemy(SVector2(20, 40), PrepEnemy(20, 40));
-   GameplayManager->addEnemy(SVector2(25, 40), PrepEnemy(25, 40));
-   GameplayManager->addEnemy(SVector2(25, 45), PrepEnemy(25, 45));
-   GameplayManager->addEnemy(SVector2(25, 50), PrepEnemy(25, 50));
 
    GameEventManager = & GameplayManager->getGameEventManager();
    GameEventManager->OnEnemyDeath.connect(& GameEventReceiver, &CGameEventReceiver::OnEnemyDeath);
