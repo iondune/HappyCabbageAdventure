@@ -25,10 +25,13 @@ class CMainMenuState : public CState<CMainMenuState>
 
       freetype::font_data our_font;
 
-      CMainMenuState();
       CTexture * woodTexture, * skyTexture;
+      CMesh *logoMesh;
+      CMeshRenderable *renderLogo;
 
+      CMainMenuState();
       virtual void setupTextures();
+      virtual void setupMeshes();
 
       virtual void drawSky(int backwards);
 

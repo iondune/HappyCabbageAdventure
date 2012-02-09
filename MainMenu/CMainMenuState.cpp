@@ -8,12 +8,43 @@ void CMainMenuState::setupTextures()
    skyTexture = new CTexture(CImageLoader::loadImage("sky.bmp"));
 }
 
+void CMainMenuState::setupMeshes()
+{
+  CShader *Flat;
+  Flat = CShaderLoader::loadShader("Diffuse");
+  logoMesh = CMeshLoader::load3dsMesh("../base/Models/HappyLogo1.3ds");
+  if (logoMesh) 
+  {
+    logoMesh->resizeMesh(SVector3(1.0));
+    logoMesh->centerMeshByExtents(SVector3(0));
+    logoMesh->calculateNormalsPerFace();
+  }
+  else 
+  {
+    fprintf(stderr, "Failed to load the logo mesh\n");
+  }
+
+  renderLogo = new CMeshRenderable();
+  renderLogo->setMesh(logoMesh);
+  renderLogo->getMaterial().Shader = Flat;
+  renderLogo->setTranslation(SVector3(0.00, 0.1, 0.3));
+  //renderLogo->setTranslation(SVector3(0.00, 0.1, 0.3));
+  renderLogo->setScale(SVector3(0.4));
+  renderLogo->setRotation(SVector3(75, 180, 0));
+  CApplication::get().getSceneManager().addRenderable(renderLogo);
+
+
+
+}
+
 void CMainMenuState::drawSky(int backwards) {
    glEnable(GL_TEXTURE_2D);
    glPushMatrix();
 
    glBindTexture(GL_TEXTURE_2D, skyTexture->getTextureHandle());
 
+   glTranslatef(0,0,1.01f);
+   //glTranslatef(0,0,1.00f);
    glBegin(GL_QUADS);
    if(!backwards) {
       glTexCoord2f(0, 1);
@@ -27,13 +58,13 @@ void CMainMenuState::drawSky(int backwards) {
    }
    else {
       glTexCoord2f(0, 1);
-      glVertex3f(-2, 2, 0.01f);
+      glVertex3f(-2, 2, 0.0f);
       glTexCoord2f(0, 0);
-      glVertex3f(-2, -2, 0.01f);
+      glVertex3f(-2, -2, 0.0f);
       glTexCoord2f(1, 0);
-      glVertex3f(2, -2, 0.01f);
+      glVertex3f(2, -2, 0.0f);
       glTexCoord2f(1, 1);
-      glVertex3f(2, 2, 0.01f);
+      glVertex3f(2, 2, 0.0f);
    }
    glEnd();
 
@@ -69,8 +100,10 @@ void CMainMenuState::drawButton()
 
 void CMainMenuState::begin()
 {
-   printf("this begins it\n");
+   //glClearColor(1.0f,1.0f,1.0f,0);
+   glClearColor(0,0,0,0);
    setupTextures();
+   setupMeshes();
    our_font.init("WIFFLES_.TTF", 30);
 }
 void CMainMenuState::end()
@@ -83,6 +116,10 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
    //Start quad
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glMatrixMode(GL_MODELVIEW);
+
+   glLoadIdentity();
+
+   CApplication::get().getSceneManager().drawAll();
    glDisable(GL_LIGHTING);
 
    glPushMatrix();
@@ -97,6 +134,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
    drawButton();
 
    glPopMatrix();
+   
 
    glEnable(GL_LIGHTING);
 
@@ -104,7 +142,6 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
    freetype::print(our_font, 310, 220.f, "Stage Editor");
    freetype::print(our_font, 325, 115.f, "Exit Game");
 
-   glLoadIdentity();
    SDL_GL_SwapBuffers();
 }
 void CMainMenuState::OnRenderEnd(float const Elapsed)
