@@ -40,8 +40,10 @@ namespace Cabbage
          CRenderable * getRenderable();
          void setRenderable(CRenderable *);
          float Speed;
-         float Range;
+ 
+         float InitialDirection;
 
+         float Range;
       };
    }
 }

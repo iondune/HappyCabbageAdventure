@@ -13,11 +13,11 @@ void CMainMenuState::setupTextures()
 void CMainMenuState::setupMeshes()
 {
   CShader *Flat;
-  Flat = CShaderLoader::loadShader("Diffuse");
-  logoMesh = CMeshLoader::load3dsMesh("../base/Models/HappyLogo2.3ds");
+  Flat = CShaderLoader::loadShader("Specular");
+  logoMesh = CMeshLoader::load3dsMesh("../base/Models/HappyLogo3.3ds");
   if (logoMesh) 
   {
-    logoMesh->resizeMesh(SVector3(1.0));
+    logoMesh->resizeMesh(SVector3(0.4f));
     logoMesh->centerMeshByExtents(SVector3(0));
     logoMesh->calculateNormalsPerFace();
   }
@@ -107,6 +107,10 @@ void CMainMenuState::begin()
    Camera = new CCamera(WindowWidth/WindowHeight, 0.01f, 100.f, 60.f);
    Application.getSceneManager().setActiveCamera(Camera);
 
+   Application.getSceneManager().Lights.push_back(SLight());
+   Application.getSceneManager().Lights.back().ColorUniform->Value = SVector3(1.f);
+   Application.getSceneManager().Lights.back().PositionUniform->Value = SVector3(0.f);
+
    //glClearColor(1.0f,1.0f,1.0f,0);
    glClearColor(0,0,0,0);
    setupTextures();
@@ -118,10 +122,12 @@ void CMainMenuState::begin()
 
    Application.getSceneManager().addRenderable(renderLogo);
 }
+
 void CMainMenuState::end()
 {
-   printf("this ends it\n");
+      Application.getSceneManager().removeAllRenderables();
 }
+
 
 void CMainMenuState::OnRenderStart(float const Elapsed)
 {
@@ -286,7 +292,6 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 }
 void CMainMenuState::OnRenderEnd(float const Elapsed)
 {
-
 }
 
 

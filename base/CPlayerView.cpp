@@ -17,7 +17,7 @@ void CPlayerView::setState(CPlayerView::State const value) {
 void CPlayerView::step(float delta) {
    if(!(Velocity.Y > 0.01 || Velocity.Y < -0.01)) {
       if(curState == CPlayerView::State::Standing) {
-         ySineValue = 0;
+         ySineValue += 0.005f*delta;
       }
       else if(curState == CPlayerView::State::MovingLeft) {
          ySineValue += 0.01f*delta;
