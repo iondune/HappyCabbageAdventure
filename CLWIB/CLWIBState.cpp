@@ -2,13 +2,13 @@
 /* These are here because someone doesn't use extern, or put prototypes in their header files */
 #include <cmath>
 
-/*#ifdef _WIN32
+#ifdef _WIN32
 static inline double round(double val)
 {
     return floor(val + 0.5);
 }
 #define M_PI 3.14159f
-#endif*/
+#endif
 
 
 float x2w(int oldX);
