@@ -4,6 +4,7 @@ CEnemy::CEnemy(float nx, float ny, int width, int height)
 {
    x = nx; y = ny;
    w = width; h = height;
+   isMovingPlatform = 0;
 }
 
 void CEnemy::writeXML(xmlwriter *l) {

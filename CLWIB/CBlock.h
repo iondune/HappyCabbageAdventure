@@ -14,8 +14,8 @@
 class CBlock : public CPlaceable
 {
    public:
+   Cabbage::Collider::CElevator* elevator;
    int Speed, Range;
-   int isMovingPlatform;
    CBlock(float nx, float ny, int width, int height);
    void writeXML(xmlwriter *);
    void moveTo(float,float);

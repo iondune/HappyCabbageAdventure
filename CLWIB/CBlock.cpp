@@ -15,9 +15,9 @@ void CBlock::writeXML(xmlwriter *l) {
     yValue << y;
     widthValue << w;
     heightValue << h;
-    isMovingValue << 0;
-    rangeValue << 0;
-    speedValue << 0;
+    isMovingValue << isMovingPlatform;
+    rangeValue << Range;
+    speedValue << Speed;
 
     tagValue << "CBlock";
 
@@ -36,18 +36,20 @@ void CBlock::moveTo(float x,float y) {
 }
 
 CMeshRenderable * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
+   CMeshRenderable *tempBlock = new CMeshRenderable();
    if(isMovingPlatform) {
       Cabbage::Collider::CElevator *engBlock = Engine->addElevator();
       engBlock->setArea(SRect2(x, y, w, h));
       engBlock->Speed = Speed;
       engBlock->Range = Range;
+      engBlock->setRenderable(tempBlock);
+      elevator = engBlock;
    }
    else {
       Cabbage::Collider::CObject *engBlock = Engine->addObject();
       engBlock->setArea(SRect2(x, y, w, h));
    }
 
-   CMeshRenderable *tempBlock = new CMeshRenderable();
    CMesh *mesh = CMeshLoader::loadAsciiMesh("Cube");
    mesh->calculateNormalsPerFace();
    tempBlock->setMesh(mesh);

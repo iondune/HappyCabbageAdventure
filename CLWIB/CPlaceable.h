@@ -18,6 +18,7 @@ class CPlaceable {
    public:
       float x,y;
       int w,h;
+      int isMovingPlatform;
 
       virtual void writeXML(xmlwriter *) =0;
       virtual void moveTo(float,float) =0;

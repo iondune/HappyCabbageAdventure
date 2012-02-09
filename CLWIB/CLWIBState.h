@@ -20,7 +20,7 @@ class CLWIBState : public CState<CLWIBState>
    private:
 
    //Boolean integers for keypressing
-   int aDown , dDown , spaceDown , wDown , sDown , gDown , fDown , tDown, eDown;
+   int aDown , dDown , spaceDown , wDown , sDown , gDown , fDown , tDown, eDown, mDown;
 
    freetype::font_data our_font;
 

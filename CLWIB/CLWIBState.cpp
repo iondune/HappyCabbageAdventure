@@ -49,7 +49,7 @@ qd blockMap[100][100];
 //Initalizer fxn
 void CLWIBState::begin()
 {
-   aDown = dDown = spaceDown = wDown = sDown = gDown = fDown = tDown = eDown = 0;
+   aDown = dDown = spaceDown = wDown = sDown = gDown = fDown = tDown = eDown = mDown = 0;
    cubeMesh = CMeshLoader::createCubeMesh();
    cubeMesh->calculateNormalsPerFace();
 
@@ -178,17 +178,17 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_a){
          aDown = 1;
       }
-      if(Event.Key == SDLK_f){
-         fDown = 1;
-      }
-      if(Event.Key == SDLK_g){
-         gDown = 1;
-      }
       if(Event.Key == SDLK_d){
          dDown = 1;
       }
+      if(Event.Key == SDLK_f){
+         fDown = 1; //width
+      }
+      if(Event.Key == SDLK_g){
+         gDown = 1; //height
+      }
       if(Event.Key == SDLK_e){
-         eDown = 1;
+         eDown = 1; //enemy
       }
       if(Event.Key == SDLK_k){
       }
@@ -243,10 +243,10 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
          }
       }
       if(Event.Key == SDLK_t){
-         tDown = 1;
+         tDown = 1; //remove
       }
       if(Event.Key == SDLK_m){
-         
+         mDown = 1; //move
       }
       if(Event.Key == SDLK_SPACE) {
          spaceDown = 1;
@@ -288,6 +288,9 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_k){
       }
       if(Event.Key == SDLK_j){
+      }
+      if(Event.Key == SDLK_m){
+         mDown = 0; //move
       }
       if(Event.Key == SDLK_SPACE){
          spaceDown = 0;
@@ -429,6 +432,11 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h) {
    Application.getSceneManager().addRenderable(tempBlock);
    redo.clear();
    redoPlaceables.clear();
+   if(mDown) {
+      tempPlaceable->isMovingPlatform = 1;
+      tempPlaceable->Range = 2;
+      tempPlaceable->Speed = 1;
+   }
 }
 
 void CLWIBState::PrepGrass(float x, float y, float w, float h) {

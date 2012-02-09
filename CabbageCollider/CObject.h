@@ -2,44 +2,48 @@
 #define _CABBAGECOLLIDER_COBJECT_H_INCLUDED_
 
 #include "CCollideable.h"
+#include "../CabbageScene/CRenderable.h"
 
 namespace Cabbage
 {
-namespace Collider
-{
-	class CObject : public CCollideable
-	{
+   namespace Collider
+   {
+      class CObject : public CCollideable
+      {
 
-	protected:
+         protected:
 
-		friend class CEngine;
+            friend class CEngine;
 
-		CObject();
+            CObject();
 
-	public:
+         public:
 
-		~CObject();
+            ~CObject();
 
-		virtual SVector2 performMovement(float const TickTime);
+            virtual SVector2 performMovement(float const TickTime);
 
-	};
+      };
 
-    class CElevator : public CObject
-	{
+      class CElevator : public CObject
+      {
 
-        float Timer;
+         float Timer;
+         CRenderable *Renderable;
 
-    public:
+         public:
 
-        CElevator();
+         CElevator();
 
-		virtual SVector2 performMovement(float const TickTime);
+         virtual SVector2 performMovement(float const TickTime);
 
-        float Speed;
-        float Range;
+         CRenderable * getRenderable();
+         void setRenderable(CRenderable *);
+         float Speed;
+         float Range;
 
-	};
-}
+      };
+   }
 }
 
 #endif

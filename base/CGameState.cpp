@@ -69,9 +69,11 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             list->push_back(ptr = new CBlock((float)x,(float)y,w,h));
             if(xml->getAttributeValueAsInt(4)) {
                ptr->isMovingPlatform = 1;
-               ptr->Speed = (int) xml->getAttributeValueAsFloat(5); //Speed
-               ptr->Range = (int) xml->getAttributeValueAsFloat(6); //Range
+               ptr->Range = (int) xml->getAttributeValueAsFloat(5); //Range
+               ptr->Speed = (int) xml->getAttributeValueAsFloat(6); //Speed
             }
+            else
+               ptr->isMovingPlatform = 0;
          }
          if(!strcmp("CEnemy", xml->getNodeName()))
          {
@@ -82,6 +84,7 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             w = xml->getAttributeValueAsInt(3);
             list->push_back(cen = new CEnemy((float)x,(float)y,w,h));
             cen->setShader(Diffuse);
+            cen->isMovingPlatform = 0;
          }
          break;
       }
@@ -118,6 +121,13 @@ void CGameState::EngineInit( void ) {
    std::vector<CPlaceable*>::iterator it;
    for(it=list.begin();it<list.end();it++) {
       (*it)->setupItem(DiffuseTexture, Engine, GameplayManager);
+      printf(" %d\n", (*it)->isMovingPlatform);
+      if((*it)->isMovingPlatform) {
+         elevators.push_back(((CBlock*)(*it))->elevator);
+         printf("this is a moving platform\n");
+      }
+      else
+         printf("this is NOT a moving platform\n");
    }
 
 
@@ -421,6 +431,13 @@ void CGameState::oldDisplay() {
       i++;
    }
 
+   std::vector<CElevator*>::iterator it;
+   for(it=elevators.begin();it<elevators.end();it++) {
+      CElevator * ptr = (*it);
+      SVector2 pos = ptr->getArea().Position;
+      SVector2 size = ptr->getArea().Size;
+      ptr->getRenderable()->setTranslation(SVector3(pos.X + (float)size.X/2, pos.Y + (float)size.Y/2, 0));
+   }
 
 
    // ...and by spinning it around

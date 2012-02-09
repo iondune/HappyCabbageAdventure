@@ -2,35 +2,43 @@
 
 namespace Cabbage
 {
-namespace Collider
-{
+   namespace Collider
+   {
 
-	CObject::CObject()
-	{}
+      CObject::CObject()
+      {}
 
-	CObject::~CObject()
-	{}
+      CObject::~CObject()
+      {}
 
-	SVector2 CObject::performMovement(float const TickTime)
-	{
-		return SVector2();
-	}
+      SVector2 CObject::performMovement(float const TickTime)
+      {
+         return SVector2();
+      }
 
-    CElevator::CElevator()
-    {
-        Timer = 0.f;
-        Speed = 0.5f;
-        Range = 0.5f;
-    }
+      CElevator::CElevator()
+      {
+         Timer = 0.f;
+         Speed = 0.5f;
+         Range = 0.5f;
+      }
 
-    SVector2 CElevator::performMovement(float const TickTime)
-	{
-        SVector2 Movement;
-        Timer += TickTime * Speed;
-        Movement.X = TickTime * sin(Timer) * Range;
-        Area.Position += Movement;
-		return Movement;
-	}
+      void CElevator::setRenderable(CRenderable *r) {
+         Renderable = r;
+      }
 
-}
+      CRenderable * CElevator::getRenderable() {
+         return Renderable;
+      }
+
+      SVector2 CElevator::performMovement(float const TickTime)
+      {
+         SVector2 Movement;
+         Timer += TickTime * Speed;
+         Movement.X = TickTime * sin(Timer) * Range;
+         Area.Position += Movement;
+         return Movement;
+      }
+
+   }
 }
