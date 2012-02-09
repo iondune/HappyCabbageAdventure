@@ -307,8 +307,6 @@ void print(const font_data &ft_font, float x, float y, const char *fmt, ...)  {
       glGetFloatv(GL_CURRENT_RASTER_POSITION ,rpos);
       float len=x-rpos[0];
 
-      printf("Length is %f\n", len);
-
 		glPopMatrix();
 
 		
