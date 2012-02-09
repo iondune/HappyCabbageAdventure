@@ -173,6 +173,11 @@ CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
                 }
                 break;
 
+            case 0xA000:
+                {
+
+                }
+
             //----------- Skip unknow chunks ------------
             //We need to skip all the chunks that currently we don't use
             //We use the chunk lenght information to set the file pointer

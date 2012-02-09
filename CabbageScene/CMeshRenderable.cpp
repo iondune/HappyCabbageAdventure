@@ -98,6 +98,9 @@ void CMeshRenderable::setMesh(CMesh * mesh)
 
 void CMeshRenderable::draw(CScene const * const scene)
 {
+    if (! Visible)
+        return;
+
     if (SubRenderables.size())
     {
         for (std::vector<CMeshRenderable *>::iterator it = SubRenderables.begin(); it != SubRenderables.end(); ++ it)
