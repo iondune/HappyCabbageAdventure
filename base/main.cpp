@@ -38,6 +38,7 @@ int main(int argc, char * argv[])
 
     CStateManager & StateManager = Application.getStateManager();
     StateManager.setState(& CMainMenuState::get());
+    //StateManager.setState(& COverworldState::get());
 
     Application.run();
 
