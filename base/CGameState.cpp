@@ -106,6 +106,7 @@ void CGameState::EngineInit( void ) {
 
    GameEventManager = & GameplayManager->getGameEventManager();
    GameEventManager->OnEnemyDeath.connect(& GameEventReceiver, &CGameEventReceiver::OnEnemyDeath);
+   Application.getEventManager().OnGameTickStart.connect(& GameEventReceiver, & CGameEventReceiver::OnGameTickStart);
 
    float i = 0;
    float j = 0;
