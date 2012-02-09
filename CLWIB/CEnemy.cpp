@@ -1,12 +1,12 @@
-#include "CBlock.h"
+#include "CEnemy.h"
 
-CBlock::CBlock(float nx, float ny, int width, int height)
+CEnemy::CEnemy(float nx, float ny, int width, int height)
 {
    x = nx; y = ny;
    w = width; h = height;
 }
 
-void CBlock::printXML() {
+void CEnemy::printXML() {
    //For usage in LWIB
    printf("X: %0.2f Y: %0.2f W: %d H: %d\n", x,y,w,h);
 }
@@ -14,7 +14,7 @@ void CBlock::printXML() {
 std::string CPlaceable::tag()
 {
     std::stringstream tag;
-    tag << "CBlock";
+    tag << "CEnemy";
     return tag.str();
 }
 
@@ -42,10 +42,10 @@ std::string CPlaceable::getHeight()
     heightValue << h;
     return heightValue.str();
 }
-void CBlock::moveTo(float x,float y) {
+void CEnemy::moveTo(float x,float y) {
    //For usage in LWIB
 }
-CMeshRenderable * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
+CMeshRenderable * CEnemy::setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
    Cabbage::Collider::CObject *engBlock = Engine->addObject();
    engBlock->setArea(SRect2(x, y, w, h));
 

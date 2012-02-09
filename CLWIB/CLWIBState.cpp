@@ -286,12 +286,12 @@ void CLWIBState::printXML() {
     
     std::vector<CPlaceable*>::iterator it;
     for(it=placeables.begin();it<placeables.end();it++) {
-        worldlist->AddAtributes("width ", (*it)->getWidth());
-		worldlist->AddAtributes("height ", (*it)->getHeight());
-        worldlist->AddAtributes("Y ", (*it)->getY());
-        worldlist->AddAtributes("X ", (*it)->getX());
-		worldlist->Createtag((*it)->tag());
-		worldlist->CloseLasttag();
+       worldlist->AddAtributes("width ", (*it)->getWidth());
+       worldlist->AddAtributes("height ", (*it)->getHeight());
+       worldlist->AddAtributes("Y ", (*it)->getY());
+       worldlist->AddAtributes("X ", (*it)->getX());
+       worldlist->Createtag((*it)->tag());
+       worldlist->CloseLasttag();
     }
     worldlist->CloseAlltags();
     delete worldlist;
