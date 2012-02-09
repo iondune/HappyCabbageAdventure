@@ -190,7 +190,7 @@ void CGameState::begin()
     CSceneManager & SceneManager = Application.getSceneManager();
     SceneManager.Lights.push_back(SLight());
     SceneManager.Lights.back().ColorUniform->Value = SVector3(LightBrightness);
-    SceneManager.Lights.back().PositionUniform->Value = SVector3(15.f, 2.f, 3.f);
+    SceneManager.Lights.back().PositionUniform->Value = SVector3(30.f, 2.f, 3.f);
 
     SceneManager.Lights.push_back(SLight());
     SceneManager.Lights.back().ColorUniform->Value = SVector3(LightBrightness);
@@ -198,7 +198,7 @@ void CGameState::begin()
 
     SceneManager.Lights.push_back(SLight());
     SceneManager.Lights.back().ColorUniform->Value = SVector3(LightBrightness);
-    SceneManager.Lights.back().PositionUniform->Value = SVector3(-15.f, 0.f, 0.f);
+    SceneManager.Lights.back().PositionUniform->Value = SVector3(-30.f, 0.f, 0.f);
 
     SceneManager.Lights.push_back(SLight());
     SceneManager.Lights.back().ColorUniform->Value = SVector3(LightBrightness);

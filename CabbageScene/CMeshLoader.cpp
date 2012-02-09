@@ -47,6 +47,10 @@ CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
     CMesh * MeshWrapper = new CMesh();
     CMesh::SMeshBuffer * Mesh = new CMesh::SMeshBuffer();
 
+    std::map<std::string, SVector3> Materials;
+    std::map<CMesh::SMeshBuffer *, std::string> FaceMaterials;
+    std::string currentMat;
+
     int bufferCount = 0;
 
     while (ftell (l_file) < filelength (fileno (l_file))) //Loop to scan the whole file
@@ -173,9 +177,76 @@ CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
                 }
                 break;
 
+            case 0xAFFF:
+                {
+                    //printf("found material block in %s (%d)!\n", fileName.c_str(), l_chunk_lenght);
+                    //fseek(l_file, l_chunk_lenght-6, SEEK_CUR);
+                    break;
+                }
+
+            case 0x4130:
+                {
+                    //printf("found faces material block in %s (%d)!\n", fileName.c_str(), l_chunk_lenght);
+                    i=0;
+                    char name[20];
+                    do
+                    {
+                        fread (&l_char, 1, 1, l_file);
+                        name[i]=l_char;
+                        i++;
+                    } while(l_char != '\0' && i < 20);
+                    FaceMaterials[Mesh] = name;
+                    fseek(l_file, l_chunk_lenght - i - 6, SEEK_CUR);
+                    break;
+                }
+
             case 0xA000:
                 {
+                    //printf("found material name in %s (%d)!\n", fileName.c_str(), l_chunk_lenght);
+                    i=0;
+                    char name[20];
+                    do
+                    {
+                        fread (&l_char, 1, 1, l_file);
+                        name[i]=l_char;
+                        i++;
+                    } while(l_char != '\0' && i < 20);
+                    currentMat = name;
+                    fseek(l_file, l_chunk_lenght - i - 6, SEEK_CUR);
+                    break;
+                }
 
+            case 0xA010:
+                {
+                    //printf("found ambient block in %s (%d)!\n", fileName.c_str(), l_chunk_lenght);
+                    fseek(l_file, l_chunk_lenght-6, SEEK_CUR);
+                    break;
+                }
+
+            case 0xA020:
+                {
+                    //printf("found diffuse block in %s (%d)!\n", fileName.c_str(), l_chunk_lenght);
+                    unsigned char what[15];
+                    fread(what, 1, 15, l_file);
+                    Materials[currentMat].X = what[6] / 256.f;
+                    Materials[currentMat].Y = what[7] / 256.f;
+                    Materials[currentMat].Z = what[8] / 256.f;
+                    //fseek(l_file, l_chunk_lenght-6, SEEK_CUR);
+                    break;
+                }
+
+            case 0xA030:
+                {
+                    //printf("found diffuse block in %s (%d)!\n", fileName.c_str(), l_chunk_lenght);
+                    fseek(l_file, l_chunk_lenght-6, SEEK_CUR);
+                    break;
+                }
+
+            case 0xA040:
+                {
+                    //printf("found specular block in %s (%d)!\n", fileName.c_str(), l_chunk_lenght);
+                    fseek(l_file, l_chunk_lenght-6, SEEK_CUR);
+                    break;
                 }
 
             //----------- Skip unknow chunks ------------
@@ -188,6 +259,9 @@ CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
         } 
     }
     fclose (l_file);
+
+    for (std::map<CMesh::SMeshBuffer *, std::string>::iterator it = FaceMaterials.begin(); it != FaceMaterials.end(); ++ it)
+        it->first->DiffuseColor = Materials[it->second];
 
     MeshWrapper->MeshBuffers.push_back(Mesh);
 

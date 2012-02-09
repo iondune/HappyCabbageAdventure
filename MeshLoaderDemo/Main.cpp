@@ -85,7 +85,7 @@ public:
         }
 
         // Attempt to load mesh
-        MeshFace = CMeshLoader::loadAsciiMesh("Models/bunny10k.m");
+        MeshFace = CMeshLoader::load3dsMesh("../models/crappycabbage.3ds");
         if (MeshFace)
         {
             MeshFace->linearizeIndices();
@@ -94,7 +94,7 @@ public:
             MeshFace->calculateNormalsPerFace();
         }
 
-        MeshVertex = CMeshLoader::loadAsciiMesh("Models/bunny10k.m");
+        MeshVertex = CMeshLoader::load3dsMesh("../models/crappycabbage.3ds");
         if (MeshVertex)
         {
             MeshVertex->resizeMesh(SVector3(1.5));

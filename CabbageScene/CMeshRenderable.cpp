@@ -68,6 +68,8 @@ void CMeshRenderable::setMesh(CMesh * mesh)
             Child->addAttribute("aTexCoord", boost::shared_ptr<IAttribute>(new CFloatVecAttribute(TexCoordBuffers[i], 2)));
             Child->addUniform("uTexColor", boost::shared_ptr<IUniform>(new CIntUniform(0)));
 
+            Child->Material.DiffuseColor->Value = Mesh->MeshBuffers[i]->DiffuseColor;
+
             // Add mesh index buffer
             Child->setIndexBufferObject(IndexBuffers[i]);
 
@@ -110,7 +112,13 @@ void CMeshRenderable::draw(CScene const * const scene)
             (* it)->RotationMatrix = RotationMatrix;
             (* it)->UsesRotationMatrix = UsesRotationMatrix;
             (* it)->Scale = Scale;
-            (* it)->Material = Material;
+
+            (* it)->Material.AmbientColor = Material.AmbientColor;
+            //(* it)->Material.DiffuseColor = Material.DiffuseColor;
+            (* it)->Material.Shader = Material.Shader;
+            (* it)->Material.Shininess = Material.Shininess;
+            (* it)->Material.Texture = Material.Texture;
+            
             (* it)->draw(scene);
         }
     }
