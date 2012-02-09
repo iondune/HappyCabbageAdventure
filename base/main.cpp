@@ -33,11 +33,11 @@ int main(int argc, char *argv[])
 int main(int argc, char * argv[])
 {
     CApplication & Application = CApplication::get();
-    Application.init(SPosition2(1024, 740));
+    Application.init(SPosition2(800, 600));
     //Application.init(SPosition2(1024, 768));
 
     CStateManager & StateManager = Application.getStateManager();
-    StateManager.setState(& COverworldState::get());
+    StateManager.setState(& CMainMenuState::get());
 
     Application.run();
 

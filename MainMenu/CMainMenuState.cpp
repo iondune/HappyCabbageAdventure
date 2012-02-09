@@ -319,6 +319,7 @@ void CMainMenuState::OnMouseEvent(SMouseEvent const & Event)
          {
             if(Event.Location.Y >225 && Event.Location.Y < 300)
             {
+               printf("top button hit!!\n");
                CApplication::get().getStateManager().setState(& CGameState::get());
                printf("top button hit!!\n");
             } 

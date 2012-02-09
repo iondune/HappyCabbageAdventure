@@ -50,7 +50,7 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
     int x,y,w,h;
     float spd, rng;
 
-    irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader("test.xml");
+    irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader("level1.xml");
 	while (xml && xml->read())
 	{
       switch(xml->getNodeType())
@@ -232,7 +232,11 @@ void CGameState::begin()
    //Load the meshes into VBOs
    PrepMeshes();
 
+   printf("Got here!\n");
+
    PrepShadow();
+
+   printf("Did I finish shadows?\n");
 
    Application.getSceneManager().addRenderable(renderBasicTree);
    Application.getSceneManager().addRenderable(playerRenderable);
@@ -734,7 +738,7 @@ void LoadTextures()
    blueFlwrImg = CImageLoader::loadImage("Textures/blueFlower.bmp");
    pinkFlwrImg = CImageLoader::loadImage("Textures/pinkFlower.bmp");
    poinImg = CImageLoader::loadImage("Textures/poin.bmp");
-   flagImg = CImageLoader::loadImage("Textures/flag.bmp");
+   //flagImg = CImageLoader::loadImage("Textures/flag.bmp");
 
    grassTxt = new CTexture(grassImg);
    skyTxt = new CTexture(skyImg);
@@ -742,7 +746,7 @@ void LoadTextures()
    blueFlwrTxt = new CTexture(blueFlwrImg);
    pinkFlwrTxt = new CTexture(pinkFlwrImg);
    poinTxt = new CTexture(poinImg);
-   flagTxt = new CTexture(flagImg);
+   //flagTxt = new CTexture(flagImg);
 }
 
 void PrepMeshes()
@@ -797,6 +801,6 @@ void PrepMeshes()
    renderFlag->setTranslation(SVector3(-25, .5, 1.0));
    renderFlag->setRotation(SVector3(-90,0,0));
    renderFlag->setScale(SVector3(.0100, .00025,.0016));
-   renderFlag->getMaterial().Texture = flagTxt;
+   //renderFlag->getMaterial().Texture = flagTxt;
    renderFlag->getMaterial().Shader = DiffuseTexture;
 }
