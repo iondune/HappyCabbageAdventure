@@ -100,8 +100,8 @@ void CGameState::EngineInit( void ) {
    Derp->setArea(SRect2(-17, 0, 1, 1));
 
    Floor = Engine->addObject();
-   Floor->setArea(SRect2(-25, -1, 50, 1));
-   PrepGrass(-25, -1, 50, 1);
+   Floor->setArea(SRect2(-25, -1, 200, 1));
+   PrepGrass(-25, -1, 200, 1);
    PrepSky();
 
    SRect2 area;
@@ -620,7 +620,7 @@ void CGameState::PrepSky() {
    tempBlock->getMaterial().Texture = skyTxt;
    tempBlock->getMaterial().Shader = DiffuseTexture;
    tempBlock->setTranslation(SVector3(0, 24, -2.5));
-   tempBlock->setScale(SVector3(100, 50, 1));
+   tempBlock->setScale(SVector3(400, 50, 1));
    Application.getSceneManager().addRenderable(tempBlock);
 
 }
