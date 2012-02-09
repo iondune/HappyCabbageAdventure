@@ -738,7 +738,7 @@ void LoadTextures()
    blueFlwrImg = CImageLoader::loadImage("Textures/blueFlower.bmp");
    pinkFlwrImg = CImageLoader::loadImage("Textures/pinkFlower.bmp");
    poinImg = CImageLoader::loadImage("Textures/poin.bmp");
-   //flagImg = CImageLoader::loadImage("Textures/flag.bmp");
+   flagImg = CImageLoader::loadImage("Textures/flag.bmp");
 
    grassTxt = new CTexture(grassImg);
    skyTxt = new CTexture(skyImg);
@@ -746,7 +746,7 @@ void LoadTextures()
    blueFlwrTxt = new CTexture(blueFlwrImg);
    pinkFlwrTxt = new CTexture(pinkFlwrImg);
    poinTxt = new CTexture(poinImg);
-   //flagTxt = new CTexture(flagImg);
+   flagTxt = new CTexture(flagImg);
 }
 
 void PrepMeshes()
@@ -801,6 +801,6 @@ void PrepMeshes()
    renderFlag->setTranslation(SVector3(-25, .5, 1.0));
    renderFlag->setRotation(SVector3(-90,0,0));
    renderFlag->setScale(SVector3(.0100, .00025,.0016));
-   //renderFlag->getMaterial().Texture = flagTxt;
+   renderFlag->getMaterial().Texture = flagTxt;
    renderFlag->getMaterial().Shader = DiffuseTexture;
 }
