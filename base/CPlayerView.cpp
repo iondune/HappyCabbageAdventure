@@ -32,12 +32,19 @@ void CPlayerView::step(float delta) {
 }
 
 void CPlayerView::draw() {
+   int negFactor = 0;
 
    //Set player's current position
    if(!(recovering > 0 && (int)(recovering *100) % 2 != 0)) {
       PlayerRenderable->setTranslation(SVector3(CenterPosition.X, CenterPosition.Y + 0.065f*sin(ySineValue), 0));
       if(!(Velocity.Y > 0.01f || Velocity.Y < -0.01f)) {
          PlayerRenderable->setRotation(SVector3(15*sin(ySineValue/2)-90.f, 0, 80.f));
+      }
+      if(Velocity.X > 0.01f) {
+         PlayerRenderable->setScale(SVector3(2,2,2));
+      }
+      else if(Velocity.X < -0.01f) {
+         PlayerRenderable->setScale(SVector3(-2,2,2));
       }
       PlayerRenderable->setVisible(true);
    }
@@ -46,7 +53,7 @@ void CPlayerView::draw() {
 
    //Set player's shadow
    renderShadow->setTranslation(SVector3(CenterPosition.X, yShadow + 0.01f, 0));
-   renderShadow->setScale(SVector3(-.05f*sin(ySineValue)+1, 1,
+   renderShadow->setScale(SVector3((-.05f*sin(ySineValue)+1), 1,
      -0.05f*sin(ySineValue)+1));
 
 

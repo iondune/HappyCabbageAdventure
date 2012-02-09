@@ -1,5 +1,5 @@
 ROOT_CABBAGE_DIR=../
-SOURCES=main.cpp CGameState.cpp CPlayerView.cpp Materials.cpp FreeType.cpp CGameplayManager.cpp sound.cpp CGameEventReceiver.cpp
+SOURCES=main.cpp CGameState.cpp CPlayerView.cpp Materials.cpp FreeType.cpp CGameplayManager.cpp sound.cpp CGameEventReceiver.cpp ./irrxml-1.2/src/irrXML.cpp 
 OBJECTS=$(SOURCES:%.cpp=%.o) ../MainMenu/CMainMenuState.o
 CABBAGE=-L../lib/ -lCabbageCollider -lCabbageFramework -lCabbageScene -lCLWIB
 COMPILER_VERSION=-std=c++0x
@@ -23,6 +23,9 @@ all: ${TARGET}
 
 cabbage: ${OBJECTS} ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCLWIB.a
 	g++ ${COMPILER_VERSION} ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL -lglut `sdl-config --cflags --libs` ${CABBAGE} ${MIXLIB} `freetype-config --libs` -g -o $@
+
+./irrxml-1.2/src/irrXML.o: ./irrxml-1.2/src/irrXML.cpp  
+	g++ -I../irrxml-1.2/src/ -o $@ -c ./irrxml-1.2/src/irrXML.cpp
 
 main.o: main.cpp
 	g++ $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c main.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
