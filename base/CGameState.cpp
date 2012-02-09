@@ -623,7 +623,7 @@ void Load3DS()
       fprintf(stderr, "Failed to load the basic tree mesh\n");
    }
 
-   christmasTreeMesh = CMeshLoader::load3dsMesh("Models/christmasTree2.3ds");
+   christmasTreeMesh = CMeshLoader::load3dsMesh("Models/christmasTree3.3ds");
    if (christmasTreeMesh) {
       christmasTreeMesh->resizeMesh(SVector3(0.5));
       christmasTreeMesh->centerMeshByExtents(SVector3(0));
