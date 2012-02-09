@@ -18,6 +18,7 @@ class COverworldState : public CState<COverworldState>
 
 //Boolean integers for keypressing
    int aDown, dDown, spaceDown, wDown, sDown;
+   SVector3 playerVector;
 
    CShader *Flat, *Diffuse, *DiffuseTexture;
    CMeshRenderable *renderMap, *discRender, *playerRender;
@@ -53,6 +54,9 @@ class COverworldState : public CState<COverworldState>
    void OnKeyboardEvent(SKeyboardEvent const & Event);
    //Runs at program close (currently not implemented)
    void end();
+   void bouncePlayer();
+   int curNode;
+   void movePlayer();
    /*
    void stepCamera(float delta);
    void OnMouseEvent(SMouseEvent const & Event);
