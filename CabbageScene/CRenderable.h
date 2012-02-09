@@ -171,7 +171,7 @@ public:
     GLenum const getDrawType() const;
     void setDrawType(GLenum const drawType);
 
-    void draw(CScene const * const scene);
+    virtual void draw(CScene const * const scene);
 
     void addAttribute(std::string const & label, boost::shared_ptr<IAttribute> attribute);
     void addUniform(std::string const & label, boost::shared_ptr<IUniform> uniform);
