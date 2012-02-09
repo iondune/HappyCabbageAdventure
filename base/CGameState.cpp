@@ -44,7 +44,7 @@ CGameState::CGameState()
 : Application (CApplication::get())
 {}
 
-void CGameState::loadWorld(std::vector<CBlock> *list)
+void CGameState::loadWorld(std::vector<CPlaceable*> *list)
 {
     int x,y,w,h;
 
@@ -56,16 +56,24 @@ void CGameState::loadWorld(std::vector<CBlock> *list)
         case irr::io::EXN_TEXT:
 			break;
         case irr::io::EXN_ELEMENT:
-			if(!strcmp("Cblock", xml->getNodeName()))
+			if(!strcmp("CBlock", xml->getNodeName()))
 			{
 				// id, X, Y, height, width / from 0,1,2 so on
 				x = xml->getAttributeValueAsInt(0);
 				y = xml->getAttributeValueAsInt(1);
 				h = xml->getAttributeValueAsInt(2);
 				w = xml->getAttributeValueAsInt(3);
-            list->push_back(CBlock((float)x,(float)y,w,h));
-            printf("%d %d %d %d\n", x, y, w, h);
-			}	
+                list->push_back(new CBlock((float)x,(float)y,w,h));
+			}
+            if(!strcmp("CEnemy", xml->getNodeName()))
+            {
+				x = xml->getAttributeValueAsInt(0);
+				y = xml->getAttributeValueAsInt(1);
+				h = xml->getAttributeValueAsInt(2);
+				w = xml->getAttributeValueAsInt(3);
+                list->push_back(new CEnemy((float)x,(float)y,w,h));
+
+            }
 				break;
 		}
 	}
@@ -111,12 +119,12 @@ void CGameState::EngineInit( void ) {
    float i = 0;
    float j = 0;
 
-   std::vector<CBlock> list;
+   std::vector<CPlaceable*> list;
    loadWorld(&list);
 
-   std::vector<CBlock>::iterator it;
+   std::vector<CPlaceable*>::iterator it;
    for(it=list.begin();it<list.end();it++) {
-      (*it).setupItem(DiffuseTexture, Engine, GameplayManager);
+      (*it)->setupItem(DiffuseTexture, Engine, GameplayManager);
    }
 
 
