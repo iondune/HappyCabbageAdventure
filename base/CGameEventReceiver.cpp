@@ -33,8 +33,8 @@ void CGameEventReceiver::OnGameTickStart(float const Elapsed)
         it->DeathTimer -= Elapsed;
         if (it->DeathTimer < 0.f)
         {
-            it = DeadEnemies.erase(it);
             CApplication::get().getSceneManager().removeRenderable(it->Renderable);
+            it = DeadEnemies.erase(it);
         }
         else
             ++ it;
