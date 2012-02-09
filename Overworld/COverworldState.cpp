@@ -9,10 +9,15 @@ COverworldState::COverworldState()
 void COverworldState::begin()
 {
    aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0;
+   camRotValue = 0;
+   rot = SVector3(-90, 0, 20);
    SPosition2 size = Application.getWindowSize();
    WindowWidth = size.X;
    WindowHeight = size.Y; 
    glClearColor(0.4f,0.8f,1.f,0);
+
+   mouseDown = 0;
+
 
    glEnable(GL_DEPTH_TEST);
    glDepthFunc(GL_LEQUAL);
@@ -23,9 +28,13 @@ void COverworldState::begin()
 
    //Initialize Font
 
+   eye = SVector3(1, 1, -1.5);
+   look = SVector3(-0.06, 0.02, -0.73);
    Camera = new CCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
    Application.getSceneManager().setActiveCamera(Camera);
-   float const LightBrightness = 0.4f;
+   float const LightBrightness = 0.6f;
+   Camera->setPosition(eye);
+   Camera->setLookDirection(look - eye);
 
     CSceneManager & SceneManager = Application.getSceneManager();
     SceneManager.Lights.push_back(SLight());
@@ -64,6 +73,11 @@ void COverworldState::begin()
    printf("END OF BEGIN\n");
 }
 
+void COverworldState::step(float delta) {
+   //rot.X += 10*delta;
+   camRotValue += 0.5*delta;
+}
+
 //Runs at very start of display
 void COverworldState::OnRenderStart(float const Elapsed)
 {
@@ -71,6 +85,15 @@ void COverworldState::OnRenderStart(float const Elapsed)
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
 
+   step(Application.getElapsedTime());
+   stepCamera(Application.getElapsedTime());
+   SVector3 eyeRot = eye;
+   eyeRot.X += cos(camRotValue);
+   eyeRot.Y += sin(camRotValue);
+   Camera->setPosition(eyeRot);
+   Camera->setLookDirection(look - eyeRot);
+
+   renderMap->setRotation(rot);
 
    Application.getSceneManager().drawAll();
 
@@ -105,6 +128,8 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
          dDown = 1;
       }
       if(Event.Key == SDLK_m){
+         printf("Eye coords: %0.2f %0.2f %0.2f\n", eye.X, eye.Y, eye.Z);
+         printf("Look coords: %0.2f %0.2f %0.2f\n", look.X, look.Y, look.Z);
       }
       if(Event.Key == SDLK_SPACE) {
          spaceDown = 1;
@@ -154,6 +179,10 @@ void COverworldState::LoadShaders() {
 void COverworldState::PrepMeshes()
 {
    CMesh *mapMesh = CMeshLoader::load3dsMesh("Models/world.3ds");
+   if(mapMesh) {
+      mapMesh->centerMeshByExtents(SVector3(0));
+      mapMesh->calculateNormalsPerFace();
+   }
    renderMap = new CMeshRenderable();
    renderMap->setMesh(mapMesh);
    renderMap->getMaterial().Texture = CImageLoader::loadTexture("Models/world.bmp");
@@ -166,3 +195,64 @@ void COverworldState::PrepMeshes()
    renderNode->getMaterial().Shader = Flat;
    */
 }
+
+
+void COverworldState::OnMouseEvent(SMouseEvent const & Event) {
+   if(Event.Button.Value == SMouseEvent::EButton::Left) {
+      if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
+         mouseDown = 1;
+      }
+      else if(!Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
+         mouseDown = 0;
+      }
+      if(mouseDown && Event.Type.Value == SMouseEvent::EType::Move) {
+         int x = Event.Location.X;
+         int y = Event.Location.Y;
+         startx = Event.Location.X - Event.Movement.X;
+         starty = WindowHeight - (Event.Location.Y - Event.Movement.Y) - 1;
+         if(x <= WindowWidth && x >= 0 && y >= 0 && y <= WindowHeight) {
+            int newy = WindowHeight-y-1;
+
+            if((pitchphi < 50*M_PI/180 || (float)(newy-starty)<0) && 
+                  (pitchphi > -50*M_PI/180 || (float)(newy-starty)>0)) {
+               yawtheta += (float)(x-startx)/WindowWidth*M_PI;
+               pitchphi += (float)(newy-starty)/WindowHeight*M_PI;
+
+               look = SVector3(cos(pitchphi)*cos(yawtheta) + eye.X,
+                     sin(pitchphi) + eye.Y,
+                     cos(pitchphi)*cos(M_PI/2 - yawtheta) + eye.Z);
+            }
+            startx = x;
+            starty = newy;
+         }
+      }
+   }
+}
+
+void COverworldState::stepCamera(float delta) {
+   SVector3 zoom = look - eye;
+   zoom *= (1*delta);
+   SVector3 strafe = SVector3(0,1,0).crossProduct(zoom);
+
+   //D
+   if(dDown) {
+      look -= strafe;
+      eye -= strafe;
+   }
+   //A
+   if(aDown) {
+      look += strafe;
+      eye += strafe;
+   }
+   //W
+   if(wDown) {
+      look += zoom;
+      eye += zoom;
+   }
+   //S
+   if(sDown) {
+      look -= zoom;
+      eye -= zoom;
+   }
+}
+
