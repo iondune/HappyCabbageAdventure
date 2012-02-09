@@ -76,7 +76,7 @@ namespace Collider
 
 		float FallAcceleration;
 		SVector2 Velocity;
-		CObject * Standing;
+		CCollideable * Standing;
 
 		SVector2 LastPosition, Movement;
 
@@ -92,7 +92,7 @@ namespace Collider
 		
 		bool updateCollision(CCollideable * Object, float const TickTime, ICollisionResponder * CollisionResponder);
 		int checkCollision(CCollideable * Object, float const TickTime);
-		void onStanding(CObject * Object);
+		void onStanding(CCollideable * Object);
 
 		void pushIfCollided(CObject * Object, SVector2 const & Movement);
 

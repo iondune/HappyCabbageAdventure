@@ -78,7 +78,7 @@ namespace Collider
 		return Out;
 	}
 
-	void CActor::onStanding(CObject * Object)
+	void CActor::onStanding(CCollideable * Object)
 	{
 		Standing = Object;
 		FallAcceleration = 0;

@@ -45,7 +45,7 @@ namespace Collider
 				(* it)->updateVectors(TickTime);
 
 				bool Alighted = false;
-                CObject * Which = 0;
+                CCollideable * Which = 0;
 
 				for (ObjectList::iterator jt = Objects.begin(); jt != Objects.end(); ++ jt)
 				{
@@ -57,7 +57,11 @@ namespace Collider
 				for (ActorList::iterator jt = Actors.begin(); jt != Actors.end(); ++ jt)
 				{
 					if (* it != * jt)
+                    {
 						Alighted |= (* it)->updateCollision(* jt, TickTime, CollisionResponder);
+                        if (Alighted)
+                            Which = (* jt);
+                    }
 				}
 
 				if (Alighted)
