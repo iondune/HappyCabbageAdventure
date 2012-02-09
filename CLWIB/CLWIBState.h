@@ -34,16 +34,16 @@ class CLWIBState : public CState<CLWIBState>
 
 
    public:
-      std::vector<CPlaceable*> placeables, redoPlaceables;
-      std::vector<CMeshRenderable*> blocks, redo;
+   std::vector<CPlaceable*> placeables, redoPlaceables;
+   std::vector<CMeshRenderable*> blocks, redo;
    CLWIBState();
    void begin();
    CCamera *Camera;
    SVector3 eye, look;
 
-   CShader *DiffuseTexture, *DiffuseTextureBright, *Flat;
+   CShader *DiffuseTexture, *DiffuseTextureBright, *Diffuse;
 
-   
+
 
    int blockWidth, blockHeight;
    void OnRenderStart(float const Elapsed);
@@ -52,6 +52,7 @@ class CLWIBState : public CState<CLWIBState>
    void end();
 
    void PrepBlock(float x, float y, int w, int h); 
+   void PrepEnemy(float x, float y); 
    void PrepGrass(float x, float y, float w, float h);
    void PrepPreviews();
 
@@ -64,6 +65,5 @@ class CLWIBState : public CState<CLWIBState>
    void BlocksInit( void ); 
 
    void stepCamera(float delta); 
-   CMeshRenderable* PrepEnemy(float x, float y);
 };
 #endif

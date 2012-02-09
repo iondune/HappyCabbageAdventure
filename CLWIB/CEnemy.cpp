@@ -26,19 +26,22 @@ void CEnemy::moveTo(float x,float y) {
    //For usage in LWIB
 }
 CMeshRenderable * CEnemy::setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
-   Cabbage::Collider::CObject *engBlock = Engine->addObject();
-   engBlock->setArea(SRect2(x, y, w, h));
+   CMeshRenderable *tempEnemy = new CMeshRenderable();
+   CMesh *mesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
+   if(mesh) {
+      mesh->resizeMesh(SVector3(1));
+      mesh->centerMeshByExtents(SVector3(0));
+      mesh->calculateNormalsPerFace();
+   }
 
-   CMeshRenderable *tempBlock = new CMeshRenderable();
-   CMesh *mesh = CMeshLoader::loadAsciiMesh("Cube");
-   mesh->calculateNormalsPerFace();
-   tempBlock->setMesh(mesh);
-   tempBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/dirt.bmp");
-   tempBlock->getMaterial().Shader = shader;
-   tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
-   tempBlock->setScale(SVector3(w, h, 1));
-   tempBlock->setRotation(SVector3(0, 0, 0));
-   CApplication::get().getSceneManager().addRenderable(tempBlock);
+   tempEnemy->setMesh(mesh);
+   //tempEnemy->getMaterial().Texture = CImageLoader::loadTexture("Textures/dirt.bmp");
+   tempEnemy->getMaterial().Shader = shader;
+   tempEnemy->setTranslation(SVector3((x+(x+1))/2, (y+(y+1))/2, 0));
+   tempEnemy->setScale(SVector3(1, 1, 1));
+   tempEnemy->setRotation(SVector3(0, 0, 0));
 
-   return tempBlock;
+   CApplication::get().getSceneManager().addRenderable(tempEnemy);
+   GameplayManager->addEnemy(SVector2(x, y), tempEnemy);
+   return tempEnemy;
 }

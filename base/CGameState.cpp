@@ -51,39 +51,37 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
     irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader("test.xml");
 	while (xml && xml->read())
 	{
-		switch(xml->getNodeType())
-		{
-        case irr::io::EXN_TEXT:
-			break;
-        case irr::io::EXN_ELEMENT:
-			if(!strcmp("CBlock", xml->getNodeName()))
-			{
-				// id, X, Y, height, width / from 0,1,2 so on
-				x = xml->getAttributeValueAsInt(0);
-				y = xml->getAttributeValueAsInt(1);
-				h = xml->getAttributeValueAsInt(2);
-				w = xml->getAttributeValueAsInt(3);
-                list->push_back(new CBlock((float)x,(float)y,w,h));
-			}
-            if(!strcmp("CEnemy", xml->getNodeName()))
-            {
-				x = xml->getAttributeValueAsInt(0);
-				y = xml->getAttributeValueAsInt(1);
-				h = xml->getAttributeValueAsInt(2);
-				w = xml->getAttributeValueAsInt(3);
-                list->push_back(new CEnemy((float)x,(float)y,w,h));
-
-            }
-				break;
-		}
-	}
+      switch(xml->getNodeType())
+      {
+      case irr::io::EXN_TEXT:
+         break;
+      case irr::io::EXN_ELEMENT:
+         if(!strcmp("CBlock", xml->getNodeName()))
+         {
+            // id, X, Y, height, width / from 0,1,2 so on
+            x = xml->getAttributeValueAsInt(0);
+            y = xml->getAttributeValueAsInt(1);
+            h = xml->getAttributeValueAsInt(2);
+            w = xml->getAttributeValueAsInt(3);
+            list->push_back(new CBlock((float)x,(float)y,w,h));
+         }
+         if(!strcmp("CEnemy", xml->getNodeName()))
+         {
+            x = xml->getAttributeValueAsInt(0);
+            y = xml->getAttributeValueAsInt(1);
+            h = xml->getAttributeValueAsInt(2);
+            w = xml->getAttributeValueAsInt(3);
+            list->push_back(new CEnemy((float)x,(float)y,w,h));
+         }
+         break;
+      }
+   }
 }
 
 void CGameState::EngineInit( void ) {
-   printf("asdf\n");
    Engine = new CEngine();
    Player = Engine->addActor();
-   Player->setArea(SRect2(-24.5, 3, 0.8, 1));
+   Player->setArea(SRect2(-24.5, 3, 1, 1));
 
    Derp = Engine->addActor();
    Derp->setArea(SRect2(-17, 0, 1, 1));
