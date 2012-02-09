@@ -37,7 +37,7 @@ void CPlayerView::draw() {
    if(!(recovering > 0 && (int)(recovering *100) % 2 != 0)) {
       PlayerRenderable->setTranslation(SVector3(CenterPosition.X, CenterPosition.Y + 0.065f*sin(ySineValue), 0));
       if(!(Velocity.Y > 0.01f || Velocity.Y < -0.01f)) {
-         PlayerRenderable->setRotation(SVector3(15*sin(ySineValue/2)-90.f, 0, 0));
+         PlayerRenderable->setRotation(SVector3(15*sin(ySineValue/2)-90.f, 0, 80.f));
       }
       PlayerRenderable->setVisible(true);
    }
