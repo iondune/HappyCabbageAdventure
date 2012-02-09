@@ -130,8 +130,8 @@ void CGameState::EngineInit( void ) {
    }
 
    Block = Engine->addObject();
-   Block->setArea(SRect2(0.f, 0.f, 4.f, 10.f));
-   PrepBlock(0, 0, 4, 10);
+   Block->setArea(SRect2(180.3f, .5f, 1.f, 1.f));
+   renderFlag->setTranslation(SVector3(180, .5, 0));
    if(lastOne) {
       GameplayManager->setVictoryFlag(Block);
    }
@@ -808,7 +808,7 @@ void PrepMeshes()
 
    renderFlag = new CMeshRenderable();
    renderFlag->setMesh(flagMesh);
-   renderFlag->setTranslation(SVector3(-25, .5, 1.0));
+   renderFlag->setTranslation(SVector3(15, .5, 0));
    renderFlag->setRotation(SVector3(-90,0,0));
    renderFlag->setScale(SVector3(.0100, .00025,.0016));
    //renderFlag->getMaterial().Texture = dirtTxt;
