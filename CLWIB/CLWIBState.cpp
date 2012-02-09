@@ -80,8 +80,8 @@ void CLWIBState::begin()
 
    Application.getSceneManager().setActiveCamera(Camera);
 
+   Diffuse = CShaderLoader::loadShader("Diffuse");
    DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture");
-   Flat = CShaderLoader::loadShader("Flat");
    DiffuseTextureBright = CShaderLoader::loadShader("DiffuseTextureBright");
 
 
@@ -116,15 +116,18 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    stepCamera(Application.getElapsedTime());
    float x=round(eye.X + previewBlockMouseX),y= round(eye.Y + previewBlockMouseY);
    PreviewBlock->setTranslation(SVector3(x+(float)blockWidth/2,y+(float)blockHeight/2, 0));
+   PreviewEnemy->setTranslation(SVector3(x+0.5f,y+0.5f, 0));
    if(tDown) {
       PreviewBlock->setVisible(false);
       PreviewEnemy->setVisible(false);
    }
    else if(eDown) {
       PreviewEnemy->setVisible(true);
+      PreviewBlock->setVisible(false);
    }
    else {
       PreviewBlock->setVisible(true);
+      PreviewEnemy->setVisible(false);
    }
    //PreviewBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    //PreviewBlock->setTranslation(SVector3(x,y, 0));
@@ -326,10 +329,16 @@ void CLWIBState::PrepPreviews() {
 
    blocks.push_back(PreviewEnemy = new CMeshRenderable());
    appleMesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
-   appleMesh->calculateNormalsPerFace();
+   if(appleMesh) {
+      appleMesh->resizeMesh(SVector3(1));
+      appleMesh->centerMeshByExtents(SVector3(0));
+      appleMesh->calculateNormalsPerFace();
+   }
+
    PreviewEnemy->setMesh(appleMesh);
 
-   PreviewEnemy->getMaterial().Shader = Flat;
+   PreviewEnemy->getMaterial().Shader = Diffuse;
+   PreviewEnemy->setRotation(SVector3(-90, 0, 0));
    PreviewBlock->setScale(SVector3(1, 1, 1));
 
    CApplication::get().getSceneManager().addRenderable(PreviewEnemy);
@@ -347,6 +356,37 @@ void initBlockMap() {
          blockMap[i][j].mapY = -1;
       }
 }
+
+void CLWIBState::PrepEnemy(float x, float y) {
+   if(x < -25 || y < -25)
+      return;
+   if(blockMap[(int)x+25][(int)(y-0.5+25)].o) {
+      printf("Blockmap space occupied. Did not place enemy\n");
+      return;
+   }
+
+   printf("Placed enemy starting at %0.2f, %0.2f\n", x, y);
+   CMeshRenderable *tempEnemy;
+   CEnemy *tempPlaceable;
+   blocks.push_back(tempEnemy = new CMeshRenderable());
+   placeables.push_back(tempPlaceable = new CEnemy(x, y, 1, 1));
+   tempEnemy->setMesh(appleMesh);
+   //tempEnemy->getMaterial().Texture = CImageLoader::loadTexture("Textures/dirt.bmp");;
+   tempEnemy->getMaterial().Shader = Diffuse;
+   tempEnemy->setTranslation(SVector3((x+(x+1))/2, (y+(y+1))/2, 0));
+   //tempEnemy->setTranslation(SVector3(x, y, 0));
+   tempEnemy->setRotation(SVector3(-90, 0, 0));
+   tempEnemy->setScale(SVector3(1, 1, 1));
+   blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
+   blockMap[(int)x+25][(int)(y-0.5+25)].r = tempEnemy;
+   blockMap[(int)x+25][(int)(y-0.5+25)].p = tempPlaceable;
+   blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
+   blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
+   Application.getSceneManager().addRenderable(tempEnemy);
+   redo.clear();
+   redoPlaceables.clear();
+}
+
 
 void CLWIBState::PrepBlock(float x, float y, int w, int h) {
    if(x < -25 || y < -25)
@@ -535,8 +575,13 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
       }
       if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
          mouseDown = 1;
-         if(!tDown)
+         if(!tDown && eDown) {
+            printf("Here\n");
+            PrepEnemy(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
+         }
+         else if (!tDown) {
             PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight);
+         }
          else {
             if(lastMouseOveredBlock.o) {
                Application.getSceneManager().removeRenderable(lastMouseOveredBlock.r);
@@ -573,28 +618,28 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          float oldPBMX = previewBlockMouseX, oldPBMY = previewBlockMouseY;
          previewBlockMouseX = 10*((float)WindowWidth/WindowHeight)*tan(30*M_PI/180)*xp2w(Event.Location.X);
          previewBlockMouseY = 10*tan(30*M_PI/180)*yp2w(Event.Location.Y);
-            float x = round(eye.X + previewBlockMouseX);
-            float y = round(eye.Y + previewBlockMouseY);
-            float oldx = round(eye.X + oldPBMX);
-            float oldy = round(eye.Y + oldPBMY);
-            if(x < -25 || y < -25)
-               return;
-            if(oldx == x && oldy == y)
-               return;
-            qd m_qd;
-            m_qd = blockMap[(int)x+25][(int)(y-0.5+25)];
-            if(tDown) {
-               if(m_qd.o && m_qd.r != lastMouseOveredBlock.r) {
-                  m_qd.r->getMaterial().Shader = DiffuseTextureBright;
-               }
+         float x = round(eye.X + previewBlockMouseX);
+         float y = round(eye.Y + previewBlockMouseY);
+         float oldx = round(eye.X + oldPBMX);
+         float oldy = round(eye.Y + oldPBMY);
+         if(x < -25 || y < -25)
+            return;
+         if(oldx == x && oldy == y)
+            return;
+         qd m_qd;
+         m_qd = blockMap[(int)x+25][(int)(y-0.5+25)];
+         if(tDown) {
+            if(m_qd.o && m_qd.r != lastMouseOveredBlock.r) {
+               m_qd.r->getMaterial().Shader = DiffuseTextureBright;
             }
-            if(lastMouseOveredBlock.o && m_qd.r != lastMouseOveredBlock.r) {
-               lastMouseOveredBlock.r->getMaterial().Shader = DiffuseTexture;
-            }
-            if(!tDown && mouseDown) {
-               PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight);
-            }
-            lastMouseOveredBlock = m_qd;
+         }
+         if(lastMouseOveredBlock.o && m_qd.r != lastMouseOveredBlock.r) {
+            lastMouseOveredBlock.r->getMaterial().Shader = DiffuseTexture;
+         }
+         if(!tDown && mouseDown) {
+            PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight);
+         }
+         lastMouseOveredBlock = m_qd;
       }
    }
    else if(Event.Button.Value == SMouseEvent::EButton::Right) {
