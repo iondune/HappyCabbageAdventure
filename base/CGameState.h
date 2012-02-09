@@ -32,6 +32,7 @@ class CGameState : public CState<CGameState>
    float fps, timeTotal;
    int numFrames;
    void oldDisplay(); 
+   void loadWorld();
    //Runs at very start of display
    void OnRenderStart(float const Elapsed);
    //Sends event every time key pressed (also when held)

@@ -2,7 +2,6 @@
 /* These are here because someone doesn't use extern, or put prototypes in their header files */
 #include "draw.h"
 
-
 //Boolean integers for keypressing
 int aDown = 0, dDown = 0, spaceDown = 0, wDown = 0, sDown = 0;
 int backwardsView = 0, overView = 0;
@@ -45,6 +44,32 @@ CGameState::CGameState()
 : Application (CApplication::get())
 {}
 
+void loadWorld(std::vector<CBlock> & list)
+{
+    int x,y,w,h;
+
+    irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader("test.xml");
+	while (xml && xml->read())
+	{
+		switch(xml->getNodeType())
+		{
+        case irr::io::EXN_TEXT:
+			break;
+        case irr::io::EXN_ELEMENT:
+			if(!strcmp("CBlock", xml->getNodeName()))
+			{
+				// id, X, Y, height, width / from 0,1,2 so on
+				x = xml->getAttributeValueAsInt(1);
+				y = xml->getAttributeValueAsInt(2);
+				h = xml->getAttributeValueAsInt(3);
+				w = xml->getAttributeValueAsInt(4);
+                list.push_back(CBlock(x,y,w,h));
+			}	
+				break;
+		}
+	}
+}
+
 void CGameState::EngineInit( void ) {
    Engine = new CEngine();
    Player = Engine->addActor();
@@ -82,6 +107,8 @@ void CGameState::EngineInit( void ) {
 
    float i = 0;
    float j = 0;
+
+
 
    CBlock *m_block = new CBlock(0, 0, 3, 5);
    m_block->setupItem(DiffuseTexture, Engine, GameplayManager);
