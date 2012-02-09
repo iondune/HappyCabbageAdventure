@@ -76,7 +76,7 @@ namespace Collider
 
 		float FallAcceleration;
 		SVector2 Velocity;
-		bool Standing;
+		CObject * Standing;
 
 		SVector2 LastPosition, Movement;
 
@@ -92,7 +92,7 @@ namespace Collider
 		
 		bool updateCollision(CCollideable * Object, float const TickTime, ICollisionResponder * CollisionResponder);
 		int checkCollision(CCollideable * Object, float const TickTime);
-		void onStanding();
+		void onStanding(CObject * Object);
 
 		void pushIfCollided(CObject * Object, SVector2 const & Movement);
 
@@ -117,7 +117,7 @@ namespace Collider
 
 		// Action control
 		void setAction(EActionType const & action);
-                bool isJumping();
+        bool isJumping();
 		void setJumping(bool const jumping);
 
 		virtual void draw();
