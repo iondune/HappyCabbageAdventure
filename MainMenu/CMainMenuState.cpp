@@ -118,10 +118,12 @@ void CMainMenuState::begin()
 
    Application.getSceneManager().addRenderable(renderLogo);
 }
+
 void CMainMenuState::end()
 {
-   printf("this ends it\n");
+      Application.getSceneManager().removeAllRenderables();
 }
+
 
 void CMainMenuState::OnRenderStart(float const Elapsed)
 {
@@ -286,7 +288,6 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 }
 void CMainMenuState::OnRenderEnd(float const Elapsed)
 {
-
 }
 
 
