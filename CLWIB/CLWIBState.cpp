@@ -36,6 +36,7 @@ struct quickndirty {
    CMeshRenderable *r;
    CPlaceable *p;
    bool o;
+   int mapX,mapY;
 } typedef qd;
 
 void initBlockMap();
@@ -197,6 +198,8 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                   blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].o = false;
                   blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].r = NULL;
                   blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].p = NULL;
+                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapX = -1;
+                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapY = -1;
                }
             }
 
@@ -218,6 +221,9 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                   blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].o = true;
                   blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].p = m_block;
                   blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].r = m_r;
+
+                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapX = (int)m_block->x+25;
+                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapY = (int)(m_block->y-0.5+25);
                }
             }
 
@@ -313,6 +319,8 @@ void initBlockMap() {
          blockMap[i][j].o = false;
          blockMap[i][j].p = NULL;
          blockMap[i][j].r = NULL;
+         blockMap[i][j].mapX = -1;
+         blockMap[i][j].mapY = -1;
       }
 }
 
@@ -349,6 +357,8 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h) {
          blockMap[(int)x+25+i][(int)(y-0.5+25)+j].o = true;
          blockMap[(int)x+25+i][(int)(y-0.5+25)+j].r = tempBlock;
          blockMap[(int)x+25+i][(int)(y-0.5+25)+j].p = tempPlaceable;
+         blockMap[(int)x+25+i][(int)(y-0.5+25)+j].mapX = (int)x+25;
+         blockMap[(int)x+25+i][(int)(y-0.5+25)+j].mapY = (int)(y-0.5+25);
       }
    }
    tempBlock->setRotation(SVector3(0, 0, 0));
@@ -503,6 +513,29 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          mouseDown = 1;
          if(!tDown)
             PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight);
+         else {
+            if(lastMouseOveredBlock.o) {
+               Application.getSceneManager().removeRenderable(lastMouseOveredBlock.r);
+               placeables.erase(std::remove(placeables.begin(), placeables.end(), lastMouseOveredBlock.p), placeables.end());
+               blocks.erase(std::remove(blocks.begin(), blocks.end(), lastMouseOveredBlock.r), blocks.end());
+               redoPlaceables.push_back(lastMouseOveredBlock.p);
+               redo.push_back(lastMouseOveredBlock.r);
+               int x = lastMouseOveredBlock.mapX;
+               int y = lastMouseOveredBlock.mapY;
+
+               int i,j;
+               for(i = 0; i < lastMouseOveredBlock.p->w; i++) {
+                  for(j = 0; j < lastMouseOveredBlock.p->h; j++) {
+                     blockMap[x+i][y+j].o = false;
+                     blockMap[x+i][y+j].r = NULL;
+                     blockMap[x+i][y+j].p = NULL;
+                     blockMap[x+i][y+j].mapX = -1;
+                     blockMap[x+i][y+j].mapY = -1;
+                  }
+               }
+               lastMouseOveredBlock = blockMap[x][y];
+            }
+         }
 
          /* Snap camera to where the block was placed
          eye.X = look.X =  eye.X + 6*tan(30*M_PI/180)*xp2w(Event.Location.X);
@@ -645,7 +678,7 @@ void CLWIBState::stepCamera(float delta) {
       eye.Y -= delta*factor;
       look.Y -= delta*factor;
    }
-   if(mouseDown) {
+   if(!tDown && mouseDown) {
       PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight);
    }
 }
