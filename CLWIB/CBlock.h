@@ -17,11 +17,6 @@ class CBlock : public CPlaceable
 
    CBlock(float nx, float ny, int width, int height);
    void printXML();
-   std::string tag();
-   std::string getX();
-   std::string getY();
-   std::string getWidth();
-   std::string getHeight();
    void moveTo(float,float);
    CMeshRenderable * setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager);
 };

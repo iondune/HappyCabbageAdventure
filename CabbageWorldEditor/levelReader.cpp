@@ -1,5 +1,5 @@
 #include "levelReader.h"
-#include "wmlwriter_src\xmlwriter.h"
+#include "wmlwriter_src\xmlwriter.cpp"
 #include <sstream>
 using namespace cimg_library;
 

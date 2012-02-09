@@ -11,25 +11,32 @@ void CBlock::printXML() {
    printf("X: %0.2f Y: %0.2f W: %d H: %d\n", x,y,w,h);
 }
 
-std::string CBlock::getX()
+std::string CPlaceable::tag()
+{
+    std::stringstream tag;
+    tag << "Cblock";
+    return tag.str();
+}
+
+std::string CPlaceable::getX()
 {
     std::stringstream xValue;
     xValue << x;
     return xValue.str();
 }
-std::string CBlock::getY()
+std::string CPlaceable::getY()
 {
     std::stringstream yValue;
     yValue << y;
     return yValue.str();
 }
-std::string CBlock::getWidth()
+std::string CPlaceable::getWidth()
 {
     std::stringstream widthValue;
     widthValue << w;
     return widthValue.str();
 }
-std::string CBlock::getHeight()
+std::string CPlaceable::getHeight()
 {
     std::stringstream heightValue;
     heightValue << h;
