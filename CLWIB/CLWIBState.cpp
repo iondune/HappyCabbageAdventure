@@ -34,6 +34,11 @@ void CLWIBState::BlocksInit( void ) {
 
 void initBlockMap();
 
+//Minblockvalue = -25
+//Heightoffset = 0.5
+bool blockMap[100][100];
+
+
 //Initalizer fxn
 void CLWIBState::begin()
 {
@@ -169,8 +174,16 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
          //3 is the number of static blocks created before the user can add in new blocks (ie unremovable)
          if(blocks.size() > 3 && placeables.size() > 0) {
             Application.getSceneManager().removeRenderable(blocks.back());
+            CPlaceable *m_block = placeables.back();
             redo.push_back(blocks.back());
             redoPlaceables.push_back(placeables.back());
+
+            int i,j;
+            for(i = 0; i < m_block->w; i++) {
+               for(j = 0; j < m_block->h; j++) {
+                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j] = false;
+               }
+            }
 
             placeables.pop_back();
             blocks.pop_back();
@@ -179,8 +192,16 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_r) {
          if(redo.size() > 0 && redoPlaceables.size() > 0) {
             Application.getSceneManager().addRenderable(redo.back());
+            CPlaceable *m_block = redoPlaceables.back();
             blocks.push_back(redo.back());
             placeables.push_back(redoPlaceables.back());
+
+            int i,j;
+            for(i = 0; i < m_block->w; i++) {
+               for(j = 0; j < m_block->h; j++) {
+                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j] = true;
+               }
+            }
 
             redo.pop_back();
             redoPlaceables.pop_back();
@@ -253,10 +274,6 @@ void CLWIBState::PrepPreviewBlock() {
    CApplication::get().getSceneManager().addRenderable(PreviewBlock);
 }
 
-//Minblockvalue = -25
-//Heightoffset = 0.5
-bool blockMap[100][100];
-
 void initBlockMap() {
    int i,j;
    for(i=0; i<100; i++)
@@ -324,7 +341,6 @@ void CLWIBState::PrepSky() {
    tempBlock->setTranslation(SVector3(0, 24, -2.5));
    tempBlock->setScale(SVector3(100, 50, 1));
    Application.getSceneManager().addRenderable(tempBlock);
-
 }
 
 /*

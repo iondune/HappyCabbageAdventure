@@ -12,8 +12,6 @@
 
 class CBlock : public CPlaceable
 {
-   float x,y;
-   int w,h;
    public:
 
    CBlock(float nx, float ny, int width, int height);
