@@ -1,6 +1,7 @@
 #include "CLWIBState.h"
 /* These are here because someone doesn't use extern, or put prototypes in their header files */
 #include <cmath>
+#include "wmlwriter_src\xmlwriter.h"
 
 #ifdef _WIN32
 static inline double round(double val)
@@ -251,8 +252,10 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
 }
 
 void CLWIBState::printXML() {
-   std::vector<CPlaceable*>::iterator it;
-   for(it=placeables.begin();it<placeables.end();it++) {
+    xmlwriter worldlist("test.xml");
+    
+    std::vector<CPlaceable*>::iterator it;
+    for(it=placeables.begin();it<placeables.end();it++) {
       (*it)->printXML();
    }
 }

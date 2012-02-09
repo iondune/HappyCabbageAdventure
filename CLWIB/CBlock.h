@@ -9,13 +9,19 @@
 #include "../CabbageCollider/CEngine.h"
 #include "../CabbageCollider/CObject.h"
 #include "../CabbageCollider/CActor.h"
-
+#include <sstream>
+#include <string>
 class CBlock : public CPlaceable
 {
    public:
 
    CBlock(float nx, float ny, int width, int height);
    void printXML();
+   std::string tag();
+   std::string getX();
+   std::string getY();
+   std::string getWidth();
+   std::string getHeight();
    void moveTo(float,float);
    CMeshRenderable * setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager);
 };

@@ -11,27 +11,33 @@ void CBlock::printXML() {
    printf("X: %0.2f Y: %0.2f W: %d H: %d\n", x,y,w,h);
 }
 
-/*float getX()
+std::string CBlock::getX()
 {
-    return x;
+    std::stringstream xValue;
+    xValue << x;
+    return xValue.str();
 }
-float getY()
+std::string CBlock::getY()
 {
-    return y;
+    std::stringstream yValue;
+    yValue << y;
+    return yValue.str();
 }
-int getWidth()
+std::string CBlock::getWidth()
 {
-    return w;
+    std::stringstream widthValue;
+    widthValue << w;
+    return widthValue.str();
 }
-int getHeight()
+std::string CBlock::getHeight()
 {
-    return h;
-}*/
-
+    std::stringstream heightValue;
+    heightValue << h;
+    return heightValue.str();
+}
 void CBlock::moveTo(float x,float y) {
    //For usage in LWIB
 }
-
 CMeshRenderable * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
    Cabbage::Collider::CObject *engBlock = Engine->addObject();
    engBlock->setArea(SRect2(x, y, w, h));
