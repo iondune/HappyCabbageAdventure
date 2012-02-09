@@ -1,5 +1,13 @@
+all: build-CabbageFramework build-CabbageScene build-CabbageCollider build-CLWIB build-MainMenu build-base build-MeshLoaderDemo build-CabbageColliderDemo
 
-all: build-CabbageFramework build-CabbageScene build-CabbageCollider build-MeshLoaderDemo build-CabbageColliderDemo
+build-CLWIB:
+	cd ./CLWIB && $(MAKE) lib
+
+build-MainMenu:
+	cd ./MainMenu && que
+
+build-base:
+	cd ./base && make
 
 build-CabbageScene:
 	cd ./CabbageScene && $(MAKE)
