@@ -23,6 +23,19 @@ namespace Collider
 		virtual SVector2 performMovement(float const TickTime);
 
 	};
+
+    class CElevator : public CObject
+	{
+
+        float time;
+
+    public:
+
+        CElevator();
+
+		virtual SVector2 performMovement(float const TickTime);
+
+	};
 }
 }
 

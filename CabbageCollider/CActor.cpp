@@ -40,7 +40,7 @@ namespace Collider
 
 
 	CActor::CActor()
-		: Standing(false), JumpTimer(0.f), FallAcceleration(0), Impulse(false)
+		: Standing(0), JumpTimer(0.f), FallAcceleration(0), Impulse(false)
 	{}
 
 	CActor::~CActor()
@@ -62,12 +62,12 @@ namespace Collider
 			{
 				if (Movement[i] > 0.f)
 				{
-					Movement[i] = std::max(Object->getArea().Position[i] - (LastPosition + Area.Size)[i], 0.f);
+					Movement[i] = std::max(Object->getArea().Position[i] - (LastPosition + Area.Size)[i] - BufferSize, 0.f);
 					Out |= (i ? ECollisionType::Up : ECollisionType::Right);
 				}
 				else if (Movement[i] < 0.f)
 				{
-					Movement[i] = std::min(Object->getArea().otherCorner()[i] - LastPosition[i], 0.f);
+					Movement[i] = std::min(Object->getArea().otherCorner()[i] - LastPosition[i] + BufferSize, 0.f);
 					Out |= (i ? ECollisionType::Down : ECollisionType::Left);
 				}
 			}
@@ -78,9 +78,9 @@ namespace Collider
 		return Out;
 	}
 
-	void CActor::onStanding()
+	void CActor::onStanding(CCollideable * Object)
 	{
-		Standing = true;
+		Standing = Object;
 		FallAcceleration = 0;
 		Velocity.Y = std::max(Velocity.Y, 0.f);
 	}
@@ -175,12 +175,14 @@ namespace Collider
 		Movement = Velocity * TickTime;
 	}
 
-	void CActor::pushIfCollided(CObject * Object, SVector2 const & Movement)
+	void CActor::pushIfCollided(CObject * Object, SVector2 const & oMovement)
 	{
-		if (! collidesWith(Object))
+        if (! collidesWith(Object) && Object != Standing)
 			return;
 
-		for (int i = 0; i < 2; ++ i)
+        Movement += oMovement;
+
+		/*for (int i = 0; i < 2; ++ i)
 		{
 			if (Movement[i] > 0)
 			{
@@ -190,12 +192,12 @@ namespace Collider
 			{
 				Area.Position[i] -= Area.otherCorner()[i] - Object->getArea().Position[i];
 			}
-		}
+		}*/
 	}
 
 	bool const CActor::isStanding() const
 	{
-		return Standing;
+		return Standing != 0;
 	}
 
 	void CActor::setVelocity(SVector2 const & vel)
@@ -223,10 +225,10 @@ namespace Collider
 		Action = action;
 	}
 
-        bool CActor::isJumping()
-        {
-           return Jumping;
-        }
+    bool CActor::isJumping()
+    {
+        return Jumping;
+    }
 
 	void CActor::setJumping(bool const jumping)
 	{

@@ -135,6 +135,12 @@ int main(int argc, char * argv[])
 	Block->setArea(SRect2(-1, -1, 15, 0.9f));
 	Block->getMaterial().Friction = 0.4f;
 
+    CObject * Elevator = Engine->addElevator();
+    Elevator->setArea(SRect2(6, -3, 1, 1));
+
+    Elevator = Engine->addElevator();
+    Elevator->setArea(SRect2(6, 1, 1, 1));
+
 	CActor * Derp = Engine->addActor();
 	Derp->setArea(SRect2(4, 0, 1, 1));
 
