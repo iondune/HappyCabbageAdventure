@@ -20,14 +20,14 @@ class CLWIBState : public CState<CLWIBState>
    private:
 
    //Boolean integers for keypressing
-   int aDown , dDown , spaceDown , wDown , sDown , gDown , fDown , tDown;
+   int aDown , dDown , spaceDown , wDown , sDown , gDown , fDown , tDown, eDown;
 
    freetype::font_data our_font;
 
    int WindowWidth, WindowHeight;
 
 
-   CMesh *cubeMesh;
+   CMesh *cubeMesh, *appleMesh;
 
    float xp2w(int oldX);
    float yp2w(int oldY);
@@ -41,7 +41,7 @@ class CLWIBState : public CState<CLWIBState>
    CCamera *Camera;
    SVector3 eye, look;
 
-   CShader *DiffuseTexture, *DiffuseTextureBright;
+   CShader *DiffuseTexture, *DiffuseTextureBright, *Flat;
 
    
 
@@ -53,7 +53,7 @@ class CLWIBState : public CState<CLWIBState>
 
    void PrepBlock(float x, float y, int w, int h); 
    void PrepGrass(float x, float y, float w, float h);
-   void PrepPreviewBlock();
+   void PrepPreviews();
 
    void PrepSky();
 

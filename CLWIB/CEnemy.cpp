@@ -6,16 +6,20 @@ CEnemy::CEnemy(float nx, float ny, int width, int height)
    w = width; h = height;
 }
 
-void CEnemy::printXML() {
-   //For usage in LWIB
-   printf("X: %0.2f Y: %0.2f W: %d H: %d\n", x,y,w,h);
-}
+void CEnemy::writeXML(xmlwriter *l) {
+    std::stringstream xValue, yValue, widthValue, heightValue, tagValue;
+    xValue << x;
+    yValue << y;
+    widthValue << w;
+    heightValue << h;
+    tagValue << "CEnemy";
 
-std::string CPlaceable::tag()
-{
-    std::stringstream tag;
-    tag << "CEnemy";
-    return tag.str();
+    l->AddAtributes("width ", widthValue.str());
+    l->AddAtributes("height ", heightValue.str());
+    l->AddAtributes("Y ", yValue.str());
+    l->AddAtributes("X ", xValue.str());
+    l->Createtag(tagValue.str());
+    l->CloseLasttag();
 }
 
 void CEnemy::moveTo(float x,float y) {

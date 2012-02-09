@@ -1,5 +1,5 @@
 ROOT_CABBAGE_DIR=../
-SOURCES=CLWIBState.cpp Materials.cpp FreeType.cpp CBlock.cpp ./wmlwriter_src/xmlwriter.cpp
+SOURCES=CLWIBState.cpp Materials.cpp FreeType.cpp ./wmlwriter_src/xmlwriter.cpp CBlock.cpp CEnemy.cpp 
 OBJECTS=$(SOURCES:%.cpp=%.o)
 CABBAGE=-L../lib/ -lCabbageCollider -lCabbageFramework -lCabbageScene
 COMPILER_VERSION=-std=c++0x
@@ -34,6 +34,8 @@ cabbage: ${OBJECTS} ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/
 	g++ -o $@ -c ./wmlwriter_src/xmlwriter.cpp
 CBlock.o: CBlock.cpp CBlock.h CPlaceable.h
 	g++ $(INCLUDE) -DGL_GLEXT_PROTOTYPES `sdl-config --cflags` -c CBlock.cpp
+CEnemy.o: CEnemy.cpp CEnemy.h CPlaceable.h
+	g++ $(INCLUDE) -DGL_GLEXT_PROTOTYPES `sdl-config --cflags` -c CEnemy.cpp
 main.o: main.cpp
 	g++ $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c main.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CLWIBState.o: CLWIBState.cpp header.h

@@ -14,12 +14,12 @@ static inline double round(double val)
 float x2w(int oldX);
 float yp2w(int oldY);
 void EngineInit();
-void PrepPreviewBlock();
+void PrepPreviews();
 
 float previewBlockMouseX, previewBlockMouseY; 
 float lastBlockPlacedLocationX, lastBlockPlacedLocationY;
 using namespace Cabbage::Collider;
-CMeshRenderable *PreviewBlock;
+CMeshRenderable *PreviewBlock, *PreviewEnemy;
 
 CLWIBState::CLWIBState()
 : Application (CApplication::get())
@@ -49,7 +49,7 @@ qd blockMap[100][100];
 //Initalizer fxn
 void CLWIBState::begin()
 {
-   aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0; gDown = 0; fDown = 0;
+   aDown = dDown = spaceDown = wDown = sDown = gDown = fDown = tDown = eDown = 0;
    cubeMesh = CMeshLoader::createCubeMesh();
    cubeMesh->calculateNormalsPerFace();
 
@@ -81,6 +81,7 @@ void CLWIBState::begin()
    Application.getSceneManager().setActiveCamera(Camera);
 
    DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture");
+   Flat = CShaderLoader::loadShader("Flat");
    DiffuseTextureBright = CShaderLoader::loadShader("DiffuseTextureBright");
 
 
@@ -90,7 +91,7 @@ void CLWIBState::begin()
 
    //Initialize Fxns
    BlocksInit();
-   PrepPreviewBlock();
+   PrepPreviews();
 
    printf("END OF BEGIN\n");
 
@@ -117,6 +118,10 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    PreviewBlock->setTranslation(SVector3(x+(float)blockWidth/2,y+(float)blockHeight/2, 0));
    if(tDown) {
       PreviewBlock->setVisible(false);
+      PreviewEnemy->setVisible(false);
+   }
+   else if(eDown) {
+      PreviewEnemy->setVisible(true);
    }
    else {
       PreviewBlock->setVisible(true);
@@ -178,6 +183,9 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_d){
          dDown = 1;
+      }
+      if(Event.Key == SDLK_e){
+         eDown = 1;
       }
       if(Event.Key == SDLK_k){
       }
@@ -262,6 +270,9 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_d){
          dDown = 0;
       }
+      if(Event.Key == SDLK_e){
+         eDown = 0;
+      }
       if(Event.Key == SDLK_f){
          fDown = 0;
       }
@@ -286,12 +297,7 @@ void CLWIBState::printXML() {
     
     std::vector<CPlaceable*>::iterator it;
     for(it=placeables.begin();it<placeables.end();it++) {
-       worldlist->AddAtributes("width ", (*it)->getWidth());
-       worldlist->AddAtributes("height ", (*it)->getHeight());
-       worldlist->AddAtributes("Y ", (*it)->getY());
-       worldlist->AddAtributes("X ", (*it)->getX());
-       worldlist->Createtag((*it)->tag());
-       worldlist->CloseLasttag();
+       (*it)->writeXML(worldlist);
     }
     worldlist->CloseAlltags();
     delete worldlist;
@@ -308,7 +314,7 @@ void CLWIBState::end()
    Application.getSceneManager().removeAllRenderables();
 }
 
-void CLWIBState::PrepPreviewBlock() {
+void CLWIBState::PrepPreviews() {
    blocks.push_back(PreviewBlock = new CMeshRenderable());
    PreviewBlock->setMesh(cubeMesh);
 
@@ -317,6 +323,17 @@ void CLWIBState::PrepPreviewBlock() {
    //PreviewBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    PreviewBlock->setScale(SVector3(blockWidth, blockHeight, 1));
    CApplication::get().getSceneManager().addRenderable(PreviewBlock);
+
+   blocks.push_back(PreviewEnemy = new CMeshRenderable());
+   appleMesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
+   appleMesh->calculateNormalsPerFace();
+   PreviewEnemy->setMesh(appleMesh);
+
+   PreviewEnemy->getMaterial().Shader = Flat;
+   PreviewBlock->setScale(SVector3(1, 1, 1));
+
+   CApplication::get().getSceneManager().addRenderable(PreviewEnemy);
+   PreviewEnemy->setVisible(false);
 }
 
 void initBlockMap() {

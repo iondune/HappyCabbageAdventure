@@ -6,21 +6,27 @@ CBlock::CBlock(float nx, float ny, int width, int height)
    w = width; h = height;
 }
 
-void CBlock::printXML() {
-   //For usage in LWIB
-   printf("X: %0.2f Y: %0.2f W: %d H: %d\n", x,y,w,h);
-}
+void CBlock::writeXML(xmlwriter *l) {
+    std::stringstream xValue, yValue, widthValue, heightValue, tagValue;
+    xValue << x;
+    yValue << y;
+    widthValue << w;
+    heightValue << h;
+    tagValue << "CBlock";
 
-std::string CPlaceable::tag()
-{
-    std::stringstream tag;
-    tag << "CBlock";
-    return tag.str();
+
+    l->AddAtributes("width ", widthValue.str());
+    l->AddAtributes("height ", heightValue.str());
+    l->AddAtributes("Y ", yValue.str());
+    l->AddAtributes("X ", xValue.str());
+    l->Createtag(tagValue.str());
+    l->CloseLasttag();
 }
 
 void CBlock::moveTo(float x,float y) {
    //For usage in LWIB
 }
+
 CMeshRenderable * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
    Cabbage::Collider::CObject *engBlock = Engine->addObject();
    engBlock->setArea(SRect2(x, y, w, h));
