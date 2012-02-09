@@ -1,6 +1,8 @@
 #include "CMainMenuState.h"
 
-CMainMenuState::CMainMenuState() {}
+CMainMenuState::CMainMenuState() 
+: Application (CApplication::get())
+{}
 
 void CMainMenuState::setupTextures()
 {
@@ -31,10 +33,6 @@ void CMainMenuState::setupMeshes()
   //renderLogo->setTranslation(SVector3(0.00, 0.1, 0.3));
   renderLogo->setScale(SVector3(0.4));
   renderLogo->setRotation(SVector3(75, 180, 0));
-  CApplication::get().getSceneManager().addRenderable(renderLogo);
-
-
-
 }
 
 void CMainMenuState::drawSky(int backwards) {
@@ -46,17 +44,17 @@ void CMainMenuState::drawSky(int backwards) {
    glTranslatef(0,0,1.01f);
    
    glBegin(GL_QUADS);
-   if(!backwards) {
+   //if(!backwards) {
       glTexCoord2f(0, 1);
-      glVertex3f(-25, 22, -2.5f);
+      glVertex3f(-20, 22, -2.0f);
       glTexCoord2f(0, 0);
-      glVertex3f(-25, -1, -2.5f);
+      glVertex3f(-20, -2, -2.0f);
       glTexCoord2f(1, 0);
-      glVertex3f(25, -1, -2.5f);
+      glVertex3f(20, -2, -2.0f);
       glTexCoord2f(1, 1);
-      glVertex3f(25, 22, -2.5f);
-   }
-   else {
+      glVertex3f(20, 22, -2.0f);
+   //}
+  /* else {
       glTexCoord2f(0, 1);
       glVertex3f(-2, 2, 0.0f);
       glTexCoord2f(0, 0);
@@ -65,7 +63,7 @@ void CMainMenuState::drawSky(int backwards) {
       glVertex3f(2, -2, 0.0f);
       glTexCoord2f(1, 1);
       glVertex3f(2, 2, 0.0f);
-   }
+   }*/
    glEnd();
 
    glPopMatrix();
@@ -102,6 +100,13 @@ void CMainMenuState::drawButton()
 
 void CMainMenuState::begin()
 {
+   SPosition2 size = Application.getWindowSize();
+   float WindowWidth = size.X;
+   float WindowHeight = size.Y;
+
+   Camera = new CCamera(WindowWidth/WindowHeight, 0.01f, 100.f, 60.f);
+   Application.getSceneManager().setActiveCamera(Camera);
+
    //glClearColor(1.0f,1.0f,1.0f,0);
    glClearColor(0,0,0,0);
    setupTextures();
@@ -110,6 +115,8 @@ void CMainMenuState::begin()
 
    curAngle = 0;
    curDirection = 'l';
+
+   Application.getSceneManager().addRenderable(renderLogo);
 }
 void CMainMenuState::end()
 {
@@ -119,16 +126,18 @@ void CMainMenuState::end()
 void CMainMenuState::OnRenderStart(float const Elapsed)
 {
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   glMatrixMode(GL_MODELVIEW);
 
+   glMatrixMode(GL_MODELVIEW);
+   
    glLoadIdentity();
 
-   CApplication::get().getSceneManager().drawAll();
    glDisable(GL_LIGHTING);
 
    glPushMatrix();
 
    drawSky(true);
+
+   Application.get().getSceneManager().drawAll();
 
    SDL_GetMouseState(&mouse_x, &mouse_y);
 
