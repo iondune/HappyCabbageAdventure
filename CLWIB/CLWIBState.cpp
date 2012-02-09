@@ -43,7 +43,7 @@ void initBlockMap();
 
 //Minblockvalue = -25
 //Heightoffset = 0.5
-qd blockMap[100][100];
+qd blockMap[225][100];
 
 
 //Initalizer fxn
@@ -350,7 +350,7 @@ void CLWIBState::PrepPreviews() {
 
 void initBlockMap() {
    int i,j;
-   for(i=0; i<100; i++)
+   for(i=0; i<225; i++)
       for(j=0; j<100; j++) {
          blockMap[i][j].o = false;
          blockMap[i][j].p = NULL;
@@ -361,7 +361,7 @@ void initBlockMap() {
 }
 
 void CLWIBState::PrepEnemy(float x, float y) {
-   if(x < -25 || y < -25)
+   if(x < -25 || y < -25 || x >= 200 || y >= 75)
       return;
    if(blockMap[(int)x+25][(int)(y-0.5+25)].o) {
       printf("Blockmap space occupied. Did not place enemy\n");
@@ -392,7 +392,7 @@ void CLWIBState::PrepEnemy(float x, float y) {
 
 
 void CLWIBState::PrepBlock(float x, float y, int w, int h) {
-   if(x < -25 || y < -25)
+   if(x < -25 || y < -25 || x >= 200 || y >= 75)
       return;
    int i,j, ret=0;
    for(i=0;i<w;i++) {
@@ -630,7 +630,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          float y = round(eye.Y + previewBlockMouseY);
          float oldx = round(eye.X + oldPBMX);
          float oldy = round(eye.Y + oldPBMY);
-         if(x < -25 || y < -25)
+         if(x < -25 || y < -25 || x >= 200 || y >= 75)
             return;
          if(oldx == x && oldy == y)
             return;

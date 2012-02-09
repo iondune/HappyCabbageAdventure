@@ -119,15 +119,21 @@ void CGameState::EngineInit( void ) {
    loadWorld(&list);
 
    std::vector<CPlaceable*>::iterator it;
+   CObject * lastOne;
    for(it=list.begin();it<list.end();it++) {
       (*it)->setupItem(DiffuseTexture, Engine, GameplayManager);
       printf(" %d\n", (*it)->isMovingPlatform);
       if((*it)->isMovingPlatform) {
          elevators.push_back(((CBlock*)(*it))->elevator);
-         printf("this is a moving platform\n");
+         lastOne = ((CBlock*)(*it))->elevator;
       }
-      else
-         printf("this is NOT a moving platform\n");
+   }
+
+   Block = Engine->addObject();
+   Block->setArea(SRect2(0.f, 0.f, 4.f, 10.f));
+   PrepBlock(0, 0, 4, 10);
+   if(lastOne) {
+      GameplayManager->setVictoryFlag(Block);
    }
 
 
@@ -234,7 +240,6 @@ void CGameState::begin()
 
    PrepShadow();
 
-   Application.getSceneManager().addRenderable(renderBasicTree);
    Application.getSceneManager().addRenderable(playerRenderable);
    Application.getSceneManager().addRenderable(renderFlag);
 
@@ -311,7 +316,7 @@ void CGameState::oldDisplay() {
    float curXVelocity = Player->getVelocity().X;
    PlayerView->setVelocity(Player->getVelocity());
 
-   if (GameplayManager->isPlayerAlive())
+   if (GameplayManager->isPlayerAlive() && !GameplayManager->isWon())
    {
       if(!overView) {
          if(dDown && aDown) {
@@ -361,6 +366,11 @@ void CGameState::oldDisplay() {
          playJump = false;
       }
 
+   }
+   else if (GameplayManager->isWon()) {
+      Player->setAction(CActor::EActionType::None);
+      PlayerView->setState(CPlayerView::State::Standing);
+      Player->setJumping(true);
    }
    else
    {
@@ -462,14 +472,20 @@ void CGameState::OnRenderStart(float const Elapsed)
 
    Application.getSceneManager().drawAll();
 
-   if (! GameplayManager->isPlayerAlive()) {
-      //Chris Code.  Play Death Sound
-      if (playDead) {
-         Mix_HaltMusic();
-         Mix_PlayChannel(-1, die, 0); //Only play once
-         playDead = false;
+   if (!GameplayManager->isPlayerAlive() || GameplayManager->isWon()) {
+      if(GameplayManager->isWon()) {
+         //CHRIS INSERT VICTORY NOISE HERE
+         freetype::print(our_font, 50, WindowHeight - 240.f, "CONGRATULATIONS! YOU HAVE WON!");
       }
-      freetype::print(our_font, 50, WindowHeight - 240.f, "GAME OVER! YOU ARE DEAD");
+      else {
+         //Chris Code.  Play Death Sound
+         if (playDead) {
+            Mix_HaltMusic();
+            Mix_PlayChannel(-1, die, 0); //Only play once
+            playDead = false;
+         }
+         freetype::print(our_font, 50, WindowHeight - 240.f, "GAME OVER! YOU ARE DEAD");
+      }
    }
 
    //Calculate FPS

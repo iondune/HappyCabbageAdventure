@@ -6,21 +6,37 @@ CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabb
 {
     Engine->setCollisionResponder(this);
     GameEventManager = new CGameEventManager();
+    won = 0;
 }
 
 void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With)
 {
     Cabbage::Collider::CCollideable * Other = 0;
-    if (Object == PlayerActor)
-        Other = With;
-    if (With == PlayerActor)
-        Other = Object;
+    Cabbage::Collider::CCollideable * PlayerCollideable = 0;
+    Cabbage::Collider::CCollideable * Flag = 0;
+    if (Object == PlayerActor) {
+       PlayerCollideable = PlayerActor;
+       Other = With;
+    }
+    if (With == PlayerActor) {
+       PlayerCollideable = PlayerActor;
+       Other = Object;
+    }
+    if (Object == VictoryFlag)
+       Flag = Object;
+    if (With == VictoryFlag)
+       Flag = With;
 
     if (! Other)
         return;
 
     float const HitThreshold = 0.05f;
 
+    if(PlayerCollideable && Flag)
+       won = 1;
+    if(won) {
+       return;
+    }
     for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
     {
         if (Other == it->Actor)
@@ -70,6 +86,16 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
         }
     }
 
+}
+
+void CGameplayManager::setVictoryFlag(Cabbage::Collider::CObject * f) {
+   VictoryFlag = f;
+}
+
+
+bool const CGameplayManager::isWon() const
+{
+    return won; 
 }
 
 bool const CGameplayManager::isPlayerAlive() const
