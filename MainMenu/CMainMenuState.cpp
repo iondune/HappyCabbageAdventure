@@ -1,4 +1,5 @@
 #include "CMainMenuState.h"
+#include "../base/sound.h"
 
 CMainMenuState::CMainMenuState() 
 : Application (CApplication::get())
@@ -115,6 +116,10 @@ void CMainMenuState::begin()
    Application.getSceneManager().Lights.push_back(SLight());
    Application.getSceneManager().Lights.back().ColorUniform->Value = SVector3(1.f);
    Application.getSceneManager().Lights.back().PositionUniform->Value = SVector3(0.f);
+
+   //Sound Setup
+   setupSoundtrack();
+   startSoundtrack();
 
    //glClearColor(1.0f,1.0f,1.0f,0);
    glClearColor(0,0,0,0);
@@ -321,7 +326,8 @@ void CMainMenuState::OnMouseEvent(SMouseEvent const & Event)
             {
                printf("top button hit!!\n");
                CApplication::get().getStateManager().setState(& CGameState::get());
-               printf("top button hit!!\n");
+               stopSoundtrack();
+               changeSoundtrack("sounds/SMW.wav");
             } 
             else if(Event.Location.Y >330 && Event.Location.Y < 400)
             {
