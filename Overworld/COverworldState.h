@@ -23,9 +23,14 @@ class COverworldState : public CState<COverworldState>
    CMeshRenderable *renderMap;
    CMesh *mapMesh;
 
+   int startx, starty;
+   float pitchphi, yawtheta;
+   int mouseDown;
 
 
+   SVector3 eye, look;
    int WindowWidth, WindowHeight;
+   SVector3 rot;
 
    //std::vector<Node> nodes;
 
@@ -38,6 +43,8 @@ class COverworldState : public CState<COverworldState>
    COverworldState();
    //Initalizer fxn
    void begin();
+   void step(float delta);
+   float camRotValue;
    CCamera *Camera;
    float fps, timeTotal;
    int numFrames;
@@ -47,5 +54,7 @@ class COverworldState : public CState<COverworldState>
    void OnKeyboardEvent(SKeyboardEvent const & Event);
    //Runs at program close (currently not implemented)
    void end();
+   void stepCamera(float delta);
+   void OnMouseEvent(SMouseEvent const & Event);
 };
 #endif
