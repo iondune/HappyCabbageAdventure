@@ -119,21 +119,15 @@ void CGameState::EngineInit( void ) {
    loadWorld(&list);
 
    std::vector<CPlaceable*>::iterator it;
-   CObject * lastOne;
    for(it=list.begin();it<list.end();it++) {
       (*it)->setupItem(DiffuseTexture, Engine, GameplayManager);
       printf(" %d\n", (*it)->isMovingPlatform);
       if((*it)->isMovingPlatform) {
          elevators.push_back(((CBlock*)(*it))->elevator);
-         lastOne = ((CBlock*)(*it))->elevator;
+         printf("this is a moving platform\n");
       }
-   }
-
-   Block = Engine->addObject();
-   Block->setArea(SRect2(180.3f, .5f, 1.f, 1.f));
-   renderFlag->setTranslation(SVector3(180, .5, 0));
-   if(lastOne) {
-      GameplayManager->setVictoryFlag(Block);
+      else
+         printf("this is NOT a moving platform\n");
    }
 
 
@@ -240,6 +234,7 @@ void CGameState::begin()
 
    PrepShadow();
 
+   Application.getSceneManager().addRenderable(renderBasicTree);
    Application.getSceneManager().addRenderable(playerRenderable);
    Application.getSceneManager().addRenderable(renderFlag);
 
@@ -247,7 +242,7 @@ void CGameState::begin()
 
    int random;
 
-   for (int n = 0; n < 24; n++) {
+   for (int n = 0; n < 110; n++) {
       random = rand() % 8;
 
       if (n % 2 == 0)
@@ -273,7 +268,7 @@ void CGameState::begin()
          }
    }
 
-   for (int n = 0; n < 12; n++) {
+   for (int n = 0; n < 55; n++) {
       random = rand() % 3;
 
       if (n % 2 == 0)
@@ -316,7 +311,7 @@ void CGameState::oldDisplay() {
    float curXVelocity = Player->getVelocity().X;
    PlayerView->setVelocity(Player->getVelocity());
 
-   if (GameplayManager->isPlayerAlive() && !GameplayManager->isWon())
+   if (GameplayManager->isPlayerAlive())
    {
       if(!overView) {
          if(dDown && aDown) {
@@ -366,11 +361,6 @@ void CGameState::oldDisplay() {
          playJump = false;
       }
 
-   }
-   else if (GameplayManager->isWon()) {
-      Player->setAction(CActor::EActionType::None);
-      PlayerView->setState(CPlayerView::State::Standing);
-      Player->setJumping(true);
    }
    else
    {
@@ -472,20 +462,14 @@ void CGameState::OnRenderStart(float const Elapsed)
 
    Application.getSceneManager().drawAll();
 
-   if (!GameplayManager->isPlayerAlive() || GameplayManager->isWon()) {
-      if(GameplayManager->isWon()) {
-         //CHRIS INSERT VICTORY NOISE HERE
-         freetype::print(our_font, 50, WindowHeight - 240.f, "CONGRATULATIONS! YOU HAVE WON!");
+   if (! GameplayManager->isPlayerAlive()) {
+      //Chris Code.  Play Death Sound
+      if (playDead) {
+         Mix_HaltMusic();
+         Mix_PlayChannel(-1, die, 0); //Only play once
+         playDead = false;
       }
-      else {
-         //Chris Code.  Play Death Sound
-         if (playDead) {
-            Mix_HaltMusic();
-            Mix_PlayChannel(-1, die, 0); //Only play once
-            playDead = false;
-         }
-         freetype::print(our_font, 50, WindowHeight - 240.f, "GAME OVER! YOU ARE DEAD");
-      }
+      freetype::print(our_font, 50, WindowHeight - 240.f, "GAME OVER! YOU ARE DEAD");
    }
 
    //Calculate FPS
@@ -750,6 +734,7 @@ void LoadTextures()
    blueFlwrImg = CImageLoader::loadImage("Textures/blueFlower.bmp");
    pinkFlwrImg = CImageLoader::loadImage("Textures/pinkFlower.bmp");
    poinImg = CImageLoader::loadImage("Textures/poin.bmp");
+   flagImg = CImageLoader::loadImage("Textures/flag.bmp");
 
    grassTxt = new CTexture(grassImg);
    skyTxt = new CTexture(skyImg);
@@ -757,6 +742,7 @@ void LoadTextures()
    blueFlwrTxt = new CTexture(blueFlwrImg);
    pinkFlwrTxt = new CTexture(pinkFlwrImg);
    poinTxt = new CTexture(poinImg);
+   flagTxt = new CTexture(flagImg);
 }
 
 void PrepMeshes()
@@ -808,9 +794,9 @@ void PrepMeshes()
 
    renderFlag = new CMeshRenderable();
    renderFlag->setMesh(flagMesh);
-   renderFlag->setTranslation(SVector3(15, .5, 0));
+   renderFlag->setTranslation(SVector3(-25, .5, 1.0));
    renderFlag->setRotation(SVector3(-90,0,0));
    renderFlag->setScale(SVector3(.0100, .00025,.0016));
-   //renderFlag->getMaterial().Texture = dirtTxt;
-   renderFlag->getMaterial().Shader = normalColor;//DiffuseTexture;
+   renderFlag->getMaterial().Texture = flagTxt;
+   renderFlag->getMaterial().Shader = DiffuseTexture;
 }
