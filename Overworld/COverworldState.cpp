@@ -86,7 +86,7 @@ void COverworldState::OnRenderStart(float const Elapsed)
    glLoadIdentity();
 
    step(Application.getElapsedTime());
-   stepCamera(Application.getElapsedTime());
+   //stepCamera(Application.getElapsedTime());
    SVector3 eyeRot = eye;
    eyeRot.X += 0.2*cos(camRotValue);
    eyeRot.Z += 0.2*(sin(camRotValue) + 1);
@@ -190,14 +190,58 @@ void COverworldState::PrepMeshes()
    renderMap->getMaterial().Shader = DiffuseTexture;
    CApplication::get().getSceneManager().addRenderable(renderMap);
 
-   /*
-   renderNode = new CMeshRenderable();
-   renderNode->setMesh(discMesh);
-   renderNode->getMaterial().Shader = Flat;
-   */
+   CShader* discShader = DiffuseTexture;
+
+   CMesh *discMesh = CMeshLoader::loadAsciiMesh("Disc");
+   discMesh->linearizeIndices();
+   discMesh->calculateNormalsPerFace();
+
+   discRender = new CMeshRenderable();
+   discRender->setMesh(discMesh);
+   discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
+   discRender->getMaterial().Shader = discShader;
+   discRender->setTranslation(SVector3(0.5, -0.13, 0.1));
+   discRender->setScale(SVector3(0.2));
+   CApplication::get().getSceneManager().addRenderable(discRender);
+
+   discRender = new CMeshRenderable();
+   discRender->setMesh(discMesh);
+   discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_orange.bmp");
+   discRender->getMaterial().Shader = discShader;
+   discRender->setTranslation(SVector3(0.9, -0.12999999, 0.3));
+   discRender->setScale(SVector3(0.19));
+   CApplication::get().getSceneManager().addRenderable(discRender);
+
+   discRender = new CMeshRenderable();
+   discRender->setMesh(discMesh);
+   discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
+   discRender->getMaterial().Shader = discShader;
+   discRender->setTranslation(SVector3(0.9, -0.13, 0.3));
+   discRender->setScale(SVector3(0.2));
+   CApplication::get().getSceneManager().addRenderable(discRender);
+   
+   CMesh *playerMesh;
+   playerMesh = CMeshLoader::load3dsMesh("Models/crappycabbage.3ds");
+   if (playerMesh) {
+      playerMesh->resizeMesh(SVector3(0.1));
+      playerMesh->centerMeshByExtents(SVector3(0));
+      playerMesh->calculateNormalsPerFace();
+   }
+   else {
+      fprintf(stderr, "Failed to load the cababge mesh\n");
+   }
+
+   playerRender = new CMeshRenderable();
+   playerRender->setMesh(playerMesh);
+   playerRender->getMaterial().Shader = Flat;
+   playerRender->setTranslation(SVector3(0.9, 0, 0.3));
+   playerRender->setScale(SVector3(1));
+
+   CApplication::get().getSceneManager().addRenderable(playerRender);
 }
 
 
+/*
 void COverworldState::OnMouseEvent(SMouseEvent const & Event) {
    if(Event.Button.Value == SMouseEvent::EButton::Left) {
       if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
@@ -256,4 +300,4 @@ void COverworldState::stepCamera(float delta) {
       eye -= zoom;
    }
 }
-
+*/
