@@ -88,6 +88,7 @@
     <ClInclude Include="draw.h" />
     <ClInclude Include="FreeType.h" />
     <ClInclude Include="header.h" />
+    <ClInclude Include="irrxml-1.2\src\irrXML.h" />
     <ClInclude Include="Materials.h" />
     <ClInclude Include="SDL_mixer.h" />
     <ClInclude Include="sound.h" />
@@ -99,6 +100,7 @@
     <ClCompile Include="CGameState.cpp" />
     <ClCompile Include="CPlayerView.cpp" />
     <ClCompile Include="FreeType.cpp" />
+    <ClCompile Include="irrxml-1.2\src\irrXML.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Materials.cpp" />
     <ClCompile Include="sound.cpp" />

@@ -9,6 +9,7 @@
 #include "../CLWIB/CBlock.h"
 #include "../CLWIB/CPlaceable.h"
 #include "CGameEventReceiver.h"
+#include "irrxml-1.2/src/irrXML.h"
 
 
 #define TREE_Y_OFFSET 2.1
