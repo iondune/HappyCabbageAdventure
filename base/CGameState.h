@@ -32,7 +32,7 @@ class CGameState : public CState<CGameState>
    float fps, timeTotal;
    int numFrames;
    void oldDisplay(); 
-   void loadWorld();
+   void loadWorld(std::vector<CBlock> *list);
    //Runs at very start of display
    void OnRenderStart(float const Elapsed);
    //Sends event every time key pressed (also when held)

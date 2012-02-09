@@ -10,6 +10,7 @@ xmlwriter::xmlwriter(string sTmp)
     fp = NULL;
     iLevel = 0;
     fp = fopen(sXmlFile.c_str(),"w");
+    fflush(fp);
     if(fp == NULL)
     {
 		std::cout<<"Unable to open output file";
@@ -23,8 +24,9 @@ xmlwriter::xmlwriter(string sTmp)
 
 xmlwriter::~xmlwriter()
 {
-    if(fp != NULL)
+    if(fp != NULL) {
         fclose(fp);
+    }
     vectAttrData.clear();
 }
 

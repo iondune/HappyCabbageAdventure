@@ -44,7 +44,7 @@ CGameState::CGameState()
 : Application (CApplication::get())
 {}
 
-void loadWorld(std::vector<CBlock> & list)
+void CGameState::loadWorld(std::vector<CBlock> *list)
 {
     int x,y,w,h;
 
@@ -56,14 +56,15 @@ void loadWorld(std::vector<CBlock> & list)
         case irr::io::EXN_TEXT:
 			break;
         case irr::io::EXN_ELEMENT:
-			if(!strcmp("CBlock", xml->getNodeName()))
+			if(!strcmp("Cblock", xml->getNodeName()))
 			{
 				// id, X, Y, height, width / from 0,1,2 so on
-				x = xml->getAttributeValueAsInt(1);
-				y = xml->getAttributeValueAsInt(2);
-				h = xml->getAttributeValueAsInt(3);
-				w = xml->getAttributeValueAsInt(4);
-                list.push_back(CBlock(x,y,w,h));
+				x = xml->getAttributeValueAsInt(0);
+				y = xml->getAttributeValueAsInt(1);
+				h = xml->getAttributeValueAsInt(2);
+				w = xml->getAttributeValueAsInt(3);
+            list->push_back(CBlock((float)x,(float)y,w,h));
+            printf("%d %d %d %d\n", x, y, w, h);
 			}	
 				break;
 		}
@@ -71,6 +72,7 @@ void loadWorld(std::vector<CBlock> & list)
 }
 
 void CGameState::EngineInit( void ) {
+   printf("asdf\n");
    Engine = new CEngine();
    Player = Engine->addActor();
    Player->setArea(SRect2(-24.5, 3, 1, 1));
@@ -108,11 +110,16 @@ void CGameState::EngineInit( void ) {
    float i = 0;
    float j = 0;
 
+   std::vector<CBlock> list;
+   loadWorld(&list);
+
+   std::vector<CBlock>::iterator it;
+   for(it=list.begin();it<list.end();it++) {
+      (*it).setupItem(DiffuseTexture, Engine, GameplayManager);
+   }
 
 
-   CBlock *m_block = new CBlock(0, 0, 3, 5);
-   m_block->setupItem(DiffuseTexture, Engine, GameplayManager);
-
+   /*
    for(j = 0; j < 10; j+=2.5f) {
       Block = Engine->addObject();
       area = SRect2(-15.f + j, 1.5f + j, 2.f, 1);
@@ -155,6 +162,7 @@ void CGameState::EngineInit( void ) {
    area = SRect2(27.5, 4, 2, 1);
    PrepBlock(27.5, 4, 2, 1);
    Block->setArea(area);
+   */
 }
 
 //Initalizer fxn

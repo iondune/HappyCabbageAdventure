@@ -244,7 +244,8 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_ESCAPE) {
          //TODO: Replace with an event/signal to end the game world 
          //finished = true;
-         exit(1);
+         glViewport(0, 0, WindowWidth, WindowHeight);
+         Application.getStateManager().setState(& CMainMenuState::get());
       }
    }
    //Check if key let go, Not sure if this will work in here.
@@ -281,24 +282,30 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
 }
 
 void CLWIBState::printXML() {
-    xmlwriter worldlist("test.xml");
+    xmlwriter *worldlist = new xmlwriter("test.xml");
     
     std::vector<CPlaceable*>::iterator it;
     for(it=placeables.begin();it<placeables.end();it++) {
-        worldlist.AddAtributes("width ", (*it)->getWidth());
-		worldlist.AddAtributes("height ", (*it)->getHeight());
-        worldlist.AddAtributes("Y ", (*it)->getY());
-        worldlist.AddAtributes("X ", (*it)->getX());
-		worldlist.Createtag((*it)->tag());
-		worldlist.CloseLasttag();
+        worldlist->AddAtributes("width ", (*it)->getWidth());
+		worldlist->AddAtributes("height ", (*it)->getHeight());
+        worldlist->AddAtributes("Y ", (*it)->getY());
+        worldlist->AddAtributes("X ", (*it)->getX());
+		worldlist->Createtag((*it)->tag());
+		worldlist->CloseLasttag();
     }
-    worldlist.CloseAlltags();
+    worldlist->CloseAlltags();
+    delete worldlist;
 }
 
 //Runs at program close (currently not implemented)
 void CLWIBState::end()
 {
    our_font.clean();
+   placeables.clear();
+   redoPlaceables.clear();
+   blocks.clear();
+   redo.clear();
+   Application.getSceneManager().removeAllRenderables();
 }
 
 void CLWIBState::PrepPreviewBlock() {

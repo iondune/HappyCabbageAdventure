@@ -4,6 +4,8 @@
 #include <iostream>
 
 #include "header.h"
+#include "../CabbageFramework/CabbageFramework.h"
+#include "../MainMenu/CMainMenuState.h"
 #include "CPlaceable.h"
 #include "CBlock.h"
 #include "wmlwriter_src/xmlwriter.h"
