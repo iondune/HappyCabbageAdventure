@@ -37,6 +37,7 @@ namespace Collider
 
         float Speed;
         float Range;
+        float InitialDirection;
 
 	};
 }
