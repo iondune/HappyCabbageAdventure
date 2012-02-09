@@ -44,7 +44,9 @@ class CPlayerView {
       CPlayerView() {
          ySineValue = 0;
          yShadow = 0;
+         lookRight = 1;
       }
+      int lookRight;
       void setRenderable(CMeshRenderable *render, CMeshRenderable *shadowRender) {
          PlayerRenderable = render;
          renderShadow = shadowRender;
