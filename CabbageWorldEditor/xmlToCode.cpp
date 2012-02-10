@@ -34,7 +34,7 @@ void xmlLevReader(std::vector<plat> & list, std::vector<obj> & character, std::s
 				move.topY = xml->getAttributeValueAsInt(1);
 				move.height = xml->getAttributeValueAsInt(1);
 				move.width = xml->getAttributeValueAsInt(1);
-				move.main = xml->getAttributeValueAsInt(1);
+				move.main = xml->getAttributeValueAsInt(1) != 0;
 				character.push_back(move);
 				printf("no\n");
 			}

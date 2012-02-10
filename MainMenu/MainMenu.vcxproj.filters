@@ -6,4 +6,7 @@
   <ItemGroup>
     <ClInclude Include="CMainMenuState.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="que" />
+  </ItemGroup>
 </Project>

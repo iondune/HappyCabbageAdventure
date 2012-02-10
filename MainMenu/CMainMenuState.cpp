@@ -35,9 +35,9 @@ void CMainMenuState::setupMeshes()
   renderLogo = new CMeshRenderable();
   renderLogo->setMesh(logoMesh);
   renderLogo->getMaterial().Shader = Flat;
-  renderLogo->setTranslation(SVector3(0.00, 0.1, 0.3));
+  renderLogo->setTranslation(SVector3(0.00, 0.1f, 0.3f));
   //renderLogo->setTranslation(SVector3(0.00, 0.1, 0.3));
-  renderLogo->setScale(SVector3(0.4));
+  renderLogo->setScale(SVector3(0.4f));
   renderLogo->setRotation(SVector3(75, 180, 0));
 }
 
@@ -107,8 +107,8 @@ void CMainMenuState::drawButton()
 void CMainMenuState::begin()
 {
    SPosition2 size = Application.getWindowSize();
-   float WindowWidth = size.X;
-   float WindowHeight = size.Y;
+   float WindowWidth = (float) size.X;
+   float WindowHeight = (float) size.Y;
 
    Camera = new CCamera(WindowWidth/WindowHeight, 0.01f, 100.f, 60.f);
    Application.getSceneManager().setActiveCamera(Camera);
@@ -159,13 +159,13 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 
    SDL_GetMouseState(&mouse_x, &mouse_y);
 
-   glTranslatef(.04f, .11, 0);
+   glTranslatef(.04f, .11f, 0);
 
    if(mouse_x < 540 && mouse_x > 280 && mouse_y >225 && mouse_y < 300)
    {
       if (curDirection == 'l' && curAngle <= 20) {
          glPushMatrix();
-         glRotatef(curAngle+=.1, 0, 0, 1);
+         glRotatef(curAngle+=.1f, 0, 0, 1);
          drawButton();
          glPopMatrix();
       }
@@ -176,7 +176,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 
       if (curDirection == 'r' && curAngle >= -20) {
          glPushMatrix();
-         glRotatef(curAngle-=.1, 0, 0, 1);
+         glRotatef(curAngle-=.1f, 0, 0, 1);
          drawButton();
          glPopMatrix();
       }
@@ -189,7 +189,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
       glLoadIdentity();
       glTranslatef(92, 125, 0);
       glRotatef(curAngle,0,0,1);
-      glScalef(1,.8+.3*cos(curAngle/5),1);
+      glScalef(1,.8f+.3f*cos(curAngle/5),1);
       glTranslatef(-80,0,0);
      freetype::print(our_font, 320, 200, "New Game", curAngle);
      glPopMatrix();
@@ -197,16 +197,16 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 
    else {
       drawButton();
-      freetype::print(our_font, 332, 325.f, "New Game");
+      freetype::print(our_font, 332, 325, "New Game");
    }
 
-   glTranslatef(0, -0.35, 0);
+   glTranslatef(0, -0.35f, 0);
 
    if(mouse_x < 540 && mouse_x > 280 && mouse_y > 330 && mouse_y < 400)
    {
       if (curDirection == 'l' && curAngle <= 20) {
          glPushMatrix();
-         glRotatef(curAngle+=.1, 0, 0, 1);
+         glRotatef(curAngle+=.1f, 0, 0, 1);
          drawButton();
          glPopMatrix();
       }
@@ -217,7 +217,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 
       if (curDirection == 'r' && curAngle >= -20) {
          glPushMatrix();
-         glRotatef(curAngle-=.1, 0, 0, 1);
+         glRotatef(curAngle-=.1f, 0, 0, 1);
          drawButton();
          glPopMatrix();
       }
@@ -230,7 +230,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
       glLoadIdentity();
       glTranslatef(102, 125, 0);
       glRotatef(curAngle,0,0,1);
-      glScalef(1,.8+.3*cos(curAngle/5),1);
+      glScalef(1,.8f+.3f*cos(curAngle/5),1);
       glTranslatef(-90,0,0);
      freetype::print(our_font, 300, 95, "Stage Editor", curAngle);
      glPopMatrix();
@@ -241,14 +241,14 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
       freetype::print(our_font, 310, 220.f, "Stage Editor");
    }
 
-   glTranslatef(0, -0.35, 0);
+   glTranslatef(0, -0.35f, 0);
 
 
    if(mouse_x < 540 && mouse_x > 280 && mouse_y > 435 && mouse_y < 510)
    {
       if (curDirection == 'l' && curAngle <= 20) {
          glPushMatrix();
-         glRotatef(curAngle+=.1, 0, 0, 1);
+         glRotatef(curAngle+=.1f, 0, 0, 1);
          drawButton();
          glPopMatrix();
       }
@@ -259,7 +259,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 
       if (curDirection == 'r' && curAngle >= -20) {
          glPushMatrix();
-         glRotatef(curAngle-=.1, 0, 0, 1);
+         glRotatef(curAngle-=.1f, 0, 0, 1);
          drawButton();
          glPopMatrix();
       }
@@ -272,7 +272,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
       glLoadIdentity();
       glTranslatef(90, 125, 0);
       glRotatef(curAngle,0,0,1);
-      glScalef(1,.8+.3*cos(curAngle/5),1);
+      glScalef(1,.8f+.3f*cos(curAngle/5),1);
       glTranslatef(-90,0,0);
      freetype::print(our_font, 325, -10, "Exit Game", curAngle);
      glPopMatrix();

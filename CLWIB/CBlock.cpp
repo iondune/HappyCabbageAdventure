@@ -39,15 +39,15 @@ CMeshRenderable * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngine
    CMeshRenderable *tempBlock = new CMeshRenderable();
    if(isMovingPlatform) {
       Cabbage::Collider::CElevator *engBlock = Engine->addElevator();
-      engBlock->setArea(SRect2(x, y, w, h));
-      engBlock->Speed = Speed;
-      engBlock->Range = Range;
+      engBlock->setArea(SRect2(x, y, (float) w, (float) h));
+      engBlock->Speed = (float) Speed;
+      engBlock->Range = (float) Range;
       engBlock->setRenderable(tempBlock);
       elevator = engBlock;
    }
    else {
       Cabbage::Collider::CObject *engBlock = Engine->addObject();
-      engBlock->setArea(SRect2(x, y, w, h));
+      engBlock->setArea(SRect2(x, y, (float) w, (float) h));
    }
 
    CMesh *mesh = CMeshLoader::loadAsciiMesh("Cube");
@@ -56,7 +56,7 @@ CMeshRenderable * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngine
    tempBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/dirt.bmp");
    tempBlock->getMaterial().Shader = shader;
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
-   tempBlock->setScale(SVector3(w, h, 1));
+   tempBlock->setScale(SVector3((float) w, (float) h, 1));
    tempBlock->setRotation(SVector3(0, 0, 0));
    CApplication::get().getSceneManager().addRenderable(tempBlock);
 

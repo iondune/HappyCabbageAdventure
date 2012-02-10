@@ -3,9 +3,10 @@
 #include <cmath>
 
 #ifdef _WIN32
-static inline double round(double val)
+static inline float round(float r)
 {
-    return floor(val + 0.5);
+    return (r > 0.f) ? floor(r + 0.5f) : ceil(r - 0.5f);
+
 }
 #define M_PI 3.14159f
 #endif
@@ -59,7 +60,7 @@ void CLWIBState::begin()
    SPosition2 size = Application.getWindowSize();
    WindowWidth = size.X;
    WindowHeight = size.Y; 
-   glClearColor(0.4,0.8,1.0,0);
+   glClearColor(0.4f,0.8f,1.0f,0);
 
    glEnable(GL_DEPTH_TEST);
    glDepthFunc(GL_LEQUAL);
@@ -87,7 +88,7 @@ void CLWIBState::begin()
 
    //Load the meshes into VBOs
 
-   srand(time(NULL));
+   srand(time(0));
 
    //Initialize Fxns
    BlocksInit();
