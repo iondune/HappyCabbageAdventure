@@ -107,11 +107,15 @@ CSceneManager & CApplication::getSceneManager()
     return * SceneManager;
 }
 
+void CApplication::skipElapsedTime()
+{
+    Time0 = SDL_GetTicks();
+}
+
 void CApplication::run()
 {
     bool Running = true;
 
-	unsigned int Time0, Time1;
 	Time0 = SDL_GetTicks();
 
 	while (Running)

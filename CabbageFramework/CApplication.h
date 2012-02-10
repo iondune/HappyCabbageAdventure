@@ -26,6 +26,8 @@ class CApplication
 
     float ElapsedTime;
 
+    unsigned int Time0, Time1;
+
 public:
 
     static CApplication & get();
@@ -42,6 +44,8 @@ public:
     float const getRunTime() const;
 
     SPosition2 const & getWindowSize() const;
+
+    void skipElapsedTime();
 
 };
 

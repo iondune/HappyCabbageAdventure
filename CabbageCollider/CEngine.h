@@ -107,7 +107,7 @@ namespace Collider
 		void updateAll(float const Elapsed)
 		{
 			static int const TicksPerSecond = 200;
-			Timer += Elapsed;
+			Timer += std::min(Elapsed, 0.1f);
 
 			float const TimePerTick = 1.f / TicksPerSecond;
 
@@ -118,33 +118,33 @@ namespace Collider
 			}
 		}
 
-		float const getHeightBelow(CActor * Actor)
-		{
-			float height = - std::numeric_limits<float>::infinity();
-			float checkHeight;
+        float const getHeightBelow(CActor * Actor)
+        {
+            float height = - std::numeric_limits<float>::infinity();
+            float checkHeight;
 
-			for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
-			{
-				if (Actor->isAbove(* it, checkHeight))
-					if (checkHeight > height)
-						height = checkHeight;
-			}
+            for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
+            {
+                if (Actor->isAbove(* it, checkHeight))
+                    if (checkHeight > height)
+                        height = checkHeight;
+            }
 
-			return height;
-		}
+            return height;
+        }
 
-      CObject * addObject()
-      {
-         Objects.push_back(new CObject());
-         return Objects.back();
-      }
+        CObject * addObject()
+        {
+            Objects.push_back(new CObject());
+            return Objects.back();
+        }
 
-      CElevator * addElevator()
-      {
-         CElevator * cen;
-         Objects.push_back(cen = new CElevator());
-         return cen; 
-      }
+        CElevator * addElevator()
+        {
+            CElevator * cen;
+            Objects.push_back(cen = new CElevator());
+            return cen; 
+        }
 
 		CActor * addActor()
 		{

@@ -94,7 +94,7 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
 void CGameState::EngineInit( void ) {
    Engine = new CEngine();
    Player = Engine->addActor();
-   Player->setArea(SRect2(-24.5, 3, 1, 1));
+   Player->setArea(SRect2(-24.5f, 3, 1, 1));
 
    Derp = Engine->addActor();
    Derp->setArea(SRect2(-17, 0, 1, 1));
@@ -319,6 +319,8 @@ void CGameState::begin()
    numFrames = 0;
 
    printf("END OF BEGIN\n");
+
+   Application.skipElapsedTime();
 }
 
 void CGameState::oldDisplay() {
