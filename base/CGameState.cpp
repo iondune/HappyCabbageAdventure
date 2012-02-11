@@ -48,7 +48,7 @@ CGameState::CGameState()
 void CGameState::loadWorld(std::vector<CPlaceable*> *list)
 {
     int x,y,w,h;
-    float spd, rng;
+    //float spd, rng;
 
     irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader("level1.xml");
 	while (xml && xml->read())
@@ -830,16 +830,16 @@ void PrepMeshes()
 
    renderFlag = new CMeshRenderable();
    renderFlag->setMesh(flagMesh);
-   renderFlag->setTranslation(SVector3(170, .5, 1.0));
+   renderFlag->setTranslation(SVector3(170, .5f, 1.0f));
    renderFlag->setRotation(SVector3(-90,0,0));
-   renderFlag->setScale(SVector3(.0150, .00025,.0016));
+   renderFlag->setScale(SVector3(.0150f, .00025f,.0016f));
    renderFlag->getMaterial().Texture = flagTxt;
    renderFlag->getMaterial().Shader = DiffuseTexture;
 
    flagLogo = new CMeshRenderable();
    flagLogo->setMesh(cabbageMesh);
-   flagLogo->setTranslation(SVector3(170, .9, 1.0));
+   flagLogo->setTranslation(SVector3(170, .9f, 1.0f));
    flagLogo->setRotation(SVector3(-90,0,0));
-   flagLogo->setScale(SVector3(.75));
+   flagLogo->setScale(SVector3(.75f));
    flagLogo->getMaterial().Shader = Flat;
 }

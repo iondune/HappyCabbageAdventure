@@ -111,14 +111,14 @@ void make_dlist ( FT_Face face, char ch, GLuint list_base, GLuint * tex_base ) {
 	//so we need to link the texture to the quad
 	//so that the result will be properly aligned.
 
-   GLfloat row = (GLfloat)bitmap.width/2.0;
-   GLfloat col = (GLfloat)bitmap.rows/2.0;
+   GLfloat row = (GLfloat)bitmap.width/2.0f;
+   GLfloat col = (GLfloat)bitmap.rows/2.0f;
 
    glBegin(GL_QUADS);
-	glTexCoord2d(0,0); glVertex2f(0,col*2.0);
+	glTexCoord2d(0,0); glVertex2f(0,col*2.0f);
 	glTexCoord2d(0,y); glVertex2f(0,0);
-	glTexCoord2d(x,y); glVertex2f(row*2.0,0);
-	glTexCoord2d(x,0); glVertex2f(row*2.0,col*2.0);
+	glTexCoord2d(x,y); glVertex2f(row*2.0f,0);
+	glTexCoord2d(x,0); glVertex2f(row*2.0,col*2.0f);
 	glEnd();
 	glPopMatrix();
 	glTranslatef((GLfloat)(face->glyph->advance.x >> 6), 0, 0);
@@ -136,7 +136,7 @@ void make_dlist ( FT_Face face, char ch, GLuint list_base, GLuint * tex_base ) {
 
 	//increment the raster position as if we were a bitmap font.
 	//(only needed if you want to calculate text length)
-	glBitmap(0,0,0,0,face->glyph->advance.x >> 6,0,NULL);
+	glBitmap(0,0,0,0,(float) (face->glyph->advance.x >> 6),0,NULL);
 
 	//Finnish the display list
 	glEndList();

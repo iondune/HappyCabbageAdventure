@@ -95,7 +95,7 @@ void CGameplayManager::setVictoryFlag(Cabbage::Collider::CObject * f) {
 
 bool const CGameplayManager::isWon() const
 {
-    return won; 
+    return won != 0; 
 }
 
 bool const CGameplayManager::isPlayerAlive() const

@@ -88,7 +88,7 @@ void CLWIBState::begin()
 
    //Load the meshes into VBOs
 
-   srand(time(0));
+   srand((unsigned int) time(0));
 
    //Initialize Fxns
    BlocksInit();
@@ -328,7 +328,7 @@ void CLWIBState::PrepPreviews() {
    PreviewBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/grass.bmp");
    PreviewBlock->getMaterial().Shader = DiffuseTexture;
    //PreviewBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
-   PreviewBlock->setScale(SVector3(blockWidth, blockHeight, 1));
+   PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, 1));
    CApplication::get().getSceneManager().addRenderable(PreviewBlock);
 
    blocks.push_back(PreviewEnemy = new CMeshRenderable());
@@ -419,7 +419,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h) {
    tempBlock->getMaterial().Shader = DiffuseTexture;
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    //tempBlock->setTranslation(SVector3(x, y, 0));
-   tempBlock->setScale(SVector3(w, h, 1));
+   tempBlock->setScale(SVector3((float) w, (float) h, 1));
    for(i = 0; i < w; i++) {
       for(j = 0; j < h; j++) {
          blockMap[(int)x+25+i][(int)(y-0.5+25)+j].o = true;
@@ -573,13 +573,13 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
       if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click && fDown) {
          if(blockWidth < 10)
             blockWidth++;
-         PreviewBlock->setScale(SVector3(blockWidth, blockHeight, 1));
+         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, 1));
          return;
       }
       if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click && gDown) {
          if(blockHeight < 10)
             blockHeight++;
-         PreviewBlock->setScale(SVector3(blockWidth, blockHeight, 1));
+         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, 1));
          return;
       }
       if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
@@ -655,13 +655,13 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
       if(Event.Pressed && fDown) {
          if(blockWidth > 1)
             blockWidth--;
-         PreviewBlock->setScale(SVector3(blockWidth, blockHeight, 1));
+         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, 1));
          return;
       }
       if(Event.Pressed && gDown) {
          if(blockHeight > 1)
             blockHeight--;
-         PreviewBlock->setScale(SVector3(blockWidth, blockHeight, 1));
+         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, 1));
          return;
       }
    }
