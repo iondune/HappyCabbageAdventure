@@ -4,11 +4,11 @@
 #include <iostream>
 
 #include "header.h"
-#include "../MainMenu/CMainMenuState.h"
-#include "../CLWIB/CLWIBState.h"
-#include "../CLWIB/CBlock.h"
-#include "../CLWIB/CEnemy.h"
-#include "../CLWIB/CPlaceable.h"
+#include "../StateMainMenu/CMainMenuState.h"
+#include "../StateLWIB/CLWIBState.h"
+#include "../StateLWIB/CBlock.h"
+#include "../StateLWIB/CEnemy.h"
+#include "../StateLWIB/CPlaceable.h"
 #include "CGameEventReceiver.h"
 #include "irrxml-1.2/src/irrXML.h"
 

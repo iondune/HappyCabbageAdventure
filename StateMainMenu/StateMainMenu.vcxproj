@@ -11,17 +11,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{11D86DD3-FE36-4890-8515-41B0B2DBFE9E}</ProjectGuid>
-    <RootNamespace>base</RootNamespace>
+    <ProjectGuid>{3EF767BE-D95D-4C6D-A268-D0C414935726}</ProjectGuid>
+    <RootNamespace>StateMainMenu</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
@@ -45,15 +45,10 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <IgnoreSpecificDefaultLibraries>
-      </IgnoreSpecificDefaultLibraries>
-      <IgnoreAllDefaultLibraries>
-      </IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -62,6 +57,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -71,33 +67,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="Makefile" />
+    <ClCompile Include="CMainMenuState.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CGameEventManager.h" />
-    <ClInclude Include="CGameEventReceiver.h" />
-    <ClInclude Include="CGameplayManager.h" />
-    <ClInclude Include="CGameState.h" />
-    <ClInclude Include="CPlayerView.h" />
-    <ClInclude Include="draw.h" />
-    <ClInclude Include="FreeType.h" />
-    <ClInclude Include="header.h" />
-    <ClInclude Include="irrxml-1.2\src\irrXML.h" />
-    <ClInclude Include="Materials.h" />
-    <ClInclude Include="SDL_mixer.h" />
-    <ClInclude Include="sound.h" />
+    <ClInclude Include="CMainMenuState.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\MainMenu\CMainMenuState.cpp" />
-    <ClCompile Include="CGameEventReceiver.cpp" />
-    <ClCompile Include="CGameplayManager.cpp" />
-    <ClCompile Include="CGameState.cpp" />
-    <ClCompile Include="CPlayerView.cpp" />
-    <ClCompile Include="FreeType.cpp" />
-    <ClCompile Include="irrxml-1.2\src\irrXML.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Materials.cpp" />
-    <ClCompile Include="sound.cpp" />
+    <None Include="que" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

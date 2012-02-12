@@ -14,9 +14,9 @@
 #include "../CabbageCore/CabbageCore.h"
 #include "../CabbageFramework/CabbageFramework.h"
 #include "../CabbageScene/CabbageScene.h"
-#include "../CLWIB/CLWIBState.h"
-#include "../base/CGameState.h"
-#include "../Overworld/COverworldState.h"
+#include "../StateLWIB/CLWIBState.h"
+#include "../Base/CGameState.h"
+#include "../StateOverworld/COverworldState.h"
 
 
 
