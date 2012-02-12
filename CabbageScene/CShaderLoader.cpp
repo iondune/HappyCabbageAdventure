@@ -59,7 +59,7 @@ static inline void printProgramInfoLog (GLuint programHandle)
 
 std::map<std::string, CShader *> CShaderLoader::LoadedShaders;
 
-std::string CShaderLoader::ShaderDirectory = "../Shaders/";
+std::string CShaderLoader::ShaderDirectory = "../Media/Shaders/";
 
 CShader * const CShaderLoader::loadShader(std::string const & name)
 {
