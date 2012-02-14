@@ -73,6 +73,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StateOverworld", "StateOver
 		{C8987DB4-983C-4801-BBBE-072704FAF615} = {C8987DB4-983C-4801-BBBE-072704FAF615}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DemoCabbageCollider", "DemoCabbageCollider\DemoCabbageCollider.vcxproj", "{1248412D-5901-40EF-A1DD-09C879B8E66B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -115,6 +117,10 @@ Global
 		{431FB1F8-489B-4B7E-82F2-CF4B4B5485DF}.Debug|Win32.Build.0 = Debug|Win32
 		{431FB1F8-489B-4B7E-82F2-CF4B4B5485DF}.Release|Win32.ActiveCfg = Release|Win32
 		{431FB1F8-489B-4B7E-82F2-CF4B4B5485DF}.Release|Win32.Build.0 = Release|Win32
+		{1248412D-5901-40EF-A1DD-09C879B8E66B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1248412D-5901-40EF-A1DD-09C879B8E66B}.Debug|Win32.Build.0 = Debug|Win32
+		{1248412D-5901-40EF-A1DD-09C879B8E66B}.Release|Win32.ActiveCfg = Release|Win32
+		{1248412D-5901-40EF-A1DD-09C879B8E66B}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
