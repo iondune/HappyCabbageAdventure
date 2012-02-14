@@ -1,15 +1,1 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<CBlock X ="-5" Y ="0" height ="10" width ="10" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="-10" Y ="0" height ="3" width ="5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CEnemy X ="-15" Y ="1" height ="1" width ="1">
-</CEnemy>
-<CEnemy X ="-12" Y ="2" height ="1" width ="1">
-</CEnemy>
-<CEnemy X ="-12" Y ="1" height ="1" width ="1">
-</CEnemy>
-<CEnemy X ="-12" Y ="0" height ="1" width ="1">
-</CEnemy>
-<CEnemy X ="-12" Y ="3" height ="1" width ="1">
-</CEnemy>
