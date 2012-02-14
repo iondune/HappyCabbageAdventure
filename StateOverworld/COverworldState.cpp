@@ -140,7 +140,7 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_SPACE) {
          Application.getStateManager().setState(& CGameState::get());
          spaceDown = 1;
-         changeSoundtrack("sounds/SMW.wav");
+         changeSoundtrack("../Media/Music/SMW.wav");
       }
       if(Event.Key == SDLK_ESCAPE) {
          //TODO: Replace with an event/signal to end the game world 

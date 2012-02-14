@@ -45,12 +45,12 @@ void setupSoundtrack() {
       printf("Could not open audio!\n");
 
    //Pre-load pointers
-   music = Mix_LoadMUS("sounds/BeginningAnew.wav");
-   die = Mix_LoadWAV("sounds/death.wav");
-   victory = Mix_LoadWAV ("sounds/victory.wav");
-   jump = Mix_LoadWAV("sounds/jump.wav");
-   takeDmg = Mix_LoadWAV("sounds/takeDmg.wav");
-   killEnemy = Mix_LoadWAV("sounds/hitEnemy.wav");
+   music = Mix_LoadMUS("../Media/Music/BeginningAnew.mp3");
+   die = Mix_LoadWAV("../Media/Music/death.wav");
+   victory = Mix_LoadWAV ("../Media/Music/victory.wav");
+   jump = Mix_LoadWAV("../Media/Music/jump.wav");
+   takeDmg = Mix_LoadWAV("../Media/Music/takeDmg.wav");
+   killEnemy = Mix_LoadWAV("../Media/Music/hitEnemy.wav");
 
    //Decrease volume of jump
    Mix_VolumeChunk(jump, 64);
