@@ -1,5 +1,5 @@
 #include "CMainMenuState.h"
-#include "../base/sound.h"
+#include "../Base/sound.h"
 
 CMainMenuState::CMainMenuState() 
 : Application (CApplication::get())
@@ -20,7 +20,7 @@ void CMainMenuState::setupMeshes()
 {
   CShader *Flat;
   Flat = CShaderLoader::loadShader("Specular");
-  logoMesh = CMeshLoader::load3dsMesh("../base/Models/HappyLogo3.3ds");
+  logoMesh = CMeshLoader::load3dsMesh("../Base/Models/HappyLogo3.3ds");
   if (logoMesh) 
   {
     logoMesh->resizeMesh(SVector3(0.4f));

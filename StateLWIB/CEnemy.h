@@ -5,7 +5,7 @@
 #include "CPlaceable.h"
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
-#include "../base/CGameplayManager.h"
+#include "../Base/CGameplayManager.h"
 #include "../CabbageCollider/CEngine.h"
 #include "../CabbageCollider/CObject.h"
 #include "../CabbageCollider/CActor.h"
