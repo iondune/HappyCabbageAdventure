@@ -1,6 +1,6 @@
 ROOT_CABBAGE_DIR=../
 SOURCES=main.cpp CGameState.cpp CPlayerView.cpp Materials.cpp FreeType.cpp CGameplayManager.cpp sound.cpp CGameEventReceiver.cpp ./irrxml-1.2/src/irrXML.cpp 
-OBJECTS=$(SOURCES:%.cpp=%.o) ../MainMenu/CMainMenuState.o
+OBJECTS=$(SOURCES:%.cpp=%.o) ../StateMainMenu/CMainMenuState.o
 CABBAGE=-L../lib/ -lCabbageCollider -lCabbageFramework -lCabbageScene -lCLWIB -lOverworldState
 
 COMPILER_VERSION=-std=c++0x
