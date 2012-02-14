@@ -86,7 +86,7 @@ public:
         }
 
         // Attempt to load mesh
-        MeshFace = CMeshLoader::load3dsMesh("../base/Models/cube.3ds");
+        MeshFace = CMeshLoader::loadAsciiMesh("../base/Models/bunny10k.m");
         if (MeshFace)
         {
             MeshFace->linearizeIndices();
@@ -95,7 +95,7 @@ public:
             MeshFace->calculateNormalsPerFace();
         }
 
-        MeshVertex = CMeshLoader::load3dsMesh("../base/Models/cube.3ds");
+        MeshVertex = CMeshLoader::loadAsciiMesh("../base/Models/bunny10k.m");
         if (MeshVertex)
         {
             MeshVertex->resizeMesh(SVector3(1.5));
