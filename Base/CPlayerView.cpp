@@ -6,7 +6,7 @@
 #endif
 
 #ifdef __unix__
-#include <GL/glut.h>
+#include <GL/gl.h>
 #endif
 
 
