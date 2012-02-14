@@ -9,10 +9,10 @@ CMainMenuState::CMainMenuState()
 
 void CMainMenuState::setupTextures()
 {
-  if(!woodTexture)
-  {
-    woodTexture = new CTexture(CImageLoader::loadImage("wood011.bmp"));
-  }
+   if(!woodTexture)
+   {
+      woodTexture = new CTexture(CImageLoader::loadImage("wood011.bmp"));
+   }
    skyTexture = new CTexture(CImageLoader::loadImage("sky.bmp"));
 }
 
