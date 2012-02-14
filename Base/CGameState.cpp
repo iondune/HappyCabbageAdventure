@@ -116,7 +116,7 @@ void CGameState::EngineInit( void ) {
    float j = 0;
 
    std::vector<CPlaceable*> list;
-   CObject *lastOne;
+   CObject *lastOne = 0;
    loadWorld(&list);
 
    std::vector<CPlaceable*>::iterator it;
