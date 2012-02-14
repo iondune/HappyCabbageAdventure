@@ -116,7 +116,7 @@ void CGameState::EngineInit( void ) {
    float j = 0;
 
    std::vector<CPlaceable*> list;
-   CObject *lastOne = 0;
+   CObject *lastOne = NULL;
    loadWorld(&list);
 
    std::vector<CPlaceable*>::iterator it;
@@ -286,15 +286,15 @@ void CGameState::begin()
       random = rand() % 3;
 
       if (n % 2 == 0)
-         if (random < 2) {
+         //if (random < 2) {
             drawBasicTree(-20.4f + n * 4, 2.0f, 2, 8.0f, Application);
-         }
-         else if (random == 2) {
-            drawChristmasTree(-20.4f + n * 4, 1.5, 2, 6.0f, Application);
-         }
-         else {
-            drawFicus(-21.f + n * 4, -1, 2, 1.0f, Application);
-         }
+         //}
+         //else if (random == 2) {
+         //   drawChristmasTree(-20.4f + n * 4, 1.5, 2, 6.0f, Application);
+         //}
+        // else {
+         //   drawFicus(-21.f + n * 4, -1, 2, 1.0f, Application);
+         //}
       else {
 
          if (random < 2) {
@@ -302,9 +302,6 @@ void CGameState::begin()
          }
          else if (random == 2) {
             drawChristmasTree(-22.4f + n * 4, 1.4f, -2, 6.0f, Application);
-         }
-         else {
-            drawFicus(-21.f + n * 4, -1, -2, 5.0f, Application);
          }
       }
    }
