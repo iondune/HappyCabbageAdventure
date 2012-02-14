@@ -5,9 +5,9 @@
 
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
-#include "../base/CGameState.h"
+#include "../Base/CGameState.h"
 /*
-#include "../base/CGameState.h"
+#include "../Base/CGameState.h"
 #include "../MainMenu/CMainMenuState.h"
 */
 
