@@ -73,6 +73,9 @@
   <ItemGroup>
     <ClCompile Include="COverworldState.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="COverworldState.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
