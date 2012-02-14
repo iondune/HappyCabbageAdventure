@@ -40,6 +40,7 @@
     <IncludePath>$(VisualStudioDir)\Projects\glew-1.7.0\include;$(VisualStudioDir)\Projects\SDL-1.2.15\include;$(VisualStudioDir)\Projects\freetype-2.4.8\include;$(SolutionDir)\CabbageCore;$(IncludePath)</IncludePath>
     <LibraryPath>$(VisualStudioDir)\Projects\glew-1.7.0\lib;$(VisualStudioDir)\Projects\SDL-1.2.15\lib\x86;$(VisualStudioDir)\Projects\freetype-2.4.8\lib;$(LibraryPath)</LibraryPath>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)lib\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)lib\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
