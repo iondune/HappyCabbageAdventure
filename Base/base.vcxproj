@@ -88,7 +88,6 @@
     <ClInclude Include="sound.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\MainMenu\CMainMenuState.cpp" />
     <ClCompile Include="CGameEventReceiver.cpp" />
     <ClCompile Include="CGameplayManager.cpp" />
     <ClCompile Include="CGameState.cpp" />

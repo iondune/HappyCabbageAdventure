@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{97ACB9B5-480B-4FF8-B2C7-637B2F3E81B4}</ProjectGuid>
-    <RootNamespace>Overworld</RootNamespace>
+    <ProjectGuid>{431FB1F8-489B-4B7E-82F2-CF4B4B5485DF}</ProjectGuid>
+    <RootNamespace>StateOverworld</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

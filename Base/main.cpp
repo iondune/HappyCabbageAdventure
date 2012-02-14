@@ -1,6 +1,6 @@
 //#include "CGameState.h"
-#include "../MainMenu/CMainMenuState.h"
-#include "../Overworld/COverworldState.h"
+#include "../StateMainMenu/CMainMenuState.h"
+#include "../StateOverworld/COverworldState.h"
 
 #ifdef _WIN32
 #pragma comment(lib, "freetype.lib")
@@ -11,6 +11,7 @@
 #pragma comment(lib, "../lib/CabbageScene.lib")
 #pragma comment(lib, "../lib/CabbageCollider.lib")
 #pragma comment(lib, "../lib/CabbageFramework.lib")
+#pragma comment(lib, "../lib/StateMainMenu.lib")
 #pragma comment(lib, "OpenGL32.lib")
 #pragma comment(lib, "glu32.lib")
 
