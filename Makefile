@@ -1,13 +1,10 @@
 all: build-CabbageFramework build-CabbageScene build-CabbageCollider build-CLWIB build-MainMenu build-base build-MeshLoaderDemo build-CabbageColliderDemo
 
 build-CLWIB:
-	cd ./CLWIB && $(MAKE) lib
+	cd ./StateLWIB && $(MAKE) lib
 
 build-MainMenu:
-	cd ./MainMenu && que
-
-build-base:
-	cd ./base && make
+	cd ./StateMainMenu && ./que
 
 build-CabbageScene:
 	cd ./CabbageScene && $(MAKE)
@@ -16,17 +13,17 @@ build-CabbageCollider:
 	cd ./CabbageCollider && $(MAKE)
 
 build-MeshLoaderDemo: build-CabbageScene
-	cd ./MeshLoaderDemo && $(MAKE)
+	cd ./DemoMeshLoader && $(MAKE)
 
 build-CabbageColliderDemo: build-CabbageCollider build-CabbageScene
-	cd ./CabbageColliderDemo && $(MAKE)
+	cd ./DemoCabbageCollider && $(MAKE)
 
 build-base: build-CabbageCollider build-CabbageScene build-CabbageFramework
-	cd ./base && $(MAKE)
+	cd ./Base && $(MAKE)
 
 build-CabbageFramework:
 	cd ./CabbageFramework && $(MAKE)
 
 clean:
-	cd ./CabbageScene && $(MAKE) $@ && cd ../CabbageCollider && $(MAKE) $@ && cd ../MeshLoaderDemo && $(MAKE) $@ && cd ../CabbageColliderDemo && $(MAKE) $@ && cd ../CabbageFramework && $(MAKE) $@
+	cd ./CabbageScene && $(MAKE) $@ && cd ../CabbageCollider && $(MAKE) $@ && cd ../DemoMeshLoader && $(MAKE) $@ && cd ../DemoCabbageCollider && $(MAKE) $@ && cd ../CabbageFramework && $(MAKE) $@
 
