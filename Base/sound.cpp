@@ -45,7 +45,7 @@ void setupSoundtrack() {
       printf("Could not open audio!\n");
 
    //Pre-load pointers
-   music = Mix_LoadMUS("sounds/BeginningAnew.mp3");
+   music = Mix_LoadMUS("sounds/BeginningAnew.wav");
    die = Mix_LoadWAV("sounds/death.wav");
    victory = Mix_LoadWAV ("sounds/victory.wav");
    jump = Mix_LoadWAV("sounds/jump.wav");

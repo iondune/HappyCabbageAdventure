@@ -1,7 +1,7 @@
 ROOT_CABBAGE_DIR=../
 SOURCES=main.cpp CGameState.cpp CPlayerView.cpp Materials.cpp FreeType.cpp CGameplayManager.cpp sound.cpp CGameEventReceiver.cpp ./irrxml-1.2/src/irrXML.cpp 
 OBJECTS=$(SOURCES:%.cpp=%.o) ../StateMainMenu/CMainMenuState.o
-CABBAGE=-L../lib/ -lCabbageCollider -lCabbageFramework -lCabbageScene -lCLWIB -lOverworldState
+CABBAGE= -L../lib/ -lCabbageCollider -lCabbageFramework -lCabbageScene -lCLWIB -lOverworldState
 
 COMPILER_VERSION=-std=c++0x
 INCLUDE=-I../CabbageCore
@@ -23,7 +23,7 @@ endif
 all: ${TARGET} 
 
 cabbage: ${OBJECTS} ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCLWIB.a ../lib/libOverworldState.a
-	g++ ${COMPILER_VERSION} ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL`sdl-config --cflags --libs` ${CABBAGE} ${MIXLIB} `freetype-config --libs` -g -o $@
+	g++ ${COMPILER_VERSION} ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL `sdl-config --cflags --libs` ${CABBAGE} ${MIXLIB} `freetype-config --libs` -g -o $@
 
 ./irrxml-1.2/src/irrXML.o: ./irrxml-1.2/src/irrXML.cpp  
 	g++ -I../irrxml-1.2/src/ -o $@ -c ./irrxml-1.2/src/irrXML.cpp
