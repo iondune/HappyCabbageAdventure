@@ -48,7 +48,7 @@ FreeType.o: FreeType.cpp FreeType.h
 qclean:
 	rm cabbage.exe cabbage 2>/dev/null
 clean:
-	rm *.o a.out cabbage cabbage.exe 2>/dev/null
+	rm -f $(OBJECTS)
 	rm -f ../lib/libCLWIB.a
 
 mingw: cabbage.exe

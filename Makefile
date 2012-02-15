@@ -12,7 +12,6 @@ build-MainMenu:
 build-Overworld:
 	cd ./StateOverworld && $(MAKE)
 	
-
 build-CabbageScene:
 	cd ./CabbageScene && $(MAKE)
 
@@ -32,5 +31,5 @@ build-CabbageFramework:
 	cd ./CabbageFramework && $(MAKE)
 	
 clean:
-	cd ./CabbageScene && $(MAKE) $@ && cd ../CabbageSound && $(MAKE) $@ && cd ../CabbageCollider && $(MAKE) $@ && cd ../DemoMeshLoader && $(MAKE) $@ && cd ../DemoCabbageCollider && $(MAKE) $@ && cd ../CabbageFramework && $(MAKE) $@
+	cd ./CabbageScene && $(MAKE) $@ && cd ../StateOverworld && $(MAKE) $@ && cd ../StateLWIB && $(MAKE) $@ && cd ../CabbageSound && $(MAKE) $@ && cd ../CabbageCollider && $(MAKE) $@ && cd ../DemoMeshLoader && $(MAKE) $@ && cd ../DemoCabbageCollider && $(MAKE) $@ && cd ../CabbageFramework && $(MAKE) $@
 
