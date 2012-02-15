@@ -58,10 +58,6 @@ void COverworldState::begin()
 
    LoadShaders();
 
-   /*soundInit();
-   setupSoundtrack();
-   startSoundtrack();*/
-
    //DiscMesh();
 
    //Load the meshes into VBOs
@@ -140,7 +136,7 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_SPACE) {
          Application.getStateManager().setState(& CGameState::get());
          spaceDown = 1;
-         changeSoundtrack("../Media/Music/SMW.wav");
+         changeSoundtrack("SMW.wav");
       }
       if(Event.Key == SDLK_ESCAPE) {
          //TODO: Replace with an event/signal to end the game world 

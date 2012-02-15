@@ -228,9 +228,7 @@ void CGameState::begin()
 
    LoadShaders();
 
-   soundInit();
-   setupSoundtrack();
-   startSoundtrack();
+//   startSoundtrack();
 
    Load3DS();
    LoadTextures();

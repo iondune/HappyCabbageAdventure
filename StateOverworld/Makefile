@@ -1,5 +1,5 @@
 ROOT_CABBAGE_DIR=../
-SOURCES=COverworldState.cpp sound.cpp
+SOURCES=COverworldState.cpp ../Base/sound.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o)
 COMPILER_VERSION=-std=c++0x
 INCLUDE=-I../CabbageCore -I../base

@@ -2,6 +2,7 @@
 #define  __SOUND_INCLUDE_H__
 
 #include "SDL_mixer.h"
+#include <string>
 
 //Used to run current soundtrack
 extern Mix_Music *music;
@@ -20,10 +21,11 @@ extern bool playJump;
 extern bool musicOn;
 extern bool playVictory;
 
+//Sound Effect fxns
 void soundInit();
-//void musicDone();
 
-void setupSoundtrack();
+
+void setupSoundtrack(char *startMusic);
 void startSoundtrack();
 void stopSoundtrack();
 

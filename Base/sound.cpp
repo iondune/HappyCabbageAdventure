@@ -16,6 +16,9 @@ bool playTakeDmg;
 bool playJump;
 bool musicOn;
 
+//Directory variables
+std::string MusicDirectory = "../Media/Music/";
+
 
 void soundInit() {
    //Used to run current soundtrack
@@ -35,22 +38,34 @@ void soundInit() {
    musicOn = true;
 }
 
-void setupSoundtrack() {
+void setupSoundtrack(char *startMusic) {
    int audio_rate = 22050;
    Uint16 audio_format = AUDIO_S16;
    int audio_channels = 2;
    int audio_buffers = 4096;
+   std::string temp;
 
    if(Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers))
       printf("Could not open audio!\n");
 
    //Pre-load pointers
-   music = Mix_LoadMUS("../Media/Music/BeginningAnew.mp3");
-   die = Mix_LoadWAV("../Media/Music/death.wav");
+   temp = MusicDirectory + startMusic;
+   music = Mix_LoadMUS(temp.c_str());
+
+   temp = MusicDirectory + "death.wav";
+   die = Mix_LoadWAV(temp.c_str());
+
+   temp = MusicDirectory + "victory.wav";
    victory = Mix_LoadWAV ("../Media/Music/victory.wav");
-   jump = Mix_LoadWAV("../Media/Music/jump.wav");
-   takeDmg = Mix_LoadWAV("../Media/Music/takeDmg.wav");
-   killEnemy = Mix_LoadWAV("../Media/Music/hitEnemy.wav");
+
+   temp = MusicDirectory + "jump.wav";
+   jump = Mix_LoadWAV(temp.c_str());
+
+   temp = MusicDirectory + "takeDmg.wav";
+   takeDmg = Mix_LoadWAV(temp.c_str());
+
+   temp = MusicDirectory + "hitEnemy.wav";
+   killEnemy = Mix_LoadWAV(temp.c_str());
 
    //Decrease volume of jump
    Mix_VolumeChunk(jump, 64);
@@ -69,13 +84,17 @@ void stopSoundtrack() {
 
 
 void changeSoundtrack(char* changeTo) {
+   std::string temp;
+
    //Stop music from playing (if currently is)
    if (musicOn) {
       Mix_FadeOutMusic(100);
       Mix_FreeMusic(music);
    }
 
-   music = Mix_LoadMUS(changeTo);
+   temp = MusicDirectory + changeTo;
+
+   music = Mix_LoadMUS(temp.c_str());
 
    Mix_FadeInMusic(music, -1, 2000);
 
