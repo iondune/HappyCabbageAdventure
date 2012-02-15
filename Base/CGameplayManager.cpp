@@ -100,7 +100,7 @@ bool const CGameplayManager::isWon() const
 
 bool const CGameplayManager::isPlayerAlive() const
 {
-    return PlayerHealth > 0;
+    return (PlayerHealth > 0) && (-5.0 < PlayerActor->getArea().getCenter().Y);
 }
     
 int const CGameplayManager::getPlayerHealth() const
@@ -142,7 +142,7 @@ void CGameplayManager::run(float const TickTime)
             it->Actor->setAction(Cabbage::Collider::CActor::EActionType::None);
         }
         //if (rand()%1000 == 1)
-        //	it->Actor->setJumping(true);
+        //it->Actor->setJumping(true);
     }
 }
 

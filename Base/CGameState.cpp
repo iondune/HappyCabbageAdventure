@@ -239,13 +239,8 @@ void CGameState::begin()
    //Load the meshes into VBOs
    PrepMeshes();
 
-   printf("Got here!\n");
-
    PrepShadow();
 
-   printf("Did I finish shadows?\n");
-
-   Application.getSceneManager().addRenderable(renderBasicTree);
    Application.getSceneManager().addRenderable(playerRenderable);
    Application.getSceneManager().addRenderable(renderFlag);
    Application.getSceneManager().addRenderable(flagLogo);
@@ -493,11 +488,14 @@ void CGameState::OnRenderStart(float const Elapsed)
          }
          freetype::print(our_font, 50, WindowHeight - 240.f, "CONGRATULATIONS! YOU HAVE WON!");
       }
-      //Chris Code.  Play Death Sound
-      else if (playDead) {
-         Mix_HaltMusic();
-         Mix_PlayChannel(-1, die, 0); //Only play once
-         playDead = false;
+
+      else {
+         //Chris Code.  Play Death Sound
+         if (playDead) {
+            Mix_HaltMusic();
+            Mix_PlayChannel(-1, die, 0); //Only play once
+            playDead = false;
+         }
 
          freetype::print(our_font, 50, WindowHeight - 240.f, "GAME OVER! YOU ARE DEAD");
       }
