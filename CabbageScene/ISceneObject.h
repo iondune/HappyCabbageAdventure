@@ -1,5 +1,5 @@
-#ifndef _CABBAGE_SCENE_IRENDERABLE_H_INCLUDED_
-#define _CABBAGE_SCENE_IRENDERABLE_H_INCLUDED_
+#ifndef _CABBAGE_SCENE_ISCENEOBJECT_H_INCLUDED_
+#define _CABBAGE_SCENE_ISCENEOBJECT_H_INCLUDED_
 
 #include <map>
 #include <set>
@@ -31,7 +31,7 @@ public:
 
 class CScene;
 
-class IRenderable
+class ISceneObject
 {
 
 protected:
@@ -48,7 +48,7 @@ protected:
 
 public:
 
-    IRenderable();
+    ISceneObject();
 
     SVector3 const & getTranslation() const;
     SVector3 const & getRotation() const;
