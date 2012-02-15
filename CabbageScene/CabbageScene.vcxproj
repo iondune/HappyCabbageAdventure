@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClCompile Include="CCamera.cpp" />
     <ClCompile Include="CImage.cpp" />
+    <ClCompile Include="CMaterial.cpp" />
     <ClCompile Include="CMesh.cpp" />
     <ClCompile Include="CMeshLoader.cpp" />
     <ClCompile Include="CMeshRenderable.cpp" />

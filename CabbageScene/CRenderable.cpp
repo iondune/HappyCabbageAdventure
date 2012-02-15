@@ -8,130 +8,39 @@
 #include "CSceneManager.h"
 
 
-CFloatVecAttribute::CFloatVecAttribute(CBufferObject<float> * bufferObject, int const size)
-    : BufferObject(bufferObject), Size(size)
-{}
-
-void CFloatVecAttribute::bindTo(GLuint const attribHandle, CShaderContext & shaderContext)
-{
-    if (BufferObject->isDirty())
-        BufferObject->syncData();
-
-    shaderContext.bindBufferObject(attribHandle, BufferObject->getHandle(), Size);
-}
-
-CFloatUniform::CFloatUniform()
-    : Value(0.f)
-{}
-
-CFloatUniform::CFloatUniform(float const value)
-    : Value(value)
-{}
-
-void CFloatUniform::bindTo(GLuint const uniformHandle, CShaderContext & shaderContext)
-{
-    shaderContext.uniform(uniformHandle, Value);
-}
-
-CIntUniform::CIntUniform()
-    : Value(0)
-{}
-
-CIntUniform::CIntUniform(int const value)
-    : Value(value)
-{}
-
-void CIntUniform::bindTo(GLuint const uniformHandle, CShaderContext & shaderContext)
-{
-    shaderContext.uniform(uniformHandle, Value);
-}
-
-CMat4Uniform::CMat4Uniform()
-{}
-
-CMat4Uniform::CMat4Uniform(glm::mat4 const & value)
-    : Value(value)
-{}
-
-void CMat4Uniform::bindTo(GLuint const uniformHandle, CShaderContext & shaderContext)
-{
-    shaderContext.uniform(uniformHandle, Value);
-}
-
-CVec3Uniform::CVec3Uniform()
-{}
-
-CVec3Uniform::CVec3Uniform(SVector3 const & value)
-    : Value(value)
-{}
-
-void CVec3Uniform::bindTo(GLuint const uniformHandle, CShaderContext & shaderContext)
-{
-    shaderContext.uniform(uniformHandle, Value);
-}
-
-
-CRenderable::SAttribute::SAttribute()
-    : Handle(-1)
-{}
-
-CRenderable::SAttribute::SAttribute(boost::shared_ptr<IAttribute> value)
-    : Value(value), Handle(-1)
-{}
-
-
-CRenderable::SUniform::SUniform()
-    : Handle(-1)
-{}
-
-CRenderable::SUniform::SUniform(boost::shared_ptr<IUniform> value)
-    : Value(value), Handle(-1)
-{}
-
-
-SMaterial::SMaterial()
-    : Shader(0), Texture(0)
-{
-    AmbientColor = boost::shared_ptr<CVec3Uniform>(new CVec3Uniform(SVector3(0.08f, 0.08f, 0.08f)));
-    DiffuseColor = boost::shared_ptr<CVec3Uniform>(new CVec3Uniform(SVector3(0.95f, 0.95f, 0.95f)));
-    Shininess = boost::shared_ptr<CFloatUniform>(new CFloatUniform());
-}
-
+CShader * CRenderable::NormalColorShader = 0;
 
 CRenderable::CRenderable()
-    : DrawType(GL_TRIANGLES), NormalObject(0),  NormalColorShader(0), IndexBufferObject(0)
+    : DrawType(GL_TRIANGLES), NormalObject(0), IndexBufferObject(0)
 {
-    uModelMatrix = boost::shared_ptr<CMat4Uniform>(new CMat4Uniform());
+    /*uModelMatrix = boost::shared_ptr<CMat4Uniform>(new CMat4Uniform());
     uNormalMatrix = boost::shared_ptr<CMat4Uniform>(new CMat4Uniform());
 
     addUniform("uModelMatrix", uModelMatrix);
     addUniform("uNormalMatrix", uNormalMatrix);
     addUniform("uMaterial.AmbientColor", Material.AmbientColor);
     addUniform("uMaterial.DiffuseColor", Material.DiffuseColor);
-    addUniform("uMaterial.Shininess", Material.Shininess);
+    addUniform("uMaterial.Shininess", Material.Shininess);*/
 }
 
-SMaterial & CRenderable::getMaterial()
+CMaterial & CRenderable::getMaterial()
 {
     return Material;
 }
 
-SMaterial const & CRenderable::getMaterial() const
+CMaterial const & CRenderable::getMaterial() const
 {
     return Material;
 }
 
-void CRenderable::loadHandlesFromShader(CShader const * const shader, CScene const * const scene)
+void CRenderable::loadShaderVariables(CShader const * const shader, CScene const * const scene)
 {
     if (! scene->SceneChanged && LastLoadedShader == shader && LastLoadedScene == scene)
         return;
 
     // Remove any handles a previous shader might have set
-    for (std::map<std::string, SAttribute>::iterator it = Attributes.begin(); it != Attributes.end(); ++ it)
-        it->second.Handle = -1;
-    for (std::map<std::string, SUniform>::iterator it = Uniforms.begin(); it != Uniforms.end(); ++ it)
-        it->second.Handle = -1;
-    SceneLoadedUniforms.clear();
+    LoadedAttributes.clear();
+	LoadedUniforms.clear();
 
     LastLoadedShader = shader;
     LastLoadedScene = scene;
@@ -142,9 +51,10 @@ void CRenderable::loadHandlesFromShader(CShader const * const shader, CScene con
     // Check the existence of all required shader attributes
     for (std::map<std::string, SShaderVariable>::const_iterator it = LastLoadedShader->getAttributeHandles().begin(); it != LastLoadedShader->getAttributeHandles().end(); ++ it)
     {
-        std::map<std::string, SAttribute>::iterator jt;
-        if ((jt = Attributes.find(it->first)) != Attributes.end())
-            jt->second.Handle = it->second.Handle;
+		IAttribute const * Attribute = getAttribute(it->first);
+
+        if (Attribute)
+			LoadedAttributes[it->second.Handle] = Attribute;
         else
             std::cout << "Attribute required by shader but not found in renderable: " << it->first << std::endl;
     }
@@ -152,15 +62,13 @@ void CRenderable::loadHandlesFromShader(CShader const * const shader, CScene con
     // Check the existences of all required uniform uniforms - skipping implicit uniforms
     for (std::map<std::string, SShaderVariable>::const_iterator it = LastLoadedShader->getUniformHandles().begin(); it != LastLoadedShader->getUniformHandles().end(); ++ it)
     {
-        std::map<std::string, SUniform>::iterator jt;
-        boost::shared_ptr<IUniform> SceneUniform;
-        if ((jt = Uniforms.find(it->first)) != Uniforms.end())
-            jt->second.Handle = it->second.Handle;
-        else if (SceneUniform = scene->getUniform(it->first))
-        {
-            SceneLoadedUniforms.push_back(SUniform(SceneUniform));
-            SceneLoadedUniforms.back().Handle = it->second.Handle;
-        }
+		IUniform const * Uniform = getUniform(it->first);
+
+		if (! Uniform)
+			Uniform = scene->getUniform(it->first);
+        
+		if (Uniform)
+			LoadedUniforms[it->second.Handle] = Uniform;
         else
             std::cout << "Uniform required by shader but not found in renderable or scene: " << it->first << std::endl;
     }
@@ -186,21 +94,23 @@ void CRenderable::setIndexBufferObject(CBufferObject<GLushort> * indexBufferObje
     IndexBufferObject = indexBufferObject;
 }
 
-void CRenderable::draw(CScene const * const scene)
+void CRenderable::draw(CScene const * const scene, STransformation3 const & transformation)
 {
-   if(! Visible) {
-      printf("Not visible item\n");
-      return;
-   }
     // If no ibo loaded, we can't draw anything
     // If the ibo loaded hasn't been synced as an index buffer object, 
-    if (! IndexBufferObject || ! IndexBufferObject->isIndexBuffer())
+    if (! IndexBufferObject)
     {
-        std::cout << "Failed to draw object: IBO address == " << IndexBufferObject << std::endl;
+        std::cout << "Failed to draw object, no IBO." << std::endl;
         return;
     }
 
-    CShader * ShaderToUse = Material.Shader;
+	if (! IndexBufferObject->isIndexBuffer())
+	{
+        std::cout << "Failed to draw object, IBO is not index buffer." << std::endl;
+        return;
+    }
+
+    CShader * ShaderToUse = Shader;
 
     if (! ShaderToUse)
         ShaderToUse = CShaderLoader::loadShader("Simple");
@@ -213,7 +123,7 @@ void CRenderable::draw(CScene const * const scene)
         ShaderToUse = NormalColorShader;
     }
 
-    loadHandlesFromShader(ShaderToUse, scene);
+    loadShaderVariables(ShaderToUse, scene);
 
     // Create shader context and link all variables required by the shader
     CShaderContext ShaderContext(* ShaderToUse);

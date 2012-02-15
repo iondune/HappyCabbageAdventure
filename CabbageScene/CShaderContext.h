@@ -4,6 +4,8 @@
 #include "CShader.h"
 
 #include "../CabbageCore/SVector3.h"
+#include "../CabbageCore/SColor.h"
+#include "../CabbageCore/Stransformation3.h"
 #include "../CabbageCore/glm/glm.hpp"
 
 class CShaderContext
@@ -43,12 +45,25 @@ public:
     void uniform(GLuint const uniformHandle, float const uniform);
     void uniform(GLuint const uniformHandle, int const uniform);
     void uniform(GLuint const uniformHandle, glm::mat4 const & uniform);
+    void uniform(GLuint const uniformHandle, STransformation3 const & uniform);
     void uniform(GLuint const uniformHandle, SVector3 const & uniform);
+    void uniform(GLuint const uniformHandle, SColor const & uniform);
 
-    void uniform(std::string const & label, float const uniform);
-    void uniform(std::string const & label, int const uniform);
-    void uniform(std::string const & label, glm::mat4 const & uniform);
-    void uniform(std::string const & label, SVector3 const & uniform);
+	template <typename T>
+    void CShaderContext::uniform(std::string const & label, T const & uniform)
+	{
+		std::map<std::string, SShaderVariable>::const_iterator it = Shader.UniformHandles.find(label);
+
+		if (it == Shader.UniformHandles.end())
+		{
+			std::cerr << "Uniform '" << label << "' was not loaded for shader. Some objects will not draw." << std::endl;
+			Valid = false;
+			return;
+		}
+
+		uniform(it->second.Handle, uniform);
+	}
+
 
 };
 

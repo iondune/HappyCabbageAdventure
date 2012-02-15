@@ -5,13 +5,12 @@
 
 struct IUniform
 {
-	virtual void bind(CShaderContext & shaderContext) =0;
+	virtual void bind(GLint const handle, CShaderContext & shaderContext) =0;
 };
 
 template <typename T>
 struct SUniform : public IUniform
 {
-	GLint Handle;
 	T * Value;
 
 	SUniform()
@@ -26,10 +25,10 @@ struct SUniform : public IUniform
 		: Value(& value)
 	{}
 
-	void bind(CShaderContext & shaderContext)
+	void bind(GLint const handle, CShaderContext & shaderContext)
 	{
 		if (Value)
-			shaderContext.uniform(Handle, * Value);
+			shaderContext.uniform(handle, * Value);
 	}
 };
 

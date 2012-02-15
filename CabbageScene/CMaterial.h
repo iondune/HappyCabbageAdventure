@@ -1,16 +1,27 @@
 #ifndef _CABBAGE_SCENE_CMATERIAL_H_INCLUDED_
 #define _CABBAGE_SCENE_CMATERIAL_H_INCLUDED_
 
-struct SMaterial
+#include "SUniform.h"
+#include "SAttribute.h"
+
+class CMaterial
 {
-    CShader * Shader;
+
+	SUniform<SColor> BindAmbientColor, BindDiffuseColor;
+	SUniform<float> BindShininess;
+
+public:
+
     CTexture * Texture;
+	SColor AmbientColor, DiffuseColor;
+	float Shininess;
 
-    boost::shared_ptr<CVec3Uniform> AmbientColor;
-    boost::shared_ptr<CVec3Uniform> DiffuseColor;
-    boost::shared_ptr<CFloatUniform> Shininess;
+    CMaterial();
 
-    SMaterial();
+	void loadDefaults();
+
+	IUniform const * const getUniform(std::string const & label);
+
 };
 
 #endif

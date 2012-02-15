@@ -6,13 +6,12 @@
 
 struct IAttribute
 {
-	virtual void bind(CShaderContext & shaderContext) =0;
+	virtual void bind(GLint const handle, CShaderContext & shaderContext) =0;
 };
 
 template <typename T>
 struct SAttribute : public IAttribute
 {
-	GLint Handle;
 	CBufferObject<T> * Buffer;
 	int ElementSize;
 
@@ -24,10 +23,10 @@ struct SAttribute : public IAttribute
 		: Value(value), ElementSize(elementSize)
 	{}
 
-	void bind(CShaderContext & shaderContext)
+	void bind(GLint const handle, CShaderContext & shaderContext)
 	{
 		if (Buffer)
-			shaderContext.bindBufferObject(Handle, Buffer->getHandle(), ElementSize);
+			shaderContext.bindBufferObject(handle, Buffer->getHandle(), ElementSize);
 	}
 };
 

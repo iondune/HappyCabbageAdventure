@@ -23,28 +23,36 @@
 /*!
  * A CRenderable is some collection of buffer objects which can be drawn by a single OpenGL draw call.
  */
-class CRenderable : public ISceneObject
+class CRenderable
 {
 
 protected:
 
-    // Implicit uniforms
-    glm::mat4 uModelMatrix, uNormalMatrix;
+    // Implicit shader variables
+    glm::mat4 ModelMatrix, NormalMatrix;
+	SUniform<glm::mat4> BindModelMatrix, BindNormalMatrix;
 
-    std::map<std::string, IAttribute> Attributes;
-    std::map<std::string, IUniform> Uniforms;
-    std::vector<SUniform> SceneLoadedUniforms;
+	// Local shader variables
+    std::map<std::string, IAttribute const *> Attributes;
+    std::map<std::string, IUniform const *> Uniforms;
 
+	// Loaded shader variables
+	std::map<GLint, IAttribute const *> LoadedAttributes;
+    std::map<GLint, IUniform const *> LoadedUniforms;
+
+	// Required data for drawing
+	CShader * Shader;
     CBufferObject<GLushort> * IndexBufferObject;
 
-    SMaterial Material;
+	// Material attribute used by phong light, etc.
+    CMaterial Material;
 
-    CShader * NormalColorShader;
+    static CShader * NormalColorShader;
     CRenderable * NormalObject;
 
     GLenum DrawType;
 
-    void loadHandlesFromShader(CShader const * const shader, CScene const * const scene);
+    void loadShaderVariables(CShader const * const shader, CScene const * const scene);
     CScene const * LastLoadedScene;
     CShader const * LastLoadedShader;
 
@@ -52,8 +60,8 @@ public:
 
     CRenderable();
 
-    SMaterial & getMaterial();
-    SMaterial const & getMaterial() const;
+    CMaterial & getMaterial();
+    CMaterial const & getMaterial() const;
 
     CBufferObject<GLushort> * getIndexBufferObject();
     void setIndexBufferObject(CBufferObject<GLushort> * indexBufferObject);
@@ -61,12 +69,15 @@ public:
     GLenum const getDrawType() const;
     void setDrawType(GLenum const drawType);
 
-    virtual void draw(CScene const * const scene);
+    virtual void draw(CScene const * const scene, STransformation3 const & transformation);
 
-    void addAttribute(std::string const & label, boost::shared_ptr<IAttribute> attribute);
-    void addUniform(std::string const & label, boost::shared_ptr<IUniform> uniform);
+    void addAttribute(std::string const & label, IAttribute const * const attribute);
+    void addUniform(std::string const & label, IUniform const * const uniform);
     void removeAttribute(std::string const & label);
     void removeUniform(std::string const & label);
+
+	IAttribute const * const getAttribute(std::string const & label);
+	IUniform const * const getUniform(std::string const & label);
 
 };
 
