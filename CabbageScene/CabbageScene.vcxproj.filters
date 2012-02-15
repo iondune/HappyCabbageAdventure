@@ -43,6 +43,15 @@
     <ClInclude Include="ISceneObject.h">
       <Filter>Scene Objects</Filter>
     </ClInclude>
+    <ClInclude Include="CMaterial.h">
+      <Filter>Scene Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SUniform.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="SAttribute.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CImage.cpp">

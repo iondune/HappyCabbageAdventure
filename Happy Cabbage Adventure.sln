@@ -29,16 +29,26 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageWorldEditor", "Cabba
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{22CB5BE8-A32A-4BBC-8A2F-05D7C9C1F292}"
 	ProjectSection(SolutionItems) = preProject
-		Shaders\Diffuse.frag = Shaders\Diffuse.frag
-		Shaders\Diffuse.vert = Shaders\Diffuse.vert
-		Shaders\DiffuseTexture.frag = Shaders\DiffuseTexture.frag
-		Shaders\DiffuseTexture.vert = Shaders\DiffuseTexture.vert
-		Shaders\Flat.frag = Shaders\Flat.frag
-		Shaders\Flat.vert = Shaders\Flat.vert
-		Shaders\Simple.frag = Shaders\Simple.frag
-		Shaders\Simple.vert = Shaders\Simple.vert
-		Shaders\Specular.frag = Shaders\Specular.frag
-		Shaders\Specular.vert = Shaders\Specular.vert
+		Media\Shaders\cel.frag = Media\Shaders\cel.frag
+		Media\Shaders\cel.vert = Media\Shaders\cel.vert
+		Media\Shaders\Diffuse.frag = Media\Shaders\Diffuse.frag
+		Media\Shaders\Diffuse.vert = Media\Shaders\Diffuse.vert
+		Media\Shaders\DiffuseTexture.frag = Media\Shaders\DiffuseTexture.frag
+		Media\Shaders\DiffuseTexture.vert = Media\Shaders\DiffuseTexture.vert
+		Media\Shaders\DiffuseTextureBright.frag = Media\Shaders\DiffuseTextureBright.frag
+		Media\Shaders\DiffuseTextureBright.vert = Media\Shaders\DiffuseTextureBright.vert
+		Media\Shaders\Flat.frag = Media\Shaders\Flat.frag
+		Media\Shaders\Flat.vert = Media\Shaders\Flat.vert
+		Media\Shaders\light.frag = Media\Shaders\light.frag
+		Media\Shaders\light.vert = Media\Shaders\light.vert
+		Media\Shaders\normalColor.frag = Media\Shaders\normalColor.frag
+		Media\Shaders\normalColor.vert = Media\Shaders\normalColor.vert
+		Media\Shaders\Simple.frag = Media\Shaders\Simple.frag
+		Media\Shaders\Simple.vert = Media\Shaders\Simple.vert
+		Media\Shaders\Specular.frag = Media\Shaders\Specular.frag
+		Media\Shaders\Specular.vert = Media\Shaders\Specular.vert
+		Media\Shaders\toonf2.frag = Media\Shaders\toonf2.frag
+		Media\Shaders\toonf2.vert = Media\Shaders\toonf2.vert
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Base", "Base\Base.vcxproj", "{11D86DD3-FE36-4890-8515-41B0B2DBFE9E}"
