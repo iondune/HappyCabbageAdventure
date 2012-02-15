@@ -40,7 +40,7 @@
     <ClInclude Include="CRenderable.h">
       <Filter>Scene Objects</Filter>
     </ClInclude>
-    <ClInclude Include="IRenderable.h">
+    <ClInclude Include="ISceneObject.h">
       <Filter>Scene Objects</Filter>
     </ClInclude>
   </ItemGroup>
@@ -79,7 +79,7 @@
     <ClCompile Include="CRenderable.cpp">
       <Filter>Scene Objects</Filter>
     </ClCompile>
-    <ClCompile Include="IRenderable.cpp">
+    <ClCompile Include="ISceneObject.cpp">
       <Filter>Scene Objects</Filter>
     </ClCompile>
   </ItemGroup>

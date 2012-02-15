@@ -1,4 +1,4 @@
-FILES = CMesh.cpp CMeshLoader.cpp CRenderable.cpp CShader.cpp CTexture.cpp CImageLoader.cpp CImage.cpp CShaderLoader.cpp CCamera.cpp CShaderContext.cpp CSceneManager.cpp CMeshRenderable.cpp IRenderable.cpp
+FILES = CMesh.cpp CMeshLoader.cpp CRenderable.cpp CShader.cpp CTexture.cpp CImageLoader.cpp CImage.cpp CShaderLoader.cpp CCamera.cpp CShaderContext.cpp CSceneManager.cpp CMeshRenderable.cpp ISceneObject.cpp
 
 OFILES = $(FILES:%.cpp=%.o)
 
@@ -13,8 +13,8 @@ endif
 
 all: ../lib/libCabbageScene.a
 
-IRenderable.o: IRenderable.cpp
-	g++ -o IRenderable.o IRenderable.cpp -c $(DIRECTORIES) $(OPENGL)
+ISceneObject.o: ISceneObject.cpp
+	g++ -o ISceneObject.o ISceneObject.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CMesh.o: CMesh.cpp
 	g++ -o CMesh.o CMesh.cpp -c $(DIRECTORIES) $(OPENGL)

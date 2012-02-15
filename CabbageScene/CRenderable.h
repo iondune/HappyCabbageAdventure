@@ -13,7 +13,7 @@
 #include "CShader.h"
 #include "CTexture.h"
 #include "CShaderContext.h"
-#include "IRenderable.h"
+#include "ISceneObject.h"
 
 
 class IAttribute
@@ -111,7 +111,7 @@ struct SMaterial
     SMaterial();
 };
 
-class CRenderable : public IRenderable
+class CRenderable : public ISceneObject
 {
 
 protected:
