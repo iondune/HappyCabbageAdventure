@@ -1,5 +1,5 @@
 #include "COverworldState.h"
-#include "sound.h"
+#include "../CabbageSound/sound.h"
 /* These are here because someone doesn't use extern, or put prototypes in their header files */
 
 COverworldState::COverworldState()

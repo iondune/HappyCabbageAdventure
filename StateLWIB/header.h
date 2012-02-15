@@ -38,6 +38,7 @@
 #include "FreeType.h"
 
 #include "Materials.h"
+#include "../CabbageSound/sound.h"
 
 //Global Defines
 #define NUM_TREES 10

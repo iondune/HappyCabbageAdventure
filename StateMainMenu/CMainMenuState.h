@@ -17,6 +17,7 @@
 #include "../StateLWIB/CLWIBState.h"
 #include "../Base/CGameState.h"
 #include "../StateOverworld/COverworldState.h"
+#include "../CabbageSound/sound.h"
 
 
 

@@ -1,5 +1,4 @@
 #include "CMainMenuState.h"
-#include "../Base/sound.h"
 
 CMainMenuState::CMainMenuState() 
 : Application (CApplication::get())

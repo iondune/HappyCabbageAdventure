@@ -1,7 +1,7 @@
 ROOT_CABBAGE_DIR=../
-SOURCES=main.cpp CGameState.cpp CPlayerView.cpp Materials.cpp FreeType.cpp CGameplayManager.cpp sound.cpp CGameEventReceiver.cpp ./irrxml-1.2/src/irrXML.cpp 
+SOURCES=main.cpp CGameState.cpp CPlayerView.cpp Materials.cpp FreeType.cpp CGameplayManager.cpp CGameEventReceiver.cpp ./irrxml-1.2/src/irrXML.cpp #sound.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o) ../StateMainMenu/CMainMenuState.o
-CABBAGE= -L../lib/ -lCabbageCollider -lCabbageFramework -lCabbageScene -lCLWIB -lOverworldState
+CABBAGE= -L../lib/ -lCabbageSound -lCabbageCollider -lCabbageFramework -lCabbageScene -lCLWIB -lOverworldState
 
 COMPILER_VERSION=-std=c++0x
 INCLUDE=-I../CabbageCore
@@ -32,8 +32,8 @@ main.o: main.cpp
 	g++ $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c main.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CGameState.o: CGameState.cpp header.h
 	g++ $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c CGameState.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
-sound.o: sound.cpp sound.h
-	g++ `sdl-config --cflags` -c sound.cpp -DGL_GLEXT_PROTOTYPES
+#sound.o: sound.cpp sound.h
+#	g++ `sdl-config --cflags` -c sound.cpp -DGL_GLEXT_PROTOTYPES
 CPlayerView.o: CPlayerView.cpp CPlayerView.h
 	g++ $(INCLUDE) -c CPlayerView.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CGameEventReceiver.o: CGameEventReceiver.cpp CGameEventReceiver.h

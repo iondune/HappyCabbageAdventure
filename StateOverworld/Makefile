@@ -1,5 +1,5 @@
 ROOT_CABBAGE_DIR=../
-SOURCES=COverworldState.cpp ../Base/sound.cpp
+SOURCES=COverworldState.cpp #../Base/sound.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o)
 COMPILER_VERSION=-std=c++0x
 INCLUDE=-I../CabbageCore -I../base
@@ -23,8 +23,8 @@ all: ${TARGET}
 
 COverworldState.o: COverworldState.cpp header.h
 	g++ $(INCLUDE) `freetype-config --cflags` `sdl-config --cflags` -c COverworldState.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
-sound.o: sound.cpp sound.h
-	g++ `sdl-config --cflags` -c sound.cpp -DGL_GLEXT_PROTOTYPES
+#sound.o: sound.cpp sound.h
+#	g++ `sdl-config --cflags` -c sound.cpp -DGL_GLEXT_PROTOTYPES
 
 qclean:
 	rm cabbage.exe cabbage 2>/dev/null
@@ -34,4 +34,4 @@ clean:
 mingw: cabbage.exe
 
 cabbage.exe: ${OBJECTS} ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCLWIB.a
-	g++ ${COMPILER_VERSION} `sdl-config --cflags` -mwindows ${OBJECTS} -DGL_GLEXT_PROTOTYPES ${CABBAGE} ./*.dll -lSDL_mixer -lopengl32 -lglu32 -lglut32 `sdl-config --libs` `freetype-config --libs` -g -L/lib/ -o $@ -lglew32
+	g++ ${COMPILER_VERSION} `sdl-config --cflags` -mwindows ${OBJECTS} -DGL_GLEXT_PROTOTYPES ${CABBAGE} ./*.dll -lSDL_mixer -lCabbageSound -lopengl32 -lglu32 -lglut32 `sdl-config --libs` `freetype-config --libs` -g -L/lib/ -o $@ -lglew32

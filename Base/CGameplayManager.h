@@ -2,7 +2,7 @@
 #define _CGAMEPLAYEMANAGER_H_INCLUDED_
 
 #include "../CabbageCollider/CEngine.h"
-#include "sound.h"
+#include "../CabbageSound/sound.h"
 
 class CGameEventManager;
 class CRenderable;

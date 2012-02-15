@@ -1,4 +1,7 @@
-all: build-CabbageFramework build-CabbageScene build-CabbageCollider build-CLWIB build-MainMenu build-Overworld build-base build-MeshLoaderDemo build-CabbageColliderDemo
+all: build-Sound build-CabbageFramework build-CabbageScene build-CabbageCollider build-CLWIB build-MainMenu build-Overworld build-base build-MeshLoaderDemo build-CabbageColliderDemo
+
+build-Sound:
+	cd ./CabbageSound && $(MAKE)
 
 build-CLWIB:
 	cd ./StateLWIB && $(MAKE) lib
@@ -29,5 +32,5 @@ build-CabbageFramework:
 	cd ./CabbageFramework && $(MAKE)
 
 clean:
-	cd ./CabbageScene && $(MAKE) $@ && cd ../CabbageCollider && $(MAKE) $@ && cd ../DemoMeshLoader && $(MAKE) $@ && cd ../DemoCabbageCollider && $(MAKE) $@ && cd ../CabbageFramework && $(MAKE) $@
+	cd ./CabbageScene && $(MAKE) $@ && cd ../CabbageSound && $(MAKE) $@ && cd ../CabbageCollider && $(MAKE) $@ && cd ../DemoMeshLoader && $(MAKE) $@ && cd ../DemoCabbageCollider && $(MAKE) $@ && cd ../CabbageFramework && $(MAKE) $@
 
