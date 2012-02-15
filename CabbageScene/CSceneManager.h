@@ -9,34 +9,43 @@
 #include "../CabbageCore/SColor.h"
 
 
-struct SLight
+class CLight
 {
-    boost::shared_ptr<CVec3Uniform> ColorUniform;
-    boost::shared_ptr<CVec3Uniform> PositionUniform;
+	// CLight should implement ISceneObject
+	// that way light billboards will be drawable by using a scene->set debug flag
+	// and positioning,etc will be inheritted
+	SUniform<SColor> BindColor;
+	SUniform<SVector3> BindPosition;
+
+public:
+
+    SColor Color;
+    SVector3 Position;
 
     // Todo: change values only through get/set, set scene changed when so
 
-    SLight()
-    {
-        ColorUniform = boost::shared_ptr<CVec3Uniform>(new CVec3Uniform());
-        PositionUniform = boost::shared_ptr<CVec3Uniform>(new CVec3Uniform());
-    }
+    CLight()
+		: BindColor(Color), BindPosition(Position)
+    {}
 };
 
 class CScene
 {
 
-    static SLight const NullLight;
+    static CLight const NullLight;
 
 protected:
 
     CCamera DefaultCamera;
     CCamera * ActiveCamera;
 
-    boost::shared_ptr<CMat4Uniform> uViewMatrix, uProjMatrix;
-    boost::shared_ptr<CIntUniform> uLightCount;
+    glm::mat4 ViewMatrix, ProjMatrix;
+    int LightCount;
 
-    std::map<std::string, CRenderable::SUniform> Uniforms;
+	SUniform<glm::mat4> BindViewMatrix, BindProjMatrix;
+	SUniform<int> BindLightCount;
+
+    std::map<std::string, IUniform const *> Uniforms;
 
 public:
 
@@ -48,14 +57,11 @@ public:
     void addUniform(std::string const & label, boost::shared_ptr<IUniform> uniform);
     void removeUniform(std::string const & label);
 
-    std::map<std::string, CRenderable::SUniform> & getExplicitUniforms();
-    std::map<std::string, CRenderable::SUniform> const & getExplicitUniforms() const;
-
-    boost::shared_ptr<IUniform> const getUniform(std::string const & label) const;
+    IUniform const * getUniform(std::string const & label) const;
 
     void update();
 
-    std::vector<SLight> Lights;
+    std::vector<CLight *> Lights;
     bool SceneChanged;
 
 };

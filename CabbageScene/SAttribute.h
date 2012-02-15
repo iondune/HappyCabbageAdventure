@@ -6,7 +6,7 @@
 
 struct IAttribute
 {
-	virtual void bind(GLint const handle, CShaderContext & shaderContext) =0;
+	virtual void bind(GLint const handle, CShaderContext & shaderContext) const =0;
 };
 
 template <typename T>
@@ -23,7 +23,7 @@ struct SAttribute : public IAttribute
 		: Value(value), ElementSize(elementSize)
 	{}
 
-	void bind(GLint const handle, CShaderContext & shaderContext)
+	void bind(GLint const handle, CShaderContext & shaderContext) const
 	{
 		if (Buffer)
 			shaderContext.bindBufferObject(handle, Buffer->getHandle(), ElementSize);

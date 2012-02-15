@@ -94,7 +94,7 @@ void CRenderable::setIndexBufferObject(CBufferObject<GLushort> * indexBufferObje
     IndexBufferObject = indexBufferObject;
 }
 
-void CRenderable::draw(CScene const * const scene, STransformation3 const & transformation)
+void CRenderable::draw(CScene const * const scene)
 {
     // If no ibo loaded, we can't draw anything
     // If the ibo loaded hasn't been synced as an index buffer object, 
@@ -116,7 +116,7 @@ void CRenderable::draw(CScene const * const scene, STransformation3 const & tran
         ShaderToUse = CShaderLoader::loadShader("Simple");
 
     // If normal colors are being shown, switch to the normal color shader
-    if (isDebugDataEnabled(EDebugData::NormalColors))
+    if (Parent->isDebugDataEnabled(EDebugData::NormalColors))
     {
         if (! NormalColorShader)
             NormalColorShader = CShaderLoader::loadShader("NormalColor");
@@ -129,29 +129,19 @@ void CRenderable::draw(CScene const * const scene, STransformation3 const & tran
     CShaderContext ShaderContext(* ShaderToUse);
 
     // Set up transform matrices
-    uModelMatrix->Value = glm::translate(glm::mat4(1.0f), Translation.getGLMVector());
-    uModelMatrix->Value = glm::rotate(uModelMatrix->Value, Rotation.X, glm::vec3(1, 0, 0));
-    uModelMatrix->Value = glm::rotate(uModelMatrix->Value, Rotation.Y, glm::vec3(0, 1, 0));
-    uModelMatrix->Value = UsesRotationMatrix ? uModelMatrix->Value * RotationMatrix : glm::rotate(uModelMatrix->Value, Rotation.Z, glm::vec3(0, 0, 1));
-    uModelMatrix->Value = glm::scale(uModelMatrix->Value, Scale.getGLMVector());
+    ModelMatrix = Transformation.get() * Parent->getTransformation().get();
 
     // Pass transform matrices to shader
-    uNormalMatrix->Value = glm::transpose(glm::inverse(uModelMatrix->Value));
+    NormalMatrix = glm::transpose(glm::inverse(ModelMatrix));
 
     // Pass values to shader
-    for (std::map<std::string, SAttribute>::iterator it = Attributes.begin(); it != Attributes.end(); ++ it)
+    for (std::map<GLint, IAttribute const *>::iterator it = LoadedAttributes.begin(); it != LoadedAttributes.end(); ++ it)
     {
-        if (it->second.Handle >= 0)
-            it->second.Value->bindTo(it->second.Handle, ShaderContext);
+        it->second->bind(it->first, ShaderContext);
     }
-    for (std::map<std::string, SUniform>::iterator it = Uniforms.begin(); it != Uniforms.end(); ++ it)
+    for (std::map<GLint, IUniform const *>::iterator it = LoadedUniforms.begin(); it != LoadedUniforms.end(); ++ it)
     {
-        if (it->second.Handle >= 0)
-            it->second.Value->bindTo(it->second.Handle, ShaderContext);
-    }
-    for (std::vector<SUniform>::iterator it = SceneLoadedUniforms.begin(); it != SceneLoadedUniforms.end(); ++ it)
-    {
-        it->Value->bindTo(it->Handle, ShaderContext);
+        it->second->bind(it->first, ShaderContext);
     }
 
     // Set up texturing if a texture was supplied
@@ -173,14 +163,9 @@ void CRenderable::draw(CScene const * const scene, STransformation3 const & tran
     glDrawElements(DrawType, IndexBufferObject->getElements().size(), GL_UNSIGNED_SHORT, 0);
 
     // Draw the normal object if it is enabled
-    if (isDebugDataEnabled(EDebugData::Normals) && NormalObject)
+    if (Parent->isDebugDataEnabled(EDebugData::Normals) && NormalObject)
     {
-        NormalObject->setTranslation(Translation);
-        NormalObject->setScale(Scale);
-        if (UsesRotationMatrix)
-            NormalObject->setRotation(RotationMatrix);
-        else
-            NormalObject->setRotation(Rotation);
+        NormalObject->Transformation = Transformation;
         NormalObject->draw(scene);
     }
 
@@ -191,19 +176,19 @@ void CRenderable::draw(CScene const * const scene, STransformation3 const & tran
     }
 }
 
-void CRenderable::addAttribute(std::string const & label, boost::shared_ptr<IAttribute> attribute)
+void CRenderable::addAttribute(std::string const & label, IAttribute const * const attribute)
 {
-    Attributes[label] = SAttribute(attribute);
+    Attributes[label] = attribute;
 }
 
-void CRenderable::addUniform(std::string const & label, boost::shared_ptr<IUniform> uniform)
+void CRenderable::addUniform(std::string const & label,IUniform const * const uniform)
 {
-    Uniforms[label] = SUniform(uniform);
+    Uniforms[label] = uniform;
 }
 
 void CRenderable::removeAttribute(std::string const & label)
 {
-    std::map<std::string, SAttribute>::iterator it = Attributes.find(label);
+    std::map<std::string, IAttribute const *>::iterator it = Attributes.find(label);
 
     if (it != Attributes.end())
         Attributes.erase(it);
@@ -211,7 +196,7 @@ void CRenderable::removeAttribute(std::string const & label)
 
 void CRenderable::removeUniform(std::string const & label)
 {
-    std::map<std::string, SUniform>::iterator it = Uniforms.find(label);
+    std::map<std::string, IUniform const *>::iterator it = Uniforms.find(label);
 
     if (it != Uniforms.end())
         Uniforms.erase(it);

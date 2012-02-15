@@ -37,23 +37,17 @@ class ISceneObject
 protected:
 
     // Model Transformation
-    SVector3 Translation, Rotation, Scale;
+    STransformation3 Transformation;
     glm::mat4 RotationMatrix;
     SBoundingBox3 BoundingBox;
 
     int DebugDataFlags;
 
     bool Visible;
-    bool UsesRotationMatrix;
 
 public:
 
     ISceneObject();
-
-    SVector3 const & getTranslation() const;
-    SVector3 const & getRotation() const;
-    glm::mat4 const & getRotationMatrix() const;
-    SVector3 const & getScale() const;
 
     void setTranslation(SVector3 const & translation);
     void setRotation(SVector3 const & rotation);
@@ -74,6 +68,8 @@ public:
 
     bool const isVisible() const;
     void setVisible(bool const isVisible);
+
+	STransformation3 const & getTransformation();
 
 };
 

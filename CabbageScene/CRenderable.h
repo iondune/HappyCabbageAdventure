@@ -46,6 +46,7 @@ protected:
 
 	// Material attribute used by phong light, etc.
     CMaterial Material;
+	STransformation3 Transformation;
 
     static CShader * NormalColorShader;
     CRenderable * NormalObject;
@@ -55,6 +56,8 @@ protected:
     void loadShaderVariables(CShader const * const shader, CScene const * const scene);
     CScene const * LastLoadedScene;
     CShader const * LastLoadedShader;
+
+	ISceneObject * Parent;
 
 public:
 
@@ -69,7 +72,7 @@ public:
     GLenum const getDrawType() const;
     void setDrawType(GLenum const drawType);
 
-    virtual void draw(CScene const * const scene, STransformation3 const & transformation);
+    virtual void draw(CScene const * const scene);
 
     void addAttribute(std::string const & label, IAttribute const * const attribute);
     void addUniform(std::string const & label, IUniform const * const uniform);

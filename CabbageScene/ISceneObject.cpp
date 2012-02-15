@@ -13,47 +13,24 @@ ISceneObject::ISceneObject()
 {}
 
 
-SVector3 const & ISceneObject::getTranslation() const
-{
-    return Translation;
-}
-
-SVector3 const & ISceneObject::getRotation() const
-{
-    return Rotation;
-}
-
-glm::mat4 const & ISceneObject::getRotationMatrix() const
-{
-    return RotationMatrix;
-}
-
-SVector3 const & ISceneObject::getScale() const
-{
-    return Scale;
-}
-
-
 void ISceneObject::setTranslation(SVector3 const & translation)
 {
-    Translation = translation;
+	Transformation.setTranslation(translation);
 }
 
 void ISceneObject::setRotation(SVector3 const & rotation)
 {
-    UsesRotationMatrix = false;
-    Rotation = rotation;
+	Transformation.setRotation(rotation);
 }
 
 void ISceneObject::setRotation(glm::mat4 const & matrix)
 {
-    UsesRotationMatrix = true;
-    RotationMatrix = matrix;
+	Transformation.setRotation(matrix);
 }
 
 void ISceneObject::setScale(SVector3 const & scale)
 {
-    Scale = scale;
+	Transformation.setScale(scale);
 }
 
 
@@ -105,4 +82,9 @@ bool const ISceneObject::isVisible() const
 void ISceneObject::setVisible(bool const isVisible)
 {
     Visible = isVisible;
+}
+
+STransformation3 const & ISceneObject::getTransformation()
+{
+	return Transformation;
 }
