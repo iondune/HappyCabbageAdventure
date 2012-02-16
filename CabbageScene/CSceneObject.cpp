@@ -12,3 +12,15 @@ void CSceneObject::removeRenderable(CRenderable * Renderable)
 {
 	Renderables.erase(std::remove(Renderables.begin(), Renderables.end(), Renderable), Renderables.end());
 }
+
+void CSceneObject::setShader(CShader * shader)
+{
+	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
+		(* it)->setShader(shader);
+}
+
+void CSceneObject::setMaterial(CMaterial const & material)
+{
+	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
+		(* it)->getMaterial() = material;
+}

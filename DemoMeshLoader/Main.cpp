@@ -62,17 +62,17 @@ public:
 
         // Setup scene
         CSceneManager & SceneManager = CApplication::get().getSceneManager();
-        SceneManager.Lights.push_back(SLight());
-        SceneManager.Lights.back().ColorUniform->Value = SVector3(0.5f, 0.2f, 0.2f);
-        SceneManager.Lights.back().PositionUniform->Value = SVector3(1.f, 2.f, 3.f);
+        SceneManager.Lights.push_back(new CLight());
+        SceneManager.Lights.back()->Color = SVector3(0.5f, 0.2f, 0.2f);
+        SceneManager.Lights.back()->Position = SVector3(1.f, 2.f, 3.f);
 
-        SceneManager.Lights.push_back(SLight());
-        SceneManager.Lights.back().ColorUniform->Value = SVector3(0.2f, 0.5f, 0.2f);
-        SceneManager.Lights.back().PositionUniform->Value = SVector3(-1.f, -2.f, -3.f);
+        SceneManager.Lights.push_back(new CLight());
+        SceneManager.Lights.back()->Color = SVector3(0.2f, 0.5f, 0.2f);
+        SceneManager.Lights.back()->Position = SVector3(-1.f, -2.f, -3.f);
 
-        SceneManager.Lights.push_back(SLight());
-        SceneManager.Lights.back().ColorUniform->Value = SVector3(0.2f, 0.2f, 0.5f);
-        SceneManager.Lights.back().PositionUniform->Value = SVector3(-3.f, 0.f, 0.f);
+        SceneManager.Lights.push_back(new CLight());
+        SceneManager.Lights.back()->Color = SVector3(0.2f, 0.2f, 0.5f);
+        SceneManager.Lights.back()->Position = SVector3(-3.f, 0.f, 0.f);
 
 
         // Attempt to load shader and attributes
@@ -104,40 +104,45 @@ public:
         }
 
 
-        Renderable = new CMeshRenderable();
+        Renderable = new CMeshSceneObject();
         Renderable->setMesh(MeshFace);
-        Renderable->getMaterial().Shader = Shader;
+        Renderable->setShader(Shader);
         setMaterial(3);
 
-        CApplication::get().getSceneManager().addRenderable(Renderable);
+		CApplication::get().getSceneManager().addSceneObject(Renderable);
 
         Font.init("Fonts/DejaVuSansMono.ttf", 14);
     }
 
     void setMaterial(int const i)
     {
+		CMaterial mat;
         switch (i)
         {
         default:
         case 1:
-            Renderable->getMaterial().AmbientColor->Value = SVector3(0.2f);
-            Renderable->getMaterial().DiffuseColor->Value = SVector3(0.9f);
-            Renderable->getMaterial().Shininess->Value = 1.f;
+            mat.AmbientColor = SVector3(0.2f);
+            mat.DiffuseColor = SVector3(0.9f);
+            mat.Shininess = 1.f;
+			Renderable->setMaterial(mat);
             break;
         case 2:
-            Renderable->getMaterial().AmbientColor->Value = SVector3(0.2f);
-            Renderable->getMaterial().DiffuseColor->Value = SVector3(1.2f);
-            Renderable->getMaterial().Shininess->Value = 2.f;
+            mat.AmbientColor = SVector3(0.2f);
+            mat.DiffuseColor = SVector3(1.2f);
+            mat.Shininess = 2.f;
+			Renderable->setMaterial(mat);
             break;
         case 3:
-            Renderable->getMaterial().AmbientColor->Value = SVector3(0.2f);
-            Renderable->getMaterial().DiffuseColor->Value = SVector3(1.4f);
-            Renderable->getMaterial().Shininess->Value = 3.f;
+            mat.AmbientColor = SVector3(0.2f);
+            mat.DiffuseColor = SVector3(1.4f);
+            mat.Shininess = 3.f;
+			Renderable->setMaterial(mat);
             break;
         case 4:
-            Renderable->getMaterial().AmbientColor->Value = SVector3(0.2f);
-            Renderable->getMaterial().DiffuseColor->Value = SVector3(1.4f);
-            Renderable->getMaterial().Shininess->Value = 0.1f;
+            mat.AmbientColor = SVector3(0.2f);
+            mat.DiffuseColor = SVector3(1.4f);
+            mat.Shininess = 0.1f;
+			Renderable->setMaterial(mat);
             break;
         }
 
@@ -212,17 +217,17 @@ public:
 
         case SDLK_z:
             if (! Event.Pressed)
-                Renderable->getMaterial().Shader = CShaderLoader::loadShader("Flat");
+                Renderable->setShader(CShaderLoader::loadShader("Flat"));
             break;
 
         case SDLK_x:
             if (! Event.Pressed)
-                Renderable->getMaterial().Shader = CShaderLoader::loadShader("Diffuse");
+                Renderable->setShader(CShaderLoader::loadShader("Diffuse"));
             break;
 
         case SDLK_c:
             if (! Event.Pressed)
-                Renderable->getMaterial().Shader = CShaderLoader::loadShader("Specular");
+                Renderable->setShader(CShaderLoader::loadShader("Specular"));
             break;
 
         case SDLK_j:
@@ -363,7 +368,7 @@ public:
     // Shader and Mesh utility classes
     CShader * Shader;
     CMesh * MeshFace, * MeshVertex;
-    CMeshRenderable * Renderable;
+    CMeshSceneObject * Renderable;
     CTexture * Texture;
     CCameraControl * Camera;
     CScene * Scene;

@@ -212,6 +212,30 @@ void CRenderable::removeUniform(std::string const & label)
         Uniforms.erase(it);
 }
 
+IAttribute const * const CRenderable::getAttribute(std::string const & label)
+{
+	std::map<std::string, IAttribute const *>::iterator it = Attributes.find(label);
+	if (it != Attributes.end())
+		return it->second;
+
+	return 0;
+}
+
+IUniform const * const CRenderable::getUniform(std::string const & label)
+{
+	if (label == "uModelMatrix")
+		return & BindModelMatrix;
+
+	if (label == "uNormalMatrix")
+		return & BindNormalMatrix;
+
+	std::map<std::string, IUniform const *>::iterator it = Uniforms.find(label);
+	if (it != Uniforms.end())
+		return it->second;
+
+	return 0;
+}
+
 CRenderable * & CRenderable::getDebuggingNormalObject()
 {
 	return NormalObject;
