@@ -46,7 +46,7 @@ FreeType.o: FreeType.cpp FreeType.h
 	g++ `freetype-config --cflags` -c FreeType.cpp
 CBadGuy.o: CBadGuy.cpp CBadGuy.h
 	g++ $(INCLUDE) `sdl-config --cflags` -c CBadGuy.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
-EApple.o: EApple.cpp EApple.h
+EApple.o: EApple.cpp EApple.h CBadGuy.h
 	g++ $(INCLUDE) `sdl-config --cflags` -c EApple.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 
 qclean:

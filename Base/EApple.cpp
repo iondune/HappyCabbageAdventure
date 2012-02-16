@@ -45,4 +45,5 @@ void EApple::loadActor() {
 
 //Updates AI's decision per frame
 void EApple::update() {
+   int x = 5 +5;
 }
