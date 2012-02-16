@@ -300,7 +300,13 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
 }
 
 void CLWIBState::printXML() {
-    xmlwriter *worldlist = new xmlwriter("test.xml");
+    std::string name;
+    cout << "Enter the name of the file you want to save: ";
+    cin >> name;
+
+    cout << name;
+
+    xmlwriter *worldlist = new xmlwriter(name);
     
     std::vector<CPlaceable*>::iterator it;
     for(it=placeables.begin();it<placeables.end();it++) {
