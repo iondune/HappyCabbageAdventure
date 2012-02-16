@@ -73,6 +73,7 @@
     <ClInclude Include="CMeshLoader.h" />
     <ClInclude Include="CMeshRenderable.h" />
     <ClInclude Include="CSceneManager.h" />
+    <ClInclude Include="CSceneObject.h" />
     <ClInclude Include="CShader.h" />
     <ClInclude Include="CShaderContext.h" />
     <ClInclude Include="CShaderLoader.h" />
@@ -92,6 +93,7 @@
     <ClCompile Include="CMeshLoader.cpp" />
     <ClCompile Include="CMeshRenderable.cpp" />
     <ClCompile Include="CSceneManager.cpp" />
+    <ClCompile Include="CSceneObject.cpp" />
     <ClCompile Include="CShader.cpp" />
     <ClCompile Include="CShaderContext.cpp" />
     <ClCompile Include="CShaderLoader.cpp" />

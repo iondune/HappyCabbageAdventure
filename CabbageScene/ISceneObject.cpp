@@ -9,7 +9,7 @@
 
 
 ISceneObject::ISceneObject()
-    : Scale(1), DebugDataFlags(0), UsesRotationMatrix(false), Visible(true)
+    : DebugDataFlags(0), Visible(true)
 {}
 
 

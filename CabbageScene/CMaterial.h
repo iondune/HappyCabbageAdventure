@@ -3,6 +3,7 @@
 
 #include "SUniform.h"
 #include "SAttribute.h"
+#include "CTexture.h"
 
 class CMaterial
 {

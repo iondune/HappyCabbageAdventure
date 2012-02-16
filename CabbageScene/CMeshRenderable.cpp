@@ -1,3 +1,5 @@
+#if 0
+
 #include "CMeshRenderable.h"
 
 #include "CShaderContext.h"
@@ -125,3 +127,5 @@ void CMeshRenderable::draw(CScene const * const scene)
     else
         CRenderable::draw(scene);
 }
+
+#endif

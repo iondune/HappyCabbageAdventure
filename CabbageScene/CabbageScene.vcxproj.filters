@@ -52,6 +52,9 @@
     <ClInclude Include="SAttribute.h">
       <Filter>Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="CSceneObject.h">
+      <Filter>Scene Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CImage.cpp">
@@ -92,6 +95,9 @@
       <Filter>Scene Objects</Filter>
     </ClCompile>
     <ClCompile Include="CMaterial.cpp">
+      <Filter>Scene Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneObject.cpp">
       <Filter>Scene Objects</Filter>
     </ClCompile>
   </ItemGroup>

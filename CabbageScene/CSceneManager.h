@@ -3,7 +3,7 @@
 
 #include <list>
 
-#include "CRenderable.h"
+#include "CSceneObject.h"
 
 #include "../CabbageCore/SLine3.h"
 #include "../CabbageCore/SColor.h"
@@ -14,13 +14,14 @@ class CLight
 	// CLight should implement ISceneObject
 	// that way light billboards will be drawable by using a scene->set debug flag
 	// and positioning,etc will be inheritted
-	SUniform<SColor> BindColor;
-	SUniform<SVector3> BindPosition;
-
+	
 public:
 
     SColor Color;
     SVector3 Position;
+
+	SUniform<SColor> BindColor;
+	SUniform<SVector3> BindPosition;
 
     // Todo: change values only through get/set, set scene changed when so
 
@@ -54,7 +55,7 @@ public:
     CCamera * const getActiveCamera();
     void setActiveCamera(CCamera * const activeCamera);
 
-    void addUniform(std::string const & label, boost::shared_ptr<IUniform> uniform);
+    void addUniform(std::string const & label, IUniform const * uniform);
     void removeUniform(std::string const & label);
 
     IUniform const * getUniform(std::string const & label) const;
@@ -69,7 +70,7 @@ public:
 class CSceneManager : public CScene
 {
 
-    std::list<CRenderable *> Renderables;
+    std::list<CSceneObject *> SceneObjects;
 
     CScene * CurrentScene;
 
@@ -77,13 +78,11 @@ public:
 
     CSceneManager();
 
-    void addRenderable(CRenderable * Renderable);
-    void removeRenderable(CRenderable * Renderable);
-    void removeAllRenderables();
+    void addSceneObject(CSceneObject * sceneObject);
+    void removeSceneObject(CSceneObject * sceneObject);
+    void removeAllSceneObjects();
 
     void drawAll();
-
-    CRenderable * const pickRenderable(SLine3 const & ViewLine);
 
 };
 
