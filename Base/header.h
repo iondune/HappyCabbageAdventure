@@ -19,6 +19,7 @@
 #pragma comment(lib, "../lib/CabbageCollider.lib")
 #pragma comment(lib, "../lib/CabbageFramework.lib")
 #pragma comment(lib, "../lib/StateOverworld.lib")
+#pragma comment(lib, "../lib/CabbageSound.lib")
 #pragma comment(lib, "../lib/StateLWIB.lib")
 #pragma comment(lib, "OpenGL32.lib")
 #pragma comment(lib, "glu32.lib")
