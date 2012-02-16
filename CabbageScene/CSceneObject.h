@@ -10,6 +10,8 @@
 class CSceneObject : public ISceneObject
 {
 
+protected:
+
 	std::vector<CRenderable *> Renderables;
 
 public:

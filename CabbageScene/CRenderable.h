@@ -69,6 +69,9 @@ public:
     CBufferObject<GLushort> * getIndexBufferObject();
     void setIndexBufferObject(CBufferObject<GLushort> * indexBufferObject);
 
+	CShader * getShader();
+	void setShader(CShader * shader);
+
     GLenum const getDrawType() const;
     void setDrawType(GLenum const drawType);
 
@@ -81,6 +84,10 @@ public:
 
 	IAttribute const * const getAttribute(std::string const & label);
 	IUniform const * const getUniform(std::string const & label);
+	
+    CRenderable * & getDebuggingNormalObject();
+
+	void reloadVariablesOnNextDraw();
 
 };
 

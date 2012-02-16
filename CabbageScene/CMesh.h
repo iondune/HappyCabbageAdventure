@@ -11,9 +11,6 @@
 class CMesh
 {
 
-    std::vector<CBufferObject<float> *> PositionBuffers, ColorBuffers, NormalBuffers, TexCoordBuffers, NormalLineBuffers, NormalColorBuffers;
-    std::vector<CBufferObject<unsigned short> *> IndexBuffers, NormalIndexBuffers;
-
 public:
 
     struct STriangle
@@ -27,10 +24,13 @@ public:
         std::vector<SVertex> Vertices;
         std::vector<STriangle> Triangles;
 
-        SVector3 DiffuseColor;
+        SColor DiffuseColor;
     };
 
     std::vector<SMeshBuffer *> MeshBuffers;
+
+	std::vector<CBufferObject<float> *> PositionBuffers, ColorBuffers, NormalBuffers, TexCoordBuffers, NormalLineBuffers, NormalColorBuffers;
+    std::vector<CBufferObject<unsigned short> *> IndexBuffers, NormalIndexBuffers;
 
     CMesh();
     ~CMesh();
@@ -47,15 +47,7 @@ public:
     void calculateNormalsPerFace();
     void calculateNormalsPerVertex();
 
-    std::vector<CBufferObject<float> *> makePositionBuffer();
-    std::vector<CBufferObject<float> *> makeColorBuffer();
-    std::vector<CBufferObject<float> *> makeNormalBuffer();
-    std::vector<CBufferObject<float> *> makeTexCoordBuffer();
-    std::vector<CBufferObject<unsigned short> *> makeIndexBuffer();
-
-    std::vector<CBufferObject<float> *> makeNormalLineBuffer(float const lengthFactor = 0.05f);
-    std::vector<CBufferObject<float> *> makeNormalColorBuffer();
-    std::vector<CBufferObject<unsigned short> *> makeNormalIndexBuffer();
+    void updateBuffers();
 
     SBoundingBox3 const getBoundingBox() const;
 

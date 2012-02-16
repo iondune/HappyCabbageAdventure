@@ -23,6 +23,16 @@ CRenderable::CRenderable()
     addUniform("uMaterial.Shininess", Material.Shininess);*/
 }
 
+CShader * CRenderable::getShader()
+{
+	return Shader;
+}
+
+void CRenderable::setShader(CShader * shader)
+{
+	Shader = shader;
+}
+
 CMaterial & CRenderable::getMaterial()
 {
     return Material;
@@ -200,4 +210,14 @@ void CRenderable::removeUniform(std::string const & label)
 
     if (it != Uniforms.end())
         Uniforms.erase(it);
+}
+
+CRenderable * & CRenderable::getDebuggingNormalObject()
+{
+	return NormalObject;
+}
+
+void CRenderable::reloadVariablesOnNextDraw()
+{
+	LastLoadedShader = 0;
 }

@@ -129,11 +129,8 @@ void CMesh::calculateNormalsPerVertex()
         it->Normal.normalize();
 }
 
-std::vector<CBufferObject<float> *> CMesh::makePositionBuffer()
+void CMesh::updateBuffers()
 {
-    if (PositionBuffers.size())
-        return PositionBuffers;
-
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
     {
         CBufferObject<float> * PositionBuffer = new CBufferObject<float>();
@@ -147,13 +144,6 @@ std::vector<CBufferObject<float> *> CMesh::makePositionBuffer()
         PositionBuffers.push_back(PositionBuffer);
     }
 
-    return PositionBuffers;
-}
-
-std::vector<CBufferObject<float> *> CMesh::makeColorBuffer()
-{
-    if (ColorBuffers.size())
-        return ColorBuffers;
 
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
     {
@@ -168,13 +158,6 @@ std::vector<CBufferObject<float> *> CMesh::makeColorBuffer()
         ColorBuffers.push_back(ColorBuffer);
     }
 
-    return ColorBuffers;
-}
-
-std::vector<CBufferObject<float> *> CMesh::makeNormalBuffer()
-{
-    if (NormalBuffers.size())
-        return NormalBuffers;
 
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
     {
@@ -189,13 +172,6 @@ std::vector<CBufferObject<float> *> CMesh::makeNormalBuffer()
         NormalBuffers.push_back(NormalBuffer);
     }
 
-    return NormalBuffers;
-}
-
-std::vector<CBufferObject<float> *> CMesh::makeTexCoordBuffer()
-{
-    if (TexCoordBuffers.size())
-        return TexCoordBuffers;
 
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
     {
@@ -210,13 +186,6 @@ std::vector<CBufferObject<float> *> CMesh::makeTexCoordBuffer()
         TexCoordBuffers.push_back(TexCoordBuffer);
     }
 
-    return TexCoordBuffers;
-}
-
-std::vector<CBufferObject<unsigned short> *> CMesh::makeIndexBuffer()
-{
-    if (IndexBuffers.size())
-        return IndexBuffers;
 
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
     {
@@ -233,13 +202,7 @@ std::vector<CBufferObject<unsigned short> *> CMesh::makeIndexBuffer()
     }
     
 
-    return IndexBuffers;
-}
-
-std::vector<CBufferObject<float> *> CMesh::makeNormalLineBuffer(float const lengthFactor)
-{
-    if (NormalLineBuffers.size())
-        return NormalLineBuffers;
+	static float const LengthFactor = 0.05f;
 
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
     {
@@ -250,20 +213,12 @@ std::vector<CBufferObject<float> *> CMesh::makeNormalLineBuffer(float const leng
             for (unsigned int j = 0; j < 3; ++ j)
                 NormalLineBuffer->push_back(it->Position[j]);
             for (unsigned int j = 0; j < 3; ++ j)
-                NormalLineBuffer->push_back(it->Position[j] + it->Normal[j]*lengthFactor);
+                NormalLineBuffer->push_back(it->Position[j] + it->Normal[j]*LengthFactor);
         }
 
         NormalLineBuffers.push_back(NormalLineBuffer);
     }
 
-
-    return NormalLineBuffers;
-}
-
-std::vector<CBufferObject<float> *> CMesh::makeNormalColorBuffer()
-{
-    if (NormalColorBuffers.size())
-        return NormalColorBuffers;
 
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
     {
@@ -281,13 +236,6 @@ std::vector<CBufferObject<float> *> CMesh::makeNormalColorBuffer()
         NormalColorBuffers.push_back(NormalColorBuffer);
     }
 
-    return NormalColorBuffers;
-}
-
-std::vector<CBufferObject<unsigned short> *> CMesh::makeNormalIndexBuffer()
-{
-    if (NormalIndexBuffers.size())
-        return NormalIndexBuffers;
 
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
     {
@@ -303,8 +251,6 @@ std::vector<CBufferObject<unsigned short> *> CMesh::makeNormalIndexBuffer()
 
         NormalIndexBuffers.push_back(NormalIndexBuffer);
     }
-
-    return NormalIndexBuffers;
 }
 
 SBoundingBox3 const CMesh::getBoundingBox() const

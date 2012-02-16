@@ -4,7 +4,7 @@
 #include "CMesh.h"
 #include "CMeshLoader.h"
 #include "CRenderable.h"
-#include "CMeshRenderable.h"
+#include "CMeshSceneObject.h"
 #include "CShader.h"
 #include "CShaderLoader.h"
 #include "CShaderContext.h"

@@ -19,8 +19,8 @@ struct SAttribute : public IAttribute
 		: Value(0), ElementSize(0)
 	{}
 
-	SAttribute(T * value, int const elementSize = 4)
-		: Value(value), ElementSize(elementSize)
+	SAttribute(CBufferObject<T> * buffer, int const elementSize = 4)
+		: Buffer(buffer), ElementSize(elementSize)
 	{}
 
 	void bind(GLint const handle, CShaderContext & shaderContext) const

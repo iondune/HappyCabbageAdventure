@@ -71,7 +71,7 @@
     <ClInclude Include="CMaterial.h" />
     <ClInclude Include="CMesh.h" />
     <ClInclude Include="CMeshLoader.h" />
-    <ClInclude Include="CMeshRenderable.h" />
+    <ClInclude Include="CMeshSceneObject.h" />
     <ClInclude Include="CSceneManager.h" />
     <ClInclude Include="CSceneObject.h" />
     <ClInclude Include="CShader.h" />
@@ -91,7 +91,7 @@
     <ClCompile Include="CMaterial.cpp" />
     <ClCompile Include="CMesh.cpp" />
     <ClCompile Include="CMeshLoader.cpp" />
-    <ClCompile Include="CMeshRenderable.cpp" />
+    <ClCompile Include="CMeshSceneObject.cpp" />
     <ClCompile Include="CSceneManager.cpp" />
     <ClCompile Include="CSceneObject.cpp" />
     <ClCompile Include="CShader.cpp" />
