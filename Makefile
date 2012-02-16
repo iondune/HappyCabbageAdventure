@@ -1,3 +1,6 @@
+OBJECT_FILES=`find | grep '\.o$$' | sed "/sdlmixer/d"`
+
+
 all: build-Sound build-CabbageFramework build-CabbageScene build-CabbageCollider build-CLWIB build-MainMenu build-Overworld build-base build-MeshLoaderDemo build-CabbageColliderDemo
 
 build-Sound:
@@ -31,5 +34,7 @@ build-CabbageFramework:
 	cd ./CabbageFramework && $(MAKE)
 	
 clean:
-	cd ./CabbageScene && $(MAKE) $@ && cd ../StateOverworld && $(MAKE) $@ && cd ../StateLWIB && $(MAKE) $@ && cd ../CabbageSound && $(MAKE) $@ && cd ../CabbageCollider && $(MAKE) $@ && cd ../DemoMeshLoader && $(MAKE) $@ && cd ../DemoCabbageCollider && $(MAKE) $@ && cd ../CabbageFramework && $(MAKE) $@
+	rm -f $(OBJECT_FILES)
+#	cd ./CabbageScene && $(MAKE) $@ && cd ../StateOverworld && $(MAKE) $@ && cd ../StateLWIB && $(MAKE) $@ && cd ../CabbageSound && $(MAKE) $@ && cd ../CabbageCollider && $(MAKE) $@ && cd ../DemoMeshLoader && $(MAKE) $@ && cd ../DemoCabbageCollider && $(MAKE) $@ && cd ../CabbageFramework && $(MAKE) $@
+
 
