@@ -54,6 +54,7 @@ void CLWIBState::begin()
    cubeMesh = CMeshLoader::createCubeMesh();
    cubeMesh->calculateNormalsPerFace();
 
+   showHelp = false;
    initBlockMap();
    blockWidth = 1;
    blockHeight = 1;
@@ -78,7 +79,6 @@ void CLWIBState::begin()
    Camera->setPosition(eye);
    Camera->setLookDirection(look - eye);
    Camera->recalculateViewMatrix();
-
    Application.getSceneManager().setActiveCamera(Camera);
 
    Diffuse = CShaderLoader::loadShader("Diffuse");
@@ -136,9 +136,13 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    Application.getSceneManager().drawAll();
 
    //Draw Text
-   freetype::print(our_font, 10, WindowHeight-40.f, "Elapsed Time: %0.0f ", Application.getRunTime());
+   //freetype::print(our_font, 10, WindowHeight-40.f, "Elapsed Time: %0.0f ", Application.getRunTime());
    freetype::print(our_font, (float)WindowWidth/2, (float)WindowHeight/2, "+");
       
+    if (showHelp)
+        freetype::print(our_font, 15, WindowHeight - 50.f, "1, 2, and 3 to change materials\n\n");
+    else
+        freetype::print(our_font, 15, WindowHeight - 50.f, "Press F1 to view commands");
 
    drawSubWindow();
    Application.getSceneManager().drawAll();
@@ -259,6 +263,9 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
          glViewport(0, 0, WindowWidth, WindowHeight);
          Application.getStateManager().setState(& CMainMenuState::get());
       }
+      if(Event.Key == SDLK_F1) {
+          showHelp = Event.Pressed;
+      }
    }
    //Check if key let go, Not sure if this will work in here.
    else  {
@@ -295,6 +302,9 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_SPACE){
          spaceDown = 0;
+      }
+      if(Event.Key == SDLK_F1) {
+         showHelp = false;
       }
    }
 }
