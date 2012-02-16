@@ -18,7 +18,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
          CRenderable * Renderable;
       };
 
-      typedef std::vector<SEnemy> EnemyList;
+      typedef std::vector<SEnemy> EnemyList; //Will change to vector<CBadGuy>
       EnemyList Enemies;
       EnemyList KillList;
 
@@ -45,6 +45,8 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       int const getPlayerHealth() const;
 
       float getRecovering() {return PlayerRecovering;}
+
+      SVector2 getPlayerLocation();
 
       void run(float const TickTime);
 

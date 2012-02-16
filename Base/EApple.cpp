@@ -12,6 +12,7 @@ EApple::EApple(float x, float y, float w, float h, CGameplayManager* manager) {
 
 }
 
+//Loads and moves the mesh
 void EApple::loadMesh() {
    Renderable = new CMeshRenderable();
    CMesh *mesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
@@ -31,8 +32,19 @@ void EApple::loadMesh() {
    CApplication::get().getSceneManager().addRenderable(Renderable);
 }
 
-bool EApple::loadActor() {
+//Adds actor to engine and preps engine
+void EApple::loadActor() {
+   Actor = Engine->addActor();
+   Actor->setArea(SRect2(SVector2(x, y), SVector2(w, h)));
 
+   //Set actor attributes
+   Actor->getAttributes().MaxWalk = 1.2f;
+
+   Manager->addEnemy(SVector2(x, y), Renderable);
+}
+
+//Updates AI's decision per frame
+void EApple::update() {
 }
 
 EApple::~EApple() {

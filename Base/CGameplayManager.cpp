@@ -88,6 +88,10 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
 
 }
 
+SVector2 CGameplayManager::getPlayerLocation() {
+   return SVector2(PlayerActor->getArea().getCenter().X, PlayerActor->getArea().getCenter().Y);
+}
+
 void CGameplayManager::setVictoryFlag(Cabbage::Collider::CObject * f) {
    VictoryFlag = f;
 }
