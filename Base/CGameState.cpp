@@ -497,7 +497,7 @@ void CGameState::OnRenderStart(float const Elapsed)
             playDead = false;
          }
 
-         freetype::print(our_font, 50, WindowHeight - 240.f, "GAME OVER! YOU ARE DEAD");
+         freetype::print(our_font, 50, WindowHeight - 240.f, "GAME OVER! YOU ARE DEAD.");
       }
    }
 
