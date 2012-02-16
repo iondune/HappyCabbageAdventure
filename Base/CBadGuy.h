@@ -1,9 +1,13 @@
 #ifndef CBADGUY_H_
 #define CBADGUY_H_
 
+#include "CGameplayManager.h"
+#include "../CabbageScene/CabbageScene.h"
+#include "../CabbageFramework/CabbageFramework.h"
+
 enum EnemyType {
    apple,
-   none
+   orange
 };
 
 class CBadGuy {
@@ -13,10 +17,10 @@ public:
    CGameplayManager* Manager;
    Cabbage::Collider::CActor* Actor;
    CRenderable* Renderable;
-   static CShader* Shader;
+   CShader* Shader;
 
-   static void setShader(CShader* shader);
-   static CBadGuy* makeBadGuy(float x, float y, float w, float h, EnemyType enemy, CGameplayManager* manager);
+   void setShader(CShader* shader);
+   static void makeBadGuy(float x, float y, float w, float h, EnemyType enemy, CGameplayManager* manager);
 
    //Methods that must be implemented in subclasses
    virtual void update();

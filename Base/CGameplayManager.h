@@ -48,6 +48,8 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 
       SVector2 getPlayerLocation();
 
+      Cabbage::Collider::CEngine* getEngine();
+
       void run(float const TickTime);
 
       void addEnemy(SVector2 const & Position, CRenderable * renderable);

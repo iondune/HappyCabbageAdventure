@@ -1,4 +1,3 @@
-
 #include "EApple.h"
 
 EApple::EApple(float x, float y, float w, float h, CGameplayManager* manager) {
@@ -6,9 +5,10 @@ EApple::EApple(float x, float y, float w, float h, CGameplayManager* manager) {
    this->y = y;
    this->w = w;
    this->h = h;
-   this->Manager = manager;
+   Manager = manager;
 
    loadMesh();
+   loadActor();
 
 }
 
@@ -24,7 +24,7 @@ void EApple::loadMesh() {
 
    ((CMeshRenderable*) Renderable)->setMesh(mesh);
    //tempEnemy->getMaterial().Texture = CImageLoader::loadTexture("Textures/dirt.bmp");
-   Renderable->getMaterial().Shader = Shader;
+   Renderable->getMaterial().Shader = CBadGuy::Shader; //Why do I need to do this?
    Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y+1))/2, 0));
    Renderable->setScale(SVector3(1, 1, 1));
    Renderable->setRotation(SVector3(-90, 0, 0));
@@ -34,7 +34,7 @@ void EApple::loadMesh() {
 
 //Adds actor to engine and preps engine
 void EApple::loadActor() {
-   Actor = Engine->addActor();
+   Actor = Manager->getEngine()->addActor();
    Actor->setArea(SRect2(SVector2(x, y), SVector2(w, h)));
 
    //Set actor attributes
@@ -46,8 +46,3 @@ void EApple::loadActor() {
 //Updates AI's decision per frame
 void EApple::update() {
 }
-
-EApple::~EApple() {
-   // TODO Auto-generated destructor stub
-}
-

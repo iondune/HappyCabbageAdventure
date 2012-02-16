@@ -150,6 +150,10 @@ void CGameplayManager::run(float const TickTime)
     }
 }
 
+Cabbage::Collider::CEngine* CGameplayManager::getEngine() {
+   return Engine;
+}
+
 void CGameplayManager::addEnemy(SVector2 const & Position, CRenderable * renderable)
 {
     SEnemy enemy;

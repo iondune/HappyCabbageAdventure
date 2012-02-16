@@ -33,8 +33,6 @@ void CEnemy::setShader(CShader * chad) {
 CMeshRenderable * CEnemy::setupItem(CShader * chad, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
    /*Rough code plan
     * CBadGuy* badGuy = CBadGuy::makeBadGuy(x, y, w, h, EnemyType enemy, GameplayManager);
-    * badGuy->loadMesh();
-    * badGuy->loadActor();
     */
 
    CMeshRenderable *tempEnemy = new CMeshRenderable();
