@@ -228,8 +228,6 @@ void CGameState::begin()
 
    LoadShaders();
 
-//   startSoundtrack();
-
    Load3DS();
    LoadTextures();
    BlockMesh();
