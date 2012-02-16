@@ -20,6 +20,8 @@ void CMeshSceneObject::setMesh(CMesh * mesh)
 
     if (Mesh)
     {
+		Mesh->updateBuffers();
+
         for (unsigned int i = 0; i < Mesh->PositionBuffers.size(); ++ i)
         {
             CRenderable * Child = 0;
@@ -27,7 +29,7 @@ void CMeshSceneObject::setMesh(CMesh * mesh)
                 Child = Renderables[i];
             else
             {
-                Renderables.push_back(Child = new CRenderable());
+                Renderables.push_back(Child = new CRenderable(this));
             }
 
             // Remove any attributes which might have been set by a previous mesh
@@ -60,7 +62,7 @@ void CMeshSceneObject::setMesh(CMesh * mesh)
             }
 
             // Add normal debugging object
-            Child->getDebuggingNormalObject() = new CRenderable();
+            Child->getDebuggingNormalObject() = new CRenderable(this);
             Child->getDebuggingNormalObject()->addAttribute("aPosition", new SAttribute<float>(Mesh->NormalLineBuffers[i], 3));
             Child->getDebuggingNormalObject()->addAttribute("aColor", new SAttribute<float>(Mesh->NormalColorBuffers[i], 3));
             Child->getDebuggingNormalObject()->setIndexBufferObject(Mesh->NormalIndexBuffers[i]);

@@ -21,6 +21,8 @@ public:
 	void addRenderable(CRenderable * Renderable);
 	void removeRenderable(CRenderable * Renderable);
 
+    void draw(CScene const * const scene);
+
 	void setShader(CShader * shader);
 	void setMaterial(CMaterial const & material);
 

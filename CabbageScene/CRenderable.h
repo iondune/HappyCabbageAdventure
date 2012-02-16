@@ -61,7 +61,7 @@ protected:
 
 public:
 
-    CRenderable();
+    CRenderable(ISceneObject * parent);
 
     CMaterial & getMaterial();
     CMaterial const & getMaterial() const;

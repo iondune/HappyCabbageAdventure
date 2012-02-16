@@ -10,8 +10,8 @@
 
 CShader * CRenderable::NormalColorShader = 0;
 
-CRenderable::CRenderable()
-    : DrawType(GL_TRIANGLES), NormalObject(0), IndexBufferObject(0)
+CRenderable::CRenderable(ISceneObject * parent)
+    : DrawType(GL_TRIANGLES), NormalObject(0), IndexBufferObject(0), Parent(parent)
 {
     /*uModelMatrix = boost::shared_ptr<CMat4Uniform>(new CMat4Uniform());
     uNormalMatrix = boost::shared_ptr<CMat4Uniform>(new CMat4Uniform());
