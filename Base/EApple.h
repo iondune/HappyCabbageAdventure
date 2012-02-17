@@ -10,6 +10,9 @@ class EApple : public CBadGuy
 public:
    EApple(float x, float y, float w, float h, CGameplayManager* manager);
 
+   float rotate;
+   bool rolling;
+
    void update();
    void loadMesh();
    void loadActor();

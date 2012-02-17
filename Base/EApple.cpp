@@ -10,6 +10,8 @@ EApple::EApple(float x, float y, float w, float h, CGameplayManager* manager) {
    loadMesh();
    loadActor();
 
+   rolling = false;
+   rotate = 0.0f;
 }
 
 //Loads and moves the mesh
@@ -37,25 +39,36 @@ void EApple::loadMesh() {
 //Adds actor to engine and preps engine
 void EApple::loadActor() {
    Actor = Manager->getEngine()->addActor();
-   printf("x is %f and y is %f\n", x, y);
    Actor->setArea(SRect2(SVector2(x, y), SVector2(w, h)));
 
    //Set actor attributes
-   Actor->getAttributes().MaxWalk = 1.2f;
+   Actor->getAttributes().MaxWalk = 2.2f;
 }
 
 //Updates AI's decision per frame
 void EApple::update() {
    if (Manager->isPlayerAlive())
    {
-       if (Manager->getPlayerLocation().X < Actor->getArea().getCenter().X)
+       if (Manager->getPlayerLocation().X < Actor->getArea().getCenter().X && !rolling)
            Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveLeft);
-       else
+       else if (Manager->getPlayerLocation().X > Actor->getArea().getCenter().X && !rolling)
            Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
 
-       if (Manager->getPlayerLocation().Y - 1 > Actor->getArea().getCenter().Y) {
-          Actor->setJumping(true);
+       if (Manager->getPlayerLocation().X - Actor->getArea().getCenter().X < 7 && Manager->getPlayerLocation().X - Actor->getArea().getCenter().X > -7 && rand()%1000 == 5) {
+             rolling = true;
+             Actor->getAttributes().MaxWalk = 6.60f;
        }
+
+      if (rolling) {
+         rotate += 3;
+         Renderable->setRotation(SVector3(-90, rotate, 0));
+      }
+
+      if (rotate >= 360) {
+         rotate = 0;
+         rolling = false;
+         Actor->getAttributes().MaxWalk = 2.2f;
+      }
    }
    else
    {
