@@ -37,19 +37,17 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
     if(won) {
        return;
     }
-    for (std::vector<EApple>::iterator it = Test.begin(); it != Test.end(); ++ it)
+    for (std::vector<EApple>::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
     {
         if (Other == it->Actor)
         {
             if (PlayerActor->getArea().Position.Y > Other->getArea().otherCorner().Y - HitThreshold)
             {
                 Mix_PlayChannel(-1, killEnemy, 0);
-                KillTest.push_back(* it);
+                KillList.push_back(* it);
                 //fprintf(stderr, "Enemy detected as dead! %d\n", it->Renderable);
 
-                Test.erase(it);
-
-                printf("Test size is: %d\n", Test.size());
+                Enemies.erase(it);
             }
             //Need to rewrite so works without SEnemy
 
@@ -124,7 +122,7 @@ void CGameplayManager::run(float const TickTime)
     if (PlayerRecovering > 0.f)
         PlayerRecovering -= TickTime;
 
-    for (std::vector<EApple>::iterator it = KillTest.begin(); it != KillTest.end(); ++ it)
+    for (std::vector<EApple>::iterator it = KillList.begin(); it != KillList.end(); ++ it)
     {
        SEnemyDeathEvent Event;
        SEnemy enemy;
@@ -137,10 +135,10 @@ void CGameplayManager::run(float const TickTime)
        Engine->removeActor(it->Actor);
     }
 
-    KillTest.clear();
+    KillList.clear();
 
 
-    for (std::vector<EApple>::iterator it = Test.begin(); it != Test.end(); ++ it)
+    for (std::vector<EApple>::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
        it->update();
 }
 
@@ -148,15 +146,6 @@ Cabbage::Collider::CEngine* CGameplayManager::getEngine() {
    return Engine;
 }
 
-void CGameplayManager::addEnemy(SVector2 const & Position, CRenderable * renderable)
-{
-    SEnemy enemy;
-    enemy.Actor = Engine->addActor();
-    enemy.Actor->setArea(SRect2(Position, 1));
-    enemy.Actor->getAttributes().MaxWalk = 1.2f;
-    enemy.Renderable = renderable;
-    Enemies.push_back(enemy);
-}
 
 CGameEventManager & CGameplayManager::getGameEventManager()
 {

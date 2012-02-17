@@ -14,11 +14,10 @@ void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
     //fprintf(stderr, "Removing enemy %d\n", Event.Enemy);
     //fprintf(stderr, "Removing renderable %d\n", Event.Renderable);
 
-   printf("GOT HERE\n");
     SDeadEnemy DeadEnemy;
     DeadEnemy.DeathTimer = 0.5f;
     DeadEnemy.Renderable = Event.Enemy.Renderable;
-    printf("GOT TO HERE\n");
+
     DeadEnemy.Renderable->setScale(SVector3(1.f, 1.0f, 0.4f));
     DeadEnemy.Renderable->setTranslation(DeadEnemy.Renderable->getTranslation() - SVector3(0.f, 0.5f, 0.f));
     DeadEnemies.push_back(DeadEnemy);

@@ -22,11 +22,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
          CRenderable * Renderable;
       };
 
-      typedef std::vector<SEnemy> EnemyList; //Will change to vector<CBadGuy>
-      EnemyList Enemies;
-      EnemyList KillList;
-
-      std::vector<EApple> Test, KillTest;
+      std::vector<EApple> Enemies, KillList;
 
    private:
 
@@ -57,8 +53,6 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       Cabbage::Collider::CEngine* getEngine();
 
       void run(float const TickTime);
-
-      void addEnemy(SVector2 const & Position, CRenderable * renderable);
 
       CGameEventManager & getGameEventManager();
 

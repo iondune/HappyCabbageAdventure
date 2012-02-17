@@ -446,15 +446,6 @@ void CGameState::oldDisplay() {
          ((CMeshRenderable*)(it->Renderable))->setScale(SVector3(1,1,1));
       i++;
    }
-   /*for (CGameplayManager::EnemyList::iterator it = GameplayManager->Enemies.begin(); it != GameplayManager->Enemies.end(); ++ it)
-   {
-      ((CMeshRenderable*)(it->Renderable))->setTranslation(SVector3(it->Actor->getArea().getCenter().X, it->Actor->getArea().getCenter().Y, 0));
-      if(it->Actor->getVelocity().X < -0.01f)
-         ((CMeshRenderable*)(it->Renderable))->setScale(SVector3(-1,1,1));
-      else if(it->Actor->getVelocity().X > 0.01f)
-         ((CMeshRenderable*)(it->Renderable))->setScale(SVector3(1,1,1));
-      i++;
-   }*/
 
    std::vector<CElevator*>::iterator it;
    for(it=elevators.begin();it<elevators.end();it++) {
@@ -463,7 +454,6 @@ void CGameState::oldDisplay() {
       SVector2 size = ptr->getArea().Size;
       ptr->getRenderable()->setTranslation(SVector3(pos.X + (float)size.X/2, pos.Y + (float)size.Y/2, 0));
    }
-
 
    // ...and by spinning it around
    static float const RotationSpeed = 50.f;
