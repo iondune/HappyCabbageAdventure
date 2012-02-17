@@ -25,11 +25,13 @@ struct SAttribute : public IAttribute
 
 	void bind(GLint const handle, CShaderContext & shaderContext) const
 	{
-		if (Buffer->isDirty())
-			Buffer->syncData();
-
 		if (Buffer)
+		{
+			if (Buffer->isDirty())
+				Buffer->syncData();
+
 			shaderContext.bindBufferObject(handle, Buffer->getHandle(), ElementSize);
+		}
 	}
 };
 

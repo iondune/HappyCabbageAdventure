@@ -11,7 +11,8 @@
 CShader * CRenderable::NormalColorShader = 0;
 
 CRenderable::CRenderable(ISceneObject * parent)
-    : DrawType(GL_TRIANGLES), NormalObject(0), IndexBufferObject(0), Parent(parent)
+    : DrawType(GL_TRIANGLES), NormalObject(0), IndexBufferObject(0), Parent(parent),
+	BindModelMatrix(ModelMatrix), BindNormalMatrix(NormalMatrix)
 {
     /*uModelMatrix = boost::shared_ptr<CMat4Uniform>(new CMat4Uniform());
     uNormalMatrix = boost::shared_ptr<CMat4Uniform>(new CMat4Uniform());
@@ -139,7 +140,7 @@ void CRenderable::draw(CScene const * const scene)
     CShaderContext ShaderContext(* ShaderToUse);
 
     // Set up transform matrices
-    ModelMatrix = Transformation.get() * Parent->getTransformation().get();
+	ModelMatrix = glm::translate(glm::mat4(1.f), glm::vec3(0));//Transformation.get() * Parent->getTransformation().get();
 
     // Pass transform matrices to shader
     NormalMatrix = glm::transpose(glm::inverse(ModelMatrix));
