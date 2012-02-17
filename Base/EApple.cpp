@@ -27,7 +27,7 @@ void EApple::loadMesh() {
 
    Renderable->setMesh(mesh);
    Renderable->getMaterial().Shader = CShaderLoader::loadShader("Diffuse");
-   Renderable->setTranslation(SVector3((x+(x+2))/2, (y+(y+2))/2, 0));
+   Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
    Renderable->setScale(SVector3(1, 1, 1));
    Renderable->setRotation(SVector3(-90, 0, 0));
 
@@ -38,7 +38,7 @@ void EApple::loadMesh() {
 void EApple::loadActor() {
    Actor = Manager->getEngine()->addActor();
    printf("x is %f and y is %f\n", x, y);
-   Actor->setArea(SRect2(SVector2(x+2, y+2), SVector2(w, h)));
+   Actor->setArea(SRect2(SVector2(x, y), SVector2(w, h)));
 
    //Set actor attributes
    Actor->getAttributes().MaxWalk = 1.2f;

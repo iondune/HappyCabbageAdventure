@@ -9,7 +9,7 @@ void CBadGuy::makeBadGuy(float x, float y, float w, float h, EnemyType enemy, CG
    EApple* temp;
 
    if (enemy == apple) {
-      temp->setShader(CShaderLoader::loadShader("Diffuse"));
+      //temp->setShader(CShaderLoader::loadShader("Diffuse"));
       temp = new EApple(x, y, w, h, manager);
    }
 
