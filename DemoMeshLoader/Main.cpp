@@ -76,7 +76,7 @@ public:
 
 
         // Attempt to load shader and attributes
-        Shader = CShaderLoader::loadShader("Simple");
+        Shader = CShaderLoader::loadShader("Flat");
         if (! Shader)
         {
             std::cerr << "Unable to open or compile necessary shader." << std::endl;
@@ -89,10 +89,10 @@ public:
         MeshFace = CMeshLoader::loadAsciiMesh("../Base/Models/bunny10k.m");
         if (MeshFace)
         {
-            //MeshFace->linearizeIndices();
+            MeshFace->linearizeIndices();
             MeshFace->resizeMesh(SVector3(1.5));
             MeshFace->centerMeshByExtents(SVector3(0));
-            //MeshFace->calculateNormalsPerFace();
+            MeshFace->calculateNormalsPerFace();
         }
 
         MeshVertex = CMeshLoader::loadAsciiMesh("../Base/Models/bunny10k.m");

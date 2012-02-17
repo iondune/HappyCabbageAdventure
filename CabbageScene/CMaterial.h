@@ -19,6 +19,8 @@ public:
 	SUniform<float> BindShininess;
 
     CMaterial();
+	CMaterial(CMaterial const & other);
+	CMaterial & operator = (CMaterial const & other);
 
 	void loadDefaults();
 

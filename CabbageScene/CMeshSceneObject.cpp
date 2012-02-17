@@ -20,7 +20,8 @@ void CMeshSceneObject::setMesh(CMesh * mesh)
 
     if (Mesh)
     {
-		Mesh->updateBuffers();
+		if (! Mesh->PositionBuffers.size())
+			Mesh->updateBuffers();
 
         for (unsigned int i = 0; i < Mesh->PositionBuffers.size(); ++ i)
         {

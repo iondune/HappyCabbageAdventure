@@ -140,7 +140,7 @@ void CRenderable::draw(CScene const * const scene)
     CShaderContext ShaderContext(* ShaderToUse);
 
     // Set up transform matrices
-	ModelMatrix = glm::translate(glm::mat4(1.f), glm::vec3(0));//Transformation.get() * Parent->getTransformation().get();
+	ModelMatrix = Transformation.get() * Parent->getTransformation().get();
 
     // Pass transform matrices to shader
     NormalMatrix = glm::transpose(glm::inverse(ModelMatrix));
@@ -234,7 +234,10 @@ IUniform const * const CRenderable::getUniform(std::string const & label)
 		return & Material.BindAmbientColor;
 
 	if (label == "uMaterial.DiffuseColor")
-		return & Material.BindAmbientColor;
+		return & Material.BindDiffuseColor;
+
+	if (label == "uMaterial.Shininess")
+		return & Material.BindShininess;
 
 	std::map<std::string, IUniform const *>::iterator it = Uniforms.find(label);
 	if (it != Uniforms.end())
