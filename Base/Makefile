@@ -1,5 +1,5 @@
 ROOT_CABBAGE_DIR=../
-SOURCES=main.cpp CGameState.cpp CPlayerView.cpp Materials.cpp FreeType.cpp CGameplayManager.cpp CGameEventReceiver.cpp ./irrxml-1.2/src/irrXML.cpp CBadGuy.cpp EApple.cpp
+SOURCES=main.cpp CGameState.cpp CPlayerView.cpp Materials.cpp FreeType.cpp CGameplayManager.cpp CGameEventReceiver.cpp ./irrxml-1.2/src/irrXML.cpp CBadGuy.cpp EApple.cpp EOrange.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o) ../StateMainMenu/CMainMenuState.o
 CABBAGE= -L../lib/ -lCabbageSound -lCabbageCollider -lCabbageFramework -lCabbageScene -lCLWIB -lOverworldState
 
@@ -48,6 +48,8 @@ CBadGuy.o: CBadGuy.cpp CBadGuy.h
 	g++ $(INCLUDE) `sdl-config --cflags` -c CBadGuy.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 EApple.o: EApple.cpp EApple.h CBadGuy.h
 	g++ $(INCLUDE) `sdl-config --cflags` -c EApple.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+EOrange.o: EOrange.cpp EOrange.h CBadGuy.h
+	g++ $(INCLUDE) `sdl-config --cflags` -c EOrange.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 
 qclean:
 	rm cabbage.exe cabbage 2>/dev/null
