@@ -11,7 +11,7 @@ public:
    EApple(float x, float y, float w, float h, CGameplayManager* manager);
 
    float rotate;
-   bool rolling;
+   bool rollingLeft, rollingRight;
 
    void update();
    void loadMesh();

@@ -10,7 +10,7 @@ EApple::EApple(float x, float y, float w, float h, CGameplayManager* manager) {
    loadMesh();
    loadActor();
 
-   rolling = false;
+   rollingLeft = rollingRight = false;
    rotate = 0.0f;
 }
 
@@ -49,25 +49,34 @@ void EApple::loadActor() {
 void EApple::update() {
    if (Manager->isPlayerAlive())
    {
-       if (Manager->getPlayerLocation().X < Actor->getArea().getCenter().X && !rolling)
+       if (Manager->getPlayerLocation().X < Actor->getArea().getCenter().X && (!rollingLeft && !rollingRight))
            Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveLeft);
-       else if (Manager->getPlayerLocation().X > Actor->getArea().getCenter().X && !rolling)
+       else if (Manager->getPlayerLocation().X > Actor->getArea().getCenter().X && (!rollingLeft && !rollingRight))
            Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
 
-       if (Manager->getPlayerLocation().X - Actor->getArea().getCenter().X < 7 && Manager->getPlayerLocation().X - Actor->getArea().getCenter().X > -7 && rand()%1000 == 5) {
-             rolling = true;
-             Actor->getAttributes().MaxWalk = 6.60f;
+       if (Manager->getPlayerLocation().X - Actor->getArea().getCenter().X < 7 && Manager->getPlayerLocation().X - Actor->getArea().getCenter().X > -7 && rand()%700 == 5) {
+             if (Actor->getAction() == Cabbage::Collider::CActor::EActionType::MoveLeft)
+                rollingLeft = true;
+             else
+                rollingRight = true;
+             Actor->getAttributes().MaxWalk = 6.0f;
        }
 
-      if (rolling) {
+      if (rollingLeft) {
+         rotate -= 3;
+         Renderable->setRotation(SVector3(-90, rotate, 0));
+      }
+
+      if (rollingRight) {
          rotate += 3;
          Renderable->setRotation(SVector3(-90, rotate, 0));
       }
 
-      if (rotate >= 360) {
+      if (rotate >= 360 || rotate <= -360) {
          rotate = 0;
-         rolling = false;
+         rollingLeft = rollingRight = false;
          Actor->getAttributes().MaxWalk = 2.2f;
+         Actor->setVelocity(SVector2(2.2f, 0.0f));
       }
    }
    else
