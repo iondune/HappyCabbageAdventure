@@ -117,7 +117,8 @@ namespace Collider
 
 		// Action control
 		void setAction(EActionType const & action);
-        bool isJumping();
+		EActionType getAction();
+      bool isJumping();
 		void setJumping(bool const jumping);
 
 		virtual void draw();

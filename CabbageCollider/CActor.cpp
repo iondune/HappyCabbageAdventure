@@ -230,6 +230,10 @@ namespace Collider
         return Jumping;
     }
 
+    CActor::EActionType CActor::getAction() {
+       return Action;
+    }
+
 	void CActor::setJumping(bool const jumping)
 	{
 		if (! Jumping && ! Standing)

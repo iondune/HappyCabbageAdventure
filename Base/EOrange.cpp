@@ -53,8 +53,7 @@ void EOrange::loadActor() {
    Actor->setArea(SRect2(SVector2(x, y), SVector2(w, h)));
 
    //Set actor attributes
-   Actor->getAttributes().MaxWalk = 3.0f;
-   Actor->getAttributes().JumpLength = .3f;
+   Actor->getAttributes().MaxWalk = 5.0f;
    Actor->getAttributes().WalkAccel = 4.0f;
    Actor->getAttributes().JumpAccel = 6.4f;
    Actor->getAttributes().JumpLength = .1f;
