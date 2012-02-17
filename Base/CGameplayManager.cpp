@@ -37,9 +37,9 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
     if(won) {
        return;
     }
-    for (std::vector<EApple>::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
+    for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
     {
-        if (Other == it->Actor)
+        if (Other == (*it)->Actor)
         {
             if (PlayerActor->getArea().Position.Y > Other->getArea().otherCorner().Y - HitThreshold)
             {
@@ -57,8 +57,8 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
                 {
                     SPlayerDamagedEvent Event;
                     SEnemy enemy;
-                    enemy.Actor = it->Actor;
-                    enemy.Renderable = it->Renderable;
+                    enemy.Actor = (*it)->Actor;
+                    enemy.Renderable = (*it)->Renderable;
 
                     Event.DamagedBy = enemy;
                     GameEventManager->OnPlayerDamaged(Event);
@@ -122,24 +122,24 @@ void CGameplayManager::run(float const TickTime)
     if (PlayerRecovering > 0.f)
         PlayerRecovering -= TickTime;
 
-    for (std::vector<EApple>::iterator it = KillList.begin(); it != KillList.end(); ++ it)
+    for (EnemyList::iterator it = KillList.begin(); it != KillList.end(); ++ it)
     {
        SEnemyDeathEvent Event;
        SEnemy enemy;
-       enemy.Actor = it->Actor;
-       enemy.Renderable = it->Renderable;
+       enemy.Actor = (*it)->Actor;
+       enemy.Renderable = (*it)->Renderable;
        Event.Enemy = enemy;
 
        GameEventManager->OnEnemyDeath(Event);
 
-       Engine->removeActor(it->Actor);
+       Engine->removeActor((*it)->Actor);
     }
 
     KillList.clear();
 
 
-    for (std::vector<EApple>::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
-       it->update();
+    for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
+       (*it)->update();
 }
 
 Cabbage::Collider::CEngine* CGameplayManager::getEngine() {

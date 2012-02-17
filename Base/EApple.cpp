@@ -52,6 +52,10 @@ void EApple::update() {
            Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveLeft);
        else
            Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
+
+       if (Manager->getPlayerLocation().Y - 1 > Actor->getArea().getCenter().Y) {
+          Actor->setJumping(true);
+       }
    }
    else
    {

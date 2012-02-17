@@ -17,5 +17,5 @@ void CBadGuy::makeBadGuy(float x, float y, float w, float h, EnemyType enemy, CG
       return;
    }
 
-   temp->Manager->Enemies.push_back(*temp);
+   temp->Manager->Enemies.push_back(temp);
 }
