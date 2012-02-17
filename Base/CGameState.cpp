@@ -437,7 +437,7 @@ void CGameState::oldDisplay() {
 
    //ENEMY DISPLAY
    int i = 0;
-   for (CGameplayManager::EnemyList::iterator it = GameplayManager->Enemies.begin(); it != GameplayManager->Enemies.end(); ++ it)
+   for (std::vector<EApple>::iterator it = GameplayManager->Test.begin(); it != GameplayManager->Test.end(); ++ it)
    {
       ((CMeshRenderable*)(it->Renderable))->setTranslation(SVector3(it->Actor->getArea().getCenter().X, it->Actor->getArea().getCenter().Y, 0));
       if(it->Actor->getVelocity().X < -0.01f)
@@ -446,6 +446,15 @@ void CGameState::oldDisplay() {
          ((CMeshRenderable*)(it->Renderable))->setScale(SVector3(1,1,1));
       i++;
    }
+   /*for (CGameplayManager::EnemyList::iterator it = GameplayManager->Enemies.begin(); it != GameplayManager->Enemies.end(); ++ it)
+   {
+      ((CMeshRenderable*)(it->Renderable))->setTranslation(SVector3(it->Actor->getArea().getCenter().X, it->Actor->getArea().getCenter().Y, 0));
+      if(it->Actor->getVelocity().X < -0.01f)
+         ((CMeshRenderable*)(it->Renderable))->setScale(SVector3(-1,1,1));
+      else if(it->Actor->getVelocity().X > 0.01f)
+         ((CMeshRenderable*)(it->Renderable))->setScale(SVector3(1,1,1));
+      i++;
+   }*/
 
    std::vector<CElevator*>::iterator it;
    for(it=elevators.begin();it<elevators.end();it++) {

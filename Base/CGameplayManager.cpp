@@ -37,24 +37,32 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
     if(won) {
        return;
     }
-    for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
+    for (std::vector<EApple>::iterator it = Test.begin(); it != Test.end(); ++ it)
     {
         if (Other == it->Actor)
         {
             if (PlayerActor->getArea().Position.Y > Other->getArea().otherCorner().Y - HitThreshold)
             {
                 Mix_PlayChannel(-1, killEnemy, 0);
-                KillList.push_back(* it);
+                KillTest.push_back(* it);
                 //fprintf(stderr, "Enemy detected as dead! %d\n", it->Renderable);
 
-                Enemies.erase(it);
+                Test.erase(it);
+
+                printf("Test size is: %d\n", Test.size());
             }
+            //Need to rewrite so works without SEnemy
+
             else
             {
                 if (isPlayerAlive() && PlayerRecovering <= 0.f)
                 {
                     SPlayerDamagedEvent Event;
-                    Event.DamagedBy = & * it;
+                    SEnemy enemy;
+                    enemy.Actor = it->Actor;
+                    enemy.Renderable = it->Renderable;
+
+                    Event.DamagedBy = enemy;
                     GameEventManager->OnPlayerDamaged(Event);
 
                     //Chris Code.  Damage Sound plays here
@@ -67,7 +75,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
                     if (PlayerHealth <= 0)
                     {
                         SPlayerDeathEvent Event;
-                        Event.KilledBy = & * it;
+                        Event.KilledBy = enemy;
                         GameEventManager->OnPlayerDeath(Event);
                     }
 
@@ -116,42 +124,24 @@ void CGameplayManager::run(float const TickTime)
     if (PlayerRecovering > 0.f)
         PlayerRecovering -= TickTime;
 
-    for (EnemyList::iterator it = KillList.begin(); it != KillList.end(); ++ it)
+    for (std::vector<EApple>::iterator it = KillTest.begin(); it != KillTest.end(); ++ it)
     {
-        SEnemyDeathEvent Event;
-        Event.Enemy = & * it;
-        Event.Renderable = it->Renderable;
-        //fprintf(stderr, "Enemy removed from kill list %d\n", it->Renderable);
-        GameEventManager->OnEnemyDeath(Event);
+       SEnemyDeathEvent Event;
+       SEnemy enemy;
+       enemy.Actor = it->Actor;
+       enemy.Renderable = it->Renderable;
+       Event.Enemy = enemy;
 
-        Engine->removeActor(it->Actor);
+       GameEventManager->OnEnemyDeath(Event);
+
+       Engine->removeActor(it->Actor);
     }
 
-    KillList.clear();
+    KillTest.clear();
 
 
-    //Enemy AI here
-    for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
-    {
-        if (isPlayerAlive())
-        {
-            if (PlayerActor->getArea().getCenter().X < it->Actor->getArea().getCenter().X)
-                it->Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveLeft);
-            else
-                it->Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
-        }
-        else
-        {
-            it->Actor->setAction(Cabbage::Collider::CActor::EActionType::None);
-        }
-        //if (rand()%1000 == 1)
-        //it->Actor->setJumping(true);
-    }
-
-    for (std::vector<EApple>::iterator it = test.begin(); it != test.end(); ++ it)
-    {
-       printf("Actor X Position: %f\n", it->Actor->getArea().getCenter().X);
-    }
+    for (std::vector<EApple>::iterator it = Test.begin(); it != Test.end(); ++ it)
+       it->update();
 }
 
 Cabbage::Collider::CEngine* CGameplayManager::getEngine() {

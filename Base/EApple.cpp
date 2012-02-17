@@ -46,4 +46,17 @@ void EApple::loadActor() {
 
 //Updates AI's decision per frame
 void EApple::update() {
+   if (Manager->isPlayerAlive())
+   {
+       if (Manager->getPlayerLocation().X < Actor->getArea().getCenter().X)
+           Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveLeft);
+       else
+           Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
+   }
+   else
+   {
+       Actor->setAction(Cabbage::Collider::CActor::EActionType::None);
+   }
+   //if (rand()%1000 == 1)
+   //it->Actor->setJumping(true);
 }
