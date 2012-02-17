@@ -85,7 +85,6 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
             break;
         }
     }
-
 }
 
 SVector2 CGameplayManager::getPlayerLocation() {
@@ -147,6 +146,11 @@ void CGameplayManager::run(float const TickTime)
         }
         //if (rand()%1000 == 1)
         //it->Actor->setJumping(true);
+    }
+
+    for (std::vector<EApple>::iterator it = test.begin(); it != test.end(); ++ it)
+    {
+       printf("Actor X Position: %f\n", it->Actor->getArea().getCenter().X);
     }
 }
 

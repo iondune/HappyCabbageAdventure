@@ -2,6 +2,7 @@
 #define EAPPLE_H_
 
 #include "CBadGuy.h"
+#include "CGameplayManager.h"
 
 class EApple : public CBadGuy
 {

@@ -4,8 +4,12 @@
 #include "../CabbageCollider/CEngine.h"
 #include "../CabbageSound/sound.h"
 
+#include "EApple.h"
+
 class CGameEventManager;
 class CRenderable;
+class EApple;
+
 
 class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 {
@@ -21,6 +25,8 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       typedef std::vector<SEnemy> EnemyList; //Will change to vector<CBadGuy>
       EnemyList Enemies;
       EnemyList KillList;
+
+      std::vector<EApple> test;
 
    private:
 

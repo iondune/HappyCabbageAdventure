@@ -1,4 +1,5 @@
 #include "CEnemy.h"
+#include "../Base/CBadGuy.h"
 
 CEnemy::CEnemy(float nx, float ny, int width, int height)
 {
@@ -31,10 +32,12 @@ void CEnemy::setShader(CShader * chad) {
    shader = chad;
 }
 CMeshRenderable * CEnemy::setupItem(CShader * chad, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
-   /*Rough code plan
-    * CBadGuy* badGuy = CBadGuy::makeBadGuy(x, y, w, h, EnemyType enemy, GameplayManager);
-    */
+   //Rough code plan
+    CBadGuy::makeBadGuy(x, y, w, h, CBadGuy::apple, GameplayManager);
 
+    return new CMeshRenderable();
+
+/*
    CMeshRenderable *tempEnemy = new CMeshRenderable();
    CMesh *mesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
    if(mesh) {
@@ -52,5 +55,5 @@ CMeshRenderable * CEnemy::setupItem(CShader * chad, Cabbage::Collider::CEngine *
 
    CApplication::get().getSceneManager().addRenderable(tempEnemy);
    GameplayManager->addEnemy(SVector2(x, y), tempEnemy);
-   return tempEnemy;
+   return tempEnemy;*/
 }

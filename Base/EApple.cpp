@@ -22,10 +22,12 @@ void EApple::loadMesh() {
       mesh->calculateNormalsPerFace();
    }
 
-   ((CMeshRenderable*) Renderable)->setMesh(mesh);
-   //tempEnemy->getMaterial().Texture = CImageLoader::loadTexture("Textures/dirt.bmp");
-   Renderable->getMaterial().Shader = CBadGuy::Shader; //Why do I need to do this?
-   Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y+1))/2, 0));
+   else
+      printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
+
+   Renderable->setMesh(mesh);
+   Renderable->getMaterial().Shader = CShaderLoader::loadShader("Diffuse");
+   Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
    Renderable->setScale(SVector3(1, 1, 1));
    Renderable->setRotation(SVector3(-90, 0, 0));
 
@@ -35,15 +37,13 @@ void EApple::loadMesh() {
 //Adds actor to engine and preps engine
 void EApple::loadActor() {
    Actor = Manager->getEngine()->addActor();
+   printf("x is %f and y is %f\n", x, y);
    Actor->setArea(SRect2(SVector2(x, y), SVector2(w, h)));
 
    //Set actor attributes
    Actor->getAttributes().MaxWalk = 1.2f;
-
-   Manager->addEnemy(SVector2(x, y), Renderable);
 }
 
 //Updates AI's decision per frame
 void EApple::update() {
-   int x = 5 +5;
 }

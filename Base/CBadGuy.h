@@ -1,22 +1,27 @@
 #ifndef CBADGUY_H_
 #define CBADGUY_H_
 
-#include "CGameplayManager.h"
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
+#include "../CabbageCollider/CEngine.h"
+#include "../CabbageSound/sound.h"
 
-enum EnemyType {
-   apple,
-   orange
-};
+class CGameplayManager;
 
 class CBadGuy {
 public:
+
+   enum EnemyType {
+      apple,
+      orange
+   };
+
    float x, y, w, h;
    EnemyType Enemy;
    CGameplayManager* Manager;
    Cabbage::Collider::CActor* Actor;
-   CRenderable* Renderable;
+   CMeshRenderable* Renderable;
+   //Currently the Shader stuff appears to be acting up.
    CShader* Shader;
 
    void setShader(CShader* shader);
