@@ -229,6 +229,12 @@ IUniform const * const CRenderable::getUniform(std::string const & label)
 	if (label == "uNormalMatrix")
 		return & BindNormalMatrix;
 
+	if (label == "uMaterial.AmbientColor")
+		return & Material.BindAmbientColor;
+
+	if (label == "uMaterial.DiffuseColor")
+		return & Material.BindAmbientColor;
+
 	std::map<std::string, IUniform const *>::iterator it = Uniforms.find(label);
 	if (it != Uniforms.end())
 		return it->second;

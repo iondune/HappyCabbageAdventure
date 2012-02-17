@@ -8,14 +8,15 @@
 class CMaterial
 {
 
-	SUniform<SColor> BindAmbientColor, BindDiffuseColor;
-	SUniform<float> BindShininess;
-
 public:
 
     CTexture * Texture;
+
 	SColor AmbientColor, DiffuseColor;
 	float Shininess;
+
+	SUniform<SColor> BindAmbientColor, BindDiffuseColor;
+	SUniform<float> BindShininess;
 
     CMaterial();
 

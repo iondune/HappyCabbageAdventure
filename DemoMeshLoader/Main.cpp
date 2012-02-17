@@ -46,7 +46,7 @@ public:
     void begin()
     {
         // OpenGL init
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
@@ -76,7 +76,7 @@ public:
 
 
         // Attempt to load shader and attributes
-        Shader = CShaderLoader::loadShader("Flat");
+        Shader = CShaderLoader::loadShader("Simple");
         if (! Shader)
         {
             std::cerr << "Unable to open or compile necessary shader." << std::endl;
@@ -89,10 +89,10 @@ public:
         MeshFace = CMeshLoader::loadAsciiMesh("../Base/Models/bunny10k.m");
         if (MeshFace)
         {
-            MeshFace->linearizeIndices();
+            //MeshFace->linearizeIndices();
             MeshFace->resizeMesh(SVector3(1.5));
             MeshFace->centerMeshByExtents(SVector3(0));
-            MeshFace->calculateNormalsPerFace();
+            //MeshFace->calculateNormalsPerFace();
         }
 
         MeshVertex = CMeshLoader::loadAsciiMesh("../Base/Models/bunny10k.m");

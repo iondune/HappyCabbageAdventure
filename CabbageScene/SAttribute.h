@@ -25,6 +25,9 @@ struct SAttribute : public IAttribute
 
 	void bind(GLint const handle, CShaderContext & shaderContext) const
 	{
+		if (Buffer->isDirty())
+			Buffer->syncData();
+
 		if (Buffer)
 			shaderContext.bindBufferObject(handle, Buffer->getHandle(), ElementSize);
 	}
