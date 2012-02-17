@@ -19,6 +19,8 @@ EOrange::EOrange(float x, float y, float w, float h, CGameplayManager* manager) 
    loadMesh();
    loadActor();
 
+   jump = true;
+
 }
 
 //Loads and moves the mesh
@@ -48,11 +50,16 @@ void EOrange::loadMesh() {
 //Adds actor to engine and preps engine
 void EOrange::loadActor() {
    Actor = Manager->getEngine()->addActor();
-   printf("x is %f and y is %f\n", x, y);
    Actor->setArea(SRect2(SVector2(x, y), SVector2(w, h)));
 
    //Set actor attributes
-   Actor->getAttributes().MaxWalk = 1.2f;
+   Actor->getAttributes().MaxWalk = 3.0f;
+   Actor->getAttributes().JumpLength = .3f;
+   Actor->getAttributes().WalkAccel = 4.0f;
+   Actor->getAttributes().JumpAccel = 6.4f;
+   Actor->getAttributes().JumpLength = .1f;
+   Actor->getAttributes().AirControl = 0.75f;
+   Actor->getAttributes().AirSpeedFactor = 1.0f;
 }
 
 //Updates AI's decision per frame
@@ -64,15 +71,18 @@ void EOrange::update() {
        else
            Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
 
-       if (Manager->getPlayerLocation().Y - 1 > Actor->getArea().getCenter().Y) {
-          Actor->setJumping(true);
+       if (Manager->getPlayerLocation().X - Actor->getArea().getCenter().X < 2.2 && Manager->getPlayerLocation().X - Actor->getArea().getCenter().X > -2.2) {
+          if (jump) {
+             Actor->setJumping(true);
+             jump = false;
+          }
        }
+       else
+          jump = true;
    }
    else
    {
        Actor->setAction(Cabbage::Collider::CActor::EActionType::None);
    }
-   //if (rand()%1000 == 1)
-   //it->Actor->setJumping(true);
 }
 

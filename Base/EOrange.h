@@ -10,6 +10,8 @@ class EOrange : public CBadGuy
 public:
    EOrange(float x, float y, float w, float h, CGameplayManager* manager);
 
+   bool jump;
+
    void update();
    void loadMesh();
    void loadActor();

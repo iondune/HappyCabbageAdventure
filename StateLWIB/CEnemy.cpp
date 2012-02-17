@@ -32,7 +32,7 @@ void CEnemy::setShader(CShader * chad) {
    shader = chad;
 }
 CMeshRenderable * CEnemy::setupItem(CShader * chad, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
-    CBadGuy::makeBadGuy(x, y, w, h, CBadGuy::apple, GameplayManager);
+    CBadGuy::makeBadGuy(x, y, w, h, CBadGuy::orange, GameplayManager);
 
     return new CMeshRenderable();
 }
