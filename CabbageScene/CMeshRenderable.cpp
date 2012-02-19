@@ -18,8 +18,10 @@ void CMeshRenderable::setMesh(CMesh * mesh)
 {
     Mesh = mesh;
 
+    printf("Dbg 1\n");
     if (Mesh)
     {
+       printf("Dbg 2\n");
         std::vector<CBufferObject<float> *> PositionBuffers, ColorBuffers, NormalBuffers, TexCoordBuffers, NormalLineBuffers, NormalColorBuffers;
         std::vector<CBufferObject<unsigned short> *> IndexBuffers, NormalIndexBuffers;
 
@@ -44,8 +46,10 @@ void CMeshRenderable::setMesh(CMesh * mesh)
             std::cerr << "Buffer count mixmatch, object will not draw!" << std::endl;
         }
 
+       printf("Dbg 3\n");
         for (unsigned int i = 0; i < PositionBuffers.size(); ++ i)
         {
+          printf("Dbg 4:%d\n", i);
             CMeshRenderable * Child = 0;
             if (SubRenderables.size() > i)
                 Child = SubRenderables[i];
@@ -72,6 +76,7 @@ void CMeshRenderable::setMesh(CMesh * mesh)
 
             // Add mesh index buffer
             Child->setIndexBufferObject(IndexBuffers[i]);
+          printf("Dbg 5:%d\n", i);
 
             // Set bounding box
             Child->BoundingBox = Mesh->getBoundingBox();
@@ -95,7 +100,7 @@ void CMeshRenderable::setMesh(CMesh * mesh)
             Child->LastLoadedShader = 0;
         }
     }
-
+    printf("Dbg 6\n");
 }
 
 void CMeshRenderable::draw(CScene const * const scene)
