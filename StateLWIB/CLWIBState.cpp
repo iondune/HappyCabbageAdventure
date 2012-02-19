@@ -50,6 +50,7 @@ qd blockMap[225][100];
 //Initalizer fxn
 void CLWIBState::begin()
 {
+   enemyType = 0;
    aDown = dDown = spaceDown = wDown = sDown = gDown = fDown = tDown = eDown = mDown = 0;
    cubeMesh = CMeshLoader::createCubeMesh();
    cubeMesh->calculateNormalsPerFace();
@@ -137,17 +138,27 @@ void CLWIBState::OnRenderStart(float const Elapsed)
 
    //Draw Text
    //freetype::print(our_font, 10, WindowHeight-40.f, "Elapsed Time: %0.0f ", Application.getRunTime());
-   freetype::print(our_font, (float)WindowWidth/2, (float)WindowHeight/2, "+");
+   if (!showHelp)
+       freetype::print(our_font, (float)WindowWidth/2, (float)WindowHeight/2, "+");
       
     if (showHelp) {
-        freetype::print(our_font, 15, WindowHeight - 50.f, "Press E for enemy\n\n");
+        freetype::print(our_font, 15, WindowHeight - 230.f, \
+            "WASD to control camera\n"\
+            "Press E to place enemies\n"\
+            "Press F to make blocks wider\n"\
+            "Press H to make blocks taller\n"\
+            "press T to enable t remove mode\n"\
+            "Press U to Undo action\n"\
+            "press R to Redo action\n");
     }
     else
         freetype::print(our_font, 15, WindowHeight - 50.f, "Press F1 For Help");
-    if (!eDown && !showHelp )
-        freetype::print(our_font, 20, WindowHeight - 80.f, "Rendering block\n\n");
-    if (eDown && !showHelp )
-        freetype::print(our_font, 20, WindowHeight - 80.f, "Rendering enemy\n\n");
+    if (!eDown && !showHelp && !tDown)
+        freetype::print(our_font, 20, WindowHeight - 100.f, "placing block\n\n");
+    if (eDown && !showHelp && !tDown)
+        freetype::print(our_font, 20, WindowHeight - 100.f, "placing enemy\n\n");
+    if (tDown && !showHelp)
+        freetype::print(our_font, 20, WindowHeight - 100.f, "remove mode\n\n");
     drawSubWindow();
    Application.getSceneManager().drawAll();
 
@@ -255,14 +266,16 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
          }
       }
       if(Event.Key == SDLK_t){
-         tDown = 1; //remove
+         if (tDown == 1)
+             tDown = 0;
+         else
+           tDown = 1; //remove
       }
       if(Event.Key == SDLK_m){
          mDown = 1; //move
       }
       if(Event.Key == SDLK_SPACE) {
          spaceDown = 1;
-
       }
       if(Event.Key == SDLK_ESCAPE) {
          //TODO: Replace with an event/signal to end the game world 
@@ -272,6 +285,14 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_F1) {
           showHelp = Event.Pressed;
+      }
+      if(Event.Key == SDLK_z ) {
+         if (enemyType != 1) //temp constraint
+          enemyType++;
+      } 
+      if (Event.Key == SDLK_x) {
+         if (enemyType != 0)
+             enemyType--;
       }
    }
    //Check if key let go, Not sure if this will work in here.
@@ -396,7 +417,7 @@ void CLWIBState::PrepEnemy(float x, float y) {
    CMeshRenderable *tempEnemy;
    CEnemy *tempPlaceable;
    blocks.push_back(tempEnemy = new CMeshRenderable());
-   placeables.push_back(tempPlaceable = new CEnemy(x, y, 1, 1));
+   placeables.push_back(tempPlaceable = new CEnemy(x, y, 1, 1, enemyType));
    tempEnemy->setMesh(appleMesh);
    //tempEnemy->getMaterial().Texture = CImageLoader::loadTexture("Textures/dirt.bmp");;
    tempEnemy->getMaterial().Shader = Diffuse;

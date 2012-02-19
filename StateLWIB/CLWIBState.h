@@ -23,7 +23,7 @@ class CLWIBState : public CState<CLWIBState>
    int aDown , dDown , spaceDown , wDown , sDown , gDown , fDown , tDown, eDown, mDown;
    bool showHelp;
    freetype::font_data our_font;
-
+   int enemyType;
    int WindowWidth, WindowHeight;
 
 
