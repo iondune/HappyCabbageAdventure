@@ -33,6 +33,16 @@ int main(int argc, char *argv[])
 
 int main(int argc, char * argv[])
 {
+   printf("Argc: %d %s\n", argc, argv[1]);
+   if(argc > 1 && strcmp(argv[1], "-l") == 0) {
+      CGameState::get().lowDef = 1;
+      printf("Low Definition Mode: On\n");
+   }
+   else {
+      CGameState::get().lowDef = 0;
+      printf("Low Definition Mode: Off\n");
+   }
+
     CApplication & Application = CApplication::get();
     Application.init(SPosition2(800, 600));
     //Application.init(SPosition2(1024, 768));

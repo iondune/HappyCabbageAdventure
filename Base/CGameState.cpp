@@ -247,52 +247,54 @@ void CGameState::begin()
 
    int random;
 
-   for (int n = 0; n < 100; n++) {
-      random = rand() % 8;
+   if(!lowDef) {
+      for (int n = 0; n < 100; n++) {
+         random = rand() % 8;
 
-      if (n % 2 == 0)
-         if (random < 3 ) {
-            drawBlueFlwr(-22.f + n * 2, -1, 2, .6f, Application);
-         }
-         else if (random < 6) {
-            drawPinkFlwr(-22.f + n * 2, -1, 2, .6f, Application);
-         }
+         if (n % 2 == 0)
+            if (random < 3 ) {
+               drawBlueFlwr(-22.f + n * 2, -1, 2, .6f, Application);
+            }
+            else if (random < 6) {
+               drawPinkFlwr(-22.f + n * 2, -1, 2, .6f, Application);
+            }
 
-         else {
-            drawPoin(-22.f + n * 2, -1, 2, 1.f, Application);
-         }
-      else
-         if (random < 3) {
-            drawBlueFlwr(-22.f + n * 2, -1, -2, .7f, Application);
-         }
-         else if (random < 6) {
-            drawPinkFlwr(-22.f + n * 2, -1, -2, .7f, Application);
-         }
-         else {
-            drawPoin(-22.f + n * 2, .2f, -2, 1.f, Application);
-         }
-   }
+            else {
+               drawPoin(-22.f + n * 2, -1, 2, 1.f, Application);
+            }
+         else
+            if (random < 3) {
+               drawBlueFlwr(-22.f + n * 2, -1, -2, .7f, Application);
+            }
+            else if (random < 6) {
+               drawPinkFlwr(-22.f + n * 2, -1, -2, .7f, Application);
+            }
+            else {
+               drawPoin(-22.f + n * 2, .2f, -2, 1.f, Application);
+            }
+      }
 
-   for (int n = 0; n < 50; n++) {
-      random = rand() % 3;
+      for (int n = 0; n < 50; n++) {
+         random = rand() % 3;
 
-      if (n % 2 == 0)
-         //if (random < 2) {
+         if (n % 2 == 0)
+            //if (random < 2) {
             drawBasicTree(-20.4f + n * 4, 2.0f, 2, 8.0f, Application);
          //}
          //else if (random == 2) {
          //   drawChristmasTree(-20.4f + n * 4, 1.5, 2, 6.0f, Application);
          //}
-        // else {
+         // else {
          //   drawFicus(-21.f + n * 4, -1, 2, 1.0f, Application);
          //}
-      else {
+         else {
 
-         if (random < 2) {
-            drawBasicTree(-22.4f + n * 4, 2.0f, -2, 8.0f, Application);
-         }
-         else if (random == 2) {
-            drawChristmasTree(-22.4f + n * 4, 1.4f, -2, 6.0f, Application);
+            if (random < 2) {
+               drawBasicTree(-22.4f + n * 4, 2.0f, -2, 8.0f, Application);
+            }
+            else if (random == 2) {
+               drawChristmasTree(-22.4f + n * 4, 1.4f, -2, 6.0f, Application);
+            }
          }
       }
    }

@@ -33,6 +33,7 @@ class CGameState : public CState<CGameState>
    CCamera *Camera;
    float fps, timeTotal;
    int numFrames;
+   int lowDef;
    void oldDisplay(); 
    void loadWorld(std::vector<CPlaceable*> *list);
    //Runs at very start of display

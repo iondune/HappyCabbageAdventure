@@ -1,3 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<CEnemy X ="0" Y ="1" height ="1" width ="1">
+<CEnemy X ="-5" Y ="0" height ="1" width ="1">
 </CEnemy>
+<CEnemy X ="-8" Y ="0" height ="1" width ="1">
+</CEnemy>
+<CEnemy X ="-12" Y ="0" height ="1" width ="1">
+</CEnemy>
+<CEnemy X ="-15" Y ="0" height ="1" width ="1">
+</CEnemy>
+<CBlock X ="-18" Y ="3" height ="1" width ="1" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-13" Y ="3" height ="1" width ="1" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-9" Y ="3" height ="1" width ="1" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-8" Y ="3" height ="1" width ="1" isMoving ="0" range ="0" speed ="0">
+</CBlock>
