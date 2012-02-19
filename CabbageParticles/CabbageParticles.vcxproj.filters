@@ -21,12 +21,24 @@
     <ClCompile Include="CParticleEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CPCube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CPLeaf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CParticle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CParticleEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CPCube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CPLeaf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
