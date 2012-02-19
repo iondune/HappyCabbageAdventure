@@ -139,12 +139,16 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    //freetype::print(our_font, 10, WindowHeight-40.f, "Elapsed Time: %0.0f ", Application.getRunTime());
    freetype::print(our_font, (float)WindowWidth/2, (float)WindowHeight/2, "+");
       
-    if (showHelp)
-        freetype::print(our_font, 15, WindowHeight - 50.f, "1, 2, and 3 to change materials\n\n");
+    if (showHelp) {
+        freetype::print(our_font, 15, WindowHeight - 50.f, "Press E for enemy\n\n");
+    }
     else
-        freetype::print(our_font, 15, WindowHeight - 50.f, "Press F1 to view commands");
-
-   drawSubWindow();
+        freetype::print(our_font, 15, WindowHeight - 50.f, "Press F1 For Help");
+    if (!eDown && !showHelp )
+        freetype::print(our_font, 20, WindowHeight - 80.f, "Rendering block\n\n");
+    if (eDown && !showHelp )
+        freetype::print(our_font, 20, WindowHeight - 80.f, "Rendering enemy\n\n");
+    drawSubWindow();
    Application.getSceneManager().drawAll();
 
    SDL_GL_SwapBuffers();
@@ -193,7 +197,10 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
          gDown = 1; //height
       }
       if(Event.Key == SDLK_e){
-         eDown = 1; //enemy
+         if (eDown == 1)
+             eDown = 0;
+         else 
+            eDown = 1; //enemy
       }
       if(Event.Key == SDLK_k){
       }
@@ -281,9 +288,9 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_d){
          dDown = 0;
       }
-      if(Event.Key == SDLK_e){
+      /*if(Event.Key == SDLK_e){
          eDown = 0;
-      }
+      }*/
       if(Event.Key == SDLK_f){
          fDown = 0;
       }

@@ -1,21 +1,25 @@
 #include "CEnemy.h"
 #include "../Base/CBadGuy.h"
 
-CEnemy::CEnemy(float nx, float ny, int width, int height)
+CEnemy::CEnemy(float nx, float ny, int width, int height /*int num type*/)
 {
+  //type = num;
    x = nx; y = ny;
    w = width; h = height;
    isMovingPlatform = 0;
 }
 
 void CEnemy::writeXML(xmlwriter *l) {
-    std::stringstream xValue, yValue, widthValue, heightValue, tagValue;
+    std::stringstream xValue, yValue, widthValue, heightValue, tagValue /*eType*/;
     xValue << x;
     yValue << y;
     widthValue << w;
     heightValue << h;
     tagValue << "CEnemy";
-
+    //etype << num;
+    //put code for type
+    // 1: apple 2: orange
+    //l->AddAtributes("type ", eType.str());
     l->AddAtributes("width ", widthValue.str());
     l->AddAtributes("height ", heightValue.str());
     l->AddAtributes("Y ", yValue.str());
