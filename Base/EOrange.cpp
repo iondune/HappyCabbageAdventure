@@ -71,8 +71,15 @@ void EOrange::update(const float TickTime) {
        else
            Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
 
-       if (Manager->getPlayerLocation().X - Actor->getArea().getCenter().X < 2.2
-           && Manager->getPlayerLocation().X - Actor->getArea().getCenter().X > -2.2) {
+
+       if (oldX == Actor->getArea().getCenter().X && !jump) {
+         printf("oldX: %f  curX: %f\n", oldX, Actor->getArea().getCenter().X);
+         Actor->setJumping(true);
+         jump = false;
+       }
+ 
+       else if (Manager->getPlayerLocation().X - Actor->getArea().getCenter().X < 2.2 && 
+                Manager->getPlayerLocation().X - Actor->getArea().getCenter().X > -2.2) {
           if (jump) {
              Actor->setJumping(true);
              jump = false;
@@ -81,11 +88,6 @@ void EOrange::update(const float TickTime) {
        else
           jump = true;
 
-       if (oldX == Actor->getArea().getCenter().X && !jump) {
-          printf("oldX: %f  curX: %f\n", oldX, Actor->getArea().getCenter().X);
-          Actor->setJumping(true);
-          jump = false;
-       }
    }
    else
    {
