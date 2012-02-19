@@ -49,6 +49,8 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 
       float getRecovering() {return PlayerRecovering;}
 
+      bool const isJumping() const;
+
       SVector2 getPlayerLocation();
 
       Cabbage::Collider::CEngine* getEngine();

@@ -38,9 +38,9 @@ void CEnemy::setShader(CShader * chad) {
 CMeshRenderable * CEnemy::setupItem(CShader * chad, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
     if (num == 0)
         CBadGuy::makeBadGuy(x, y, w, h, CBadGuy::apple, GameplayManager);
-    if (num == 1)
+    else if (num == 1)
         CBadGuy::makeBadGuy(x, y, w, h, CBadGuy::orange, GameplayManager);
-    if (num > 1)
-        printf("invalied enemy given"); // will gain
+    else
+        printf("Unknown enemy type received.\n");
     return new CMeshRenderable();
 }

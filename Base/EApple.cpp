@@ -54,7 +54,8 @@ void EApple::update(float const TickTime) {
        else if (Manager->getPlayerLocation().X > Actor->getArea().getCenter().X && (!rollingLeft && !rollingRight))
            Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
 
-       if (Manager->getPlayerLocation().X - Actor->getArea().getCenter().X < 7 && Manager->getPlayerLocation().X - Actor->getArea().getCenter().X > -7 && rand()%700 == 5) {
+       if (Manager->getPlayerLocation().X - Actor->getArea().getCenter().X < 7 && Manager->getPlayerLocation().X - Actor->getArea().getCenter().X > -7 &&
+           Manager->getPlayerLocation().Y - Actor->getArea().getCenter().Y < 1.0 && Manager->getPlayerLocation().Y - Actor->getArea().getCenter().Y > -1.0 && rand()%800 == 5) {
              if (Actor->getAction() == Cabbage::Collider::CActor::EActionType::MoveLeft)
                 rollingLeft = true;
              else

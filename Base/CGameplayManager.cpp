@@ -117,6 +117,10 @@ int const CGameplayManager::getPlayerHealth() const
     return PlayerHealth;
 }
 
+bool const CGameplayManager::isJumping() const {
+   return PlayerActor->isJumping();
+}
+
 void CGameplayManager::run(float const TickTime)
 {
     if (PlayerRecovering > 0.f)
