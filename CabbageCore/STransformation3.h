@@ -17,6 +17,11 @@ public:
 		: Translation(1.f), Rotation(1.f), Scale(1.f)
 	{}
 
+	operator glm::mat4 ()
+	{
+		return Translation * Rotation * Scale;
+	}
+
 	glm::mat4 const getGLMMat4()
 	{
 		return Translation * Rotation * Scale;

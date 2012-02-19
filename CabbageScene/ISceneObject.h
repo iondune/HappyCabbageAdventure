@@ -3,6 +3,7 @@
 
 #include <map>
 #include <set>
+#include <list>
 
 #include "../CabbageCore/boost/shared_ptr.hpp"
 #include "../CabbageCore/SVector3.h"
@@ -38,6 +39,7 @@ protected:
 
     // Model Transformation
     STransformation3 Transformation;
+	glm::mat4 AbsoluteTransformation;
     glm::mat4 RotationMatrix;
     SBoundingBox3 BoundingBox;
 
@@ -45,16 +47,22 @@ protected:
 
     bool Visible;
 
+	std::list<ISceneObject *> Children;
+	ISceneObject * Parent;
+
 public:
 
     ISceneObject();
+
+	void updateAbsoluteTransformation();
+	glm::mat4 const & getAbsoluteTransformation() const;
 
     void setTranslation(SVector3 const & translation);
     void setRotation(SVector3 const & rotation);
     void setRotation(glm::mat4 const & matrix);
     void setScale(SVector3 const & scale);
 
-    void draw(CScene const * const scene);
+    virtual void draw(CScene const * const scene);
 
     SBoundingBox3 const & getBoundingBox() const;
     SBoundingBox3 & getBoundingBox();
@@ -69,7 +77,14 @@ public:
     bool const isVisible() const;
     void setVisible(bool const isVisible);
 
-	STransformation3 const & getTransformation();
+	STransformation3 const & getTransformation() const;
+
+	ISceneObject const * const getParent() const;
+	std::list<ISceneObject *> const & getChildren() const;
+
+	void removeChild(ISceneObject * child);
+	void addChild(ISceneObject * child);
+	void setParent(ISceneObject * parent);
 
 };
 

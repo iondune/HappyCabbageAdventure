@@ -140,7 +140,7 @@ void CRenderable::draw(CScene const * const scene)
     CShaderContext ShaderContext(* ShaderToUse);
 
     // Set up transform matrices
-	ModelMatrix = Transformation.get() * Parent->getTransformation().get();
+	ModelMatrix = Transformation() * Parent->getAbsoluteTransformation();
 
     // Pass transform matrices to shader
     NormalMatrix = glm::transpose(glm::inverse(ModelMatrix));

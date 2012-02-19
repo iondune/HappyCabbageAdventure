@@ -9,9 +9,28 @@
 
 
 ISceneObject::ISceneObject()
-    : DebugDataFlags(0), Visible(true)
+    : DebugDataFlags(0), Visible(true), Parent(0)
 {}
 
+
+void ISceneObject::updateAbsoluteTransformation()
+{
+	AbsoluteTransformation = Transformation;
+	if (Parent)
+	{
+		AbsoluteTransformation = AbsoluteTransformation * Parent->AbsoluteTransformation;
+	}
+
+	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
+	{
+		(* it)->updateAbsoluteTransformation();
+	}
+}
+
+glm::mat4 const & ISceneObject::getAbsoluteTransformation() const
+{
+	return AbsoluteTransformation;
+}
 
 void ISceneObject::setTranslation(SVector3 const & translation)
 {
@@ -36,6 +55,8 @@ void ISceneObject::setScale(SVector3 const & scale)
 
 void ISceneObject::draw(CScene const * const scene)
 {
+	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
+		(* it)->draw(scene);
 }
 
 SBoundingBox3 const & ISceneObject::getBoundingBox() const
@@ -84,7 +105,37 @@ void ISceneObject::setVisible(bool const isVisible)
     Visible = isVisible;
 }
 
-STransformation3 const & ISceneObject::getTransformation()
+STransformation3 const & ISceneObject::getTransformation() const
 {
 	return Transformation;
+}
+
+ISceneObject const * const ISceneObject::getParent() const
+{
+	return Parent;
+}
+
+std::list<ISceneObject *> const & ISceneObject::getChildren() const
+{
+	return Children;
+}
+
+void ISceneObject::removeChild(ISceneObject * child)
+{
+	Children.erase(std::remove(Children.begin(), Children.end(), child), Children.end());
+	child->Parent = 0;
+}
+
+void ISceneObject::addChild(ISceneObject * child)
+{
+	Children.push_back(child);
+	child->Parent = this;
+}
+
+void ISceneObject::setParent(ISceneObject * parent)
+{
+	if (Parent)
+		Parent->removeChild(this);
+	if (parent)
+		parent->addChild(this);
 }

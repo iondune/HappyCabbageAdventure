@@ -48,6 +48,8 @@ protected:
 
     std::map<std::string, IUniform const *> Uniforms;
 
+	std::list<ISceneObject *> SceneObjects;
+
 public:
 
     CScene();
@@ -69,8 +71,6 @@ public:
 
 class CSceneManager : public CScene
 {
-
-    std::list<CSceneObject *> SceneObjects;
 
     CScene * CurrentScene;
 

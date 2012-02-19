@@ -15,6 +15,8 @@ void CSceneObject::removeRenderable(CRenderable * Renderable)
 
 void CSceneObject::draw(CScene const * const scene)
 {
+	ISceneObject::draw(scene);
+
 	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
 		(* it)->draw(scene);
 }

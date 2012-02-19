@@ -103,6 +103,9 @@ void CScene::update()
         SceneChanged = true;
         LightCount = Lights.size();
     }
+
+	for (std::list<ISceneObject *>::iterator it = SceneObjects.begin(); it != SceneObjects.end(); ++ it)
+		(* it)->updateAbsoluteTransformation();
 }
 
 CSceneManager::CSceneManager()
@@ -129,8 +132,7 @@ void CSceneManager::drawAll()
 {
     CurrentScene->update();
 
-    //printf("size of renderables list: %d\n", Renderables.size());
-    for (std::list<CSceneObject *>::iterator it = SceneObjects.begin(); it != SceneObjects.end(); ++ it)
+    for (std::list<ISceneObject *>::iterator it = SceneObjects.begin(); it != SceneObjects.end(); ++ it)
         (* it)->draw(CurrentScene);
 
     SceneChanged = false;
