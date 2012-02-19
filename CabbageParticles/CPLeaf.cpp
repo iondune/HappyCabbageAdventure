@@ -1,6 +1,7 @@
 #include "CPLeaf.h"
 
 void CPLeaf::setupRenderable() {
+   sineValue = 0;
    renderable = new CParticleRenderable();
    CMesh * cube = CMeshLoader::loadAsciiMesh("Disc");
    cube->calculateNormalsPerFace();
@@ -16,15 +17,21 @@ void CPLeaf::setupRenderable() {
    RotationSpeed = SVector3((float)rand()/(float)RAND_MAX * 4 - 2, 
          (float)rand()/(float)RAND_MAX * 4 - 2,
          (float)rand()/(float)RAND_MAX * 4 - 2);
-   StartFactor = (float)rand()/(float)RAND_MAX * 180 - 90; 
+   StartFactor = (float)rand()/(float)RAND_MAX * AppearRate; 
+   AppearRate = StartFactor;
 }
 
-void CPLeaf::updateMatrices(float sineValue) {
-   float mSineValue = sineValue + StartFactor;
-   getRenderable()->setTranslation(
-         SVector3(
-            Amplitude*cos(Period*mSineValue), 
-            yFactor, 
-            Amplitude*sin(Period*mSineValue)));
-   getRenderable()->setRotation(RotationSpeed*mSineValue);
+void CPLeaf::updateMatrices(float timeElapsed) {
+   if(AppearRate > 0) {
+      AppearRate -= timeElapsed;
+   }
+   else {
+      sineValue += 4*timeElapsed;
+      getRenderable()->setTranslation(
+            SVector3(
+               Amplitude*cos(Period*sineValue), 
+               yFactor, 
+               Amplitude*sin(Period*sineValue)));
+      getRenderable()->setRotation(RotationSpeed*sineValue);
+   }
 }

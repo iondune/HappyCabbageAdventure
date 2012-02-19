@@ -8,6 +8,10 @@
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
 
+
+#define LEAF_PARTICLE 0
+#define CUBE_PARTICLE 1
+
 class CParticleEngine {
    std::vector<CParticle*> particles;
    SVector3 centerPos;
@@ -15,10 +19,12 @@ class CParticleEngine {
    float totalDuration;
    float currentDuration;
    public:
-      float sineValue;
-      //Duration in seconds
-      CParticleEngine(SVector3 pos, int maxParticles, float duration);
+      int dead, lookRight;
+      //Duration in milliseconds
+      CParticleEngine(SVector3 pos, int maxParticles, float duration, int);
       void setCenterPos(SVector3 cP);
+      void setLookRight(int pf);
       void step(float const elapsedTime);
+      void deconstruct();
 };
 #endif

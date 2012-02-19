@@ -214,6 +214,14 @@ void CParticle::setCenterPos(SVector3 *cPos) {
    centerPos = cPos;
 }
 
+void CParticle::setLookRight(int *ptr) {
+   lookRight = ptr;
+}
+
+void CParticle::setAppearRate(float r) {
+   AppearRate = r;
+}
+
 CRenderable * CParticle::getRenderable() {
    return renderable;
 }

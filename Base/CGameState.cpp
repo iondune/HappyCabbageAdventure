@@ -187,11 +187,13 @@ void CGameState::EngineInit( void ) {
    */
 }
 
-CParticleEngine * particleEngine;
+CParticleEngine * particleLeafEngine;
+CParticleEngine * particleCubeEngine;
 
 //Initalizer fxn
 void CGameState::begin()
 {
+   particleLeafEngine = particleCubeEngine = 0;
    SPosition2 size = Application.getWindowSize();
    WindowWidth = size.X;
    WindowHeight = size.Y; 
@@ -313,7 +315,6 @@ void CGameState::begin()
 
    printf("END OF BEGIN\n");
 
-   particleEngine = new CParticleEngine(SVector3(0, 1, 0), 90, 1);
 
    Application.skipElapsedTime();
 }
@@ -396,16 +397,24 @@ void CGameState::oldDisplay() {
 
    Engine->updateAll(Application.getElapsedTime());
    GameplayManager->run(Application.getElapsedTime());
-   particleEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
-   particleEngine->step(Application.getElapsedTime());
+
    PlayerView->step(Application.getElapsedTime()*1000);
 
    SVector2 middleOfPlayer = Player->getArea().getCenter();
-   //printf("%0.2f, %0.2f\n", Player->getArea().getCenter().X, Player->getArea().getCenter().Y);
    PlayerView->setMiddle(middleOfPlayer);
    PlayerView->setGround(Engine->getHeightBelow(Player));
 
    PlayerView->establishCamera(Camera, ANGLE(overView, backwardsView));
+
+   if(particleLeafEngine && !particleLeafEngine->dead) {
+      particleLeafEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
+      particleLeafEngine->step(Application.getElapsedTime());
+   }
+   if(particleCubeEngine && !particleCubeEngine->dead) {
+      particleCubeEngine->setLookRight(PlayerView->getLookRight());
+      particleCubeEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
+      particleCubeEngine->step(Application.getElapsedTime());
+   }
 
    //draw the ground plane
    //drawPlane();
@@ -540,6 +549,14 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_d){
          dDown = 1;
+      }
+      if(Event.Key == SDLK_e) {
+         if(!particleCubeEngine || (particleCubeEngine && particleCubeEngine->dead))
+            particleCubeEngine = new CParticleEngine(SVector3(0, 1, 0), 70, 3, CUBE_PARTICLE);
+      }
+      if(Event.Key == SDLK_r) {
+         if(!particleLeafEngine || (particleLeafEngine && particleLeafEngine->dead))
+            particleLeafEngine = new CParticleEngine(SVector3(0, 1, 0), 70, 3, LEAF_PARTICLE);
       }
       if(Event.Key == SDLK_k){
          backwardsView = !backwardsView;

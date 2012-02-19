@@ -1,6 +1,7 @@
 #include "CPCube.h"
 
 void CPCube::setupRenderable() {
+   sineValue = 0;
    renderable = new CParticleRenderable();
    CMesh * cube = CMeshLoader::loadAsciiMesh("Cube");
    cube->calculateNormalsPerFace();
@@ -18,16 +19,22 @@ void CPCube::setupRenderable() {
          (float)rand()/(float)RAND_MAX * 4 - 2,
          (float)rand()/(float)RAND_MAX * 4 - 2);
    RotationSpeed *= -yFactor + 2.0;
-   StartFactor = (float)rand()/(float)RAND_MAX * 180 - 90; 
+   StartFactor = (float)rand()/(float)RAND_MAX * AppearRate; 
+   AppearRate = StartFactor;
 }
 
-void CPCube::updateMatrices(float sineValue) {
-   float mSineValue = sineValue + StartFactor;
-   getRenderable()->setTranslation(
-         SVector3(
-            0.5+yFactor, 
-            Amplitude*cos(Period*mSineValue), 
-            Amplitude*sin(Period*mSineValue)));
-
-   getRenderable()->setRotation(RotationSpeed*mSineValue);
+void CPCube::updateMatrices(float timeElapsed) {
+   if(AppearRate > 0) {
+      AppearRate -= timeElapsed;
+   }
+   else {
+      sineValue += 4*timeElapsed;
+      float newX = (*lookRight?1:-1)*(1+yFactor);
+      getRenderable()->setTranslation(
+            SVector3(
+               newX,
+               Amplitude*cos(Period*sineValue), 
+               Amplitude*sin(Period*sineValue)));
+      getRenderable()->setRotation(RotationSpeed*sineValue);
+   }
 }

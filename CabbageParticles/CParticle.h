@@ -26,12 +26,16 @@ class CParticle {
    float size;
    public:
       CParticleRenderable *renderable;
-      SVector3  *centerPos;
+      SVector3 *centerPos;
+      int* lookRight;
       float yFactor, Amplitude, Period;
-      float StartFactor;
+      float StartFactor, AppearRate;
+      float sineValue;
       SVector3 RotationSpeed;
 
+      void setLookRight(int*);
       void setCenterPos(SVector3*);
+      void setAppearRate(float r);
       virtual void setupRenderable()=0;
       virtual void updateMatrices(float)=0;
 
