@@ -17,14 +17,16 @@ class CParticleRenderable : public CRenderable {
    CMesh * getMesh();
    void draw(CScene const * const scene);
    void setMesh(CMesh * mesh);
+      
+   SVector3 *centerPos;
 };
 
 class CParticle {
-   SVector3 centerPos;
+   SVector3  *centerPos;
    CParticleRenderable *renderable;
    float size;
    public:
-      CParticle(SVector3);
+      CParticle(SVector3*);
       void setupRenderable();
       CRenderable * getRenderable();
 };

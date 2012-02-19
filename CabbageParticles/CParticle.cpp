@@ -12,6 +12,7 @@ void CParticleRenderable::draw(CScene const * const scene) {
    if (! Visible)
       return;
 
+   /* Code parallels CMeshRenderable::draw() */
    if (SubRenderables.size())
    {
       for (std::vector<CParticleRenderable *>::iterator it = SubRenderables.begin(); it != SubRenderables.end(); ++ it)
@@ -31,6 +32,7 @@ void CParticleRenderable::draw(CScene const * const scene) {
          (* it)->draw(scene);
       }
    }
+   /* Code parallels CRenderable::draw() */
    else {
       // If no ibo loaded, we can't draw anything
       // If the ibo loaded hasn't been synced as an index buffer object, 
@@ -59,6 +61,7 @@ void CParticleRenderable::draw(CScene const * const scene) {
       CShaderContext ShaderContext(* ShaderToUse);
 
       // Set up transform matrices
+      uModelMatrix->Value = glm::translate(glm::mat4(1.0f), centerPos->getGLMVector());
       uModelMatrix->Value = glm::translate(glm::mat4(1.0f), Translation.getGLMVector());
       uModelMatrix->Value = glm::rotate(uModelMatrix->Value, Rotation.X, glm::vec3(1, 0, 0));
       uModelMatrix->Value = glm::rotate(uModelMatrix->Value, Rotation.Y, glm::vec3(0, 1, 0));
@@ -205,7 +208,7 @@ void CParticleRenderable::setMesh(CMesh * mesh)
     }
 }
 
-CParticle::CParticle(SVector3 cPos) {
+CParticle::CParticle(SVector3 *cPos) {
    centerPos = cPos;
 }
 
@@ -215,8 +218,10 @@ void CParticle::setupRenderable() {
    cube->calculateNormalsPerFace();
    printf("CPARTICLE BEGIN SETMESH\n");
    renderable->setMesh(cube);
+   renderable->centerPos = centerPos;
    printf("CPARTICLE END SETMESH %d\n", renderable->getIndexBufferObject());
-   renderable->setTranslation(centerPos);
+   renderable->setTranslation(SVector3(rand() % 2, rand() % 2, rand() % 2));
+   renderable->setRotation(SVector3(0, rand() % 90, 0));
    renderable->getMaterial().Texture = CImageLoader::loadTexture("Textures/grass.bmp");
    renderable->getMaterial().Shader = CShaderLoader::loadShader("DiffuseTexture");
 }

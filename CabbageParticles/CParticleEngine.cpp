@@ -8,7 +8,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration) {
 
    CParticle *cPtr;
    for(int i = 0; i < numParticles; i++) {
-      particles.push_back(cPtr = new CParticle(pos));
+      particles.push_back(cPtr = new CParticle(&centerPos));
       cPtr->setupRenderable();
       CApplication::get().getSceneManager().addRenderable(cPtr->getRenderable());
    }
