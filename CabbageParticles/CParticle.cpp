@@ -61,7 +61,7 @@ void CParticleRenderable::draw(CScene const * const scene) {
       CShaderContext ShaderContext(* ShaderToUse);
 
       // Set up transform matrices
-      uModelMatrix->Value = glm::translate(glm::mat4(1.0f), centerPos->getGLMVector());
+      //uModelMatrix->Value = glm::translate(glm::mat4(1.0f), centerPos->getGLMVector());
       uModelMatrix->Value = glm::translate(glm::mat4(1.0f), Translation.getGLMVector());
       uModelMatrix->Value = glm::rotate(uModelMatrix->Value, Rotation.X, glm::vec3(1, 0, 0));
       uModelMatrix->Value = glm::rotate(uModelMatrix->Value, Rotation.Y, glm::vec3(0, 1, 0));
