@@ -14,7 +14,6 @@ CMesh *basicTreeMesh, *cabbageMesh, *christmasTreeMesh, *enemyMesh,
 
 CMeshRenderable *playerRenderable, *renderChristmasTree,
   *renderBasicTree, *renderMap,  *renderNode, *tempRender;
-#endif
 
 
 void movePlayer(float x, float y) {
@@ -30,3 +29,4 @@ void DiscMesh() {
    discMesh->calculateNormalsPerFace();
 }
 
+#endif

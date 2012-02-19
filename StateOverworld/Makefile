@@ -1,5 +1,5 @@
 ROOT_CABBAGE_DIR=../
-SOURCES=COverworldState.cpp #../Base/sound.cpp
+SOURCES=COverworldState.cpp 
 OBJECTS=$(SOURCES:%.cpp=%.o)
 COMPILER_VERSION=-std=c++0x
 INCLUDE=-I../CabbageCore -I../base
@@ -23,8 +23,6 @@ all: ${TARGET}
 
 COverworldState.o: COverworldState.cpp header.h
 	g++ $(INCLUDE) `freetype-config --cflags` `sdl-config --cflags` -c COverworldState.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
-#sound.o: sound.cpp sound.h
-#	g++ `sdl-config --cflags` -c sound.cpp -DGL_GLEXT_PROTOTYPES
 
 qclean:
 	rm cabbage.exe cabbage 2>/dev/null

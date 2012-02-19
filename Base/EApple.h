@@ -13,7 +13,7 @@ public:
    float rotate;
    bool rollingLeft, rollingRight;
 
-   void update();
+   void update(const float TickTime);
    void loadMesh();
    void loadActor();
 };

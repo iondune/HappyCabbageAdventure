@@ -1,6 +1,5 @@
 #include "COverworldState.h"
 #include "../CabbageSound/sound.h"
-/* These are here because someone doesn't use extern, or put prototypes in their header files */
 
 COverworldState::COverworldState()
 : Application (CApplication::get())
@@ -68,7 +67,6 @@ void COverworldState::begin()
    fps = timeTotal = 0;
    numFrames = 0;
 
-   printf("END OF BEGIN\n");
 }
 
 void COverworldState::step(float delta) {
@@ -192,8 +190,6 @@ void COverworldState::PrepMeshes()
    renderMap->getMaterial().Shader = DiffuseTexture;
    CApplication::get().getSceneManager().addRenderable(renderMap);
 
-   CShader* discShader = DiffuseTexture;
-
    CMesh *discMesh = CMeshLoader::loadAsciiMesh("Disc");
    discMesh->linearizeIndices();
    discMesh->calculateNormalsPerFace();
@@ -201,7 +197,7 @@ void COverworldState::PrepMeshes()
    discRender = new CMeshRenderable();
    discRender->setMesh(discMesh);
    discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
-   discRender->getMaterial().Shader = discShader;
+   discRender->getMaterial().Shader = DiffuseTexture;
    discRender->setTranslation(SVector3(0.5f, -0.13f, 0.1f));
    discRender->setScale(SVector3(0.1f));
    CApplication::get().getSceneManager().addRenderable(discRender);
@@ -210,7 +206,7 @@ void COverworldState::PrepMeshes()
    orangeDisc = discRender = new CMeshRenderable();
    discRender->setMesh(discMesh);
    discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_orange.bmp");
-   discRender->getMaterial().Shader = discShader;
+   discRender->getMaterial().Shader = DiffuseTexture;
    discRender->setTranslation(SVector3(0.9f, -0.12999999f, 0.3f));
    discRender->setScale(SVector3(0.09f));
    CApplication::get().getSceneManager().addRenderable(discRender);
@@ -218,10 +214,10 @@ void COverworldState::PrepMeshes()
    discRender = new CMeshRenderable();
    discRender->setMesh(discMesh);
    discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
-   discRender->getMaterial().Shader = discShader;
+   discRender->getMaterial().Shader = DiffuseTexture;
    discRender->setTranslation(SVector3(0.9f, -0.13f, 0.3f));
    discRender->setScale(SVector3(0.1f));
-   CApplication::get().getSceneManager().addRenderable(discRender);
+   //CApplication::get().getSceneManager().addRenderable(discRender);
    discRender = orangeDisc;
    
    CMesh *playerMesh;
@@ -255,12 +251,12 @@ void COverworldState::bouncePlayer() {
 void COverworldState::movePlayer() {
    if(curNode == 0) {
       playerVector = SVector3(0.5f, -0.08f, 0.1f);
-      discRender->setTranslation(SVector3(0.5f, -0.12999999f, 0.1f));
+      //discRender->setTranslation(SVector3(0.5f, -0.12999999f, 0.1f));
       curNode = 1;
    }
    else {
       playerVector = SVector3(0.9f, -0.08f, 0.3f);
-      discRender->setTranslation(SVector3(0.9f, -0.12999999f, 0.3f));
+      //discRender->setTranslation(SVector3(0.9f, -0.12999999f, 0.3f));
       curNode = 0;
    }
 }
