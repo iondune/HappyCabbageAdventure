@@ -15,8 +15,8 @@ class CEnemy : public CPlaceable
 {
    CShader* shader;
    public:
-   int type;
-   CEnemy(float nx, float ny, int width, int height /*int type*/);
+   int num;
+   CEnemy(float nx, float ny, int width, int height, int type );
    void writeXML(xmlwriter *);
    void moveTo(float,float);
    void setShader(CShader*);

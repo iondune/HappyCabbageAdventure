@@ -47,7 +47,7 @@ CGameState::CGameState()
 
 void CGameState::loadWorld(std::vector<CPlaceable*> *list)
 {
-    int x,y,w,h;
+    int x,y,w,h,t;
     //float spd, rng;
 
     irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader("test.xml");
@@ -82,7 +82,8 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             y = xml->getAttributeValueAsInt(1);
             h = xml->getAttributeValueAsInt(2);
             w = xml->getAttributeValueAsInt(3);
-            list->push_back(cen = new CEnemy((float)x,(float)y,w,h));
+            t = xml->getAttributeValueAsInt(4);
+            list->push_back(cen = new CEnemy((float)x,(float)y,w,h,t));
             cen->setShader(Diffuse);
             cen->isMovingPlatform = 0;
          }

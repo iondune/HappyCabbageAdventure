@@ -1,25 +1,25 @@
 #include "CEnemy.h"
 #include "../Base/CBadGuy.h"
 
-CEnemy::CEnemy(float nx, float ny, int width, int height /*int num type*/)
+CEnemy::CEnemy(float nx, float ny, int width, int height, int type )
 {
-  //type = num;
+   num = type;
    x = nx; y = ny;
    w = width; h = height;
    isMovingPlatform = 0;
 }
 
 void CEnemy::writeXML(xmlwriter *l) {
-    std::stringstream xValue, yValue, widthValue, heightValue, tagValue /*eType*/;
+    std::stringstream xValue, yValue, widthValue, heightValue, tagValue, eType;
     xValue << x;
     yValue << y;
     widthValue << w;
     heightValue << h;
     tagValue << "CEnemy";
-    //etype << num;
+    eType << num;
     //put code for type
     // 1: apple 2: orange
-    //l->AddAtributes("type ", eType.str());
+    l->AddAtributes("type ", eType.str());
     l->AddAtributes("width ", widthValue.str());
     l->AddAtributes("height ", heightValue.str());
     l->AddAtributes("Y ", yValue.str());
@@ -36,7 +36,11 @@ void CEnemy::setShader(CShader * chad) {
    shader = chad;
 }
 CMeshRenderable * CEnemy::setupItem(CShader * chad, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
-    CBadGuy::makeBadGuy(x, y, w, h, CBadGuy::apple, GameplayManager);
-
+    if (num == 0)
+        CBadGuy::makeBadGuy(x, y, w, h, CBadGuy::orange, GameplayManager);
+    if (num == 1)
+        CBadGuy::makeBadGuy(x, y, w, h, CBadGuy::orange, GameplayManager);
+    if (num > 1)
+        printf("invalied enemy given"); // will gain
     return new CMeshRenderable();
 }
