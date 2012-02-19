@@ -28,12 +28,6 @@ void CParticleEngine::step(float const elapsedTime) {
    sineValue += 4*elapsedTime;
    std::vector<CParticle*>::iterator it;
    for(it = particles.begin(); it != particles.end(); it++) {
-      float mSineValue = sineValue + (* it)->StartFactor;
-      (* it)->getRenderable()->setTranslation(
-            SVector3(
-               (* it)->Amplitude*cos((* it)->Period*mSineValue), 
-               (* it)->yFactor, 
-               (* it)->Amplitude*sin((* it)->Period*mSineValue)));
-      (* it)->getRenderable()->setRotation((* it)->RotationSpeed*mSineValue);
+      (* it)->updateMatrices(sineValue);
    }
 }

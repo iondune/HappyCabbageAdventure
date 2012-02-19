@@ -31,6 +31,8 @@ class CParticle {
       float StartFactor;
       SVector3 RotationSpeed;
       void setupRenderable(int type);
+      void updateMatrices(float);
+      int particleType;
       CRenderable * getRenderable();
 };
 

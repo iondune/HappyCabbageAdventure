@@ -215,6 +215,7 @@ CParticle::CParticle(SVector3 *cPos) {
 
 //These particles are leaves (green ovals [using the disc mesh])
 void CParticle::setupRenderable(int type) {
+   particleType = type;
    if(type == 0) {
       renderable = new CParticleRenderable();
       CMesh * cube = CMeshLoader::loadAsciiMesh("Disc");
@@ -259,6 +260,25 @@ void CParticle::setupRenderable(int type) {
 
 
    }
+}
+
+void CParticle::updateMatrices(float sineValue) {
+   float mSineValue = sineValue + StartFactor;
+   if(particleType == 5) { // Disabled for now
+      getRenderable()->setTranslation(
+            SVector3(
+               yFactor, 
+               Amplitude*cos(Period*mSineValue), 
+               Amplitude*sin(Period*mSineValue)));
+   }
+   else {
+      getRenderable()->setTranslation(
+            SVector3(
+               Amplitude*cos(Period*mSineValue), 
+               yFactor, 
+               Amplitude*sin(Period*mSineValue)));
+   }
+   getRenderable()->setRotation(RotationSpeed*mSineValue);
 }
 
 CRenderable * CParticle::getRenderable() {
