@@ -138,8 +138,16 @@ void CGameplayManager::run(float const TickTime)
     KillList.clear();
 
 
-    for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
-       (*it)->update(TickTime);
+    float cabbageCenterX = PlayerActor->getArea().getCenter().X;
+    float cabbageCenterY = PlayerActor->getArea().getCenter().Y;
+
+    for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it) {
+       float enemyCenterX = (*it)->Actor->getArea().getCenter().X;
+       float enemyCenterY = (*it)->Actor->getArea().getCenter().Y;
+
+       if ((enemyCenterX < cabbageCenterX + 7 && enemyCenterX > cabbageCenterX - 7) && (enemyCenterY < cabbageCenterY + 7 && enemyCenterY > cabbageCenterY - 7))
+          (*it)->update(TickTime);
+    }
 }
 
 Cabbage::Collider::CEngine* CGameplayManager::getEngine() {
