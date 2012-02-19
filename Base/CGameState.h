@@ -9,6 +9,7 @@
 #include "../StateLWIB/CBlock.h"
 #include "../StateLWIB/CEnemy.h"
 #include "../StateLWIB/CPlaceable.h"
+#include "../CabbageParticles/CParticleEngine.h"
 #include "CGameplayManager.h"
 #include "CGameEventReceiver.h"
 #include "irrxml-1.2/src/irrXML.h"

@@ -310,6 +310,8 @@ void CGameState::begin()
 
    printf("END OF BEGIN\n");
 
+   CParticleEngine * particleEngine = new CParticleEngine(SVector3(0, 1, 0), 1, 1);
+
    Application.skipElapsedTime();
 }
 
