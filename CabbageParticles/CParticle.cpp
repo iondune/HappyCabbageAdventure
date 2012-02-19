@@ -214,25 +214,51 @@ CParticle::CParticle(SVector3 *cPos) {
 }
 
 //These particles are leaves (green ovals [using the disc mesh])
-void CParticle::setupRenderable() {
-   renderable = new CParticleRenderable();
-   CMesh * cube = CMeshLoader::loadAsciiMesh("Disc");
-   cube->calculateNormalsPerFace();
-   printf("CPARTICLE BEGIN SETMESH\n");
-   renderable->setMesh(cube);
-   renderable->setScale(SVector3(0.1, 0.2, 0.1));
-   renderable->centerPos = centerPos;
-   printf("CPARTICLE END SETMESH %d\n", renderable->getIndexBufferObject());
-   renderable->getMaterial().Texture = CImageLoader::loadTexture("Textures/grass.bmp");
-   renderable->getMaterial().Shader = CShaderLoader::loadShader("DiffuseTexture");
+void CParticle::setupRenderable(int type) {
+   if(type == 0) {
+      renderable = new CParticleRenderable();
+      CMesh * cube = CMeshLoader::loadAsciiMesh("Disc");
+      cube->calculateNormalsPerFace();
+      printf("CPARTICLE BEGIN SETMESH\n");
+      renderable->setMesh(cube);
+      renderable->setScale(SVector3(0.13, 0.26, 0.13));
+      renderable->centerPos = centerPos;
+      printf("CPARTICLE END SETMESH %d\n", renderable->getIndexBufferObject());
+      renderable->getMaterial().Texture = CImageLoader::loadTexture("Textures/grass.bmp");
+      renderable->getMaterial().Shader = CShaderLoader::loadShader("DiffuseTextureBright");
 
-   yFactor = (float)rand()/(float)RAND_MAX * 0.6 - 0.3;
-   Amplitude = (float)rand()/(float)RAND_MAX * 0.5 + 0.3;
-   Period = (float)rand()/(float)RAND_MAX * 2 + 1;
-   RotationSpeed = SVector3((float)rand()/(float)RAND_MAX * 4 - 2, 
-                            (float)rand()/(float)RAND_MAX * 4 - 2,
-                            (float)rand()/(float)RAND_MAX * 4 - 2);
-   StartFactor = (float)rand()/(float)RAND_MAX * 180 - 90; 
+      yFactor = (float)rand()/(float)RAND_MAX * 0.6 - 0.3;
+      Amplitude = (float)rand()/(float)RAND_MAX * 0.5 + 0.3;
+      Period = (float)rand()/(float)RAND_MAX * 2 + 1;
+      RotationSpeed = SVector3((float)rand()/(float)RAND_MAX * 4 - 2, 
+            (float)rand()/(float)RAND_MAX * 4 - 2,
+            (float)rand()/(float)RAND_MAX * 4 - 2);
+      StartFactor = (float)rand()/(float)RAND_MAX * 180 - 90; 
+   }
+   else if(type == 1) {
+      renderable = new CParticleRenderable();
+      CMesh * cube = CMeshLoader::loadAsciiMesh("Cube");
+      cube->calculateNormalsPerFace();
+      printf("CPARTICLE BEGIN SETMESH\n");
+      renderable->setMesh(cube);
+      renderable->setScale(0.07);
+      renderable->centerPos = centerPos;
+      printf("CPARTICLE END SETMESH %d\n", renderable->getIndexBufferObject());
+      renderable->getMaterial().Texture = CImageLoader::loadTexture("Textures/sky.bmp");
+      renderable->getMaterial().Shader = CShaderLoader::loadShader("DiffuseTextureBright");
+
+      yFactor = (float)rand()/(float)RAND_MAX * 1.5 - 0.4;
+      Amplitude = 0.4*(yFactor + 1);
+      Period = (float)rand()/(float)RAND_MAX * 2 + 1;
+      RotationSpeed = SVector3(
+            (float)rand()/(float)RAND_MAX * 4 - 2, 
+            (float)rand()/(float)RAND_MAX * 4 - 2,
+            (float)rand()/(float)RAND_MAX * 4 - 2);
+      RotationSpeed *= -yFactor + 2.0;
+      StartFactor = (float)rand()/(float)RAND_MAX * 180 - 90; 
+
+
+   }
 }
 
 CRenderable * CParticle::getRenderable() {

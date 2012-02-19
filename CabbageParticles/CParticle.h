@@ -30,7 +30,7 @@ class CParticle {
       float yFactor, Amplitude, Period;
       float StartFactor;
       SVector3 RotationSpeed;
-      void setupRenderable();
+      void setupRenderable(int type);
       CRenderable * getRenderable();
 };
 

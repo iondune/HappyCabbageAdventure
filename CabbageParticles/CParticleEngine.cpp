@@ -11,7 +11,11 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration) {
    for(int i = 0; i < numParticles; i++) {
       printf("Here in CParticleEngine's constructor\n");
       particles.push_back(cPtr = new CParticle(&centerPos));
-      cPtr->setupRenderable();
+      if(i % 3 == 0) {
+         cPtr->setupRenderable(1);
+      }
+      else
+         cPtr->setupRenderable(0);
       CApplication::get().getSceneManager().addRenderable(cPtr->getRenderable());
    }
 }
