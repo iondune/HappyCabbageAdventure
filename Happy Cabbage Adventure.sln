@@ -90,6 +90,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DemoMeshLoader", "DemoMeshL
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageSound", "CabbageSound\CabbageSound.vcxproj", "{9EC4EF67-EDCE-4FDA-97E9-CADBBEAB2D89}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageParticles", "CabbageParticles\CabbageParticles.vcxproj", "{75299A5D-B7AF-4B26-8B18-3116172F330D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -144,6 +146,10 @@ Global
 		{9EC4EF67-EDCE-4FDA-97E9-CADBBEAB2D89}.Debug|Win32.Build.0 = Debug|Win32
 		{9EC4EF67-EDCE-4FDA-97E9-CADBBEAB2D89}.Release|Win32.ActiveCfg = Release|Win32
 		{9EC4EF67-EDCE-4FDA-97E9-CADBBEAB2D89}.Release|Win32.Build.0 = Release|Win32
+		{75299A5D-B7AF-4B26-8B18-3116172F330D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{75299A5D-B7AF-4B26-8B18-3116172F330D}.Debug|Win32.Build.0 = Debug|Win32
+		{75299A5D-B7AF-4B26-8B18-3116172F330D}.Release|Win32.ActiveCfg = Release|Win32
+		{75299A5D-B7AF-4B26-8B18-3116172F330D}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
