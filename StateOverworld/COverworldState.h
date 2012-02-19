@@ -2,20 +2,30 @@
 #define __COVERWORLDSTATE_HEADER_
 
 #include <iostream>
+#include <vector>
 
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
 #include "../Base/CGameState.h"
 //#include "../MainMenu/CMainMenuState.h"
 
+#define NUM_LEVELS 2
+
 class COverworldState : public CState<COverworldState>
 {
+  struct SomeLevel
+  {
+    SVector3 loc;
+    const char * name;
+  };
+
    CApplication & Application;
 //   CGameEventManager * GameEventManager;
 //   CGameEventReceiver GameEventReceiver;
 
    //Boolean integers for keypressing
    int aDown, dDown, spaceDown, wDown, sDown;
+   float changex, changey, changez;
    SVector3 playerVector;
 
    CShader *Flat, *Diffuse, *DiffuseTexture;
@@ -30,10 +40,12 @@ class COverworldState : public CState<COverworldState>
    int WindowWidth, WindowHeight;
    SVector3 rot;
 
-   //std::vector<Node> nodes;
+   SomeLevel levels [NUM_LEVELS];
 
    void LoadShaders();
    void PrepMeshes();
+   void loadLevels();
+   void levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor);
 
    SLight * PlayerLight;
 

@@ -21,7 +21,7 @@ all: ${TARGET}
 	mkdir -p ../lib
 	ar cq $@ $(OBJECTS)
 
-COverworldState.o: COverworldState.cpp header.h
+COverworldState.o: COverworldState.cpp COverworldState.h header.h
 	g++ $(INCLUDE) `freetype-config --cflags` `sdl-config --cflags` -c COverworldState.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 
 qclean:
