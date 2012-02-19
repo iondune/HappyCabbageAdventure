@@ -1,10 +1,3 @@
-/*
- * EOrange.cpp
- *
- *  Created on: Feb 17, 2012
- *      Author: Klonoa
- */
-
 #include "EOrange.h"
 
 #include "EApple.h"
@@ -38,9 +31,9 @@ void EOrange::loadMesh() {
       printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
 
    Renderable->setMesh(mesh);
-   //Renderable->getMaterial().Texture = new CTexture(CImageLoader::loadImage("Textures/orange.bmp"));
+   Renderable->getMaterial().Texture = new CTexture(CImageLoader::loadImage("Textures/orange.bmp"));
 
-   Renderable->getMaterial().Shader = CShaderLoader::loadShader("Diffuse");
+   Renderable->getMaterial().Shader = CShaderLoader::loadShader("DiffuseTexture");
    Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
    Renderable->setScale(SVector3(1, 1, 1));
    Renderable->setRotation(SVector3(-90, 0, 0));
