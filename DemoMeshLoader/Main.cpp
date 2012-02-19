@@ -95,7 +95,7 @@ public:
             MeshFace->calculateNormalsPerFace();
         }
 
-        MeshVertex = CMeshLoader::loadAsciiMesh("../Base/Models/bunny10k.m");
+        MeshVertex = CMeshLoader::loadAsciiMesh("../Base/Models/bunny10k_2.m");
         if (MeshVertex)
         {
             MeshVertex->resizeMesh(SVector3(1.5));
@@ -114,8 +114,11 @@ public:
         Font.init("Fonts/DejaVuSansMono.ttf", 14);
     }
 
+	int currentMat;
+
     void setMaterial(int const i)
     {
+		currentMat = i;
 		CMaterial mat;
         switch (i)
         {
@@ -204,14 +207,20 @@ public:
         case SDLK_f:
 
             if (! Event.Pressed)
+			{
                 Renderable->setMesh(MeshFace);
+				setMaterial(currentMat);
+			}
 
             break;
 
         case SDLK_v:
 
             if (! Event.Pressed)
+			{
                 Renderable->setMesh(MeshVertex);
+				setMaterial(currentMat);
+			}
 
             break;
 

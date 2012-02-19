@@ -99,16 +99,18 @@ SVector3 const CMesh::getExtent() const
 void CMesh::calculateNormalsPerFace()
 {
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
-    for (std::vector<STriangle>::iterator it = (* bit)->Triangles.begin(); it != (* bit)->Triangles.end(); ++ it)
-    {
-        it->Normal = ((* bit)->Vertices[it->Indices[1]].Position - (* bit)->Vertices[it->Indices[0]].Position).
-            crossProduct((* bit)->Vertices[it->Indices[2]].Position - (* bit)->Vertices[it->Indices[0]].Position);
-        (* bit)->Vertices[it->Indices[0]].Normal = (* bit)->Vertices[it->Indices[1]].Normal = (* bit)->Vertices[it->Indices[2]].Normal = it->Normal;
-    }
+	{
+		for (std::vector<STriangle>::iterator it = (* bit)->Triangles.begin(); it != (* bit)->Triangles.end(); ++ it)
+		{
+			it->Normal = ((* bit)->Vertices[it->Indices[1]].Position - (* bit)->Vertices[it->Indices[0]].Position).
+				crossProduct((* bit)->Vertices[it->Indices[2]].Position - (* bit)->Vertices[it->Indices[0]].Position);
+			(* bit)->Vertices[it->Indices[0]].Normal = (* bit)->Vertices[it->Indices[1]].Normal = (* bit)->Vertices[it->Indices[2]].Normal = it->Normal;
+		}
+	}
 
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
-    for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
-        it->Normal.normalize();
+		for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
+			it->Normal.normalize();
 }
 
 void CMesh::calculateNormalsPerVertex()
@@ -116,17 +118,19 @@ void CMesh::calculateNormalsPerVertex()
     calculateNormalsPerFace();
 
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
-    for (std::vector<STriangle>::iterator it = (* bit)->Triangles.begin(); it != (* bit)->Triangles.end(); ++ it)
-    {
-        for (int i = 0; i < 3; ++ i)
-        {
-            (* bit)->Vertices[it->Indices[i]].Normal += it->Normal;
-        }
-    }
+	{
+		for (std::vector<STriangle>::iterator it = (* bit)->Triangles.begin(); it != (* bit)->Triangles.end(); ++ it)
+		{
+			for (int i = 0; i < 3; ++ i)
+			{
+				(* bit)->Vertices[it->Indices[i]].Normal += it->Normal;
+			}
+		}
+	}
 
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
-    for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
-        it->Normal.normalize();
+		for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
+			it->Normal.normalize();
 }
 
 void CMesh::updateBuffers()
