@@ -4,8 +4,19 @@
 #include "CabbageCore.h"
 #include "../CabbageScene/CabbageScene.h"
 
-class CParticleRenderable : public CMeshRenderable {
+#include "../CabbageCore/glm/gtc/matrix_transform.hpp"
+
+//CParticleRenderable is just a CMeshRenderable with hierarchical transforms
+class CParticleRenderable : public CRenderable {
+   friend class CParticle;
+   CParticleRenderable();
+
+   CMesh * Mesh;
+   std::vector<CParticleRenderable *> SubRenderables;
+
+   CMesh * getMesh();
    void draw(CScene const * const scene);
+   void setMesh(CMesh * mesh);
 };
 
 class CParticle {
@@ -15,7 +26,7 @@ class CParticle {
    public:
       CParticle(SVector3);
       void setupRenderable();
-      CMeshRenderable * getRenderable();
+      CRenderable * getRenderable();
 };
 
 #endif

@@ -111,8 +111,11 @@ struct SMaterial
     SMaterial();
 };
 
+//#include "../CabbageParticles/CParticle.h"
+class CParticleRenderable;
 class CRenderable : public ISceneObject
 {
+   friend class CParticleRenderable;
 
 protected:
 
