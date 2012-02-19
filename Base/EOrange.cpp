@@ -20,6 +20,7 @@ EOrange::EOrange(float x, float y, float w, float h, CGameplayManager* manager) 
    loadActor();
 
    jump = true;
+   oldX = x;
 
 }
 
@@ -37,9 +38,9 @@ void EOrange::loadMesh() {
       printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
 
    Renderable->setMesh(mesh);
-   Renderable->getMaterial().Texture = new CTexture(CImageLoader::loadImage("Textures/orange.bmp"));
+   //Renderable->getMaterial().Texture = new CTexture(CImageLoader::loadImage("Textures/orange.bmp"));
 
-   Renderable->getMaterial().Shader = CShaderLoader::loadShader("DiffuseTexture");
+   Renderable->getMaterial().Shader = CShaderLoader::loadShader("Diffuse");
    Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
    Renderable->setScale(SVector3(1, 1, 1));
    Renderable->setRotation(SVector3(-90, 0, 0));
@@ -70,7 +71,8 @@ void EOrange::update(const float TickTime) {
        else
            Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
 
-       if (Manager->getPlayerLocation().X - Actor->getArea().getCenter().X < 2.2 && Manager->getPlayerLocation().X - Actor->getArea().getCenter().X > -2.2) {
+       if (Manager->getPlayerLocation().X - Actor->getArea().getCenter().X < 2.2
+           && Manager->getPlayerLocation().X - Actor->getArea().getCenter().X > -2.2) {
           if (jump) {
              Actor->setJumping(true);
              jump = false;
@@ -78,10 +80,18 @@ void EOrange::update(const float TickTime) {
        }
        else
           jump = true;
+
+       if (oldX == Actor->getArea().getCenter().X && !jump) {
+          printf("oldX: %f  curX: %f\n", oldX, Actor->getArea().getCenter().X);
+          Actor->setJumping(true);
+          jump = false;
+       }
    }
    else
    {
        Actor->setAction(Cabbage::Collider::CActor::EActionType::None);
    }
+
+   oldX = Actor->getArea().getCenter().X;
 }
 

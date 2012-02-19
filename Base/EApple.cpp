@@ -64,7 +64,6 @@ void EApple::update(float const TickTime) {
 
       if (rollingLeft) {
          rotate -= (.6 *  1000 * TickTime);
-         printf("TickTime is %f\n", TickTime);
          Renderable->setRotation(SVector3(-90, rotate, 0));
       }
 
