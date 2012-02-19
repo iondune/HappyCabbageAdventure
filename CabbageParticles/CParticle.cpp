@@ -17,6 +17,7 @@ void CParticleRenderable::draw(CScene const * const scene) {
    {
       for (std::vector<CParticleRenderable *>::iterator it = SubRenderables.begin(); it != SubRenderables.end(); ++ it)
       {
+         (* it)->centerPos = centerPos;
          (* it)->Translation = Translation;
          (* it)->Rotation = Rotation;
          (* it)->RotationMatrix = RotationMatrix;
@@ -61,8 +62,8 @@ void CParticleRenderable::draw(CScene const * const scene) {
       CShaderContext ShaderContext(* ShaderToUse);
 
       // Set up transform matrices
-      //uModelMatrix->Value = glm::translate(glm::mat4(1.0f), centerPos->getGLMVector());
-      uModelMatrix->Value = glm::translate(glm::mat4(1.0f), Translation.getGLMVector());
+      uModelMatrix->Value = glm::translate(glm::mat4(1.0f), centerPos->getGLMVector());
+      uModelMatrix->Value = glm::translate(uModelMatrix->Value, Translation.getGLMVector());
       uModelMatrix->Value = glm::rotate(uModelMatrix->Value, Rotation.X, glm::vec3(1, 0, 0));
       uModelMatrix->Value = glm::rotate(uModelMatrix->Value, Rotation.Y, glm::vec3(0, 1, 0));
       uModelMatrix->Value = UsesRotationMatrix ? uModelMatrix->Value * RotationMatrix : glm::rotate(uModelMatrix->Value, Rotation.Z, glm::vec3(0, 0, 1));
@@ -212,18 +213,26 @@ CParticle::CParticle(SVector3 *cPos) {
    centerPos = cPos;
 }
 
+//These particles are leaves (green ovals [using the disc mesh])
 void CParticle::setupRenderable() {
    renderable = new CParticleRenderable();
-   CMesh * cube = CMeshLoader::loadAsciiMesh("Cube");
+   CMesh * cube = CMeshLoader::loadAsciiMesh("Disc");
    cube->calculateNormalsPerFace();
    printf("CPARTICLE BEGIN SETMESH\n");
    renderable->setMesh(cube);
+   renderable->setScale(SVector3(0.1, 0.2, 0.1));
    renderable->centerPos = centerPos;
    printf("CPARTICLE END SETMESH %d\n", renderable->getIndexBufferObject());
-   renderable->setTranslation(SVector3(rand() % 2, rand() % 2, rand() % 2));
-   renderable->setRotation(SVector3(0, rand() % 90, 0));
    renderable->getMaterial().Texture = CImageLoader::loadTexture("Textures/grass.bmp");
    renderable->getMaterial().Shader = CShaderLoader::loadShader("DiffuseTexture");
+
+   yFactor = (float)rand()/(float)RAND_MAX * 0.6 - 0.3;
+   Amplitude = (float)rand()/(float)RAND_MAX * 0.5 + 0.3;
+   Period = (float)rand()/(float)RAND_MAX * 2 + 1;
+   RotationSpeed = SVector3((float)rand()/(float)RAND_MAX * 4 - 2, 
+                            (float)rand()/(float)RAND_MAX * 4 - 2,
+                            (float)rand()/(float)RAND_MAX * 4 - 2);
+   StartFactor = (float)rand()/(float)RAND_MAX * 180 - 90; 
 }
 
 CRenderable * CParticle::getRenderable() {

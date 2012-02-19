@@ -13,6 +13,7 @@ class CParticleEngine {
    float totalDuration;
    float currentDuration;
    public:
+      float sineValue;
       //Duration in seconds
       CParticleEngine(SVector3 pos, int maxParticles, float duration);
       void setCenterPos(SVector3 cP);

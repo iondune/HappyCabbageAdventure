@@ -27,6 +27,9 @@ class CParticle {
    float size;
    public:
       CParticle(SVector3*);
+      float yFactor, Amplitude, Period;
+      float StartFactor;
+      SVector3 RotationSpeed;
       void setupRenderable();
       CRenderable * getRenderable();
 };

@@ -187,6 +187,8 @@ void CGameState::EngineInit( void ) {
    */
 }
 
+CParticleEngine * particleEngine;
+
 //Initalizer fxn
 void CGameState::begin()
 {
@@ -311,7 +313,7 @@ void CGameState::begin()
 
    printf("END OF BEGIN\n");
 
-   CParticleEngine * particleEngine = new CParticleEngine(SVector3(0, 1, 0), 1, 1);
+   particleEngine = new CParticleEngine(SVector3(0, 1, 0), 70, 1);
 
    Application.skipElapsedTime();
 }
@@ -394,6 +396,8 @@ void CGameState::oldDisplay() {
 
    Engine->updateAll(Application.getElapsedTime());
    GameplayManager->run(Application.getElapsedTime());
+   particleEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
+   particleEngine->step(Application.getElapsedTime());
    PlayerView->step(Application.getElapsedTime()*1000);
 
    SVector2 middleOfPlayer = Player->getArea().getCenter();

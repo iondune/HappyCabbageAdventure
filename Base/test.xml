@@ -1,3 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<CEnemy X ="3" Y ="0" height ="1" width ="1" type ="1">
+<CEnemy X ="1" Y ="0" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="5" Y ="0" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="7" Y ="-0" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-2" Y ="1" height ="1" width ="1" type ="0">
 </CEnemy>
