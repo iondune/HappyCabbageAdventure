@@ -12,7 +12,7 @@ public:
 
    bool jump;
 
-   void update();
+   void update(float const TickTime);
    void loadMesh();
    void loadActor();
 };

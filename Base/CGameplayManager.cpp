@@ -139,7 +139,7 @@ void CGameplayManager::run(float const TickTime)
 
 
     for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
-       (*it)->update();
+       (*it)->update(TickTime);
 }
 
 Cabbage::Collider::CEngine* CGameplayManager::getEngine() {

@@ -46,7 +46,7 @@ void EApple::loadActor() {
 }
 
 //Updates AI's decision per frame
-void EApple::update() {
+void EApple::update(float const TickTime) {
    if (Manager->isPlayerAlive())
    {
        if (Manager->getPlayerLocation().X < Actor->getArea().getCenter().X && (!rollingLeft && !rollingRight))
@@ -63,12 +63,13 @@ void EApple::update() {
        }
 
       if (rollingLeft) {
-         rotate -= 3;
+         rotate -= (.6 *  1000 * TickTime);
+         printf("TickTime is %f\n", TickTime);
          Renderable->setRotation(SVector3(-90, rotate, 0));
       }
 
       if (rollingRight) {
-         rotate += 3;
+         rotate += (.6 * 1000 * TickTime);
          Renderable->setRotation(SVector3(-90, rotate, 0));
       }
 

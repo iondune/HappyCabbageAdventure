@@ -28,7 +28,7 @@ public:
    static void makeBadGuy(float x, float y, float w, float h, EnemyType enemy, CGameplayManager* manager);
 
    //Methods that must be implemented in subclasses
-   virtual void update() =0;
+   virtual void update(float const TickTime) =0;
    virtual void loadMesh() =0;
    virtual void loadActor() =0;
 };

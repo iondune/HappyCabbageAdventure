@@ -62,7 +62,7 @@ void EOrange::loadActor() {
 }
 
 //Updates AI's decision per frame
-void EOrange::update() {
+void EOrange::update(const float TickTime) {
    if (Manager->isPlayerAlive())
    {
        if (Manager->getPlayerLocation().X < Actor->getArea().getCenter().X)
