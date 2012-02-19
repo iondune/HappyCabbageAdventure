@@ -11,6 +11,7 @@ public:
    EOrange(float x, float y, float w, float h, CGameplayManager* manager);
 
    bool jump;
+   float oldX;
 
    void update(float const TickTime);
    void loadMesh();
