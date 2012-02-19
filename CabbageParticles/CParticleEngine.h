@@ -3,6 +3,8 @@
 
 #include <vector>
 #include "CParticle.h"
+#include "CPCube.h"
+#include "CPLeaf.h"
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
 

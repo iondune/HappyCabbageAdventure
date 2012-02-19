@@ -1,4 +1,4 @@
-FILES = CParticle.cpp CParticleEngine.cpp 
+FILES = CParticle.cpp CParticleEngine.cpp CPLeaf.cpp CPCube.cpp 
 
 OFILES = $(FILES:%.cpp=%.o)
 
@@ -15,6 +15,12 @@ all: ../lib/libCabbageParticles.a
 
 CParticle.o: CParticle.cpp CParticle.h
 	g++ -o CParticle.o CParticle.cpp -c $(DIRECTORIES) $(OPENGL)
+
+CPCube.o: CPCube.cpp CPCube.h
+	g++ -o CPCube.o CPCube.cpp -c $(DIRECTORIES) $(OPENGL)
+
+CPLeaf.o: CPLeaf.cpp CPLeaf.h
+	g++ -o CPLeaf.o CPLeaf.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CParticleEngine.o: CParticleEngine.cpp CParticleEngine.h CParticle.h CParticle.cpp
 	g++ -o CParticleEngine.o CParticleEngine.cpp -c $(DIRECTORIES) $(OPENGL)

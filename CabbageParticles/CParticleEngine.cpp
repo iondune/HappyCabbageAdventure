@@ -9,13 +9,14 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration) {
 
    CParticle *cPtr;
    for(int i = 0; i < numParticles; i++) {
-      printf("Here in CParticleEngine's constructor\n");
-      particles.push_back(cPtr = new CParticle(&centerPos));
       if(i % 3 == 0) {
-         cPtr->setupRenderable(1);
+         particles.push_back(cPtr = new CPCube());
       }
-      else
-         cPtr->setupRenderable(0);
+      else {
+         particles.push_back(cPtr = new CPLeaf());
+      }
+      cPtr->setCenterPos(&centerPos);
+      cPtr->setupRenderable();
       CApplication::get().getSceneManager().addRenderable(cPtr->getRenderable());
    }
 }

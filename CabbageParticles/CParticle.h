@@ -9,6 +9,7 @@
 //CParticleRenderable is just a CMeshRenderable with hierarchical transforms
 class CParticleRenderable : public CRenderable {
    friend class CParticle;
+   public:
    CParticleRenderable();
 
    CMesh * Mesh;
@@ -22,17 +23,18 @@ class CParticleRenderable : public CRenderable {
 };
 
 class CParticle {
-   SVector3  *centerPos;
-   CParticleRenderable *renderable;
    float size;
    public:
-      CParticle(SVector3*);
+      CParticleRenderable *renderable;
+      SVector3  *centerPos;
       float yFactor, Amplitude, Period;
       float StartFactor;
       SVector3 RotationSpeed;
-      void setupRenderable(int type);
-      void updateMatrices(float);
-      int particleType;
+
+      void setCenterPos(SVector3*);
+      virtual void setupRenderable()=0;
+      virtual void updateMatrices(float)=0;
+
       CRenderable * getRenderable();
 };
 
