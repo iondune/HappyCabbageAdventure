@@ -20,15 +20,21 @@ void CPCube::setupRenderable() {
          (float)rand()/(float)RAND_MAX * 4 - 2);
    RotationSpeed *= -yFactor + 2.0;
    StartFactor = (float)rand()/(float)RAND_MAX * AppearRate; 
-   AppearRate = StartFactor;
+   Counter = StartFactor;
 }
 
 void CPCube::updateMatrices(float timeElapsed) {
-   if(AppearRate > 0) {
-      AppearRate -= timeElapsed;
+   if(Counter > 0) {
+      Counter -= timeElapsed;
    }
+   else if(Duration >= TotalDuration - (float)AppearRate*0.85) {
+      CApplication::get().getSceneManager().removeRenderable(getRenderable());
+      Duration = -1;
+   }
+   else if(Duration == -1) {}
    else {
       sineValue += 4*timeElapsed;
+      Duration += timeElapsed;
       float newX = (*lookRight?1:-1)*(1+yFactor);
       getRenderable()->setTranslation(
             SVector3(

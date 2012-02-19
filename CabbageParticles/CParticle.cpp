@@ -219,6 +219,8 @@ void CParticle::setLookRight(int *ptr) {
 }
 
 void CParticle::setAppearRate(float r) {
+   Duration = 0;
+   Counter = 0;
    AppearRate = r;
 }
 

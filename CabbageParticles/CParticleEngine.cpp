@@ -20,6 +20,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int part
       cPtr->setCenterPos(&centerPos);
       cPtr->setLookRight(&lookRight);
       cPtr->setAppearRate(2);
+      cPtr->TotalDuration = duration;
       cPtr->setupRenderable();
       CApplication::get().getSceneManager().addRenderable(cPtr->getRenderable());
    }

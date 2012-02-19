@@ -18,20 +18,25 @@ void CPLeaf::setupRenderable() {
          (float)rand()/(float)RAND_MAX * 4 - 2,
          (float)rand()/(float)RAND_MAX * 4 - 2);
    StartFactor = (float)rand()/(float)RAND_MAX * AppearRate; 
-   AppearRate = StartFactor;
+   Counter = StartFactor;
 }
 
 void CPLeaf::updateMatrices(float timeElapsed) {
-   if(AppearRate > 0) {
-      AppearRate -= timeElapsed;
+   if(Counter > 0) {
+      Counter -= timeElapsed;
+   }
+   else if(Duration >= TotalDuration - (float)AppearRate*0.85) {
+      CApplication::get().getSceneManager().removeRenderable(getRenderable());
+      Duration = -1;
    }
    else {
       sineValue += 4*timeElapsed;
+      Duration += timeElapsed;
       getRenderable()->setTranslation(
             SVector3(
                Amplitude*cos(Period*sineValue), 
                yFactor, 
                Amplitude*sin(Period*sineValue)));
-      getRenderable()->setRotation(RotationSpeed*sineValue);
+      getRenderable()->setRotation(RotationSpeed*sineValue*5);
    }
 }

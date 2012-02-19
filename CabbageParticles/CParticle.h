@@ -3,6 +3,7 @@
 
 #include "CabbageCore.h"
 #include "../CabbageScene/CabbageScene.h"
+#include "../CabbageFramework/CabbageFramework.h"
 
 #include "../CabbageCore/glm/gtc/matrix_transform.hpp"
 
@@ -29,8 +30,8 @@ class CParticle {
       SVector3 *centerPos;
       int* lookRight;
       float yFactor, Amplitude, Period;
-      float StartFactor, AppearRate;
       float sineValue;
+      float StartFactor, AppearRate, Duration, TotalDuration, Counter;
       SVector3 RotationSpeed;
 
       void setLookRight(int*);
