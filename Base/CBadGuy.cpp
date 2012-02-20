@@ -19,7 +19,8 @@ void CBadGuy::makeBadGuy(float x, float y, float w, float h, EnemyType enemy, CG
    }
 
    else if (enemy == kiwi) {
-      temp = new EKiwi(x, y, w, h, manager);
+      int direction = 0;
+      temp = new EKiwi(x, y, w, h, manager, direction);
    }
 
    else {

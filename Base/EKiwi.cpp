@@ -1,6 +1,6 @@
 #include "EKiwi.h"
 
-EKiwi::EKiwi(float x, float y, float w, float h, CGameplayManager* manager) {
+EKiwi::EKiwi(float x, float y, float w, float h, CGameplayManager* manager, int direction) {
    this->x = x;
    this->y = y;
    this->w = w;
@@ -9,6 +9,8 @@ EKiwi::EKiwi(float x, float y, float w, float h, CGameplayManager* manager) {
 
    loadMesh();
    loadActor();
+
+   Direction = direction;
 
    OrigX = x;
 }
@@ -64,7 +66,10 @@ void EKiwi::update(float const TickTime) {
 
       Actor->setArea(SRect2(curX, TempY, w, h));
 
-      Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveLeft);
+      if(Direction == 0)
+         Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveLeft);
+      else
+         Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
 
    }
    else
