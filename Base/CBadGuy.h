@@ -13,7 +13,9 @@ public:
 
    enum EnemyType {
       apple,
-      orange
+      orange,
+      kiwi,
+      grape
    };
 
    float x, y, w, h;
