@@ -154,17 +154,17 @@ void CLWIBState::OnRenderStart(float const Elapsed)
     else
         freetype::print(our_font, 15, WindowHeight - 50.f, "Press F1 For Help");
     if (!eDown && !showHelp && !tDown)
-        freetype::print(our_font, 20, WindowHeight - 100.f, "placing block\n\n");
+        freetype::print(our_font, 20, WindowHeight - 100.f, "Placing block\n\n");
     if (eDown && !showHelp && !tDown) {
-        freetype::print(our_font, 20, WindowHeight - 100.f, "placing enemy\n");
+        freetype::print(our_font, 20, WindowHeight - 100.f, "Placing enemy\n");
         if (enemyType == 0)
-            freetype::print(our_font, 20, WindowHeight - 150.f, "placing Apple\n");
+            freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Apple\n");
         if (enemyType == 1)
-            freetype::print(our_font, 20, WindowHeight - 150.f, "placing orange\n");
+            freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Orange\n");
         if (enemyType == 2)
-            freetype::print(our_font, 20, WindowHeight - 150.f, "placing kiwi\n");
+            freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Kiwi\n");
         if (enemyType == 3)
-            freetype::print(our_font, 20, WindowHeight - 150.f, "placing grape\n");
+            freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Grape\n");
     }
     if (tDown && !showHelp)
         freetype::print(our_font, 20, WindowHeight - 100.f, "remove mode\n\n");
