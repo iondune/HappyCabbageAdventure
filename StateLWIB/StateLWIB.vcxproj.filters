@@ -29,6 +29,9 @@
     <ClCompile Include="wmlwriter_src\xmlwriter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CCabbage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CBlock.h">
@@ -53,6 +56,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="wmlwriter_src\xmlwriter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CCabbage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

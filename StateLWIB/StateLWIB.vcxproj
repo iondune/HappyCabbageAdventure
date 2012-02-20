@@ -69,6 +69,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CBlock.h" />
+    <ClInclude Include="CCabbage.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CLWIBState.h" />
     <ClInclude Include="CPlaceable.h" />
@@ -79,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CBlock.cpp" />
+    <ClCompile Include="CCabbage.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CLWIBState.cpp" />
     <ClCompile Include="FreeType.cpp" />
