@@ -126,25 +126,31 @@ public:
         case 1:
             mat.AmbientColor = SVector3(0.2f);
             mat.DiffuseColor = SVector3(0.9f);
-            mat.Shininess = 1.f;
+            mat.Shininess = 10.f;
 			Renderable->setMaterial(mat);
             break;
         case 2:
             mat.AmbientColor = SVector3(0.2f);
             mat.DiffuseColor = SVector3(1.2f);
-            mat.Shininess = 2.f;
+            mat.Shininess = 200.f;
 			Renderable->setMaterial(mat);
             break;
         case 3:
             mat.AmbientColor = SVector3(0.2f);
             mat.DiffuseColor = SVector3(1.4f);
-            mat.Shininess = 3.f;
+            mat.Shininess = 3000.f;
 			Renderable->setMaterial(mat);
             break;
         case 4:
             mat.AmbientColor = SVector3(0.2f);
             mat.DiffuseColor = SVector3(1.4f);
             mat.Shininess = 0.1f;
+			Renderable->setMaterial(mat);
+            break;
+		case 5:
+            mat.AmbientColor = SVector3(0.2f);
+            mat.DiffuseColor = SVector3(1.4f);
+            mat.Shininess = 0.01f;
 			Renderable->setMaterial(mat);
             break;
         }
@@ -270,6 +276,10 @@ public:
 
         case SDLK_4:
            setMaterial(4);
+            break;
+
+		case SDLK_5:
+           setMaterial(5);
             break;
 
         case SDLK_F1:
