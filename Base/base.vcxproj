@@ -82,6 +82,7 @@
     <ClInclude Include="CPlayerView.h" />
     <ClInclude Include="draw.h" />
     <ClInclude Include="EApple.h" />
+    <ClInclude Include="EKiwi.h" />
     <ClInclude Include="EOrange.h" />
     <ClInclude Include="FreeType.h" />
     <ClInclude Include="header.h" />
@@ -96,6 +97,7 @@
     <ClCompile Include="CGameState.cpp" />
     <ClCompile Include="CPlayerView.cpp" />
     <ClCompile Include="EApple.cpp" />
+    <ClCompile Include="EKiwi.cpp" />
     <ClCompile Include="EOrange.cpp" />
     <ClCompile Include="FreeType.cpp" />
     <ClCompile Include="irrxml-1.2\src\irrXML.cpp" />

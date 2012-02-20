@@ -155,8 +155,17 @@ void CLWIBState::OnRenderStart(float const Elapsed)
         freetype::print(our_font, 15, WindowHeight - 50.f, "Press F1 For Help");
     if (!eDown && !showHelp && !tDown)
         freetype::print(our_font, 20, WindowHeight - 100.f, "placing block\n\n");
-    if (eDown && !showHelp && !tDown)
-        freetype::print(our_font, 20, WindowHeight - 100.f, "placing enemy\n\n");
+    if (eDown && !showHelp && !tDown) {
+        freetype::print(our_font, 20, WindowHeight - 100.f, "placing enemy\n");
+        if (enemyType == 0)
+            freetype::print(our_font, 20, WindowHeight - 150.f, "placing Apple\n");
+        if (enemyType == 1)
+            freetype::print(our_font, 20, WindowHeight - 150.f, "placing orange\n");
+        if (enemyType == 2)
+            freetype::print(our_font, 20, WindowHeight - 150.f, "placing kiwi\n");
+        if (enemyType == 3)
+            freetype::print(our_font, 20, WindowHeight - 150.f, "placing grape\n");
+    }
     if (tDown && !showHelp)
         freetype::print(our_font, 20, WindowHeight - 100.f, "remove mode\n\n");
     drawSubWindow();
@@ -287,7 +296,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
           showHelp = Event.Pressed;
       }
       if(Event.Key == SDLK_z ) {
-         if (enemyType != 1) //temp constraint
+         if (enemyType < 3) //temp constraint
           enemyType++;
       } 
       if (Event.Key == SDLK_x) {
