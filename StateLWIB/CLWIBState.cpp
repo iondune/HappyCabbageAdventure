@@ -157,17 +157,26 @@ void CLWIBState::OnRenderStart(float const Elapsed)
         freetype::print(our_font, 20, WindowHeight - 100.f, "Placing block\n\n");
     if (eDown && !showHelp && !tDown) {
         freetype::print(our_font, 20, WindowHeight - 100.f, "Placing enemy\n");
-        if (enemyType == 0)
+        if (enemyType == 0) {
             freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Apple\n");
-        if (enemyType == 1)
+           PreviewEnemy->setMesh(appleMesh);
+        }
+        if (enemyType == 1) {
             freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Orange\n");
-        if (enemyType == 2)
+            PreviewEnemy->setMesh(orangeMesh);
+        }
+        if (enemyType == 2) {
             freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Kiwi\n");
-        if (enemyType == 3)
+            PreviewEnemy->setMesh(kiwiMesh);
+        }
+
+        if (enemyType == 3) {
             freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Grape\n");
+            PreviewEnemy->setMesh(cubeMesh);
+        }
     }
     if (tDown && !showHelp)
-        freetype::print(our_font, 20, WindowHeight - 100.f, "remove mode\n\n");
+        freetype::print(our_font, 20, WindowHeight - 100.f, "Remove mode\n\n");
     drawSubWindow();
    Application.getSceneManager().drawAll();
 
@@ -390,13 +399,26 @@ void CLWIBState::PrepPreviews() {
 
    blocks.push_back(PreviewEnemy = new CMeshRenderable());
    appleMesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
+   orangeMesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
+   kiwiMesh = CMeshLoader::load3dsMesh("Models/alien.3ds");
+
    if(appleMesh) {
       appleMesh->resizeMesh(SVector3(1));
       appleMesh->centerMeshByExtents(SVector3(0));
       appleMesh->calculateNormalsPerFace();
    }
 
-   PreviewEnemy->setMesh(appleMesh);
+   if(orangeMesh) {
+         orangeMesh->resizeMesh(SVector3(1));
+         orangeMesh->centerMeshByExtents(SVector3(0));
+         orangeMesh->calculateNormalsPerFace();
+      }
+
+   if(kiwiMesh) {
+         kiwiMesh->resizeMesh(SVector3(1));
+         kiwiMesh->centerMeshByExtents(SVector3(0));
+         kiwiMesh->calculateNormalsPerFace();
+      }
 
    PreviewEnemy->getMaterial().Shader = Diffuse;
    PreviewEnemy->setRotation(SVector3(-90, 0, 0));
