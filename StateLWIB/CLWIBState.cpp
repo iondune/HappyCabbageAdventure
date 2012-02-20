@@ -295,13 +295,17 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_F1) {
           showHelp = Event.Pressed;
       }
-      if(Event.Key == SDLK_z ) {
+      if(Event.Key == SDLK_x ) {
          if (enemyType < 3) //temp constraint
           enemyType++;
+         else
+             enemyType = 0;
       } 
-      if (Event.Key == SDLK_x) {
+      if (Event.Key == SDLK_z) {
          if (enemyType != 0)
              enemyType--;
+         else
+             enemyType = 3;
       }
    }
    //Check if key let go, Not sure if this will work in here.
