@@ -1,11 +1,20 @@
-all: build-CabbageFramework build-CabbageScene build-CabbageCollider build-CLWIB build-MainMenu build-base build-MeshLoaderDemo build-CabbageColliderDemo
+OBJECT_FILES=`find | grep '\.o$$' | sed "/sdlmixer/d"`
+
+
+all: build-Sound build-CabbageFramework build-CabbageParticles build-CabbageScene build-CabbageCollider build-CLWIB build-MainMenu build-Overworld build-base build-MeshLoaderDemo build-CabbageColliderDemo
+
+build-Sound:
+	cd ./CabbageSound && $(MAKE)
 
 build-CLWIB:
 	cd ./StateLWIB && $(MAKE) lib
 
 build-MainMenu:
 	cd ./StateMainMenu && ./que
-
+	
+build-Overworld:
+	cd ./StateOverworld && $(MAKE)
+	
 build-CabbageScene:
 	cd ./CabbageScene && $(MAKE)
 
@@ -18,12 +27,17 @@ build-MeshLoaderDemo: build-CabbageScene
 build-CabbageColliderDemo: build-CabbageCollider build-CabbageScene
 	cd ./DemoCabbageCollider && $(MAKE)
 
-build-base: build-CabbageCollider build-CabbageScene build-CabbageFramework
+build-base: build-CabbageCollider build-CabbageScene build-CabbageFramework build-CabbageParticles
 	cd ./Base && $(MAKE)
 
 build-CabbageFramework:
 	cd ./CabbageFramework && $(MAKE)
 
+build-CabbageParticles:
+	cd ./CabbageParticles && $(MAKE)
+	
 clean:
-	cd ./CabbageScene && $(MAKE) $@ && cd ../CabbageCollider && $(MAKE) $@ && cd ../DemoMeshLoader && $(MAKE) $@ && cd ../DemoCabbageCollider && $(MAKE) $@ && cd ../CabbageFramework && $(MAKE) $@
+	rm -f $(OBJECT_FILES)
+#	cd ./CabbageScene && $(MAKE) $@ && cd ../StateOverworld && $(MAKE) $@ && cd ../StateLWIB && $(MAKE) $@ && cd ../CabbageSound && $(MAKE) $@ && cd ../CabbageCollider && $(MAKE) $@ && cd ../DemoMeshLoader && $(MAKE) $@ && cd ../DemoCabbageCollider && $(MAKE) $@ && cd ../CabbageFramework && $(MAKE) $@
+
 

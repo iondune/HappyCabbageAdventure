@@ -1,7 +1,7 @@
 ROOT_CABBAGE_DIR=../
-SOURCES=main.cpp CGameState.cpp CPlayerView.cpp Materials.cpp FreeType.cpp CGameplayManager.cpp sound.cpp CGameEventReceiver.cpp ./irrxml-1.2/src/irrXML.cpp 
-OBJECTS=$(SOURCES:%.cpp=%.o) ../StateMainMenu/CMainMenuState.o
-CABBAGE= -L../lib/ -lCabbageCollider -lCabbageFramework -lCabbageScene -lCLWIB -lOverworldState
+SOURCES=main.cpp CGameState.cpp CPlayerView.cpp Materials.cpp FreeType.cpp CGameplayManager.cpp CGameEventReceiver.cpp ./irrxml-1.2/src/irrXML.cpp CBadGuy.cpp EApple.cpp EOrange.cpp EKiwi.cpp
+OBJECTS=$(SOURCES:%.cpp=%.o) ../StateMainMenu/CMainMenuState.o ../StateOverworld/COverworldState.o
+CABBAGE= -L../lib/ -lCabbageSound -lCabbageCollider -lCabbageFramework -lCabbageScene -lCLWIB -lOverworldState -lCabbageParticles
 
 COMPILER_VERSION=-std=c++0x
 INCLUDE=-I../CabbageCore
@@ -22,7 +22,7 @@ endif
 
 all: ${TARGET} 
 
-cabbage: ${OBJECTS} ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCLWIB.a ../lib/libOverworldState.a
+cabbage: ${OBJECTS} ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCLWIB.a ../lib/libOverworldState.a ../lib/libCabbageParticles.a
 	g++ ${COMPILER_VERSION} ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL `sdl-config --cflags --libs` ${CABBAGE} ${MIXLIB} `freetype-config --libs` -g -o $@
 
 ./irrxml-1.2/src/irrXML.o: ./irrxml-1.2/src/irrXML.cpp  
@@ -32,8 +32,8 @@ main.o: main.cpp
 	g++ $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c main.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CGameState.o: CGameState.cpp header.h
 	g++ $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c CGameState.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
-sound.o: sound.cpp sound.h
-	g++ `sdl-config --cflags` -c sound.cpp -DGL_GLEXT_PROTOTYPES
+#sound.o: sound.cpp sound.h
+#	g++ `sdl-config --cflags` -c sound.cpp -DGL_GLEXT_PROTOTYPES
 CPlayerView.o: CPlayerView.cpp CPlayerView.h
 	g++ $(INCLUDE) -c CPlayerView.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CGameEventReceiver.o: CGameEventReceiver.cpp CGameEventReceiver.h
@@ -44,6 +44,14 @@ Materials.o: Materials.cpp Materials.h
 	g++ -c Materials.cpp
 FreeType.o: FreeType.cpp FreeType.h
 	g++ `freetype-config --cflags` -c FreeType.cpp
+CBadGuy.o: CBadGuy.cpp CBadGuy.h
+	g++ $(INCLUDE) `sdl-config --cflags` -c CBadGuy.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+EApple.o: EApple.cpp EApple.h CBadGuy.h
+	g++ $(INCLUDE) `sdl-config --cflags` -c EApple.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+EOrange.o: EOrange.cpp EOrange.h CBadGuy.h
+	g++ $(INCLUDE) `sdl-config --cflags` -c EOrange.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+EKiwi.o: EKiwi.cpp EKiwi.h CBadGuy.h
+	g++ $(INCLUDE) `sdl-config --cflags` -c EKiwi.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 
 qclean:
 	rm cabbage.exe cabbage 2>/dev/null
@@ -52,5 +60,5 @@ clean:
 
 mingw: cabbage.exe
 
-cabbage.exe: ${OBJECTS} ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCLWIB.a ../lib/libOverworldState.a
+cabbage.exe: ${OBJECTS} ../lib/libCabbageSound.a ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCLWIB.a ../lib/libOverworldState.a ../lib/libCabbageParticles.a
 	g++ ${COMPILER_VERSION} `sdl-config --cflags` -mwindows ${OBJECTS} -DGL_GLEXT_PROTOTYPES ${CABBAGE} ./*.dll -lSDL_mixer -lopengl32 -lglu32 -lglut32 `sdl-config --libs` `freetype-config --libs` -g -L/lib/ -o $@ -lglew32

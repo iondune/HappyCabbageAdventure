@@ -1,5 +1,4 @@
 #include "CMainMenuState.h"
-#include "../Base/sound.h"
 
 CMainMenuState::CMainMenuState() 
 : Application (CApplication::get())
@@ -119,7 +118,7 @@ void CMainMenuState::begin()
 
    //Sound Setup
    soundInit();
-   setupSoundtrack();
+   setupSoundtrack("BeginningAnew.mp3");
    startSoundtrack();
 
    //glClearColor(1.0f,1.0f,1.0f,0);

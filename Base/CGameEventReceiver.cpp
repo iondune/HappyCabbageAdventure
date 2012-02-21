@@ -16,7 +16,8 @@ void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
 
     SDeadEnemy DeadEnemy;
     DeadEnemy.DeathTimer = 0.5f;
-    DeadEnemy.Renderable = Event.Renderable;
+    DeadEnemy.Renderable = Event.Enemy.Renderable;
+
     DeadEnemy.Renderable->setScale(SVector3(1.f, 1.0f, 0.4f));
     DeadEnemy.Renderable->setTranslation(DeadEnemy.Renderable->getTranslation() - SVector3(0.f, 0.5f, 0.f));
     DeadEnemies.push_back(DeadEnemy);

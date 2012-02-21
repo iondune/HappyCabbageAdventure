@@ -84,5 +84,4 @@ void CMeshSceneObject::setMesh(CMesh * mesh)
 
 		LoadedRevision = Mesh->getRevision();
     }
-
 }

@@ -1,6 +1,5 @@
 #include "COverworldState.h"
-#include "sound.h"
-/* These are here because someone doesn't use extern, or put prototypes in their header files */
+#include "../CabbageSound/sound.h"
 
 COverworldState::COverworldState()
 : Application (CApplication::get())
@@ -20,11 +19,11 @@ void COverworldState::begin()
 
    mouseDown = 0;
 
+   loadLevels();
+
 
    glEnable(GL_DEPTH_TEST);
    glDepthFunc(GL_LEQUAL);
-   //glEnable(GL_CULL_FACE);
-   //glCullFace(GL_BACK);
 
    SDL_WM_SetCaption("Happy Cabbage Adventure", NULL);
 
@@ -58,12 +57,6 @@ void COverworldState::begin()
 
    LoadShaders();
 
-   /*soundInit();
-   setupSoundtrack();
-   startSoundtrack();*/
-
-   //DiscMesh();
-
    //Load the meshes into VBOs
    PrepMeshes();
 
@@ -72,7 +65,6 @@ void COverworldState::begin()
    fps = timeTotal = 0;
    numFrames = 0;
 
-   printf("END OF BEGIN\n");
 }
 
 void COverworldState::step(float delta) {
@@ -140,7 +132,7 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_SPACE) {
          Application.getStateManager().setState(& CGameState::get());
          spaceDown = 1;
-         changeSoundtrack("../Media/Music/SMW.wav");
+         changeSoundtrack("SMW.wav");
       }
       if(Event.Key == SDLK_ESCAPE) {
          //TODO: Replace with an event/signal to end the game world 
@@ -160,9 +152,32 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_d){
          dDown = 0;
       }
+      if(Event.Key == SDLK_i){
+        changey += 0.01f;
+        discRender->setTranslation(SVector3(changex,changey, changez));
+      }
       if(Event.Key == SDLK_k){
+        changey -= 0.01f;
+        discRender->setTranslation(SVector3(changex,changey, changez));
+      }
+      if(Event.Key == SDLK_u){
+        changex += 0.01f;
+        discRender->setTranslation(SVector3(changex,changey, changez));
       }
       if(Event.Key == SDLK_j){
+        changex -= 0.01f;
+        discRender->setTranslation(SVector3(changex,changey, changez));
+      }
+      if(Event.Key == SDLK_o){
+        changez += 0.01f;
+        discRender->setTranslation(SVector3(changex,changey, changez));
+      }
+      if(Event.Key == SDLK_l){
+        changez -= 0.01f;
+        discRender->setTranslation(SVector3(changex,changey, changez));
+      }
+      if(Event.Key == SDLK_p){
+         printf("disk coords: %0.2f %0.2f %0.2f\n", changex,changey, changez);
       }
       if(Event.Key == SDLK_SPACE){
          spaceDown = 0;
@@ -175,6 +190,19 @@ void COverworldState::end()
    Application.getSceneManager().removeAllRenderables();
 }
 
+void COverworldState::loadLevels()
+{
+  //If you're adding more levels be sure to update COverworldState's NUM_LEVELS
+  levels[0].name = "test.xml";
+  levels[0].loc = SVector3(0.5f, -0.13f, 0.1f);
+  levels[1].name = "test2.xml";
+  levels[1].loc = SVector3(0.9f, -0.12999999f, 0.3f);
+  /*
+   * Green hill 0.83 0.00 0.65
+   * Green beach 0.98 -0.27 -0.19
+   * Yellow beach 0.94 -0.25 -0.38
+   * */
+}
 
 void COverworldState::LoadShaders() {
    Flat = CShaderLoader::loadShader("Diffuse");
@@ -185,6 +213,7 @@ void COverworldState::LoadShaders() {
 
 void COverworldState::PrepMeshes()
 {
+   //Set up world map renderable
    CMesh *mapMesh = CMeshLoader::load3dsMesh("Models/world.3ds");
    if(mapMesh) {
       mapMesh->centerMeshByExtents(SVector3(0));
@@ -196,40 +225,8 @@ void COverworldState::PrepMeshes()
    renderMap->getMaterial().Shader = DiffuseTexture;
    CApplication::get().getSceneManager().addRenderable(renderMap);
 
-   CShader* discShader = DiffuseTexture;
-
-   CMesh *discMesh = CMeshLoader::loadAsciiMesh("Disc");
-   discMesh->linearizeIndices();
-   discMesh->calculateNormalsPerFace();
-
-   discRender = new CMeshRenderable();
-   discRender->setMesh(discMesh);
-   discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
-   discRender->getMaterial().Shader = discShader;
-   discRender->setTranslation(SVector3(0.5f, -0.13f, 0.1f));
-   discRender->setScale(SVector3(0.1f));
-   CApplication::get().getSceneManager().addRenderable(discRender);
-
-   CMeshRenderable *orangeDisc;
-   orangeDisc = discRender = new CMeshRenderable();
-   discRender->setMesh(discMesh);
-   discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_orange.bmp");
-   discRender->getMaterial().Shader = discShader;
-   discRender->setTranslation(SVector3(0.9f, -0.12999999f, 0.3f));
-   discRender->setScale(SVector3(0.09f));
-   CApplication::get().getSceneManager().addRenderable(discRender);
-
-   discRender = new CMeshRenderable();
-   discRender->setMesh(discMesh);
-   discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
-   discRender->getMaterial().Shader = discShader;
-   discRender->setTranslation(SVector3(0.9f, -0.13f, 0.3f));
-   discRender->setScale(SVector3(0.1f));
-   CApplication::get().getSceneManager().addRenderable(discRender);
-   discRender = orangeDisc;
-   
-   CMesh *playerMesh;
-   playerMesh = CMeshLoader::load3dsMesh("Models/crappycabbage.3ds");
+   //Set up player renderable
+   CMesh *playerMesh = CMeshLoader::load3dsMesh("Models/crappycabbage.3ds");
    if (playerMesh) {
       playerMesh->resizeMesh(SVector3(0.5f));
       playerMesh->centerMeshByExtents(SVector3(0));
@@ -247,6 +244,72 @@ void COverworldState::PrepMeshes()
    playerRender->setScale(SVector3(0.18f));
 
    CApplication::get().getSceneManager().addRenderable(playerRender);
+
+   CMesh *discMesh = CMeshLoader::loadAsciiMesh("Disc");
+   discMesh->linearizeIndices();
+   discMesh->calculateNormalsPerFace();
+
+   levelIcons(levels[0].loc, discMesh, 1);
+   levelIcons(levels[1].loc, discMesh, 1);
+   levelIcons(SVector3(0.6f, 0.06f, 0.6f), discMesh, 1);
+
+   changex = 0.6f;
+   changey = 0.06f;
+   changez = 0.6f;
+/*
+   discRender = new CMeshRenderable();
+   discRender->setMesh(discMesh);
+   discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
+   discRender->getMaterial().Shader = DiffuseTexture;
+   discRender->setTranslation(SVector3(0.5f, -0.13f, 0.1f));
+   discRender->setScale(SVector3(0.1f));
+   CApplication::get().getSceneManager().addRenderable(discRender);
+
+   CMeshRenderable *orangeDisc;
+   orangeDisc = discRender = new CMeshRenderable();
+   discRender->setMesh(discMesh);
+   discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_orange.bmp");
+   discRender->getMaterial().Shader = DiffuseTexture;
+   discRender->setTranslation(SVector3(0.9f, -0.12999999f, 0.3f));
+   discRender->setScale(SVector3(0.09f));
+   CApplication::get().getSceneManager().addRenderable(discRender);
+
+   discRender = new CMeshRenderable();
+   discRender->setMesh(discMesh);
+   discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
+   discRender->getMaterial().Shader = DiffuseTexture;
+   discRender->setTranslation(SVector3(0.9f, -0.13f, 0.3f));
+   discRender->setScale(SVector3(0.1f));
+   //CApplication::get().getSceneManager().addRenderable(discRender);
+   discRender = orangeDisc;
+  */ 
+}
+
+void COverworldState::levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor)
+{
+
+   discRender = new CMeshRenderable();
+   discRender->setMesh(levelIcon);
+
+   switch(iconColor)
+   {
+     case 1:
+       discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
+       break;
+
+     case 2:
+       discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_orange.bmp");
+       break;
+       
+     default:
+       discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
+       break;
+   }
+
+   discRender->getMaterial().Shader = DiffuseTexture;
+   discRender->setTranslation(loc);
+   discRender->setScale(SVector3(0.1f));
+   CApplication::get().getSceneManager().addRenderable(discRender);
 }
 
 void COverworldState::bouncePlayer() {
@@ -259,12 +322,12 @@ void COverworldState::bouncePlayer() {
 void COverworldState::movePlayer() {
    if(curNode == 0) {
       playerVector = SVector3(0.5f, -0.08f, 0.1f);
-      discRender->setTranslation(SVector3(0.5f, -0.12999999f, 0.1f));
+      //discRender->setTranslation(SVector3(0.5f, -0.12999999f, 0.1f));
       curNode = 1;
    }
    else {
       playerVector = SVector3(0.9f, -0.08f, 0.3f);
-      discRender->setTranslation(SVector3(0.9f, -0.12999999f, 0.3f));
+      //discRender->setTranslation(SVector3(0.9f, -0.12999999f, 0.3f));
       curNode = 0;
    }
 }

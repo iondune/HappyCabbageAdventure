@@ -9,25 +9,24 @@ class CRenderable;
 
 struct SEnemyDeathEvent
 {
-    CGameplayManager::SEnemy * Enemy;
-    CRenderable * Renderable;
+    CGameplayManager::SEnemy Enemy;
 };
 
 struct SEnemyDamagedEvent
 {
-    CGameplayManager::SEnemy * Enemy;
+    CGameplayManager::SEnemy Enemy;
 };
 
 struct SPlayerDeathEvent
 {
-    CGameplayManager::SEnemy * KilledBy;
+    CGameplayManager::SEnemy KilledBy;
     // We can have other members here if its possible 
     // for the player to die from something else
 };
 
 struct SPlayerDamagedEvent
 {
-    CGameplayManager::SEnemy * DamagedBy;
+    CGameplayManager::SEnemy DamagedBy;
 };
 
 class CGameEventManager

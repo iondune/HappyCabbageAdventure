@@ -1,20 +1,25 @@
 #include "CEnemy.h"
+#include "../Base/CBadGuy.h"
 
-CEnemy::CEnemy(float nx, float ny, int width, int height)
+CEnemy::CEnemy(float nx, float ny, int width, int height, int type )
 {
+   num = type;
    x = nx; y = ny;
    w = width; h = height;
    isMovingPlatform = 0;
 }
 
 void CEnemy::writeXML(xmlwriter *l) {
-    std::stringstream xValue, yValue, widthValue, heightValue, tagValue;
+    std::stringstream xValue, yValue, widthValue, heightValue, tagValue, eType;
     xValue << x;
     yValue << y;
     widthValue << w;
     heightValue << h;
     tagValue << "CEnemy";
-
+    eType << num;
+    //put code for type
+    // 1: apple 2: orange
+    l->AddAtributes("type ", eType.str());
     l->AddAtributes("width ", widthValue.str());
     l->AddAtributes("height ", heightValue.str());
     l->AddAtributes("Y ", yValue.str());
@@ -31,22 +36,18 @@ void CEnemy::setShader(CShader * chad) {
    shader = chad;
 }
 CMeshRenderable * CEnemy::setupItem(CShader * chad, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
-   CMeshRenderable *tempEnemy = new CMeshRenderable();
-   CMesh *mesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
-   if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
-      mesh->calculateNormalsPerFace();
-   }
+    if (num == 0)
+       CBadGuy::makeBadGuy(x, y, w, h, CBadGuy::apple, GameplayManager);
+    else if (num == 1)
+       CBadGuy::makeBadGuy(x, y, w, h, CBadGuy::orange, GameplayManager);
+    else if (num == 2)
+       CBadGuy::makeBadGuy(x, y, w, h, CBadGuy::kiwi, GameplayManager);
+    else if (num == 3)
+       //CBadGuy::makeBadGuy(x, y, w, h, CBadGuy::grape, GameplayManager);
+       printf("Grape is not currently implemented");
+    else
+        printf("Unknown enemy type received.\n");
 
-   tempEnemy->setMesh(mesh);
-   //tempEnemy->getMaterial().Texture = CImageLoader::loadTexture("Textures/dirt.bmp");
-   tempEnemy->getMaterial().Shader = shader;
-   tempEnemy->setTranslation(SVector3((x+(x+1))/2, (y+(y+1))/2, 0));
-   tempEnemy->setScale(SVector3(1, 1, 1));
-   tempEnemy->setRotation(SVector3(-90, 0, 0));
-
-   CApplication::get().getSceneManager().addRenderable(tempEnemy);
-   GameplayManager->addEnemy(SVector2(x, y), tempEnemy);
-   return tempEnemy;
+    //BS return.  Either need to make useful or make this void.
+    return new CMeshRenderable();
 }

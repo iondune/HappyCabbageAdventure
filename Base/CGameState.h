@@ -9,6 +9,8 @@
 #include "../StateLWIB/CBlock.h"
 #include "../StateLWIB/CEnemy.h"
 #include "../StateLWIB/CPlaceable.h"
+#include "../CabbageParticles/CParticleEngine.h"
+#include "CGameplayManager.h"
 #include "CGameEventReceiver.h"
 #include "irrxml-1.2/src/irrXML.h"
 
@@ -32,6 +34,7 @@ class CGameState : public CState<CGameState>
    CCamera *Camera;
    float fps, timeTotal;
    int numFrames;
+   int lowDef;
    void oldDisplay(); 
    void loadWorld(std::vector<CPlaceable*> *list);
    //Runs at very start of display

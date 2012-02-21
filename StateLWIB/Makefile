@@ -48,9 +48,10 @@ FreeType.o: FreeType.cpp FreeType.h
 qclean:
 	rm cabbage.exe cabbage 2>/dev/null
 clean:
-	rm *.o a.out cabbage cabbage.exe 2>/dev/null
+	rm -f $(OBJECTS)
+	rm -f ../lib/libCLWIB.a
 
 mingw: cabbage.exe
 
 cabbage.exe: ${OBJECTS} ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a
-	g++ ${COMPILER_VERSION} `sdl-config --cflags` -mwindows ${OBJECTS} -DGL_GLEXT_PROTOTYPES ${CABBAGE} ./*.dll -lSDL_mixer -lopengl32 -lglu32 -lglut32 `sdl-config --libs` `freetype-config --libs` -g -L/lib/ -o $@ -lglew32
+	g++ ${COMPILER_VERSION} `sdl-config --cflags` -mwindows ${OBJECTS} -DGL_GLEXT_PROTOTYPES ${CABBAGE} ./*.dll -lCabbageSound -lSDL_mixer -lopengl32 -lglu32 -lglut32 `sdl-config --libs` `freetype-config --libs` -g -L/lib/ -o $@ -lglew32

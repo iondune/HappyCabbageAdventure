@@ -2,10 +2,14 @@
 #define _CGAMEPLAYEMANAGER_H_INCLUDED_
 
 #include "../CabbageCollider/CEngine.h"
-#include "sound.h"
+#include "../CabbageSound/sound.h"
+
+#include "EApple.h"
 
 class CGameEventManager;
 class CRenderable;
+class EApple;
+
 
 class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 {
@@ -16,12 +20,10 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       {
          Cabbage::Collider::CActor * Actor;
          CRenderable * Renderable;
-         /*Enemy type variable here?*/
       };
 
-      typedef std::vector<SEnemy> EnemyList;
-      EnemyList Enemies;
-      EnemyList KillList;
+      typedef std::vector<CBadGuy*> EnemyList;
+      EnemyList Enemies, KillList;
 
    private:
 
@@ -47,9 +49,13 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 
       float getRecovering() {return PlayerRecovering;}
 
-      void run(float const TickTime);
+      bool const isJumping() const;
 
-      void addEnemy(SVector2 const & Position, CRenderable * renderable);
+      SVector2 getPlayerLocation();
+
+      Cabbage::Collider::CEngine* getEngine();
+
+      void run(float const TickTime);
 
       CGameEventManager & getGameEventManager();
 

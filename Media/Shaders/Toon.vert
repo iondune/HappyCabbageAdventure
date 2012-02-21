@@ -1,0 +1,18 @@
+--Vertex.GL2
+attribute vec4 Position;
+attribute vec3 Normal;
+
+uniform mat4 Projection;
+uniform mat4 Modelview;
+uniform mat3 NormalMatrix;
+uniform vec3 DiffuseMaterial;
+
+varying vec3 EyespaceNormal;
+varying vec3 Diffuse;
+
+void main()
+{
+    EyespaceNormal = NormalMatrix * Normal;
+    gl_Position = Projection * Modelview * Position;
+    Diffuse = DiffuseMaterial;
+}

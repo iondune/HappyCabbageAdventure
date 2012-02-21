@@ -40,7 +40,7 @@ namespace Collider
 
 
 	CActor::CActor()
-		: Standing(0), JumpTimer(0.f), FallAcceleration(0), Impulse(false)
+		: Standing(0), JumpTimer(0.f), FallAcceleration(0), Impulse(false), ControlFall(true)
 	{}
 
 	CActor::~CActor()
@@ -105,7 +105,8 @@ namespace Collider
 
 	void CActor::updateVectors(float const TickTime)
 	{
-		FallAcceleration -= Gravity * TickTime;
+	   if (ControlFall)
+	      FallAcceleration -= Gravity * TickTime;
 
 		float MaxVelocity = Attributes.MaxWalk * (Standing ? 1.f : Attributes.AirSpeedFactor);
 		bool Moving = false;
@@ -230,6 +231,10 @@ namespace Collider
         return Jumping;
     }
 
+    CActor::EActionType CActor::getAction() {
+       return Action;
+    }
+
 	void CActor::setJumping(bool const jumping)
 	{
 		if (! Jumping && ! Standing)
@@ -244,6 +249,10 @@ namespace Collider
 			JumpTimer = Attributes.JumpLength;
 			Jumping = true;
 		}*/
+	}
+
+	void CActor::setControlFall(bool const fall) {
+	   ControlFall = fall;
 	}
 
 	bool CActor::updateCollision(CCollideable * Object, float const TickTime, ICollisionResponder * CollisionResponder)
@@ -282,6 +291,11 @@ namespace Collider
 		Impulse = true;
 		ImpulseTimer = duration;
 		ImpulseVelocity = velocity;
+	}
+
+	void CActor::setFallAcceleration(float speed)
+	{
+	   FallAcceleration = speed;
 	}
 
 }

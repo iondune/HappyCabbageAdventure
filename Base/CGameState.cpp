@@ -47,7 +47,7 @@ CGameState::CGameState()
 
 void CGameState::loadWorld(std::vector<CPlaceable*> *list)
 {
-    int x,y,w,h;
+    int x,y,w,h,t;
     //float spd, rng;
 
     irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader("test.xml");
@@ -82,7 +82,8 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             y = xml->getAttributeValueAsInt(1);
             h = xml->getAttributeValueAsInt(2);
             w = xml->getAttributeValueAsInt(3);
-            list->push_back(cen = new CEnemy((float)x,(float)y,w,h));
+            t = xml->getAttributeValueAsInt(4);
+            list->push_back(cen = new CEnemy((float)x,(float)y,w,h,t));
             cen->setShader(Diffuse);
             cen->isMovingPlatform = 0;
          }
@@ -186,9 +187,13 @@ void CGameState::EngineInit( void ) {
    */
 }
 
+CParticleEngine * particleLeafEngine;
+CParticleEngine * particleCubeEngine;
+
 //Initalizer fxn
 void CGameState::begin()
 {
+   particleLeafEngine = particleCubeEngine = 0;
    SPosition2 size = Application.getWindowSize();
    WindowWidth = size.X;
    WindowHeight = size.Y; 
@@ -228,10 +233,6 @@ void CGameState::begin()
 
    LoadShaders();
 
-   soundInit();
-   setupSoundtrack();
-   startSoundtrack();
-
    Load3DS();
    LoadTextures();
    BlockMesh();
@@ -241,13 +242,8 @@ void CGameState::begin()
    //Load the meshes into VBOs
    PrepMeshes();
 
-   printf("Got here!\n");
-
    PrepShadow();
 
-   printf("Did I finish shadows?\n");
-
-   Application.getSceneManager().addRenderable(renderBasicTree);
    Application.getSceneManager().addRenderable(playerRenderable);
    Application.getSceneManager().addRenderable(renderFlag);
    Application.getSceneManager().addRenderable(flagLogo);
@@ -256,52 +252,54 @@ void CGameState::begin()
 
    int random;
 
-   for (int n = 0; n < 100; n++) {
-      random = rand() % 8;
+   if(!lowDef) {
+      for (int n = 0; n < 100; n++) {
+         random = rand() % 8;
 
-      if (n % 2 == 0)
-         if (random < 3 ) {
-            drawBlueFlwr(-22.f + n * 2, -1, 2, .6f, Application);
-         }
-         else if (random < 6) {
-            drawPinkFlwr(-22.f + n * 2, -1, 2, .6f, Application);
-         }
+         if (n % 2 == 0)
+            if (random < 3 ) {
+               drawBlueFlwr(-22.f + n * 2, -1, 2, .6f, Application);
+            }
+            else if (random < 6) {
+               drawPinkFlwr(-22.f + n * 2, -1, 2, .6f, Application);
+            }
 
-         else {
-            drawPoin(-22.f + n * 2, -1, 2, 1.f, Application);
-         }
-      else
-         if (random < 3) {
-            drawBlueFlwr(-22.f + n * 2, -1, -2, .7f, Application);
-         }
-         else if (random < 6) {
-            drawPinkFlwr(-22.f + n * 2, -1, -2, .7f, Application);
-         }
-         else {
-            drawPoin(-22.f + n * 2, .2f, -2, 1.f, Application);
-         }
-   }
+            else {
+               drawPoin(-22.f + n * 2, -1, 2, 1.f, Application);
+            }
+         else
+            if (random < 3) {
+               drawBlueFlwr(-22.f + n * 2, -1, -2, .7f, Application);
+            }
+            else if (random < 6) {
+               drawPinkFlwr(-22.f + n * 2, -1, -2, .7f, Application);
+            }
+            else {
+               drawPoin(-22.f + n * 2, .2f, -2, 1.f, Application);
+            }
+      }
 
-   for (int n = 0; n < 50; n++) {
-      random = rand() % 3;
+      for (int n = 0; n < 50; n++) {
+         random = rand() % 3;
 
-      if (n % 2 == 0)
-         //if (random < 2) {
+         if (n % 2 == 0)
+            //if (random < 2) {
             drawBasicTree(-20.4f + n * 4, 2.0f, 2, 8.0f, Application);
          //}
          //else if (random == 2) {
          //   drawChristmasTree(-20.4f + n * 4, 1.5, 2, 6.0f, Application);
          //}
-        // else {
+         // else {
          //   drawFicus(-21.f + n * 4, -1, 2, 1.0f, Application);
          //}
-      else {
+         else {
 
-         if (random < 2) {
-            drawBasicTree(-22.4f + n * 4, 2.0f, -2, 8.0f, Application);
-         }
-         else if (random == 2) {
-            drawChristmasTree(-22.4f + n * 4, 1.4f, -2, 6.0f, Application);
+            if (random < 2) {
+               drawBasicTree(-22.4f + n * 4, 2.0f, -2, 8.0f, Application);
+            }
+            else if (random == 2) {
+               drawChristmasTree(-22.4f + n * 4, 1.4f, -2, 6.0f, Application);
+            }
          }
       }
    }
@@ -316,6 +314,7 @@ void CGameState::begin()
    numFrames = 0;
 
    printf("END OF BEGIN\n");
+
 
    Application.skipElapsedTime();
 }
@@ -398,14 +397,24 @@ void CGameState::oldDisplay() {
 
    Engine->updateAll(Application.getElapsedTime());
    GameplayManager->run(Application.getElapsedTime());
+
    PlayerView->step(Application.getElapsedTime()*1000);
 
    SVector2 middleOfPlayer = Player->getArea().getCenter();
-   //printf("%0.2f, %0.2f\n", Player->getArea().getCenter().X, Player->getArea().getCenter().Y);
    PlayerView->setMiddle(middleOfPlayer);
    PlayerView->setGround(Engine->getHeightBelow(Player));
 
    PlayerView->establishCamera(Camera, ANGLE(overView, backwardsView));
+
+   if(particleLeafEngine && !particleLeafEngine->dead) {
+      particleLeafEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
+      particleLeafEngine->step(Application.getElapsedTime());
+   }
+   if(particleCubeEngine && !particleCubeEngine->dead) {
+      particleCubeEngine->setLookRight(PlayerView->getLookRight());
+      particleCubeEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
+      particleCubeEngine->step(Application.getElapsedTime());
+   }
 
    //draw the ground plane
    //drawPlane();
@@ -446,13 +455,13 @@ void CGameState::oldDisplay() {
 
    //ENEMY DISPLAY
    int i = 0;
-   for (CGameplayManager::EnemyList::iterator it = GameplayManager->Enemies.begin(); it != GameplayManager->Enemies.end(); ++ it)
+   for (std::vector<CBadGuy*>::iterator it = GameplayManager->Enemies.begin(); it != GameplayManager->Enemies.end(); ++ it)
    {
-      ((CMeshRenderable*)(it->Renderable))->setTranslation(SVector3(it->Actor->getArea().getCenter().X, it->Actor->getArea().getCenter().Y, 0));
-      if(it->Actor->getVelocity().X < -0.01f)
-         ((CMeshRenderable*)(it->Renderable))->setScale(SVector3(-1,1,1));
-      else if(it->Actor->getVelocity().X > 0.01f)
-         ((CMeshRenderable*)(it->Renderable))->setScale(SVector3(1,1,1));
+      ((CMeshRenderable*)((*it)->Renderable))->setTranslation(SVector3((*it)->Actor->getArea().getCenter().X, (*it)->Actor->getArea().getCenter().Y, 0));
+      if((*it)->Actor->getVelocity().X < -0.01f)
+         ((CMeshRenderable*)((*it)->Renderable))->setScale(SVector3(-1,1,1));
+      else if((*it)->Actor->getVelocity().X > 0.01f)
+         ((CMeshRenderable*)((*it)->Renderable))->setScale(SVector3(1,1,1));
       i++;
    }
 
@@ -463,7 +472,6 @@ void CGameState::oldDisplay() {
       SVector2 size = ptr->getArea().Size;
       ptr->getRenderable()->setTranslation(SVector3(pos.X + (float)size.X/2, pos.Y + (float)size.Y/2, 0));
    }
-
 
    // ...and by spinning it around
    static float const RotationSpeed = 50.f;
@@ -495,13 +503,16 @@ void CGameState::OnRenderStart(float const Elapsed)
          }
          freetype::print(our_font, 50, WindowHeight - 240.f, "CONGRATULATIONS! YOU HAVE WON!");
       }
-      //Chris Code.  Play Death Sound
-      else if (playDead) {
-         Mix_HaltMusic();
-         Mix_PlayChannel(-1, die, 0); //Only play once
-         playDead = false;
 
-         freetype::print(our_font, 50, WindowHeight - 240.f, "GAME OVER! YOU ARE DEAD");
+      else {
+         //Chris Code.  Play Death Sound
+         if (playDead) {
+            Mix_HaltMusic();
+            Mix_PlayChannel(-1, die, 0); //Only play once
+            playDead = false;
+         }
+
+         freetype::print(our_font, 50, WindowHeight - 240.f, "GAME OVER! YOU ARE DEAD.");
       }
    }
 
@@ -538,6 +549,14 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_d){
          dDown = 1;
+      }
+      if(Event.Key == SDLK_e) {
+         if(!particleCubeEngine || (particleCubeEngine && particleCubeEngine->dead))
+            particleCubeEngine = new CParticleEngine(SVector3(0, 1, 0), 70, 3, CUBE_PARTICLE);
+      }
+      if(Event.Key == SDLK_r) {
+         if(!particleLeafEngine || (particleLeafEngine && particleLeafEngine->dead))
+            particleLeafEngine = new CParticleEngine(SVector3(0, 1, 0), 70, 3, LEAF_PARTICLE);
       }
       if(Event.Key == SDLK_k){
          backwardsView = !backwardsView;

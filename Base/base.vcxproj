@@ -74,29 +74,35 @@
     <None Include="Makefile" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CBadGuy.h" />
     <ClInclude Include="CGameEventManager.h" />
     <ClInclude Include="CGameEventReceiver.h" />
     <ClInclude Include="CGameplayManager.h" />
     <ClInclude Include="CGameState.h" />
     <ClInclude Include="CPlayerView.h" />
     <ClInclude Include="draw.h" />
+    <ClInclude Include="EApple.h" />
+    <ClInclude Include="EKiwi.h" />
+    <ClInclude Include="EOrange.h" />
     <ClInclude Include="FreeType.h" />
     <ClInclude Include="header.h" />
     <ClInclude Include="irrxml-1.2\src\irrXML.h" />
     <ClInclude Include="Materials.h" />
     <ClInclude Include="SDL_mixer.h" />
-    <ClInclude Include="sound.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CBadGuy.cpp" />
     <ClCompile Include="CGameEventReceiver.cpp" />
     <ClCompile Include="CGameplayManager.cpp" />
     <ClCompile Include="CGameState.cpp" />
     <ClCompile Include="CPlayerView.cpp" />
+    <ClCompile Include="EApple.cpp" />
+    <ClCompile Include="EKiwi.cpp" />
+    <ClCompile Include="EOrange.cpp" />
     <ClCompile Include="FreeType.cpp" />
     <ClCompile Include="irrxml-1.2\src\irrXML.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Materials.cpp" />
-    <ClCompile Include="sound.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

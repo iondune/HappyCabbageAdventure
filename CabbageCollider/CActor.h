@@ -83,7 +83,7 @@ namespace Collider
 		SAttributes Attributes;
 		EActionType Action;
 		float JumpTimer;
-		bool Jumping;
+		bool Jumping, ControlFall;
 
 		CActor();
 
@@ -117,8 +117,12 @@ namespace Collider
 
 		// Action control
 		void setAction(EActionType const & action);
-        bool isJumping();
+		EActionType getAction();
+      bool isJumping();
 		void setJumping(bool const jumping);
+		void setControlFall(bool const fall);
+		void setFallAcceleration(float speed);
+		float getFallAcceleration();
 
 		virtual void draw();
 

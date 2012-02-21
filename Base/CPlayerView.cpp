@@ -33,6 +33,10 @@ void CPlayerView::step(float delta) {
    }
 }
 
+int CPlayerView::getLookRight() {
+   return lookRight;
+}
+
 void CPlayerView::draw() {
    int negFactor = 0;
 

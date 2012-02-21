@@ -39,7 +39,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
     }
     for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
     {
-        if (Other == it->Actor)
+        if (Other == (*it)->Actor)
         {
             if (PlayerActor->getArea().Position.Y > Other->getArea().otherCorner().Y - HitThreshold)
             {
@@ -49,12 +49,18 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
 
                 Enemies.erase(it);
             }
+            //Need to rewrite so works without SEnemy
+
             else
             {
                 if (isPlayerAlive() && PlayerRecovering <= 0.f)
                 {
                     SPlayerDamagedEvent Event;
-                    Event.DamagedBy = & * it;
+                    SEnemy enemy;
+                    enemy.Actor = (*it)->Actor;
+                    enemy.Renderable = (*it)->Renderable;
+
+                    Event.DamagedBy = enemy;
                     GameEventManager->OnPlayerDamaged(Event);
 
                     //Chris Code.  Damage Sound plays here
@@ -67,7 +73,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
                     if (PlayerHealth <= 0)
                     {
                         SPlayerDeathEvent Event;
-                        Event.KilledBy = & * it;
+                        Event.KilledBy = enemy;
                         GameEventManager->OnPlayerDeath(Event);
                     }
 
@@ -85,7 +91,10 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
             break;
         }
     }
+}
 
+SVector2 CGameplayManager::getPlayerLocation() {
+   return SVector2(PlayerActor->getArea().getCenter().X, PlayerActor->getArea().getCenter().Y);
 }
 
 void CGameplayManager::setVictoryFlag(Cabbage::Collider::CObject * f) {
@@ -100,12 +109,16 @@ bool const CGameplayManager::isWon() const
 
 bool const CGameplayManager::isPlayerAlive() const
 {
-    return PlayerHealth > 0;
+    return (PlayerHealth > 0) && (-5.0 < PlayerActor->getArea().getCenter().Y);
 }
     
 int const CGameplayManager::getPlayerHealth() const
 {
     return PlayerHealth;
+}
+
+bool const CGameplayManager::isJumping() const {
+   return PlayerActor->isJumping();
 }
 
 void CGameplayManager::run(float const TickTime)
@@ -115,46 +128,36 @@ void CGameplayManager::run(float const TickTime)
 
     for (EnemyList::iterator it = KillList.begin(); it != KillList.end(); ++ it)
     {
-        SEnemyDeathEvent Event;
-        Event.Enemy = & * it;
-        Event.Renderable = it->Renderable;
-        //fprintf(stderr, "Enemy removed from kill list %d\n", it->Renderable);
-        GameEventManager->OnEnemyDeath(Event);
+       SEnemyDeathEvent Event;
+       SEnemy enemy;
+       enemy.Actor = (*it)->Actor;
+       enemy.Renderable = (*it)->Renderable;
+       Event.Enemy = enemy;
 
-        Engine->removeActor(it->Actor);
+       GameEventManager->OnEnemyDeath(Event);
+
+       Engine->removeActor((*it)->Actor);
     }
 
     KillList.clear();
 
 
-    //Enemy AI here
-    for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
-    {
-        if (isPlayerAlive())
-        {
-            if (PlayerActor->getArea().getCenter().X < it->Actor->getArea().getCenter().X)
-                it->Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveLeft);
-            else
-                it->Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
-        }
-        else
-        {
-            it->Actor->setAction(Cabbage::Collider::CActor::EActionType::None);
-        }
-        //if (rand()%1000 == 1)
-        //	it->Actor->setJumping(true);
+    float cabbageCenterX = PlayerActor->getArea().getCenter().X;
+    float cabbageCenterY = PlayerActor->getArea().getCenter().Y;
+
+    for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it) {
+       float enemyCenterX = (*it)->Actor->getArea().getCenter().X;
+       float enemyCenterY = (*it)->Actor->getArea().getCenter().Y;
+
+       if ((enemyCenterX < cabbageCenterX + 7 && enemyCenterX > cabbageCenterX - 7) && (enemyCenterY < cabbageCenterY + 7 && enemyCenterY > cabbageCenterY - 7))
+          (*it)->update(TickTime);
     }
 }
 
-void CGameplayManager::addEnemy(SVector2 const & Position, CRenderable * renderable)
-{
-    SEnemy enemy;
-    enemy.Actor = Engine->addActor();
-    enemy.Actor->setArea(SRect2(Position, 1));
-    enemy.Actor->getAttributes().MaxWalk = 1.2f;
-    enemy.Renderable = renderable;
-    Enemies.push_back(enemy);
+Cabbage::Collider::CEngine* CGameplayManager::getEngine() {
+   return Engine;
 }
+
 
 CGameEventManager & CGameplayManager::getGameEventManager()
 {

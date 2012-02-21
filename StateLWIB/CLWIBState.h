@@ -21,13 +21,13 @@ class CLWIBState : public CState<CLWIBState>
 
    //Boolean integers for keypressing
    int aDown , dDown , spaceDown , wDown , sDown , gDown , fDown , tDown, eDown, mDown;
-
+   bool showHelp;
    freetype::font_data our_font;
-
+   int enemyType;
    int WindowWidth, WindowHeight;
 
 
-   CMesh *cubeMesh, *appleMesh;
+   CMesh *cubeMesh, *appleMesh, *orangeMesh, *kiwiMesh;
 
    float xp2w(int oldX);
    float yp2w(int oldY);

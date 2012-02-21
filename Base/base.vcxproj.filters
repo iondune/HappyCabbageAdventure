@@ -35,7 +35,16 @@
     <ClCompile Include="Materials.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sound.cpp">
+    <ClCompile Include="CBadGuy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EApple.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EOrange.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EKiwi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -73,7 +82,16 @@
     <ClInclude Include="SDL_mixer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sound.h">
+    <ClInclude Include="CBadGuy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EApple.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EOrange.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EKiwi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

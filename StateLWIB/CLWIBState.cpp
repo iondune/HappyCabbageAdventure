@@ -50,10 +50,12 @@ qd blockMap[225][100];
 //Initalizer fxn
 void CLWIBState::begin()
 {
+   enemyType = 0;
    aDown = dDown = spaceDown = wDown = sDown = gDown = fDown = tDown = eDown = mDown = 0;
    cubeMesh = CMeshLoader::createCubeMesh();
    cubeMesh->calculateNormalsPerFace();
 
+   showHelp = false;
    initBlockMap();
    blockWidth = 1;
    blockHeight = 1;
@@ -78,7 +80,6 @@ void CLWIBState::begin()
    Camera->setPosition(eye);
    Camera->setLookDirection(look - eye);
    Camera->recalculateViewMatrix();
-
    Application.getSceneManager().setActiveCamera(Camera);
 
    Diffuse = CShaderLoader::loadShader("Diffuse");
@@ -136,11 +137,47 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    Application.getSceneManager().drawAll();
 
    //Draw Text
-   freetype::print(our_font, 10, WindowHeight-40.f, "Elapsed Time: %0.0f ", Application.getRunTime());
-   freetype::print(our_font, (float)WindowWidth/2, (float)WindowHeight/2, "+");
+   //freetype::print(our_font, 10, WindowHeight-40.f, "Elapsed Time: %0.0f ", Application.getRunTime());
+   if (!showHelp)
+       freetype::print(our_font, (float)WindowWidth/2, (float)WindowHeight/2, "+");
       
+    if (showHelp) {
+        freetype::print(our_font, 15, WindowHeight - 230.f, \
+            "WASD to control camera\n"\
+            "Press E to place enemies\n"\
+            "Press F to make blocks wider\n"\
+            "Press H to make blocks taller\n"\
+            "press T to enable t remove mode\n"\
+            "Press U to Undo action\n"\
+            "press R to Redo action\n");
+    }
+    else
+        freetype::print(our_font, 15, WindowHeight - 50.f, "Press F1 For Help");
+    if (!eDown && !showHelp && !tDown)
+        freetype::print(our_font, 20, WindowHeight - 100.f, "Placing block\n\n");
+    if (eDown && !showHelp && !tDown) {
+        freetype::print(our_font, 20, WindowHeight - 100.f, "Placing enemy\n");
+        if (enemyType == 0) {
+            freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Apple\n");
+           PreviewEnemy->setMesh(appleMesh);
+        }
+        if (enemyType == 1) {
+            freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Orange\n");
+            PreviewEnemy->setMesh(orangeMesh);
+        }
+        if (enemyType == 2) {
+            freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Kiwi\n");
+            PreviewEnemy->setMesh(kiwiMesh);
+        }
 
-   drawSubWindow();
+        if (enemyType == 3) {
+            freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Grape\n");
+            PreviewEnemy->setMesh(cubeMesh);
+        }
+    }
+    if (tDown && !showHelp)
+        freetype::print(our_font, 20, WindowHeight - 100.f, "Remove mode\n\n");
+    drawSubWindow();
    Application.getSceneManager().drawAll();
 
    SDL_GL_SwapBuffers();
@@ -189,7 +226,10 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
          gDown = 1; //height
       }
       if(Event.Key == SDLK_e){
-         eDown = 1; //enemy
+         if (eDown == 1)
+             eDown = 0;
+         else 
+            eDown = 1; //enemy
       }
       if(Event.Key == SDLK_k){
       }
@@ -244,20 +284,37 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
          }
       }
       if(Event.Key == SDLK_t){
-         tDown = 1; //remove
+         if (tDown == 1)
+             tDown = 0;
+         else
+           tDown = 1; //remove
       }
       if(Event.Key == SDLK_m){
          mDown = 1; //move
       }
       if(Event.Key == SDLK_SPACE) {
          spaceDown = 1;
-
       }
       if(Event.Key == SDLK_ESCAPE) {
          //TODO: Replace with an event/signal to end the game world 
          //finished = true;
          glViewport(0, 0, WindowWidth, WindowHeight);
          Application.getStateManager().setState(& CMainMenuState::get());
+      }
+      if(Event.Key == SDLK_F1) {
+          showHelp = Event.Pressed;
+      }
+      if(Event.Key == SDLK_x ) {
+         if (enemyType < 3) //temp constraint
+          enemyType++;
+         else
+             enemyType = 0;
+      } 
+      if (Event.Key == SDLK_z) {
+         if (enemyType != 0)
+             enemyType--;
+         else
+             enemyType = 3;
       }
    }
    //Check if key let go, Not sure if this will work in here.
@@ -274,9 +331,9 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_d){
          dDown = 0;
       }
-      if(Event.Key == SDLK_e){
+      /*if(Event.Key == SDLK_e){
          eDown = 0;
-      }
+      }*/
       if(Event.Key == SDLK_f){
          fDown = 0;
       }
@@ -296,11 +353,20 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_SPACE){
          spaceDown = 0;
       }
+      if(Event.Key == SDLK_F1) {
+         showHelp = false;
+      }
    }
 }
 
 void CLWIBState::printXML() {
-    xmlwriter *worldlist = new xmlwriter("test.xml");
+    std::string name;
+    cout << "Enter the name of the file you want to save: ";
+    cin >> name;
+
+    cout << name;
+
+    xmlwriter *worldlist = new xmlwriter(name);
     
     std::vector<CPlaceable*>::iterator it;
     for(it=placeables.begin();it<placeables.end();it++) {
@@ -333,13 +399,26 @@ void CLWIBState::PrepPreviews() {
 
    blocks.push_back(PreviewEnemy = new CMeshRenderable());
    appleMesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
+   orangeMesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
+   kiwiMesh = CMeshLoader::load3dsMesh("Models/alien.3ds");
+
    if(appleMesh) {
       appleMesh->resizeMesh(SVector3(1));
       appleMesh->centerMeshByExtents(SVector3(0));
       appleMesh->calculateNormalsPerFace();
    }
 
-   PreviewEnemy->setMesh(appleMesh);
+   if(orangeMesh) {
+         orangeMesh->resizeMesh(SVector3(1));
+         orangeMesh->centerMeshByExtents(SVector3(0));
+         orangeMesh->calculateNormalsPerFace();
+      }
+
+   if(kiwiMesh) {
+         kiwiMesh->resizeMesh(SVector3(1));
+         kiwiMesh->centerMeshByExtents(SVector3(0));
+         kiwiMesh->calculateNormalsPerFace();
+      }
 
    PreviewEnemy->getMaterial().Shader = Diffuse;
    PreviewEnemy->setRotation(SVector3(-90, 0, 0));
@@ -373,7 +452,7 @@ void CLWIBState::PrepEnemy(float x, float y) {
    CMeshRenderable *tempEnemy;
    CEnemy *tempPlaceable;
    blocks.push_back(tempEnemy = new CMeshRenderable());
-   placeables.push_back(tempPlaceable = new CEnemy(x, y, 1, 1));
+   placeables.push_back(tempPlaceable = new CEnemy(x, y, 1, 1, enemyType));
    tempEnemy->setMesh(appleMesh);
    //tempEnemy->getMaterial().Texture = CImageLoader::loadTexture("Textures/dirt.bmp");;
    tempEnemy->getMaterial().Shader = Diffuse;
