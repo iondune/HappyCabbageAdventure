@@ -14,7 +14,7 @@ void CMeshSceneObject::update()
 {
 	ISceneObject::update();
 
-	if (Mesh->getRevision() != LoadedRevision)
+	if (Mesh->isDirty() || Mesh->getRevision() != LoadedRevision)
 		setMesh(Mesh);
 }
 
@@ -30,10 +30,8 @@ void CMeshSceneObject::setMesh(CMesh * mesh)
 
     if (Mesh)
     {
-		if (Mesh == OldMesh && Mesh->getRevision() == LoadedRevision)
-			return;
-		
-		Mesh->updateBuffers();
+		if (Mesh->isDirty())
+			Mesh->updateBuffers();
 
         for (unsigned int i = 0; i < Mesh->MeshBuffers.size(); ++ i)
         {
@@ -41,9 +39,7 @@ void CMeshSceneObject::setMesh(CMesh * mesh)
             if (Renderables.size() > i)
                 Child = Renderables[i];
             else
-            {
                 Renderables.push_back(Child = new CRenderable(this));
-            }
 
             // Remove any attributes which might have been set by a previous mesh
             Child->removeAttribute("aPosition");
