@@ -36,7 +36,7 @@ class COverworldState : public CState<COverworldState>
    int mouseDown;
 
 
-   SVector3 eye, look;
+   SVector3 eye, look, eyeShift, lookShift, eyeTarget, lookTarget;
    int WindowWidth, WindowHeight;
    SVector3 rot;
 
@@ -71,5 +71,8 @@ class COverworldState : public CState<COverworldState>
    void stepCamera(float delta);
    void OnMouseEvent(SMouseEvent const & Event);
    */
+   void superInterpolator(SVector3 & curr, SVector3 & change, SVector3 & target);
+   void shiftSetter(SVector3 & curr, SVector3 & change, SVector3 & target, int slices);
+   
 };
 #endif

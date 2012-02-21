@@ -185,7 +185,10 @@ public:
     {
         return (X > v.X && Y > v.Y && Z > v.Z);
     }
-
+    bool const operator == (SVector3 const & v) const
+    {
+        return (X == v.X && Y == v.Y && Z == v.Z);
+    }
 };
 
 #endif
