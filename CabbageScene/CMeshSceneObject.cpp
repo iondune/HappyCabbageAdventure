@@ -55,7 +55,7 @@ void CMeshSceneObject::setMesh(CMesh * mesh)
             Child->addAttribute("aTexCoord", new SAttribute<float>(& Mesh->MeshBuffers[i]->TexCoordBuffer, 2));
             Child->addUniform("uTexColor", new SUniform<int>(0));
 
-			Child->getMaterial().DiffuseColor = Mesh->MeshBuffers[i]->Material.DiffuseColor;
+			Child->getMaterial() = Mesh->MeshBuffers[i]->Material;
 
             // Add mesh index buffer
             Child->setIndexBufferObject(& Mesh->MeshBuffers[i]->IndexBuffer);
@@ -81,6 +81,8 @@ void CMeshSceneObject::setMesh(CMesh * mesh)
             // Reset the shader to load attributes again
             Child->reloadVariablesOnNextDraw();
         }
+
+		LoadedRevision = Mesh->getRevision();
     }
 
 }
