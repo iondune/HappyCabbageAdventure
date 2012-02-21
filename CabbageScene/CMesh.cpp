@@ -62,7 +62,7 @@ void CMesh::SMeshBuffer::updateBuffers()
 }
 
 CMesh::CMesh()
-	: Dirty(false), Revision(0)
+	: Dirty(true), Revision(0)
 {}
 
 CMesh::~CMesh()

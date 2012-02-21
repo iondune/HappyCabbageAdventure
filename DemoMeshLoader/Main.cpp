@@ -263,23 +263,23 @@ public:
             break;
 
         case SDLK_1:
-           setMaterial(1);
+			setMaterial(1);
             break;
 
         case SDLK_2:
-           setMaterial(2);
+			setMaterial(2);
             break;
 
         case SDLK_3:
-           setMaterial(3);
+			setMaterial(3);
             break;
 
         case SDLK_4:
-           setMaterial(4);
+			setMaterial(4);
             break;
 
 		case SDLK_5:
-           setMaterial(5);
+			setMaterial(5);
             break;
 
         case SDLK_F1:
