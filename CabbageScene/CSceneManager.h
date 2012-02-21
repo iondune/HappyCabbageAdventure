@@ -4,6 +4,7 @@
 #include <list>
 
 #include "CSceneObject.h"
+#include "CMeshSceneObject.h"
 
 #include "../CabbageCore/SLine3.h"
 #include "../CabbageCore/SColor.h"
@@ -81,6 +82,11 @@ public:
     void addSceneObject(ISceneObject * sceneObject);
     void removeSceneObject(ISceneObject * sceneObject);
     void removeAllSceneObjects();
+
+	CMeshSceneObject * addMeshSceneObject(CMesh * Mesh);
+	CMeshSceneObject * addMeshSceneObject(CMesh * Mesh, CShader * Shader);
+	CMeshSceneObject * addMeshSceneObject(CMesh * Mesh, CShader * Shader, CMaterial const & Material);
+	CMeshSceneObject * addMeshSceneObject(std::string const & Mesh, std::string const & Shader, CMaterial const & Material);
 
     void drawAll();
 

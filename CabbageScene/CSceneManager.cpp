@@ -3,6 +3,9 @@
 #include <algorithm>
 #include <sstream>
 
+#include "CShaderLoader.h"
+#include "CMeshLoader.h"
+
 
 CLight const CScene::NullLight;
 
@@ -139,4 +142,41 @@ void CSceneManager::drawAll()
         (* it)->draw(CurrentScene);
 
     SceneChanged = false;
+}
+
+CMeshSceneObject * CSceneManager::addMeshSceneObject(CMesh * Mesh)
+{
+	CMeshSceneObject * Object = new CMeshSceneObject();
+	Object->setMesh(Mesh);
+	addSceneObject(Object);
+	return Object;
+}
+
+CMeshSceneObject * CSceneManager::addMeshSceneObject(CMesh * Mesh, CShader * Shader)
+{
+	CMeshSceneObject * Object = new CMeshSceneObject();
+	Object->setMesh(Mesh);
+	Object->setShader(Shader);
+	addSceneObject(Object);
+	return Object;
+}
+
+CMeshSceneObject * CSceneManager::addMeshSceneObject(CMesh * Mesh, CShader * Shader, CMaterial const & Material)
+{
+	CMeshSceneObject * Object = new CMeshSceneObject();
+	Object->setMesh(Mesh);
+	Object->setShader(Shader);
+	Object->setMaterial(Material);
+	addSceneObject(Object);
+	return Object;
+}
+
+CMeshSceneObject * CSceneManager::addMeshSceneObject(std::string const & Mesh, std::string const & Shader, CMaterial const & Material)
+{
+	CMeshSceneObject * Object = new CMeshSceneObject();
+	Object->setMesh(CMeshLoader::load3dsMesh(Mesh));
+	Object->setShader(CShaderLoader::loadShader(Shader));
+	Object->setMaterial(Material);
+	addSceneObject(Object);
+	return Object;
 }

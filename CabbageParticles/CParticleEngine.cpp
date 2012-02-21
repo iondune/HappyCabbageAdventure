@@ -4,7 +4,8 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int part
    centerPos = pos;
    numParticles = max;
    totalDuration = duration;
-   currentDuration = dead = 0;
+   currentDuration = 0.f;
+   dead = 0;
 
    CParticle *cPtr;
    for(int i = 0; i < numParticles; i++) {
