@@ -78,8 +78,8 @@ public:
 
     CSceneManager();
 
-    void addSceneObject(CSceneObject * sceneObject);
-    void removeSceneObject(CSceneObject * sceneObject);
+    void addSceneObject(ISceneObject * sceneObject);
+    void removeSceneObject(ISceneObject * sceneObject);
     void removeAllSceneObjects();
 
     void drawAll();

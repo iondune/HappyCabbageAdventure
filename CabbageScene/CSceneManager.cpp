@@ -116,12 +116,12 @@ CSceneManager::CSceneManager()
     CurrentScene = this;
 }
 
-void CSceneManager::addSceneObject(CSceneObject * sceneObject)
+void CSceneManager::addSceneObject(ISceneObject * sceneObject)
 {
 	SceneObjects.push_back(sceneObject);
 }
 
-void CSceneManager::removeSceneObject(CSceneObject * sceneObject)
+void CSceneManager::removeSceneObject(ISceneObject * sceneObject)
 {
 	SceneObjects.erase(std::remove(SceneObjects.begin(), SceneObjects.end(), sceneObject), SceneObjects.end());
 }
