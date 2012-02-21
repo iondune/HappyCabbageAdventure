@@ -106,6 +106,9 @@ void CScene::update()
 
 	for (std::list<ISceneObject *>::iterator it = SceneObjects.begin(); it != SceneObjects.end(); ++ it)
 		(* it)->updateAbsoluteTransformation();
+
+	for (std::list<ISceneObject *>::iterator it = SceneObjects.begin(); it != SceneObjects.end(); ++ it)
+		(* it)->update();
 }
 
 CSceneManager::CSceneManager()

@@ -53,6 +53,12 @@ void ISceneObject::setScale(SVector3 const & scale)
 }
 
 
+void ISceneObject::update()
+{
+	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
+		(* it)->update();
+}
+
 void ISceneObject::draw(CScene const * const scene)
 {
 	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)

@@ -62,6 +62,7 @@ public:
     void setRotation(glm::mat4 const & matrix);
     void setScale(SVector3 const & scale);
 
+	virtual void update();
     virtual void draw(CScene const * const scene);
 
     SBoundingBox3 const & getBoundingBox() const;

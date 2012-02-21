@@ -5,11 +5,15 @@
 
 #include "SVertex.h"
 #include "CBufferObject.h"
+#include "CMaterial.h"
 
 #include <vector>
 
 class CMesh
 {
+
+	bool Dirty;
+	unsigned int Revision;
 
 public:
 
@@ -24,13 +28,15 @@ public:
         std::vector<SVertex> Vertices;
         std::vector<STriangle> Triangles;
 
-        SColor DiffuseColor;
+		CBufferObject<float> PositionBuffer, ColorBuffer, NormalBuffer, TexCoordBuffer, NormalLineBuffer, NormalColorBuffer;
+		CBufferObject<unsigned short> IndexBuffer, NormalIndexBuffer;
+
+		void updateBuffers();
+
+        CMaterial Material;
     };
 
     std::vector<SMeshBuffer *> MeshBuffers;
-
-	std::vector<CBufferObject<float> *> PositionBuffers, ColorBuffers, NormalBuffers, TexCoordBuffers, NormalLineBuffers, NormalColorBuffers;
-    std::vector<CBufferObject<unsigned short> *> IndexBuffers, NormalIndexBuffers;
 
     CMesh();
     ~CMesh();
@@ -52,6 +58,11 @@ public:
     SBoundingBox3 const getBoundingBox() const;
 
     void linearizeIndices();
+
+	bool const isDirty() const;
+	void setDirty(bool const dirty);
+
+	unsigned int const getRevision() const;
 
 };
 

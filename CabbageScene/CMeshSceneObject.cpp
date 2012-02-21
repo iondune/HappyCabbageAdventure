@@ -7,7 +7,16 @@
 
 
 CMeshSceneObject::CMeshSceneObject()
+	: LoadedRevision(-1)
 {}
+
+void CMeshSceneObject::update()
+{
+	ISceneObject::update();
+
+	if (Mesh->getRevision() != LoadedRevision)
+		setMesh(Mesh);
+}
 
 CMesh * CMeshSceneObject::getMesh()
 {
@@ -16,14 +25,17 @@ CMesh * CMeshSceneObject::getMesh()
 
 void CMeshSceneObject::setMesh(CMesh * mesh)
 {
+	CMesh * OldMesh = Mesh;
     Mesh = mesh;
 
     if (Mesh)
     {
-		if (! Mesh->PositionBuffers.size())
-			Mesh->updateBuffers();
+		if (Mesh == OldMesh && Mesh->getRevision() == LoadedRevision)
+			return;
+		
+		Mesh->updateBuffers();
 
-        for (unsigned int i = 0; i < Mesh->PositionBuffers.size(); ++ i)
+        for (unsigned int i = 0; i < Mesh->MeshBuffers.size(); ++ i)
         {
             CRenderable * Child = 0;
             if (Renderables.size() > i)
@@ -41,16 +53,16 @@ void CMeshSceneObject::setMesh(CMesh * mesh)
             Child->removeUniform("uTexColor");
 
             // Add mesh attributes
-            Child->addAttribute("aPosition", new SAttribute<float>(Mesh->PositionBuffers[i], 3));
-            Child->addAttribute("aColor", new SAttribute<float>(Mesh->ColorBuffers[i], 3));
-            Child->addAttribute("aNormal", new SAttribute<float>(Mesh->NormalBuffers[i], 3));
-            Child->addAttribute("aTexCoord", new SAttribute<float>(Mesh->TexCoordBuffers[i], 2));
+            Child->addAttribute("aPosition", new SAttribute<float>(& Mesh->MeshBuffers[i]->PositionBuffer, 3));
+            Child->addAttribute("aColor", new SAttribute<float>(& Mesh->MeshBuffers[i]->ColorBuffer, 3));
+            Child->addAttribute("aNormal", new SAttribute<float>(& Mesh->MeshBuffers[i]->NormalBuffer, 3));
+            Child->addAttribute("aTexCoord", new SAttribute<float>(& Mesh->MeshBuffers[i]->TexCoordBuffer, 2));
             Child->addUniform("uTexColor", new SUniform<int>(0));
 
-            Child->getMaterial().DiffuseColor = Mesh->MeshBuffers[i]->DiffuseColor;
+			Child->getMaterial().DiffuseColor = Mesh->MeshBuffers[i]->Material.DiffuseColor;
 
             // Add mesh index buffer
-            Child->setIndexBufferObject(Mesh->IndexBuffers[i]);
+            Child->setIndexBufferObject(& Mesh->MeshBuffers[i]->IndexBuffer);
 
             // Set bounding box
             //Child->BoundingBox = Mesh->getBoundingBox();
@@ -64,9 +76,9 @@ void CMeshSceneObject::setMesh(CMesh * mesh)
 
             // Add normal debugging object
             Child->getDebuggingNormalObject() = new CRenderable(this);
-            Child->getDebuggingNormalObject()->addAttribute("aPosition", new SAttribute<float>(Mesh->NormalLineBuffers[i], 3));
-            Child->getDebuggingNormalObject()->addAttribute("aColor", new SAttribute<float>(Mesh->NormalColorBuffers[i], 3));
-            Child->getDebuggingNormalObject()->setIndexBufferObject(Mesh->NormalIndexBuffers[i]);
+            Child->getDebuggingNormalObject()->addAttribute("aPosition", new SAttribute<float>(& Mesh->MeshBuffers[i]->NormalLineBuffer, 3));
+            Child->getDebuggingNormalObject()->addAttribute("aColor", new SAttribute<float>(& Mesh->MeshBuffers[i]->NormalColorBuffer, 3));
+            Child->getDebuggingNormalObject()->setIndexBufferObject(& Mesh->MeshBuffers[i]->NormalIndexBuffer);
             Child->getDebuggingNormalObject()->setShader(CShaderLoader::loadShader("Simple"));
             Child->getDebuggingNormalObject()->setDrawType(GL_LINES);
 
