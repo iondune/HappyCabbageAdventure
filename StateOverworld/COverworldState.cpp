@@ -323,6 +323,12 @@ void COverworldState::bouncePlayer() {
 
 
 void COverworldState::movePlayer() {
+  if(aDown && curNode > 0)
+  {
+  }
+  else if(dDown && curNode < NUM_LEVELS)
+  {
+  }
    if(curNode == 0) {
       playerVector = SVector3(0.5f, -0.08f, 0.1f);
       //discRender->setTranslation(SVector3(0.5f, -0.12999999f, 0.1f));
