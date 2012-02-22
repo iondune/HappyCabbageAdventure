@@ -1,4 +1,4 @@
-#ifdef __CPARTICLE_ENGINE_H_____________
+#ifndef __CPARTICLE_ENGINE_H_____________
 #define __CPARTICLE_ENGINE_H_____________
 
 #include <vector>
