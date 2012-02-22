@@ -82,11 +82,6 @@ public:
 		{
 			Position -= LookDirection*MoveSpeed*TickTime;
 		}
-
-		static float const MinimumHeight = 0.1f;
-
-		if (Position.Y < MinimumHeight)
-			Position.Y = MinimumHeight;
 	}
 
 	SVector3 const & getPosition()
