@@ -179,6 +179,9 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_p){
          printf("disk coords: %0.2f %0.2f %0.2f\n", changex,changey, changez);
       }
+      if(Event.Key == SDLK_n){
+        look = levels[0].loc;
+      }
       if(Event.Key == SDLK_SPACE){
          spaceDown = 0;
       }
@@ -320,6 +323,12 @@ void COverworldState::bouncePlayer() {
 
 
 void COverworldState::movePlayer() {
+  if(aDown && curNode > 0)
+  {
+  }
+  else if(dDown && curNode < NUM_LEVELS)
+  {
+  }
    if(curNode == 0) {
       playerVector = SVector3(0.5f, -0.08f, 0.1f);
       //discRender->setTranslation(SVector3(0.5f, -0.12999999f, 0.1f));
@@ -332,7 +341,22 @@ void COverworldState::movePlayer() {
    }
 }
 
+void superInterpolator(SVector3 & curr, SVector3 & change, SVector3 & target)
+{
+  if(curr == target)
+  {
+    return;
+  }
+  else
+  {
+    curr = curr + change;
+  }
+}
 
+void shiftSetter(SVector3 & curr, SVector3 & change, SVector3 & target, int slices)
+{
+  change = (target - curr) / ((float)slices);
+}
 /*
 void COverworldState::OnMouseEvent(SMouseEvent const & Event) {
    if(Event.Button.Value == SMouseEvent::EButton::Left) {
