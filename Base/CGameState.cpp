@@ -219,17 +219,20 @@ void CGameState::begin()
    float const LightBrightness = 0.4f;
 
     CSceneManager & SceneManager = Application.getSceneManager();
-    SceneManager.Lights.push_back(new CLight());
-    SceneManager.Lights.back()->Color = SVector3(LightBrightness);
-    SceneManager.Lights.back()->Position = SVector3(30.f, 2.f, 15.f);
+
+    SceneManager.Lights.clear();
 
     SceneManager.Lights.push_back(new CLight());
     SceneManager.Lights.back()->Color = SVector3(LightBrightness);
-    SceneManager.Lights.back()->Position = SVector3(-1.f, -2.f, 30.f);
+    SceneManager.Lights.back()->Position = SVector3(200.f, 2.f, 15.f);
 
     SceneManager.Lights.push_back(new CLight());
     SceneManager.Lights.back()->Color = SVector3(LightBrightness);
-    SceneManager.Lights.back()->Position = SVector3(-30.f, 0.f, 15.f);
+    SceneManager.Lights.back()->Position = SVector3(70.f, -2.f, 30.f);
+
+    //SceneManager.Lights.push_back(new CLight());
+    //SceneManager.Lights.back()->Color = SVector3(LightBrightness);
+    //SceneManager.Lights.back()->Position = SVector3(-30.f, 0.f, 15.f);
 
     SceneManager.Lights.push_back(new CLight());
     SceneManager.Lights.back()->Color = SVector3(LightBrightness);
@@ -687,6 +690,7 @@ void LoadShaders() {
    Diffuse = CShaderLoader::loadShader("Diffuse");
    DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture");
    normalColor = CShaderLoader::loadShader("Simple");
+   Toon = CShaderLoader::loadShader("Toon");
 }
 
 
@@ -811,7 +815,7 @@ void PrepMeshes()
 {
    renderBasicTree = new CMeshSceneObject();
    renderBasicTree->setMesh(basicTreeMesh);
-   renderBasicTree->setShader(Flat);
+   renderBasicTree->setShader(Toon);
 
    renderChristmasTree = new CMeshSceneObject();
    renderChristmasTree->setMesh(cabbageMesh);
@@ -819,7 +823,7 @@ void PrepMeshes()
 
    playerRenderable = new CMeshSceneObject();
    playerRenderable->setMesh(cabbageMesh);
-   playerRenderable->setShader(Flat);
+   playerRenderable->setShader(Toon);
    playerRenderable->setScale(SVector3(2));
 
    renderBlueFlwr = new CMeshSceneObject();

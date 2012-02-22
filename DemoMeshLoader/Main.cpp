@@ -43,6 +43,8 @@ public:
         : Application(CApplication::get()), WindowWidth(1440), WindowHeight(900), Scale(1), Animate(false), Mode(0), ShowHelp(false)
     {}
 
+	CMeshSceneObject * WingMan;
+
     void begin()
     {
         // OpenGL init
@@ -50,7 +52,7 @@ public:
 
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
-        glEnable(GL_CULL_FACE);
+        //glEnable(GL_CULL_FACE);
         glCullFace(GL_BACK);
 
         // Setup camera
@@ -109,9 +111,25 @@ public:
         Renderable->setShader(Shader);
         setMaterial(3);
 
+		WingMan = new CMeshSceneObject();
+		WingMan->setMesh(MeshFace);
+		WingMan->setShader("DiffuseTexture");
+		WingMan->setTexture("spaceshiptexture.bmp");
+		ISceneObject * Dummy = new ISceneObject();
+		Dummy->setTranslation(SVector3(1.5f,0,0));
+		WingMan->setParent(Dummy);
+		Dummy->setParent(Renderable);
+
+		CMesh * Cube = CMeshLoader::createCubeMesh();
+		CMeshSceneObject * SkyBox = SceneManager.addMeshSceneObject(Cube, CShaderLoader::loadShader("DiffuseTexture"));
+		SkyBox->setScale(SVector3(20.f));
+		SkyBox->setTexture("../DemoMeshLoader/stars.bmp");
+
 		CApplication::get().getSceneManager().addSceneObject(Renderable);
 
         Font.init("Fonts/DejaVuSansMono.ttf", 14);
+
+		Timer = 0.f;
     }
 
 	int currentMat;
@@ -159,8 +177,12 @@ public:
         CApplication::get().getSceneManager().SceneChanged = true;
     }
 
+	float Timer;
+
     void OnRenderStart(float const Elapsed)
     {
+		Timer += Elapsed;
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glMatrixMode(GL_MODELVIEW);
@@ -171,6 +193,8 @@ public:
         Renderable->setTranslation(Translation);
         Renderable->setScale(Scale);
         Renderable->setRotation(Rotation);
+
+		WingMan->setTranslation(SVector3(0, 0, 0.25f*sin(0.8f*Timer)));
 
         CApplication::get().getSceneManager().drawAll();
 
@@ -233,7 +257,7 @@ public:
 
         case SDLK_z:
             if (! Event.Pressed)
-                Renderable->setShader(CShaderLoader::loadShader("Flat"));
+                Renderable->setShader(CShaderLoader::loadShader("DiffuseTexture_2"));
             break;
 
         case SDLK_x:
@@ -411,7 +435,7 @@ public:
 int main(int argc, char * argv[])
 {
     CApplication & Application = CApplication::get();
-    Application.init(SPosition2(800, 600));
+    Application.init(SPosition2(1440, 900));
 
     Application.getStateManager().setState(& CMainState::get());
 

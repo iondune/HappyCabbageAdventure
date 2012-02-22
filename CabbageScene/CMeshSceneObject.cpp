@@ -7,14 +7,14 @@
 
 
 CMeshSceneObject::CMeshSceneObject()
-	: LoadedRevision(-1)
+	: LoadedRevision(-1), Mesh(0)
 {}
 
 void CMeshSceneObject::update()
 {
 	ISceneObject::update();
 
-	if (Mesh->isDirty() || Mesh->getRevision() != LoadedRevision)
+	if (Mesh && (Mesh->isDirty() || Mesh->getRevision() != LoadedRevision))
 		setMesh(Mesh);
 }
 

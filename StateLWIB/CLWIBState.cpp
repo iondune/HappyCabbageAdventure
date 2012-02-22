@@ -429,7 +429,7 @@ void CLWIBState::PrepPreviews() {
    appleMesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
    orangeMesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
    kiwiMesh = CMeshLoader::load3dsMesh("Models/alien.3ds");
-
+   
    if(appleMesh) {
       appleMesh->resizeMesh(SVector3(1));
       appleMesh->centerMeshByExtents(SVector3(0));
