@@ -219,19 +219,25 @@ public:
 
         case SDLK_n:
 
-            if (Event.Pressed)
-                Renderable->enableDebugData(EDebugData::Normals);
-            else
-                Renderable->disableDebugData(EDebugData::Normals);
+			if (! Event.Pressed)
+			{
+				if (Renderable->isDebugDataEnabled(EDebugData::Normals))
+					Renderable->disableDebugData(EDebugData::Normals);
+				else
+					Renderable->enableDebugData(EDebugData::Normals);
+			}
 
             break;
 
         case SDLK_m:
 
-            if (Event.Pressed)
-                Renderable->enableDebugData(EDebugData::NormalColors);
-            else
-                Renderable->disableDebugData(EDebugData::NormalColors);
+            if (! Event.Pressed)
+			{
+				if (Renderable->isDebugDataEnabled(EDebugData::NormalColors))
+					Renderable->disableDebugData(EDebugData::NormalColors);
+				else
+					Renderable->enableDebugData(EDebugData::NormalColors);
+			}
 
             break;
 
