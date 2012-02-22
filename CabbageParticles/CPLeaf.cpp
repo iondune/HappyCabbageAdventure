@@ -2,6 +2,7 @@
 
 void CPLeaf::setupRenderable() {
    sineValue = 0;
+   /*
    renderable = new CMeshSceneObject();
    CMesh * cube = CMeshLoader::loadAsciiMesh("Disc");
    cube->calculateNormalsPerFace();
@@ -12,6 +13,7 @@ void CPLeaf::setupRenderable() {
    mat.Texture = CImageLoader::loadTexture("Textures/grass.bmp");
    renderable->setMaterial(mat);
    renderable->setShader(CShaderLoader::loadShader("DiffuseTextureBright"));
+   */
 
    yFactor = (float)rand()/(float)RAND_MAX * 0.6 - 0.3;
    Amplitude = (float)rand()/(float)RAND_MAX * 0.5 + 0.3;
@@ -28,17 +30,17 @@ void CPLeaf::updateMatrices(float timeElapsed) {
       Counter -= timeElapsed;
    }
    else if(Duration >= TotalDuration - (float)AppearRate*0.85) {
-      CApplication::get().getSceneManager().removeSceneObject(getRenderable());
+      //CApplication::get().getSceneManager().removeSceneObject(getRenderable());
       Duration = -1;
    }
    else {
       sineValue += 4*timeElapsed;
       Duration += timeElapsed;
-      getRenderable()->setTranslation(
+      /*getRenderable()->setTranslation(
             SVector3(
                Amplitude*cos(Period*sineValue), 
                yFactor, 
                Amplitude*sin(Period*sineValue)));
-      getRenderable()->setRotation(RotationSpeed*sineValue*5);
+      getRenderable()->setRotation(RotationSpeed*sineValue*5);*/
    }
 }

@@ -14,6 +14,3 @@ void CParticle::setAppearRate(float r) {
    AppearRate = r;
 }
 
-CSceneObject * CParticle::getRenderable() {
-   return renderable;
-}

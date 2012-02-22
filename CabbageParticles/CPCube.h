@@ -1,4 +1,4 @@
-#ifdef ____CPCUBE_H_INCLUDE______________
+#ifndef ____CPCUBE_H_INCLUDE______________
 #define ____CPCUBE_H_INCLUDE______________
 
 #include "CParticle.h"

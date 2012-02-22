@@ -1,4 +1,4 @@
-#ifdef __CPARTICLE__H_____
+#ifndef __CPARTICLE__H_____
 #define __CPARTICLE__H_____
 
 #include "CabbageCore.h"
@@ -10,12 +10,12 @@
 class CParticle {
    float size;
    public:
-      CMeshSceneObject *renderable;
       SVector3 *centerPos;
       int* lookRight;
       float yFactor, Amplitude, Period;
       float sineValue;
       float StartFactor, AppearRate, Duration, TotalDuration, Counter;
+      float Size;
       SVector3 RotationSpeed;
 
       void setLookRight(int*);
@@ -23,8 +23,6 @@ class CParticle {
       void setAppearRate(float r);
       virtual void setupRenderable()=0;
       virtual void updateMatrices(float)=0;
-
-      CSceneObject * getRenderable();
 };
 
 #endif
