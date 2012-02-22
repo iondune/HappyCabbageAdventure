@@ -812,7 +812,7 @@ void PrepMeshes()
 {
    renderBasicTree = new CMeshSceneObject();
    renderBasicTree->setMesh(basicTreeMesh);
-   renderBasicTree->setShader("Toon");
+   renderBasicTree->setShader(Toon);
 
    renderChristmasTree = new CMeshSceneObject();
    renderChristmasTree->setMesh(cabbageMesh);
@@ -820,7 +820,7 @@ void PrepMeshes()
 
    playerRenderable = new CMeshSceneObject();
    playerRenderable->setMesh(cabbageMesh);
-   playerRenderable->setShader(Flat);
+   playerRenderable->setShader(Toon);
    playerRenderable->setScale(SVector3(2));
 
    renderBlueFlwr = new CMeshSceneObject();
