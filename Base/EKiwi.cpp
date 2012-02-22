@@ -86,7 +86,7 @@ void EKiwi::doRenderable() {
 
       rotateBird = -100.0f * SineValue;
 
-   printf("rotateBird: %f\n", rotateBird);
+   //printf("rotateBird: %f\n", rotateBird);
 
    Renderable->setRotation(SVector3(-90 + rotateBird, 0, -90));
 

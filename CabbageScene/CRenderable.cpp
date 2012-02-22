@@ -170,8 +170,13 @@ void CRenderable::draw(CScene const * const scene)
     // And bind the synced buffer object to shader...
     ShaderContext.bindIndexBufferObject(IndexBufferObject->getHandle());
 
-    // Finally draw!
-    glDrawElements(DrawType, IndexBufferObject->getElements().size(), GL_UNSIGNED_SHORT, 0);
+    if(DrawType == GL_POINTS) {
+       glDrawArrays(DrawType, 0, Size);
+    }
+    else {
+       // Finally draw!
+       glDrawElements(DrawType, IndexBufferObject->getElements().size(), GL_UNSIGNED_SHORT, 0);
+    }
 
     // Draw the normal object if it is enabled
     if (Parent->isDebugDataEnabled(EDebugData::Normals) && NormalObject)

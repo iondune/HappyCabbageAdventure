@@ -188,6 +188,7 @@ void CGameState::EngineInit( void ) {
    */
 }
 
+#define PARTICLE
 #ifdef PARTICLE
 CParticleEngine * particleLeafEngine;
 CParticleEngine * particleCubeEngine;
@@ -679,7 +680,8 @@ void LoadShaders() {
    Diffuse = CShaderLoader::loadShader("Diffuse");
    DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture");
    normalColor = CShaderLoader::loadShader("Simple");
-   Toon = CShaderLoader::loadShader("Toon");
+   //Toon = CShaderLoader::loadShader("Toon");
+   Toon = Diffuse;
 }
 
 

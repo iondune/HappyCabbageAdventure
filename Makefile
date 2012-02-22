@@ -34,8 +34,7 @@ build-CabbageFramework:
 	cd ./CabbageFramework && $(MAKE)
 
 build-CabbageParticles:
-	cd ./CabbageParticles && cd -
-#cd ./CabbageParticles && $(MAKE)
+	cd ./CabbageParticles && $(MAKE)
 	
 	
 clean:
