@@ -5,8 +5,10 @@
 
 #include "../CabbageCore/SVector3.h"
 #include "../CabbageCore/SColor.h"
-#include "../CabbageCore/Stransformation3.h"
+#include "../CabbageCore/STransformation3.h"
 #include "../CabbageCore/glm/glm.hpp"
+
+#include <iostream>
 
 class CShaderContext
 {
