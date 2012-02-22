@@ -17,7 +17,7 @@ void EngineInit();
 using namespace Cabbage::Collider;
 CEngine *Engine;
 CActor *Player, *Derp;
-SLight * PlayerLight;
+CLight * PlayerLight;
 CObject *Floor, *Block;
 CPlayerView *PlayerView;
 std::vector<CElevator*> elevators;
@@ -187,13 +187,17 @@ void CGameState::EngineInit( void ) {
    */
 }
 
+#ifdef PARTICLES
 CParticleEngine * particleLeafEngine;
 CParticleEngine * particleCubeEngine;
+#endif
 
 //Initalizer fxn
 void CGameState::begin()
 {
+#ifdef PARTICLES
    particleLeafEngine = particleCubeEngine = 0;
+#endif
    SPosition2 size = Application.getWindowSize();
    WindowWidth = size.X;
    WindowHeight = size.Y; 
@@ -214,21 +218,21 @@ void CGameState::begin()
    float const LightBrightness = 0.4f;
 
     CSceneManager & SceneManager = Application.getSceneManager();
-    SceneManager.Lights.push_back(SLight());
-    SceneManager.Lights.back().ColorUniform->Value = SVector3(LightBrightness);
-    SceneManager.Lights.back().PositionUniform->Value = SVector3(30.f, 2.f, 15.f);
+    SceneManager.Lights.push_back(new CLight());
+    SceneManager.Lights.back()->Color = SVector3(LightBrightness);
+    SceneManager.Lights.back()->Position = SVector3(30.f, 2.f, 15.f);
 
-    SceneManager.Lights.push_back(SLight());
-    SceneManager.Lights.back().ColorUniform->Value = SVector3(LightBrightness);
-    SceneManager.Lights.back().PositionUniform->Value = SVector3(-1.f, -2.f, 30.f);
+    SceneManager.Lights.push_back(new CLight());
+    SceneManager.Lights.back()->Color = SVector3(LightBrightness);
+    SceneManager.Lights.back()->Position = SVector3(-1.f, -2.f, 30.f);
 
-    SceneManager.Lights.push_back(SLight());
-    SceneManager.Lights.back().ColorUniform->Value = SVector3(LightBrightness);
-    SceneManager.Lights.back().PositionUniform->Value = SVector3(-30.f, 0.f, 15.f);
+    SceneManager.Lights.push_back(new CLight());
+    SceneManager.Lights.back()->Color = SVector3(LightBrightness);
+    SceneManager.Lights.back()->Position = SVector3(-30.f, 0.f, 15.f);
 
-    SceneManager.Lights.push_back(SLight());
-    SceneManager.Lights.back().ColorUniform->Value = SVector3(LightBrightness);
-    PlayerLight = & SceneManager.Lights.back();
+    SceneManager.Lights.push_back(new CLight());
+    SceneManager.Lights.back()->Color = SVector3(LightBrightness);
+    PlayerLight = SceneManager.Lights.back();
 
 
    LoadShaders();
@@ -244,9 +248,9 @@ void CGameState::begin()
 
    PrepShadow();
 
-   Application.getSceneManager().addRenderable(playerRenderable);
-   Application.getSceneManager().addRenderable(renderFlag);
-   Application.getSceneManager().addRenderable(flagLogo);
+   Application.getSceneManager().addSceneObject(playerRenderable);
+   Application.getSceneManager().addSceneObject(renderFlag);
+   Application.getSceneManager().addSceneObject(flagLogo);
 
    srand((unsigned int) time(NULL));
 
@@ -406,6 +410,7 @@ void CGameState::oldDisplay() {
 
    PlayerView->establishCamera(Camera, ANGLE(overView, backwardsView));
 
+#ifdef PARTICLES
    if(particleLeafEngine && !particleLeafEngine->dead) {
       particleLeafEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
       particleLeafEngine->step(Application.getElapsedTime());
@@ -415,6 +420,7 @@ void CGameState::oldDisplay() {
       particleCubeEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
       particleCubeEngine->step(Application.getElapsedTime());
    }
+#endif
 
    //draw the ground plane
    //drawPlane();
@@ -457,11 +463,11 @@ void CGameState::oldDisplay() {
    int i = 0;
    for (std::vector<CBadGuy*>::iterator it = GameplayManager->Enemies.begin(); it != GameplayManager->Enemies.end(); ++ it)
    {
-      ((CMeshRenderable*)((*it)->Renderable))->setTranslation(SVector3((*it)->Actor->getArea().getCenter().X, (*it)->Actor->getArea().getCenter().Y, 0));
+      ((CMeshSceneObject*)((*it)->Renderable))->setTranslation(SVector3((*it)->Actor->getArea().getCenter().X, (*it)->Actor->getArea().getCenter().Y, 0));
       if((*it)->Actor->getVelocity().X < -0.01f)
-         ((CMeshRenderable*)((*it)->Renderable))->setScale(SVector3(-1,1,1));
+         ((CMeshSceneObject*)((*it)->Renderable))->setScale(SVector3(-1,1,1));
       else if((*it)->Actor->getVelocity().X > 0.01f)
-         ((CMeshRenderable*)((*it)->Renderable))->setScale(SVector3(1,1,1));
+         ((CMeshSceneObject*)((*it)->Renderable))->setScale(SVector3(1,1,1));
       i++;
    }
 
@@ -488,7 +494,7 @@ void CGameState::OnRenderStart(float const Elapsed)
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
 
-   PlayerLight->PositionUniform->Value = playerRenderable->getTranslation();
+   PlayerLight->Position = playerRenderable->getTranslation();
 
    oldDisplay();
 
@@ -550,6 +556,8 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_d){
          dDown = 1;
       }
+#ifdef PARTICLES
+
       if(Event.Key == SDLK_e) {
          if(!particleCubeEngine || (particleCubeEngine && particleCubeEngine->dead))
             particleCubeEngine = new CParticleEngine(SVector3(0, 1, 0), 70, 3, CUBE_PARTICLE);
@@ -558,6 +566,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          if(!particleLeafEngine || (particleLeafEngine && particleLeafEngine->dead))
             particleLeafEngine = new CParticleEngine(SVector3(0, 1, 0), 70, 3, LEAF_PARTICLE);
       }
+#endif
       if(Event.Key == SDLK_k){
          backwardsView = !backwardsView;
       }
@@ -614,61 +623,61 @@ void CGameState::end()
    Mix_CloseAudio();
    our_font.clean();
 
-   Application.getSceneManager().removeAllRenderables();
+   Application.getSceneManager().removeAllSceneObjects();
 }
 
 void CGameState::PrepShadow() {
-   renderShadow = new CMeshRenderable();
+   renderShadow = new CMeshSceneObject();
    renderShadow->setMesh(discMesh);
-   renderShadow->getMaterial().Shader = DiffuseTexture;
+   renderShadow->setShader(DiffuseTexture);
 
-   Application.getSceneManager().addRenderable(renderShadow);
+   Application.getSceneManager().addSceneObject(renderShadow);
 }
 
 void CGameState::PrepBlock(float x, float y, float w, float h) {
-   CMeshRenderable *tempBlock;
-   blocks.push_back(tempBlock = new CMeshRenderable());
+   CMeshSceneObject *tempBlock;
+   blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
-   tempBlock->getMaterial().Texture = dirtTxt;
-   tempBlock->getMaterial().Shader = DiffuseTexture;
+   tempBlock->setTexture(dirtTxt);
+   tempBlock->setShader(DiffuseTexture);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    tempBlock->setScale(SVector3(w, h, 1));
    tempBlock->setRotation(SVector3(0, 0, 0));
-   Application.getSceneManager().addRenderable(tempBlock);
+   Application.getSceneManager().addSceneObject(tempBlock);
 }
 
 void CGameState::PrepGrass(float x, float y, float w, float h) {
-   CMeshRenderable *tempBlock;
-   blocks.push_back(tempBlock = new CMeshRenderable());
+   CMeshSceneObject *tempBlock;
+   blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
-   tempBlock->getMaterial().Texture = grassTxt;
-   tempBlock->getMaterial().Shader = DiffuseTexture;
+   tempBlock->setTexture(grassTxt);
+   tempBlock->setShader(DiffuseTexture);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    tempBlock->setScale(SVector3(w, h, 5));
-   Application.getSceneManager().addRenderable(tempBlock);
+   Application.getSceneManager().addSceneObject(tempBlock);
 
 }
 
 void CGameState::PrepSky() {
-   CMeshRenderable *tempBlock;
-   blocks.push_back(tempBlock = new CMeshRenderable());
+   CMeshSceneObject *tempBlock;
+   blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
-   tempBlock->getMaterial().Texture = skyTxt;
-   tempBlock->getMaterial().Shader = DiffuseTexture;
+   tempBlock->setTexture(skyTxt);
+   tempBlock->setShader(DiffuseTexture);
    tempBlock->setTranslation(SVector3(0, 24, -2.5));
    tempBlock->setScale(SVector3(400, 50, 1));
-   Application.getSceneManager().addRenderable(tempBlock);
+   Application.getSceneManager().addSceneObject(tempBlock);
 
 }
 
-CMeshRenderable* CGameState::PrepEnemy(float x, float y) {
-   CMeshRenderable *tempEnemy;
-   enemies.push_back(tempEnemy = new CMeshRenderable());
+CMeshSceneObject* CGameState::PrepEnemy(float x, float y) {
+   CMeshSceneObject *tempEnemy;
+   enemies.push_back(tempEnemy = new CMeshSceneObject());
    tempEnemy->setMesh(enemyMesh);
    //tempEnemy->setTexture(dirtTxt);
-   tempEnemy->getMaterial().Shader = Flat;
+   tempEnemy->setShader(Flat);
    tempEnemy->setRotation(SVector3(-90, 0, 0));
-   Application.getSceneManager().addRenderable(tempEnemy);
+   Application.getSceneManager().addSceneObject(tempEnemy);
    return tempEnemy;
 }
 
@@ -799,63 +808,63 @@ void LoadTextures()
 
 void PrepMeshes()
 {
-   renderBasicTree = new CMeshRenderable();
+   renderBasicTree = new CMeshSceneObject();
    renderBasicTree->setMesh(basicTreeMesh);
-   renderBasicTree->getMaterial().Shader = Flat;
+   renderBasicTree->setShader(Flat);
 
-   renderChristmasTree = new CMeshRenderable();
+   renderChristmasTree = new CMeshSceneObject();
    renderChristmasTree->setMesh(cabbageMesh);
-   renderChristmasTree->getMaterial().Shader = Flat;
+   renderChristmasTree->setShader(Flat);
 
-   playerRenderable = new CMeshRenderable();
+   playerRenderable = new CMeshSceneObject();
    playerRenderable->setMesh(cabbageMesh);
-   playerRenderable->getMaterial().Shader = Flat;
+   playerRenderable->setShader(Flat);
    playerRenderable->setScale(SVector3(2));
 
-   renderBlueFlwr = new CMeshRenderable();
+   renderBlueFlwr = new CMeshSceneObject();
    renderBlueFlwr->setMesh(blueFlwrMesh);
-   renderBlueFlwr->getMaterial().Texture = blueFlwrTxt;
-   renderBlueFlwr->getMaterial().Shader = DiffuseTexture;
+   renderBlueFlwr->setTexture(blueFlwrTxt);
+   renderBlueFlwr->setShader(DiffuseTexture);
    renderBlueFlwr->setTranslation(SVector3(-23.f, .18f, 2));
    renderBlueFlwr->setScale(SVector3(.36f));
    renderBlueFlwr->setRotation(SVector3(-90, 0, 0));
 
-   renderPinkFlwr = new CMeshRenderable();
+   renderPinkFlwr = new CMeshSceneObject();
    renderPinkFlwr->setMesh(pinkFlwrMesh);
-   renderPinkFlwr->getMaterial().Texture = pinkFlwrTxt;
+   renderPinkFlwr->setTexture(pinkFlwrTxt);
    renderPinkFlwr->setTranslation(SVector3(-20, .2f, 2));
    renderPinkFlwr->setScale(SVector3(.36f));
    renderPinkFlwr->setRotation(SVector3(-90, 0, 0));
-   renderPinkFlwr->getMaterial().Shader = DiffuseTexture;
+   renderPinkFlwr->setShader(DiffuseTexture);
 
-   renderFicus = new CMeshRenderable();
+   renderFicus = new CMeshSceneObject();
    renderFicus->setMesh(ficusMesh);
    renderFicus->setTranslation(SVector3(-21, .5f, 2));
    renderFicus->setScale(SVector3(1.0));
    renderFicus->setRotation(SVector3(-90, 0, 0));
-   renderFicus->getMaterial().Texture = blueFlwrTxt;
-   renderFicus->getMaterial().Shader = DiffuseTexture;
+   renderFicus->setTexture(blueFlwrTxt);
+   renderFicus->setShader(DiffuseTexture);
 
-   renderPoin = new CMeshRenderable();
+   renderPoin = new CMeshSceneObject();
    renderPoin->setMesh(poinMesh);
    renderPoin->setTranslation(SVector3(-19, .5f, 2));
    renderPoin->setScale(SVector3(.75));
    renderPoin->setRotation(SVector3(-90, 0, 0));
-   renderPoin->getMaterial().Texture = (poinTxt);
-   renderPoin->getMaterial().Shader = DiffuseTexture;
+   renderPoin->setTexture(poinTxt);
+   renderPoin->setShader(DiffuseTexture);
 
-   renderFlag = new CMeshRenderable();
+   renderFlag = new CMeshSceneObject();
    renderFlag->setMesh(flagMesh);
    renderFlag->setTranslation(SVector3(170, .5f, 1.0f));
    renderFlag->setRotation(SVector3(-90,0,0));
    renderFlag->setScale(SVector3(.0150f, .00025f,.0016f));
-   renderFlag->getMaterial().Texture = flagTxt;
-   renderFlag->getMaterial().Shader = DiffuseTexture;
+   renderFlag->setTexture(flagTxt);
+   renderFlag->setShader(DiffuseTexture);
 
-   flagLogo = new CMeshRenderable();
+   flagLogo = new CMeshSceneObject();
    flagLogo->setMesh(cabbageMesh);
    flagLogo->setTranslation(SVector3(170, .9f, 1.0f));
    flagLogo->setRotation(SVector3(-90,0,0));
    flagLogo->setScale(SVector3(.75f));
-   flagLogo->getMaterial().Shader = Flat;
+   flagLogo->setShader(Flat);
 }

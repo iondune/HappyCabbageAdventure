@@ -22,7 +22,7 @@ void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
     DeadEnemy.Renderable->setTranslation(DeadEnemy.Renderable->getTranslation() - SVector3(0.f, 0.5f, 0.f));
     DeadEnemies.push_back(DeadEnemy);
     
-    //CApplication::get().getSceneManager().removeRenderable(Event.Renderable);
+    //CApplication::get().getSceneManager().removeSceneObject(Event.Renderable);
     
     numKilled++;
 }
@@ -34,7 +34,7 @@ void CGameEventReceiver::OnGameTickStart(float const Elapsed)
         it->DeathTimer -= Elapsed;
         if (it->DeathTimer < 0.f)
         {
-            CApplication::get().getSceneManager().removeRenderable(it->Renderable);
+            CApplication::get().getSceneManager().removeSceneObject(it->Renderable);
             it = DeadEnemies.erase(it);
         }
         else

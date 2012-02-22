@@ -28,7 +28,7 @@ void CPCube::updateMatrices(float timeElapsed) {
       Counter -= timeElapsed;
    }
    else if(Duration >= TotalDuration - (float)AppearRate*0.85) {
-      CApplication::get().getSceneManager().removeRenderable(getRenderable());
+      CApplication::get().getSceneManager().removeSceneObject(getRenderable());
       Duration = -1;
    }
    else if(Duration == -1) {}

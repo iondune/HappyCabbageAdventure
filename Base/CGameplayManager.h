@@ -19,7 +19,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       struct SEnemy
       {
          Cabbage::Collider::CActor * Actor;
-         CRenderable * Renderable;
+         ISceneObject * Renderable;
       };
 
       typedef std::vector<CBadGuy*> EnemyList;

@@ -17,7 +17,7 @@ EKiwi::EKiwi(float x, float y, float w, float h, CGameplayManager* manager, int 
 
 //Loads and moves the mesh
 void EKiwi::loadMesh() {
-   Renderable = new CMeshRenderable();
+   Renderable = new CMeshSceneObject();
    CMesh *mesh = CMeshLoader::load3dsMesh("Models/alien.3ds");
    if(mesh) {
       mesh->resizeMesh(SVector3(1));
@@ -29,12 +29,12 @@ void EKiwi::loadMesh() {
       printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
 
    Renderable->setMesh(mesh);
-   Renderable->getMaterial().Shader = CShaderLoader::loadShader("Diffuse");
+   Renderable->setShader("Diffuse");
    Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
    Renderable->setScale(SVector3(1, 1, 1));
    Renderable->setRotation(SVector3(-90, 0, 0));
 
-   CApplication::get().getSceneManager().addRenderable(Renderable);
+   CApplication::get().getSceneManager().addSceneObject(Renderable);
 }
 
 //Adds actor to engine and preps engine

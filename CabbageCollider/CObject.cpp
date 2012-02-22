@@ -25,11 +25,11 @@ namespace Cabbage
       }
 
 
-      void CElevator::setRenderable(CRenderable *r) {
+      void CElevator::setRenderable(CSceneObject *r) {
          Renderable = r;
       }
 
-      CRenderable * CElevator::getRenderable() {
+      CSceneObject * CElevator::getRenderable() {
          return Renderable;
       }
 

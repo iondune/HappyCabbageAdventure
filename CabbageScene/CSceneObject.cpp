@@ -1,14 +1,18 @@
 #include "CSceneObject.h"
 
+#include "CShaderLoader.h"
+#include "CImageLoader.h"
+
+
 CSceneObject::CSceneObject()
 {}
 
-void CSceneObject::addRenderable(CRenderable * Renderable)
+void CSceneObject::addSceneObject(CRenderable * Renderable)
 {
 	Renderables.push_back(Renderable);
 }
 
-void CSceneObject::removeRenderable(CRenderable * Renderable)
+void CSceneObject::removeSceneObject(CRenderable * Renderable)
 {
 	Renderables.erase(std::remove(Renderables.begin(), Renderables.end(), Renderable), Renderables.end());
 }
@@ -27,8 +31,24 @@ void CSceneObject::setShader(CShader * shader)
 		(* it)->setShader(shader);
 }
 
+void CSceneObject::setShader(std::string const & shader)
+{
+	setShader(CShaderLoader::loadShader(shader));
+}
+
 void CSceneObject::setMaterial(CMaterial const & material)
 {
 	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
 		(* it)->getMaterial() = material;
+}
+
+void CSceneObject::setTexture(CTexture * texture)
+{
+	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
+		(* it)->getMaterial().Texture = texture;
+}
+
+void CSceneObject::setTexture(std::string const & texture)
+{
+	setTexture(CImageLoader::loadTexture(texture));
 }

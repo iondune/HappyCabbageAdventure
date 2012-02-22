@@ -31,9 +31,7 @@ void CMainMenuState::setupMeshes()
     fprintf(stderr, "Failed to load the logo mesh\n");
   }
 
-  renderLogo = new CMeshRenderable();
-  renderLogo->setMesh(logoMesh);
-  renderLogo->getMaterial().Shader = Flat;
+  renderLogo = CApplication::get().getSceneManager().addMeshSceneObject(logoMesh, Flat);
   renderLogo->setTranslation(SVector3(0.00, 0.1f, 0.3f));
   //renderLogo->setTranslation(SVector3(0.00, 0.1, 0.3));
   renderLogo->setScale(SVector3(0.4f));
@@ -112,9 +110,9 @@ void CMainMenuState::begin()
    Camera = new CCamera(WindowWidth/WindowHeight, 0.01f, 100.f, 60.f);
    Application.getSceneManager().setActiveCamera(Camera);
 
-   Application.getSceneManager().Lights.push_back(SLight());
-   Application.getSceneManager().Lights.back().ColorUniform->Value = SVector3(1.f);
-   Application.getSceneManager().Lights.back().PositionUniform->Value = SVector3(0.f);
+   Application.getSceneManager().Lights.push_back(new CLight());
+   Application.getSceneManager().Lights.back()->Color = SVector3(1.f);
+   Application.getSceneManager().Lights.back()->Position = SVector3(0.f);
 
    //Sound Setup
    soundInit();
@@ -130,13 +128,13 @@ void CMainMenuState::begin()
    curAngle = 0;
    curDirection = 'l';
 
-   Application.getSceneManager().addRenderable(renderLogo);
+   Application.getSceneManager().addSceneObject(renderLogo);
 }
 
 void CMainMenuState::end()
 {
     Application.getSceneManager().Lights.clear();
-      Application.getSceneManager().removeAllRenderables();
+      Application.getSceneManager().removeAllSceneObjects();
 }
 
 

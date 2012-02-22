@@ -2,7 +2,7 @@
 #define _CABBAGECOLLIDER_COBJECT_H_INCLUDED_
 
 #include "CCollideable.h"
-#include "../CabbageScene/CRenderable.h"
+#include "../CabbageScene/CSceneObject.h"
 
 namespace Cabbage
 {
@@ -29,7 +29,7 @@ namespace Cabbage
       {
 
          float Timer;
-         CRenderable *Renderable;
+         CSceneObject *Renderable;
 
          public:
 
@@ -37,8 +37,8 @@ namespace Cabbage
 
          virtual SVector2 performMovement(float const TickTime);
 
-         CRenderable * getRenderable();
-         void setRenderable(CRenderable *);
+         CSceneObject * getRenderable();
+         void setRenderable(CSceneObject *);
          float Speed;
  
          float InitialDirection;

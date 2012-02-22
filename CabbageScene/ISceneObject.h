@@ -43,6 +43,8 @@ protected:
     glm::mat4 RotationMatrix;
     SBoundingBox3 BoundingBox;
 
+	SVector3 Rotation, Translation, Scale;
+
     int DebugDataFlags;
 
     bool Visible;
@@ -86,6 +88,10 @@ public:
 	void removeChild(ISceneObject * child);
 	void addChild(ISceneObject * child);
 	void setParent(ISceneObject * parent);
+
+	SVector3 const & getRotation() const;
+	SVector3 const & getTranslation() const;
+	SVector3 const & getScale() const;
 
 };
 

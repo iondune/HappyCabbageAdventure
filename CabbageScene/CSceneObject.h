@@ -18,13 +18,16 @@ public:
 
 	CSceneObject();
 
-	void addRenderable(CRenderable * Renderable);
-	void removeRenderable(CRenderable * Renderable);
+	void addSceneObject(CRenderable * Renderable);
+	void removeSceneObject(CRenderable * Renderable);
 
     void draw(CScene const * const scene);
 
 	void setShader(CShader * shader);
+	void setShader(std::string const & shader);
 	void setMaterial(CMaterial const & material);
+	void setTexture(CTexture * texture);
+	void setTexture(std::string const & texture);
 
 };
 

@@ -18,7 +18,7 @@
 class CPlayerView {
    SVector2 CenterPosition;
    SVector2 Velocity;
-   CMeshRenderable *PlayerRenderable, *renderShadow;
+   CMeshSceneObject *PlayerRenderable, *renderShadow;
    float recovering;
    private:
    public:
@@ -49,7 +49,7 @@ class CPlayerView {
       int lookRight;
 
       int getLookRight();
-      void setRenderable(CMeshRenderable *render, CMeshRenderable *shadowRender) {
+      void setRenderable(CMeshSceneObject *render, CMeshSceneObject *shadowRender) {
          PlayerRenderable = render;
          renderShadow = shadowRender;
       }

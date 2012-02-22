@@ -19,7 +19,7 @@ class CBlock : public CPlaceable
    CBlock(float nx, float ny, int width, int height);
    void writeXML(xmlwriter *);
    void moveTo(float,float);
-   CMeshRenderable * setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager);
+   CMeshSceneObject * setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager);
 };
 
 #endif

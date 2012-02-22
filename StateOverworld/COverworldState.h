@@ -29,7 +29,7 @@ class COverworldState : public CState<COverworldState>
    SVector3 playerVector;
 
    CShader *Flat, *Diffuse, *DiffuseTexture;
-   CMeshRenderable *renderMap, *discRender, *playerRender;
+   CMeshSceneObject *renderMap, *discRender, *playerRender;
 
    int startx, starty;
    float pitchphi, yawtheta;
@@ -47,7 +47,7 @@ class COverworldState : public CState<COverworldState>
    void loadLevels();
    void levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor);
 
-   SLight * PlayerLight;
+   CLight * PlayerLight;
 
    public:
 

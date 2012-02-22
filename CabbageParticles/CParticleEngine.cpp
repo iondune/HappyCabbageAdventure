@@ -23,7 +23,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int part
       cPtr->setAppearRate(2);
       cPtr->TotalDuration = duration;
       cPtr->setupRenderable();
-      CApplication::get().getSceneManager().addRenderable(cPtr->getRenderable());
+      CApplication::get().getSceneManager().addSceneObject(cPtr->getRenderable());
    }
 }
 
@@ -51,7 +51,7 @@ void CParticleEngine::step(float const elapsedTime) {
 void CParticleEngine::deconstruct() {
    std::vector<CParticle*>::iterator it;
    for(it = particles.begin(); it != particles.end(); it++) {
-      CApplication::get().getSceneManager().removeRenderable((* it)->getRenderable());
+      CApplication::get().getSceneManager().removeSceneObject((* it)->getRenderable());
       delete (* it)->getRenderable();
       delete (* it);
    }

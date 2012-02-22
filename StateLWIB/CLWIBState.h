@@ -35,7 +35,7 @@ class CLWIBState : public CState<CLWIBState>
 
    public:
    std::vector<CPlaceable*> placeables, redoPlaceables;
-   std::vector<CMeshRenderable*> blocks, redo;
+   std::vector<CMeshSceneObject*> blocks, redo;
    CLWIBState();
    void begin();
    CCamera *Camera;

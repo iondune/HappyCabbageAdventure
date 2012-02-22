@@ -1,4 +1,4 @@
-#ifndef ____CPLEAF_H_INCLUDE______________
+#ifdef ____CPLEAF_H_INCLUDE______________
 #define ____CPLEAF_H_INCLUDE______________
 
 #include "CParticle.h"

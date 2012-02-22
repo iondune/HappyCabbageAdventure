@@ -20,7 +20,7 @@ class CEnemy : public CPlaceable
    void writeXML(xmlwriter *);
    void moveTo(float,float);
    void setShader(CShader*);
-   CMeshRenderable * setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager);
+   CMeshSceneObject * setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager);
 };
 
 #endif

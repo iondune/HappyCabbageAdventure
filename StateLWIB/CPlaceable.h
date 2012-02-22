@@ -22,7 +22,7 @@ class CPlaceable {
 
       virtual void writeXML(xmlwriter *) =0;
       virtual void moveTo(float,float) =0;
-      virtual CMeshRenderable* setupItem(CShader*, Cabbage::Collider::CEngine*, CGameplayManager*)=0;
+      virtual CMeshSceneObject* setupItem(CShader*, Cabbage::Collider::CEngine*, CGameplayManager*)=0;
 
 };
 #endif
