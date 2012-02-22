@@ -26,10 +26,25 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int part
       //CApplication::get().getSceneManager().addSceneObject(cPtr->getRenderable());
    }
 
+   float temp;
    for(int i = 0; i < max; i++) {
       positionArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*1 - 0.5, (float)rand()/(float)RAND_MAX*2, 0));
-      colorArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*0.2 + 0.4, (float)rand()/(float)RAND_MAX*0.2 + 0.8, (float)rand()/(float)RAND_MAX*0.4 + 0.4));
-      sizeArr.push_back((float)rand()/(float)RAND_MAX*15 + 8);
+      switch(particleType) {
+         case LEAF_PARTICLE:
+            colorArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*0.2 + 0.4, (float)rand()/(float)RAND_MAX*0.2 + 0.8, (float)rand()/(float)RAND_MAX*0.4 + 0.4));
+            sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 10);
+            break;
+         case CUBE_PARTICLE:
+            temp = (float)rand()/(float)RAND_MAX*0.3 + 0.3;
+            if(rand() % 4 == 0) {
+               colorArr.push_back(new SVector3(1));
+            }
+            else {
+               colorArr.push_back(new SVector3(temp, temp*2, temp*3));
+            }
+            sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 10);
+            break;
+      }
    }
    myObj = new CParticleObject();
    myObj->setup(positionArr, colorArr, sizeArr, max);
