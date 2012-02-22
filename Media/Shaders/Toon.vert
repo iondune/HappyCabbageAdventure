@@ -32,7 +32,7 @@ varying vec3 Eye;
 varying vec3 LightPosition;
 varying vec3 vLight[4];
 varying vec3 vLightColor[4];
-varying vec3 vEye[4];
+varying vec3 vEye;
 
 void main()
 {
@@ -46,8 +46,9 @@ void main()
     {
         vLight[i] = normalize(uLights[i].Position - vec3(vPosition));
         vLightColor[i] = uLights[i].Color;
-        vEye[i] = vec3(uViewMatrix * vPosition) * -1.0;
     }
+
+    vEye = vec3(uViewMatrix * vPosition) * -1.0;
     
     Eye = vec3(uViewMatrix * vPosition) * -1.0;
 

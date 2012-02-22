@@ -680,8 +680,8 @@ void LoadShaders() {
    Diffuse = CShaderLoader::loadShader("Diffuse");
    DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture");
    normalColor = CShaderLoader::loadShader("Simple");
-   //Toon = CShaderLoader::loadShader("Toon");
-   Toon = Diffuse;
+   Toon = CShaderLoader::loadShader("Toon");
+   //Toon = Diffuse;
 }
 
 

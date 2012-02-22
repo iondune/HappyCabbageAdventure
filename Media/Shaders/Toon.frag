@@ -5,7 +5,7 @@ varying vec3 Eye;
 varying vec3 LightPosition;
 varying vec3 vLight[4];
 varying vec3 vLightColor[4];
-varying vec3 vEye[4];
+varying vec3 vEye;
 uniform int uLightCount;
 
 struct SMaterial
