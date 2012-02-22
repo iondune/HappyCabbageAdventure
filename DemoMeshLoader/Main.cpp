@@ -50,7 +50,7 @@ public:
 
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
-        glEnable(GL_CULL_FACE);
+        //glEnable(GL_CULL_FACE);
         glCullFace(GL_BACK);
 
         // Setup camera
@@ -108,6 +108,11 @@ public:
         Renderable->setMesh(MeshFace);
         Renderable->setShader(Shader);
         setMaterial(3);
+
+		CMesh * Cube = CMeshLoader::createCubeMesh();
+		CMeshSceneObject * SkyBox = SceneManager.addMeshSceneObject(Cube, CShaderLoader::loadShader("DiffuseTexture"));
+		SkyBox->setScale(SVector3(20.f));
+		SkyBox->setTexture("../DemoMeshLoader/stars.bmp");
 
 		CApplication::get().getSceneManager().addSceneObject(Renderable);
 
@@ -233,7 +238,7 @@ public:
 
         case SDLK_z:
             if (! Event.Pressed)
-                Renderable->setShader(CShaderLoader::loadShader("Flat"));
+                Renderable->setShader(CShaderLoader::loadShader("DiffuseTexture_2"));
             break;
 
         case SDLK_x:
@@ -411,7 +416,7 @@ public:
 int main(int argc, char * argv[])
 {
     CApplication & Application = CApplication::get();
-    Application.init(SPosition2(800, 600));
+    Application.init(SPosition2(1440, 900));
 
     Application.getStateManager().setState(& CMainState::get());
 
