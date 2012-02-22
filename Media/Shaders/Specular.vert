@@ -17,7 +17,6 @@ uniform SLight uLights[4];
 
 varying vec4 vColor;
 varying vec3 vLight[4];
-varying vec3 vLightColor[4];
 varying vec3 vEye[4];
 varying vec3 vNormal;
 
@@ -29,7 +28,6 @@ void main()
     for (int i = 0; i < 4 && i < uLightCount; ++ i)
     {
         vLight[i] = normalize(uLights[i].Position - vec3(vPosition));
-        vLightColor[i] = uLights[i].Color;
         vEye[i] = vec3(uViewMatrix * vPosition) * -1.0;
     }
     gl_Position = uProjMatrix * uViewMatrix * vPosition;
