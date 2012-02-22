@@ -86,7 +86,7 @@ public:
         }
 
         // Attempt to load mesh
-        MeshFace = CMeshLoader::loadAsciiMesh("../Base/Models/bunny10k.m");
+        MeshFace = CMeshLoader::load3dsMesh("../DemoMeshLoader/spaceship.3ds");
         if (MeshFace)
         {
             MeshFace->linearizeIndices();
@@ -95,7 +95,7 @@ public:
             MeshFace->calculateNormalsPerFace();
         }
 
-        MeshVertex = CMeshLoader::loadAsciiMesh("../Base/Models/bunny10k_2.m");
+        MeshVertex = CMeshLoader::load3dsMesh("../DemoMeshLoader/spaceship.3ds");
         if (MeshVertex)
         {
             MeshVertex->resizeMesh(SVector3(1.5));
@@ -120,6 +120,7 @@ public:
     {
 		currentMat = i;
 		CMaterial mat;
+		mat.Texture = CImageLoader::loadTexture("spaceshiptexture.bmp");
         switch (i)
         {
         default:
@@ -237,7 +238,7 @@ public:
 
         case SDLK_x:
             if (! Event.Pressed)
-                Renderable->setShader(CShaderLoader::loadShader("Diffuse"));
+                Renderable->setShader(CShaderLoader::loadShader("DiffuseTexture"));
             break;
 
         case SDLK_c:
