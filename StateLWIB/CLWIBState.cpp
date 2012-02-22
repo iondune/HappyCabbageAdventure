@@ -20,7 +20,7 @@ void PrepPreviews();
 float previewBlockMouseX, previewBlockMouseY; 
 float lastBlockPlacedLocationX, lastBlockPlacedLocationY;
 using namespace Cabbage::Collider;
-CMeshRenderable *PreviewBlock, *PreviewEnemy;
+CMeshSceneObject *PreviewBlock, *PreviewEnemy;
 
 CLWIBState::CLWIBState()
 : Application (CApplication::get())
@@ -34,7 +34,7 @@ void CLWIBState::BlocksInit( void ) {
 }
 
 struct quickndirty {
-   CMeshRenderable *r;
+   CMeshSceneObject *r;
    CPlaceable *p;
    bool o;
    int mapX,mapY;
@@ -250,7 +250,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if (Event.Key == SDLK_j) {
          if(blockDepth < 6)
             blockDepth++;
-         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, blockDepth));
+         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
       }
       if(Event.Key == SDLK_e){
          if (eDown == 1)
@@ -266,7 +266,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_u) {
          //3 is the number of static blocks created before the user can add in new blocks (ie unremovable)
          if(blocks.size() > 3 && placeables.size() > 0) {
-            Application.getSceneManager().removeRenderable(blocks.back());
+            Application.getSceneManager().removeSceneObject(blocks.back());
             CPlaceable *m_block = placeables.back();
             redo.push_back(blocks.back());
             redoPlaceables.push_back(placeables.back());
@@ -288,9 +288,9 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_r) {
          if(redo.size() > 0 && redoPlaceables.size() > 0) {
-            Application.getSceneManager().addRenderable(redo.back());
+            Application.getSceneManager().addSceneObject(redo.back());
             CPlaceable *m_block = redoPlaceables.back();
-            CMeshRenderable *m_r = redo.back();
+            CMeshSceneObject *m_r = redo.back();
             blocks.push_back(redo.back());
             placeables.push_back(redoPlaceables.back());
 
@@ -411,21 +411,21 @@ void CLWIBState::end()
    redoPlaceables.clear();
    blocks.clear();
    redo.clear();
-   Application.getSceneManager().removeAllRenderables();
+   Application.getSceneManager().removeAllSceneObjects();
 }
 
 void CLWIBState::PrepPreviews() {
-   blocks.push_back(PreviewBlock = new CMeshRenderable());
+   blocks.push_back(PreviewBlock = new CMeshSceneObject());
    PreviewBlock->setMesh(cubeMesh);
 
-   PreviewBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/grass.bmp");
+   PreviewBlock->setTexture("Textures/grass.bmp");
    //PreviewBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/grass.bmp");
-   PreviewBlock->getMaterial().Shader = DiffuseTexture;
+   PreviewBlock->setShader(DiffuseTexture);
    //PreviewBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
-   CApplication::get().getSceneManager().addRenderable(PreviewBlock);
+   CApplication::get().getSceneManager().addSceneObject(PreviewBlock);
 
-   blocks.push_back(PreviewEnemy = new CMeshRenderable());
+   blocks.push_back(PreviewEnemy = new CMeshSceneObject());
    appleMesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
    orangeMesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
    kiwiMesh = CMeshLoader::load3dsMesh("Models/alien.3ds");
@@ -448,11 +448,11 @@ void CLWIBState::PrepPreviews() {
          kiwiMesh->calculateNormalsPerFace();
       }
 
-   PreviewEnemy->getMaterial().Shader = Diffuse;
+   PreviewEnemy->setShader(Diffuse);
    PreviewEnemy->setRotation(SVector3(-90, 0, 0));
    PreviewBlock->setScale(SVector3(1, 1, 1));
 
-   CApplication::get().getSceneManager().addRenderable(PreviewEnemy);
+   CApplication::get().getSceneManager().addSceneObject(PreviewEnemy);
    PreviewEnemy->setVisible(false);
 }
 
@@ -477,13 +477,13 @@ void CLWIBState::PrepEnemy(float x, float y) {
    }
 
    printf("Placed enemy starting at %0.2f, %0.2f\n", x, y);
-   CMeshRenderable *tempEnemy;
+   CMeshSceneObject *tempEnemy;
    CEnemy *tempPlaceable;
-   blocks.push_back(tempEnemy = new CMeshRenderable());
+   blocks.push_back(tempEnemy = new CMeshSceneObject());
    placeables.push_back(tempPlaceable = new CEnemy(x, y, 1, 1, enemyType));
    tempEnemy->setMesh(appleMesh);
    //tempEnemy->getMaterial().Texture = CImageLoader::loadTexture("Textures/dirt.bmp");;
-   tempEnemy->getMaterial().Shader = Diffuse;
+   tempEnemy->setShader(Diffuse);
    tempEnemy->setTranslation(SVector3((x+(x+1))/2, (y+(y+1))/2, 0));
    //tempEnemy->setTranslation(SVector3(x, y, 0));
    tempEnemy->setRotation(SVector3(-90, 0, 0));
@@ -493,7 +493,7 @@ void CLWIBState::PrepEnemy(float x, float y) {
    blockMap[(int)x+25][(int)(y-0.5+25)].p = tempPlaceable;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
-   Application.getSceneManager().addRenderable(tempEnemy);
+   Application.getSceneManager().addSceneObject(tempEnemy);
    redo.clear();
    redoPlaceables.clear();
 }
@@ -517,13 +517,13 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d) {
       return;
 
    printf("Placed block starting at %0.2f, %0.2f\n", x, y);
-   CMeshRenderable *tempBlock;
+   CMeshSceneObject *tempBlock;
    CBlock *tempPlaceable;
-   blocks.push_back(tempBlock = new CMeshRenderable());
+   blocks.push_back(tempBlock = new CMeshSceneObject());
    placeables.push_back(tempPlaceable = new CBlock(x, y, w, h, d));
    tempBlock->setMesh(cubeMesh);
-   tempBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/dirt.bmp");;
-   tempBlock->getMaterial().Shader = DiffuseTexture;
+   tempBlock->setTexture("Textures/dirt.bmp");;
+   tempBlock->setShader(DiffuseTexture);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    //tempBlock->setTranslation(SVector3(x, y, 0));
    tempBlock->setScale(SVector3((float) w, (float) h, (float) d));
@@ -537,7 +537,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d) {
       }
    }
    tempBlock->setRotation(SVector3(0, 0, 0));
-   Application.getSceneManager().addRenderable(tempBlock);
+   Application.getSceneManager().addSceneObject(tempBlock);
    redo.clear();
    redoPlaceables.clear();
    if(mDown) {
@@ -548,27 +548,27 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d) {
 }
 
 void CLWIBState::PrepGrass(float x, float y, float w, float h) {
-   CMeshRenderable *tempBlock;
-   blocks.push_back(tempBlock = new CMeshRenderable());
+   CMeshSceneObject *tempBlock;
+   blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
 
-   tempBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/grass.bmp");
-   tempBlock->getMaterial().Shader = DiffuseTexture;
+   tempBlock->setTexture("Textures/grass.bmp");
+   tempBlock->setShader(DiffuseTexture);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    tempBlock->setScale(SVector3(w, h, 5));
-   Application.getSceneManager().addRenderable(tempBlock);
+   Application.getSceneManager().addSceneObject(tempBlock);
 
 }
 
 void CLWIBState::PrepSky() {
-   CMeshRenderable *tempBlock;
-   blocks.push_back(tempBlock = new CMeshRenderable());
+   CMeshSceneObject *tempBlock;
+   blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
-   tempBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/sky.bmp");
-   tempBlock->getMaterial().Shader = DiffuseTexture;
+   tempBlock->setTexture("Textures/sky.bmp");
+   tempBlock->setShader(DiffuseTexture);
    tempBlock->setTranslation(SVector3(0, 24, -2.5));
    tempBlock->setScale(SVector3(400, 50, 1));
-   Application.getSceneManager().addRenderable(tempBlock);
+   Application.getSceneManager().addSceneObject(tempBlock);
 }
 
 /*
@@ -700,7 +700,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          }
          else {
             if(lastMouseOveredBlock.o) {
-               Application.getSceneManager().removeRenderable(lastMouseOveredBlock.r);
+               Application.getSceneManager().addSceneObject(lastMouseOveredBlock.r);
                placeables.erase(std::remove(placeables.begin(), placeables.end(), lastMouseOveredBlock.p), placeables.end());
                blocks.erase(std::remove(blocks.begin(), blocks.end(), lastMouseOveredBlock.r), blocks.end());
                redoPlaceables.push_back(lastMouseOveredBlock.p);
@@ -746,11 +746,11 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          m_qd = blockMap[(int)x+25][(int)(y-0.5+25)];
          if(tDown) {
             if(m_qd.o && m_qd.r != lastMouseOveredBlock.r) {
-               m_qd.r->getMaterial().Shader = DiffuseTextureBright;
+               m_qd.r->setShader(DiffuseTextureBright);
             }
          }
          if(lastMouseOveredBlock.o && m_qd.r != lastMouseOveredBlock.r) {
-            lastMouseOveredBlock.r->getMaterial().Shader = DiffuseTexture;
+            lastMouseOveredBlock.r->setShader(DiffuseTexture);
          }
          if(!tDown && mouseDown) {
             PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth);
