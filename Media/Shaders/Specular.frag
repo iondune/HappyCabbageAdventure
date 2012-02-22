@@ -12,8 +12,16 @@ struct SMaterial
 
 uniform SMaterial uMaterial;
 
+
+struct SLight
+{
+    vec3 Position;
+    vec3 Color;
+};
+
+uniform SLight uLights[4];
+
 varying vec3 vLight[4];
-varying vec3 vLightColor[4];
 varying vec3 vEye[4];
 
 void main()
@@ -29,8 +37,8 @@ void main()
         vec3 nLight = normalize(vLight[i]);
 
         vec3 vReflection = reflect(nLight, nNormal);
-        vDiffuse += uMaterial.DiffuseColor * clamp(dot(nNormal, nLight), 0.0, 1.0) * vLightColor[i];
-        vSpecular += SpecularColor * pow(clamp(dot(normalize(vEye[i]), normalize(vReflection)), 0.0, 1.0), uMaterial.Shininess) * vLightColor[i];
+        vDiffuse += uMaterial.DiffuseColor * clamp(dot(nNormal, nLight), 0.0, 1.0) * uLights[i].Color;
+        vSpecular += SpecularColor * pow(clamp(dot(normalize(vEye[i]), normalize(vReflection)), 0.0, 1.0), uMaterial.Shininess) * uLights[i].Color;
     }
 
     gl_FragColor = vec4(vDiffuse + vSpecular + uMaterial.AmbientColor, 1);

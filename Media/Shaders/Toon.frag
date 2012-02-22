@@ -4,11 +4,6 @@ varying vec3 EyespaceNormal;
 varying vec3 Eye;
 varying vec3 LightPosition;
 
-//uniform vec3 LightPosition;
-//uniform vec3 uMaterial.AmbientColor;
-//uniform vec3 uMaterial.SpecularColor;
-//uniform float uMaterial.Shininess;
-
 struct SMaterial
 {
     vec3 SpecularColor;
@@ -29,7 +24,6 @@ void main()
 {
     vec3 N = normalize(EyespaceNormal);
     vec3 L = normalize(LightPosition);
-    //vec3 Eye = //vec3(0, 0, 1);
     vec3 H = normalize(L + Eye);
     
     float df = max(0.0, dot(N, L));
