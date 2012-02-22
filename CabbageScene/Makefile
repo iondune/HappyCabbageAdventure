@@ -20,8 +20,6 @@ CMaterial.o: CMaterial.cpp
 	g++ -o CMaterial.o CMaterial.cpp -c $(DIRECTORIES) $(OPENGL)
 CSceneObject.o: CSceneObject.cpp
 	g++ -o CSceneObject.o CSceneObject.cpp -c $(DIRECTORIES) $(OPENGL)
-CMeshSceneObject.o: CMeshSceneObject.cpp
-	g++ -o CMeshSceneObject.o CMeshSceneObject.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CMesh.o: CMesh.cpp
 	g++ -o CMesh.o CMesh.cpp -c $(DIRECTORIES) $(OPENGL)
