@@ -30,3 +30,14 @@ void CBadGuy::makeBadGuy(float x, float y, float w, float h, EnemyType enemy, CG
 
    temp->Manager->Enemies.push_back(temp);
 }
+
+void CBadGuy::doRenderable() {
+
+   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, 0));
+
+   if(Actor->getVelocity().X < -0.01f)
+      Renderable->setScale(SVector3(-1,1,1));
+   else if(Actor->getVelocity().X > 0.01f)
+      Renderable->setScale(SVector3(1,1,1));
+
+}

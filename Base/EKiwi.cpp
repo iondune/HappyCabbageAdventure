@@ -13,12 +13,14 @@ EKiwi::EKiwi(float x, float y, float w, float h, CGameplayManager* manager, int 
    Direction = direction;
 
    OrigX = x;
+
+   rotateBird = 0.0f;
 }
 
 //Loads and moves the mesh
 void EKiwi::loadMesh() {
    Renderable = new CMeshRenderable();
-   CMesh *mesh = CMeshLoader::load3dsMesh("Models/alien.3ds");
+   CMesh *mesh = CMeshLoader::load3dsMesh("Models/killerkiwi.3ds");
    if(mesh) {
       mesh->resizeMesh(SVector3(1));
       mesh->centerMeshByExtents(SVector3(0));
@@ -29,10 +31,11 @@ void EKiwi::loadMesh() {
       printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
 
    Renderable->setMesh(mesh);
+   //Renderable->getMaterial().Texture = new CTexture(CImageLoader::loadImage("Textures/kiwi.bmp"));
    Renderable->getMaterial().Shader = CShaderLoader::loadShader("Diffuse");
-   Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
+   //Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
    Renderable->setScale(SVector3(1, 1, 1));
-   Renderable->setRotation(SVector3(-90, 0, 0));
+   Renderable->setRotation(SVector3(-90, 0, -90));
 
    CApplication::get().getSceneManager().addRenderable(Renderable);
 }
@@ -60,20 +63,39 @@ void EKiwi::update(float const TickTime) {
    if (Manager->isPlayerAlive())
    {
       float curX = Actor->getArea().Position.X;
-      float SineValue = sin(curX - OrigX);
+      SineValue = sin(curX - OrigX);
 
       float TempY = y + SineValue;
 
       Actor->setArea(SRect2(curX, TempY, w, h));
 
+      Actor->setAction(Cabbage::Collider::CActor::EActionType::None);
+
       if(Direction == 0)
          Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveLeft);
       else
          Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
-
    }
    else
    {
        Actor->setAction(Cabbage::Collider::CActor::EActionType::None);
    }
 }
+
+void EKiwi::doRenderable() {
+
+   rotateBird +=5.0f * SineValue;
+
+   printf("SineValue: %f\n", SineValue);
+
+   Renderable->setRotation(SVector3(-90 + rotateBird, 0, -90));
+
+   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, 0));
+
+   if(Actor->getVelocity().X < -0.01f)
+      Renderable->setScale(SVector3(-1,1,1));
+   else if(Actor->getVelocity().X > 0.01f)
+      Renderable->setScale(SVector3(1,1,1));
+
+}
+

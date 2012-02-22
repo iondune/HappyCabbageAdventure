@@ -20,8 +20,9 @@ public:
    void update(const float TickTime);
    void loadMesh();
    void loadActor();
+   void doRenderable();
 
-   float OrigX;
+   float OrigX, SineValue, rotateBird;
    int Direction;
 };
 

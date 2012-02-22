@@ -33,6 +33,7 @@ public:
    virtual void update(float const TickTime) =0;
    virtual void loadMesh() =0;
    virtual void loadActor() =0;
+   virtual void doRenderable();
 };
 
 #endif /* CBADGUY_H_ */
