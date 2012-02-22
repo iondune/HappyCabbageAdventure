@@ -5,6 +5,7 @@
 #include "CParticle.h"
 #include "CPCube.h"
 #include "CPLeaf.h"
+#include "CParticleObject.h"
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
 

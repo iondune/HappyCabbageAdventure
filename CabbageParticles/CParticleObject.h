@@ -2,7 +2,7 @@
 #define _CABBAGE_SCENE_CPARTICLEOBJECT_H_INCLUDED_
 
 #include "../CabbageCore/SVector3.h"
-#include "CabbageScene.h"
+#include "../CabbageScene/CabbageScene.h"
 
 class CParticleObject : public CSceneObject
 {
@@ -10,14 +10,14 @@ protected:
    CRenderable * particlesRenderable;
    CBufferObject<float> PositionBuffer, ColorBuffer, SizeBuffer;
    CBufferObject<unsigned short> IndexBuffer;
-   SVector3 * positionsArr;
+   std::vector<SVector3*> positionsArr;
    bool updated;
    int numParticles;
 
 public:
    CRenderable * getParticlesRenderable();
-   void setup(SVector3 * vectorArr, SVector3 * colorArr, float * sizeArr, int num);
-   void setPositions(SVector3 *vectorArr);
+   void setup(std::vector<SVector3*> vectorArr, std::vector<SVector3*> colorArr, std::vector<float> sizeArr, int num);
+   void setPositions(std::vector<SVector3*> vectorArr);
    void update();
 };
 
