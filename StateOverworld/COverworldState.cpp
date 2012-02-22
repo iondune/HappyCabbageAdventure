@@ -224,8 +224,10 @@ void COverworldState::PrepMeshes()
    }
    
    CMaterial mat;
+
    mat.Texture = CImageLoader::loadTexture("Models/world.bmp");
    renderMap = CApplication::get().getSceneManager().addMeshSceneObject(mapMesh, DiffuseTexture);
+   renderMap->setMaterial(mat);
 
    //Set up player renderable
    CMesh *playerMesh = CMeshLoader::load3dsMesh("Models/crappycabbage.3ds");
