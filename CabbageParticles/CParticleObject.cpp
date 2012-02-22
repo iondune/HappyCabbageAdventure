@@ -48,6 +48,12 @@ void CParticleObject::update() {
    }
 }
 
+void CParticleObject::draw(CScene const * const scene) {
+	ISceneObject::draw(scene);
+
+   particlesRenderable->draw(scene);
+}
+
 void CParticleObject::setup(std::vector<SVector3*> vectorArr, std::vector<SVector3*> colorArr, std::vector<float> sizeArr, int num) {
    printf("Beginning of setup: "); printOpenGLErrors();
    updated = true;
@@ -61,7 +67,9 @@ void CParticleObject::setup(std::vector<SVector3*> vectorArr, std::vector<SVecto
          ColorBuffer.push_back((*(colorArr[i]))[j]);
          SizeBuffer.push_back(sizeArr[i]);
       }
+      IndexBuffer.push_back((unsigned short)i);
    }
+   IndexBuffer.setIsIndexBuffer(true);
 
    // Add attributes and uniforms
    particlesRenderable->addAttribute("aPosition", new SAttribute<float>(& PositionBuffer, 3));

@@ -31,7 +31,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int part
    std::vector<SVector3*> colorArr;
    std::vector<float> sizeArr;
    for(int i = 0; i < max; i++) {
-      positionArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*10 - 5, (float)rand()/(float)RAND_MAX*2, 0));
+      positionArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*1 - 0.5 + centerPos.X, (float)rand()/(float)RAND_MAX*2, 0));
       colorArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*0.8 + 0.2, (float)rand()/(float)RAND_MAX*0.8 + 0.2, (float)rand()/(float)RAND_MAX*0.8 + 0.2));
       sizeArr.push_back((float)rand()/(float)RAND_MAX*3 + 1);
    }
