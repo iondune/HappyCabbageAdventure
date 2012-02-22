@@ -291,15 +291,7 @@ void CGameState::begin()
          random = rand() % 3;
 
          if (n % 2 == 0)
-            //if (random < 2) {
             drawBasicTree(-20.4f + n * 4, 2.0f, 2, 8.0f, Application);
-         //}
-         //else if (random == 2) {
-         //   drawChristmasTree(-20.4f + n * 4, 1.5, 2, 6.0f, Application);
-         //}
-         // else {
-         //   drawFicus(-21.f + n * 4, -1, 2, 1.0f, Application);
-         //}
          else {
 
             if (random < 2) {
@@ -311,9 +303,6 @@ void CGameState::begin()
          }
       }
    }
-   //drawFicus(-15, -1, -2, 2.0, Application);
-   //drawBasicTree(-20, -1, -2, 2.0, Application);
-   //drawChristmasTree(-14, 1, 2, 5.0, Application);
 
    //Initialize Fxns
    EngineInit();
@@ -321,7 +310,7 @@ void CGameState::begin()
    fps = timeTotal = 0;
    numFrames = 0;
 
-   printf("END OF BEGIN\n");
+   printf("CGameState:  Begin Function Complete\n");
 
 
    Application.skipElapsedTime();

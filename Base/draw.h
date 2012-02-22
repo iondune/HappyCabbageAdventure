@@ -130,7 +130,7 @@ void drawChristmasTree(float x, float y, float z, float scale, CApplication app)
    renderChristmasTree = new CMeshSceneObject();
    renderChristmasTree->setMesh(christmasTreeMesh);
    //renderChristmasTree->getMaterial().Texture = (basicTreeTxt);
-   renderChristmasTree->setShader(Flat);
+   renderChristmasTree->setShader(Toon);
    renderChristmasTree->setTranslation(SVector3(x, y, z));
    renderChristmasTree->setScale(SVector3(scale));
    renderChristmasTree->setRotation(SVector3(-90, 0, 0));

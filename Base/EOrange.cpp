@@ -33,7 +33,7 @@ void EOrange::loadMesh() {
    Renderable->setMesh(mesh);
    Renderable->setTexture("Textures/orange.bmp");
 
-   Renderable->setShader("DiffuseTexture");
+   Renderable->setShader("Toon");
    Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
    Renderable->setScale(SVector3(1, 1, 1));
    Renderable->setRotation(SVector3(-90, 0, 0));
