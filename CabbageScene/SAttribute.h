@@ -16,7 +16,7 @@ struct SAttribute : public IAttribute
 	int ElementSize;
 
 	SAttribute()
-		: Value(0), ElementSize(0)
+		: Buffer(0), ElementSize(0)
 	{}
 
 	SAttribute(CBufferObject<T> * buffer, int const elementSize = 4)
