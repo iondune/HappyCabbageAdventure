@@ -21,10 +21,9 @@ class CParticleEngine {
    float currentDuration;
 
    std::vector<SVector3*> positionArr;
-   /*
    std::vector<SVector3*> colorArr;
    std::vector<float> sizeArr;
-   */
+   CParticleObject * myObj; 
 
    public:
       int dead, lookRight;
