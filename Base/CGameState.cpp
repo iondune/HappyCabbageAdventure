@@ -47,7 +47,7 @@ CGameState::CGameState()
 
 void CGameState::loadWorld(std::vector<CPlaceable*> *list)
 {
-    int x,y,w,h,t;
+    int x,y,w,d,h,t;
     //float spd, rng;
 
     irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader("test.xml");
@@ -66,11 +66,12 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             y = xml->getAttributeValueAsInt(1);
             h = xml->getAttributeValueAsInt(2);
             w = xml->getAttributeValueAsInt(3);
-            list->push_back(ptr = new CBlock((float)x,(float)y,w,h));
-            if(xml->getAttributeValueAsInt(4)) {
+            d = xml->getAttributeValueAsInt(4);
+            list->push_back(ptr = new CBlock((float)x,(float)y,w,h,d));
+            if(xml->getAttributeValueAsInt(5)) {
                ptr->isMovingPlatform = 1;
-               ptr->Range = (int) xml->getAttributeValueAsFloat(5); //Range
-               ptr->Speed = (int) xml->getAttributeValueAsFloat(6); //Speed
+               ptr->Range = (int) xml->getAttributeValueAsFloat(6); //Range
+               ptr->Speed = (int) xml->getAttributeValueAsFloat(7); //Speed
             }
             else
                ptr->isMovingPlatform = 0;

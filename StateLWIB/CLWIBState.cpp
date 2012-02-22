@@ -59,6 +59,7 @@ void CLWIBState::begin()
    initBlockMap();
    blockWidth = 1;
    blockHeight = 1;
+   blockDepth = 1;
    SPosition2 size = Application.getWindowSize();
    WindowWidth = size.X;
    WindowHeight = size.Y; 
@@ -220,10 +221,36 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
          dDown = 1;
       }
       if(Event.Key == SDLK_f){
-         fDown = 1; //width
+         if(blockWidth < 10)
+            blockWidth++;
+         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+         //fDown = 1; //width
       }
       if(Event.Key == SDLK_g){
-         gDown = 1; //height
+         if(blockWidth > 1)
+            blockWidth--;
+         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+         //gDown = 1; //height
+      }
+      if (Event.Key == SDLK_c) {
+         if(blockHeight > 1)
+            blockHeight--;
+         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+      }
+      if (Event.Key == SDLK_v) {
+         if(blockHeight < 10)
+            blockHeight++;
+         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+      }
+      if (Event.Key == SDLK_h) {
+         if(blockDepth > 1)
+            blockDepth--;
+         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+      }
+      if (Event.Key == SDLK_j) {
+         if(blockDepth < 6)
+            blockDepth++;
+         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, blockDepth));
       }
       if(Event.Key == SDLK_e){
          if (eDown == 1)
@@ -392,9 +419,10 @@ void CLWIBState::PrepPreviews() {
    PreviewBlock->setMesh(cubeMesh);
 
    PreviewBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/grass.bmp");
+   //PreviewBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/grass.bmp");
    PreviewBlock->getMaterial().Shader = DiffuseTexture;
    //PreviewBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
-   PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, 1));
+   PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
    CApplication::get().getSceneManager().addRenderable(PreviewBlock);
 
    blocks.push_back(PreviewEnemy = new CMeshRenderable());
@@ -471,7 +499,7 @@ void CLWIBState::PrepEnemy(float x, float y) {
 }
 
 
-void CLWIBState::PrepBlock(float x, float y, int w, int h) {
+void CLWIBState::PrepBlock(float x, float y, int w, int h, int d) {
    if(x < -25 || y < -25 || x >= 200 || y >= 75)
       return;
    int i,j, ret=0;
@@ -492,13 +520,13 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h) {
    CMeshRenderable *tempBlock;
    CBlock *tempPlaceable;
    blocks.push_back(tempBlock = new CMeshRenderable());
-   placeables.push_back(tempPlaceable = new CBlock(x, y, w, h));
+   placeables.push_back(tempPlaceable = new CBlock(x, y, w, h, d));
    tempBlock->setMesh(cubeMesh);
    tempBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/dirt.bmp");;
    tempBlock->getMaterial().Shader = DiffuseTexture;
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    //tempBlock->setTranslation(SVector3(x, y, 0));
-   tempBlock->setScale(SVector3((float) w, (float) h, 1));
+   tempBlock->setScale(SVector3((float) w, (float) h, (float) d));
    for(i = 0; i < w; i++) {
       for(j = 0; j < h; j++) {
          blockMap[(int)x+25+i][(int)(y-0.5+25)+j].o = true;
@@ -668,7 +696,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
             PrepEnemy(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
          }
          else if (!tDown) {
-            PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight);
+            PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth);
          }
          else {
             if(lastMouseOveredBlock.o) {
@@ -725,7 +753,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
             lastMouseOveredBlock.r->getMaterial().Shader = DiffuseTexture;
          }
          if(!tDown && mouseDown) {
-            PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight);
+            PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth);
          }
          lastMouseOveredBlock = m_qd;
       }
@@ -836,7 +864,7 @@ void CLWIBState::stepCamera(float delta) {
       look.Y -= delta*factor;
    }
    if(!tDown && mouseDown) {
-      PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight);
+      PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth);
    }
 }
 

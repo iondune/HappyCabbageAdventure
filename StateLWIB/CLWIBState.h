@@ -45,13 +45,13 @@ class CLWIBState : public CState<CLWIBState>
 
 
 
-   int blockWidth, blockHeight;
+   int blockWidth, blockHeight,blockDepth;
    void OnRenderStart(float const Elapsed);
    void OnKeyboardEvent(SKeyboardEvent const & Event);
    void OnMouseEvent(SMouseEvent const & Event);
    void end();
 
-   void PrepBlock(float x, float y, int w, int h); 
+   void PrepBlock(float x, float y, int w, int h, int d); 
    void PrepEnemy(float x, float y); 
    void PrepGrass(float x, float y, float w, float h);
    void PrepPreviews();
