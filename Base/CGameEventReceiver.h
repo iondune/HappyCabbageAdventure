@@ -15,7 +15,7 @@ class CGameEventReceiver : public sigslot::has_slots<>
 
     struct SDeadEnemy
     {
-        CRenderable * Renderable;
+        ISceneObject * Renderable;
         float DeathTimer;
     };
 

@@ -2,14 +2,16 @@
 
 void CPLeaf::setupRenderable() {
    sineValue = 0;
-   renderable = new CParticleRenderable();
+   renderable = new CMeshSceneObject();
    CMesh * cube = CMeshLoader::loadAsciiMesh("Disc");
    cube->calculateNormalsPerFace();
    renderable->setMesh(cube);
    renderable->setScale(SVector3(0.13, 0.26, 0.13));
-   renderable->centerPos = centerPos;
-   renderable->getMaterial().Texture = CImageLoader::loadTexture("Textures/grass.bmp");
-   renderable->getMaterial().Shader = CShaderLoader::loadShader("DiffuseTextureBright");
+   renderable->setTranslation(* centerPos);
+   CMaterial mat;
+   mat.Texture = CImageLoader::loadTexture("Textures/grass.bmp");
+   renderable->setMaterial(mat);
+   renderable->setShader(CShaderLoader::loadShader("DiffuseTextureBright"));
 
    yFactor = (float)rand()/(float)RAND_MAX * 0.6 - 0.3;
    Amplitude = (float)rand()/(float)RAND_MAX * 0.5 + 0.3;
@@ -26,7 +28,7 @@ void CPLeaf::updateMatrices(float timeElapsed) {
       Counter -= timeElapsed;
    }
    else if(Duration >= TotalDuration - (float)AppearRate*0.85) {
-      CApplication::get().getSceneManager().removeRenderable(getRenderable());
+      CApplication::get().getSceneManager().removeSceneObject(getRenderable());
       Duration = -1;
    }
    else {

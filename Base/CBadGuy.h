@@ -22,7 +22,7 @@ public:
    EnemyType Enemy;
    CGameplayManager* Manager;
    Cabbage::Collider::CActor* Actor;
-   CMeshRenderable* Renderable;
+   CMeshSceneObject* Renderable;
    //Currently the Shader stuff appears to be acting up.
    CShader* Shader;
 

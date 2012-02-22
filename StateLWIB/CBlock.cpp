@@ -38,8 +38,8 @@ void CBlock::moveTo(float x,float y) {
    //For usage in LWIB
 }
 
-CMeshRenderable * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
-   CMeshRenderable *tempBlock = new CMeshRenderable();
+CMeshSceneObject * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
+   CMeshSceneObject *tempBlock = new CMeshSceneObject();
    if(isMovingPlatform) {
       Cabbage::Collider::CElevator *engBlock = Engine->addElevator();
       engBlock->setArea(SRect2(x, y, (float) w, (float) h));
@@ -56,12 +56,12 @@ CMeshRenderable * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngine
    CMesh *mesh = CMeshLoader::loadAsciiMesh("Cube");
    mesh->calculateNormalsPerFace();
    tempBlock->setMesh(mesh);
-   tempBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/dirt.bmp");
-   tempBlock->getMaterial().Shader = shader;
+   tempBlock->setTexture("Textures/dirt.bmp");
+   tempBlock->setShader(shader);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    tempBlock->setScale(SVector3((float) w, (float) h, (float) z));
    tempBlock->setRotation(SVector3(0, 0, 0));
-   CApplication::get().getSceneManager().addRenderable(tempBlock);
+   CApplication::get().getSceneManager().addSceneObject(tempBlock);
 
    return tempBlock;
 }

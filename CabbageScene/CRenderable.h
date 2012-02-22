@@ -15,171 +15,79 @@
 #include "CShaderContext.h"
 #include "ISceneObject.h"
 
+#include "CMaterial.h"
+#include "SAttribute.h"
+#include "SUniform.h"
 
-class IAttribute
+
+/*!
+ * A CRenderable is some collection of buffer objects which can be drawn by a single OpenGL draw call.
+ */
+class CRenderable
 {
-
-public:
-
-    virtual void bindTo(GLuint const attribHandle, CShaderContext & shaderContext) =0;
-
-};
-
-class CFloatVecAttribute : public IAttribute
-{
-
-public:
-
-    CFloatVecAttribute(CBufferObject<float> * bufferObject, int const size);
-    void bindTo(GLuint const attribHandle, CShaderContext & shaderContext);
-
-    CBufferObject<float> * BufferObject;
-    int Size;
-
-};
-
-class IUniform
-{
-
-public:
-
-    virtual void bindTo(GLuint const uniformHandle, CShaderContext & shaderContext) =0;
-
-};
-
-class CFloatUniform : public IUniform
-{
-
-public:
-
-    CFloatUniform();
-    CFloatUniform(float const value);
-    void bindTo(GLuint const uniformHandle, CShaderContext & shaderContext);
-
-    float Value;
-
-};
-
-class CIntUniform : public IUniform
-{
-
-public:
-
-    CIntUniform();
-    CIntUniform(int const value);
-    void bindTo(GLuint const uniformHandle, CShaderContext & shaderContext);
-
-    int Value;
-
-};
-
-class CMat4Uniform : public IUniform
-{
-
-public:
-
-    CMat4Uniform();
-    CMat4Uniform(glm::mat4 const & value);
-    void bindTo(GLuint const uniformHandle, CShaderContext & shaderContext);
-
-    glm::mat4 Value;
-
-};
-
-class CVec3Uniform : public IUniform
-{
-
-public:
-
-    CVec3Uniform();
-    CVec3Uniform(SVector3 const & value);
-    void bindTo(GLuint const uniformHandle, CShaderContext & shaderContext);
-
-    SVector3 Value;
-
-};
-
-struct SMaterial
-{
-    CShader * Shader;
-    CTexture * Texture;
-
-    boost::shared_ptr<CVec3Uniform> AmbientColor;
-    boost::shared_ptr<CVec3Uniform> DiffuseColor;
-    boost::shared_ptr<CFloatUniform> Shininess;
-
-    SMaterial();
-};
-
-//#include "../CabbageParticles/CParticle.h"
-class CParticleRenderable;
-class CRenderable : public ISceneObject
-{
-   friend class CParticleRenderable;
 
 protected:
 
-    // Implicit uniforms
-    boost::shared_ptr<CMat4Uniform> uModelMatrix, uNormalMatrix;
+    // Implicit shader variables
+    glm::mat4 ModelMatrix, NormalMatrix;
+	SUniform<glm::mat4> BindModelMatrix, BindNormalMatrix;
 
-public:
+	// Local shader variables
+    std::map<std::string, IAttribute const *> Attributes;
+    std::map<std::string, IUniform const *> Uniforms;
 
-    struct SAttribute
-    {
-        GLint Handle;
-        boost::shared_ptr<IAttribute> Value;
+	// Loaded shader variables
+	std::map<GLint, IAttribute const *> LoadedAttributes;
+    std::map<GLint, IUniform const *> LoadedUniforms;
 
-        SAttribute();
-        SAttribute(boost::shared_ptr<IAttribute> value);
-    };
-
-    struct SUniform
-    {
-        GLint Handle;
-        boost::shared_ptr<IUniform> Value;
-
-        SUniform();
-        SUniform(boost::shared_ptr<IUniform> value);
-    };
-
-protected:
-
-    std::map<std::string, SAttribute> Attributes;
-    std::map<std::string, SUniform> Uniforms;
-    std::vector<SUniform> SceneLoadedUniforms;
-
+	// Required data for drawing
+	CShader * Shader;
     CBufferObject<GLushort> * IndexBufferObject;
 
-    SMaterial Material;
+	// Material attribute used by phong light, etc.
+    CMaterial Material;
+	STransformation3 Transformation;
 
-    CShader * NormalColorShader;
+    static CShader * NormalColorShader;
     CRenderable * NormalObject;
 
     GLenum DrawType;
 
-    void loadHandlesFromShader(CShader const * const shader, CScene const * const scene);
+    void loadShaderVariables(CShader const * const shader, CScene const * const scene);
     CScene const * LastLoadedScene;
     CShader const * LastLoadedShader;
 
+	ISceneObject * Parent;
+
 public:
 
-    CRenderable();
+    CRenderable(ISceneObject * parent);
 
-    SMaterial & getMaterial();
-    SMaterial const & getMaterial() const;
+    CMaterial & getMaterial();
+    CMaterial const & getMaterial() const;
 
     CBufferObject<GLushort> * getIndexBufferObject();
     void setIndexBufferObject(CBufferObject<GLushort> * indexBufferObject);
+
+	CShader * getShader();
+	void setShader(CShader * shader);
 
     GLenum const getDrawType() const;
     void setDrawType(GLenum const drawType);
 
     virtual void draw(CScene const * const scene);
 
-    void addAttribute(std::string const & label, boost::shared_ptr<IAttribute> attribute);
-    void addUniform(std::string const & label, boost::shared_ptr<IUniform> uniform);
+    void addAttribute(std::string const & label, IAttribute const * const attribute);
+    void addUniform(std::string const & label, IUniform const * const uniform);
     void removeAttribute(std::string const & label);
     void removeUniform(std::string const & label);
+
+	IAttribute const * const getAttribute(std::string const & label);
+	IUniform const * const getUniform(std::string const & label);
+	
+    CRenderable * & getDebuggingNormalObject();
+
+	void reloadVariablesOnNextDraw();
 
 };
 

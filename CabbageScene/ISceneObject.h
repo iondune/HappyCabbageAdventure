@@ -3,6 +3,7 @@
 
 #include <map>
 #include <set>
+#include <list>
 
 #include "../CabbageCore/boost/shared_ptr.hpp"
 #include "../CabbageCore/SVector3.h"
@@ -37,30 +38,34 @@ class ISceneObject
 protected:
 
     // Model Transformation
-    SVector3 Translation, Rotation, Scale;
+    STransformation3 Transformation;
+	glm::mat4 AbsoluteTransformation;
     glm::mat4 RotationMatrix;
     SBoundingBox3 BoundingBox;
+
+	SVector3 Rotation, Translation, Scale;
 
     int DebugDataFlags;
 
     bool Visible;
-    bool UsesRotationMatrix;
+
+	std::list<ISceneObject *> Children;
+	ISceneObject * Parent;
 
 public:
 
     ISceneObject();
 
-    SVector3 const & getTranslation() const;
-    SVector3 const & getRotation() const;
-    glm::mat4 const & getRotationMatrix() const;
-    SVector3 const & getScale() const;
+	void updateAbsoluteTransformation();
+	glm::mat4 const & getAbsoluteTransformation() const;
 
     void setTranslation(SVector3 const & translation);
     void setRotation(SVector3 const & rotation);
     void setRotation(glm::mat4 const & matrix);
     void setScale(SVector3 const & scale);
 
-    void draw(CScene const * const scene);
+	virtual void update();
+    virtual void draw(CScene const * const scene);
 
     SBoundingBox3 const & getBoundingBox() const;
     SBoundingBox3 & getBoundingBox();
@@ -74,6 +79,19 @@ public:
 
     bool const isVisible() const;
     void setVisible(bool const isVisible);
+
+	STransformation3 const & getTransformation() const;
+
+	ISceneObject const * const getParent() const;
+	std::list<ISceneObject *> const & getChildren() const;
+
+	void removeChild(ISceneObject * child);
+	void addChild(ISceneObject * child);
+	void setParent(ISceneObject * parent);
+
+	SVector3 const & getRotation() const;
+	SVector3 const & getTranslation() const;
+	SVector3 const & getScale() const;
 
 };
 

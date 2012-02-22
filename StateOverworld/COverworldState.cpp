@@ -38,21 +38,21 @@ void COverworldState::begin()
    Camera->setLookDirection(look - eye);
 
     CSceneManager & SceneManager = Application.getSceneManager();
-    SceneManager.Lights.push_back(SLight());
-    SceneManager.Lights.back().ColorUniform->Value = SVector3(LightBrightness);
-    SceneManager.Lights.back().PositionUniform->Value = SVector3(30.f, 2.f, 3.f);
+    SceneManager.Lights.push_back(new CLight());
+    SceneManager.Lights.back()->Color = SVector3(LightBrightness);
+    SceneManager.Lights.back()->Position = SVector3(30.f, 2.f, 3.f);
 
-    SceneManager.Lights.push_back(SLight());
-    SceneManager.Lights.back().ColorUniform->Value = SVector3(LightBrightness);
-    SceneManager.Lights.back().PositionUniform->Value = SVector3(-1.f, -2.f, 30.f);
+    SceneManager.Lights.push_back(new CLight());
+    SceneManager.Lights.back()->Color = SVector3(LightBrightness);
+    SceneManager.Lights.back()->Position = SVector3(-1.f, -2.f, 30.f);
 
-    SceneManager.Lights.push_back(SLight());
-    SceneManager.Lights.back().ColorUniform->Value = SVector3(LightBrightness);
-    SceneManager.Lights.back().PositionUniform->Value = SVector3(-30.f, 0.f, 0.f);
+    SceneManager.Lights.push_back(new CLight());
+    SceneManager.Lights.back()->Color = SVector3(LightBrightness);
+    SceneManager.Lights.back()->Position = SVector3(-30.f, 0.f, 0.f);
 
-    SceneManager.Lights.push_back(SLight());
-    SceneManager.Lights.back().ColorUniform->Value = SVector3(LightBrightness);
-    PlayerLight = & SceneManager.Lights.back();
+    SceneManager.Lights.push_back(new CLight());
+    SceneManager.Lights.back()->Color = SVector3(LightBrightness);
+    PlayerLight = SceneManager.Lights.back();
 
 
    LoadShaders();
@@ -190,7 +190,7 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 void COverworldState::end()
 {
-   Application.getSceneManager().removeAllRenderables();
+   Application.getSceneManager().removeAllSceneObjects();
 }
 
 void COverworldState::loadLevels()
@@ -222,11 +222,10 @@ void COverworldState::PrepMeshes()
       mapMesh->centerMeshByExtents(SVector3(0));
       mapMesh->calculateNormalsPerFace();
    }
-   renderMap = new CMeshRenderable();
-   renderMap->setMesh(mapMesh);
-   renderMap->getMaterial().Texture = CImageLoader::loadTexture("Models/world.bmp");
-   renderMap->getMaterial().Shader = DiffuseTexture;
-   CApplication::get().getSceneManager().addRenderable(renderMap);
+   
+   CMaterial mat;
+   mat.Texture = CImageLoader::loadTexture("Models/world.bmp");
+   renderMap = CApplication::get().getSceneManager().addMeshSceneObject(mapMesh, DiffuseTexture);
 
    //Set up player renderable
    CMesh *playerMesh = CMeshLoader::load3dsMesh("Models/crappycabbage.3ds");
@@ -239,14 +238,12 @@ void COverworldState::PrepMeshes()
       fprintf(stderr, "Failed to load the cababge mesh\n");
    }
 
-   playerRender = new CMeshRenderable();
-   playerRender->setMesh(playerMesh);
-   playerRender->getMaterial().Shader = Flat;
+   playerRender = CApplication::get().getSceneManager().addMeshSceneObject(playerMesh, Flat);
    playerRender->setTranslation(playerVector = SVector3(0.9f, -0.08f, 0.3f));
    playerRender->setRotation(SVector3(0, -90, 0));
    playerRender->setScale(SVector3(0.18f));
 
-   CApplication::get().getSceneManager().addRenderable(playerRender);
+   (playerRender);
 
    CMesh *discMesh = CMeshLoader::loadAsciiMesh("Disc");
    discMesh->linearizeIndices();
@@ -260,30 +257,30 @@ void COverworldState::PrepMeshes()
    changey = 0.06f;
    changez = 0.6f;
 /*
-   discRender = new CMeshRenderable();
+   discRender = new CMeshSceneObject();
    discRender->setMesh(discMesh);
    discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
    discRender->getMaterial().Shader = DiffuseTexture;
    discRender->setTranslation(SVector3(0.5f, -0.13f, 0.1f));
    discRender->setScale(SVector3(0.1f));
-   CApplication::get().getSceneManager().addRenderable(discRender);
+   CApplication::get().getSceneManager().addSceneObject(discRender);
 
-   CMeshRenderable *orangeDisc;
-   orangeDisc = discRender = new CMeshRenderable();
+   CMeshSceneObject *orangeDisc;
+   orangeDisc = discRender = new CMeshSceneObject();
    discRender->setMesh(discMesh);
    discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_orange.bmp");
    discRender->getMaterial().Shader = DiffuseTexture;
    discRender->setTranslation(SVector3(0.9f, -0.12999999f, 0.3f));
    discRender->setScale(SVector3(0.09f));
-   CApplication::get().getSceneManager().addRenderable(discRender);
+   CApplication::get().getSceneManager().addSceneObject(discRender);
 
-   discRender = new CMeshRenderable();
+   discRender = new CMeshSceneObject();
    discRender->setMesh(discMesh);
    discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
    discRender->getMaterial().Shader = DiffuseTexture;
    discRender->setTranslation(SVector3(0.9f, -0.13f, 0.3f));
    discRender->setScale(SVector3(0.1f));
-   //CApplication::get().getSceneManager().addRenderable(discRender);
+   //CApplication::get().getSceneManager().addSceneObject(discRender);
    discRender = orangeDisc;
   */ 
 }
@@ -291,28 +288,27 @@ void COverworldState::PrepMeshes()
 void COverworldState::levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor)
 {
 
-   discRender = new CMeshRenderable();
-   discRender->setMesh(levelIcon);
+   discRender = CApplication::get().getSceneManager().addMeshSceneObject(levelIcon, DiffuseTexture);
 
+   CMaterial mat;
    switch(iconColor)
    {
      case 1:
-       discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
+       mat.Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
        break;
 
      case 2:
-       discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_orange.bmp");
+       mat.Texture = CImageLoader::loadTexture("Models/disc_orange.bmp");
        break;
        
      default:
-       discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
+       mat.Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
        break;
    }
+   discRender->setMaterial(mat);
 
-   discRender->getMaterial().Shader = DiffuseTexture;
    discRender->setTranslation(loc);
    discRender->setScale(SVector3(0.1f));
-   CApplication::get().getSceneManager().addRenderable(discRender);
 }
 
 void COverworldState::bouncePlayer() {

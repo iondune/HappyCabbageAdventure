@@ -3,40 +3,53 @@
 
 #include <list>
 
-#include "CRenderable.h"
+#include "CSceneObject.h"
+#include "CMeshSceneObject.h"
 
 #include "../CabbageCore/SLine3.h"
 #include "../CabbageCore/SColor.h"
 
 
-struct SLight
+class CLight
 {
-    boost::shared_ptr<CVec3Uniform> ColorUniform;
-    boost::shared_ptr<CVec3Uniform> PositionUniform;
+	// CLight should implement ISceneObject
+	// that way light billboards will be drawable by using a scene->set debug flag
+	// and positioning,etc will be inheritted
+	
+public:
+
+    SColor Color;
+    SVector3 Position;
+
+	SUniform<SColor> BindColor;
+	SUniform<SVector3> BindPosition;
 
     // Todo: change values only through get/set, set scene changed when so
 
-    SLight()
-    {
-        ColorUniform = boost::shared_ptr<CVec3Uniform>(new CVec3Uniform());
-        PositionUniform = boost::shared_ptr<CVec3Uniform>(new CVec3Uniform());
-    }
+    CLight()
+		: BindColor(Color), BindPosition(Position)
+    {}
 };
 
 class CScene
 {
 
-    static SLight const NullLight;
+    static CLight const NullLight;
 
 protected:
 
     CCamera DefaultCamera;
     CCamera * ActiveCamera;
 
-    boost::shared_ptr<CMat4Uniform> uViewMatrix, uProjMatrix;
-    boost::shared_ptr<CIntUniform> uLightCount;
+    glm::mat4 ViewMatrix, ProjMatrix;
+    int LightCount;
 
-    std::map<std::string, CRenderable::SUniform> Uniforms;
+	SUniform<glm::mat4> BindViewMatrix, BindProjMatrix;
+	SUniform<int> BindLightCount;
+
+    std::map<std::string, IUniform const *> Uniforms;
+
+	std::list<ISceneObject *> SceneObjects;
 
 public:
 
@@ -45,17 +58,14 @@ public:
     CCamera * const getActiveCamera();
     void setActiveCamera(CCamera * const activeCamera);
 
-    void addUniform(std::string const & label, boost::shared_ptr<IUniform> uniform);
+    void addUniform(std::string const & label, IUniform const * uniform);
     void removeUniform(std::string const & label);
 
-    std::map<std::string, CRenderable::SUniform> & getExplicitUniforms();
-    std::map<std::string, CRenderable::SUniform> const & getExplicitUniforms() const;
-
-    boost::shared_ptr<IUniform> const getUniform(std::string const & label) const;
+    IUniform const * getUniform(std::string const & label) const;
 
     void update();
 
-    std::vector<SLight> Lights;
+    std::vector<CLight *> Lights;
     bool SceneChanged;
 
 };
@@ -63,21 +73,22 @@ public:
 class CSceneManager : public CScene
 {
 
-    std::list<CRenderable *> Renderables;
-
     CScene * CurrentScene;
 
 public:
 
     CSceneManager();
 
-    void addRenderable(CRenderable * Renderable);
-    void removeRenderable(CRenderable * Renderable);
-    void removeAllRenderables();
+    void addSceneObject(ISceneObject * sceneObject);
+    void removeSceneObject(ISceneObject * sceneObject);
+    void removeAllSceneObjects();
+
+	CMeshSceneObject * addMeshSceneObject(CMesh * Mesh);
+	CMeshSceneObject * addMeshSceneObject(CMesh * Mesh, CShader * Shader);
+	CMeshSceneObject * addMeshSceneObject(CMesh * Mesh, CShader * Shader, CMaterial const & Material);
+	CMeshSceneObject * addMeshSceneObject(std::string const & Mesh, std::string const & Shader, CMaterial const & Material);
 
     void drawAll();
-
-    CRenderable * const pickRenderable(SLine3 const & ViewLine);
 
 };
 

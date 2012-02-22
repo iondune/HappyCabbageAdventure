@@ -3,44 +3,34 @@
 #include <algorithm>
 #include <sstream>
 
+#include "CShaderLoader.h"
+#include "CMeshLoader.h"
 
-SLight const CScene::NullLight;
+
+CLight const CScene::NullLight;
 
 
 CScene::CScene()
+	: BindProjMatrix(ProjMatrix), BindViewMatrix(ViewMatrix), BindLightCount(LightCount)
 {
     ActiveCamera = & DefaultCamera;
 
-    uProjMatrix = boost::shared_ptr<CMat4Uniform>(new CMat4Uniform());
-    uViewMatrix = boost::shared_ptr<CMat4Uniform>(new CMat4Uniform());
-    uLightCount = boost::shared_ptr<CIntUniform>(new CIntUniform());
-
-    addUniform("uProjMatrix", uProjMatrix);
-    addUniform("uViewMatrix", uViewMatrix);
-    addUniform("uLightCount", uLightCount);
+    addUniform("uProjMatrix", & BindProjMatrix);
+    addUniform("uViewMatrix", & BindViewMatrix);
+    addUniform("uLightCount", & BindLightCount);
 }
 
-void CScene::addUniform(std::string const & label, boost::shared_ptr<IUniform> uniform)
+void CScene::addUniform(std::string const & label, IUniform const * uniform)
 {
-    Uniforms[label] = CRenderable::SUniform(uniform);
+    Uniforms[label] = uniform;
 }
 
 void CScene::removeUniform(std::string const & label)
 {
-    std::map<std::string, CRenderable::SUniform>::iterator it = Uniforms.find(label);
+    std::map<std::string, IUniform const *>::iterator it = Uniforms.find(label);
 
     if (it != Uniforms.end())
         Uniforms.erase(it);
-}
-
-std::map<std::string, CRenderable::SUniform> & CScene::getExplicitUniforms()
-{
-    return Uniforms;
-}
-
-std::map<std::string, CRenderable::SUniform> const & CScene::getExplicitUniforms() const
-{
-    return Uniforms;
 }
 
 CCamera * const CScene::getActiveCamera()
@@ -71,7 +61,7 @@ unsigned int const digitCount(int n)
     return count;
 }
 
-boost::shared_ptr<IUniform> const CScene::getUniform(std::string const & label) const
+IUniform const * CScene::getUniform(std::string const & label) const
 {
     if (label.substr(0, 8) == "uLights[")
     {
@@ -84,37 +74,44 @@ boost::shared_ptr<IUniform> const CScene::getUniform(std::string const & label) 
         if (remaining == "Color")
         {
             if (index >= Lights.size())
-                return NullLight.ColorUniform;
+				return & NullLight.BindColor;
             else
-                return Lights[index].ColorUniform;
+                return & Lights[index]->BindColor;
         }
         else if (remaining == "Position")
         {
             if (index >= Lights.size())
-                return NullLight.PositionUniform;
+                return & NullLight.BindPosition;
             else
-                return Lights[index].PositionUniform;
+                return & Lights[index]->BindPosition;
         }
     }
 
-    std::map<std::string, CRenderable::SUniform>::const_iterator it = Uniforms.find(label);
+    std::map<std::string, IUniform const *>::const_iterator it = Uniforms.find(label);
 
     if (it != Uniforms.end())
-        return it->second.Value;
+        return it->second;
 
-    return boost::shared_ptr<IUniform>();
+    return 0;
 }
 
 void CScene::update()
 {
     ActiveCamera->recalculateViewMatrix();
-    uViewMatrix->Value = ActiveCamera->getViewMatrix();
-    uProjMatrix->Value = ActiveCamera->getProjectionMatrix();
-    if (uLightCount->Value != Lights.size())
+    ViewMatrix = ActiveCamera->getViewMatrix();
+    ProjMatrix = ActiveCamera->getProjectionMatrix();
+
+    if (LightCount != Lights.size())
     {
         SceneChanged = true;
-        uLightCount->Value = Lights.size();
+        LightCount = Lights.size();
     }
+
+	for (std::list<ISceneObject *>::iterator it = SceneObjects.begin(); it != SceneObjects.end(); ++ it)
+		(* it)->updateAbsoluteTransformation();
+
+	for (std::list<ISceneObject *>::iterator it = SceneObjects.begin(); it != SceneObjects.end(); ++ it)
+		(* it)->update();
 }
 
 CSceneManager::CSceneManager()
@@ -122,33 +119,64 @@ CSceneManager::CSceneManager()
     CurrentScene = this;
 }
 
-void CSceneManager::addRenderable(CRenderable * Renderable)
+void CSceneManager::addSceneObject(ISceneObject * sceneObject)
 {
-    Renderables.push_back(Renderable);
+	SceneObjects.push_back(sceneObject);
 }
 
-void CSceneManager::removeRenderable(CRenderable * Renderable)
+void CSceneManager::removeSceneObject(ISceneObject * sceneObject)
 {
-    Renderables.erase(std::remove(Renderables.begin(), Renderables.end(), Renderable), Renderables.end());
+	SceneObjects.erase(std::remove(SceneObjects.begin(), SceneObjects.end(), sceneObject), SceneObjects.end());
 }
 
-void CSceneManager::removeAllRenderables()
+void CSceneManager::removeAllSceneObjects()
 {
-   Renderables.erase(Renderables.begin(), Renderables.end());
+	SceneObjects.erase(SceneObjects.begin(), SceneObjects.end());
 }
 
 void CSceneManager::drawAll()
 {
     CurrentScene->update();
 
-    //printf("size of renderables list: %d\n", Renderables.size());
-    for (std::list<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
+    for (std::list<ISceneObject *>::iterator it = SceneObjects.begin(); it != SceneObjects.end(); ++ it)
         (* it)->draw(CurrentScene);
 
     SceneChanged = false;
 }
 
-CRenderable * const CSceneManager::pickRenderable(SLine3 const & ViewLine)
+CMeshSceneObject * CSceneManager::addMeshSceneObject(CMesh * Mesh)
 {
-    return 0;
+	CMeshSceneObject * Object = new CMeshSceneObject();
+	Object->setMesh(Mesh);
+	addSceneObject(Object);
+	return Object;
+}
+
+CMeshSceneObject * CSceneManager::addMeshSceneObject(CMesh * Mesh, CShader * Shader)
+{
+	CMeshSceneObject * Object = new CMeshSceneObject();
+	Object->setMesh(Mesh);
+	Object->setShader(Shader);
+	addSceneObject(Object);
+	return Object;
+}
+
+CMeshSceneObject * CSceneManager::addMeshSceneObject(CMesh * Mesh, CShader * Shader, CMaterial const & Material)
+{
+	CMeshSceneObject * Object = new CMeshSceneObject();
+	Object->setMesh(Mesh);
+	Object->setShader(Shader);
+	Object->setMaterial(Material);
+	addSceneObject(Object);
+	return Object;
+}
+
+CMeshSceneObject * CSceneManager::addMeshSceneObject(std::string const & Mesh, std::string const & Shader, CMaterial const & Material)
+{
+	CMeshSceneObject * Object = new CMeshSceneObject();
+	Object->setMesh(CMeshLoader::load3dsMesh(Mesh));
+	Object->setShader(CShaderLoader::loadShader(Shader));
+	Object->setMaterial(Material);
+	addSceneObject(Object);
+	return Object;
 }

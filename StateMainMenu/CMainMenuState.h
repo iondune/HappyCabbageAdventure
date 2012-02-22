@@ -32,7 +32,7 @@ class CMainMenuState : public CState<CMainMenuState>
 
       CTexture * woodTexture, * skyTexture;
       CMesh *logoMesh;
-      CMeshRenderable *renderLogo;
+      CMeshSceneObject *renderLogo;
 
       CMainMenuState();
       int mouse_x, mouse_y;

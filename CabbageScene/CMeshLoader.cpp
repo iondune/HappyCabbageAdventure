@@ -272,7 +272,7 @@ CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
     fclose (l_file);
 
     for (std::map<CMesh::SMeshBuffer *, std::string>::iterator it = FaceMaterials.begin(); it != FaceMaterials.end(); ++ it)
-        it->first->DiffuseColor = Materials[it->second];
+        it->first->Material.DiffuseColor = Materials[it->second];
 
     MeshWrapper->MeshBuffers.push_back(Mesh);
 

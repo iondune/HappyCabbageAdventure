@@ -47,6 +47,6 @@ class CGameState : public CState<CGameState>
    void PrepBlock(float x, float y, float w, float h);
    void PrepGrass(float x, float y, float w, float h);
    void PrepSky();
-   CMeshRenderable* PrepEnemy(float x, float y);
+   CMeshSceneObject* PrepEnemy(float x, float y);
 };
 #endif

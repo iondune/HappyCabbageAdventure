@@ -35,13 +35,13 @@ void CEnemy::moveTo(float x,float y) {
 void CEnemy::setShader(CShader * chad) {
    shader = chad;
 }
-CMeshRenderable * CEnemy::setupItem(CShader * chad, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
+CMeshSceneObject * CEnemy::setupItem(CShader * chad, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
     if (num == 0)
-       CBadGuy::makeBadGuy(x, y, w, h, CBadGuy::apple, GameplayManager);
+       CBadGuy::makeBadGuy(x, y, (float) w, (float) h, CBadGuy::apple, GameplayManager);
     else if (num == 1)
-       CBadGuy::makeBadGuy(x, y, w, h, CBadGuy::orange, GameplayManager);
+       CBadGuy::makeBadGuy(x, y, (float) w, (float) h, CBadGuy::orange, GameplayManager);
     else if (num == 2)
-       CBadGuy::makeBadGuy(x, y, w, h, CBadGuy::kiwi, GameplayManager);
+       CBadGuy::makeBadGuy(x, y, (float) w, (float) h, CBadGuy::kiwi, GameplayManager);
     else if (num == 3)
        //CBadGuy::makeBadGuy(x, y, w, h, CBadGuy::grape, GameplayManager);
        printf("Grape is not currently implemented");
@@ -49,5 +49,5 @@ CMeshRenderable * CEnemy::setupItem(CShader * chad, Cabbage::Collider::CEngine *
         printf("Unknown enemy type received.\n");
 
     //BS return.  Either need to make useful or make this void.
-    return new CMeshRenderable();
+    return new CMeshSceneObject();
 }

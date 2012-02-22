@@ -46,7 +46,7 @@ public:
     void begin()
     {
         // OpenGL init
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
@@ -62,17 +62,17 @@ public:
 
         // Setup scene
         CSceneManager & SceneManager = CApplication::get().getSceneManager();
-        SceneManager.Lights.push_back(SLight());
-        SceneManager.Lights.back().ColorUniform->Value = SVector3(0.5f, 0.2f, 0.2f);
-        SceneManager.Lights.back().PositionUniform->Value = SVector3(1.f, 2.f, 3.f);
+        SceneManager.Lights.push_back(new CLight());
+        SceneManager.Lights.back()->Color = SVector3(0.5f, 0.2f, 0.2f);
+        SceneManager.Lights.back()->Position = SVector3(1.f, 2.f, 3.f);
 
-        SceneManager.Lights.push_back(SLight());
-        SceneManager.Lights.back().ColorUniform->Value = SVector3(0.2f, 0.5f, 0.2f);
-        SceneManager.Lights.back().PositionUniform->Value = SVector3(-1.f, -2.f, -3.f);
+        SceneManager.Lights.push_back(new CLight());
+        SceneManager.Lights.back()->Color = SVector3(0.2f, 0.5f, 0.2f);
+        SceneManager.Lights.back()->Position = SVector3(-1.f, -2.f, -3.f);
 
-        SceneManager.Lights.push_back(SLight());
-        SceneManager.Lights.back().ColorUniform->Value = SVector3(0.2f, 0.2f, 0.5f);
-        SceneManager.Lights.back().PositionUniform->Value = SVector3(-3.f, 0.f, 0.f);
+        SceneManager.Lights.push_back(new CLight());
+        SceneManager.Lights.back()->Color = SVector3(0.2f, 0.2f, 0.5f);
+        SceneManager.Lights.back()->Position = SVector3(-3.f, 0.f, 0.f);
 
 
         // Attempt to load shader and attributes
@@ -95,7 +95,7 @@ public:
             MeshFace->calculateNormalsPerFace();
         }
 
-        MeshVertex = CMeshLoader::loadAsciiMesh("../Base/Models/bunny10k.m");
+        MeshVertex = CMeshLoader::loadAsciiMesh("../Base/Models/bunny10k_2.m");
         if (MeshVertex)
         {
             MeshVertex->resizeMesh(SVector3(1.5));
@@ -104,40 +104,54 @@ public:
         }
 
 
-        Renderable = new CMeshRenderable();
+        Renderable = new CMeshSceneObject();
         Renderable->setMesh(MeshFace);
-        Renderable->getMaterial().Shader = Shader;
+        Renderable->setShader(Shader);
         setMaterial(3);
 
-        CApplication::get().getSceneManager().addRenderable(Renderable);
+		CApplication::get().getSceneManager().addSceneObject(Renderable);
 
         Font.init("Fonts/DejaVuSansMono.ttf", 14);
     }
 
+	int currentMat;
+
     void setMaterial(int const i)
     {
+		currentMat = i;
+		CMaterial mat;
         switch (i)
         {
         default:
         case 1:
-            Renderable->getMaterial().AmbientColor->Value = SVector3(0.2f);
-            Renderable->getMaterial().DiffuseColor->Value = SVector3(0.9f);
-            Renderable->getMaterial().Shininess->Value = 1.f;
+            mat.AmbientColor = SVector3(0.2f);
+            mat.DiffuseColor = SVector3(0.9f);
+            mat.Shininess = 10.f;
+			Renderable->setMaterial(mat);
             break;
         case 2:
-            Renderable->getMaterial().AmbientColor->Value = SVector3(0.2f);
-            Renderable->getMaterial().DiffuseColor->Value = SVector3(1.2f);
-            Renderable->getMaterial().Shininess->Value = 2.f;
+            mat.AmbientColor = SVector3(0.2f);
+            mat.DiffuseColor = SVector3(1.2f);
+            mat.Shininess = 200.f;
+			Renderable->setMaterial(mat);
             break;
         case 3:
-            Renderable->getMaterial().AmbientColor->Value = SVector3(0.2f);
-            Renderable->getMaterial().DiffuseColor->Value = SVector3(1.4f);
-            Renderable->getMaterial().Shininess->Value = 3.f;
+            mat.AmbientColor = SVector3(0.2f);
+            mat.DiffuseColor = SVector3(1.4f);
+            mat.Shininess = 3000.f;
+			Renderable->setMaterial(mat);
             break;
         case 4:
-            Renderable->getMaterial().AmbientColor->Value = SVector3(0.2f);
-            Renderable->getMaterial().DiffuseColor->Value = SVector3(1.4f);
-            Renderable->getMaterial().Shininess->Value = 0.1f;
+            mat.AmbientColor = SVector3(0.2f);
+            mat.DiffuseColor = SVector3(1.4f);
+            mat.Shininess = 0.1f;
+			Renderable->setMaterial(mat);
+            break;
+		case 5:
+            mat.AmbientColor = SVector3(0.2f);
+            mat.DiffuseColor = SVector3(1.4f);
+            mat.Shininess = 0.01f;
+			Renderable->setMaterial(mat);
             break;
         }
 
@@ -199,30 +213,36 @@ public:
         case SDLK_f:
 
             if (! Event.Pressed)
+			{
                 Renderable->setMesh(MeshFace);
+				setMaterial(currentMat);
+			}
 
             break;
 
         case SDLK_v:
 
             if (! Event.Pressed)
+			{
                 Renderable->setMesh(MeshVertex);
+				setMaterial(currentMat);
+			}
 
             break;
 
         case SDLK_z:
             if (! Event.Pressed)
-                Renderable->getMaterial().Shader = CShaderLoader::loadShader("Flat");
+                Renderable->setShader(CShaderLoader::loadShader("Flat"));
             break;
 
         case SDLK_x:
             if (! Event.Pressed)
-                Renderable->getMaterial().Shader = CShaderLoader::loadShader("Diffuse");
+                Renderable->setShader(CShaderLoader::loadShader("Diffuse"));
             break;
 
         case SDLK_c:
             if (! Event.Pressed)
-                Renderable->getMaterial().Shader = CShaderLoader::loadShader("Specular");
+                Renderable->setShader(CShaderLoader::loadShader("Specular"));
             break;
 
         case SDLK_j:
@@ -243,19 +263,23 @@ public:
             break;
 
         case SDLK_1:
-           setMaterial(1);
+			setMaterial(1);
             break;
 
         case SDLK_2:
-           setMaterial(2);
+			setMaterial(2);
             break;
 
         case SDLK_3:
-           setMaterial(3);
+			setMaterial(3);
             break;
 
         case SDLK_4:
-           setMaterial(4);
+			setMaterial(4);
+            break;
+
+		case SDLK_5:
+			setMaterial(5);
             break;
 
         case SDLK_F1:
@@ -363,7 +387,7 @@ public:
     // Shader and Mesh utility classes
     CShader * Shader;
     CMesh * MeshFace, * MeshVertex;
-    CMeshRenderable * Renderable;
+    CMeshSceneObject * Renderable;
     CTexture * Texture;
     CCameraControl * Camera;
     CScene * Scene;

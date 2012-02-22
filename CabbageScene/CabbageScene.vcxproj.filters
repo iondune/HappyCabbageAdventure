@@ -27,9 +27,6 @@
     <ClInclude Include="CShaderContext.h">
       <Filter>Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="CMeshRenderable.h">
-      <Filter>Scene Objects</Filter>
-    </ClInclude>
     <ClInclude Include="CSceneManager.h" />
     <ClInclude Include="CCamera.h">
       <Filter>Camera</Filter>
@@ -41,6 +38,21 @@
       <Filter>Scene Objects</Filter>
     </ClInclude>
     <ClInclude Include="ISceneObject.h">
+      <Filter>Scene Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CMaterial.h">
+      <Filter>Scene Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SUniform.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="SAttribute.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneObject.h">
+      <Filter>Scene Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CMeshSceneObject.h">
       <Filter>Scene Objects</Filter>
     </ClInclude>
   </ItemGroup>
@@ -69,9 +81,6 @@
     <ClCompile Include="CShaderContext.cpp">
       <Filter>Shaders</Filter>
     </ClCompile>
-    <ClCompile Include="CMeshRenderable.cpp">
-      <Filter>Scene Objects</Filter>
-    </ClCompile>
     <ClCompile Include="CSceneManager.cpp" />
     <ClCompile Include="CCamera.cpp">
       <Filter>Camera</Filter>
@@ -80,6 +89,15 @@
       <Filter>Scene Objects</Filter>
     </ClCompile>
     <ClCompile Include="ISceneObject.cpp">
+      <Filter>Scene Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CMaterial.cpp">
+      <Filter>Scene Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneObject.cpp">
+      <Filter>Scene Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CMeshSceneObject.cpp">
       <Filter>Scene Objects</Filter>
     </ClCompile>
   </ItemGroup>

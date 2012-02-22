@@ -66,17 +66,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="freetype6.dll" />
-    <None Include="glew32.dll" />
     <None Include="Makefile" />
     <None Include="Readme.txt" />
-    <None Include="SDL.dll" />
-    <None Include="Shaders\normalColor.frag" />
-    <None Include="Shaders\normalColor.vert" />
-    <None Include="spaceship.3ds" />
     <None Include="spaceshiptexture.bmp" />
-    <None Include="tree.3ds" />
-    <None Include="zlib1.dll" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FreeType.cpp" />

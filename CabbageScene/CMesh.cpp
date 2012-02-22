@@ -1,8 +1,68 @@
 #include "CMesh.h"
 
 #include <limits>
+	
+void CMesh::SMeshBuffer::updateBuffers()
+{
+	PositionBuffer.clear();
+	ColorBuffer.clear();
+	NormalBuffer.clear();
+	TexCoordBuffer.clear();
+	IndexBuffer.clear();
+	NormalLineBuffer.clear();
+	NormalColorBuffer.clear();
+	NormalIndexBuffer.clear();
+
+    for (std::vector<SVertex>::iterator it = Vertices.begin(); it != Vertices.end(); ++ it)
+        for (unsigned int j = 0; j < 3; ++ j)
+            PositionBuffer.push_back(it->Position[j]);
+
+    for (std::vector<SVertex>::iterator it = Vertices.begin(); it != Vertices.end(); ++ it)
+        for (unsigned int j = 0; j < 3; ++ j)
+            ColorBuffer.push_back(it->Color[j]);
+
+    for (std::vector<SVertex>::iterator it = Vertices.begin(); it != Vertices.end(); ++ it)
+        for (unsigned int j = 0; j < 3; ++ j)
+            NormalBuffer.push_back(it->Normal[j]);
+
+    for (std::vector<SVertex>::iterator it = Vertices.begin(); it != Vertices.end(); ++ it)
+        for (unsigned int j = 0; j < 2; ++ j)
+            TexCoordBuffer.push_back(it->TextureCoordinates[j]);
+
+    for (std::vector<STriangle>::iterator it = Triangles.begin(); it != Triangles.end(); ++ it)
+        for (unsigned int j = 0; j < 3; ++ j)
+            IndexBuffer.push_back((* it).Indices[j]);
+
+    IndexBuffer.setIsIndexBuffer(true);
+
+
+	static float const LengthFactor = 0.05f;
+
+    for (std::vector<SVertex>::iterator it = Vertices.begin(); it != Vertices.end(); ++ it)
+    {
+        for (unsigned int j = 0; j < 3; ++ j)
+            NormalLineBuffer.push_back(it->Position[j]);
+        for (unsigned int j = 0; j < 3; ++ j)
+            NormalLineBuffer.push_back(it->Position[j] + it->Normal[j]*LengthFactor);
+    }
+
+    for (std::vector<SVertex>::iterator it = Vertices.begin(); it != Vertices.end(); ++ it)
+    {
+        for (unsigned int j = 0; j < 3; ++ j)
+            NormalColorBuffer.push_back(it->Color[j]);
+        for (unsigned int j = 0; j < 3; ++ j)
+            NormalColorBuffer.push_back(it->Color[j]);
+    }
+
+    for (unsigned int i = 0; i < Vertices.size(); ++ i)
+        for (unsigned int j = 0; j < 2; ++ j)
+            NormalIndexBuffer.push_back(i*2 + j);
+
+    NormalIndexBuffer.setIsIndexBuffer(true);
+}
 
 CMesh::CMesh()
+	: Dirty(true), Revision(0)
 {}
 
 CMesh::~CMesh()
@@ -99,16 +159,18 @@ SVector3 const CMesh::getExtent() const
 void CMesh::calculateNormalsPerFace()
 {
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
-    for (std::vector<STriangle>::iterator it = (* bit)->Triangles.begin(); it != (* bit)->Triangles.end(); ++ it)
-    {
-        it->Normal = ((* bit)->Vertices[it->Indices[1]].Position - (* bit)->Vertices[it->Indices[0]].Position).
-            crossProduct((* bit)->Vertices[it->Indices[2]].Position - (* bit)->Vertices[it->Indices[0]].Position);
-        (* bit)->Vertices[it->Indices[0]].Normal = (* bit)->Vertices[it->Indices[1]].Normal = (* bit)->Vertices[it->Indices[2]].Normal = it->Normal;
-    }
+	{
+		for (std::vector<STriangle>::iterator it = (* bit)->Triangles.begin(); it != (* bit)->Triangles.end(); ++ it)
+		{
+			it->Normal = ((* bit)->Vertices[it->Indices[1]].Position - (* bit)->Vertices[it->Indices[0]].Position).
+				crossProduct((* bit)->Vertices[it->Indices[2]].Position - (* bit)->Vertices[it->Indices[0]].Position);
+			(* bit)->Vertices[it->Indices[0]].Normal = (* bit)->Vertices[it->Indices[1]].Normal = (* bit)->Vertices[it->Indices[2]].Normal = it->Normal;
+		}
+	}
 
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
-    for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
-        it->Normal.normalize();
+		for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
+			it->Normal.normalize();
 }
 
 void CMesh::calculateNormalsPerVertex()
@@ -116,195 +178,22 @@ void CMesh::calculateNormalsPerVertex()
     calculateNormalsPerFace();
 
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
-    for (std::vector<STriangle>::iterator it = (* bit)->Triangles.begin(); it != (* bit)->Triangles.end(); ++ it)
-    {
-        for (int i = 0; i < 3; ++ i)
-        {
-            (* bit)->Vertices[it->Indices[i]].Normal += it->Normal;
-        }
-    }
+		for (std::vector<STriangle>::iterator it = (* bit)->Triangles.begin(); it != (* bit)->Triangles.end(); ++ it)
+			for (int i = 0; i < 3; ++ i)
+				(* bit)->Vertices[it->Indices[i]].Normal += it->Normal;
 
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
-    for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
-        it->Normal.normalize();
+		for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
+			it->Normal.normalize();
 }
 
-std::vector<CBufferObject<float> *> CMesh::makePositionBuffer()
+void CMesh::updateBuffers()
 {
-    if (PositionBuffers.size())
-        return PositionBuffers;
-
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
-    {
-        CBufferObject<float> * PositionBuffer = new CBufferObject<float>();
-
-        for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
-        {
-            for (unsigned int j = 0; j < 3; ++ j)
-                PositionBuffer->push_back(it->Position[j]);
-        }
-
-        PositionBuffers.push_back(PositionBuffer);
-    }
-
-    return PositionBuffers;
-}
-
-std::vector<CBufferObject<float> *> CMesh::makeColorBuffer()
-{
-    if (ColorBuffers.size())
-        return ColorBuffers;
-
-    for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
-    {
-        CBufferObject<float> * ColorBuffer = new CBufferObject<float>();
-
-        for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
-        {
-            for (unsigned int j = 0; j < 3; ++ j)
-                ColorBuffer->push_back(it->Color[j]);
-        }
-
-        ColorBuffers.push_back(ColorBuffer);
-    }
-
-    return ColorBuffers;
-}
-
-std::vector<CBufferObject<float> *> CMesh::makeNormalBuffer()
-{
-    if (NormalBuffers.size())
-        return NormalBuffers;
-
-    for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
-    {
-        CBufferObject<float> * NormalBuffer = new CBufferObject<float>();
-
-        for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
-        {
-            for (unsigned int j = 0; j < 3; ++ j)
-                NormalBuffer->push_back(it->Normal[j]);
-        }
-
-        NormalBuffers.push_back(NormalBuffer);
-    }
-
-    return NormalBuffers;
-}
-
-std::vector<CBufferObject<float> *> CMesh::makeTexCoordBuffer()
-{
-    if (TexCoordBuffers.size())
-        return TexCoordBuffers;
-
-    for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
-    {
-        CBufferObject<float> * TexCoordBuffer = new CBufferObject<float>();
-
-        for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
-        {
-            for (unsigned int j = 0; j < 2; ++ j)
-                TexCoordBuffer->push_back(it->TextureCoordinates[j]);
-        }
-
-        TexCoordBuffers.push_back(TexCoordBuffer);
-    }
-
-    return TexCoordBuffers;
-}
-
-std::vector<CBufferObject<unsigned short> *> CMesh::makeIndexBuffer()
-{
-    if (IndexBuffers.size())
-        return IndexBuffers;
-
-    for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
-    {
-        CBufferObject<unsigned short> * IndexBuffer = new CBufferObject<unsigned short>();
-
-        for (std::vector<STriangle>::iterator it = (* bit)->Triangles.begin(); it != (* bit)->Triangles.end(); ++ it)
-        {
-            for (unsigned int j = 0; j < 3; ++ j)
-                IndexBuffer->push_back((* it).Indices[j]);
-        }
-
-        IndexBuffer->setIsIndexBuffer(true);
-        IndexBuffers.push_back(IndexBuffer);
-    }
-    
-
-    return IndexBuffers;
-}
-
-std::vector<CBufferObject<float> *> CMesh::makeNormalLineBuffer(float const lengthFactor)
-{
-    if (NormalLineBuffers.size())
-        return NormalLineBuffers;
-
-    for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
-    {
-        CBufferObject<float> * NormalLineBuffer = new CBufferObject<float>();
-
-        for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
-        {
-            for (unsigned int j = 0; j < 3; ++ j)
-                NormalLineBuffer->push_back(it->Position[j]);
-            for (unsigned int j = 0; j < 3; ++ j)
-                NormalLineBuffer->push_back(it->Position[j] + it->Normal[j]*lengthFactor);
-        }
-
-        NormalLineBuffers.push_back(NormalLineBuffer);
-    }
-
-
-    return NormalLineBuffers;
-}
-
-std::vector<CBufferObject<float> *> CMesh::makeNormalColorBuffer()
-{
-    if (NormalColorBuffers.size())
-        return NormalColorBuffers;
-
-    for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
-    {
-        CBufferObject<float> * NormalColorBuffer = new CBufferObject<float>();
-
-        for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
-        {
-            for (unsigned int j = 0; j < 3; ++ j)
-                NormalColorBuffer->push_back(it->Color[j]);
-
-            for (unsigned int j = 0; j < 3; ++ j)
-                NormalColorBuffer->push_back(it->Color[j]);
-        }
-
-        NormalColorBuffers.push_back(NormalColorBuffer);
-    }
-
-    return NormalColorBuffers;
-}
-
-std::vector<CBufferObject<unsigned short> *> CMesh::makeNormalIndexBuffer()
-{
-    if (NormalIndexBuffers.size())
-        return NormalIndexBuffers;
-
-    for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
-    {
-        CBufferObject<unsigned short> * NormalIndexBuffer = new CBufferObject<unsigned short>();
-
-        for (unsigned int i = 0; i < (* bit)->Vertices.size(); ++ i)
-        {
-            for (unsigned int j = 0; j < 2; ++ j)
-                NormalIndexBuffer->push_back(i*2 + j);
-        }
-
-        NormalIndexBuffer->setIsIndexBuffer(true);
-
-        NormalIndexBuffers.push_back(NormalIndexBuffer);
-    }
-
-    return NormalIndexBuffers;
+		(* bit)->updateBuffers();
+	
+	++ Revision;
+	Dirty = false;
 }
 
 SBoundingBox3 const CMesh::getBoundingBox() const
@@ -343,4 +232,19 @@ void CMesh::linearizeIndices()
         (* bit)->Vertices = newVertices;
         (* bit)->Triangles = newTriangles;
     }
+}
+
+bool const CMesh::isDirty() const
+{
+	return Dirty;
+}
+
+void CMesh::setDirty(bool const dirty)
+{
+	Dirty = dirty;
+}
+
+unsigned int const CMesh::getRevision() const
+{
+	return Revision;
 }

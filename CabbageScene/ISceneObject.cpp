@@ -9,56 +9,63 @@
 
 
 ISceneObject::ISceneObject()
-    : Scale(1), DebugDataFlags(0), UsesRotationMatrix(false), Visible(true)
+    : DebugDataFlags(0), Visible(true), Parent(0)
 {}
 
 
-SVector3 const & ISceneObject::getTranslation() const
+void ISceneObject::updateAbsoluteTransformation()
 {
-    return Translation;
+	AbsoluteTransformation = Transformation;
+	if (Parent)
+	{
+		AbsoluteTransformation = AbsoluteTransformation * Parent->AbsoluteTransformation;
+	}
+
+	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
+	{
+		(* it)->updateAbsoluteTransformation();
+	}
 }
 
-SVector3 const & ISceneObject::getRotation() const
+glm::mat4 const & ISceneObject::getAbsoluteTransformation() const
 {
-    return Rotation;
+	return AbsoluteTransformation;
 }
-
-glm::mat4 const & ISceneObject::getRotationMatrix() const
-{
-    return RotationMatrix;
-}
-
-SVector3 const & ISceneObject::getScale() const
-{
-    return Scale;
-}
-
 
 void ISceneObject::setTranslation(SVector3 const & translation)
 {
-    Translation = translation;
+	Translation = translation;
+	Transformation.setTranslation(translation);
 }
 
 void ISceneObject::setRotation(SVector3 const & rotation)
 {
-    UsesRotationMatrix = false;
-    Rotation = rotation;
+	Rotation = rotation;
+	Transformation.setRotation(rotation);
 }
 
 void ISceneObject::setRotation(glm::mat4 const & matrix)
 {
-    UsesRotationMatrix = true;
-    RotationMatrix = matrix;
+	Transformation.setRotation(matrix);
 }
 
 void ISceneObject::setScale(SVector3 const & scale)
 {
-    Scale = scale;
+	Scale = scale;
+	Transformation.setScale(scale);
 }
 
 
+void ISceneObject::update()
+{
+	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
+		(* it)->update();
+}
+
 void ISceneObject::draw(CScene const * const scene)
 {
+	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
+		(* it)->draw(scene);
 }
 
 SBoundingBox3 const & ISceneObject::getBoundingBox() const
@@ -105,4 +112,54 @@ bool const ISceneObject::isVisible() const
 void ISceneObject::setVisible(bool const isVisible)
 {
     Visible = isVisible;
+}
+
+STransformation3 const & ISceneObject::getTransformation() const
+{
+	return Transformation;
+}
+
+ISceneObject const * const ISceneObject::getParent() const
+{
+	return Parent;
+}
+
+std::list<ISceneObject *> const & ISceneObject::getChildren() const
+{
+	return Children;
+}
+
+void ISceneObject::removeChild(ISceneObject * child)
+{
+	Children.erase(std::remove(Children.begin(), Children.end(), child), Children.end());
+	child->Parent = 0;
+}
+
+void ISceneObject::addChild(ISceneObject * child)
+{
+	Children.push_back(child);
+	child->Parent = this;
+}
+
+void ISceneObject::setParent(ISceneObject * parent)
+{
+	if (Parent)
+		Parent->removeChild(this);
+	if (parent)
+		parent->addChild(this);
+}
+
+SVector3 const & ISceneObject::getRotation() const
+{
+	return Rotation;
+}
+
+SVector3 const & ISceneObject::getTranslation() const
+{
+	return Translation;
+}
+
+SVector3 const & ISceneObject::getScale() const
+{
+	return Scale;
 }

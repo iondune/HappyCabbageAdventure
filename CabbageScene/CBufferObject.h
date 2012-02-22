@@ -88,6 +88,12 @@ public:
         return IndexBuffer;
     }
 
+	void clear()
+	{
+		Elements.clear();
+		Dirty = true;
+	}
+
     void setIsIndexBuffer(bool const isIndexBuffer)
     {
         IndexBuffer = isIndexBuffer;

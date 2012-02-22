@@ -1,0 +1,34 @@
+#ifndef _CABBAGE_SCENE_CSCENEOBJECT_H_INCLUDED_
+#define _CABBAGE_SCENE_CSCENEOBJECT_H_INCLUDED_
+
+#include "ISceneObject.h"
+#include "CRenderable.h"
+
+/*!
+ * Standard implementation of ISceneObject, renders a set of CRenderables
+ */
+class CSceneObject : public ISceneObject
+{
+
+protected:
+
+	std::vector<CRenderable *> Renderables;
+
+public:
+
+	CSceneObject();
+
+	void addSceneObject(CRenderable * Renderable);
+	void removeSceneObject(CRenderable * Renderable);
+
+    void draw(CScene const * const scene);
+
+	void setShader(CShader * shader);
+	void setShader(std::string const & shader);
+	void setMaterial(CMaterial const & material);
+	void setTexture(CTexture * texture);
+	void setTexture(std::string const & texture);
+
+};
+
+#endif

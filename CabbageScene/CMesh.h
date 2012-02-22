@@ -5,14 +5,15 @@
 
 #include "SVertex.h"
 #include "CBufferObject.h"
+#include "CMaterial.h"
 
 #include <vector>
 
 class CMesh
 {
 
-    std::vector<CBufferObject<float> *> PositionBuffers, ColorBuffers, NormalBuffers, TexCoordBuffers, NormalLineBuffers, NormalColorBuffers;
-    std::vector<CBufferObject<unsigned short> *> IndexBuffers, NormalIndexBuffers;
+	bool Dirty;
+	unsigned int Revision;
 
 public:
 
@@ -27,7 +28,12 @@ public:
         std::vector<SVertex> Vertices;
         std::vector<STriangle> Triangles;
 
-        SVector3 DiffuseColor;
+		CBufferObject<float> PositionBuffer, ColorBuffer, NormalBuffer, TexCoordBuffer, NormalLineBuffer, NormalColorBuffer;
+		CBufferObject<unsigned short> IndexBuffer, NormalIndexBuffer;
+
+		void updateBuffers();
+
+        CMaterial Material;
     };
 
     std::vector<SMeshBuffer *> MeshBuffers;
@@ -47,19 +53,16 @@ public:
     void calculateNormalsPerFace();
     void calculateNormalsPerVertex();
 
-    std::vector<CBufferObject<float> *> makePositionBuffer();
-    std::vector<CBufferObject<float> *> makeColorBuffer();
-    std::vector<CBufferObject<float> *> makeNormalBuffer();
-    std::vector<CBufferObject<float> *> makeTexCoordBuffer();
-    std::vector<CBufferObject<unsigned short> *> makeIndexBuffer();
-
-    std::vector<CBufferObject<float> *> makeNormalLineBuffer(float const lengthFactor = 0.05f);
-    std::vector<CBufferObject<float> *> makeNormalColorBuffer();
-    std::vector<CBufferObject<unsigned short> *> makeNormalIndexBuffer();
+    void updateBuffers();
 
     SBoundingBox3 const getBoundingBox() const;
 
     void linearizeIndices();
+
+	bool const isDirty() const;
+	void setDirty(bool const dirty);
+
+	unsigned int const getRevision() const;
 
 };
 
