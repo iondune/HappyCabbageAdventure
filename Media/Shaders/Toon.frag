@@ -1,12 +1,30 @@
--- Fragment.GL2
+// Fragment.GL2
 
 varying vec3 EyespaceNormal;
 varying vec3 Diffuse;
 
-uniform vec3 LightPosition;
-uniform vec3 uMaterial.AmbientColor;
-uniform vec3 SpecularMaterial;
-uniform float uMaterial.Shininess;
+//uniform vec3 LightPosition;
+//uniform vec3 uMaterial.AmbientColor;
+//uniform vec3 uMaterial.SpecularColor;
+//uniform float uMaterial.Shininess;
+
+struct SMaterial
+{
+    vec3 SpecularColor;
+    vec3 AmbientColor;
+    vec3 DiffuseColor;
+    float Shininess;
+};
+
+uniform SMaterial uMaterial;
+
+struct SLight
+{
+    vec3 Position;
+    vec3 Color;
+};
+
+uniform SLight uLights[4];
 
 float stepmix(float edge0, float edge1, float E, float x)
 {
@@ -17,7 +35,7 @@ float stepmix(float edge0, float edge1, float E, float x)
 void main()
 {
     vec3 N = normalize(EyespaceNormal);
-    vec3 L = normalize(LightPosition);
+    vec3 L = normalize(uLights[0].Position);
     vec3 Eye = vec3(0, 0, 1);
     vec3 H = normalize(L + Eye);
     
@@ -49,6 +67,6 @@ void main()
         sf = step(0.5, sf);
     }
 
-    vec3 color = uMaterial.AmbientColor + df * Diffuse + sf * SpecularMaterial;
+    vec3 color = uMaterial.AmbientColor + df * Diffuse + sf * vec3(1,1,1);
     gl_FragColor = vec4(color, 1.0);
 }
