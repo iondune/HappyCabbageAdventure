@@ -36,6 +36,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{22CB
 		Media\Shaders\light.vert = Media\Shaders\light.vert
 		Media\Shaders\normalColor.frag = Media\Shaders\normalColor.frag
 		Media\Shaders\normalColor.vert = Media\Shaders\normalColor.vert
+		Media\Shaders\Particle.frag = Media\Shaders\Particle.frag
+		Media\Shaders\Particle.vert = Media\Shaders\Particle.vert
 		Media\Shaders\Simple.frag = Media\Shaders\Simple.frag
 		Media\Shaders\Simple.vert = Media\Shaders\Simple.vert
 		Media\Shaders\Specular.frag = Media\Shaders\Specular.frag
@@ -149,6 +151,7 @@ Global
 		{9EC4EF67-EDCE-4FDA-97E9-CADBBEAB2D89}.Release|Win32.ActiveCfg = Release|Win32
 		{9EC4EF67-EDCE-4FDA-97E9-CADBBEAB2D89}.Release|Win32.Build.0 = Release|Win32
 		{75299A5D-B7AF-4B26-8B18-3116172F330D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{75299A5D-B7AF-4B26-8B18-3116172F330D}.Debug|Win32.Build.0 = Debug|Win32
 		{75299A5D-B7AF-4B26-8B18-3116172F330D}.Release|Win32.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
