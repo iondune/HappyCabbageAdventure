@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{22CB
 		Media\Shaders\Diffuse.vert = Media\Shaders\Diffuse.vert
 		Media\Shaders\DiffuseTexture.frag = Media\Shaders\DiffuseTexture.frag
 		Media\Shaders\DiffuseTexture.vert = Media\Shaders\DiffuseTexture.vert
+		Media\Shaders\DiffuseTexture_2.frag = Media\Shaders\DiffuseTexture_2.frag
+		Media\Shaders\DiffuseTexture_2.vert = Media\Shaders\DiffuseTexture_2.vert
 		Media\Shaders\DiffuseTextureBright.frag = Media\Shaders\DiffuseTextureBright.frag
 		Media\Shaders\DiffuseTextureBright.vert = Media\Shaders\DiffuseTextureBright.vert
 		Media\Shaders\Flat.frag = Media\Shaders\Flat.frag
@@ -38,6 +40,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{22CB
 		Media\Shaders\Simple.vert = Media\Shaders\Simple.vert
 		Media\Shaders\Specular.frag = Media\Shaders\Specular.frag
 		Media\Shaders\Specular.vert = Media\Shaders\Specular.vert
+		Media\Shaders\Toon.frag = Media\Shaders\Toon.frag
+		Media\Shaders\Toon.frag.original = Media\Shaders\Toon.frag.original
+		Media\Shaders\Toon.vert = Media\Shaders\Toon.vert
+		Media\Shaders\Toon.vert.original = Media\Shaders\Toon.vert.original
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Base", "Base\Base.vcxproj", "{11D86DD3-FE36-4890-8515-41B0B2DBFE9E}"
@@ -144,7 +150,6 @@ Global
 		{9EC4EF67-EDCE-4FDA-97E9-CADBBEAB2D89}.Release|Win32.Build.0 = Release|Win32
 		{75299A5D-B7AF-4B26-8B18-3116172F330D}.Debug|Win32.ActiveCfg = Debug|Win32
 		{75299A5D-B7AF-4B26-8B18-3116172F330D}.Release|Win32.ActiveCfg = Release|Win32
-		{75299A5D-B7AF-4B26-8B18-3116172F330D}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

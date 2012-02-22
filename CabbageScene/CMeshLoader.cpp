@@ -23,14 +23,17 @@ static long filelength(int f)
 }
 
 // TODO: Rewrite this horrendous pile of C nonsense
-CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
+CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName, bool const useCache)
 {
-    std::map<std::string, CMesh *>::iterator it = LoadedMeshes.find(fileName);
+	if (useCache)
+	{
+		std::map<std::string, CMesh *>::iterator it = LoadedMeshes.find(fileName);
 
-    if (it != LoadedMeshes.end())
-    {
-        return it->second;
-    }
+		if (it != LoadedMeshes.end())
+		{
+			return it->second;
+		}
+	}
 
     int i; //Index variable
 
@@ -276,7 +279,8 @@ CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName)
 
     MeshWrapper->MeshBuffers.push_back(Mesh);
 
-    LoadedMeshes[fileName] = MeshWrapper;
+	if (useCache)
+		LoadedMeshes[fileName] = MeshWrapper;
     return MeshWrapper;
 }
 

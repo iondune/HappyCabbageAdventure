@@ -8,11 +8,6 @@ varying vec3 vLightColor[4];
 varying vec3 vEye[4];
 uniform int uLightCount;
 
-//uniform vec3 LightPosition;
-//uniform vec3 uMaterial.AmbientColor;
-//uniform vec3 uMaterial.SpecularColor;
-//uniform float uMaterial.Shininess;
-
 struct SMaterial
 {
     vec3 SpecularColor;

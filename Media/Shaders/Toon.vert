@@ -8,7 +8,7 @@ uniform mat4 uViewMatrix;
 uniform mat4 uModelMatrix;
 uniform mat4 uNormalMatrix;
 uniform int uLightCount;
-//uniform vec3 uMaterial.DiffuseColor;
+
 struct SMaterial
 {
     vec3 SpecularColor;
