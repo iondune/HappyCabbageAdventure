@@ -84,9 +84,9 @@ void EKiwi::update(float const TickTime) {
 
 void EKiwi::doRenderable() {
 
-   rotateBird +=5.0f * SineValue;
+      rotateBird = -100.0f * SineValue;
 
-   printf("SineValue: %f\n", SineValue);
+   printf("rotateBird: %f\n", rotateBird);
 
    Renderable->setRotation(SVector3(-90 + rotateBird, 0, -90));
 
