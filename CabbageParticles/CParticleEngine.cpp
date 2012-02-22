@@ -27,16 +27,18 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int part
       //CApplication::get().getSceneManager().addSceneObject(cPtr->getRenderable());
    }
    */
-   std::vector<SVector3*> positionArr = (SVector3*) malloc(sizeof(SVector3)*max);
-   std::vector<SVector3*> colorArr = (SVector3*) malloc(sizeof(SVector3)*max);
-   std::vector<float> sizeArr = (float*) malloc(sizeof(float)*max);
+   std::vector<SVector3*> positionArr;
+   std::vector<SVector3*> colorArr;
+   std::vector<float> sizeArr;
    for(int i = 0; i < max; i++) {
       positionArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*10 - 5, (float)rand()/(float)RAND_MAX*2, 0));
       colorArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*0.8 + 0.2, (float)rand()/(float)RAND_MAX*0.8 + 0.2, (float)rand()/(float)RAND_MAX*0.8 + 0.2));
       sizeArr.push_back((float)rand()/(float)RAND_MAX*3 + 1);
    }
    CParticleObject * myObj = new CParticleObject();
+   myObj->setup(positionArr, colorArr, sizeArr, max);
 
+   CApplication::get().getSceneManager().addSceneObject(myObj);
 }
 
 void CParticleEngine::setCenterPos(SVector3 cP) {
