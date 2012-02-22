@@ -19,6 +19,13 @@ class CParticleEngine {
    int numParticles;
    float totalDuration;
    float currentDuration;
+
+   std::vector<SVector3*> positionArr;
+   /*
+   std::vector<SVector3*> colorArr;
+   std::vector<float> sizeArr;
+   */
+
    public:
       int dead, lookRight;
       //Duration in milliseconds

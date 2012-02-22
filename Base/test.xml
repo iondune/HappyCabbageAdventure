@@ -3,3 +3,5 @@
 </CEnemy>
 <CEnemy X ="5" Y ="2" height ="1" width ="1" type ="2">
 </CEnemy>
+<CBlock X="0" Y="2" width="1" height="1">
+</CBlock>

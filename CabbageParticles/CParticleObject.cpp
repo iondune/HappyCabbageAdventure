@@ -77,7 +77,7 @@ void CParticleObject::setup(std::vector<SVector3*> vectorArr, std::vector<SVecto
    particlesRenderable->addAttribute("aPointSize", new SAttribute<float>(& SizeBuffer, 3));
    particlesRenderable->addUniform("uTexColor", new SUniform<int>(0));
 
-   this->setTexture(CImageLoader::loadTexture("Textures/particle.bmp"));
+   this->setTexture(CImageLoader::loadTexture("Textures/sky.bmp"));
    particlesRenderable->setShader(CShaderLoader::loadShader("Particle"));
 
    // Add mesh index buffer
