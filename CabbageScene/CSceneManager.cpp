@@ -134,12 +134,34 @@ void CSceneManager::removeAllSceneObjects()
 	SceneObjects.erase(SceneObjects.begin(), SceneObjects.end());
 }
 
+
+static inline bool printOpenGLErrors()
+{
+    bool Succeeded = true;
+
+    GLenum glErr = glGetError();
+    while (glErr != GL_NO_ERROR)
+    {
+        std::cerr << "OpenGL Error: " << gluErrorString(glErr) << std::endl;
+        Succeeded = false;
+        glErr = glGetError();
+    }
+
+    return Succeeded;
+}
+
+
+
 void CSceneManager::drawAll()
 {
     CurrentScene->update();
 
-    for (std::list<ISceneObject *>::iterator it = SceneObjects.begin(); it != SceneObjects.end(); ++ it)
+    int i = 0;
+    for (std::list<ISceneObject *>::iterator it = SceneObjects.begin(); it != SceneObjects.end(); ++ it) {
         (* it)->draw(CurrentScene);
+         printf("Object number %d: ", i); printOpenGLErrors();
+         i++;
+    }
 
     SceneChanged = false;
 }

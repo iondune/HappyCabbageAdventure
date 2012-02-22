@@ -63,6 +63,7 @@ std::string CShaderLoader::ShaderDirectory = "../Media/Shaders/";
 
 CShader * const CShaderLoader::loadShader(std::string const & name)
 {
+   printf("SHADER1\n");
     std::map<std::string, CShader *>::iterator it = LoadedShaders.find(name);
 
     if (it != LoadedShaders.end())
@@ -77,6 +78,7 @@ CShader * const CShaderLoader::loadShader(std::string const & name)
     GLuint VS = glCreateShader(GL_VERTEX_SHADER);
     GLuint FS = glCreateShader(GL_FRAGMENT_SHADER);
 
+   printf("SHADER2\n");
     // Read Vertex Shader file
     {
         std::ifstream vertFile(vertFileName.c_str());
@@ -97,6 +99,7 @@ CShader * const CShaderLoader::loadShader(std::string const & name)
         GLchar const * SourceString = vertFileSource.c_str();
         glShaderSource(VS, 1, & SourceString, NULL);
     }
+   printf("SHADER3\n");
 
 
     // Read Fragment Shader file
@@ -119,14 +122,16 @@ CShader * const CShaderLoader::loadShader(std::string const & name)
         GLchar const * SourceString = fragFileSource.c_str();
         glShaderSource(FS, 1, & SourceString, NULL);
     }
-
-
     // Compile Shader
     {
+         printf("SHADER4.1\n");
         glCompileShader(VS);
+         printf("SHADER4.2\n");
         GLint vCompiled;
         glGetShaderiv(VS, GL_COMPILE_STATUS, & vCompiled);
+         printf("SHADER4.3\n");
         printShaderInfoLog(VS);
+         printf("SHADER4.4\n");
         if (! vCompiled)
         {
             std::cerr << "Error compiling shader: " << vertFileName << std::endl;
@@ -134,7 +139,9 @@ CShader * const CShaderLoader::loadShader(std::string const & name)
             glDeleteShader(FS);
             return 0;
         }
+         printf("SHADER4.5\n");
     }
+   printf("SHADER5\n");
 
     {
         glCompileShader(FS);
@@ -149,13 +156,18 @@ CShader * const CShaderLoader::loadShader(std::string const & name)
             return 0;
         }
     }
+   printf("SHADER6\n");
 
     CShader * Shader = new CShader();
+   printf("SHADER7\n");
 
     // Create Shader program
     Shader->Handle = glCreateProgram();
+   printf("SHADER8\n");
     glAttachShader(Shader->Handle, VS);
+   printf("SHADER9\n");
     glAttachShader(Shader->Handle, FS);
+   printf("SHADER10\n");
 
     // Link program
     {
@@ -164,6 +176,7 @@ CShader * const CShaderLoader::loadShader(std::string const & name)
         glGetProgramiv(Shader->Handle, GL_LINK_STATUS, & linked);
         printProgramInfoLog(Shader->Handle);
     }
+   printf("SHADER11\n");
 
     std::cout << "Sucessfully installed shader! (" << Shader->Handle << ")" << std::endl;
 
@@ -172,6 +185,7 @@ CShader * const CShaderLoader::loadShader(std::string const & name)
     GLint longestName = 0;
     glGetProgramiv(Shader->Handle, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, & longestName);
     glGetProgramiv(Shader->Handle, GL_ACTIVE_ATTRIBUTES, & total);
+   printf("SHADER12\n");
     for (GLint i = 0; i < total; ++ i)
     {
         GLsizei nameLenth = -1, variableSize = -1;
@@ -202,5 +216,6 @@ CShader * const CShaderLoader::loadShader(std::string const & name)
     }
 
     LoadedShaders[name] = Shader;
+   printf("SHADER13\n");
     return Shader;
 }

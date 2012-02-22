@@ -188,6 +188,7 @@ void CGameState::EngineInit( void ) {
    */
 }
 
+#define PARTICLE
 #ifdef PARTICLE
 CParticleEngine * particleLeafEngine;
 CParticleEngine * particleCubeEngine;
@@ -479,11 +480,30 @@ void CGameState::oldDisplay() {
    //Rotation.Y += RotationSpeed*Delta*2;
 
    glLoadIdentity();
+
+
 }
+
+static inline bool printOpenGLErrors()
+{
+    bool Succeeded = true;
+
+    GLenum glErr = glGetError();
+    while (glErr != GL_NO_ERROR)
+    {
+        std::cerr << "OpenGL Error: " << gluErrorString(glErr) << std::endl;
+        Succeeded = false;
+        glErr = glGetError();
+    }
+
+    return Succeeded;
+}
+
 
 //Runs at very start of display
 void CGameState::OnRenderStart(float const Elapsed)
 {
+   while(glGetError() != GL_NO_ERROR);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
@@ -552,10 +572,12 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
 #ifdef PARTICLE
       if(Event.Key == SDLK_e) {
+         printf("Particle Engine On\n");
          if(!particleCubeEngine || (particleCubeEngine && particleCubeEngine->dead))
             particleCubeEngine = new CParticleEngine(SVector3(0, 1, 0), 70, 3, CUBE_PARTICLE);
       }
       if(Event.Key == SDLK_r) {
+         printf("Particle Engine On\n");
          if(!particleLeafEngine || (particleLeafEngine && particleLeafEngine->dead))
             particleLeafEngine = new CParticleEngine(SVector3(0, 1, 0), 70, 3, LEAF_PARTICLE);
       }
@@ -673,13 +695,13 @@ CMeshSceneObject* CGameState::PrepEnemy(float x, float y) {
    Application.getSceneManager().addSceneObject(tempEnemy);
    return tempEnemy;
 }
-
 void LoadShaders() {
    Flat = CShaderLoader::loadShader("Diffuse");
    Diffuse = CShaderLoader::loadShader("Diffuse");
    DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture");
    normalColor = CShaderLoader::loadShader("Simple");
-   Toon = CShaderLoader::loadShader("Toon");
+   //Toon = CShaderLoader::loadShader("Toon");
+   Toon = Diffuse; 
 }
 
 
