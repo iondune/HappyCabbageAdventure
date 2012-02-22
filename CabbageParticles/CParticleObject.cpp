@@ -10,22 +10,6 @@ void CParticleObject::setPositions(std::vector<SVector3*> vectorArr) {
    positionsArr = vectorArr;
 }
 
-static inline bool printOpenGLErrors()
-{
-    bool Succeeded = true;
-
-    GLenum glErr = glGetError();
-    while (glErr != GL_NO_ERROR)
-    {
-        std::cerr << "OpenGL Error: " << gluErrorString(glErr) << std::endl;
-        Succeeded = false;
-        glErr = glGetError();
-    }
-
-    return Succeeded;
-}
-
-
 /*
 void CMeshSceneObject::update()
 {
@@ -55,7 +39,6 @@ void CParticleObject::draw(CScene const * const scene) {
 }
 
 void CParticleObject::setup(std::vector<SVector3*> vectorArr, std::vector<SVector3*> colorArr, std::vector<float> sizeArr, int num) {
-   printf("Beginning of setup: "); printOpenGLErrors();
    updated = true;
    numParticles = num;
    particlesRenderable = new CRenderable(this);
@@ -77,7 +60,9 @@ void CParticleObject::setup(std::vector<SVector3*> vectorArr, std::vector<SVecto
    particlesRenderable->addAttribute("aPointSize", new SAttribute<float>(& SizeBuffer, 3));
    particlesRenderable->addUniform("uTexColor", new SUniform<int>(0));
 
-   this->setTexture(CImageLoader::loadTexture("Textures/sky.bmp"));
+   glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+   particlesRenderable->getMaterial().Texture = CImageLoader::loadTexture("Textures/particle2.bmp");
+
    particlesRenderable->setShader(CShaderLoader::loadShader("Particle"));
 
    // Add mesh index buffer

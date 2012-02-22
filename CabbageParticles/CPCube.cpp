@@ -30,13 +30,9 @@ void CPCube::updateMatrices(float timeElapsed) {
       sineValue += 4*timeElapsed;
       Duration += timeElapsed;
       float newX = (*lookRight?1:-1)*(1+yFactor);
-      /*
-      getRenderable()->setTranslation(
-            SVector3(
-               newX,
-               Amplitude*cos(Period*sineValue), 
-               Amplitude*sin(Period*sineValue)));
-      getRenderable()->setRotation(RotationSpeed*sineValue);
-      */
+      translate = SVector3(newX,
+                           Amplitude*cos(Period*sineValue), 
+                           Amplitude*sin(Period*sineValue));
+      //getRenderable()->setRotation(RotationSpeed*sineValue);
    }
 }

@@ -12,8 +12,13 @@ varying vec4 vColor;
 void main()
 {
    //aPosition is the center of the particle.
+   if(aPosition.x == -50.0 && aPosition.y == -50.0 && aPosition.z == -50.0) {
+      gl_PointSize = 0.0;
+   }
+   else {
+      gl_PointSize = aPointSize;
+   }
 
-   gl_PointSize = aPointSize;
 // * gl_Position.w;
    vColor = vec4(aColor, 1.);
    gl_Position = uProjMatrix*uViewMatrix*uModelMatrix * vec4(aPosition, 1.);

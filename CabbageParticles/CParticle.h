@@ -18,6 +18,8 @@ class CParticle {
       float Size;
       SVector3 RotationSpeed;
 
+      SVector3 translate;
+
       void setLookRight(int*);
       void setCenterPos(SVector3*);
       void setAppearRate(float r);

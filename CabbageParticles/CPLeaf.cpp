@@ -33,14 +33,13 @@ void CPLeaf::updateMatrices(float timeElapsed) {
       //CApplication::get().getSceneManager().removeSceneObject(getRenderable());
       Duration = -1;
    }
+   else if(Duration == -1) {}
    else {
       sineValue += 4*timeElapsed;
       Duration += timeElapsed;
-      /*getRenderable()->setTranslation(
-            SVector3(
-               Amplitude*cos(Period*sineValue), 
-               yFactor, 
-               Amplitude*sin(Period*sineValue)));
-      getRenderable()->setRotation(RotationSpeed*sineValue*5);*/
+      translate = SVector3(Amplitude*cos(Period*sineValue),
+                           yFactor,
+                           Amplitude*sin(Period*sineValue));
+      //getRenderable()->setRotation(RotationSpeed*sineValue*5);
    }
 }
