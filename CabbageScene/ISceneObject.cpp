@@ -18,7 +18,7 @@ void ISceneObject::updateAbsoluteTransformation()
 	AbsoluteTransformation = Transformation;
 	if (Parent)
 	{
-		AbsoluteTransformation = AbsoluteTransformation * Parent->AbsoluteTransformation;
+		AbsoluteTransformation = Parent->AbsoluteTransformation* AbsoluteTransformation;
 	}
 
 	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
