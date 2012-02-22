@@ -67,6 +67,7 @@ void main()
         sf = step(0.5, sf);
     }
 
-    vec3 color = uMaterial.AmbientColor + df * Diffuse + sf * vec3(1,1,1);
+    vec3 SpecularColor = vec3(1, 1, 1);
+    vec3 color = uMaterial.AmbientColor + df * Diffuse + sf * SpecularColor; //vec3
     gl_FragColor = vec4(color, 1.0);
 }

@@ -687,6 +687,7 @@ void LoadShaders() {
    Diffuse = CShaderLoader::loadShader("Diffuse");
    DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture");
    normalColor = CShaderLoader::loadShader("Simple");
+   Toon = CShaderLoader::loadShader("Toon");
 }
 
 
@@ -811,7 +812,7 @@ void PrepMeshes()
 {
    renderBasicTree = new CMeshSceneObject();
    renderBasicTree->setMesh(basicTreeMesh);
-   renderBasicTree->setShader(Flat);
+   renderBasicTree->setShader("Toon");
 
    renderChristmasTree = new CMeshSceneObject();
    renderChristmasTree->setMesh(cabbageMesh);
