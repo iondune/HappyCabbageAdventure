@@ -16,8 +16,8 @@ class CBlock : public CPlaceable
    public:
    Cabbage::Collider::CElevator* elevator;
    int Speed, Range;
-   CBlock(float nx, float ny, int width, int height, int depth);
-   int z;
+   CBlock(float nx, float ny, int width, int height, int depth, int texture);
+   int z, t;
    void writeXML(xmlwriter *);
    void moveTo(float,float);
    CMeshSceneObject * setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager);

@@ -67,11 +67,12 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             h = xml->getAttributeValueAsInt(2);
             w = xml->getAttributeValueAsInt(3);
             d = xml->getAttributeValueAsInt(4);
-            list->push_back(ptr = new CBlock((float)x,(float)y,w,h,d));
-            if(xml->getAttributeValueAsInt(5)) {
+            t = xml->getAttributeValueAsInt(5);
+            list->push_back(ptr = new CBlock((float)x,(float)y,w,h,d,t));
+            if(xml->getAttributeValueAsInt(6)) {
                ptr->isMovingPlatform = 1;
-               ptr->Range = (int) xml->getAttributeValueAsFloat(6); //Range
-               ptr->Speed = (int) xml->getAttributeValueAsFloat(7); //Speed
+               ptr->Range = (int) xml->getAttributeValueAsFloat(7); //Range
+               ptr->Speed = (int) xml->getAttributeValueAsFloat(8); //Speed
             }
             else
                ptr->isMovingPlatform = 0;

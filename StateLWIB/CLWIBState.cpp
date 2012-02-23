@@ -50,6 +50,7 @@ qd blockMap[225][100];
 //Initalizer fxn
 void CLWIBState::begin()
 {
+   textureType = 0;
    enemyType = 0;
    aDown = dDown = spaceDown = wDown = sDown = gDown = fDown = tDown = eDown = mDown = 0;
    cubeMesh = CMeshLoader::createCubeMesh();
@@ -332,14 +333,17 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
           showHelp = Event.Pressed;
       }
       if(Event.Key == SDLK_x ) {
-         if (enemyType < 3) //temp constraint
-          enemyType++;
-         else
+         if (enemyType < 3) {//temp constraint
+            enemyType++;
+            textureType++;
+         } else
              enemyType = 0;
       } 
       if (Event.Key == SDLK_z) {
-         if (enemyType != 0)
+         if (enemyType != 0) {
              enemyType--;
+             textureType--;
+         }
          else
              enemyType = 3;
       }
@@ -418,7 +422,15 @@ void CLWIBState::PrepPreviews() {
    blocks.push_back(PreviewBlock = new CMeshSceneObject());
    PreviewBlock->setMesh(cubeMesh);
 
-   PreviewBlock->setTexture("Textures/grass.bmp");
+   if (textureType == 0)
+       PreviewBlock->setTexture("Textures/grass.bmp");
+   else if (textureType == 1)
+       PreviewBlock->setTexture("Textures/dirt.bmp");
+   else if (textureType ==2)
+       PreviewBlock->setTexture("Textures/dirt.bmp");
+   else 
+       printf("texture doesn't exit\n");
+  
    //PreviewBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/grass.bmp");
    PreviewBlock->setShader(DiffuseTexture);
    //PreviewBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
@@ -499,7 +511,7 @@ void CLWIBState::PrepEnemy(float x, float y) {
 }
 
 
-void CLWIBState::PrepBlock(float x, float y, int w, int h, int d) {
+void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t) {
    if(x < -25 || y < -25 || x >= 200 || y >= 75)
       return;
    int i,j, ret=0;
@@ -520,9 +532,16 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d) {
    CMeshSceneObject *tempBlock;
    CBlock *tempPlaceable;
    blocks.push_back(tempBlock = new CMeshSceneObject());
-   placeables.push_back(tempPlaceable = new CBlock(x, y, w, h, d));
+   placeables.push_back(tempPlaceable = new CBlock(x, y, w, h, d, t));
    tempBlock->setMesh(cubeMesh);
-   tempBlock->setTexture("Textures/dirt.bmp");;
+   if (textureType == 0)
+        tempBlock->setTexture("Textures/grass.bmp");
+   else if (textureType == 1)
+        tempBlock->setTexture("Textures/dirt.bmp");
+   else if (textureType == 1)
+        tempBlock->setTexture("Textures/rock.bmp");
+   else
+       printf("texture doesn't exist\n");
    tempBlock->setShader(DiffuseTexture);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    //tempBlock->setTranslation(SVector3(x, y, 0));
@@ -696,7 +715,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
             PrepEnemy(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
          }
          else if (!tDown) {
-            PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth);
+            PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,textureType);
          }
          else {
             if(lastMouseOveredBlock.o) {
@@ -753,7 +772,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
             lastMouseOveredBlock.r->setShader(DiffuseTexture);
          }
          if(!tDown && mouseDown) {
-            PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth);
+            PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth, textureType);
          }
          lastMouseOveredBlock = m_qd;
       }
@@ -864,7 +883,7 @@ void CLWIBState::stepCamera(float delta) {
       look.Y -= delta*factor;
    }
    if(!tDown && mouseDown) {
-      PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth);
+      PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,textureType);
    }
 }
 

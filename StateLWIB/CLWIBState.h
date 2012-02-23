@@ -23,7 +23,7 @@ class CLWIBState : public CState<CLWIBState>
    int aDown , dDown , spaceDown , wDown , sDown , gDown , fDown , tDown, eDown, mDown;
    bool showHelp;
    freetype::font_data our_font;
-   int enemyType;
+   int enemyType, textureType;
    int WindowWidth, WindowHeight;
 
 
@@ -51,7 +51,7 @@ class CLWIBState : public CState<CLWIBState>
    void OnMouseEvent(SMouseEvent const & Event);
    void end();
 
-   void PrepBlock(float x, float y, int w, int h, int d); 
+   void PrepBlock(float x, float y, int w, int h, int d, int t); 
    void PrepEnemy(float x, float y); 
    void PrepGrass(float x, float y, float w, float h);
    void PrepPreviews();
