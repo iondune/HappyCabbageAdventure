@@ -50,6 +50,7 @@ void EApple::loadActor() {
 
 //Updates AI's decision per frame
 void EApple::update(float const TickTime) {
+   Time = TickTime;
    if (Manager->isPlayerAlive())
    {
        if (Manager->getPlayerLocation().X < Actor->getArea().getCenter().X && (!rollingLeft && !rollingRight))
@@ -62,10 +63,10 @@ void EApple::update(float const TickTime) {
           if (Manager->getPlayerLocation().X - Actor->getArea().getCenter().X < 7 && Manager->getPlayerLocation().X - Actor->getArea().getCenter().X > -7 &&
                 Manager->getPlayerLocation().Y - Actor->getArea().getCenter().Y < 1.0 && Manager->getPlayerLocation().Y - Actor->getArea().getCenter().Y > -1.0 && rand()%1000 <= 2) {
              if (Actor->getAction() == Cabbage::Collider::CActor::EActionType::MoveLeft)
-                rollingLeft = true;
+                rollingLeft = false;//true;
              else
-                rollingRight = true;
-             Actor->getAttributes().MaxWalk = 6.0f;
+                rollingRight = false;//true;
+             //Actor->getAttributes().MaxWalk = 6.0f;
           }
        }
 
@@ -104,12 +105,9 @@ void EApple::doRenderable() {
       PositiveScale = true;
 
    if (PositiveScale)
-      ScaleMult += .0015;
+      ScaleMult += .35 * Time;
    else
-      ScaleMult -= .0015;
-
-printf("ScaleMult is: %f\n", ScaleMult);
-
+      ScaleMult -= .35 * Time;
 
    if (!rollingLeft && !rollingRight) {
       if(Actor->getVelocity().X < -0.01f)
