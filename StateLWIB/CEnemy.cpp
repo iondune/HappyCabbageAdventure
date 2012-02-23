@@ -45,6 +45,8 @@ CMeshSceneObject * CEnemy::setupItem(CShader * chad, Cabbage::Collider::CEngine 
     else if (num == 3)
        //CBadGuy::makeBadGuy(x, y, w, h, CBadGuy::grape, GameplayManager);
        printf("Grape is not currently implemented");
+    else if (num == 4)
+       CBadGuy::makeBadGuy(x, y, (float)w, (float)h, CBadGuy::flame, GameplayManager);
     else
         printf("Unknown enemy type received.\n");
 

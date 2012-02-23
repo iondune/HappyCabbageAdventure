@@ -36,6 +36,10 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
        ((Cabbage::Collider::CActor*)Object)->setImpulse(SVector2(0.03f, 0.3f)*7, 0.2);
     }
 
+    if (Object == PlayerActor && With->CollideableType == COLLIDEABLE_TYPE_FLAME) {
+       printf("Collided with flame! : D\n");
+    }
+
     if (! Other)
         return;
    
@@ -52,7 +56,8 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
     {
         if (Other == (*it)->Actor)
         {
-            if (PlayerActor->getArea().Position.Y > Other->getArea().otherCorner().Y - HitThreshold)
+
+            if (PlayerActor->getArea().Position.Y > Other->getArea().otherCorner().Y - HitThreshold && (*it)->Actor->CollideableType != COLLIDEABLE_TYPE_FLAME)
             {
                 Mix_PlayChannel(-1, killEnemy, 0);
                 KillList.push_back(* it);

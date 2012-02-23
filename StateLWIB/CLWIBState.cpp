@@ -195,6 +195,11 @@ void CLWIBState::OnRenderStart(float const Elapsed)
             freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Grape\n");
             PreviewEnemy->setMesh(cubeMesh);
         }
+
+        if (enemyType == 4) {
+           freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Flame\n");
+           PreviewEnemy->setMesh(cubeMesh);
+        }
     }
     if (tDown && !showHelp)
         freetype::print(our_font, 20, WindowHeight - 100.f, "Remove mode\n\n");
@@ -358,7 +363,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
           showHelp = Event.Pressed;
       }
       if(Event.Key == SDLK_x ) {
-        if (enemyType < 4) //temp constraint
+        if (enemyType < 5) //temp constraint
              enemyType++;
         else
             enemyType = 0;
@@ -371,7 +376,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
          if (enemyType != 0) 
              enemyType--;
          else
-            enemyType = 3;
+            enemyType = 4;
          if (textureType !=0)
              textureType--;
          else

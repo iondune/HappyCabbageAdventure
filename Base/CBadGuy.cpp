@@ -2,6 +2,7 @@
 #include "EApple.h"
 #include "EOrange.h"
 #include "EKiwi.h"
+#include "EFlame.h"
 
 void CBadGuy::setShader(CShader* shade) {
    CBadGuy::Shader = shade;
@@ -21,6 +22,10 @@ void CBadGuy::makeBadGuy(float x, float y, float w, float h, EnemyType enemy, CG
    else if (enemy == kiwi) {
       int direction = 0;
       temp = new EKiwi(x, y, w, h, manager, direction);
+   }
+
+   else if (enemy == flame) {
+      temp = new EFlame(x, y, w, h, manager);
    }
 
    else {
