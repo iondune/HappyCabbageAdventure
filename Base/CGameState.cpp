@@ -628,7 +628,7 @@ void CGameState::end()
 void CGameState::PrepShadow() {
    renderShadow = new CMeshSceneObject();
    renderShadow->setMesh(discMesh);
-   renderShadow->setShader(DiffuseTexture);
+   renderShadow->setShader(BlackShader);
 
    Application.getSceneManager().addSceneObject(renderShadow);
 }
@@ -687,6 +687,7 @@ void LoadShaders() {
    DiffuseTexture = CShaderLoader::loadShader("ToonTexture");
    normalColor = CShaderLoader::loadShader("Simple");
    Toon = CShaderLoader::loadShader("Toon");
+   BlackShader = CShaderLoader::loadShader("Border");
    //Toon = Diffuse;
 }
 
