@@ -27,7 +27,7 @@ CLWIBState::CLWIBState()
 {}
 
 void CLWIBState::BlocksInit( void ) {
-   PrepGrass(-25, -1, 200, 1);
+   PrepGrass(-25, -1, 1, 1);
    PrepSky();
 
    SRect2 area;
@@ -52,7 +52,7 @@ void CLWIBState::begin()
 {
    textureType = 0;
    enemyType = 0;
-   aDown = dDown = spaceDown = wDown = sDown = gDown = fDown = tDown = eDown = mDown = 0;
+   aDown = dDown = spaceDown = wDown = sDown = gDown = fDown = tDown = eDown = mDown = oneDown = twoDown = threeDown = 0;
    cubeMesh = CMeshLoader::createCubeMesh();
    cubeMesh->calculateNormalsPerFace();
 
@@ -121,6 +121,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    float x=round(eye.X + previewBlockMouseX),y= round(eye.Y + previewBlockMouseY);
    PreviewBlock->setTranslation(SVector3(x+(float)blockWidth/2,y+(float)blockHeight/2, 0));
    PreviewEnemy->setTranslation(SVector3(x+0.5f,y+0.5f, 0));
+
    if(tDown) {
       PreviewBlock->setVisible(false);
       PreviewEnemy->setVisible(false);
@@ -254,8 +255,9 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
          PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
       }
       if(Event.Key == SDLK_e){
-         if (eDown == 1)
+         if (eDown == 1 ) {
              eDown = 0;
+         }
          else 
             eDown = 1; //enemy
       }
@@ -333,19 +335,24 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
           showHelp = Event.Pressed;
       }
       if(Event.Key == SDLK_x ) {
-         if (enemyType < 3) {//temp constraint
-            enemyType++;
+        if (enemyType < 4) //temp constraint
+             enemyType++;
+        else
+            enemyType = 0;
+        if (textureType < 3)
             textureType++;
-         } else
-             enemyType = 0;
+        else
+            textureType = 0;
       } 
       if (Event.Key == SDLK_z) {
-         if (enemyType != 0) {
+         if (enemyType != 0) 
              enemyType--;
-             textureType--;
-         }
          else
-             enemyType = 3;
+            enemyType = 3;
+         if (textureType !=0)
+             textureType--;
+         else
+            textureType =2;
       }
    }
    //Check if key let go, Not sure if this will work in here.
@@ -422,14 +429,7 @@ void CLWIBState::PrepPreviews() {
    blocks.push_back(PreviewBlock = new CMeshSceneObject());
    PreviewBlock->setMesh(cubeMesh);
 
-   if (textureType == 0)
-       PreviewBlock->setTexture("Textures/grass.bmp");
-   else if (textureType == 1)
-       PreviewBlock->setTexture("Textures/dirt.bmp");
-   else if (textureType ==2)
-       PreviewBlock->setTexture("Textures/dirt.bmp");
-   else 
-       printf("texture doesn't exit\n");
+   PreviewBlock->setTexture("Textures/white.bmp");
   
    //PreviewBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/grass.bmp");
    PreviewBlock->setShader(DiffuseTexture);
@@ -440,7 +440,7 @@ void CLWIBState::PrepPreviews() {
    blocks.push_back(PreviewEnemy = new CMeshSceneObject());
    appleMesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
    orangeMesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
-   kiwiMesh = CMeshLoader::load3dsMesh("Models/alien.3ds");
+   kiwiMesh = CMeshLoader::load3dsMesh("Models/killkiwi.3ds");
    
    if(appleMesh) {
       appleMesh->resizeMesh(SVector3(1));
@@ -538,7 +538,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t) {
         tempBlock->setTexture("Textures/grass.bmp");
    else if (textureType == 1)
         tempBlock->setTexture("Textures/dirt.bmp");
-   else if (textureType == 1)
+   else if (textureType == 2)
         tempBlock->setTexture("Textures/rock.bmp");
    else
        printf("texture doesn't exist\n");
