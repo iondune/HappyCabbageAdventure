@@ -156,8 +156,26 @@ void CLWIBState::OnRenderStart(float const Elapsed)
     }
     else
         freetype::print(our_font, 15, WindowHeight - 50.f, "Press F1 For Help");
-    if (!eDown && !showHelp && !tDown)
+    if (!eDown && !showHelp && !tDown) {
         freetype::print(our_font, 20, WindowHeight - 100.f, "Placing block\n\n");
+        if (textureType == 0) {
+            freetype::print(our_font, 20, WindowHeight - 150.f, "Placing grass block\n");
+           PreviewEnemy->setMesh(appleMesh);
+        }
+        if (textureType == 1) {
+            freetype::print(our_font, 20, WindowHeight - 150.f, "Placing dirt block\n");
+            PreviewEnemy->setMesh(orangeMesh);
+        }
+        if (textureType == 2) {
+            freetype::print(our_font, 20, WindowHeight - 150.f, "Placing rock block \n");
+            PreviewEnemy->setMesh(kiwiMesh);
+        }
+
+        if (textureType == 3) {
+            freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Grape\n");
+            PreviewEnemy->setMesh(cubeMesh);
+        }
+    }
     if (eDown && !showHelp && !tDown) {
         freetype::print(our_font, 20, WindowHeight - 100.f, "Placing enemy\n");
         if (enemyType == 0) {
@@ -258,8 +276,13 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
          if (eDown == 1 ) {
              eDown = 0;
          }
-         else 
+         else {
             eDown = 1; //enemy
+            blockWidth = 1;
+            blockHeight = 1;
+            blockDepth = 1;
+             PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+         }
       }
       if(Event.Key == SDLK_k){
       }
