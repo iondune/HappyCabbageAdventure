@@ -235,7 +235,7 @@ void COverworldState::end()
 void COverworldState::loadLevels()
 {
   //If you're adding more levels be sure to update COverworldState's NUM_LEVELS
-  levels[0].name = "test.xml";
+  levels[0].name = "chris.xml";
   levels[0].loc = SVector3(0.33, -0.17, 1.05); //bit of green near sole orange hill
   levels[1].name = "test2.xml";
   levels[1].loc = SVector3(0.83, 0.00, 0.65); //Green hill

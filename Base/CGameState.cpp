@@ -534,7 +534,6 @@ void CGameState::OnRenderStart(float const Elapsed)
    SDL_GL_SwapBuffers();
 }
 
-
 //Sends event every time key pressed (also when held)
 void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
