@@ -14,22 +14,22 @@ endif
 all: ../lib/libCabbageParticles.a
 
 CParticle.o: CParticle.cpp CParticle.h
-	g++ -o CParticle.o CParticle.cpp -c $(DIRECTORIES) $(OPENGL)
+	g++ -O1 -o CParticle.o CParticle.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CPCube.o: CPCube.cpp CPCube.h
-	g++ -o CPCube.o CPCube.cpp -c $(DIRECTORIES) $(OPENGL)
+	g++ -O1 -o CPCube.o CPCube.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CParticleObject.o: CParticleObject.cpp CParticleObject.h
-	g++ -I../CabbageScene/ -o CParticleObject.o CParticleObject.cpp -c $(DIRECTORIES) $(OPENGL)
+	g++ -O1 -I../CabbageScene/ -o CParticleObject.o CParticleObject.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CPLeaf.o: CPLeaf.cpp CPLeaf.h
-	g++ -o CPLeaf.o CPLeaf.cpp -c $(DIRECTORIES) $(OPENGL)
+	g++ -O1 -o CPLeaf.o CPLeaf.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CPFlame.o: CPFlame.cpp CPFlame.h
-	g++ -o CPFlame.o CPFlame.cpp -c $(DIRECTORIES) $(OPENGL)
+	g++ -O1 -o CPFlame.o CPFlame.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CParticleEngine.o: CParticleEngine.cpp CParticleEngine.h CParticle.h CParticle.cpp
-	g++ -o CParticleEngine.o CParticleEngine.cpp -c $(DIRECTORIES) $(OPENGL)
+	g++ -O1 -o CParticleEngine.o CParticleEngine.cpp -c $(DIRECTORIES) $(OPENGL)
 
 ../lib/libCabbageParticles.a: $(OFILES)
 	rm -f $@

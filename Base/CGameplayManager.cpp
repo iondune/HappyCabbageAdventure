@@ -27,7 +27,10 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
        Flag = Object;
     if (With == VictoryFlag)
        Flag = With;
+    if(Flag)
+       printf("Flag collision\n");
 
+    int birdCollision = 0;
     //printf("With's type: %d, Object's type: %d\n", With->CollideableType, Object->CollideableType);
     if((With->CollideableType == COLLIDEABLE_TYPE_ACTOR || With == PlayerActor || With->CollideableType == COLLIDEABLE_TYPE_BLOCK)
           && Object->CollideableType == COLLIDEABLE_TYPE_KIWI) {
@@ -35,10 +38,17 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
        //SRect2 area = ((Cabbage::Collider::CActor*)Object)->getArea();
        //((Cabbage::Collider::CActor*)Object)->setArea(SRect2(area.Position.X + 1.5, area.Position.Y + 0.2, area.Size.X, area.Size.Y));
        ((Cabbage::Collider::CActor*)Object)->setImpulse(SVector2(0.03f, 0.3f)*7, 0.2);
+       if(With->CollideableType == COLLIDEABLE_TYPE_ACTOR) {
+          ((Cabbage::Collider::CActor*)With)->setImpulse(SVector2(0.00f, -0.3f), 0.2);
+       }
+       birdCollision = 1;
     }
 
     if (Object == PlayerActor && With->CollideableType == COLLIDEABLE_TYPE_FLAME) {
-       printf("Collided with flame! : D\n");
+    }
+
+    if(GodMode && birdCollision == 1 && PlayerCollideable) {
+        PlayerActor->setImpulse(SVector2(0.f, -0.4f) * 7, 0.5);
     }
 
     if (! Other || GodMode)

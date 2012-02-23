@@ -14,13 +14,13 @@ endif
 all: ../lib/libCabbageFramework.a
 
 CApplication.o: CApplication.cpp *.h
-	g++ -o $@ CApplication.cpp -c $(DIRECTORIES) $(OPENGL)
+	g++ -O1 -o $@ CApplication.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CEventManager.o: CEventManager.cpp *.h
-	g++ -o $@ CEventManager.cpp -c $(DIRECTORIES) $(OPENGL)
+	g++ -O1 -o $@ CEventManager.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CStateManager.o: CStateManager.cpp *.h
-	g++ -o $@ CStateManager.cpp -c $(DIRECTORIES) $(OPENGL)
+	g++ -O1 -o $@ CStateManager.cpp -c $(DIRECTORIES) $(OPENGL)
 
 ../lib/libCabbageFramework.a: $(OFILES)
 	rm -f $@

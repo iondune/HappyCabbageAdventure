@@ -63,10 +63,10 @@ void EApple::update(float const TickTime) {
           if (Manager->getPlayerLocation().X - Actor->getArea().getCenter().X < 7 && Manager->getPlayerLocation().X - Actor->getArea().getCenter().X > -7 &&
                 Manager->getPlayerLocation().Y - Actor->getArea().getCenter().Y < 1.0 && Manager->getPlayerLocation().Y - Actor->getArea().getCenter().Y > -1.0 && rand()%1000 <= 2) {
              if (Actor->getAction() == Cabbage::Collider::CActor::EActionType::MoveLeft)
-                rollingLeft = false;//true;
+                rollingLeft = true;
              else
-                rollingRight = false;//true;
-             //Actor->getAttributes().MaxWalk = 6.0f;
+                rollingRight = true;
+             Actor->getAttributes().MaxWalk = 6.0f;
           }
        }
 
@@ -96,7 +96,6 @@ void EApple::update(float const TickTime) {
 }
 
 void EApple::doRenderable() {
-
    Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, 0));
 
    if (ScaleMult > 1.1)
@@ -108,6 +107,10 @@ void EApple::doRenderable() {
       ScaleMult += .35 * Time;
    else
       ScaleMult -= .35 * Time;
+
+   // Hack to make the apples always appear
+   if(ScaleMult > 10)
+      ScaleMult = 1.0f;
 
    if (!rollingLeft && !rollingRight) {
       if(Actor->getVelocity().X < -0.01f)

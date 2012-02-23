@@ -169,8 +169,9 @@ void CMesh::calculateNormalsPerFace()
 	}
 
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
-		for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
+		for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it) {
 			it->Normal.normalize();
+      }
 }
 
 void CMesh::calculateNormalsPerVertex(bool CombineNear, float const NearTolerance)

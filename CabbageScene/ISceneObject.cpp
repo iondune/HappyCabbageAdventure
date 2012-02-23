@@ -78,6 +78,9 @@ SBoundingBox3 & ISceneObject::getBoundingBox()
 {
     return BoundingBox;
 }
+void ISceneObject::setBoundingBox(SBoundingBox3 const & boundingBox) {
+   BoundingBox.addInternalBox(boundingBox);
+}
 
 bool const ISceneObject::isDebugDataEnabled(EDebugData::Domain const type) const
 {
