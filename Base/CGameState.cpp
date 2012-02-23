@@ -227,12 +227,13 @@ void CGameState::begin()
 
     SceneManager.Lights.push_back(new CLight());
     SceneManager.Lights.back()->Color = SVector3(LightBrightness);
-    SceneManager.Lights.back()->Position = SVector3(200.f, 2.f, 15.f);
+    SceneManager.Lights.back()->Position = SVector3(-5.f, 20.f, 500.f);
 
+    /*
     SceneManager.Lights.push_back(new CLight());
     SceneManager.Lights.back()->Color = SVector3(LightBrightness);
-    SceneManager.Lights.back()->Position = SVector3(-100.f, 0.f, 15.f);
-
+    SceneManager.Lights.back()->Position = SVector3(0.f, 100.f, 0.f);
+    */
 
     //PlayerLight = new CLight();
     //SceneManager.Lights.push_back(PlayerLight);
@@ -675,7 +676,7 @@ CMeshSceneObject* CGameState::PrepEnemy(float x, float y) {
 void LoadShaders() {
    Flat = CShaderLoader::loadShader("Diffuse");
    Diffuse = CShaderLoader::loadShader("Diffuse");
-   DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture");
+   DiffuseTexture = CShaderLoader::loadShader("ToonTexture");
    normalColor = CShaderLoader::loadShader("Simple");
    Toon = CShaderLoader::loadShader("Toon");
    //Toon = Diffuse;

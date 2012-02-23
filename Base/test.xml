@@ -1,73 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<CBlock X ="-24" Y ="-1" height ="1" width ="1" depth ="5" texture ="0" isMoving ="0" range ="0" speed ="0">
+<CEnemy X ="-8" Y ="-0" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-2" Y ="0" height ="1" width ="1" type ="0">
+</CEnemy>
+<CBlock X ="-1" Y ="0" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CBlock X ="-23" Y ="-1" height ="1" width ="10" depth ="5" texture ="0" isMoving ="0" range ="0" speed ="0">
+<CEnemy X ="2" Y ="0" height ="1" width ="1" type ="0">
+</CEnemy>
+<CBlock X ="3" Y ="0" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CBlock X ="-13" Y ="-1" height ="1" width ="10" depth ="5" texture ="0" isMoving ="0" range ="0" speed ="0">
+<CEnemy X ="-10" Y ="2" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-13" Y ="2" height ="1" width ="1" type ="0">
+</CEnemy>
+<CBlock X ="-14" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CBlock X ="-3" Y ="-1" height ="1" width ="10" depth ="5" texture ="0" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-15" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CBlock X ="7" Y ="-1" height ="1" width ="10" depth ="5" texture ="0" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-16" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CBlock X ="17" Y ="-1" height ="1" width ="10" depth ="5" texture ="0" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-17" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CBlock X ="27" Y ="-1" height ="1" width ="10" depth ="5" texture ="0" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="37" Y ="-1" height ="1" width ="10" depth ="5" texture ="0" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="47" Y ="-1" height ="1" width ="10" depth ="5" texture ="0" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="57" Y ="-1" height ="1" width ="10" depth ="5" texture ="0" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="67" Y ="-1" height ="1" width ="10" depth ="5" texture ="0" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="77" Y ="-1" height ="1" width ="10" depth ="5" texture ="0" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="-25" Y ="-4" height ="3" width ="10" depth ="5" texture ="1" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="-15" Y ="-4" height ="3" width ="10" depth ="5" texture ="1" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="-5" Y ="-4" height ="3" width ="10" depth ="5" texture ="1" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="5" Y ="-4" height ="3" width ="10" depth ="5" texture ="1" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="15" Y ="-4" height ="3" width ="10" depth ="5" texture ="1" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="26" Y ="-4" height ="3" width ="10" depth ="5" texture ="1" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="25" Y ="-4" height ="3" width ="10" depth ="5" texture ="1" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="36" Y ="-4" height ="3" width ="10" depth ="5" texture ="1" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="46" Y ="-4" height ="3" width ="10" depth ="5" texture ="1" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="56" Y ="-4" height ="3" width ="10" depth ="5" texture ="1" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="66" Y ="-4" height ="3" width ="10" depth ="5" texture ="1" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="76" Y ="-4" height ="3" width ="10" depth ="5" texture ="1" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="86" Y ="-4" height ="3" width ="1" depth ="5" texture ="3" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="47" Y ="0" height ="3" width ="1" depth ="5" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="45" Y ="0" height ="3" width ="1" depth ="5" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="43" Y ="0" height ="3" width ="1" depth ="5" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="40" Y ="0" height ="3" width ="1" depth ="5" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="35" Y ="0" height ="3" width ="1" depth ="5" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="27" Y ="0" height ="3" width ="1" depth ="5" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="26" Y ="0" height ="3" width ="1" depth ="5" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="15" Y ="0" height ="3" width ="1" depth ="5" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="4" Y ="0" height ="3" width ="1" depth ="5" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="3" Y ="0" height ="3" width ="1" depth ="5" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="-13" Y ="0" height ="3" width ="1" depth ="5" texture ="2" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-18" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
