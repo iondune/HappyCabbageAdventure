@@ -12,7 +12,7 @@ void COverworldState::begin()
    aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0;
    transitionTimer = 0.0;
 
-   camRotValue = 0;
+   camRotValue = stepValue = 0;
    rot = SVector3(-90, 0, -90);
    SPosition2 size = Application.getWindowSize();
    WindowWidth = size.X;
@@ -86,6 +86,7 @@ void COverworldState::step(float delta) {
    {
      camRotValue += 0.5f*delta;
    }
+  stepValue += 0.5f*delta;
    /*
 
    if(!(look == lookTarget))
@@ -255,9 +256,9 @@ void COverworldState::setCameraTrans()
 }
 
 void COverworldState::LoadShaders() {
-   Flat = CShaderLoader::loadShader("Diffuse");
-   Diffuse = CShaderLoader::loadShader("Diffuse");
-   DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture");
+   Flat = CShaderLoader::loadShader("Toon");
+   Diffuse = CShaderLoader::loadShader("Toon");
+   DiffuseTexture = CShaderLoader::loadShader("ToonTexture");
    //normalColor = CShaderLoader::loadShader("NormalColor");
 }
 
@@ -368,7 +369,7 @@ void COverworldState::levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor)
 
 void COverworldState::bouncePlayer() {
    SVector3 m_base = playerVector;
-   m_base.Y += 0.03f*(sin(camRotValue*15)+1);
+   m_base.Y += 0.03f*(sin(stepValue*15)+1);
    playerRender->setTranslation(m_base);
 }
 
