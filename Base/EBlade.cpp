@@ -61,9 +61,9 @@ void EBlade::update(float const TickTime) {
 
 void EBlade::doRenderable() {
 
-   BladeRotate -= 1.0f;
+	BladeRotate -= 600.0f * CApplication::get().getElapsedTime();
 
-   Renderable->setRotation(SVector3(-90, 0, BladeRotate));
-   //Renderable->setScale(SVector3(2.0f));
-   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X, Actor->getArea().getCenter().Y, 0));
+	Renderable->setRotation(SVector3(-90, 0, BladeRotate));
+	//Renderable->setScale(SVector3(2.0f));
+	Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X, Actor->getArea().getCenter().Y, 0));
 }
