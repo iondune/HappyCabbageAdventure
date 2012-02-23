@@ -6,6 +6,7 @@
 #include "glm/glm.hpp"
 
 #include "Utils.h"
+#include "SVector2.h"
 
 class SVector3
 {
@@ -197,6 +198,22 @@ public:
     {
         return (::equals(X, v.X, Epsilon) && ::equals(Y, v.Y, Epsilon) && ::equals(Z, v.Z, Epsilon));
     }
+
+	SVector2 const xy() const
+    {
+        return SVector2(X, Y);
+    }
+
+    SVector2 const xz() const
+    {
+        return SVector2(X, Z);
+    }
+
+    SVector2 const yz() const
+    {
+        return SVector2(Y, Z);
+    }
+
 };
 
 #endif
