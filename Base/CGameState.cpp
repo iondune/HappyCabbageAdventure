@@ -613,7 +613,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 void CGameState::end()
 {   
    stopSoundtrack();
-   Mix_CloseAudio();
+   //Mix_CloseAudio();
    our_font.clean();
 
    Application.getSceneManager().removeAllSceneObjects();
