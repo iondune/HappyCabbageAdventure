@@ -40,7 +40,8 @@ void main()
         vLightColor[i] = uLights[i].Color;
 
         vtl[i] = uLights[i].Position - vPosition.xyz;
-        vAttenuation[i] = clamp(400.0/(vtl[i].x + vtl[i].y + vtl[i].z), 0.0, 1.0);
+        vAttenuation[i] = 1;
+        //vAttenuation[i] = clamp(400.0/(vtl[i].x + vtl[i].y + vtl[i].z), 0.0, 1.0);
     }
 
     vEye = vec3(uViewMatrix * vPosition) * -1.0;
