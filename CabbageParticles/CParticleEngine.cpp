@@ -32,7 +32,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
 
    float temp;
    for(int i = 0; i < max; i++) {
-      positionArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*1 - 0.5, (float)rand()/(float)RAND_MAX*2, 0));
+      positionArr.push_back(new SVector3(-50));
       switch(particleType) {
          case LEAF_PARTICLE:
             if(rand() % 4 == 0) {
@@ -93,7 +93,7 @@ void CParticleEngine::step(float const elapsedTime) {
          (* it)->updateMatrices(elapsedTime);
          for(int j = 0; j < 3; j++) {
             (*(positionArr[i]))[j] = (* it)->translate[j] + centerPos[j];
-            if((* it)->Duration == -1) {
+            if((* it)->Duration == -1 || (* it)->Counter > 0) {
                (*(positionArr[i]))[j] = -50;
             }
          }

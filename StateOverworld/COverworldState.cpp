@@ -462,11 +462,21 @@ void COverworldState::shiftSetter(SVector3 & curr, SVector3 & change, SVector3 &
 
 float COverworldState::angleMaker(SVector3 start, SVector3 toPoint)
 {
+    float asinxz, asinzx, acosxz, acoszx, lookat;
      SVector3 temp = toPoint - start;
 
      temp.normalize();
+     /*
 
-     float lookat = atan2(temp.X,temp.Z) * RAD_TO_DEG;
+     lookat = atan2(temp.X,temp.Z) * RAD_TO_DEG;
+     asinxz = asinf(temp.X/temp.Z) * RAD_TO_DEG;
+     asinzx = asinf(temp.Z/temp.X) * RAD_TO_DEG;
+     acosxz = acosf(temp.X/temp.Z) * RAD_TO_DEG;
+     acoszx = acosf(temp.Z/temp.X) * RAD_TO_DEG;
+
+     printf("asin %f %f\n acos %f %f\natan2xz %f\n\n",
+         asinxz, asinzx, acosxz, acoszx,lookat);
+*/
      lookat = lookat < 0 ? lookat + 55 : lookat;
      return lookat;
 }
