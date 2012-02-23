@@ -30,7 +30,7 @@ cabbage: ${OBJECTS} ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/
 
 main.o: main.cpp
 	g++ $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c main.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
-CGameState.o: CGameState.cpp header.h
+CGameState.o: CGameState.cpp header.h draw.h
 	g++ $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c CGameState.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 #sound.o: sound.cpp sound.h
 #	g++ `sdl-config --cflags` -c sound.cpp -DGL_GLEXT_PROTOTYPES

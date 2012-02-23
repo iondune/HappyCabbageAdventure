@@ -53,6 +53,7 @@ void EOrange::loadActor() {
    Actor->getAttributes().JumpLength = .1f;
    Actor->getAttributes().AirControl = 0.75f;
    Actor->getAttributes().AirSpeedFactor = 1.0f;
+   Actor->CollideableType = COLLIDEABLE_TYPE_ORANGE;
 }
 
 //Updates AI's decision per frame

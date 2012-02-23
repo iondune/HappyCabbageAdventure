@@ -56,7 +56,11 @@ void EKiwi::loadActor() {
 
    Actor->getAttributes().AirControl = 1.0f;
    Actor->getAttributes().AirSpeedFactor = 1.0f;
+   Actor->CollideableType = COLLIDEABLE_TYPE_KIWI;
+   printf("Actor collideable type: %d\n", Actor->CollideableType);
 }
+
+float oldSineValue = 0.0f;
 
 //Updates AI's decision per frame
 void EKiwi::update(float const TickTime) {
@@ -65,16 +69,22 @@ void EKiwi::update(float const TickTime) {
       float curX = Actor->getArea().Position.X;
       SineValue = sin(curX - OrigX);
 
-      float TempY = y + SineValue;
+      y = Actor->getArea().Position.Y;
+      y -= oldSineValue;
+      y += SineValue; 
 
-      Actor->setArea(SRect2(curX, TempY, w, h));
+      Actor->setArea(SRect2(curX, y, w, h));
 
       Actor->setAction(Cabbage::Collider::CActor::EActionType::None);
+
+      SVector2 vel = Actor->getVelocity();
+      Actor->setVelocity(SVector2(vel.X, vel.Y > 0 ? vel.Y - 1.0*TickTime : 0));
 
       if(Direction == 0)
          Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveLeft);
       else
          Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
+      oldSineValue = SineValue;
    }
    else
    {

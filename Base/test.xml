@@ -1,7 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<CEnemy X ="-3" Y ="2" height ="1" width ="1" type ="2">
+<CBlock X ="-18" Y ="-0" height ="1" width ="1" depth ="1" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-18" Y ="1" height ="1" width ="1" depth ="1" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-18" Y ="2" height ="1" width ="1" depth ="1" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-18" Y ="3" height ="1" width ="1" depth ="1" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-18" Y ="4" height ="1" width ="1" depth ="1" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-18" Y ="5" height ="1" width ="1" depth ="1" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CEnemy X ="-14" Y ="1" height ="1" width ="1" type ="2">
 </CEnemy>
-<CEnemy X ="5" Y ="2" height ="1" width ="1" type ="2">
-</CEnemy>
-<CBlock X="0" Y="2" width="1" height="1">
+<CBlock X ="-21" Y ="0" height ="1" width ="1" depth ="1" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-20" Y ="0" height ="1" width ="1" depth ="1" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-19" Y ="3" height ="1" width ="1" depth ="1" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-21" Y ="5" height ="1" width ="1" depth ="1" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-22" Y ="5" height ="1" width ="1" depth ="1" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-24" Y ="7" height ="1" width ="1" depth ="1" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-25" Y ="7" height ="1" width ="1" depth ="1" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-25" Y ="9" height ="1" width ="1" depth ="1" isMoving ="0" range ="0" speed ="0">
 </CBlock>

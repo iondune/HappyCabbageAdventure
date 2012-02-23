@@ -43,6 +43,7 @@ void EApple::loadActor() {
 
    //Set actor attributes
    Actor->getAttributes().MaxWalk = 2.2f;
+   Actor->CollideableType = COLLIDEABLE_TYPE_APPLE;
 }
 
 //Updates AI's decision per frame

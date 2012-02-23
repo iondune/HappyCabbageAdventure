@@ -27,9 +27,18 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
     if (With == VictoryFlag)
        Flag = With;
 
+    //printf("With's type: %d, Object's type: %d\n", With->CollideableType, Object->CollideableType);
+    if((With->CollideableType == COLLIDEABLE_TYPE_ACTOR || With == PlayerActor || With->CollideableType == COLLIDEABLE_TYPE_BLOCK)
+          && Object->CollideableType == COLLIDEABLE_TYPE_KIWI) {
+       //printf("Hey 15\n");
+       //SRect2 area = ((Cabbage::Collider::CActor*)Object)->getArea();
+       //((Cabbage::Collider::CActor*)Object)->setArea(SRect2(area.Position.X + 1.5, area.Position.Y + 0.2, area.Size.X, area.Size.Y));
+       ((Cabbage::Collider::CActor*)Object)->setImpulse(SVector2(0.03f, 0.3f)*7, 0.2);
+    }
+
     if (! Other)
         return;
-
+   
     float const HitThreshold = 0.05f;
 
     if(PlayerCollideable && Flag)
@@ -37,6 +46,8 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
     if(won) {
        return;
     }
+
+
     for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
     {
         if (Other == (*it)->Actor)
@@ -50,7 +61,6 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
                 Enemies.erase(it);
             }
             //Need to rewrite so works without SEnemy
-
             else
             {
                 if (isPlayerAlive() && PlayerRecovering <= 0.f)
@@ -83,9 +93,15 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
                     PlayerRecovering = KnockbackDuration*3;
 
                     if (PlayerActor->getArea().getCenter().X > Other->getArea().getCenter().X)
-                        PlayerActor->setImpulse(SVector2(1.f, 0.5f) * KnockbackSpeed, KnockbackDuration);
+                        PlayerActor->setImpulse(SVector2(1.f, 0.4f) * KnockbackSpeed, KnockbackDuration);
                     else
-                        PlayerActor->setImpulse(SVector2(-1.f, 0.5f) * KnockbackSpeed, KnockbackDuration);
+                       PlayerActor->setImpulse(SVector2(-1.f, 0.4f) * KnockbackSpeed, KnockbackDuration);
+                    if (PlayerActor->getArea().getCenter().Y <= Other->getArea().getCenter().Y)
+                       PlayerActor->addImpulse(SVector2(0.f, -0.75f) * KnockbackSpeed);
+                    else
+                       PlayerActor->addImpulse(SVector2(0.f, -0.75f) * KnockbackSpeed);
+
+
                 }
             }
             break;
