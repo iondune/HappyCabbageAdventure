@@ -20,7 +20,7 @@ EOrange::EOrange(float x, float y, float w, float h, CGameplayManager* manager) 
 //Loads and moves the mesh
 void EOrange::loadMesh() {
    Renderable = new CMeshSceneObject();
-   CMesh *mesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
+   CMesh *mesh = CMeshLoader::load3dsMesh("Models/orange.3ds");
    if(mesh) {
       mesh->resizeMesh(SVector3(1));
       mesh->centerMeshByExtents(SVector3(0));
@@ -65,11 +65,6 @@ void EOrange::update(const float TickTime) {
        else
            Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
 
-       //if (Actor->getArea().getCenter().Y < Manager->getPlayerLocation().Y - 1.4 && !Manager->isJumping()) {
-       //   Actor->setJumping(true);
-       //}
-
-
        if (Manager->getPlayerLocation().X - Actor->getArea().getCenter().X < 2.2 &&
                 Manager->getPlayerLocation().X - Actor->getArea().getCenter().X > -2.2) {
           if (jump) {
@@ -88,3 +83,24 @@ void EOrange::update(const float TickTime) {
    oldX = Actor->getArea().getCenter().X;
 }
 
+void EOrange::doRenderable() {
+
+   if (Actor->getVelocity().X < 0.0f)
+      Renderable->setRotation(SVector3(-90, Actor->getVelocity().X*10.0, -90));
+   else if (Actor->getVelocity().X >= 0.0f)
+      Renderable->setRotation(SVector3(-90, Actor->getVelocity().X*10.0, 90));
+   else {
+      if (Manager->getPlayerLocation().X < Actor->getArea().getCenter().X)
+         Renderable->setRotation(SVector3(-90, 0, -90));
+      else
+         Renderable->setRotation(SVector3(-90, 0, 90));
+   
+   }
+
+   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, 0));
+
+   if(Actor->getVelocity().X < -0.01f)
+      Renderable->setScale(SVector3(-1,1,1));
+   else if(Actor->getVelocity().X > 0.01f)
+      Renderable->setScale(SVector3(1,1,1));
+}
