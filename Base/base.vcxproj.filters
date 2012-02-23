@@ -47,6 +47,9 @@
     <ClCompile Include="EKiwi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EFlame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGameEventManager.h">
@@ -92,6 +95,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EKiwi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EFlame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

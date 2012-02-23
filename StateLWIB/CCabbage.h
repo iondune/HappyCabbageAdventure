@@ -20,7 +20,7 @@ class CCabbage : public CPlaceable
    void writeXML(xmlwriter *);
    void moveTo(float,float);
    void setShader(CShader*);
-   CMeshSceneObject * setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager, Cabbage::Collider::CActor *Player);
+   CMeshSceneObject * setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager);
 };
 
 #endif

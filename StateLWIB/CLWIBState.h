@@ -8,6 +8,7 @@
 #include "../StateMainMenu/CMainMenuState.h"
 #include "CPlaceable.h"
 #include "CBlock.h"
+#include "CCabbage.h"
 #include "wmlwriter_src/xmlwriter.h"
 
 #define TREE_Y_OFFSET 2.1
@@ -28,7 +29,7 @@ class CLWIBState : public CState<CLWIBState>
    int WindowWidth, WindowHeight;
 
 
-   CMesh *cubeMesh, *appleMesh, *orangeMesh, *kiwiMesh;
+   CMesh *cubeMesh, *appleMesh, *orangeMesh, *kiwiMesh, *cabbageMesh;
 
    float xp2w(int oldX);
    float yp2w(int oldY);
@@ -54,6 +55,7 @@ class CLWIBState : public CState<CLWIBState>
 
    void PrepBlock(float x, float y, int w, int h, int d, int t); 
    void PrepEnemy(float x, float y); 
+   void PrepCabbage(float x, float y);
    void PrepGrass(float x, float y, float w, float h);
    void PrepPreviews();
 

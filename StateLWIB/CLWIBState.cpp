@@ -20,7 +20,7 @@ void PrepPreviews();
 float previewBlockMouseX, previewBlockMouseY; 
 float lastBlockPlacedLocationX, lastBlockPlacedLocationY;
 using namespace Cabbage::Collider;
-CMeshSceneObject *PreviewBlock, *PreviewEnemy;
+CMeshSceneObject *PreviewBlock, *PreviewEnemy, *PreviewCabbage;
 
 CLWIBState::CLWIBState()
 : Application (CApplication::get())
@@ -121,16 +121,26 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    float x=round(eye.X + previewBlockMouseX),y= round(eye.Y + previewBlockMouseY);
    PreviewBlock->setTranslation(SVector3(x+(float)blockWidth/2,y+(float)blockHeight/2, 0));
    PreviewEnemy->setTranslation(SVector3(x+0.5f,y+0.5f, 0));
+   PreviewCabbage->setTranslation(SVector3(x+0.5f,y+0.5f, 0));
 
    if(tDown) {
+      PreviewCabbage->setVisible(false); 
       PreviewBlock->setVisible(false);
       PreviewEnemy->setVisible(false);
    }
    else if(eDown) {
+      PreviewCabbage->setVisible(false); 
       PreviewEnemy->setVisible(true);
       PreviewBlock->setVisible(false);
    }
+   else if(oneDown) {
+   
+      PreviewCabbage->setVisible(true); 
+      PreviewEnemy->setVisible(false);
+      PreviewBlock->setVisible(false);
+   }
    else {
+      PreviewCabbage->setVisible(false); 
       PreviewBlock->setVisible(true);
       PreviewEnemy->setVisible(false);
    }
@@ -147,16 +157,16 @@ void CLWIBState::OnRenderStart(float const Elapsed)
     if (showHelp) {
         freetype::print(our_font, 15, WindowHeight - 230.f, \
             "WASD to control camera\n"\
-            "Press E to place enemies\n"\
-            "Press F to make blocks wider\n"\
-            "Press H to make blocks taller\n"\
-            "press T to enable t remove mode\n"\
-            "Press U to Undo action\n"\
+            "You add blocks by defualt\n"\
+            "press Z\X change block type\n"\
+            "Press E to place enemies press Z\X add different enemies\n"\
+            "Press F/G to make blocks shorter/longer\n"\
+            "Press H/J to make blocks skinny/wider\n"\
             "press R to Redo action\n");
     }
     else
         freetype::print(our_font, 15, WindowHeight - 50.f, "Press F1 For Help");
-    if (!eDown && !showHelp && !tDown) {
+    if (!eDown && !showHelp && !tDown && !oneDown) {
         freetype::print(our_font, 20, WindowHeight - 100.f, "Placing block\n\n");
         if (textureType == 0) {
             freetype::print(our_font, 20, WindowHeight - 150.f, "Placing grass block\n");
@@ -176,7 +186,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
             PreviewEnemy->setMesh(cubeMesh);
         }
     }
-    if (eDown && !showHelp && !tDown) {
+    if (eDown && !showHelp && !tDown && !oneDown) {
         freetype::print(our_font, 20, WindowHeight - 100.f, "Placing enemy\n");
         if (enemyType == 0) {
             freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Apple\n");
@@ -201,6 +211,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
            PreviewEnemy->setMesh(cubeMesh);
         }
     }
+    if (oneDown && !showHelp && !tDown && !eDown)
     if (tDown && !showHelp)
         freetype::print(our_font, 20, WindowHeight - 100.f, "Remove mode\n\n");
     drawSubWindow();
@@ -230,6 +241,12 @@ void CLWIBState::drawSubWindow() {
 void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
    if(Event.Pressed){
+       if(Event.Key == SDLK_1){
+            if (oneDown == 1)
+                oneDown = 0;
+            else 
+                oneDown = 1;
+       }
       if(Event.Key == SDLK_w){
          wDown = 1;
       }
@@ -245,13 +262,13 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_d){
          dDown = 1;
       }
-      if(Event.Key == SDLK_f){
+      if(Event.Key == SDLK_g){
          if(blockWidth < 10)
             blockWidth++;
          PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
          //fDown = 1; //width
       }
-      if(Event.Key == SDLK_g){
+      if(Event.Key == SDLK_f){
          if(blockWidth > 1)
             blockWidth--;
          PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
@@ -469,7 +486,16 @@ void CLWIBState::PrepPreviews() {
    appleMesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
    orangeMesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
    kiwiMesh = CMeshLoader::load3dsMesh("Models/killkiwi.3ds");
+   cabbageMesh = CMeshLoader::load3dsMesh("Models/crappycabbage.3ds");
+
+   blocks.push_back(PreviewCabbage = new CMeshSceneObject());
+   PreviewCabbage->setMesh(cabbageMesh);
    
+   if(cabbageMesh) {
+      cabbageMesh->resizeMesh(SVector3(1));
+      cabbageMesh->centerMeshByExtents(SVector3(0));
+      cabbageMesh->calculateNormalsPerFace();
+   }
    if(appleMesh) {
       appleMesh->resizeMesh(SVector3(1));
       appleMesh->centerMeshByExtents(SVector3(0));
@@ -488,6 +514,9 @@ void CLWIBState::PrepPreviews() {
          kiwiMesh->calculateNormalsPerFace();
       }
 
+   PreviewCabbage->setShader(Diffuse);
+   PreviewCabbage->setRotation(SVector3(-90, 0, 0));
+   PreviewCabbage->setScale(SVector3(0.5,0.5, 0.5));
    PreviewEnemy->setShader(Diffuse);
    PreviewEnemy->setRotation(SVector3(-90, 0, 0));
    PreviewBlock->setScale(SVector3(1, 1, 1));
@@ -538,6 +567,34 @@ void CLWIBState::PrepEnemy(float x, float y) {
    redoPlaceables.clear();
 }
 
+void CLWIBState::PrepCabbage(float x, float y) {
+
+   if(x < -25 || y < -25 || x >= 200 || y >= 75)
+      return;
+   if(blockMap[(int)x+25][(int)(y-0.5+25)].o) {
+      printf("Blockmap space occupied. Did not place Cabbage\n");
+      return;
+   }
+
+   printf("Placed cabbage starting at %0.2f, %0.2f\n", x, y);
+   CMeshSceneObject *tempCabbage;
+   CCabbage *tempPlaceable;
+   blocks.push_back(tempCabbage = new CMeshSceneObject());
+   placeables.push_back(tempPlaceable = new CCabbage(x, y, 1, 1));
+   tempCabbage->setMesh(cabbageMesh);
+   tempCabbage->setShader(Diffuse);
+   tempCabbage->setTranslation(SVector3((x+(x+1.5))/2, (y+(y))/2, 0));
+   tempCabbage->setRotation(SVector3(-90, 0, 0));
+   tempCabbage->setScale(SVector3(0.5, 0.5, 0.5));
+   blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
+   blockMap[(int)x+25][(int)(y-0.5+25)].r = tempCabbage;
+   blockMap[(int)x+25][(int)(y-0.5+25)].p = tempPlaceable;
+   blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
+   blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
+   Application.getSceneManager().addSceneObject(tempCabbage);
+   redo.clear();
+   redoPlaceables.clear();
+}
 
 void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t) {
    if(x < -25 || y < -25 || x >= 200 || y >= 75)
@@ -738,9 +795,12 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
       }
       if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
          mouseDown = 1;
-         if(!tDown && eDown) {
+         if(!tDown && eDown && !oneDown) {
             printf("Here\n");
             PrepEnemy(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
+         }
+         if(!tDown && oneDown && !eDown) {
+            PrepCabbage(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
          }
          else if (!tDown) {
             PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,textureType);
