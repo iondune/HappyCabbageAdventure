@@ -290,7 +290,7 @@ void COverworldState::PrepMeshes()
    playerVector = levels[0].loc;
    playerVector.Y += 0.05;
    playerRender->setTranslation(playerVector);
-   playerRender->setRotation(SVector3(0, -90, 0));
+   playerRender->setRotation(SVector3(-90, 0, 180));
    playerRender->setScale(SVector3(0.18f));
 
    (playerRender);
