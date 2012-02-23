@@ -64,6 +64,8 @@ void ISceneObject::update()
 
 void ISceneObject::draw(CScene const * const scene)
 {
+   if(!Visible)
+      return;
 	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
 		if (! (* it)->isCulled(scene))
 			(* it)->draw(scene);
