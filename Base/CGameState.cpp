@@ -457,16 +457,9 @@ void CGameState::oldDisplay() {
    renderDerp->setRotation(SVector3(-90, 0, -90));
 
    //ENEMY DISPLAY
-   int i = 0;
    for (std::vector<CBadGuy*>::iterator it = GameplayManager->Enemies.begin(); it != GameplayManager->Enemies.end(); ++ it)
    {
       (*it)->doRenderable();
-//      ((CMeshSceneObject*)((*it)->Renderable))->setTranslation(SVector3((*it)->Actor->getArea().getCenter().X, (*it)->Actor->getArea().getCenter().Y, 0));
-//      if((*it)->Actor->getVelocity().X < -0.01f)
-//         ((CMeshSceneObject*)((*it)->Renderable))->setScale(SVector3(-1,1,1));
-//      else if((*it)->Actor->getVelocity().X > 0.01f)
-//         ((CMeshSceneObject*)((*it)->Renderable))->setScale(SVector3(1,1,1));
-      i++;
    }
 
    std::vector<CElevator*>::iterator it;

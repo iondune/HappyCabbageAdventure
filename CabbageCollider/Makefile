@@ -9,13 +9,13 @@ OPENGL = -DGL_GLEXT_PROTOTYPES
 all: ../lib/libCabbageCollider.a
 
 CActor.o: CActor.cpp *.h
-	g++ -o $@ CActor.cpp -c $(DIRECTORIES) $(OPENGL)
+	g++ -O1 -o $@ CActor.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CCollideable.o: CCollideable.cpp *.h
-	g++ -o $@ CCollideable.cpp -c $(DIRECTORIES) $(OPENGL)
+	g++ -O1 -o $@ CCollideable.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CObject.o: CObject.cpp *.h
-	g++ -o $@ CObject.cpp -c $(DIRECTORIES) $(OPENGL)
+	g++ -O1 -o $@ CObject.cpp -c $(DIRECTORIES) $(OPENGL)
 
 ../lib/libCabbageCollider.a: $(OFILES)
 	rm -f $@

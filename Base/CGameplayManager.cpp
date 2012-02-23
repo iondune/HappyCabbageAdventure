@@ -38,7 +38,6 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
     }
 
     if (Object == PlayerActor && With->CollideableType == COLLIDEABLE_TYPE_FLAME) {
-       printf("Collided with flame! : D\n");
     }
 
     if (! Other || GodMode)

@@ -11,7 +11,7 @@ CLight const CScene::NullLight;
 
 
 CScene::CScene()
-	: BindProjMatrix(ProjMatrix), BindViewMatrix(ViewMatrix), BindLightCount(LightCount), UseCulling(true)
+   : BindProjMatrix(ProjMatrix), BindViewMatrix(ViewMatrix), BindLightCount(LightCount), UseCulling(true)
 {
     ActiveCamera = & DefaultCamera;
 
@@ -50,12 +50,12 @@ void CScene::setActiveCamera(CCamera * const activeCamera)
 
 bool const CScene::isCullingEnabled() const
 {
-	return UseCulling;
+   return UseCulling;
 }
 
 void CScene::setCullingEnabled(bool const culling)
 {
-	UseCulling = culling;
+   UseCulling = culling;
 }
 
 
@@ -90,7 +90,7 @@ IUniform const * CScene::getUniform(std::string const & label) const
         if (remaining == "Color")
         {
             if (index >= Lights.size())
-				return & NullLight.BindColor;
+            return & NullLight.BindColor;
             else
                 return & Lights[index]->BindColor;
         }
@@ -123,9 +123,9 @@ void CScene::update()
         LightCount = Lights.size();
     }
 
-	RootObject.updateAbsoluteTransformation();
+   RootObject.updateAbsoluteTransformation();
 
-	RootObject.update();
+   RootObject.update();
 }
 
 CSceneManager::CSceneManager()
@@ -135,61 +135,61 @@ CSceneManager::CSceneManager()
 
 void CSceneManager::addSceneObject(ISceneObject * sceneObject)
 {
-	RootObject.addChild(sceneObject);
+   RootObject.addChild(sceneObject);
 }
 
 void CSceneManager::removeSceneObject(ISceneObject * sceneObject)
 {
-	RootObject.removeChild(sceneObject);
+   RootObject.removeChild(sceneObject);
 }
 
 void CSceneManager::removeAllSceneObjects()
 {
-	RootObject.removeChildren();
+   RootObject.removeChildren();
 }
 
 void CSceneManager::drawAll()
 {
     CurrentScene->update();
 
-	RootObject.draw(CurrentScene);
+    RootObject.draw(CurrentScene);
 
     SceneChanged = false;
 }
 
 CMeshSceneObject * CSceneManager::addMeshSceneObject(CMesh * Mesh)
 {
-	CMeshSceneObject * Object = new CMeshSceneObject();
-	Object->setMesh(Mesh);
-	addSceneObject(Object);
-	return Object;
+   CMeshSceneObject * Object = new CMeshSceneObject();
+   Object->setMesh(Mesh);
+   addSceneObject(Object);
+   return Object;
 }
 
 CMeshSceneObject * CSceneManager::addMeshSceneObject(CMesh * Mesh, CShader * Shader)
 {
-	CMeshSceneObject * Object = new CMeshSceneObject();
-	Object->setMesh(Mesh);
-	Object->setShader(Shader);
-	addSceneObject(Object);
-	return Object;
+   CMeshSceneObject * Object = new CMeshSceneObject();
+   Object->setMesh(Mesh);
+   Object->setShader(Shader);
+   addSceneObject(Object);
+   return Object;
 }
 
 CMeshSceneObject * CSceneManager::addMeshSceneObject(CMesh * Mesh, CShader * Shader, CMaterial const & Material)
 {
-	CMeshSceneObject * Object = new CMeshSceneObject();
-	Object->setMesh(Mesh);
-	Object->setShader(Shader);
-	Object->setMaterial(Material);
-	addSceneObject(Object);
-	return Object;
+   CMeshSceneObject * Object = new CMeshSceneObject();
+   Object->setMesh(Mesh);
+   Object->setShader(Shader);
+   Object->setMaterial(Material);
+   addSceneObject(Object);
+   return Object;
 }
 
 CMeshSceneObject * CSceneManager::addMeshSceneObject(std::string const & Mesh, std::string const & Shader, CMaterial const & Material)
 {
-	CMeshSceneObject * Object = new CMeshSceneObject();
-	Object->setMesh(CMeshLoader::load3dsMesh(Mesh));
-	Object->setShader(CShaderLoader::loadShader(Shader));
-	Object->setMaterial(Material);
-	addSceneObject(Object);
-	return Object;
+   CMeshSceneObject * Object = new CMeshSceneObject();
+   Object->setMesh(CMeshLoader::load3dsMesh(Mesh));
+   Object->setShader(CShaderLoader::loadShader(Shader));
+   Object->setMaterial(Material);
+   addSceneObject(Object);
+   return Object;
 }
