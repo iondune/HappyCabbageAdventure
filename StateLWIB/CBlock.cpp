@@ -56,7 +56,10 @@ CMeshSceneObject * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngin
       engBlock->setArea(SRect2(x, y, (float) w, (float) h));
    }
 
-   CMesh *mesh = CMeshLoader::loadAsciiMesh("Cube");
+   CMesh *mesh;
+
+
+   mesh = CMeshLoader::loadAsciiMesh("Cube");
    mesh->calculateNormalsPerVertex();
    tempBlock->setMesh(mesh);
    if (t == 0) {
@@ -68,13 +71,27 @@ CMeshSceneObject * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngin
    else if (t == 2) {
         tempBlock->setTexture("Textures/rock.bmp");
    }
+   else if (t == -5) {
+      mesh = CMeshLoader::load3dsMesh("Models/levelBlock.3ds");
+      if (mesh) {
+         mesh->resizeMesh(SVector3(1.0));
+         mesh->centerMeshByExtents(SVector3(0));
+         mesh->calculateNormalsPerVertex();
+      }
+      else {
+         fprintf(stderr, "Failed to load the mesh\n");
+      }
+      tempBlock->setMesh(mesh);
+		tempBlock->setTexture("Textures/GrassyGrass.bmp", 2);
+		tempBlock->setTexture("Textures/DirtyDirt.bmp", 3);
+   }
    else {
         printf("texture not found\n" );   
    }
    tempBlock->setShader(shader);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    tempBlock->setScale(SVector3((float) w, (float) h, (float) z));
-   tempBlock->setRotation(SVector3(0, 0, 0));
+   tempBlock->setRotation(SVector3(t==-5?-90:0, 0, 0));
    CApplication::get().getSceneManager().addSceneObject(tempBlock);
 
    return tempBlock;
