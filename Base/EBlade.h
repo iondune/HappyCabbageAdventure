@@ -17,6 +17,7 @@ public:
    void doRenderable();
 
    float BladeRotate;
+   float Time;
 };
 
 #endif /* EKIWI_H_ */

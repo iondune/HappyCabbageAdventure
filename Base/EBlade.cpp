@@ -57,11 +57,12 @@ void EBlade::loadActor() {
 
 //Updates AI's decision per frame
 void EBlade::update(float const TickTime) {
+   Time = TickTime;
 }
 
 void EBlade::doRenderable() {
 
-   BladeRotate -= 1.0f;
+   BladeRotate -= 300.0f * Time;
 
    Renderable->setRotation(SVector3(-90, 0, BladeRotate));
    //Renderable->setScale(SVector3(2.0f));
