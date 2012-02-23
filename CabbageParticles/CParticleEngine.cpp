@@ -35,8 +35,13 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
       positionArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*1 - 0.5, (float)rand()/(float)RAND_MAX*2, 0));
       switch(particleType) {
          case LEAF_PARTICLE:
-            colorArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*0.2 + 0.4, (float)rand()/(float)RAND_MAX*0.2 + 0.8, (float)rand()/(float)RAND_MAX*0.4 + 0.4));
-            sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 10);
+            if(rand() % 4 == 0) {
+               colorArr.push_back(new SVector3(1.0f));
+            }
+            else {
+               colorArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*0.2 + 0.4, (float)rand()/(float)RAND_MAX*0.2 + 0.8, (float)rand()/(float)RAND_MAX*0.4 + 0.4));
+            }
+            sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 15);
             break;
          case CUBE_PARTICLE:
             temp = (float)rand()/(float)RAND_MAX*0.3 + 0.3;

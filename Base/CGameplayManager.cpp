@@ -2,12 +2,21 @@
 #include "CGameEventManager.h"
 
 CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CEngine * engine)
-    : PlayerActor(playerActor), PlayerRecovering(false), PlayerHealth(5), Engine(engine)
+    : PlayerActor(playerActor), PlayerRecovering(false), PlayerHealth(5), Engine(engine), PlayerEnergy(3)
 {
     Engine->setCollisionResponder(this);
     GameEventManager = new CGameEventManager();
     won = 0;
     GodMode = 0;
+    GodModeTime = 0;
+}
+
+void CGameplayManager::UseAbility(int energyCost) {
+   PlayerEnergy -= energyCost;
+}
+
+void CGameplayManager::setGodMode(float time) {
+   GodModeTime = time;
 }
 
 void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With)
@@ -79,6 +88,8 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
             //Need to rewrite so works without SEnemy
             else
             {
+                if (GodModeTime > 0)
+                   continue;
                 if (isPlayerAlive() && PlayerRecovering <= 0.f)
                 {
                     SPlayerDamagedEvent Event;
@@ -149,6 +160,11 @@ int const CGameplayManager::getPlayerHealth() const
     return PlayerHealth;
 }
 
+int const CGameplayManager::getPlayerEnergy() const
+{
+    return PlayerEnergy;
+}
+
 bool const CGameplayManager::isJumping() const {
    return PlayerActor->isJumping();
 }
@@ -157,6 +173,8 @@ void CGameplayManager::run(float const TickTime)
 {
     if (PlayerRecovering > 0.f)
         PlayerRecovering -= TickTime;
+    if (GodModeTime > 0)
+       GodModeTime -= TickTime;
 
     for (EnemyList::iterator it = KillList.begin(); it != KillList.end(); ++ it)
     {

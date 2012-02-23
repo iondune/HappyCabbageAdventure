@@ -30,7 +30,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       int won;
       Cabbage::Collider::CActor * PlayerActor;
       Cabbage::Collider::CObject * VictoryFlag;
-      int PlayerHealth;
+      int PlayerHealth, PlayerEnergy;
       float PlayerRecovering;
 
       Cabbage::Collider::CEngine * Engine;
@@ -43,11 +43,15 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       void OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With);
 
       int GodMode;
+      float GodModeTime;
+      void setGodMode(float time);
       bool const isPlayerAlive() const;
       bool const isWon() const;
 
       int const getPlayerHealth() const;
+      int const getPlayerEnergy() const;
 
+      void UseAbility(int energyCost);
       float getRecovering() {return PlayerRecovering;}
 
       bool const isJumping() const;

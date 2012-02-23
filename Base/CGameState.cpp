@@ -553,8 +553,12 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
             particleCubeEngine = new CParticleEngine(SVector3(0, 1, 0), 800, 6, CUBE_PARTICLE);
       }
       if(Event.Key == SDLK_r) {
-         if(!particleLeafEngine || (particleLeafEngine && particleLeafEngine->dead))
-            particleLeafEngine = new CParticleEngine(SVector3(0, 1, 0), 300, 6, LEAF_PARTICLE);
+         if(GameplayManager->getPlayerEnergy() > 0) {
+            if(!particleLeafEngine || (particleLeafEngine && particleLeafEngine->dead))
+               particleLeafEngine = new CParticleEngine(SVector3(0, 1, 0), 150, 6, LEAF_PARTICLE);
+            GameplayManager->UseAbility(1);
+            GameplayManager->setGodMode(6.0);
+         }
       }
 #endif
       if(Event.Key == SDLK_k){
