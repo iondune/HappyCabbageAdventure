@@ -17,7 +17,7 @@ namespace Collider
 		: Friction(1.f), Elasticity(0.f)
 	{}
 
-	CCollideable::CCollideable()
+	CCollideable::CCollideable() : CollideableType(COLLIDEABLE_TYPE_COLLIDEABLE)
 	{}
 
 	CCollideable::~CCollideable()

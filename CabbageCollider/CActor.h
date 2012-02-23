@@ -121,12 +121,14 @@ namespace Collider
       bool isJumping();
 		void setJumping(bool const jumping);
 		void setControlFall(bool const fall);
+      bool getControlFall();
 		void setFallAcceleration(float speed);
 		float getFallAcceleration();
 
 		virtual void draw();
 
 		void setImpulse(SVector2 const & velocity, float const duration = 0.3f);
+		void addImpulse(SVector2 const & velocity);
 
 	};
 }

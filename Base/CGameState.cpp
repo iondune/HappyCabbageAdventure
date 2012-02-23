@@ -98,6 +98,7 @@ void CGameState::EngineInit( void ) {
    Engine = new CEngine();
    Player = Engine->addActor();
    Player->setArea(SRect2(-24.5f, 3, 1, 1));
+   Player->CollideableType = COLLIDEABLE_TYPE_PLAYER;
 
    Derp = Engine->addActor();
    Derp->setArea(SRect2(-17, 0, 1, 1));
@@ -555,11 +556,11 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 #ifdef PARTICLE
       if(Event.Key == SDLK_e) {
          if(!particleCubeEngine || (particleCubeEngine && particleCubeEngine->dead))
-            particleCubeEngine = new CParticleEngine(SVector3(0, 1, 0), 80, 6, CUBE_PARTICLE);
+            particleCubeEngine = new CParticleEngine(SVector3(0, 1, 0), 800, 6, CUBE_PARTICLE);
       }
       if(Event.Key == SDLK_r) {
          if(!particleLeafEngine || (particleLeafEngine && particleLeafEngine->dead))
-            particleLeafEngine = new CParticleEngine(SVector3(0, 1, 0), 30, 6, LEAF_PARTICLE);
+            particleLeafEngine = new CParticleEngine(SVector3(0, 1, 0), 300, 6, LEAF_PARTICLE);
       }
 #endif
       if(Event.Key == SDLK_k){
