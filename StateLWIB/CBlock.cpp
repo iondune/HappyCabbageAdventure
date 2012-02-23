@@ -89,7 +89,10 @@ CMeshSceneObject * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngin
         printf("texture not found\n" );   
    }
    tempBlock->setShader(shader);
-   tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
+   if(t != -5)
+      tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
+   else /* For ground blocks */
+      tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    tempBlock->setScale(SVector3((float) w, (float) h, (float) z));
    tempBlock->setRotation(SVector3(t==-5?-90:0, 0, 0));
    CApplication::get().getSceneManager().addSceneObject(tempBlock);
