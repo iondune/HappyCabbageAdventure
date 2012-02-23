@@ -830,6 +830,7 @@ void PrepMeshes()
 
    playerRenderable = new CMeshSceneObject();
    playerRenderable->setMesh(cabbageMesh);
+   //playerRenderable->enableDebugData(EDebugData::Normals);
    playerRenderable->setShader(Toon);
    playerRenderable->setScale(SVector3(2));
 
