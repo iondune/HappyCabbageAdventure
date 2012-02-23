@@ -72,6 +72,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
 
 void CParticleEngine::setCenterPos(SVector3 cP) {
    centerPos = cP;
+   myObj->setBoundingBox(SBoundingBox3(centerPos - 0.5, centerPos + 0.5));
 }
 
 void CParticleEngine::setLookRight(int pf) {
