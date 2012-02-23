@@ -1,9 +1,10 @@
 #include "CParticleEngine.h"
 
-CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int particleType) {
+CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) {
    centerPos = pos;
    numParticles = max;
    totalDuration = duration;
+   particleType = pT;
    currentDuration = 0.f;
    dead = 0;
 
@@ -16,6 +17,9 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int part
             break;
          case CUBE_PARTICLE:
             particles.push_back(cPtr = new CPCube());
+            break;
+         case FLAME_PARTICLE:
+            particles.push_back(cPtr = new CPFlame());
             break;
       }
       cPtr->setCenterPos(&centerPos);
@@ -42,6 +46,17 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int part
             else {
                colorArr.push_back(new SVector3(temp, temp*2, temp*3));
             }
+            sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 10);
+            break;
+         case FLAME_PARTICLE:
+            temp = (float)rand()/(float)RAND_MAX*0.3 + 0.3;
+            if(rand() % 3 == 0) {
+               colorArr.push_back(new SVector3(temp*3, temp*2, temp));
+            }
+            else {
+               colorArr.push_back(new SVector3(temp*3, temp, temp));
+            }
+
             sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 10);
             break;
       }
@@ -75,7 +90,7 @@ void CParticleEngine::step(float const elapsedTime) {
          }
       }
       myObj->setPositions(positionArr);
-      if(currentDuration >= totalDuration) {
+      if(currentDuration >= totalDuration && totalDuration >= 0) {
          deconstruct();
       }
    }
