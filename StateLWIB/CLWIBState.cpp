@@ -96,7 +96,6 @@ void CLWIBState::begin()
    //Initialize Fxns
    BlocksInit();
    PrepPreviews();
-
    printf("END OF BEGIN\n");
 
 }
@@ -321,7 +320,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
             blockWidth = 1;
             blockHeight = 1;
             blockDepth = 1;
-             PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
          }
       }
       if(Event.Key == SDLK_k){
@@ -401,37 +400,48 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
           showHelp = Event.Pressed;
       }
       if(Event.Key == SDLK_x ) {
-         if(eDown) {
-            if (enemyType < 6) //temp constraint
-               enemyType++;
-            else
-               enemyType = 0;
-         }
-         else {
-            if (textureType < 3 && textureType >= 0 && textureType != 2)
-               textureType++;
-            else if (textureType == 2) {
-               textureType = -5;
-               blockWidth = 5;
-               blockHeight = 5;
-               blockDepth = 5;
-               PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
-            }
-            else if (textureType == -5)
-               textureType = 0;
-         }
+        if (enemyType < 6) //temp constraint
+             enemyType++;
+        else
+            enemyType = 0;
+        if (textureType < 3 && textureType >= 0 && textureType != 2)
+            textureType++;
+        else if (textureType == 2) {
+            textureType = -5;
+            blockWidth = 5;
+            blockHeight = 5;
+            blockDepth = 5;
+            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+        }
+        else if (textureType == -5) {
+            textureType = 0;
+            blockWidth = 1;
+            blockHeight = 1;
+            blockDepth = 1;
+            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+        }
       } 
       if (Event.Key == SDLK_z) {
          if (enemyType != 0) 
              enemyType--;
          else
              enemyType = 0;
-         if (textureType != 0)   
-             enemyType--;
-         else if (textureType == 0)
+         if (textureType != 0 && textureType > 0)   
+             textureType--;
+         else if (textureType == 0) {
              textureType = -5;
-         else if (textureType == -5)
+             blockWidth = 5;
+             blockHeight = 5;
+             blockDepth = 5;
+             PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+         }
+         else if (textureType == -5) {
              textureType = 2;
+             blockWidth = 1;
+             blockHeight = 1;
+             blockDepth = 1;
+             PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+         }
       }
    }
    //Check if key let go, Not sure if this will work in here.
@@ -685,18 +695,37 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t) {
 
 void CLWIBState::PrepGrass(float x, float y, float w, float h) {
    CMeshSceneObject *tempBlock;
+   // block
    blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
 
-   tempBlock->setTexture("Textures/grass.bmp");
+   tempBlock->setTexture("Textures/sky.bmp");
    tempBlock->setShader(DiffuseTexture);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    tempBlock->setScale(SVector3(w, h, .5));
    Application.getSceneManager().addSceneObject(tempBlock);
+   CMeshSceneObject *tempyBlock;
+   blocks.push_back(tempyBlock = new CMeshSceneObject());
+   tempyBlock->setMesh(cubeMesh);
+
+   tempyBlock->setTexture("Textures/sky.bmp");
+   tempyBlock->setShader(DiffuseTexture);
+   tempyBlock->setTranslation(SVector3(172, (y+(y+h))/2, 0));
+   tempyBlock->setScale(SVector3(w, h, .5));
+   Application.getSceneManager().addSceneObject(tempyBlock);
 
 }
 
 void CLWIBState::PrepSky() {
+  /* CMeshSceneObject *tempBlock;
+   blocks.push_back(tempBlock = new CMeshSceneObject());
+   tempBlock->setMesh(cubeMesh);
+   tempBlock->setTexture("Textures/rock.bmp");
+   tempBlock->setShader(DiffuseTexture);
+   tempBlock->setTranslation(SVector3(0, 24, -2.5));
+   tempBlock->setTranslation(SVector3(0, 0, 0));
+   tempBlock->setScale(SVector3(50, 25, 1));
+   Application.getSceneManager().addSceneObject(tempBlock);*/
    CMeshSceneObject *tempBlock;
    blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
@@ -704,6 +733,7 @@ void CLWIBState::PrepSky() {
    tempBlock->setShader(DiffuseTexture);
    tempBlock->setTranslation(SVector3(0, 24, -2.5));
    tempBlock->setScale(SVector3(400, 50, 1));
+   tempBlock->setCullingEnabled(false);
    Application.getSceneManager().addSceneObject(tempBlock);
 }
 
