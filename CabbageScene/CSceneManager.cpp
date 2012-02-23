@@ -12,7 +12,7 @@ CLight const CScene::NullLight;
 
 CScene::CScene()
    : BindProjMatrix(ProjMatrix), BindViewMatrix(ViewMatrix), BindLightCount(LightCount), UseCulling(true),
-   DirectDisplayCamera(-10.f, 10.f)
+   DirectDisplayCamera(-1000.f, 1000.f)
 {
     ActiveCamera = & DefaultCamera;
 
@@ -114,21 +114,21 @@ IUniform const * CScene::getUniform(std::string const & label) const
 
 void CScene::update()
 {
-    ActiveCamera->recalculateViewMatrix();
-    ViewMatrix = ActiveCamera->getViewMatrix();
-    ProjMatrix = ActiveCamera->getProjectionMatrix();
+	ActiveCamera->recalculateViewMatrix();
+	ViewMatrix = ActiveCamera->getViewMatrix();
+	ProjMatrix = ActiveCamera->getProjectionMatrix();
 
-    if (LightCount != Lights.size())
-    {
-        SceneChanged = true;
-        LightCount = Lights.size();
-    }
+	if (LightCount != Lights.size())
+	{
+		SceneChanged = true;
+		LightCount = Lights.size();
+	}
 
-   RootObject.updateAbsoluteTransformation();
-   RootObject.update();
+	RootObject.updateAbsoluteTransformation();
+	RootObject.update();
 
-   DirectDisplayRoot.updateAbsoluteTransformation();
-   DirectDisplayRoot.update();
+	DirectDisplayRoot.updateAbsoluteTransformation();
+	DirectDisplayRoot.update();
 }
 
 CSceneManager::CSceneManager()
@@ -148,6 +148,7 @@ void CSceneManager::removeSceneObject(ISceneObject * sceneObject)
 
 void CSceneManager::addDirectObject(ISceneObject * sceneObject)
 {
+	sceneObject->setCullingEnabled(false);
 	DirectDisplayRoot.addChild(sceneObject);
 }
 
@@ -170,6 +171,8 @@ void CSceneManager::drawAll()
 
 	ICamera * Active = CurrentScene->getActiveCamera();
 	CurrentScene->setActiveCamera(& DirectDisplayCamera);
+	ViewMatrix = ActiveCamera->getViewMatrix();
+	ProjMatrix = ActiveCamera->getProjectionMatrix();
 	DirectDisplayRoot.draw(CurrentScene);
 	CurrentScene->setActiveCamera(Active);
 
