@@ -173,7 +173,7 @@ void CMesh::calculateNormalsPerFace()
 			it->Normal.normalize();
 }
 
-void CMesh::calculateNormalsPerVertex()
+void CMesh::calculateNormalsPerVertex(bool CombineNear, float const NearTolerance)
 {
     calculateNormalsPerFace();
 
@@ -186,11 +186,12 @@ void CMesh::calculateNormalsPerVertex()
 			for (int i = 0; i < 3; ++ i)
 				(* bit)->Vertices[it->Indices[i]].Normal += it->Normal;
 
-	/*for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
-		for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
-			for (std::vector<SVertex>::iterator jt = ++ it; jt != (* bit)->Vertices.end(); ++ jt)
-				if (jt->Position == it->Position)
-					it->Normal += jt->Normal;*/
+	if (CombineNear)
+		for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
+			for (unsigned int i = 0; i < (* bit)->Vertices.size(); ++ i)
+				for (unsigned int j = i + 1; j < (* bit)->Vertices.size(); ++ j)
+					if ((* bit)->Vertices[i].Position.equals((* bit)->Vertices[j].Position, NearTolerance))
+						(* bit)->Vertices[i].Normal = (* bit)->Vertices[j].Normal = (* bit)->Vertices[i].Normal + (* bit)->Vertices[j].Normal;
 
 
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
