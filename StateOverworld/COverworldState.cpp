@@ -9,6 +9,7 @@ COverworldState::COverworldState()
 void COverworldState::begin()
 {
    curNode = 0;
+   curCamera = 0;
    aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0;
    transitionTimer = 0.0;
 
@@ -24,6 +25,7 @@ void COverworldState::begin()
    loadLevels();
    setCameraTrans();
 
+   testFun();
 
    glEnable(GL_DEPTH_TEST);
    glDepthFunc(GL_LEQUAL);
@@ -77,16 +79,34 @@ void COverworldState::begin()
 void COverworldState::step(float delta) {
    //rot.X += 10*delta;
 
-   superInterpolator(look, lookShift, lookTarget, delta);
-   superInterpolator(eye, eyeShift, eyeTarget, delta);
-
-   transitionTimer = transitionTimer < 0.0f ? 0.0f : transitionTimer - delta;
+  superInterpolator(playerVector, playerVecShift, delta);
+   superInterpolator(look, lookShift, delta);
+   superInterpolator(eye, eyeShift, delta);
 
    if(transitionTimer == 0.0f)
    {
      camRotValue += 0.5f*delta;
    }
-  stepValue += 0.5f*delta;
+   else if(transitionTimer < 0.0f )
+   { 
+     transitionTimer =  0.0f;
+     playerRender->setRotation(SVector3(-90, 0, angleMaker(levels[curNode].loc, cameraPos[curCamera])));
+
+     /*
+     if(curNode != NUM_LEVELS -1)
+     {
+arrowRender2->setTranslation(SVector3(0,0.2,0) + playerVector);
+   arrowRender2->setRotation(SVector3(90.0f, 0.0f, angleMaker(playerVector, levels[curNode + 1].loc)));
+     }
+     */
+   }
+   else
+   {
+     transitionTimer -= delta;
+   }
+
+
+   stepValue += 0.5f*delta;
    /*
 
    if(!(look == lookTarget))
@@ -139,6 +159,7 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
   bool diskChanger = false;
   bool eyeChanger = false;
+  bool arrowChanger = false;
 
    if(Event.Pressed ){
       if(Event.Key == SDLK_w){
@@ -185,27 +206,27 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_i){
         changey += 0.01f;
-        eyeChanger = true;
+        arrowChanger = true;
       }
       if(Event.Key == SDLK_k){
         changey -= 0.01f;
-        eyeChanger = true;
+        arrowChanger = true;
       }
       if(Event.Key == SDLK_u){
         changex += 0.01f;
-        eyeChanger = true;
+        arrowChanger = true;
       }
       if(Event.Key == SDLK_j){
         changex -= 0.01f;
-        eyeChanger = true;
+        arrowChanger = true;
       }
       if(Event.Key == SDLK_o){
-        changez += 0.01f;
-        eyeChanger = true;
+        changez += 5.00f;
+        arrowChanger = true;
       }
       if(Event.Key == SDLK_l){
-        changez -= 0.01f;
-        eyeChanger = true;
+        changez -= 5.00f;
+        arrowChanger = true;
       }
       if(Event.Key == SDLK_p){
          printf("disk coords: %0.2f %0.2f %0.2f\n", changex,changey, changez);
@@ -224,6 +245,10 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
    if(eyeChanger)
      eye = SVector3(changex, changey, changez);
+
+   if(arrowChanger)
+     arrowRender2->setRotation(SVector3(90.0f, 0.0f, changez ));
+
 }
 
 void COverworldState::end()
@@ -293,10 +318,31 @@ void COverworldState::PrepMeshes()
    playerVector = levels[0].loc;
    playerVector.Y += 0.05;
    playerRender->setTranslation(playerVector);
-   playerRender->setRotation(SVector3(-90, 0, 180));
+   playerRender->setRotation(SVector3(-90.0f, 0.0f, 45.0f));
    playerRender->setScale(SVector3(0.18f));
 
    (playerRender);
+
+   CMesh *arrowMesh = CMeshLoader::load3dsMesh("Models/arrow.3ds");
+   if (arrowMesh) {
+     arrowMesh->resizeMesh(SVector3(0.5f));
+     arrowMesh->centerMeshByExtents(SVector3(0));
+     arrowMesh->calculateNormalsPerFace();
+   }
+   else {
+     fprintf(stderr, "Failed to load the cababge mesh\n");
+   }
+   arrowRender1 = CApplication::get().getSceneManager().addMeshSceneObject(arrowMesh, Flat);
+   arrowRender1->setTranslation(SVector3(0, -0.2f, 0.0) + playerVector);
+   arrowRender1->setRotation(SVector3(-90.0f, 0.0f, 45.0f));
+   arrowRender1->setScale(SVector3(0.18f));
+                  
+   arrowRender2 = CApplication::get().getSceneManager().addMeshSceneObject(arrowMesh, Flat);
+   arrowRender2->setTranslation(SVector3(0,-0.2,0) + playerVector);
+   arrowRender2->setRotation(SVector3(90.0f, 0.0f, angleMaker(playerVector, levels[curNode + 1].loc) + 90.0f ));
+   arrowRender2->setScale(SVector3(0.18f));
+
+
 
    CMesh *discMesh = CMeshLoader::loadAsciiMesh("Disc");
    discMesh->linearizeIndices();
@@ -307,39 +353,12 @@ void COverworldState::PrepMeshes()
      levelIcons(levels[i].loc, discMesh, 1);
    }
 
-   levelIcons(SVector3(0.6f, 0.06f, 0.6f), discMesh, 1);
+   //levelIcons(SVector3(0.6f, 0.06f, 0.6f), discMesh, 1);
 /*
    changex = 0.6f;
    changey = 0.06f;
    changez = 0.6f;
    */
-/*
-   discRender = new CMeshSceneObject();
-   discRender->setMesh(discMesh);
-   discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
-   discRender->getMaterial().Shader = DiffuseTexture;
-   discRender->setTranslation(SVector3(0.5f, -0.13f, 0.1f));
-   discRender->setScale(SVector3(0.1f));
-   CApplication::get().getSceneManager().addSceneObject(discRender);
-
-   CMeshSceneObject *orangeDisc;
-   orangeDisc = discRender = new CMeshSceneObject();
-   discRender->setMesh(discMesh);
-   discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_orange.bmp");
-   discRender->getMaterial().Shader = DiffuseTexture;
-   discRender->setTranslation(SVector3(0.9f, -0.12999999f, 0.3f));
-   discRender->setScale(SVector3(0.09f));
-   CApplication::get().getSceneManager().addSceneObject(discRender);
-
-   discRender = new CMeshSceneObject();
-   discRender->setMesh(discMesh);
-   discRender->getMaterial().Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
-   discRender->getMaterial().Shader = DiffuseTexture;
-   discRender->setTranslation(SVector3(0.9f, -0.13f, 0.3f));
-   discRender->setScale(SVector3(0.1f));
-   //CApplication::get().getSceneManager().addSceneObject(discRender);
-   discRender = orangeDisc;
-  */ 
 }
 
 void COverworldState::levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor)
@@ -393,10 +412,11 @@ void COverworldState::movePlayer() {
 
   if(moved)
   {
-    playerVector = levels[curNode].loc;
-    playerVector.Y += 0.05;
-
     transitionTimer = TRANSITION_PERIOD;
+
+    playerVecTarget = levels[curNode].loc;
+    playerVecTarget.Y += 0.05f;
+    shiftSetter(playerVector, playerVecShift, playerVecTarget);
 
     lookTarget = levels[curNode].loc;
     shiftSetter(look, lookShift, lookTarget);
@@ -404,29 +424,19 @@ void COverworldState::movePlayer() {
     if(curNode == 1 && aDown)
     {
       eyeTarget = cameraPos[0];
+      curCamera = 0;
       shiftSetter(eye, eyeShift, eyeTarget);
     }
     else if(curNode == 2 && dDown)
     {
       eyeTarget = cameraPos[1];
+      curCamera = 1;
       shiftSetter(eye, eyeShift, eyeTarget);
     }
   }
-  /*
-   if(curNode == 0) {
-      playerVector = SVector3(0.5f, -0.08f, 0.1f);
-      //discRender->setTranslation(SVector3(0.5f, -0.12999999f, 0.1f));
-      curNode = 1;
-   }
-   else {
-      playerVector = SVector3(0.9f, -0.08f, 0.3f);
-      //discRender->setTranslation(SVector3(0.9f, -0.12999999f, 0.3f));
-      curNode = 0;
-   }
-   */
 }
 
-void COverworldState::superInterpolator(SVector3 & curr, SVector3 & change, SVector3 & target, float delta)
+void COverworldState::superInterpolator(SVector3 & curr, SVector3 & change, float delta)
 {
   SVector3 zeroV = SVector3(0.0f, 0.0f, 0.0f);
 
@@ -448,6 +458,25 @@ void COverworldState::superInterpolator(SVector3 & curr, SVector3 & change, SVec
 void COverworldState::shiftSetter(SVector3 & curr, SVector3 & change, SVector3 & target)
 {
   change = target - curr;
+}
+
+float COverworldState::angleMaker(SVector3 start, SVector3 toPoint)
+{
+     SVector3 temp = toPoint - start;
+
+     temp.normalize();
+
+     float lookat = atan2(temp.X,temp.Z) * RAD_TO_DEG;
+     lookat = lookat < 0 ? lookat + 55 : lookat;
+     return lookat;
+}
+void COverworldState::testFun()
+{
+  SVector3 temp = cameraPos[1] -levels[2].loc;
+  temp.normalize();
+
+  printf("TEST %f\n", (atan2(temp.X,temp.Z) * RAD_TO_DEG));
+
 }
 /*
 void COverworldState::OnMouseEvent(SMouseEvent const & Event) {

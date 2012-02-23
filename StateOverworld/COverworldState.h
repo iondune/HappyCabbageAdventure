@@ -11,7 +11,9 @@
 
 #define NUM_LEVELS 6
 #define NUM_CAMERAS 2
-#define TRANSITION_PERIOD 0.65f
+#define TRANSITION_PERIOD 0.45f
+#define RAD_TO_DEG 180.0f/3.145f
+#define DEG_TO_RAD 3.145f/180.0f
 
 class COverworldState : public CState<COverworldState>
 {
@@ -28,10 +30,11 @@ class COverworldState : public CState<COverworldState>
    //Boolean integers for keypressing
    int aDown, dDown, spaceDown, wDown, sDown;
    float changex, changey, changez;
-   SVector3 playerVector;
+   SVector3 playerVector, playerVecShift, playerVecTarget;
 
    CShader *Flat, *Diffuse, *DiffuseTexture;
-   CMeshSceneObject *renderMap, *discRender, *playerRender;
+   CMeshSceneObject *renderMap, *discRender, *playerRender,
+                    *arrowRender1, *arrowRender2;
 
    int startx, starty;
    float pitchphi, yawtheta;
@@ -52,6 +55,7 @@ class COverworldState : public CState<COverworldState>
    void loadLevels();
    void setCameraTrans();
    void levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor);
+   void testFun();
 
    CLight * PlayerLight;
 
@@ -59,7 +63,7 @@ class COverworldState : public CState<COverworldState>
 
    CCamera *Camera;
    float camRotValue, fps, timeTotal, stepValue;
-   int numFrames, curNode;
+   int numFrames, curNode, curCamera;
 
    COverworldState();
    //Initalizer fxn
@@ -77,8 +81,9 @@ class COverworldState : public CState<COverworldState>
    void stepCamera(float delta);
    void OnMouseEvent(SMouseEvent const & Event);
    */
-   void superInterpolator(SVector3 & curr, SVector3 & change, SVector3 & target, float delta);
+   void superInterpolator(SVector3 & curr, SVector3 & change, float delta);
    void shiftSetter(SVector3 & curr, SVector3 & change, SVector3 & target);
+   float angleMaker(SVector3 start, SVector3 toPoint);
    
 };
 #endif
