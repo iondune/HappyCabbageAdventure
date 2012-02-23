@@ -20,7 +20,7 @@ void PrepPreviews();
 float previewBlockMouseX, previewBlockMouseY; 
 float lastBlockPlacedLocationX, lastBlockPlacedLocationY;
 using namespace Cabbage::Collider;
-CMeshSceneObject *PreviewBlock, *PreviewEnemy, *PreviewCabbage;
+CMeshSceneObject *PreviewBlock, *PreviewEnemy, *PreviewCabbage, *PreviewGround;
 
 CLWIBState::CLWIBState()
 : Application (CApplication::get())
@@ -735,11 +735,11 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          }
          else {
             if(lastMouseOveredBlock.o) {
-               Application.getSceneManager().addSceneObject(lastMouseOveredBlock.r);
+               Application.getSceneManager().removeSceneObject(lastMouseOveredBlock.r);
                placeables.erase(std::remove(placeables.begin(), placeables.end(), lastMouseOveredBlock.p), placeables.end());
                blocks.erase(std::remove(blocks.begin(), blocks.end(), lastMouseOveredBlock.r), blocks.end());
-               redoPlaceables.push_back(lastMouseOveredBlock.p);
-               redo.push_back(lastMouseOveredBlock.r);
+               //redoPlaceables.push_back(lastMouseOveredBlock.p);
+               //redo.push_back(lastMouseOveredBlock.r);
                int x = lastMouseOveredBlock.mapX;
                int y = lastMouseOveredBlock.mapY;
 

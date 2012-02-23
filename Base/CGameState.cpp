@@ -50,7 +50,7 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
     int x,y,w,d,h,t;
     //float spd, rng;
 
-    irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader("test.xml");
+    irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader(levelName);
 	while (xml && xml->read())
 	{
       switch(xml->getNodeType())
@@ -253,6 +253,8 @@ void CGameState::begin()
 
    PrepShadow();
 
+
+   Application.getSceneManager().addSceneObject(renderDerp);
    Application.getSceneManager().addSceneObject(playerRenderable);
    Application.getSceneManager().addSceneObject(renderFlag);
    Application.getSceneManager().addSceneObject(flagLogo);
@@ -449,9 +451,9 @@ void CGameState::oldDisplay() {
    PlayerView->draw();
 
    //Draw derp (enemy)
-   renderBasicTree->setTranslation(SVector3(Derp->getArea().getCenter().X, Derp->getArea().getCenter().Y, 0));
-   renderBasicTree->setScale(SVector3(1.5));
-   renderBasicTree->setRotation(SVector3(-90, 0, -90));
+   renderDerp->setTranslation(SVector3(Derp->getArea().getCenter().X, Derp->getArea().getCenter().Y + .2, 0));
+   renderDerp->setScale(SVector3(1.5));
+   renderDerp->setRotation(SVector3(-90, 0, -90));
 
    //ENEMY DISPLAY
    int i = 0;
@@ -696,6 +698,18 @@ void Load3DS()
       fprintf(stderr, "Failed to load the enemy mesh\n");
    }
 
+   derpMesh = CMeshLoader::load3dsMesh("Models/derp.3ds");
+
+   if(derpMesh) {
+      derpMesh->resizeMesh(SVector3(1.0));
+      derpMesh->centerMeshByExtents(SVector3(0));
+      derpMesh->calculateNormalsPerVertex();
+   }
+
+   else {
+      fprintf(stderr, "Failed to load derp mesh\n");
+   }
+
    basicTreeMesh = CMeshLoader::load3dsMesh("Models/tree4.3ds");
    if (basicTreeMesh) {
       basicTreeMesh->resizeMesh(SVector3(0.5));
@@ -802,13 +816,17 @@ void LoadTextures()
 
 void PrepMeshes()
 {
+   renderDerp = new CMeshSceneObject();
+   renderDerp->setMesh(derpMesh);
+   renderDerp->setShader(Toon);
+
    renderBasicTree = new CMeshSceneObject();
    renderBasicTree->setMesh(basicTreeMesh);
    renderBasicTree->setShader(Toon);
 
    renderChristmasTree = new CMeshSceneObject();
    renderChristmasTree->setMesh(cabbageMesh);
-   renderChristmasTree->setShader(Flat);
+   renderChristmasTree->setShader(Toon);
 
    playerRenderable = new CMeshSceneObject();
    playerRenderable->setMesh(cabbageMesh);

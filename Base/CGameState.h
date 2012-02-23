@@ -35,6 +35,7 @@ class CGameState : public CState<CGameState>
    float fps, timeTotal;
    int numFrames;
    int lowDef;
+   const char * levelName;
    void oldDisplay(); 
    void loadWorld(std::vector<CPlaceable*> *list);
    //Runs at very start of display
