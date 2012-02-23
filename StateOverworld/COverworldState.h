@@ -57,7 +57,7 @@ class COverworldState : public CState<COverworldState>
 
    public:
 
-   CCamera *Camera;
+   ICamera *Camera;
    float camRotValue, fps, timeTotal, stepValue;
    int numFrames, curNode;
 

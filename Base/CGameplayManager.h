@@ -53,7 +53,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 
       void UseAbility(int energyCost);
       float getRecovering() {return PlayerRecovering;}
-      float setRecovering(float val) {PlayerRecovering = val;}
+      void setRecovering(float val) {PlayerRecovering = val;}
 
       bool const isJumping() const;
 

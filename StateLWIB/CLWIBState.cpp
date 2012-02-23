@@ -78,7 +78,7 @@ void CLWIBState::begin()
 
    eye = SVector3(0,0,10);
    look = SVector3(0,0,-1);
-   Camera = new CCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
+   Camera = new CPerspectiveCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
    Camera->setPosition(eye);
    Camera->setLookDirection(look - eye);
    Camera->recalculateViewMatrix();
@@ -158,8 +158,8 @@ void CLWIBState::OnRenderStart(float const Elapsed)
         freetype::print(our_font, 15, WindowHeight - 230.f, \
             "WASD to control camera\n"\
             "You add blocks by defualt\n"\
-            "press Z\X change block type\n"\
-            "Press E to place enemies press Z\X add different enemies\n"\
+            "press Z/X change block type\n"\
+            "Press E to place enemies press Z/X add different enemies\n"\
             "Press F/G to make blocks shorter/longer\n"\
             "Press H/J to make blocks skinny/wider\n"\
             "press R to Redo action\n");
@@ -612,7 +612,7 @@ void CLWIBState::PrepCabbage(float x, float y) {
    placeables.push_back(tempPlaceable = new CCabbage(x, y, 1, 1));
    tempCabbage->setMesh(cabbageMesh);
    tempCabbage->setShader(Diffuse);
-   tempCabbage->setTranslation(SVector3((x+(x+1.5))/2, (y+(y))/2, 0));
+   tempCabbage->setTranslation(SVector3((x+(x+1.5f))/2, (y+(y))/2, 0));
    tempCabbage->setRotation(SVector3(-90, 0, 0));
    tempCabbage->setScale(SVector3(0.5, 0.5, 0.5));
    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;

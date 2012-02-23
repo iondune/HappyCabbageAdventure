@@ -33,17 +33,17 @@ void CScene::removeUniform(std::string const & label)
         Uniforms.erase(it);
 }
 
-CCamera * const CScene::getActiveCamera()
+ICamera * const CScene::getActiveCamera()
 {
     return ActiveCamera;
 }
 
-CCamera const * const CScene::getActiveCamera() const
+ICamera const * const CScene::getActiveCamera() const
 {
     return ActiveCamera;
 }
 
-void CScene::setActiveCamera(CCamera * const activeCamera)
+void CScene::setActiveCamera(ICamera * const activeCamera)
 {
     ActiveCamera = activeCamera;
 }

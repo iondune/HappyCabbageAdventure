@@ -28,7 +28,7 @@ class CMainMenuState : public CState<CMainMenuState>
 
       freetype::font_data our_font;
 
-      CCamera *Camera;
+      ICamera *Camera;
 
       CTexture * woodTexture, * skyTexture;
       CMesh *logoMesh;

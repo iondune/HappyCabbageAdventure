@@ -60,7 +60,7 @@ class CPlayerView {
       void setVelocity(SVector2 vel) {
          Velocity = vel;
       }
-      void establishCamera(CCamera*,int);
+      void establishCamera(ICamera*,int);
       void setMiddle(SVector2 middle) {
          CenterPosition = middle;
       }

@@ -218,7 +218,7 @@ void CGameState::begin()
    //Initialize Font
    our_font.init("WIFFLES_.TTF", 30);
 
-   Camera = new CCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
+   Camera = new CPerspectiveCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
    Application.getSceneManager().setActiveCamera(Camera);
    float const LightBrightness = 0.4f;
 

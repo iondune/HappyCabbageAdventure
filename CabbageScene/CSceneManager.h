@@ -38,8 +38,8 @@ class CScene
 
 protected:
 
-    CCamera DefaultCamera;
-    CCamera * ActiveCamera;
+    ICamera DefaultCamera;
+    ICamera * ActiveCamera;
 
     glm::mat4 ViewMatrix, ProjMatrix;
     int LightCount;
@@ -57,9 +57,9 @@ public:
 
     CScene();
 
-    CCamera * const getActiveCamera();
-	CCamera const * const getActiveCamera() const;
-    void setActiveCamera(CCamera * const activeCamera);
+    ICamera * const getActiveCamera();
+	ICamera const * const getActiveCamera() const;
+    void setActiveCamera(ICamera * const activeCamera);
 
     void addUniform(std::string const & label, IUniform const * uniform);
     void removeUniform(std::string const & label);
