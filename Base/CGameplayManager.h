@@ -42,6 +42,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 
       void OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With);
 
+      int GodMode;
       bool const isPlayerAlive() const;
       bool const isWon() const;
 

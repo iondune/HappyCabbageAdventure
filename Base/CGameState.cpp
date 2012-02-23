@@ -571,6 +571,10 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          overView = NEXT(overView);
          //printf("Angle: %d\n", ANGLE(overView, backwardsView));
       }
+      if(Event.Key == SDLK_g){
+         GameplayManager->GodMode = !GameplayManager->GodMode;
+         printf("Godmode: %d\n", GameplayManager->GodMode);
+      }
       if(Event.Key == SDLK_m){
          if(musicOn) {
             musicOn = false;
@@ -583,7 +587,6 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_SPACE) {
          spaceDown = 1;
-
       }
       if(Event.Key == SDLK_ESCAPE) {
          //TODO: Replace with an event/signal to end the game world 

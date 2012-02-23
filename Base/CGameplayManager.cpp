@@ -7,6 +7,7 @@ CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabb
     Engine->setCollisionResponder(this);
     GameEventManager = new CGameEventManager();
     won = 0;
+    GodMode = 0;
 }
 
 void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With)
@@ -40,7 +41,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
        printf("Collided with flame! : D\n");
     }
 
-    if (! Other)
+    if (! Other || GodMode)
         return;
    
     float const HitThreshold = 0.05f;
