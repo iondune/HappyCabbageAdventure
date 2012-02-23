@@ -506,11 +506,6 @@ void CLWIBState::PrepPreviews() {
    blocks.push_back(PreviewCabbage = new CMeshSceneObject());
    PreviewCabbage->setMesh(cabbageMesh);
    
-   if(cabbageMesh) {
-      cabbageMesh->resizeMesh(SVector3(1));
-      cabbageMesh->centerMeshByExtents(SVector3(0));
-      cabbageMesh->calculateNormalsPerFace();
-   }
    if(appleMesh) {
       appleMesh->resizeMesh(SVector3(1));
       appleMesh->centerMeshByExtents(SVector3(0));
