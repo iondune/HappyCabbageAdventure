@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<CEnemy X ="-3" Y ="2" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="5" Y ="2" height ="1" width ="1" type ="2">
-</CEnemy>
-<CBlock X="0" Y="2" width="1" height="1">
+<CBlock X ="-5" Y ="2" height ="1" width ="1" depth ="1" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-3" Y ="2" height ="1" width ="1" depth ="1" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-1" Y ="2" height ="1" width ="1" depth ="1" isMoving ="0" range ="0" speed ="0">
 </CBlock>

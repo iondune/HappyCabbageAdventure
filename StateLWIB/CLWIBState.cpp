@@ -367,9 +367,9 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_g){
          gDown = 0;
       }
-      if(Event.Key == SDLK_t){
+     /* if(Event.Key == SDLK_t){
          tDown = 0;
-      }
+      }*/
       if(Event.Key == SDLK_k){
       }
       if(Event.Key == SDLK_j){
