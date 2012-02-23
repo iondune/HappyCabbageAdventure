@@ -16,6 +16,11 @@ public:
    void update(const float TickTime);
    void loadMesh();
    void loadActor();
+
+   void doRenderable();
+
+   float ScaleMult;
+   bool PositiveScale;
 };
 
 #endif /* EAPPLE_H_ */

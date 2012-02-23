@@ -40,7 +40,7 @@ void main()
     
     float df = vAttenuation[i]*max(0.0, dot(N, L));
     float sf = vAttenuation[i]*max(0.0, dot(N, H));
-    sf = pow(sf, 1000.0);
+    sf = pow(sf, 10000000.0);
 
     const float A = 0.1;
     const float B = 0.3;
