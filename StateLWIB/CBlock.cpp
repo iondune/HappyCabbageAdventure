@@ -1,22 +1,24 @@
 #include "CBlock.h"
 
-CBlock::CBlock(float nx, float ny, int width, int height, int depth)
+CBlock::CBlock(float nx, float ny, int width, int height, int depth, int texture)
 {
    x = nx; y = ny;
    w = width; h = height;
    Speed = 0;
    Range = 0;
    z = depth;
+   t = texture;
    isMovingPlatform = 0;
 }
 
 void CBlock::writeXML(xmlwriter *l) {
-    std::stringstream xValue, yValue, widthValue, heightValue, tagValue, isMovingValue, rangeValue, speedValue, depthValue;
+    std::stringstream xValue, yValue, widthValue, heightValue, tagValue, isMovingValue, rangeValue, speedValue, depthValue, textureType;
     xValue << x;
     yValue << y;
     widthValue << w;
     heightValue << h;
     depthValue << z;
+    textureType << t;
     isMovingValue << isMovingPlatform;
     rangeValue << Range;
     speedValue << Speed;
@@ -26,6 +28,7 @@ void CBlock::writeXML(xmlwriter *l) {
     l->AddAtributes("speed ", speedValue.str());
     l->AddAtributes("range ", rangeValue.str());
     l->AddAtributes("isMoving ", isMovingValue.str());
+    l->AddAtributes("texture ", textureType.str());
     l->AddAtributes("depth ", depthValue.str());
     l->AddAtributes("width ", widthValue.str());
     l->AddAtributes("height ", heightValue.str());
@@ -56,7 +59,18 @@ CMeshSceneObject * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngin
    CMesh *mesh = CMeshLoader::loadAsciiMesh("Cube");
    mesh->calculateNormalsPerFace();
    tempBlock->setMesh(mesh);
-   tempBlock->setTexture("Textures/dirt.bmp");
+   if (t == 0) {
+        tempBlock->setTexture("Textures/grass.bmp");
+   }
+   else if (t == 1) {
+        tempBlock->setTexture("Textures/dirt.bmp");
+   }
+   else if (t == 2) {
+        tempBlock->setTexture("Textures/rock.bmp");
+   }
+   else {
+        printf("texture not found\n" );   
+   }
    tempBlock->setShader(shader);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    tempBlock->setScale(SVector3((float) w, (float) h, (float) z));
