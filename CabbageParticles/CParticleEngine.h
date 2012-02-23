@@ -5,6 +5,7 @@
 #include "CParticle.h"
 #include "CPCube.h"
 #include "CPLeaf.h"
+#include "CPFlame.h"
 #include "CParticleObject.h"
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
@@ -12,6 +13,7 @@
 
 #define LEAF_PARTICLE 0
 #define CUBE_PARTICLE 1
+#define FLAME_PARTICLE 2
 
 class CParticleEngine {
    std::vector<CParticle*> particles;
@@ -19,6 +21,7 @@ class CParticleEngine {
    int numParticles;
    float totalDuration;
    float currentDuration;
+   int particleType;
 
    std::vector<SVector3*> positionArr;
    std::vector<SVector3*> colorArr;

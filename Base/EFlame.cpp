@@ -13,25 +13,7 @@ EFlame::EFlame(float x, float y, float w, float h, CGameplayManager* manager) {
 
 //Loads and moves the mesh
 void EFlame::loadMesh() {
-   Renderable = new CMeshSceneObject();
-   CMesh *mesh = CMeshLoader::load3dsMesh("Models/killerkiwi.3ds");
-   if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
-      mesh->calculateNormalsPerFace();
-   }
-
-   else
-      printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
-
-   Renderable->setMesh(mesh);
-   //Renderable->getMaterial().Texture = new CTexture(CImageLoader::loadImage("Textures/kiwi.bmp"));
-   Renderable->setShader("Toon");
-   //Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
-   Renderable->setScale(SVector3(1, 1, 1));
-   Renderable->setRotation(SVector3(-90, 0, -90));
-
-   CApplication::get().getSceneManager().addSceneObject(Renderable);
+   particleEngine = new CParticleEngine(SVector3(x, y, 0), 400, -1, FLAME_PARTICLE);
 }
 
 //Adds actor to engine and preps engine
@@ -53,7 +35,11 @@ void EFlame::loadActor() {
    Actor->CollideableType = COLLIDEABLE_TYPE_FLAME;
 }
 
+void EFlame::doRenderable() {
+}
+
 
 //Updates AI's decision per frame
 void EFlame::update(float const TickTime) {
+   particleEngine->step(TickTime);
 }
