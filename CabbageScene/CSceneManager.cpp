@@ -168,6 +168,11 @@ void CSceneManager::drawAll()
 
     RootObject.draw(CurrentScene);
 
+	ICamera * Active = CurrentScene->getActiveCamera();
+	CurrentScene->setActiveCamera(& DirectDisplayCamera);
+	DirectDisplayRoot.draw(CurrentScene);
+	CurrentScene->setActiveCamera(Active);
+
     SceneChanged = false;
 }
 
