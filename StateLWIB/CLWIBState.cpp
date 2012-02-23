@@ -307,6 +307,12 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_e){
          if (eDown == 1 ) {
              eDown = 0;
+             if(textureType == -5) {
+                blockWidth = 5;
+                blockHeight = 5;
+                blockDepth = 5;
+                PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+             }
          }
          else {
             eDown = 1; //enemy
@@ -403,6 +409,10 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
             textureType++;
         else if (textureType == 2) {
             textureType = -5;
+            blockWidth = 5;
+            blockHeight = 5;
+            blockDepth = 5;
+            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
         }
         else if (textureType == -5)
             textureType = 0;
