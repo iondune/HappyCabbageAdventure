@@ -16,6 +16,8 @@ public:
    void update(float const TickTime);
    void loadMesh();
    void loadActor();
+
+   void doRenderable();
 };
 
 #endif /* EORANGE_H_ */

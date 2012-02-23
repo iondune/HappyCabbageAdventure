@@ -57,7 +57,7 @@ CMeshSceneObject * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngin
    }
 
    CMesh *mesh = CMeshLoader::loadAsciiMesh("Cube");
-   mesh->calculateNormalsPerFace();
+   mesh->calculateNormalsPerVertex();
    tempBlock->setMesh(mesh);
    if (t == 0) {
         tempBlock->setTexture("Textures/grass.bmp");
