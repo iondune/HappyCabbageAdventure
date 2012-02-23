@@ -9,7 +9,9 @@
 #include "../Base/CGameState.h"
 //#include "../MainMenu/CMainMenuState.h"
 
-#define NUM_LEVELS 2
+#define NUM_LEVELS 6
+#define NUM_CAMERAS 2
+#define TRANSITION_PERIOD 0.65f
 
 class COverworldState : public CState<COverworldState>
 {
@@ -40,11 +42,15 @@ class COverworldState : public CState<COverworldState>
    int WindowWidth, WindowHeight;
    SVector3 rot;
 
+   float transitionTimer;
+
    SomeLevel levels [NUM_LEVELS];
+   SVector3 cameraPos [NUM_CAMERAS];
 
    void LoadShaders();
    void PrepMeshes();
    void loadLevels();
+   void setCameraTrans();
    void levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor);
 
    CLight * PlayerLight;
@@ -71,8 +77,8 @@ class COverworldState : public CState<COverworldState>
    void stepCamera(float delta);
    void OnMouseEvent(SMouseEvent const & Event);
    */
-   void superInterpolator(SVector3 & curr, SVector3 & change, SVector3 & target);
-   void shiftSetter(SVector3 & curr, SVector3 & change, SVector3 & target, int slices);
+   void superInterpolator(SVector3 & curr, SVector3 & change, SVector3 & target, float delta);
+   void shiftSetter(SVector3 & curr, SVector3 & change, SVector3 & target);
    
 };
 #endif
