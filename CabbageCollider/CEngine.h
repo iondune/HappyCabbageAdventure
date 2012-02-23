@@ -135,20 +135,22 @@ namespace Collider
 
         CObject * addObject()
         {
-            Objects.push_back(new CObject());
-            return Objects.back();
+           CObject * a;
+           Objects.push_back(a = new CObject());
+           return Objects.back();
         }
 
         CElevator * addElevator()
         {
-            CElevator * cen;
-            Objects.push_back(cen = new CElevator());
-            return cen; 
+           CElevator * cen;
+           Objects.push_back(cen = new CElevator());
+           return cen; 
         }
 
-		CActor * addActor()
-		{
-			Actors.push_back(new CActor());
+        CActor * addActor()
+        {
+           CActor *a;
+           Actors.push_back(a = new CActor());
 			return Actors.back();
 		}
 

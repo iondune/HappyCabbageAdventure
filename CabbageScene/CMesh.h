@@ -51,7 +51,7 @@ public:
     SVector3 const getExtent() const;
 
     void calculateNormalsPerFace();
-    void calculateNormalsPerVertex();
+    void calculateNormalsPerVertex(bool CombineNear = true, float const NearTolerance = 0.01f);
 
     void updateBuffers();
 

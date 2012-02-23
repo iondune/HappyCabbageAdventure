@@ -40,8 +40,10 @@ namespace Collider
 
 
 	CActor::CActor()
-		: Standing(0), JumpTimer(0.f), FallAcceleration(0), Impulse(false), ControlFall(true)
-	{}
+		: Standing(0), JumpTimer(0.f), FallAcceleration(0), Impulse(false), ControlFall(true) 
+   {
+      CollideableType = COLLIDEABLE_TYPE_ACTOR;
+   }
 
 	CActor::~CActor()
 	{}
@@ -102,6 +104,10 @@ namespace Collider
 
 		return true;
 	}
+
+   bool CActor::getControlFall() {
+      return ControlFall;
+   }
 
 	void CActor::updateVectors(float const TickTime)
 	{
@@ -259,8 +265,9 @@ namespace Collider
 	{
 		int CollisionType = checkCollision(Object, TickTime);
 
-		if (CollisionResponder && CollisionType)
+		if (CollisionResponder && CollisionType) {
 			CollisionResponder->OnCollision(this, Object);
+      }
 
 		if (CollisionType & ECollisionType::Up)
 		{
@@ -292,6 +299,12 @@ namespace Collider
 		ImpulseTimer = duration;
 		ImpulseVelocity = velocity;
 	}
+
+   void CActor::addImpulse(SVector2 const & velocity) {
+		Impulse = true;
+		ImpulseVelocity += velocity;
+   }
+
 
 	void CActor::setFallAcceleration(float speed)
 	{

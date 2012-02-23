@@ -88,7 +88,7 @@ public:
         }
 
         // Attempt to load mesh
-        MeshFace = CMeshLoader::load3dsMesh("../DemoMeshLoader/spaceship.3ds");
+        MeshFace = CMeshLoader::load3dsMesh("../Base/Models/tree4.3ds", false);
         if (MeshFace)
         {
             MeshFace->linearizeIndices();
@@ -97,7 +97,7 @@ public:
             MeshFace->calculateNormalsPerFace();
         }
 
-        MeshVertex = CMeshLoader::load3dsMesh("../DemoMeshLoader/spaceship.3ds");
+        MeshVertex = CMeshLoader::load3dsMesh("../Base/Models/tree4.3ds", false);
         if (MeshVertex)
         {
             MeshVertex->resizeMesh(SVector3(1.5));

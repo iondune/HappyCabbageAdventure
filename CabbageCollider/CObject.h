@@ -22,7 +22,6 @@ namespace Cabbage
             ~CObject();
 
             virtual SVector2 performMovement(float const TickTime);
-
       };
 
       class CElevator : public CObject
