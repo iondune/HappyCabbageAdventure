@@ -211,8 +211,10 @@ void CLWIBState::OnRenderStart(float const Elapsed)
            PreviewEnemy->setMesh(cubeMesh);
         }
     }
-    if (oneDown && !showHelp && !tDown && !eDown)
-    if (tDown && !showHelp)
+    if (oneDown && !showHelp && !tDown && !eDown) {
+        freetype::print(our_font, 20, WindowHeight - 100.f, "Insert Cabbage\n\n");
+    }
+    if (tDown && !showHelp )
         freetype::print(our_font, 20, WindowHeight - 100.f, "Remove mode\n\n");
     drawSubWindow();
    Application.getSceneManager().drawAll();
@@ -244,8 +246,11 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
        if(Event.Key == SDLK_1){
             if (oneDown == 1)
                 oneDown = 0;
-            else 
+            else {
                 oneDown = 1;
+                tDown = 0;
+                eDown = 0;
+            }
        }
       if(Event.Key == SDLK_w){
          wDown = 1;
@@ -300,6 +305,8 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
          }
          else {
             eDown = 1; //enemy
+            tDown = 0;
+            oneDown = 0;
             blockWidth = 1;
             blockHeight = 1;
             blockDepth = 1;
@@ -361,8 +368,11 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_t){
          if (tDown == 1)
              tDown = 0;
-         else
+         else {
            tDown = 1; //remove
+           eDown = 0;
+           oneDown = 0;
+         }
       }
       if(Event.Key == SDLK_m){
          mDown = 1; //move
@@ -800,9 +810,9 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
             PrepEnemy(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
          }
          if(!tDown && oneDown && !eDown) {
-            PrepCabbage(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
+             PrepCabbage(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
          }
-         else if (!tDown) {
+         else if (!tDown && !oneDown && !eDown) {
             PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,textureType);
          }
          else {
