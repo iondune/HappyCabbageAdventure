@@ -231,16 +231,13 @@ void CGameState::begin()
 
     SceneManager.Lights.push_back(new CLight());
     SceneManager.Lights.back()->Color = SVector3(LightBrightness);
-    SceneManager.Lights.back()->Position = SVector3(70.f, -2.f, 30.f);
+    SceneManager.Lights.back()->Position = SVector3(-100.f, 0.f, 15.f);
 
-    SceneManager.Lights.push_back(new CLight());
-    SceneManager.Lights.back()->Color = SVector3(LightBrightness);
-    SceneManager.Lights.back()->Position = SVector3(-30.f, 0.f, 15.f);
 
-    SceneManager.Lights.push_back(new CLight());
-    SceneManager.Lights.back()->Color = SVector3(LightBrightness);
-    PlayerLight = SceneManager.Lights.back();
-
+    //PlayerLight = new CLight();
+    //SceneManager.Lights.push_back(PlayerLight);
+    //PlayerLight->Color = SVector3(0.0f);
+    //PlayerLight->Position = SVector3(0.f, 0.f, 200.f);
 
    LoadShaders();
 
@@ -490,8 +487,6 @@ void CGameState::OnRenderStart(float const Elapsed)
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
-
-   PlayerLight->Position = playerRenderable->getTranslation();
 
    oldDisplay();
 

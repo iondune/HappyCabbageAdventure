@@ -26,7 +26,7 @@ CMaterial & CMaterial::operator = (CMaterial const & other)
 
 void CMaterial::loadDefaults()
 {
-	Shininess = 1000000000000.0f;
+	Shininess = 100000000000.0f;
 	AmbientColor = SColor(0.15f, 0.15f, 0.15f);
 	DiffuseColor = SColor(0.8f, 0.8f, 0.8f);
 }
