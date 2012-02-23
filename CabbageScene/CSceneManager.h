@@ -38,7 +38,8 @@ class CScene
 
 protected:
 
-    ICamera DefaultCamera;
+    CPerspectiveCamera DefaultCamera;
+	COrthoCamera DirectDisplayCamera;
     ICamera * ActiveCamera;
 
     glm::mat4 ViewMatrix, ProjMatrix;
@@ -50,6 +51,7 @@ protected:
     std::map<std::string, IUniform const *> Uniforms;
 
 	ISceneObject RootObject;
+	ISceneObject DirectDisplayRoot;
 
 	bool UseCulling;
 
@@ -88,6 +90,10 @@ public:
 
     void addSceneObject(ISceneObject * sceneObject);
     void removeSceneObject(ISceneObject * sceneObject);
+
+	void addDirectObject(ISceneObject * sceneObject);
+    void removeDirectObject(ISceneObject * sceneObject);
+
     void removeAllSceneObjects();
 
 	CMeshSceneObject * addMeshSceneObject(CMesh * Mesh);

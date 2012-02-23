@@ -11,7 +11,8 @@ CLight const CScene::NullLight;
 
 
 CScene::CScene()
-   : BindProjMatrix(ProjMatrix), BindViewMatrix(ViewMatrix), BindLightCount(LightCount), UseCulling(true)
+   : BindProjMatrix(ProjMatrix), BindViewMatrix(ViewMatrix), BindLightCount(LightCount), UseCulling(true),
+   DirectDisplayCamera(-10.f, 10.f)
 {
     ActiveCamera = & DefaultCamera;
 
@@ -124,8 +125,10 @@ void CScene::update()
     }
 
    RootObject.updateAbsoluteTransformation();
-
    RootObject.update();
+
+   DirectDisplayRoot.updateAbsoluteTransformation();
+   DirectDisplayRoot.update();
 }
 
 CSceneManager::CSceneManager()
@@ -143,9 +146,20 @@ void CSceneManager::removeSceneObject(ISceneObject * sceneObject)
    RootObject.removeChild(sceneObject);
 }
 
+void CSceneManager::addDirectObject(ISceneObject * sceneObject)
+{
+	DirectDisplayRoot.addChild(sceneObject);
+}
+
+void CSceneManager::removeDirectObject(ISceneObject * sceneObject)
+{
+	DirectDisplayRoot.removeChild(sceneObject);
+}
+
 void CSceneManager::removeAllSceneObjects()
 {
    RootObject.removeChildren();
+   DirectDisplayRoot.removeChildren();
 }
 
 void CSceneManager::drawAll()
