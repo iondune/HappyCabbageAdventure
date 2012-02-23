@@ -5,6 +5,8 @@
 
 #include "glm/glm.hpp"
 
+#include "Utils.h"
+
 class SVector3
 {
 
@@ -187,7 +189,7 @@ public:
     }
     bool const operator == (SVector3 const & v) const
     {
-        return (X == v.X && Y == v.Y && Z == v.Z);
+        return (equals(X, v.X) && equals(Y, v.Y) && equals(Z, v.Z));
     }
 };
 

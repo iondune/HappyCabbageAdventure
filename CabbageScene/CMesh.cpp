@@ -177,10 +177,21 @@ void CMesh::calculateNormalsPerVertex()
 {
     calculateNormalsPerFace();
 
+	for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
+		for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
+			it->Normal = SVector3();
+
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
 		for (std::vector<STriangle>::iterator it = (* bit)->Triangles.begin(); it != (* bit)->Triangles.end(); ++ it)
 			for (int i = 0; i < 3; ++ i)
 				(* bit)->Vertices[it->Indices[i]].Normal += it->Normal;
+
+	/*for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
+		for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
+			for (std::vector<SVertex>::iterator jt = ++ it; jt != (* bit)->Vertices.end(); ++ jt)
+				if (jt->Position == it->Position)
+					it->Normal += jt->Normal;*/
+
 
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
 		for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
