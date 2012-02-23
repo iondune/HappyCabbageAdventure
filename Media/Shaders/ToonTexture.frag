@@ -68,6 +68,6 @@ void main()
   }
 
     vec3 SpecularColor = vec3(1, 1, 1);
-    vec3 color = max(diffuse,0.4) * texture2D(uTexColor, vTexCoord) + specular * SpecularColor; //vec3
+    vec3 color = max(diffuse,0.4) * texture2D(uTexColor, vTexCoord).xyz + specular * SpecularColor; //vec3
     gl_FragColor = vec4(color, 1.0);
 }
