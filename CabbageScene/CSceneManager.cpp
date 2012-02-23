@@ -11,7 +11,8 @@ CLight const CScene::NullLight;
 
 
 CScene::CScene()
-   : BindProjMatrix(ProjMatrix), BindViewMatrix(ViewMatrix), BindLightCount(LightCount), UseCulling(true)
+   : BindProjMatrix(ProjMatrix), BindViewMatrix(ViewMatrix), BindLightCount(LightCount), UseCulling(true),
+   DirectDisplayCamera(-10000.f, 10000.f)
 {
     ActiveCamera = & DefaultCamera;
 
@@ -113,19 +114,21 @@ IUniform const * CScene::getUniform(std::string const & label) const
 
 void CScene::update()
 {
-    ActiveCamera->recalculateViewMatrix();
-    ViewMatrix = ActiveCamera->getViewMatrix();
-    ProjMatrix = ActiveCamera->getProjectionMatrix();
+	ActiveCamera->recalculateViewMatrix();
+	ViewMatrix = ActiveCamera->getViewMatrix();
+	ProjMatrix = ActiveCamera->getProjectionMatrix();
 
-    if (LightCount != Lights.size())
-    {
-        SceneChanged = true;
-        LightCount = Lights.size();
-    }
+	if (LightCount != Lights.size())
+	{
+		SceneChanged = true;
+		LightCount = Lights.size();
+	}
 
-   RootObject.updateAbsoluteTransformation();
+	RootObject.updateAbsoluteTransformation();
+	RootObject.update();
 
-   RootObject.update();
+	DirectDisplayRoot.updateAbsoluteTransformation();
+	DirectDisplayRoot.update();
 }
 
 CSceneManager::CSceneManager()
@@ -143,9 +146,21 @@ void CSceneManager::removeSceneObject(ISceneObject * sceneObject)
    RootObject.removeChild(sceneObject);
 }
 
+void CSceneManager::addDirectObject(ISceneObject * sceneObject)
+{
+	sceneObject->setCullingEnabled(false);
+	DirectDisplayRoot.addChild(sceneObject);
+}
+
+void CSceneManager::removeDirectObject(ISceneObject * sceneObject)
+{
+	DirectDisplayRoot.removeChild(sceneObject);
+}
+
 void CSceneManager::removeAllSceneObjects()
 {
    RootObject.removeChildren();
+   DirectDisplayRoot.removeChildren();
 }
 
 void CSceneManager::drawAll()
@@ -153,6 +168,13 @@ void CSceneManager::drawAll()
     CurrentScene->update();
 
     RootObject.draw(CurrentScene);
+
+	ICamera * Active = CurrentScene->getActiveCamera();
+	CurrentScene->setActiveCamera(& DirectDisplayCamera);
+	ViewMatrix = ActiveCamera->getViewMatrix();
+	ProjMatrix = ActiveCamera->getProjectionMatrix();
+	DirectDisplayRoot.draw(CurrentScene);
+	CurrentScene->setActiveCamera(Active);
 
     SceneChanged = false;
 }
