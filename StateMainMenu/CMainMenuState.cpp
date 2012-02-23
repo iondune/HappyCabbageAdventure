@@ -107,7 +107,7 @@ void CMainMenuState::begin()
    float WindowWidth = (float) size.X;
    float WindowHeight = (float) size.Y;
 
-   Camera = new CCamera(WindowWidth/WindowHeight, 0.01f, 100.f, 60.f);
+   Camera = new CPerspectiveCamera(WindowWidth/WindowHeight, 0.01f, 100.f, 60.f);
    Application.getSceneManager().setActiveCamera(Camera);
 
    Application.getSceneManager().Lights.push_back(new CLight());

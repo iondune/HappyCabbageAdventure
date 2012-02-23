@@ -4,7 +4,7 @@
 #include "../CabbageCore/SVector3.h"
 #include "../CabbageCore/glm/glm.hpp"
 
-class CCamera
+class ICamera
 {
 
 protected:
@@ -17,20 +17,29 @@ protected:
 
 public:
 
-    CCamera(float const AspectRatio = 16.f/9.f, float const Near = 0.1f, float const Far = 100.f, float const FOV = 60.f);
+	ICamera();
 
-    virtual void recalculateViewMatrix();
+	virtual void recalculateViewMatrix();
 
-    virtual void setProjection(float const FOV, float const AspectRatio, float const Near, float const Far);
-
-    SVector3 const & getPosition() const;
+	SVector3 const & getPosition() const;
     SVector3 const & getLookDirecton() const;
 
-    void setPosition(SVector3 const & position);
+	void setPosition(SVector3 const & position);
     void setLookDirection(SVector3 const & lookDirection);
 
-    glm::mat4 const & getViewMatrix() const;
+	glm::mat4 const & getViewMatrix() const;
     glm::mat4 const & getProjectionMatrix() const;
+
+};
+
+class CPerspectiveCamera : public ICamera
+{
+
+public:
+
+    CPerspectiveCamera(float const AspectRatio = 16.f/9.f, float const Near = 0.1f, float const Far = 100.f, float const FOV = 60.f);
+
+    virtual void setProjection(float const FOV, float const AspectRatio, float const Near, float const Far);
 
 };
 

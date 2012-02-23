@@ -31,7 +31,7 @@ class CGameState : public CState<CGameState>
    void EngineInit( void );
    //Initalizer fxn
    void begin();
-   CCamera *Camera;
+   ICamera *Camera;
    float fps, timeTotal;
    int numFrames;
    int lowDef;

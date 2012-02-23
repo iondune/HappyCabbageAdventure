@@ -7,7 +7,7 @@
 #include "CEventManager.h"
 #include "CApplication.h"
 
-class CCameraControl : public CCamera, public sigslot::has_slots<>
+class CCameraControl : public CPerspectiveCamera, public sigslot::has_slots<>
 {
 
     CApplication & Application;

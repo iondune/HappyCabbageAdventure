@@ -40,7 +40,7 @@ void COverworldState::begin()
    //look = SVector3(0.57f, -0.08f, 0.19f);
    eye = cameraPos[0];
    look = levels[0].loc;
-   Camera = new CCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
+   Camera = new CPerspectiveCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
    Application.getSceneManager().setActiveCamera(Camera);
    float const LightBrightness = 0.6f;
    Camera->setPosition(eye);

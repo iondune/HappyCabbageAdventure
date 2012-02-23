@@ -87,7 +87,7 @@ void CPlayerView::draw() {
    glPopMatrix();*/
 }
 
-void CPlayerView::establishCamera(CCamera *Camera, int angle) {
+void CPlayerView::establishCamera(ICamera *Camera, int angle) {
    SVector3 camPos, camLook;
 
    if(angle == 0) {

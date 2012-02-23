@@ -40,7 +40,7 @@ class CLWIBState : public CState<CLWIBState>
    std::vector<CMeshSceneObject*> blocks, redo;
    CLWIBState();
    void begin();
-   CCamera *Camera;
+   CPerspectiveCamera *Camera;
    SVector3 eye, look;
 
    CShader *DiffuseTexture, *DiffuseTextureBright, *Diffuse;
@@ -67,6 +67,7 @@ class CLWIBState : public CState<CLWIBState>
 
    void BlocksInit( void ); 
 
-   void stepCamera(float delta); 
+   void stepCamera(float delta);
+
 };
 #endif
