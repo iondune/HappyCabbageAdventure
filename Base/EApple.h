@@ -20,6 +20,7 @@ public:
    void doRenderable();
 
    float ScaleMult;
+   float Time;
    bool PositiveScale;
 };
 
