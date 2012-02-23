@@ -52,6 +52,8 @@ protected:
 	std::list<ISceneObject *> Children;
 	ISceneObject * Parent;
 
+	bool UseCulling;
+
 public:
 
     ISceneObject();
@@ -88,10 +90,15 @@ public:
 	void removeChild(ISceneObject * child);
 	void addChild(ISceneObject * child);
 	void setParent(ISceneObject * parent);
+	void removeChildren();
 
 	SVector3 const & getRotation() const;
 	SVector3 const & getTranslation() const;
 	SVector3 const & getScale() const;
+
+	bool const isCulled(CScene const * const Scene) const;
+	bool const isCullingEnabled() const;
+	void setCullingEnabled(bool const culling);
 
 };
 

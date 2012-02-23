@@ -538,6 +538,9 @@ void CGameState::OnRenderStart(float const Elapsed)
 //Sends event every time key pressed (also when held)
 void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
+	if (Event.Key == SDLK_c)
+		CApplication::get().getSceneManager().setCullingEnabled(! Event.Pressed);
+
    if(Event.Pressed){
       if(Event.Key == SDLK_w){
          wDown = 1;
@@ -660,6 +663,7 @@ void CGameState::PrepSky() {
    tempBlock->setShader(DiffuseTexture);
    tempBlock->setTranslation(SVector3(0, 24, -2.5));
    tempBlock->setScale(SVector3(400, 50, 1));
+   tempBlock->setCullingEnabled(false);
    Application.getSceneManager().addSceneObject(tempBlock);
 
 }

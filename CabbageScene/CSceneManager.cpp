@@ -11,7 +11,7 @@ CLight const CScene::NullLight;
 
 
 CScene::CScene()
-	: BindProjMatrix(ProjMatrix), BindViewMatrix(ViewMatrix), BindLightCount(LightCount)
+	: BindProjMatrix(ProjMatrix), BindViewMatrix(ViewMatrix), BindLightCount(LightCount), UseCulling(true)
 {
     ActiveCamera = & DefaultCamera;
 
@@ -38,10 +38,26 @@ CCamera * const CScene::getActiveCamera()
     return ActiveCamera;
 }
 
+CCamera const * const CScene::getActiveCamera() const
+{
+    return ActiveCamera;
+}
+
 void CScene::setActiveCamera(CCamera * const activeCamera)
 {
     ActiveCamera = activeCamera;
 }
+
+bool const CScene::isCullingEnabled() const
+{
+	return UseCulling;
+}
+
+void CScene::setCullingEnabled(bool const culling)
+{
+	UseCulling = culling;
+}
+
 
 unsigned int const digitCount(int n)
 {
@@ -107,11 +123,9 @@ void CScene::update()
         LightCount = Lights.size();
     }
 
-	for (std::list<ISceneObject *>::iterator it = SceneObjects.begin(); it != SceneObjects.end(); ++ it)
-		(* it)->updateAbsoluteTransformation();
+	RootObject.updateAbsoluteTransformation();
 
-	for (std::list<ISceneObject *>::iterator it = SceneObjects.begin(); it != SceneObjects.end(); ++ it)
-		(* it)->update();
+	RootObject.update();
 }
 
 CSceneManager::CSceneManager()
@@ -121,25 +135,24 @@ CSceneManager::CSceneManager()
 
 void CSceneManager::addSceneObject(ISceneObject * sceneObject)
 {
-	SceneObjects.push_back(sceneObject);
+	RootObject.addChild(sceneObject);
 }
 
 void CSceneManager::removeSceneObject(ISceneObject * sceneObject)
 {
-	SceneObjects.erase(std::remove(SceneObjects.begin(), SceneObjects.end(), sceneObject), SceneObjects.end());
+	RootObject.removeChild(sceneObject);
 }
 
 void CSceneManager::removeAllSceneObjects()
 {
-	SceneObjects.erase(SceneObjects.begin(), SceneObjects.end());
+	RootObject.removeChildren();
 }
 
 void CSceneManager::drawAll()
 {
     CurrentScene->update();
 
-    for (std::list<ISceneObject *>::iterator it = SceneObjects.begin(); it != SceneObjects.end(); ++ it)
-        (* it)->draw(CurrentScene);
+	RootObject.draw(CurrentScene);
 
     SceneChanged = false;
 }
