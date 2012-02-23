@@ -699,11 +699,11 @@ void Load3DS()
       fprintf(stderr, "Failed to load the enemy mesh\n");
    }
 
-   basicTreeMesh = CMeshLoader::load3dsMesh("Models/tree2.3ds");
+   basicTreeMesh = CMeshLoader::load3dsMesh("Models/tree4.3ds");
    if (basicTreeMesh) {
       basicTreeMesh->resizeMesh(SVector3(0.5));
       basicTreeMesh->centerMeshByExtents(SVector3(0));
-      basicTreeMesh->calculateNormalsPerFace();
+      basicTreeMesh->calculateNormalsPerVertex();
    }
    else {
       fprintf(stderr, "Failed to load the basic tree mesh\n");
