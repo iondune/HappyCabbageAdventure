@@ -5,6 +5,8 @@
 
 #include "glm/glm.hpp"
 
+#include "Utils.h"
+
 class SVector3
 {
 
@@ -185,9 +187,15 @@ public:
     {
         return (X > v.X && Y > v.Y && Z > v.Z);
     }
+
     bool const operator == (SVector3 const & v) const
     {
-        return (X == v.X && Y == v.Y && Z == v.Z);
+        return (::equals(X, v.X) && ::equals(Y, v.Y) && ::equals(Z, v.Z));
+    }
+
+	bool const equals(SVector3 const & v, float const Epsilon = RoundingError32) const
+    {
+        return (::equals(X, v.X, Epsilon) && ::equals(Y, v.Y, Epsilon) && ::equals(Z, v.Z, Epsilon));
     }
 };
 

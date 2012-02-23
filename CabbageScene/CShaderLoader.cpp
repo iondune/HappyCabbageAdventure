@@ -89,7 +89,7 @@ CShader * const CShaderLoader::loadShader(std::string const & name)
         }
         std::string vertFileSource;
 
-        vertFile.seekg(0, std::ios::end);   
+        vertFile.seekg(0, std::ios::end);
         vertFileSource.reserve((size_t) vertFile.tellg());
         vertFile.seekg(0, std::ios::beg);
 
