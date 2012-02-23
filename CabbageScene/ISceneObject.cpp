@@ -9,7 +9,7 @@
 
 
 ISceneObject::ISceneObject()
-    : DebugDataFlags(0), Visible(true), Parent(0)
+    : DebugDataFlags(0), Visible(true), Parent(0), UseCulling(true)
 {}
 
 
@@ -65,7 +65,8 @@ void ISceneObject::update()
 void ISceneObject::draw(CScene const * const scene)
 {
 	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
-		(* it)->draw(scene);
+		if (! (* it)->isCulled(scene))
+			(* it)->draw(scene);
 }
 
 SBoundingBox3 const & ISceneObject::getBoundingBox() const
@@ -149,6 +150,11 @@ void ISceneObject::setParent(ISceneObject * parent)
 		parent->addChild(this);
 }
 
+void ISceneObject::removeChildren()
+{
+	Children.clear();
+}
+
 SVector3 const & ISceneObject::getRotation() const
 {
 	return Rotation;
@@ -162,4 +168,40 @@ SVector3 const & ISceneObject::getTranslation() const
 SVector3 const & ISceneObject::getScale() const
 {
 	return Scale;
+}
+
+#include "CCamera.h"
+
+bool const ISceneObject::isCulled(CScene const * const Scene) const
+{
+    if (! UseCulling || ! Scene->isCullingEnabled())
+        return false;
+
+    for (int i = 0; i < 8; ++ i) {
+        SVector3 const Center = getBoundingBox().getCorner(i);
+        glm::vec4 Center4(Center.X, Center.Y, Center.Z, 1.f);
+
+        glm::mat4 PVM(Scene->getActiveCamera()->getProjectionMatrix()*Scene->getActiveCamera()->getViewMatrix()*Transformation());
+        glm::vec4 prime = PVM * Center4;
+
+        float length = glm::length(glm::vec3(prime.x, prime.y, prime.z));
+        SVector3 v = SVector3(prime.x, prime.y, prime.z) / length;
+        float w = prime.w / length;
+        if ((-prime.w < prime.x) && (prime.w > prime.x) &&
+            (-prime.w < prime.y) && (prime.w > prime.y) && 
+            (-prime.w < prime.z) && (prime.w > prime.z))
+            return false;
+    }
+
+    return true;
+}
+
+bool const ISceneObject::isCullingEnabled() const
+{
+	return UseCulling;
+}
+
+void ISceneObject::setCullingEnabled(bool const culling)
+{
+	UseCulling = culling;
 }

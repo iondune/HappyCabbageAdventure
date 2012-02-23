@@ -61,7 +61,7 @@ void CMeshSceneObject::setMesh(CMesh * mesh)
             Child->setIndexBufferObject(& Mesh->MeshBuffers[i]->IndexBuffer);
 
             // Set bounding box
-            //Child->BoundingBox = Mesh->getBoundingBox();
+            BoundingBox.addInternalBox(Mesh->getBoundingBox());
 
             // Remove any previous normal debugging object
             if (Child->getDebuggingNormalObject())

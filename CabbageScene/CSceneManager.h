@@ -49,13 +49,16 @@ protected:
 
     std::map<std::string, IUniform const *> Uniforms;
 
-	std::list<ISceneObject *> SceneObjects;
+	ISceneObject RootObject;
+
+	bool UseCulling;
 
 public:
 
     CScene();
 
     CCamera * const getActiveCamera();
+	CCamera const * const getActiveCamera() const;
     void setActiveCamera(CCamera * const activeCamera);
 
     void addUniform(std::string const & label, IUniform const * uniform);
@@ -67,6 +70,10 @@ public:
 
     std::vector<CLight *> Lights;
     bool SceneChanged;
+
+	
+	bool const isCullingEnabled() const;
+	void setCullingEnabled(bool const culling);
 
 };
 
