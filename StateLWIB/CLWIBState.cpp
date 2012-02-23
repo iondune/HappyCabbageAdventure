@@ -704,6 +704,15 @@ void CLWIBState::PrepGrass(float x, float y, float w, float h) {
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    tempBlock->setScale(SVector3(w, h, .5));
    Application.getSceneManager().addSceneObject(tempBlock);
+   CMeshSceneObject *tempyBlock;
+   blocks.push_back(tempyBlock = new CMeshSceneObject());
+   tempyBlock->setMesh(cubeMesh);
+
+   tempyBlock->setTexture("Textures/sky.bmp");
+   tempyBlock->setShader(DiffuseTexture);
+   tempyBlock->setTranslation(SVector3(172, (y+(y+h))/2, 0));
+   tempyBlock->setScale(SVector3(w, h, .5));
+   Application.getSceneManager().addSceneObject(tempyBlock);
 
 }
 
