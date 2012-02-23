@@ -52,3 +52,17 @@ void CSceneObject::setTexture(std::string const & texture)
 {
 	setTexture(CImageLoader::loadTexture(texture));
 }
+
+void CSceneObject::setTexture(CTexture * texture, int const renderable)
+{
+	//Renderables[renderable].Texture = texture;
+	std::vector<CRenderable *>::iterator it = Renderables.begin();
+	for (int i = 0; i < renderable && it != Renderables.end(); ++ i, ++ it)
+		;
+	(* it)->getMaterial().Texture = texture;
+}
+
+void CSceneObject::setTexture(std::string const & texture, int const renderable)
+{
+	setTexture(CImageLoader::loadTexture(texture), renderable);
+}

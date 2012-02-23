@@ -27,7 +27,9 @@ public:
 	void setShader(std::string const & shader);
 	void setMaterial(CMaterial const & material);
 	void setTexture(CTexture * texture);
+	void setTexture(CTexture * texture, int const renderable);
 	void setTexture(std::string const & texture);
+	void setTexture(std::string const & texture, int const renderable);
 
 };
 

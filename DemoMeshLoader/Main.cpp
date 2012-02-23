@@ -88,7 +88,7 @@ public:
         }
 
         // Attempt to load mesh
-        MeshFace = CMeshLoader::load3dsMesh("../Base/Models/tree4.3ds", false);
+        MeshFace = CMeshLoader::load3dsMesh("../Base/Models/levelBlock.3ds", false);
         if (MeshFace)
         {
             MeshFace->linearizeIndices();
@@ -97,12 +97,12 @@ public:
             MeshFace->calculateNormalsPerFace();
         }
 
-        MeshVertex = CMeshLoader::load3dsMesh("../Base/Models/tree4.3ds", false);
+        MeshVertex = CMeshLoader::load3dsMesh("../Base/Models/levelBlock.3ds", false);
         if (MeshVertex)
         {
             MeshVertex->resizeMesh(SVector3(1.5));
             MeshVertex->centerMeshByExtents(SVector3(0));
-            MeshVertex->calculateNormalsPerVertex();
+            MeshVertex->calculateNormalsPerVertex(true);
         }
 
 
@@ -112,9 +112,10 @@ public:
         setMaterial(3);
 
 		WingMan = new CMeshSceneObject();
-		WingMan->setMesh(MeshFace);
+		WingMan->setMesh(MeshVertex);
 		WingMan->setShader("DiffuseTexture");
-		WingMan->setTexture("spaceshiptexture.bmp");
+		WingMan->setTexture("../Base/Textures/GrassyGrass.bmp", 2);
+		WingMan->setTexture("../Base/Textures/DirtyDirt.bmp", 3);
 		ISceneObject * Dummy = new ISceneObject();
 		Dummy->setTranslation(SVector3(1.5f,0,0));
 		WingMan->setParent(Dummy);
