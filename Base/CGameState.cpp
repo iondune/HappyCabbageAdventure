@@ -227,12 +227,12 @@ void CGameState::begin()
 
     SceneManager.Lights.push_back(new CLight());
     SceneManager.Lights.back()->Color = SVector3(LightBrightness);
-    SceneManager.Lights.back()->Position = SVector3(-5.f, 20.f, 500.f);
+    SceneManager.Lights.back()->Position = SVector3(-5.f, 200.f, 500.f);
 
     /*
     SceneManager.Lights.push_back(new CLight());
     SceneManager.Lights.back()->Color = SVector3(LightBrightness);
-    SceneManager.Lights.back()->Position = SVector3(0.f, 100.f, 0.f);
+    SceneManager.Lights.back()->Position = SVector3(0.f, 500.f, 0.f);
     */
 
     //PlayerLight = new CLight();
