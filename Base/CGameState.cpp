@@ -556,6 +556,8 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          if(GameplayManager->getPlayerEnergy() > 0) {
             if(!particleLeafEngine || (particleLeafEngine && particleLeafEngine->dead))
                particleLeafEngine = new CParticleEngine(SVector3(0, 1, 0), 150, 6, LEAF_PARTICLE);
+            PlayerView->setRecovering(6);
+            GameplayManager->setRecovering(6.0);
             GameplayManager->UseAbility(1);
             GameplayManager->setGodMode(6.0);
          }
