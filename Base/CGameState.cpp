@@ -652,7 +652,7 @@ void CGameState::PrepGrass(float x, float y, float w, float h) {
    tempBlock->setTexture(grassTxt);
    tempBlock->setShader(DiffuseTexture);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
-   tempBlock->setScale(SVector3(w, h, 5));
+   tempBlock->setScale(SVector3(0, 0, 0));
    Application.getSceneManager().addSceneObject(tempBlock);
 
 }
