@@ -8,6 +8,7 @@ COverworldState::COverworldState()
 //Initalizer fxn
 void COverworldState::begin()
 {
+   CApplication::get().getSceneManager().setCullingEnabled(false);
    curNode = 0;
    aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0;
    transitionTimer = 0.0;
@@ -410,9 +411,6 @@ void COverworldState::movePlayer() {
       eyeTarget = cameraPos[1];
       shiftSetter(eye, eyeShift, eyeTarget);
     }
-
-
-
   }
   /*
    if(curNode == 0) {

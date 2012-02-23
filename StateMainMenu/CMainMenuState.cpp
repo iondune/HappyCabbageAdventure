@@ -18,7 +18,7 @@ void CMainMenuState::setupTextures()
 void CMainMenuState::setupMeshes()
 {
   CShader *Flat;
-  Flat = CShaderLoader::loadShader("Specular");
+  Flat = CShaderLoader::loadShader("Toon");
   logoMesh = CMeshLoader::load3dsMesh("../Base/Models/HappyLogo3.3ds");
   if (logoMesh) 
   {
