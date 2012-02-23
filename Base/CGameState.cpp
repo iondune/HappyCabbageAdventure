@@ -104,8 +104,8 @@ void CGameState::EngineInit( void ) {
    Derp->setArea(SRect2(-17, 0, 1, 1));
 
    Floor = Engine->addObject();
-   Floor->setArea(SRect2(-25, -1, 200, 1));
-   PrepGrass(-25, -1, 200, 1);
+   Floor->setArea(SRect2(-25, -1, 1, 1));
+   PrepGrass(-25, -1, 1, 1);
    PrepSky();
 
    SRect2 area;
