@@ -13,11 +13,11 @@ CTexture *grassTxt, *skyTxt, *dirtTxt, *blueFlwrTxt, *pinkFlwrTxt, *ficusTxt,
 
 CMesh *basicTreeMesh, *cabbageMesh, *christmasTreeMesh, *cubeMesh, *discMesh,
       *blueFlwrMesh, *pinkFlwrMesh, *ficusMesh, *poinMesh, *enemyMesh, 
-      *flagMesh;
+      *flagMesh, *derpMesh;
 
 CMeshSceneObject *renderShadow, *playerRenderable, *renderChristmasTree,
   *renderBasicTree, *renderBlueFlwr, *renderPinkFlwr, *renderFicus, *renderPoin,
-  *tempRender, *renderFlag, *flagLogo;
+  *tempRender, *renderFlag, *flagLogo, *renderDerp;
 
 std::vector<CMeshSceneObject*> blocks, enemies, blueFlwrs, pinkFlwrs, ficuses,
   basicTrees, xmasTrees, poins;
