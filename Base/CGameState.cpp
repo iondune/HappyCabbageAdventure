@@ -199,6 +199,7 @@ CParticleEngine * particleCubeEngine;
 //Initalizer fxn
 void CGameState::begin()
 {
+   CApplication::get().getSceneManager().setCullingEnabled(true);
 #ifdef PARTICLE
    particleLeafEngine = particleCubeEngine = 0;
 #endif
