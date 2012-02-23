@@ -70,6 +70,7 @@ void CParticleObject::setup(std::vector<SVector3*> vectorArr, std::vector<SVecto
    particlesRenderable->setDrawType(GL_POINTS);
    particlesRenderable->Size = num;
 
+
    // Reset the shader to load attributes again
    particlesRenderable->reloadVariablesOnNextDraw();
 }
