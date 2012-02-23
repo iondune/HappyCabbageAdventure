@@ -116,6 +116,9 @@ public:
 
     virtual void syncData()
     {
+		if (! Elements.size())
+			return;
+
         if (! Handle)
         {
             allocate(Elements.size(), & Elements[0]);
