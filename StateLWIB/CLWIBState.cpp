@@ -181,8 +181,8 @@ void CLWIBState::OnRenderStart(float const Elapsed)
             PreviewEnemy->setMesh(kiwiMesh);
         }
 
-        if (textureType == 3) {
-            freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Grape\n");
+        if (textureType == -5) {
+            freetype::print(our_font, 20, WindowHeight - 150.f, "ground block\n");
             PreviewEnemy->setMesh(cubeMesh);
         }
     }
@@ -399,20 +399,25 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
              enemyType++;
         else
             enemyType = 0;
-        if (textureType < 3)
+        if (textureType < 3 && textureType >= 0 && textureType != 2)
             textureType++;
-        else
+        else if (textureType == 2) {
+            textureType = -5;
+        }
+        else if (textureType == -5)
             textureType = 0;
       } 
       if (Event.Key == SDLK_z) {
          if (enemyType != 0) 
              enemyType--;
          else
-            enemyType = 5;
-         if (textureType !=0)
-             textureType--;
-         else
-            textureType =2;
+             enemyType = 0;
+         if (textureType != 0)   
+             enemyType--;
+         else if (textureType == 0)
+             textureType = -5;
+         else if (textureType == -5)
+             textureType = 2;
       }
    }
    //Check if key let go, Not sure if this will work in here.
@@ -629,6 +634,9 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t) {
    blocks.push_back(tempBlock = new CMeshSceneObject());
    placeables.push_back(tempPlaceable = new CBlock(x, y, w, h, d, t));
    tempBlock->setMesh(cubeMesh);
+   if (textureType == -5) {
+        printf("loaded groundBlockmesh\n");
+   }
    if (textureType == 0)
         tempBlock->setTexture("Textures/grass.bmp");
    else if (textureType == 1)
