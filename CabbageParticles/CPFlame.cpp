@@ -1,5 +1,9 @@
 #include "CPFlame.h"
 
+#ifndef M_PI
+#define M_PI 3.14159f
+#endif
+
 void CPFlame::setupRenderable() {
    sineValue = 0;
 
@@ -44,8 +48,8 @@ void CPFlame::updateMatrices(float timeElapsed) {
       // yFactor == [0, 1]
       // yHeight/maxHeight == [0, 1]
       
-      translate = SVector3((yFactor - 0.5) * MIN(1, pow(yHeight / maxHeight, 0.2)) + 0.5,
-                           yHeight + 0.1,
+      translate = SVector3((yFactor - 0.5f) * MIN(1, pow(yHeight / maxHeight, 0.2f)) + 0.5f,
+                           yHeight + 0.1f,
                            Amplitude*sin(Period*sineValue));
       //getRenderable()->setRotation(RotationSpeed*sineValue);
    }

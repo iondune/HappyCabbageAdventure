@@ -69,6 +69,7 @@
     <ClCompile Include="CParticleEngine.cpp" />
     <ClCompile Include="CParticleObject.cpp" />
     <ClCompile Include="CPCube.cpp" />
+    <ClCompile Include="CPFlame.cpp" />
     <ClCompile Include="CPLeaf.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +77,7 @@
     <ClInclude Include="CParticleEngine.h" />
     <ClInclude Include="CParticleObject.h" />
     <ClInclude Include="CPCube.h" />
+    <ClInclude Include="CPFlame.h" />
     <ClInclude Include="CPLeaf.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

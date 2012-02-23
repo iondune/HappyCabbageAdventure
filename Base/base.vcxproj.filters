@@ -50,6 +50,9 @@
     <ClCompile Include="EFlame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EBlade.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGameEventManager.h">
@@ -98,6 +101,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EFlame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EBlade.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

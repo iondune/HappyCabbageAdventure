@@ -81,6 +81,7 @@
     <ClInclude Include="CPlayerView.h" />
     <ClInclude Include="draw.h" />
     <ClInclude Include="EApple.h" />
+    <ClInclude Include="EBlade.h" />
     <ClInclude Include="EFlame.h" />
     <ClInclude Include="EKiwi.h" />
     <ClInclude Include="EOrange.h" />
@@ -97,6 +98,7 @@
     <ClCompile Include="CGameState.cpp" />
     <ClCompile Include="CPlayerView.cpp" />
     <ClCompile Include="EApple.cpp" />
+    <ClCompile Include="EBlade.cpp" />
     <ClCompile Include="EFlame.cpp" />
     <ClCompile Include="EKiwi.cpp" />
     <ClCompile Include="EOrange.cpp" />
