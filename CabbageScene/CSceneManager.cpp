@@ -12,7 +12,7 @@ CLight const CScene::NullLight;
 
 CScene::CScene()
    : BindProjMatrix(ProjMatrix), BindViewMatrix(ViewMatrix), BindLightCount(LightCount), UseCulling(true),
-   DirectDisplayCamera(-1000.f, 1000.f)
+   DirectDisplayCamera(-10000.f, 10000.f)
 {
     ActiveCamera = & DefaultCamera;
 
