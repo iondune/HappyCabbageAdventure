@@ -401,21 +401,25 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
           showHelp = Event.Pressed;
       }
       if(Event.Key == SDLK_x ) {
-        if (enemyType < 6) //temp constraint
-             enemyType++;
-        else
-            enemyType = 0;
-        if (textureType < 3 && textureType >= 0 && textureType != 2)
-            textureType++;
-        else if (textureType == 2) {
-            textureType = -5;
-            blockWidth = 5;
-            blockHeight = 5;
-            blockDepth = 5;
-            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
-        }
-        else if (textureType == -5)
-            textureType = 0;
+         if(eDown) {
+            if (enemyType < 6) //temp constraint
+               enemyType++;
+            else
+               enemyType = 0;
+         }
+         else {
+            if (textureType < 3 && textureType >= 0 && textureType != 2)
+               textureType++;
+            else if (textureType == 2) {
+               textureType = -5;
+               blockWidth = 5;
+               blockHeight = 5;
+               blockDepth = 5;
+               PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+            }
+            else if (textureType == -5)
+               textureType = 0;
+         }
       } 
       if (Event.Key == SDLK_z) {
          if (enemyType != 0) 

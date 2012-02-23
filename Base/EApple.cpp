@@ -96,7 +96,6 @@ void EApple::update(float const TickTime) {
 }
 
 void EApple::doRenderable() {
-
    Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, 0));
 
    if (ScaleMult > 1.1)
@@ -108,6 +107,10 @@ void EApple::doRenderable() {
       ScaleMult += .35 * Time;
    else
       ScaleMult -= .35 * Time;
+
+   // Hack to make the apples always appear
+   if(ScaleMult > 10)
+      ScaleMult = 1.0f;
 
    if (!rollingLeft && !rollingRight) {
       if(Actor->getVelocity().X < -0.01f)

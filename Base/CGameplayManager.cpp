@@ -27,6 +27,8 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
        Flag = Object;
     if (With == VictoryFlag)
        Flag = With;
+    if(Flag)
+       printf("Flag collision\n");
 
     int birdCollision = 0;
     //printf("With's type: %d, Object's type: %d\n", With->CollideableType, Object->CollideableType);
