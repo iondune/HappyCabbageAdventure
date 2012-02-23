@@ -785,8 +785,6 @@
 </CEnemy>
 <CEnemy X ="2" Y ="10" height ="1" width ="1" type ="2">
 </CEnemy>
-<CEnemy X ="-4" Y ="10" height ="1" width ="1" type ="2">
-</CEnemy>
 <CEnemy X ="-12" Y ="3" height ="1" width ="1" type ="2">
 </CEnemy>
 <CEnemy X ="13" Y ="0" height ="1" width ="1" type ="0">
