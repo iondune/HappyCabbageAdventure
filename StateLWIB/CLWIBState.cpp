@@ -504,7 +504,7 @@ void CLWIBState::PrepPreviews() {
    cabbageMesh = CMeshLoader::load3dsMesh("Models/crappycabbage.3ds");
 
    blocks.push_back(PreviewCabbage = new CMeshSceneObject());
-   PreviewCabbage->setMesh(cabbageMesh);
+   //PreviewCabbage->setMesh(cabbageMesh);
    
    if(appleMesh) {
       appleMesh->resizeMesh(SVector3(1));
@@ -524,9 +524,9 @@ void CLWIBState::PrepPreviews() {
          kiwiMesh->calculateNormalsPerFace();
       }
 
-   PreviewCabbage->setShader(Diffuse);
+   /*PreviewCabbage->setShader(Diffuse);
    PreviewCabbage->setRotation(SVector3(-90, 0, 0));
-   PreviewCabbage->setScale(SVector3(0.5,0.5, 0.5));
+   PreviewCabbage->setScale(SVector3(0.5,0.5, 0.5));*/
    PreviewEnemy->setShader(Diffuse);
    PreviewEnemy->setRotation(SVector3(-90, 0, 0));
    PreviewBlock->setScale(SVector3(1, 1, 1));
@@ -685,96 +685,6 @@ void CLWIBState::PrepSky() {
    Application.getSceneManager().addSceneObject(tempBlock);
 }
 
-/*
-void Load3DS()
-{
-   basicTreeMesh = CMeshLoader::load3dsMesh("Models/tree.3ds");
-   if (basicTreeMesh) {
-      basicTreeMesh->resizeMesh(SVector3(0.5));
-      basicTreeMesh->centerMeshByExtents(SVector3(0));
-      basicTreeMesh->calculateNormalsPerFace();
-   }
-   else {
-      fprintf(stderr, "Failed to load the basic tree mesh\n");
-   }
-
-   christmasTreeMesh = CMeshLoader::load3dsMesh("Models/christmasTree.3ds");
-   if (christmasTreeMesh) {
-      christmasTreeMesh->resizeMesh(SVector3(0.5));
-      christmasTreeMesh->centerMeshByExtents(SVector3(0));
-      christmasTreeMesh->calculateNormalsPerFace();
-   }
-   else {
-      fprintf(stderr, "Failed to load the christmas tree mesh\n");
-   }
-
-
-
-   cabbageMesh = CMeshLoader::load3dsMesh("Models/crappycabbage.3ds");
-   if (cabbageMesh) {
-      cabbageMesh->resizeMesh(SVector3(0.5));
-      cabbageMesh->centerMeshByExtents(SVector3(0));
-      cabbageMesh->calculateNormalsPerFace();
-   }
-   else {
-      fprintf(stderr, "Failed to load the cababge mesh\n");
-   }
-
-
-
-   blueFlwrMesh = CMeshLoader::load3dsMesh("Models/blueFlower.3ds");
-   if (blueFlwrMesh) {
-      blueFlwrMesh->centerMeshByExtents(SVector3(0));
-      blueFlwrMesh->calculateNormalsPerFace();
-   }
-   else {
-      fprintf(stderr, "Failed to load blue flower mesh.\n");
-   }
-
-
-
-   pinkFlwrMesh = CMeshLoader::load3dsMesh("Models/pinkFlower.3ds");
-   if (pinkFlwrMesh) {
-      pinkFlwrMesh->centerMeshByExtents(SVector3(0));
-      pinkFlwrMesh->calculateNormalsPerFace();
-   }
-   else {
-      fprintf(stderr, "Failed to load pink flower mesh.\n");
-   }
-
-   ficusMesh = CMeshLoader::load3dsMesh("Models/ficus.3ds");
-   if (ficusMesh) {
-      ficusMesh->centerMeshByExtents(SVector3(0));
-      ficusMesh->calculateNormalsPerFace();
-   }
-   else {
-      fprintf(stderr, "Failed to load ficus mesh.\n");
-   }
-
-   poinMesh = CMeshLoader::load3dsMesh("Models/poin.3ds");
-   if (poinMesh) {
-      poinMesh->centerMeshByExtents(SVector3(0));
-      poinMesh->calculateNormalsPerFace();
-   }
-   else {
-      fprintf(stderr, "Failed to load poinsetta mesh.\n");
-   }
-
-}
-*/
-
-/*
-void LoadTextures()
-{
-   grassImg = CImageLoader::loadImage("Textures/grass.bmp");
-   skyImg = CImageLoader::loadImage("Textures/sky.bmp");
-   dirtImg = CImageLoader::loadImage("Textures/dirt.bmp");
-   blueFlwrImg = CImageLoader::loadImage("Textures/blueFlower.bmp");
-   pinkFlwrImg = CImageLoader::loadImage("Textures/pinkFlower.bmp");
-   poinImg = CImageLoader::loadImage("Textures/poin.bmp");
-}
-*/
-
 
 float CLWIBState::xp2w(int oldX)
 {
@@ -839,10 +749,6 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
             }
          }
 
-         /* Snap camera to where the block was placed
-         eye.X = look.X =  eye.X + 6*tan(30*M_PI/180)*xp2w(Event.Location.X);
-         eye.Y = look.Y = eye.Y + 6*tan(30*M_PI/180)*yp2w(Event.Location.Y);
-         */
       }
       else if(!Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
          mouseDown = 0;
@@ -892,73 +798,8 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
 }
 
   
-/*
-   int startx, starty;
-   float pitchphi, yawtheta;
-   int mouseDown;
-   void OnMouseEvent(SMouseEvent const & Event) {
-      if(Event.Button.Value == SMouseEvent::EButton::Left) {
-         if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
-            mouseDown = 1;
-         }
-         else if(!Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
-            mouseDown = 0;
-         }
-         if(mouseDown && Event.Type.Value == SMouseEvent::EType::Move) {
-            int x = Event.Location.X;
-            int y = Event.Location.Y;
-            startx = Event.Location.X - Event.Movement.X;
-            starty = WindowHeight - (Event.Location.Y - Event.Movement.Y) - 1;
-            if(x <= WindowWidth && x >= 0 && y >= 0 && y <= WindowHeight) {
-               int newy = WindowHeight-y-1;
-
-               if((pitchphi < 50*M_PI/180 || (float)(newy-starty)<0) && 
-                     (pitchphi > -50*M_PI/180 || (float)(newy-starty)>0)) {
-                  yawtheta += (float)(x-startx)/WindowWidth*M_PI;
-                  pitchphi += (float)(newy-starty)/WindowHeight*M_PI;
-
-                  //the Y and Z components are switched in our view
-                  look = SVector3(cos(pitchphi)*cos(yawtheta) + eye.X, 
-                     -cos(pitchphi)*cos(M_PI/2 - yawtheta) + eye.Y, 
-                     sin(pitchphi) + eye.Z);
-               }
-               startx = x;
-               starty = newy;
-            }
-         }
-      }
-   }
-   */
 
 void CLWIBState::stepCamera(float delta) {
-   /*
-   SVector3 zoom = look - eye;
-   zoom *= (5*delta);
-   SVector3 strafe = SVector3(0,0,1).crossProduct(zoom);
-
-   //D
-   if(dDown) {
-      look -= strafe;
-      eye -= strafe;
-   }
-   //A
-   if(aDown) {
-      look += strafe;
-      eye += strafe;
-   }
-   //W
-   if(wDown) {
-      zoom.Z = 0;
-      look += zoom;
-      eye += zoom;
-   }
-   //S
-   if(sDown) {
-      zoom.Z = 0;
-      look -= zoom;
-      eye -= zoom;
-   }
-   */
    float factor = 6;
    //D
    if(dDown) {
