@@ -522,7 +522,7 @@ void CGameState::OnRenderStart(float const Elapsed)
 
    //Draw Text
    freetype::print(our_font, 10, WindowHeight-40.f, "Elapsed Time: %0.0f\n"
-         "Health: %d\nnumKilled: %d\nFPS: %0.2f ", Application.getRunTime(), GameplayManager->getPlayerHealth(), numKilled, fps);
+         "Health: %d\nEnergy: %d\nnumKilled: %d\nFPS: %0.2f ", Application.getRunTime(), GameplayManager->getPlayerHealth(), GameplayManager->getPlayerEnergy(), numKilled, fps);
 
 
    SDL_GL_SwapBuffers();
