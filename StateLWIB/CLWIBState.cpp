@@ -708,14 +708,23 @@ void CLWIBState::PrepGrass(float x, float y, float w, float h) {
 }
 
 void CLWIBState::PrepSky() {
-   CMeshSceneObject *tempBlock;
+  /* CMeshSceneObject *tempBlock;
    blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
    tempBlock->setTexture("Textures/rock.bmp");
    tempBlock->setShader(DiffuseTexture);
-//   tempBlock->setTranslation(SVector3(0, 24, -2.5));
+   tempBlock->setTranslation(SVector3(0, 24, -2.5));
    tempBlock->setTranslation(SVector3(0, 0, 0));
    tempBlock->setScale(SVector3(50, 25, 1));
+   Application.getSceneManager().addSceneObject(tempBlock);*/
+   CMeshSceneObject *tempBlock;
+   blocks.push_back(tempBlock = new CMeshSceneObject());
+   tempBlock->setMesh(cubeMesh);
+   tempBlock->setTexture("Textures/sky.bmp");
+   tempBlock->setShader(DiffuseTexture);
+   tempBlock->setTranslation(SVector3(0, 24, -2.5));
+   tempBlock->setScale(SVector3(400, 50, 1));
+   tempBlock->setCullingEnabled(false);
    Application.getSceneManager().addSceneObject(tempBlock);
 }
 

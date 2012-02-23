@@ -5,3 +5,5 @@
 </CBlock>
 <CBlock X ="-15" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
+<CBlock X ="-8" Y ="1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1" range ="2" speed ="1">
+</CBlock>
