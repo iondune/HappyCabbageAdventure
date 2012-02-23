@@ -50,7 +50,7 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
     int x,y,w,d,h,t;
     //float spd, rng;
 
-    irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader("test.xml");
+    irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader(levelName);
 	while (xml && xml->read())
 	{
       switch(xml->getNodeType())

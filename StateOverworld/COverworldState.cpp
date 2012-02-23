@@ -159,6 +159,7 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
          printf("Look coords: %0.2f %0.2f %0.2f\n", look.X, look.Y, look.Z);
       }
       if(Event.Key == SDLK_SPACE) {
+        CGameState::get().levelName = levels[curNode].name;
          Application.getStateManager().setState(& CGameState::get());
          spaceDown = 1;
          changeSoundtrack("SMW.wav");
@@ -234,7 +235,7 @@ void COverworldState::loadLevels()
   //If you're adding more levels be sure to update COverworldState's NUM_LEVELS
   levels[0].name = "test.xml";
   levels[0].loc = SVector3(0.33, -0.17, 1.05); //bit of green near sole orange hill
-  levels[1].name = "test.xml";
+  levels[1].name = "test2.xml";
   levels[1].loc = SVector3(0.83, 0.00, 0.65); //Green hill
   levels[2].name = "test.xml";
   levels[2].loc = SVector3(0.9f, -0.12999999f, 0.3f);
