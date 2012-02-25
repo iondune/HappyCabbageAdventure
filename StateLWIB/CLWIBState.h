@@ -9,6 +9,7 @@
 #include "CPlaceable.h"
 #include "CBlock.h"
 #include "CCabbage.h"
+#include "../base/irrxml-1.2/src/irrXML.h"
 #include "wmlwriter_src/xmlwriter.h"
 
 #define TREE_Y_OFFSET 2.1
@@ -54,12 +55,14 @@ class CLWIBState : public CState<CLWIBState>
    void end();
 
    void PrepBlock(float x, float y, int w, int h, int d, int t); 
-   void PrepEnemy(float x, float y); 
+   void PrepEnemy(float x, float y, int type); 
    void PrepCabbage(float x, float y);
    void PrepGrass(float x, float y, float w, float h);
    void PrepPreviews();
 
    void PrepSky();
+
+   void loadWorld();
 
    void printXML();
 

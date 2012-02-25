@@ -143,8 +143,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
       PreviewBlock->setVisible(true);
       PreviewEnemy->setVisible(false);
    }
-   //PreviewBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
-   //PreviewBlock->setTranslation(SVector3(x,y, 0));
+
 
    Application.getSceneManager().drawAll();
 
@@ -324,6 +323,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
          }
       }
       if(Event.Key == SDLK_k){
+          loadWorld();
       }
       if(Event.Key == SDLK_j){
          //printf("Angle: %d\n", ANGLE(overView, backwardsView));
@@ -486,6 +486,52 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
    }
 }
 
+void CLWIBState::loadWorld() {
+    int x,y,h,w,d,t;
+    int moving, range, speed;
+    std::string name;
+    //float spd, rng;
+     
+    cout << "Enter the name of the file you want to load: ";
+    cin >> name;
+    irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader(name.c_str());
+	while (xml && xml->read())
+	{
+        switch(xml->getNodeType())
+        {
+        case irr::io::EXN_TEXT:
+             break;
+        case irr::io::EXN_ELEMENT:
+           if(!strcmp("CBlock", xml->getNodeName()))
+           {
+                // id, X, Y, height, width / from 0,1,2 so on
+                x = xml->getAttributeValueAsInt(0);
+                y = xml->getAttributeValueAsInt(1);
+                h = xml->getAttributeValueAsInt(2);
+                w = xml->getAttributeValueAsInt(3);
+                d = xml->getAttributeValueAsInt(4);
+                t = xml->getAttributeValueAsInt(5);
+                moving = xml->getAttributeValueAsInt(6);
+                range = (int) xml->getAttributeValueAsFloat(7); //Range
+                speed = (int) xml->getAttributeValueAsFloat(8); //Speed
+                PrepBlock((float)x,(float)y,w,h,d,t);
+                printf("texture is %d\n", t);
+           }
+           if(!strcmp("CEnemy", xml->getNodeName()))
+           {
+              x = xml->getAttributeValueAsInt(0);
+              y = xml->getAttributeValueAsInt(1);
+              h = xml->getAttributeValueAsInt(2);
+              w = xml->getAttributeValueAsInt(3);
+              t = xml->getAttributeValueAsInt(4);
+              PrepEnemy((float)x,(float)y,t);
+           }
+         break;
+        
+        }
+    }
+}
+
 void CLWIBState::printXML() {
     std::string name;
     cout << "Enter the name of the file you want to save: ";
@@ -545,13 +591,13 @@ void CLWIBState::PrepPreviews() {
          orangeMesh->resizeMesh(SVector3(1));
          orangeMesh->centerMeshByExtents(SVector3(0));
          orangeMesh->calculateNormalsPerFace();
-      }
+    }
 
    if(kiwiMesh) {
          kiwiMesh->resizeMesh(SVector3(1));
          kiwiMesh->centerMeshByExtents(SVector3(0));
          kiwiMesh->calculateNormalsPerFace();
-      }
+    }
 
    /*PreviewCabbage->setShader(Diffuse);
    PreviewCabbage->setRotation(SVector3(-90, 0, 0));
@@ -576,7 +622,7 @@ void initBlockMap() {
       }
 }
 
-void CLWIBState::PrepEnemy(float x, float y) {
+void CLWIBState::PrepEnemy(float x, float y, int type) {
    if(x < -25 || y < -25 || x >= 200 || y >= 75)
       return;
    if(blockMap[(int)x+25][(int)(y-0.5+25)].o) {
@@ -588,7 +634,7 @@ void CLWIBState::PrepEnemy(float x, float y) {
    CMeshSceneObject *tempEnemy;
    CEnemy *tempPlaceable;
    blocks.push_back(tempEnemy = new CMeshSceneObject());
-   placeables.push_back(tempPlaceable = new CEnemy(x, y, 1, 1, enemyType));
+   placeables.push_back(tempPlaceable = new CEnemy(x, y, 1, 1, type));
    tempEnemy->setMesh(appleMesh);
    //tempEnemy->getMaterial().Texture = CImageLoader::loadTexture("Textures/dirt.bmp");;
    tempEnemy->setShader(Diffuse);
@@ -661,11 +707,11 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t) {
    if (textureType == -5) {
         printf("loaded groundBlockmesh\n");
    }
-   if (textureType == 0)
+   if (t == 0)
         tempBlock->setTexture("Textures/grass.bmp");
-   else if (textureType == 1)
+   else if (t == 1)
         tempBlock->setTexture("Textures/dirt.bmp");
-   else if (textureType == 2)
+   else if (t == 2)
         tempBlock->setTexture("Textures/rock.bmp");
    else
        printf("texture doesn't exist\n");
@@ -717,15 +763,7 @@ void CLWIBState::PrepGrass(float x, float y, float w, float h) {
 }
 
 void CLWIBState::PrepSky() {
-  /* CMeshSceneObject *tempBlock;
-   blocks.push_back(tempBlock = new CMeshSceneObject());
-   tempBlock->setMesh(cubeMesh);
-   tempBlock->setTexture("Textures/rock.bmp");
-   tempBlock->setShader(DiffuseTexture);
-   tempBlock->setTranslation(SVector3(0, 24, -2.5));
-   tempBlock->setTranslation(SVector3(0, 0, 0));
-   tempBlock->setScale(SVector3(50, 25, 1));
-   Application.getSceneManager().addSceneObject(tempBlock);*/
+
    CMeshSceneObject *tempBlock;
    blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
@@ -769,7 +807,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          mouseDown = 1;
          if(!tDown && eDown && !oneDown) {
             printf("Here\n");
-            PrepEnemy(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
+            PrepEnemy(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY),enemyType);
          }
          if(!tDown && oneDown && !eDown) {
              PrepCabbage(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
