@@ -182,6 +182,7 @@ bool const ISceneObject::isCulled(CScene const * const Scene) const
     if (! UseCulling || ! Scene->isCullingEnabled())
         return false;
 
+    int i = 0;
     for (int i = 0; i < 8; ++ i) {
         SVector3 const Center = getBoundingBox().getCorner(i);
         glm::vec4 Center4(Center.X, Center.Y, Center.Z, 1.f);

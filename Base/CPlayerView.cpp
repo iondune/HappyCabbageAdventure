@@ -94,7 +94,7 @@ void CPlayerView::establishCamera(ICamera *Camera, int angle) {
       camPos = SVector3(CenterPosition.X, CenterPosition.Y + 1.3f, 6);
    }
    else if(angle == 1) {
-      camPos = SVector3(CenterPosition.X, CenterPosition.Y + 1.3f, -6);
+      camPos = SVector3(CenterPosition.X, CenterPosition.Y + 1.3f, 10);
    }
    else if(angle == 2) {
       camPos = SVector3(CenterPosition.X - 4, CenterPosition.Y + 4, 1);

@@ -70,7 +70,22 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
    //Default bounding box to 0,0,0 to 1,1,1. All of our particle effects at this point (i.e. flame) are 1x1x1
    myObj->setBoundingBox(SBoundingBox3(centerPos - 0.5, centerPos + 0.5));
 
-   myObj->setup(positionArr, colorArr, sizeArr, max);
+   char *textureToUse;
+
+   switch(particleType) {
+   case LEAF_PARTICLE:
+      textureToUse = "Textures/particleStar.bmp";
+      break;
+   case CUBE_PARTICLE:
+      textureToUse = "Textures/particleStar.bmp";
+      break;
+   case FLAME_PARTICLE:
+      textureToUse = "Textures/particle2.bmp";
+      break;
+   }
+
+
+   myObj->setup(positionArr, colorArr, sizeArr, max, textureToUse);
 
    CApplication::get().getSceneManager().addSceneObject(myObj);
 }

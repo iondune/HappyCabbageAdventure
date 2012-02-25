@@ -38,7 +38,7 @@ void CParticleObject::draw(CScene const * const scene) {
    particlesRenderable->draw(scene);
 }
 
-void CParticleObject::setup(std::vector<SVector3*> vectorArr, std::vector<SVector3*> colorArr, std::vector<float> sizeArr, int num) {
+void CParticleObject::setup(std::vector<SVector3*> vectorArr, std::vector<SVector3*> colorArr, std::vector<float> sizeArr, int num, const char* texturePath) {
    updated = true;
    numParticles = num;
    particlesRenderable = new CRenderable(this);
@@ -61,7 +61,7 @@ void CParticleObject::setup(std::vector<SVector3*> vectorArr, std::vector<SVecto
    particlesRenderable->addUniform("uTexColor", new SUniform<int>(0));
 
    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
-   particlesRenderable->getMaterial().Texture = CImageLoader::loadTexture("Textures/particle2.bmp");
+   particlesRenderable->getMaterial().Texture = CImageLoader::loadTexture(texturePath);
 
    particlesRenderable->setShader(CShaderLoader::loadShader("Particle"));
 
