@@ -21,6 +21,9 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
          case FLAME_PARTICLE:
             particles.push_back(cPtr = new CPFlame());
             break;
+         case DEATH_PARTICLE:
+            particles.push_back(cPtr = new CPDeath());
+            break;
       }
       cPtr->setCenterPos(&centerPos);
       cPtr->setLookRight(&lookRight);
@@ -64,6 +67,20 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
 
             sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 10);
             break;
+         case DEATH_PARTICLE:
+            if(rand() % 3 == 0) {
+               if(rand() % 2 == 0) {
+                  colorArr.push_back(new SVector3(1.0f, 1.0f, 1.0f));
+               }
+               else {
+                  colorArr.push_back(new SVector3(0.0f, 1.0f, 0.0f));
+               }
+            }
+            else {
+               colorArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*0.2 + 0.8, (float)rand()/(float)RAND_MAX*0.2 + 0.8, (float)rand()/(float)RAND_MAX*0.1 + 0.1));
+            }
+            sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 15);
+            break;
       }
    }
    myObj = new CParticleObject();
@@ -81,6 +98,9 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
       break;
    case FLAME_PARTICLE:
       textureToUse = "Textures/particle2.bmp";
+      break;
+   case DEATH_PARTICLE:
+      textureToUse = "Textures/particleStar.bmp";
       break;
    }
 

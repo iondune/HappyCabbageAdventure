@@ -4,6 +4,7 @@
 #include "../CabbageCollider/CEngine.h"
 #include "../CabbageSound/sound.h"
 #include "../CabbageParticles/CParticleEngine.h"
+#include "CPlayerView.h"
 
 #include "EApple.h"
 
@@ -16,6 +17,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 {
 
    public:
+      CPlayerView *playerView;
 
       struct SEnemy
       {

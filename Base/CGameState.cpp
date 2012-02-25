@@ -320,6 +320,7 @@ void CGameState::begin()
    //Initialize Fxns
    EngineInit();
    ViewInit();
+   GameplayManager->playerView = PlayerView;
    //LoadHUD();
    fps = timeTotal = 0;
    numFrames = 0;

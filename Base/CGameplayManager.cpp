@@ -144,14 +144,16 @@ void CGameplayManager::runDeathSequence(float elapsedTime) {
          playerDeathParticleEngine->step(elapsedTime);
       }
       else {
-         //delete playerDeathParticleEngine;
+         delete playerDeathParticleEngine;
          playerDeathParticleEngine = NULL;
       }
       return;
    }
    dead = !isPlayerAlive();
    if(dead) {
-      playerDeathParticleEngine = new CParticleEngine(SVector3(PlayerActor->getArea().getCenter(), 0), 400, -1, FLAME_PARTICLE);
+      playerDeathParticleEngine = new CParticleEngine(SVector3(PlayerActor->getArea().getCenter(), 0), 400, 5, DEATH_PARTICLE);
+      Engine->removeActor(PlayerActor);
+      playerView->removeFromScene();
    }
 }
 

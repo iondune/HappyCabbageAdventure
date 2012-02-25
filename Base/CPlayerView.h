@@ -14,6 +14,7 @@
 #endif
 
 #include "../CabbageScene/CabbageScene.h"
+#include "../CabbageFramework/CabbageFramework.h"
 
 class CPlayerView {
    SVector2 CenterPosition;
@@ -53,6 +54,8 @@ class CPlayerView {
          PlayerRenderable = render;
          renderShadow = shadowRender;
       }
+      void removeFromScene();
+      void addToScene();
       void setRecovering(float recovVal) {
          recovering = recovVal;
       }

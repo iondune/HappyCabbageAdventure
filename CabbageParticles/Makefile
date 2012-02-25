@@ -1,4 +1,4 @@
-FILES = CParticle.cpp CParticleEngine.cpp CPLeaf.cpp CPCube.cpp CParticleObject.cpp CPFlame.cpp 
+FILES = CParticle.cpp CParticleEngine.cpp CPLeaf.cpp CPCube.cpp CParticleObject.cpp CPFlame.cpp CPDeath.cpp 
 
 OFILES = $(FILES:%.cpp=%.o)
 
@@ -27,6 +27,10 @@ CPLeaf.o: CPLeaf.cpp CPLeaf.h
 
 CPFlame.o: CPFlame.cpp CPFlame.h
 	g++ -O1 -o CPFlame.o CPFlame.cpp -c $(DIRECTORIES) $(OPENGL)
+
+CPDeath.o: CPDeath.cpp CPDeath.h
+	g++ -O1 -o CPDeath.o CPDeath.cpp -c $(DIRECTORIES) $(OPENGL)
+
 
 CParticleEngine.o: CParticleEngine.cpp CParticleEngine.h CParticle.h CParticle.cpp
 	g++ -O1 -o CParticleEngine.o CParticleEngine.cpp -c $(DIRECTORIES) $(OPENGL)
