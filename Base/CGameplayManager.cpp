@@ -9,6 +9,7 @@ CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabb
     won = 0;
     GodMode = 0;
     GodModeTime = 0;
+    dead = 0;
 }
 
 void CGameplayManager::UseAbility(int energyCost) {
@@ -136,6 +137,24 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
     }
 }
 
+void CGameplayManager::runDeathSequence(float elapsedTime) {
+   if(dead) {
+      if(playerDeathParticleEngine && !playerDeathParticleEngine->dead) {
+         playerDeathParticleEngine->setCenterPos(SVector3(PlayerActor->getArea().getCenter(), 0));
+         playerDeathParticleEngine->step(elapsedTime);
+      }
+      else {
+         //delete playerDeathParticleEngine;
+         playerDeathParticleEngine = NULL;
+      }
+      return;
+   }
+   dead = !isPlayerAlive();
+   if(dead) {
+      playerDeathParticleEngine = new CParticleEngine(SVector3(PlayerActor->getArea().getCenter(), 0), 400, -1, FLAME_PARTICLE);
+   }
+}
+
 SVector2 CGameplayManager::getPlayerLocation() {
    return SVector2(PlayerActor->getArea().getCenter().X, PlayerActor->getArea().getCenter().Y);
 }
@@ -202,6 +221,7 @@ void CGameplayManager::run(float const TickTime)
        if ((enemyCenterX < cabbageCenterX + 7 && enemyCenterX > cabbageCenterX - 7) && (enemyCenterY < cabbageCenterY + 7 && enemyCenterY > cabbageCenterY - 7))
           (*it)->update(TickTime);
     }
+    runDeathSequence(TickTime);
 }
 
 Cabbage::Collider::CEngine* CGameplayManager::getEngine() {

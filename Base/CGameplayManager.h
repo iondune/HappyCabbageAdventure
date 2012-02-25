@@ -3,6 +3,7 @@
 
 #include "../CabbageCollider/CEngine.h"
 #include "../CabbageSound/sound.h"
+#include "../CabbageParticles/CParticleEngine.h"
 
 #include "EApple.h"
 
@@ -26,8 +27,8 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       EnemyList Enemies, KillList;
 
    private:
-
-      int won;
+      CParticleEngine * playerDeathParticleEngine; 
+      int won, dead;
       Cabbage::Collider::CActor * PlayerActor;
       Cabbage::Collider::CObject * VictoryFlag;
       int PlayerHealth, PlayerEnergy;
@@ -41,6 +42,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CEngine * engine);
 
       void OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With);
+      void runDeathSequence(float);
 
       int GodMode;
       float GodModeTime;
