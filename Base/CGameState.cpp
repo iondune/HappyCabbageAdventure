@@ -196,6 +196,15 @@ CParticleEngine * particleLeafEngine;
 CParticleEngine * particleCubeEngine;
 #endif
 
+void LoadHUD() {
+   CMeshSceneObject * DD = new CMeshSceneObject();
+   DD->setMesh(CMeshLoader::loadAsciiMesh("Cube"));
+   DD->setShader(CShaderLoader::loadShader("DiffuseTexture"));
+   DD->setScale(SVector3(50.f));
+   DD->setTexture("Textures/HealthCabbage0.bmp");
+   CApplication::get().getSceneManager().addDirectObject(DD);
+}
+
 //Initalizer fxn
 void CGameState::begin()
 {
@@ -311,6 +320,7 @@ void CGameState::begin()
    //Initialize Fxns
    EngineInit();
    ViewInit();
+   //LoadHUD();
    fps = timeTotal = 0;
    numFrames = 0;
 
@@ -331,11 +341,12 @@ void CGameState::oldDisplay() {
             Player->setAction(CActor::EActionType::None);
             PlayerView->setState(CPlayerView::State::Standing);
          }
-         else if((aDown && !backwardsView) || (dDown && backwardsView)) {
+         //I disabled backwards view for far view so we don't need backwards keypresses anymore
+         else if((aDown)){// && !backwardsView) || (dDown && backwardsView)) {
             Player->setAction(CActor::EActionType::MoveLeft);
             PlayerView->setState(CPlayerView::State::MovingLeft);
          }
-         else if((dDown && !backwardsView) || (aDown && backwardsView)) {
+         else if((dDown)){// && !backwardsView) || (aDown && backwardsView)) {
             Player->setAction(CActor::EActionType::MoveRight);
             PlayerView->setState(CPlayerView::State::MovingRight);
          }
