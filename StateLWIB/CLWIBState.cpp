@@ -400,10 +400,12 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
           showHelp = Event.Pressed;
       }
       if(Event.Key == SDLK_x ) {
-        if (enemyType < 6) //temp constraint
-             enemyType++;
-        else
-            enemyType = 0;
+        if (eDown) {
+            if (enemyType < 6) //temp constraint
+                 enemyType++;
+            else
+                enemyType = 0;
+        } else {
         if (textureType < 3 && textureType >= 0 && textureType != 2)
             textureType++;
         else if (textureType == 2) {
@@ -419,13 +421,16 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
             blockHeight = 1;
             blockDepth = 1;
             PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+            }
         }
       } 
       if (Event.Key == SDLK_z) {
-         if (enemyType != 0) 
+         if (eDown) {
+          if (enemyType != 0) 
              enemyType--;
          else
              enemyType = 0;
+         } else {
          if (textureType != 0 && textureType > 0)   
              textureType--;
          else if (textureType == 0) {
@@ -441,6 +446,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
              blockHeight = 1;
              blockDepth = 1;
              PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+         }
          }
       }
    }
@@ -566,20 +572,19 @@ void CLWIBState::PrepPreviews() {
 
    PreviewBlock->setTexture("Textures/white.bmp");
   
-   //PreviewBlock->getMaterial().Texture = CImageLoader::loadTexture("Textures/grass.bmp");
    PreviewBlock->setShader(DiffuseTexture);
-   //PreviewBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
    CApplication::get().getSceneManager().addSceneObject(PreviewBlock);
 
    blocks.push_back(PreviewEnemy = new CMeshSceneObject());
    appleMesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
-   orangeMesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
-   kiwiMesh = CMeshLoader::load3dsMesh("Models/killkiwi.3ds");
+   orangeMesh = CMeshLoader::load3dsMesh("Models/orange.3ds");
+   kiwiMesh = CMeshLoader::load3dsMesh("Models/killerkiwi.3ds");
    cabbageMesh = CMeshLoader::load3dsMesh("Models/crappycabbage.3ds");
+   bladeMesh = CMeshLoader::load3dsMesh("Models/trap1.3ds");
 
    blocks.push_back(PreviewCabbage = new CMeshSceneObject());
-   //PreviewCabbage->setMesh(cabbageMesh);
+   //PreviewCabbage->setMesh(cabbageMesh
    
    if(appleMesh) {
       appleMesh->resizeMesh(SVector3(1));
@@ -598,7 +603,11 @@ void CLWIBState::PrepPreviews() {
          kiwiMesh->centerMeshByExtents(SVector3(0));
          kiwiMesh->calculateNormalsPerFace();
     }
-
+   if(bladeMesh) {
+      bladeMesh->resizeMesh(SVector3(1));
+      bladeMesh->centerMeshByExtents(SVector3(0));
+      bladeMesh->calculateNormalsPerFace();
+   }
    /*PreviewCabbage->setShader(Diffuse);
    PreviewCabbage->setRotation(SVector3(-90, 0, 0));
    PreviewCabbage->setScale(SVector3(0.5,0.5, 0.5));*/
@@ -635,11 +644,20 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
    CEnemy *tempPlaceable;
    blocks.push_back(tempEnemy = new CMeshSceneObject());
    placeables.push_back(tempPlaceable = new CEnemy(x, y, 1, 1, type));
-   tempEnemy->setMesh(appleMesh);
-   //tempEnemy->getMaterial().Texture = CImageLoader::loadTexture("Textures/dirt.bmp");;
+   if (type == 0)
+        tempEnemy->setMesh(appleMesh);
+   if (type == 1)
+        tempEnemy->setMesh(orangeMesh);
+   if (type == 2)
+        tempEnemy->setMesh(kiwiMesh);
+   if (type == 3)
+        tempEnemy->setMesh(appleMesh);
+   if (type == 4)
+        tempEnemy->setMesh(appleMesh);
+   if (type == 5)
+        tempEnemy->setMesh(bladeMesh);
    tempEnemy->setShader(Diffuse);
    tempEnemy->setTranslation(SVector3((x+(x+1))/2, (y+(y+1))/2, 0));
-   //tempEnemy->setTranslation(SVector3(x, y, 0));
    tempEnemy->setRotation(SVector3(-90, 0, 0));
    tempEnemy->setScale(SVector3(1, 1, 1));
    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
@@ -705,6 +723,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t) {
    placeables.push_back(tempPlaceable = new CBlock(x, y, w, h, d, t));
    tempBlock->setMesh(cubeMesh);
    if (textureType == -5) {
+       tempBlock->setTexture("Textures/GrassyGrass.bmp");
         printf("loaded groundBlockmesh\n");
    }
    if (t == 0)
@@ -717,7 +736,6 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t) {
        printf("texture doesn't exist\n");
    tempBlock->setShader(DiffuseTexture);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
-   //tempBlock->setTranslation(SVector3(x, y, 0));
    tempBlock->setScale(SVector3((float) w, (float) h, (float) d));
    for(i = 0; i < w; i++) {
       for(j = 0; j < h; j++) {
@@ -865,13 +883,13 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          if(lastMouseOveredBlock.o && m_qd.r != lastMouseOveredBlock.r) {
             lastMouseOveredBlock.r->setShader(DiffuseTexture);
          }
-         if(!tDown && mouseDown) {
+         if(!tDown && !eDown && mouseDown) {
             PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth, textureType);
          }
          lastMouseOveredBlock = m_qd;
       }
    }
-   else if(Event.Button.Value == SMouseEvent::EButton::Right) {
+   /*else if(Event.Button.Value == SMouseEvent::EButton::Right) {
       if(Event.Pressed && fDown) {
          if(blockWidth > 1)
             blockWidth--;
@@ -884,7 +902,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, 1));
          return;
       }
-   }
+   }*/
 }
 
   
@@ -911,7 +929,7 @@ void CLWIBState::stepCamera(float delta) {
       eye.Y -= delta*factor;
       look.Y -= delta*factor;
    }
-   if(!tDown && mouseDown) {
+   if(!tDown && !eDown && mouseDown) {
       PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,textureType);
    }
 }
