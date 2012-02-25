@@ -37,6 +37,24 @@ int CPlayerView::getLookRight() {
    return lookRight;
 }
 
+void CPlayerView::removeFromScene() {
+   if(PlayerRenderable) {
+      CApplication::get().getSceneManager().removeSceneObject(PlayerRenderable);
+   }
+   if(renderShadow) {
+      CApplication::get().getSceneManager().removeSceneObject(renderShadow);
+   }
+}
+
+void CPlayerView::addToScene() {
+   if(PlayerRenderable) {
+      CApplication::get().getSceneManager().addSceneObject(PlayerRenderable);
+   }
+   if(renderShadow) {
+      CApplication::get().getSceneManager().addSceneObject(renderShadow);
+   }
+}
+
 void CPlayerView::draw() {
    int negFactor = 0;
 
@@ -58,33 +76,6 @@ void CPlayerView::draw() {
    renderShadow->setTranslation(SVector3(CenterPosition.X, yShadow + 0.01f, 0));
    renderShadow->setScale(SVector3((-.05f*sin(ySineValue)+1), 1,
      -0.05f*sin(ySineValue)+1));
-
-
-
-   //Draw Shadow
-   /*glPushMatrix();
-      glTranslatef(CenterPosition.X, yShadow + 0.01, 0);
-      glScalef(-0.05*sin(ySineValue)+1, 1, -0.05*sin(ySineValue)+1);
-
-      // draw a solid disc from a bunch of triangles //
-      float z1,x1,x,z,ox=0,oz=0,angle,radius=0.5;
-      z1=oz;
-      x1=ox;
-      glBegin(GL_TRIANGLES);  
-      int i;
-      for(i=0;i<=360;i++)
-      {
-         angle=(float)(((double)i)/57.29577957795135);   
-         x=ox+(radius*(float)sin((double)angle));
-         z=oz+(radius*(float)cos((double)angle));      
-         glVertex3f(ox,0,oz);
-         glVertex3f(x1,0,z1);
-         glVertex3f(x,0,z);
-         z1=z;
-         x1=x; 
-      }
-      glEnd();
-   glPopMatrix();*/
 }
 
 void CPlayerView::establishCamera(ICamera *Camera, int angle) {

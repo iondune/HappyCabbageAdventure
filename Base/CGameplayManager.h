@@ -3,6 +3,8 @@
 
 #include "../CabbageCollider/CEngine.h"
 #include "../CabbageSound/sound.h"
+#include "../CabbageParticles/CParticleEngine.h"
+#include "CPlayerView.h"
 
 #include "EApple.h"
 
@@ -15,6 +17,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 {
 
    public:
+      CPlayerView *playerView;
 
       struct SEnemy
       {
@@ -26,11 +29,11 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       EnemyList Enemies, KillList;
 
    private:
-
-      int won;
+      CParticleEngine * playerDeathParticleEngine; 
+      int won, dead, gameOver;
       Cabbage::Collider::CActor * PlayerActor;
       Cabbage::Collider::CObject * VictoryFlag;
-      int PlayerHealth, PlayerEnergy;
+      int PlayerHealth, PlayerEnergy, PlayerLives;
       float PlayerRecovering;
 
       Cabbage::Collider::CEngine * Engine;
@@ -41,15 +44,18 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CEngine * engine);
 
       void OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With);
+      void runDeathSequence(float);
 
       int GodMode;
       float GodModeTime;
       void setGodMode(float time);
       bool const isPlayerAlive() const;
       bool const isWon() const;
+      bool const isGameOver() const;
 
       int const getPlayerHealth() const;
       int const getPlayerEnergy() const;
+      int const getPlayerLives() const;
 
       void UseAbility(int energyCost);
       float getRecovering() {return PlayerRecovering;}

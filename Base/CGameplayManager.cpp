@@ -9,6 +9,9 @@ CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabb
     won = 0;
     GodMode = 0;
     GodModeTime = 0;
+    dead = 0;
+    gameOver = 0;
+    PlayerLives = 3;
 }
 
 void CGameplayManager::UseAbility(int energyCost) {
@@ -136,6 +139,32 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
     }
 }
 
+void CGameplayManager::runDeathSequence(float elapsedTime) {
+   if(dead) {
+      if(playerDeathParticleEngine && !playerDeathParticleEngine->dead) {
+         playerDeathParticleEngine->setCenterPos(SVector3(PlayerActor->getArea().getCenter(), 0));
+         playerDeathParticleEngine->step(elapsedTime);
+      }
+      else {
+         delete playerDeathParticleEngine;
+         playerDeathParticleEngine = NULL;
+      }
+      return;
+   }
+   dead = !isPlayerAlive();
+   if(dead) {
+      playerDeathParticleEngine = new CParticleEngine(SVector3(PlayerActor->getArea().getCenter(), 0), 400, 5, DEATH_PARTICLE);
+      Engine->removeActor(PlayerActor);
+      playerView->removeFromScene();
+
+      if(PlayerLives > 0)
+         PlayerLives--;
+      else {
+         gameOver = 1;
+      }
+   }
+}
+
 SVector2 CGameplayManager::getPlayerLocation() {
    return SVector2(PlayerActor->getArea().getCenter().X, PlayerActor->getArea().getCenter().Y);
 }
@@ -148,6 +177,11 @@ void CGameplayManager::setVictoryFlag(Cabbage::Collider::CObject * f) {
 bool const CGameplayManager::isWon() const
 {
     return won != 0; 
+}
+
+bool const CGameplayManager::isGameOver() const
+{
+    return gameOver; 
 }
 
 bool const CGameplayManager::isPlayerAlive() const
@@ -163,6 +197,11 @@ int const CGameplayManager::getPlayerHealth() const
 int const CGameplayManager::getPlayerEnergy() const
 {
     return PlayerEnergy;
+}
+
+int const CGameplayManager::getPlayerLives() const
+{
+    return PlayerLives;
 }
 
 bool const CGameplayManager::isJumping() const {
@@ -202,6 +241,7 @@ void CGameplayManager::run(float const TickTime)
        if ((enemyCenterX < cabbageCenterX + 7 && enemyCenterX > cabbageCenterX - 7) && (enemyCenterY < cabbageCenterY + 7 && enemyCenterY > cabbageCenterY - 7))
           (*it)->update(TickTime);
     }
+    runDeathSequence(TickTime);
 }
 
 Cabbage::Collider::CEngine* CGameplayManager::getEngine() {

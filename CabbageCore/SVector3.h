@@ -19,6 +19,9 @@ public:
         : X(0), Y(0), Z(0)
     {}
 
+    SVector3(SVector2 vec, float in) : X(vec.X), Y(vec.Y), Z(in)
+   {}
+
     SVector3(glm::vec3 const & vec)
         : X(vec.x), Y(vec.y), Z(vec.z)
     {}

@@ -320,6 +320,7 @@ void CGameState::begin()
    //Initialize Fxns
    EngineInit();
    ViewInit();
+   GameplayManager->playerView = PlayerView;
    //LoadHUD();
    fps = timeTotal = 0;
    numFrames = 0;
@@ -395,10 +396,12 @@ void CGameState::oldDisplay() {
          Mix_PlayChannel(-1, jump, 0);
          playJump = false;
       }
-
    }
    else
    {
+      if(spaceDown) {
+         printf("Revive player like so\n");
+      }
       Player->setAction(CActor::EActionType::None);
       PlayerView->setState(CPlayerView::State::Standing);
       Player->setJumping(false);
