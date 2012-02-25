@@ -30,7 +30,7 @@ class CLWIBState : public CState<CLWIBState>
    int WindowWidth, WindowHeight;
 
 
-   CMesh *cubeMesh, *appleMesh, *orangeMesh, *kiwiMesh, *cabbageMesh, *groundMesh;
+   CMesh *cubeMesh, *appleMesh, *orangeMesh, *kiwiMesh, *cabbageMesh, *groundMesh, *bladeMesh;
 
    float xp2w(int oldX);
    float yp2w(int oldY);
