@@ -9,7 +9,7 @@
 #include "CPlaceable.h"
 #include "CBlock.h"
 #include "CCabbage.h"
-#include "../base/irrxml-1.2/src/irrXML.h"
+#include "../Base/irrxml-1.2/src/irrXML.h"
 #include "wmlwriter_src/xmlwriter.h"
 
 #define TREE_Y_OFFSET 2.1
