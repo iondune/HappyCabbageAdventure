@@ -396,10 +396,12 @@ void CGameState::oldDisplay() {
          Mix_PlayChannel(-1, jump, 0);
          playJump = false;
       }
-
    }
    else
    {
+      if(spaceDown) {
+         printf("Revive player like so\n");
+      }
       Player->setAction(CActor::EActionType::None);
       PlayerView->setState(CPlayerView::State::Standing);
       Player->setJumping(false);

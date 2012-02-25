@@ -10,6 +10,8 @@ CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabb
     GodMode = 0;
     GodModeTime = 0;
     dead = 0;
+    gameOver = 0;
+    PlayerLives = 3;
 }
 
 void CGameplayManager::UseAbility(int energyCost) {
@@ -154,6 +156,12 @@ void CGameplayManager::runDeathSequence(float elapsedTime) {
       playerDeathParticleEngine = new CParticleEngine(SVector3(PlayerActor->getArea().getCenter(), 0), 400, 5, DEATH_PARTICLE);
       Engine->removeActor(PlayerActor);
       playerView->removeFromScene();
+
+      if(PlayerLives > 0)
+         PlayerLives--;
+      else {
+         gameOver = 1;
+      }
    }
 }
 
@@ -171,6 +179,11 @@ bool const CGameplayManager::isWon() const
     return won != 0; 
 }
 
+bool const CGameplayManager::isGameOver() const
+{
+    return gameOver; 
+}
+
 bool const CGameplayManager::isPlayerAlive() const
 {
     return (PlayerHealth > 0) && (-5.0 < PlayerActor->getArea().getCenter().Y);
@@ -184,6 +197,11 @@ int const CGameplayManager::getPlayerHealth() const
 int const CGameplayManager::getPlayerEnergy() const
 {
     return PlayerEnergy;
+}
+
+int const CGameplayManager::getPlayerLives() const
+{
+    return PlayerLives;
 }
 
 bool const CGameplayManager::isJumping() const {
