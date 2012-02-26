@@ -33,6 +33,9 @@
     <ClCompile Include="CPFlame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CPDeath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CParticle.h">
@@ -51,6 +54,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CPFlame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CPDeath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -102,7 +102,7 @@ CMeshSceneObject * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngin
       printf("y is %f\n", y);
       printf("h is %d\n", h);
    }
-   tempBlock->setRotation(SVector3(t==-5?-90:0, 0, 0));
+   tempBlock->setRotation(SVector3(t==-5?-90.f:0, 0, 0));
    CApplication::get().getSceneManager().addSceneObject(tempBlock);
 
    return tempBlock;

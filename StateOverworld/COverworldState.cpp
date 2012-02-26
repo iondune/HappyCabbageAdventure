@@ -34,7 +34,7 @@ void COverworldState::begin()
 
    changex = 0.87f;
    changey = 0.58f;
-   changez = 1.27;
+   changez = 1.27f;
 
    //eye = SVector3(1.47f, 0.33f, 0);
    //look = SVector3(0.57f, -0.08f, 0.19f);
@@ -233,7 +233,7 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_n){
         look = levels[0].loc;
-        eye = SVector3(0.74, 0.48, 1.50);
+        eye = SVector3(0.74f, 0.48f, 1.50f);
       }
       if(Event.Key == SDLK_SPACE){
          spaceDown = 0;
@@ -260,17 +260,17 @@ void COverworldState::loadLevels()
 {
   //If you're adding more levels be sure to update COverworldState's NUM_LEVELS
   levels[0].name = "jorge1.xml";
-  levels[0].loc = SVector3(0.33, -0.17, 1.05); //bit of green near sole orange hill
+  levels[0].loc = SVector3(0.33f, -0.17f, 1.05f); //bit of green near sole orange hill
   levels[1].name = "chris.xml";
-  levels[1].loc = SVector3(0.83, 0.00, 0.65); //Green hill
+  levels[1].loc = SVector3(0.83f, 0.00f, 0.65f); //Green hill
   levels[2].name = "test.xml";
   levels[2].loc = SVector3(0.9f, -0.12999999f, 0.3f);
   levels[3].name = "test.xml";
   levels[3].loc = SVector3(0.5f, -0.13f, 0.1f);
   levels[4].name = "test.xml";
-  levels[4].loc = SVector3(0.98, -0.27, -0.19); //Green beach
+  levels[4].loc = SVector3(0.98f, -0.27f, -0.19f); //Green beach
   levels[5].name = "test.xml";
-  levels[5].loc = SVector3(0.94, -0.25, -0.38); //Yellow beach
+  levels[5].loc = SVector3(0.94f, -0.25f, -0.38f); //Yellow beach
 }
 
 void COverworldState::setCameraTrans()
@@ -316,7 +316,7 @@ void COverworldState::PrepMeshes()
 
    playerRender = CApplication::get().getSceneManager().addMeshSceneObject(playerMesh, Flat);
    playerVector = levels[0].loc;
-   playerVector.Y += 0.05;
+   playerVector.Y += 0.05f;
    playerRender->setTranslation(playerVector);
    playerRender->setRotation(SVector3(-90.0f, 0.0f, 45.0f));
    playerRender->setScale(SVector3(0.18f));
@@ -338,7 +338,7 @@ void COverworldState::PrepMeshes()
    arrowRender1->setScale(SVector3(0.18f));
                   
    arrowRender2 = CApplication::get().getSceneManager().addMeshSceneObject(arrowMesh, Flat);
-   arrowRender2->setTranslation(SVector3(0,-0.2,0) + playerVector);
+   arrowRender2->setTranslation(SVector3(0,-0.2f,0) + playerVector);
    arrowRender2->setRotation(SVector3(90.0f, 0.0f, angleMaker(playerVector, levels[curNode + 1].loc) + 90.0f ));
    arrowRender2->setScale(SVector3(0.18f));
 
@@ -462,7 +462,8 @@ void COverworldState::shiftSetter(SVector3 & curr, SVector3 & change, SVector3 &
 
 float COverworldState::angleMaker(SVector3 start, SVector3 toPoint)
 {
-    float asinxz, asinzx, acosxz, acoszx, lookat;
+    //float asinxz, asinzx, acosxz, acoszx;
+	float lookat = 0.f;
      SVector3 temp = toPoint - start;
 
      temp.normalize();
