@@ -753,11 +753,11 @@ void Load3DS()
 
 
 
-   cabbageMesh = CMeshLoader::load3dsMesh("Models/crappycabbage.3ds");
+   cabbageMesh = CMeshLoader::load3dsMesh("Models/crappycabbage2.3ds");
    if (cabbageMesh) {
       cabbageMesh->resizeMesh(SVector3(0.5));
       cabbageMesh->centerMeshByExtents(SVector3(0));
-      cabbageMesh->calculateNormalsPerFace();
+      cabbageMesh->calculateNormalsPerVertex();
    }
    else {
       fprintf(stderr, "Failed to load the cababge mesh\n");

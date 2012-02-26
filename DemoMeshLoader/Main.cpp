@@ -52,7 +52,7 @@ public:
 
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
-        //glEnable(GL_CULL_FACE);
+        glEnable(GL_CULL_FACE);
         glCullFace(GL_BACK);
 
         // Setup camera
@@ -88,7 +88,7 @@ public:
         }
 
         // Attempt to load mesh
-        MeshFace = CMeshLoader::load3dsMesh("../Base/Models/levelBlock.3ds", false);
+        MeshFace = CMeshLoader::load3dsMesh("../Base/Models/crappycabbage2.3ds", false);
         if (MeshFace)
         {
             MeshFace->linearizeIndices();
@@ -97,7 +97,7 @@ public:
             MeshFace->calculateNormalsPerFace();
         }
 
-        MeshVertex = CMeshLoader::load3dsMesh("../Base/Models/levelBlock.3ds", false);
+        MeshVertex = CMeshLoader::load3dsMesh("../Base/Models/crappycabbage2.3ds", false);
         if (MeshVertex)
         {
             MeshVertex->resizeMesh(SVector3(1.5));
