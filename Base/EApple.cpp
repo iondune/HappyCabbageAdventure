@@ -14,6 +14,7 @@ EApple::EApple(float x, float y, float w, float h, CGameplayManager* manager) {
    rotate = 0.0f;
 
    ScaleMult = 1.0f;
+   Time = 0.f;
 }
 
 //Loads and moves the mesh
@@ -98,9 +99,9 @@ void EApple::update(float const TickTime) {
 void EApple::doRenderable() {
    Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, 0));
 
-   if (ScaleMult > 1.1)
+   if (ScaleMult > 1.1f)
       PositiveScale = false;
-   else if (ScaleMult < .9)
+   else if (ScaleMult < .9f)
       PositiveScale = true;
 
    if (PositiveScale)
@@ -108,9 +109,7 @@ void EApple::doRenderable() {
    else
       ScaleMult -= .35f * Time;
 
-   // Hack to make the apples always appear
-   if(ScaleMult > 10)
-      ScaleMult = 1.0f;
+   ScaleMult = std::max(std::min(ScaleMult, 1.2f), 0.8f);
 
    if (!rollingLeft && !rollingRight) {
       if(Actor->getVelocity().X < -0.01f)
