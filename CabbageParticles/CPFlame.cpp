@@ -8,24 +8,24 @@ void CPFlame::setupRenderable() {
    sineValue = 0;
 
    yFactor = (float)rand()/(float)RAND_MAX * 1;
-   yVelocity = (float)rand()/(float)RAND_MAX * 0.8 + 0.5;
+   yVelocity = (float)rand()/(float)RAND_MAX * 0.8f + 0.5f;
    yHeight = 0;
 
 
-   Period = (float)rand()/(float)RAND_MAX * 0.8 + 0.5;
-   Amplitude = (float)rand()/(float)RAND_MAX * 0.4 - 0.3;
+   Period = (float)rand()/(float)RAND_MAX * 0.8f + 0.5f;
+   Amplitude = (float)rand()/(float)RAND_MAX * 0.4f - 0.3f;
 
    RotationSpeed = SVector3(
          (float)rand()/(float)RAND_MAX * 4 - 2, 
          (float)rand()/(float)RAND_MAX * 4 - 2,
          (float)rand()/(float)RAND_MAX * 4 - 2);
-   RotationSpeed *= -yFactor + 2.0;
+   RotationSpeed *= -yFactor + 2.0f;
 
    StartFactor = (float)rand()/(float)RAND_MAX * AppearRate; 
    Counter = StartFactor;
 
-   Size = (float)rand()/(float)RAND_MAX*0.8 + 0.2;
-   maxHeight = 1 + 0.1*cos(yFactor*5*M_PI);
+   Size = (float)rand()/(float)RAND_MAX*0.8f + 0.2f;
+   maxHeight = 1 + 0.1f*cos(yFactor*5*M_PI);
 }
 
 #define MIN(x,y) ((x>y)?y:x)

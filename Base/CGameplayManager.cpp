@@ -49,9 +49,9 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
        //printf("Hey 15\n");
        //SRect2 area = ((Cabbage::Collider::CActor*)Object)->getArea();
        //((Cabbage::Collider::CActor*)Object)->setArea(SRect2(area.Position.X + 1.5, area.Position.Y + 0.2, area.Size.X, area.Size.Y));
-       ((Cabbage::Collider::CActor*)Object)->setImpulse(SVector2(0.03f, 0.3f)*7, 0.2);
+       ((Cabbage::Collider::CActor*)Object)->setImpulse(SVector2(0.03f, 0.3f)*7, 0.2f);
        if(With->CollideableType == COLLIDEABLE_TYPE_ACTOR) {
-          ((Cabbage::Collider::CActor*)With)->setImpulse(SVector2(0.00f, -0.3f), 0.2);
+          ((Cabbage::Collider::CActor*)With)->setImpulse(SVector2(0.00f, -0.3f), 0.2f);
        }
        birdCollision = 1;
     }
@@ -60,7 +60,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
     }
 
     if(GodMode && birdCollision == 1 && PlayerCollideable) {
-        PlayerActor->setImpulse(SVector2(0.f, -0.4f) * 7, 0.5);
+        PlayerActor->setImpulse(SVector2(0.f, -0.4f) * 7, 0.5f);
     }
 
     if (! Other || GodMode)
@@ -181,7 +181,7 @@ bool const CGameplayManager::isWon() const
 
 bool const CGameplayManager::isGameOver() const
 {
-    return gameOver; 
+    return gameOver != 0; 
 }
 
 bool const CGameplayManager::isPlayerAlive() const

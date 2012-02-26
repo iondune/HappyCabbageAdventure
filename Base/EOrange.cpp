@@ -86,9 +86,9 @@ void EOrange::update(const float TickTime) {
 void EOrange::doRenderable() {
 
    if (Actor->getVelocity().X < 0.0f)
-      Renderable->setRotation(SVector3(-90, Actor->getVelocity().X*10.0, -90));
+      Renderable->setRotation(SVector3(-90, Actor->getVelocity().X*10.0f, -90));
    else if (Actor->getVelocity().X >= 0.0f)
-      Renderable->setRotation(SVector3(-90, Actor->getVelocity().X*10.0, 90));
+      Renderable->setRotation(SVector3(-90, Actor->getVelocity().X*10.0f, 90));
    else {
       if (Manager->getPlayerLocation().X < Actor->getArea().getCenter().X)
          Renderable->setRotation(SVector3(-90, 0, -90));

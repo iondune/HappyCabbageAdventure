@@ -78,7 +78,7 @@ void EKiwi::update(float const TickTime) {
       Actor->setAction(Cabbage::Collider::CActor::EActionType::None);
 
       SVector2 vel = Actor->getVelocity();
-      Actor->setVelocity(SVector2(vel.X, vel.Y > 0 ? vel.Y - 1.0*TickTime : 0));
+      Actor->setVelocity(SVector2(vel.X, vel.Y > 0 ? vel.Y - 1.0f*TickTime : 0));
 
       if(Direction == 0)
          Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveLeft);

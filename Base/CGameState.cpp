@@ -466,8 +466,8 @@ void CGameState::oldDisplay() {
    PlayerView->draw();
 
    //Draw derp (enemy)
-   renderDerp->setTranslation(SVector3(Derp->getArea().getCenter().X, Derp->getArea().getCenter().Y + .2, 0));
-   renderDerp->setScale(SVector3(1.5));
+   renderDerp->setTranslation(SVector3(Derp->getArea().getCenter().X, Derp->getArea().getCenter().Y + .2f, 0));
+   renderDerp->setScale(SVector3(1.5f));
    renderDerp->setRotation(SVector3(-90, 0, -90));
 
    //ENEMY DISPLAY

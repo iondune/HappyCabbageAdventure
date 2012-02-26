@@ -59,9 +59,9 @@ void EApple::update(float const TickTime) {
            Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
 
        float curTime = TickTime;
-       for(; curTime > 0; curTime -= 0.002) { 
+       for(; curTime > 0; curTime -= 0.002f) { 
           if (Manager->getPlayerLocation().X - Actor->getArea().getCenter().X < 7 && Manager->getPlayerLocation().X - Actor->getArea().getCenter().X > -7 &&
-                Manager->getPlayerLocation().Y - Actor->getArea().getCenter().Y < 1.0 && Manager->getPlayerLocation().Y - Actor->getArea().getCenter().Y > -1.0 && rand()%1000 <= 2) {
+                Manager->getPlayerLocation().Y - Actor->getArea().getCenter().Y < 1.0f && Manager->getPlayerLocation().Y - Actor->getArea().getCenter().Y > -1.0f && rand()%1000 <= 2) {
              if (Actor->getAction() == Cabbage::Collider::CActor::EActionType::MoveLeft)
                 rollingLeft = true;
              else
@@ -104,9 +104,9 @@ void EApple::doRenderable() {
       PositiveScale = true;
 
    if (PositiveScale)
-      ScaleMult += .35 * Time;
+      ScaleMult += .35f * Time;
    else
-      ScaleMult -= .35 * Time;
+      ScaleMult -= .35f * Time;
 
    // Hack to make the apples always appear
    if(ScaleMult > 10)

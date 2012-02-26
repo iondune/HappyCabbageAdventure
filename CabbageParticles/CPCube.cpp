@@ -3,18 +3,18 @@
 void CPCube::setupRenderable() {
    sineValue = 0;
 
-   yFactor = (float)rand()/(float)RAND_MAX * 1.5 - 0.2;
-   Amplitude = 0.4*(yFactor + 1);
+   yFactor = (float)rand()/(float)RAND_MAX * 1.5f - 0.2f;
+   Amplitude = 0.4f*(yFactor + 1);
    Period = (float)rand()/(float)RAND_MAX * 2 + 1;
    RotationSpeed = SVector3(
          (float)rand()/(float)RAND_MAX * 4 - 2, 
          (float)rand()/(float)RAND_MAX * 4 - 2,
          (float)rand()/(float)RAND_MAX * 4 - 2);
-   RotationSpeed *= -yFactor + 2.0;
+   RotationSpeed *= -yFactor + 2.0f;
    StartFactor = (float)rand()/(float)RAND_MAX * AppearRate; 
    Counter = StartFactor;
 
-   Size = (float)rand()/(float)RAND_MAX*0.8 + 0.2;
+   Size = (float)rand()/(float)RAND_MAX*0.8f + 0.2f;
 }
 
 void CPCube::updateMatrices(float timeElapsed) {
@@ -29,7 +29,7 @@ void CPCube::updateMatrices(float timeElapsed) {
    else {
       sineValue += 4*timeElapsed;
       Duration += timeElapsed;
-      float newX = (*lookRight?1:-1)*(0.8+yFactor);
+      float newX = (*lookRight?1:-1)*(0.8f+yFactor);
       translate = SVector3(newX,
                            Amplitude*cos(Period*sineValue), 
                            Amplitude*sin(Period*sineValue));

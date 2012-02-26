@@ -15,8 +15,8 @@ void CPLeaf::setupRenderable() {
    renderable->setShader(CShaderLoader::loadShader("DiffuseTextureBright"));
    */
 
-   yFactor = (float)rand()/(float)RAND_MAX * 0.6 - 0.3;
-   Amplitude = (float)rand()/(float)RAND_MAX * 0.5 + 0.3;
+   yFactor = (float)rand()/(float)RAND_MAX * 0.6f - 0.3f;
+   Amplitude = (float)rand()/(float)RAND_MAX * 0.5f + 0.3f;
    Period = (float)rand()/(float)RAND_MAX * 2 + 1;
    RotationSpeed = SVector3((float)rand()/(float)RAND_MAX * 4 - 2, 
          (float)rand()/(float)RAND_MAX * 4 - 2,

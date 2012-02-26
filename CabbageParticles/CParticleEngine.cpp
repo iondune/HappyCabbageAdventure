@@ -42,12 +42,12 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
                colorArr.push_back(new SVector3(1.0f));
             }
             else {
-               colorArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*0.2 + 0.4, (float)rand()/(float)RAND_MAX*0.2 + 0.8, (float)rand()/(float)RAND_MAX*0.4 + 0.4));
+               colorArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*0.2f + 0.4f, (float)rand()/(float)RAND_MAX*0.2f + 0.8f, (float)rand()/(float)RAND_MAX*0.4f + 0.4f));
             }
             sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 15);
             break;
          case CUBE_PARTICLE:
-            temp = (float)rand()/(float)RAND_MAX*0.3 + 0.3;
+            temp = (float)rand()/(float)RAND_MAX*0.3f + 0.3f;
             if(rand() % 4 == 0) {
                colorArr.push_back(new SVector3(1));
             }
@@ -57,7 +57,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
             sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 10);
             break;
          case FLAME_PARTICLE:
-            temp = (float)rand()/(float)RAND_MAX*0.3 + 0.3;
+            temp = (float)rand()/(float)RAND_MAX*0.3f + 0.3f;
             if(rand() % 3 == 0) {
                colorArr.push_back(new SVector3(temp*3, temp*2, temp));
             }
@@ -77,7 +77,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
                }
             }
             else {
-               colorArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*0.2 + 0.8, (float)rand()/(float)RAND_MAX*0.2 + 0.8, (float)rand()/(float)RAND_MAX*0.1 + 0.1));
+               colorArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*0.2f + 0.8f, (float)rand()/(float)RAND_MAX*0.2f + 0.8f, (float)rand()/(float)RAND_MAX*0.1f + 0.1f));
             }
             sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 15);
             break;
