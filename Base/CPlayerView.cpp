@@ -62,9 +62,35 @@ void CPlayerView::draw() {
    if(!(recovering > 0 && (int)(recovering *100) % 2 != 0)) {
       PlayerRenderable->setTranslation(SVector3(CenterPosition.X, CenterPosition.Y + 0.065f*sin(ySineValue), 0));
       SVector3 rot = PlayerRenderable->getRotation();
+
       if(!(Velocity.Y > 0.01f || Velocity.Y < -0.01f)) {
          rot.X = 15*sin(ySineValue/2)-90.f;
+         if (xScale < 2.0f) {
+            xScale += .002f;
+            yScale -= .002f;
+         }
+
+         else if (xScale > 2.0f) {
+            xScale -= .002f;
+            yScale += .002f;
+         }
       }
+
+      else if (Velocity.Y > .01f) { //When jumping/launched up
+         if (yScale < 2.4f && xScale > 1.6f) {
+            yScale += .0008f*Velocity.Y;
+            xScale -= .0008f*Velocity.Y;
+         }
+      }
+
+      else if (Velocity.Y < -0.01f) { //When falling down
+         if (xScale < 2.4f && yScale > 1.6f) {
+            yScale -= -1.0f*.0008f*Velocity.Y;
+            xScale += -1.0f*.0008f*Velocity.Y;
+         }
+      }
+
+      PlayerRenderable->setScale(SVector3(xScale, xScale, yScale));
       rot.Z = lookRight ? 80.f : 0.f;
       PlayerRenderable->setRotation(rot);
       PlayerRenderable->setVisible(true);

@@ -42,10 +42,13 @@ class CPlayerView {
       State curState;
       float ySineValue;
       float yShadow;
+      float xScale;
+      float yScale;
       CPlayerView() {
          ySineValue = 0;
          yShadow = 0;
          lookRight = 1;
+         yScale = xScale = 2.0f;
       }
       int lookRight;
 
