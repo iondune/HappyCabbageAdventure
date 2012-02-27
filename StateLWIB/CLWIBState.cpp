@@ -52,11 +52,12 @@ void CLWIBState::begin()
 {
    textureType = 0;
    enemyType = 0;
-   aDown = dDown = spaceDown = wDown = sDown = gDown = fDown = tDown = eDown = mDown = oneDown = twoDown = threeDown = 0;
+   aDown = dDown = spaceDown = wDown = sDown = gDown = fDown = tDown = eDown = mDown = oneDown = twoDown = threeDown = cDown = 0;
    cubeMesh = CMeshLoader::createCubeMesh();
    cubeMesh->calculateNormalsPerFace();
 
    showHelp = false;
+   blockCycle = 0;
    initBlockMap();
    blockWidth = 1;
    blockHeight = 1;
@@ -127,7 +128,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
       PreviewBlock->setVisible(false);
       PreviewEnemy->setVisible(false);
    }
-   else if(eDown) {
+   else if(twoDown) {
       PreviewCabbage->setVisible(false); 
       PreviewEnemy->setVisible(true);
       PreviewBlock->setVisible(false);
@@ -164,27 +165,41 @@ void CLWIBState::OnRenderStart(float const Elapsed)
     }
     else
         freetype::print(our_font, 15, WindowHeight - 50.f, "Press F1 For Help");
-    if (!eDown && !showHelp && !tDown && !oneDown) {
+    if (!twoDown && !showHelp && !tDown && !oneDown) {
         freetype::print(our_font, 20, WindowHeight - 100.f, "Placing block\n\n");
-        if (textureType == 0) {
-            freetype::print(our_font, 20, WindowHeight - 150.f, "Placing grass block\n");
-           PreviewEnemy->setMesh(appleMesh);
-        }
-        if (textureType == 1) {
-            freetype::print(our_font, 20, WindowHeight - 150.f, "Placing dirt block\n");
-            PreviewEnemy->setMesh(orangeMesh);
-        }
-        if (textureType == 2) {
-            freetype::print(our_font, 20, WindowHeight - 150.f, "Placing rock block \n");
-            PreviewEnemy->setMesh(kiwiMesh);
-        }
+        if (cDown == 0) {
+            if (textureType == 0) {
+                freetype::print(our_font, 20, WindowHeight - 150.f, "Placing grass block\n");
+                PreviewEnemy->setMesh(appleMesh);
+            }
+            if (textureType == 1) {
+                freetype::print(our_font, 20, WindowHeight - 150.f, "Placing dirt block\n");
+                PreviewEnemy->setMesh(orangeMesh);
+            }
+            if (textureType == 2) {
+                freetype::print(our_font, 20, WindowHeight - 150.f, "Placing rock block \n");
+                PreviewEnemy->setMesh(kiwiMesh);
+            }
 
-        if (textureType == -5) {
-            freetype::print(our_font, 20, WindowHeight - 150.f, "ground block\n");
-            PreviewEnemy->setMesh(cubeMesh);
+            if (textureType == -5) {
+                freetype::print(our_font, 20, WindowHeight - 150.f, "ground block\n");
+                PreviewEnemy->setMesh(cubeMesh);
+            }
+        }
+        if (cDown == 1) {
+           freetype::print(our_font, 20, WindowHeight - 150.f, "changing block width\n");
+           freetype::print(our_font, 20, WindowHeight - 200.f, "block width is %d\n", blockWidth);
+        }
+        if (cDown == 2) {
+           freetype::print(our_font, 20, WindowHeight - 150.f, "changing block height\n");
+           freetype::print(our_font, 20, WindowHeight - 200.f, "block height is %d\n", blockHeight);
+        }
+        if (cDown == 3) {
+           freetype::print(our_font, 20, WindowHeight - 150.f, "changing block depth\n");
+           freetype::print(our_font, 20, WindowHeight - 200.f, "block depth is %d\n", blockDepth);
         }
     }
-    if (eDown && !showHelp && !tDown && !oneDown) {
+    if (twoDown && !showHelp && !tDown && !oneDown) {
         freetype::print(our_font, 20, WindowHeight - 100.f, "Placing enemy\n");
         if (enemyType == 0) {
             freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Apple\n");
@@ -214,7 +229,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
            PreviewEnemy->setMesh(cubeMesh);
         }
     }
-    if (oneDown && !showHelp && !tDown && !eDown) {
+    if (oneDown && !showHelp && !tDown && !twoDown) {
         freetype::print(our_font, 20, WindowHeight - 100.f, "Insert Cabbage\n\n");
     }
     if (tDown && !showHelp )
@@ -245,211 +260,220 @@ void CLWIBState::drawSubWindow() {
 //Sends event every time key pressed (also when held)
 void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
-   if(Event.Pressed){
-       if(Event.Key == SDLK_1){
+    if(Event.Pressed){
+        if(Event.Key == SDLK_1){
             if (oneDown == 1)
                 oneDown = 0;
             else {
                 oneDown = 1;
                 tDown = 0;
-                eDown = 0;
+                twoDown = 0;
             }
-       }
-      if(Event.Key == SDLK_w){
-         wDown = 1;
-      }
-      if(Event.Key == SDLK_p){
-         printXML();
-      }
-      if(Event.Key == SDLK_s){
-         sDown = 1;
-      }
-      if(Event.Key == SDLK_a){
-         aDown = 1;
-      }
-      if(Event.Key == SDLK_d){
-         dDown = 1;
-      }
-      if(Event.Key == SDLK_g){
-         if(blockWidth < 10)
-            blockWidth++;
-         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
-         //fDown = 1; //width
-      }
-      if(Event.Key == SDLK_f){
-         if(blockWidth > 1)
-            blockWidth--;
-         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
-         //gDown = 1; //height
-      }
-      if (Event.Key == SDLK_c) {
-         if(blockHeight > 1)
-            blockHeight--;
-         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
-      }
-      if (Event.Key == SDLK_v) {
-         if(blockHeight < 10)
-            blockHeight++;
-         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
-      }
-      if (Event.Key == SDLK_h) {
-         if(blockDepth > 1)
-            blockDepth--;
-         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
-      }
-      if (Event.Key == SDLK_j) {
-         if(blockDepth < 6)
-            blockDepth++;
-         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
-      }
-      if(Event.Key == SDLK_e){
-         if (eDown == 1 ) {
-             eDown = 0;
-             if(textureType == -5) {
-                blockWidth = 5;
-                blockHeight = 5;
-                blockDepth = 5;
+        }
+        if(Event.Key == SDLK_w){
+            wDown = 1;
+        }
+        if(Event.Key == SDLK_p){
+            printXML();
+        }
+        if(Event.Key == SDLK_s){
+            sDown = 1;
+        }
+        if(Event.Key == SDLK_a){
+            aDown = 1;
+        }
+        if(Event.Key == SDLK_d){
+            dDown = 1;
+        }
+        if(Event.Key == SDLK_2){
+            if (twoDown == 1 ) {
+                twoDown = 0;
+                if(textureType == -5) {
+                    blockWidth = 5;
+                    blockHeight = 5;
+                    blockDepth = 5;
+                    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                }
+            }
+            else {
+                twoDown = 1; //enemy
+                tDown = 0;
+                oneDown = 0;
+                blockWidth = 1;
+                blockHeight = 1;
+                blockDepth = 1;
                 PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
-             }
-         }
-         else {
-            eDown = 1; //enemy
-            tDown = 0;
-            oneDown = 0;
-            blockWidth = 1;
-            blockHeight = 1;
-            blockDepth = 1;
-            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
-         }
-      }
-      if(Event.Key == SDLK_k){
-          loadWorld();
-      }
-      if(Event.Key == SDLK_j){
-         //printf("Angle: %d\n", ANGLE(overView, backwardsView));
-      }
-      if(Event.Key == SDLK_u) {
-         //3 is the number of static blocks created before the user can add in new blocks (ie unremovable)
-         if(blocks.size() > 3 && placeables.size() > 0) {
-            Application.getSceneManager().removeSceneObject(blocks.back());
-            CPlaceable *m_block = placeables.back();
-            redo.push_back(blocks.back());
-            redoPlaceables.push_back(placeables.back());
-
-            int i,j;
-            for(i = 0; i < m_block->w; i++) {
-               for(j = 0; j < m_block->h; j++) {
-                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].o = false;
-                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].r = NULL;
-                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].p = NULL;
-                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapX = -1;
-                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapY = -1;
-               }
             }
+        }
+        if(Event.Key == SDLK_k){
+            loadWorld();
+        }
+        if(Event.Key == SDLK_j){
+            //printf("Angle: %d\n", ANGLE(overView, backwardsView));
+        }
+        if(Event.Key == SDLK_u) {
+            //3 is the number of static blocks created before the user can add in new blocks (ie unremovable)
+            if(blocks.size() > 3 && placeables.size() > 0) {
+                Application.getSceneManager().removeSceneObject(blocks.back());
+                CPlaceable *m_block = placeables.back();
+                redo.push_back(blocks.back());
+                redoPlaceables.push_back(placeables.back());
 
-            placeables.pop_back();
-            blocks.pop_back();
-         }
-      }
-      if(Event.Key == SDLK_r) {
-         if(redo.size() > 0 && redoPlaceables.size() > 0) {
-            Application.getSceneManager().addSceneObject(redo.back());
-            CPlaceable *m_block = redoPlaceables.back();
-            CMeshSceneObject *m_r = redo.back();
-            blocks.push_back(redo.back());
-            placeables.push_back(redoPlaceables.back());
+                int i,j;
+                for(i = 0; i < m_block->w; i++) {
+                    for(j = 0; j < m_block->h; j++) {
+                        blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].o = false;
+                        blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].r = NULL;
+                        blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].p = NULL;
+                        blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapX = -1;
+                        blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapY = -1;
+                    }
+                }
 
-            int i,j;
-            for(i = 0; i < m_block->w; i++) {
-               for(j = 0; j < m_block->h; j++) {
-                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].o = true;
-                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].p = m_block;
-                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].r = m_r;
-
-                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapX = (int)m_block->x+25;
-                  blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapY = (int)(m_block->y-0.5+25);
-               }
+                placeables.pop_back();
+                blocks.pop_back();
             }
+        }
+        if(Event.Key == SDLK_r) {
+            if(redo.size() > 0 && redoPlaceables.size() > 0) {
+                Application.getSceneManager().addSceneObject(redo.back());
+                CPlaceable *m_block = redoPlaceables.back();
+                CMeshSceneObject *m_r = redo.back();
+                blocks.push_back(redo.back());
+                placeables.push_back(redoPlaceables.back());
 
-            redo.pop_back();
-            redoPlaceables.pop_back();
-         }
-      }
-      if(Event.Key == SDLK_t){
-         if (tDown == 1)
-             tDown = 0;
-         else {
-           tDown = 1; //remove
-           eDown = 0;
-           oneDown = 0;
-         }
-      }
-      if(Event.Key == SDLK_m){
-         mDown = 1; //move
-      }
-      if(Event.Key == SDLK_SPACE) {
-         spaceDown = 1;
-      }
-      if(Event.Key == SDLK_ESCAPE) {
-         //TODO: Replace with an event/signal to end the game world 
-         //finished = true;
-         glViewport(0, 0, WindowWidth, WindowHeight);
-         Application.getStateManager().setState(& CMainMenuState::get());
-      }
-      if(Event.Key == SDLK_F1) {
-          showHelp = Event.Pressed;
-      }
-      if(Event.Key == SDLK_x ) {
-        if (eDown) {
-            if (enemyType < 6) //temp constraint
-                 enemyType++;
+                int i,j;
+                for(i = 0; i < m_block->w; i++) {
+                    for(j = 0; j < m_block->h; j++) {
+                        blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].o = true;
+                        blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].p = m_block;
+                        blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].r = m_r;
+
+                        blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapX = (int)m_block->x+25;
+                        blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapY = (int)(m_block->y-0.5+25);
+                    }
+                }
+
+                redo.pop_back();
+                redoPlaceables.pop_back();
+            }
+        }
+        if(Event.Key == SDLK_t){
+            if (tDown == 1)
+                tDown = 0;
+            else {
+                tDown = 1; //remove
+                twoDown = 0;
+                oneDown = 0;
+            }
+        }
+        if(Event.Key == SDLK_m){
+            mDown = 1; //move
+        }
+        if(Event.Key == SDLK_c){
+            if(cDown <= 3)
+                cDown++;
             else
-                enemyType = 0;
-        } else {
-        if (textureType < 3 && textureType >= 0 && textureType != 2)
-            textureType++;
-        else if (textureType == 2) {
-            textureType = -5;
-            blockWidth = 5;
-            blockHeight = 5;
-            blockDepth = 5;
-            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                cDown = 0;
         }
-        else if (textureType == -5) {
-            textureType = 0;
-            blockWidth = 1;
-            blockHeight = 1;
-            blockDepth = 1;
-            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+        if(Event.Key == SDLK_SPACE) {
+            spaceDown = 1;
+        }
+        if(Event.Key == SDLK_ESCAPE) {
+            //TODO: Replace with an event/signal to end the game world 
+            //finished = true;
+            glViewport(0, 0, WindowWidth, WindowHeight);
+            Application.getStateManager().setState(& CMainMenuState::get());
+        }
+        if(Event.Key == SDLK_F1) {
+            showHelp = Event.Pressed;
+        }
+        if(Event.Key == SDLK_x ) { // adding generally
+            if (twoDown) {
+                if (enemyType < 6) //temp constraint
+                    enemyType++;
+                else
+                    enemyType = 0;
+            } else {
+                if (cDown == 0) { 
+                    if (textureType < 3 && textureType >= 0 && textureType != 2)
+                        textureType++;
+                    else if (textureType == 2) {
+                        textureType = -5;
+                        blockWidth = 5;
+                        blockHeight = 5;
+                        blockDepth = 5;
+                        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                    }
+                    else if (textureType == -5) {
+                        textureType = 0;
+                        blockWidth = 1;
+                        blockHeight = 1;
+                        blockDepth = 1;
+                        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                    }
+                }
             }
+            if (cDown == 1) {
+                if(blockWidth < 10 && textureType != 2)
+                    blockWidth++;
+                PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+            }
+            if (cDown == 2) {
+                if(blockHeight < 10 && textureType != 2)
+                    blockHeight++;
+                PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+            }
+            if (cDown == 3) {
+                if(blockDepth < 6 && textureType != 2)
+                    blockDepth++;
+                PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+            }
+        } 
+        if (Event.Key == SDLK_z) { // subtracting generally
+            if (twoDown) {
+                if (enemyType != 0) 
+                    enemyType--;
+                else
+                    enemyType = 0;
+            } else {
+                if (cDown == 0) {
+                    if (textureType != 0 && textureType > 0)   
+                        textureType--;
+                    else if (textureType == 0) {
+                        textureType = -5;
+                        blockWidth = 5;
+                        blockHeight = 5;
+                        blockDepth = 5;
+                        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                    }
+                    else if (textureType == -5) {
+                        textureType = 2;
+                        blockWidth = 1;
+                        blockHeight = 1;
+                        blockDepth = 1;
+                        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                    }
+                }
+                if(cDown == 1) {
+                    if(blockWidth > 1 && textureType != 2) 
+                        blockWidth--;
+                    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                }
+                if(cDown == 2) {
+                    if(blockWidth > 1 && textureType != 2)
+                        blockWidth--;
+                    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                }
+                if(cDown == 3) {
+                    if(blockDepth > 1 && textureType != 2)
+                        blockDepth--;
+                    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                }
+            }
+
         }
-      } 
-      if (Event.Key == SDLK_z) {
-         if (eDown) {
-          if (enemyType != 0) 
-             enemyType--;
-         else
-             enemyType = 0;
-         } else {
-         if (textureType != 0 && textureType > 0)   
-             textureType--;
-         else if (textureType == 0) {
-             textureType = -5;
-             blockWidth = 5;
-             blockHeight = 5;
-             blockDepth = 5;
-             PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
-         }
-         else if (textureType == -5) {
-             textureType = 2;
-             blockWidth = 1;
-             blockHeight = 1;
-             blockDepth = 1;
-             PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
-         }
-         }
-      }
-   }
+    }
    //Check if key let go, Not sure if this will work in here.
    else  {
       if(Event.Key == SDLK_w){
@@ -465,7 +489,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
          dDown = 0;
       }
       /*if(Event.Key == SDLK_e){
-         eDown = 0;
+         twoDown = 0;
       }*/
       if(Event.Key == SDLK_f){
          fDown = 0;
@@ -823,14 +847,14 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
       }
       if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
          mouseDown = 1;
-         if(!tDown && eDown && !oneDown) {
+         if(!tDown && twoDown && !oneDown) {
             printf("Here\n");
             PrepEnemy(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY),enemyType);
          }
-         if(!tDown && oneDown && !eDown) {
+         if(!tDown && oneDown && !twoDown) {
              PrepCabbage(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
          }
-         else if (!tDown && !oneDown && !eDown) {
+         else if (!tDown && !oneDown && !twoDown) {
             PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,textureType);
          }
          else {
@@ -883,7 +907,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          if(lastMouseOveredBlock.o && m_qd.r != lastMouseOveredBlock.r) {
             lastMouseOveredBlock.r->setShader(DiffuseTexture);
          }
-         if(!tDown && !eDown && mouseDown) {
+         if(!tDown && !twoDown && mouseDown) {
             PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth, textureType);
          }
          lastMouseOveredBlock = m_qd;
@@ -929,7 +953,7 @@ void CLWIBState::stepCamera(float delta) {
       eye.Y -= delta*factor;
       look.Y -= delta*factor;
    }
-   if(!tDown && !eDown && mouseDown) {
+   if(!tDown && !twoDown && mouseDown) {
       PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,textureType);
    }
 }
