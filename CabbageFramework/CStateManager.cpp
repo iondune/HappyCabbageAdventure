@@ -41,3 +41,21 @@ void CStateManager::OnKeyboardEvent(SKeyboardEvent const & Event)
     if (CurrentState)
         CurrentState->OnKeyboardEvent(Event);
 }
+
+void CStateManager::setState(IState * State)
+{
+    if (CurrentState)
+        CurrentState->end();
+
+    CurrentState = State;
+
+    CurrentState->begin();
+}
+
+void CStateManager::shutDown()
+{
+	if (CurrentState)
+		CurrentState->end();
+
+	CurrentState = 0;
+}

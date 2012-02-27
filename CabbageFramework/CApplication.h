@@ -28,6 +28,8 @@ class CApplication
 
     unsigned int Time0, Time1;
 
+	bool Running;
+
 public:
 
     static CApplication & get();
@@ -46,6 +48,9 @@ public:
     SPosition2 const & getWindowSize() const;
 
     void skipElapsedTime();
+
+	bool shuttingDown() const;
+	void close();
 
 };
 

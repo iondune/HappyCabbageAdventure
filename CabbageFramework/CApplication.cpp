@@ -114,7 +114,7 @@ void CApplication::skipElapsedTime()
 
 void CApplication::run()
 {
-    bool Running = true;
+    Running = true;
 
 	Time0 = SDL_GetTicks();
 
@@ -209,6 +209,8 @@ void CApplication::run()
         EventManager->OnRenderEnd(ElapsedTime);
 
     } // while (Running)
+
+	StateManager->shutDown();
 }
 
 float const CApplication::getElapsedTime() const
@@ -224,4 +226,14 @@ float const CApplication::getRunTime() const
 SPosition2 const & CApplication::getWindowSize() const
 {
     return WindowSize;
+}
+
+bool CApplication::shuttingDown() const
+{
+	return ! Running;
+}
+
+void CApplication::close()
+{
+	Running = false;
 }

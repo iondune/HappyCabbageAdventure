@@ -82,15 +82,9 @@ public:
     void OnMouseEvent(SMouseEvent const & Event);
     void OnKeyboardEvent(SKeyboardEvent const & Event);
 
-    void setState(IState * State)
-    {
-        if (CurrentState)
-            CurrentState->end();
+    void setState(IState * State);
 
-        CurrentState = State;
-
-        CurrentState->begin();
-    }
+	void shutDown();
 
 };
 
