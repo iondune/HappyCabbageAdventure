@@ -5,8 +5,8 @@
 #pragma comment(lib, "glew32.lib")
 #pragma comment(lib, "SDL.lib")
 #pragma comment(lib, "SDLmain.lib")
-#pragma comment(lib, "../lib/CabbageScene.lib")
-#pragma comment(lib, "../lib/CabbageFramework.lib")
+#pragma comment(lib, "CabbageScene.lib")
+#pragma comment(lib, "CabbageFramework.lib")
 #pragma comment(lib, "OpenGL32.lib")
 #pragma comment(lib, "glu32.lib")
 #endif

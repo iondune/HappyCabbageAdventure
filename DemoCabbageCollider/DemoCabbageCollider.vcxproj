@@ -37,8 +37,25 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(VisualStudioDir)\Projects\glew-1.7.0\include;$(VisualStudioDir)\Projects\SDL-1.2.15\include;$(SolutionDir)\CabbageCore;$(IncludePath)</IncludePath>
-    <LibraryPath>$(VisualStudioDir)\Projects\glew-1.7.0\lib;$(VisualStudioDir)\Projects\SDL-1.2.15\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>
+        ;$(VisualStudioDir)\Projects\glew-1.7.0\include;
+        ;$(VisualStudioDir)\Projects\SDL-1.2.15\include;
+        ;$(SolutionDir)\CabbageCore;
+        ;$(IncludePath)
+    </IncludePath>
+    <LibraryPath>
+        ;$(VisualStudioDir)\Projects\glew-1.7.0\lib;
+        ;$(VisualStudioDir)\Projects\SDL-1.2.15\lib\x86;
+        ;$(LibraryPath);
+    </LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+        ;$(SolutionDir)\Debug;
+        ;$(LibraryPath);
+    </LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+        ;$(SolutionDir)\Release;
+        ;$(LibraryPath);
+    </LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
