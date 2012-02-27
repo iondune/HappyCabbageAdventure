@@ -12,6 +12,7 @@
 #pragma warning(disable: 4996)
 
 std::map<std::string, CMesh *> CMeshLoader::LoadedMeshes;
+std::string CMeshLoader::MeshDirectory = "";
 
 static long filelength(int f)
 {
@@ -47,7 +48,7 @@ CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName, bool const 
 
     unsigned short l_face_flags; //Flag that stores some face information
 
-    if ((l_file=fopen (fileName.c_str(), "rb"))== NULL) return 0; //Open the file
+    if ((l_file=fopen ((MeshDirectory + fileName).c_str(), "rb"))== NULL) return 0; //Open the file
 
     CMesh * MeshWrapper = new CMesh();
     CMesh::SMeshBuffer * Mesh = new CMesh::SMeshBuffer();
@@ -311,7 +312,7 @@ CMesh * const CMeshLoader::loadAsciiMesh(std::string const & fileName)
     CMesh::SMeshBuffer * Mesh = new CMesh::SMeshBuffer();
 
     std::ifstream File;
-    File.open(fileName.c_str());
+    File.open((MeshDirectory + fileName).c_str());
 
     if (! File.is_open())
     {

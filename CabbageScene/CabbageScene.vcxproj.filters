@@ -55,6 +55,9 @@
     <ClInclude Include="CMeshSceneObject.h">
       <Filter>Scene Objects</Filter>
     </ClInclude>
+    <ClInclude Include="CTextureLoader.h">
+      <Filter>Textures</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CImage.cpp">

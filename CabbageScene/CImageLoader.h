@@ -15,9 +15,11 @@ class CImageLoader
 
 public:
 
-    static CImage * const loadImage(std::string const & fileName);
-    
-    static CTexture * const loadTexture(std::string const & fileName);
+    static CImage * const loadImage(std::string const & fileName, bool const useCache = true);
+    static CTexture * const loadTexture(std::string const & fileName, bool const useCache = true);
+
+	static std::string ImageDirectory;
+	static std::string & TextureDirectory;
 
 };
 

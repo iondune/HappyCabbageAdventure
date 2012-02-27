@@ -25,28 +25,38 @@ struct SBitmapInfo
 std::map<std::string, CImage *> CImageLoader::LoadedImages;
 std::map<std::string, CTexture *> CImageLoader::LoadedTextures;
 
-CTexture * const CImageLoader::loadTexture(std::string const & fileName)
+std::string CImageLoader::ImageDirectory = "";
+std::string & CImageLoader::TextureDirectory = CImageLoader::ImageDirectory;
+
+CTexture * const CImageLoader::loadTexture(std::string const & fileName, bool const useCache)
 {
-    std::map<std::string, CTexture *>::iterator it = LoadedTextures.find(fileName);
+	if (useCache)
+	{
+		std::map<std::string, CTexture *>::iterator it = LoadedTextures.find(fileName);
 
-    if (it != LoadedTextures.end())
-    {
-        return it->second;
-    }
+		if (it != LoadedTextures.end())
+		{
+			return it->second;
+		}
+	}
 
-    CTexture * Texture = new CTexture(loadImage(fileName));
-    LoadedTextures[fileName] = Texture;
+    CTexture * Texture = new CTexture(loadImage(fileName, useCache));
+	if (useCache)
+		LoadedTextures[fileName] = Texture;
     return Texture;
 }
 
-CImage * const CImageLoader::loadImage(std::string const & fileName)
+CImage * const CImageLoader::loadImage(std::string const & fileName, bool const useCache)
 {
-    std::map<std::string, CImage *>::iterator it = LoadedImages.find(fileName);
+	if (useCache)
+	{
+		std::map<std::string, CImage *>::iterator it = LoadedImages.find(fileName);
 
-    if (it != LoadedImages.end())
-    {
-        return it->second;
-    }
+		if (it != LoadedImages.end())
+		{
+			return it->second;
+		}
+	}
 
     FILE * file;
     char temp;
@@ -54,7 +64,7 @@ CImage * const CImageLoader::loadImage(std::string const & fileName)
 
     SBitmapInfo infoheader;
 
-    if( (file = fopen(fileName.c_str(), "rb"))==NULL)
+    if( (file = fopen((ImageDirectory + fileName).c_str(), "rb"))==NULL)
         return 0; // Open the file for reading
 
     fseek(file, 18, SEEK_CUR);  /* start reading width & height */
@@ -100,8 +110,8 @@ CImage * const CImageLoader::loadImage(std::string const & fileName)
 
     CImage * Image = new CImage(infoheader.data, infoheader.biWidth, infoheader.biHeight);
 
-    LoadedImages[fileName] = Image;
+	if (useCache)
+		LoadedImages[fileName] = Image;
 
     return Image;
 }
-

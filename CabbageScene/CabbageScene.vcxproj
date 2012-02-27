@@ -80,6 +80,7 @@
     <ClInclude Include="CTexture.h" />
     <ClInclude Include="CImageLoader.h" />
     <ClInclude Include="CRenderable.h" />
+    <ClInclude Include="CTextureLoader.h" />
     <ClInclude Include="ISceneObject.h" />
     <ClInclude Include="SAttribute.h" />
     <ClInclude Include="SVertex.h" />
