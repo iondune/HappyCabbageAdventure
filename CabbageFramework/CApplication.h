@@ -49,7 +49,7 @@ public:
 
     void skipElapsedTime();
 
-	bool shuttingDown() const;
+	bool isShuttingDown() const;
 	void close();
 
 };

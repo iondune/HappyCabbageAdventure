@@ -228,7 +228,7 @@ SPosition2 const & CApplication::getWindowSize() const
     return WindowSize;
 }
 
-bool CApplication::shuttingDown() const
+bool CApplication::isShuttingDown() const
 {
 	return ! Running;
 }
