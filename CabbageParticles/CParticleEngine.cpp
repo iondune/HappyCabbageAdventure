@@ -167,11 +167,13 @@ void CParticleEngine::step(float const elapsedTime) {
 }
 
 void CParticleEngine::deconstruct() {
-   std::vector<CParticle*>::iterator it;
-   for(it = particles.begin(); it != particles.end(); it++) {
-      //delete (* it)->getRenderable();
-      delete (* it);
+   if(!dead) {
+      std::vector<CParticle*>::iterator it;
+      for(it = particles.begin(); it != particles.end(); it++) {
+         //delete (* it)->getRenderable();
+         delete (* it);
+      }
+      CApplication::get().getSceneManager().removeSceneObject(myObj);
+      dead = 1;
    }
-   CApplication::get().getSceneManager().removeSceneObject(myObj);
-   dead = 1;
 }

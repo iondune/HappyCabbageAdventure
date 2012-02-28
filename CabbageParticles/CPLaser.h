@@ -4,6 +4,7 @@
 #include "CParticle.h"
 
 class CPLaser : public CParticle {
+   float reflectX, reflectY, xFactor, yFactor, zFactor;
    void setupRenderable();
    void updateMatrices(float);
 };

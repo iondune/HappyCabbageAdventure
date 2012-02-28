@@ -435,8 +435,20 @@ void CGameState::oldDisplay() {
    if(particleLaserEngine && !particleLaserEngine->dead) {
       particleLaserEngine->setLookRight(PlayerView->getLookRight());
       particleLaserEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
-      particleLaserEngine->step(Application.getElapsedTime());
+      if(GameplayManager->getRecovering() > 0) {
+         if(particleLaserEngine) {
+            particleLaserEngine->deconstruct();
+            delete particleLaserEngine;
+            particleLaserEngine = NULL;
+         }
+      }
+      else {
+         particleLaserEngine->step(Application.getElapsedTime());
+      }
    }
+   if(particleLaserEngine && particleLaserEngine->dead)
+      printf("Dead now\n");
+
 #endif
 
    //draw the ground plane
@@ -567,13 +579,13 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_d){
          dDown = 1;
       }
+#ifdef PARTICLE
       if(Event.Key == SDLK_l){
          //GameplayManager->setChargingLaser
          if(!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead))
-            particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 100, 10, LASER_PARTICLE);
+            particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 3.5f, LASER_PARTICLE);
          lDown = 1;
       }
-#ifdef PARTICLE
       if(Event.Key == SDLK_e) {
          if(!particleCubeEngine || (particleCubeEngine && particleCubeEngine->dead))
             particleCubeEngine = new CParticleEngine(SVector3(0, 1, 0), 100, 10, CUBE_PARTICLE);
