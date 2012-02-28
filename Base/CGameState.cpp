@@ -47,6 +47,9 @@ CGameState::CGameState()
 
 void CGameState::loadWorld(std::vector<CPlaceable*> *list)
 {
+   NumTreeTypes = 2;
+   NumFlowerTypes = 2;
+
     int x,y,w,d,h,t;
     //float spd, rng;
 
@@ -68,6 +71,10 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             w = xml->getAttributeValueAsInt(3);
             d = xml->getAttributeValueAsInt(4);
             t = xml->getAttributeValueAsInt(5);
+
+            if (t == -5 && !lowDef)
+               GeneratePlants(x, y, w, h, d);
+
             list->push_back(ptr = new CBlock((float)x,(float)y,w,h,d,t));
             if(xml->getAttributeValueAsInt(6)) {
                ptr->isMovingPlatform = 1;
@@ -274,50 +281,6 @@ void CGameState::begin()
    srand((unsigned int) time(NULL));
 
    int random;
-
-   if(!lowDef) {
-      for (int n = 0; n < 100; n++) {
-         random = rand() % 8;
-
-         if (n % 2 == 0)
-            if (random < 3 ) {
-               drawBlueFlwr(-22.f + n * 2, -1, 2, .6f, Application);
-            }
-            else if (random < 6) {
-               drawPinkFlwr(-22.f + n * 2, -1, 2, .6f, Application);
-            }
-
-            else {
-               drawPoin(-22.f + n * 2, -1, 2, 1.f, Application);
-            }
-         else
-            if (random < 3) {
-               drawBlueFlwr(-22.f + n * 2, -1, -2, .7f, Application);
-            }
-            else if (random < 6) {
-               drawPinkFlwr(-22.f + n * 2, -1, -2, .7f, Application);
-            }
-            else {
-               drawPoin(-22.f + n * 2, .2f, -2, 1.f, Application);
-            }
-      }
-
-      for (int n = 0; n < 50; n++) {
-         random = rand() % 3;
-
-         if (n % 2 == 0)
-            drawBasicTree(-20.4f + n * 4, 2.0f, 2, 8.0f, Application);
-         else {
-
-            if (random < 2) {
-               drawBasicTree(-22.4f + n * 4, 2.0f, -2, 8.0f, Application);
-            }
-            else if (random == 2) {
-               drawChristmasTree(-22.4f + n * 4, 1.4f, -2, 6.0f, Application);
-            }
-         }
-      }
-   }
 
    //Initialize Fxns
    EngineInit();
@@ -723,7 +686,7 @@ void CGameState::PrepSky() {
    tempBlock->setMesh(cubeMesh);
    tempBlock->setTexture(skyTxt);
    tempBlock->setShader(DiffuseTexture);
-   tempBlock->setTranslation(SVector3(0, 24, -2.5));
+   tempBlock->setTranslation(SVector3(0, 22, -5.0));
    tempBlock->setScale(SVector3(400, 50, 1));
    tempBlock->setCullingEnabled(false);
    Application.getSceneManager().addSceneObject(tempBlock);
@@ -740,6 +703,70 @@ CMeshSceneObject* CGameState::PrepEnemy(float x, float y) {
    Application.getSceneManager().addSceneObject(tempEnemy);
    return tempEnemy;
 }
+
+void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
+   int numForeground, numBackground;
+   int random;
+   float randScale, randDepth;
+   float div;
+
+   if (w > 0.5f && w < 1.5f)  //If block size roughly 1, don't draw any trees
+      numForeground = numBackground = 0;
+   else {
+      numForeground = w / 2;
+      numBackground = w / 2;
+   }
+
+   div =  w/(float)numBackground;
+
+   printf("y: %f, h: %f, myCalc: %f\n", y, h, y + h/2.0f);
+
+   //Check how many tree-type objects we should draw in the background
+   for (int n = 0; n < numBackground; n++) {
+      random = rand()%2;
+
+      if (random == 0)
+         drawBasicTree(x + (n)*div + div/2.0f, -0.2f, -d/2.0f + .4f, 8.0f, Application);
+      else if (random == 1)
+         drawChristmasTree(x + (n)*div + div/2.0f, 1.4f, -d/2.0f + .4f, 6.0f, Application);
+   }
+
+   //Draw flower-type plants in background
+   for (int n = 0; n < w; n++) {
+      random = rand()%3;
+      randScale = rand()%20;
+      randScale = randScale * .025f;
+      randDepth = rand()%2;
+      randDepth = randDepth*.25f;
+
+      if (random == 0)
+         drawPinkFlwr(x + n + .5f, -1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
+      else if (random == 1)
+         drawBlueFlwr(x + n + .5f, -1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
+      else if (random == 2)
+         drawPoin(x + n + .5f, .2f, -d/2.0f + 1.5f + randDepth, 1.f + randScale, Application);
+   }
+
+
+   //Draw flower-type plants in foreground
+      for (int n = 0; n < w; n++) {
+         random = rand()%3;
+         randScale = rand()%20;
+         randScale = randScale * .025f;
+         randDepth = rand()%2;
+         randDepth = randDepth*.25f;
+
+         if (random == 0)
+            drawPinkFlwr(x + n + .5f, -1.0f, d/2.0f - .4 - randDepth, .4f + randScale, Application);
+         else if (random == 1)
+            drawBlueFlwr(x + n + .5f, -1.0f, d/2.0f - .4 - randDepth, .4f + randScale, Application);
+         else if (random == 2)
+            drawPoin(x + n + .5f, .2f, d/2.0f - .4 - randDepth, .7f + randScale, Application);
+      }
+
+
+}
+
 
 void LoadShaders() {
    Flat = CShaderLoader::loadShader("Diffuse");

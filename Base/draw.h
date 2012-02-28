@@ -112,9 +112,9 @@ void drawBasicTree(float x, float y, float z, float scale, CApplication app) {
    renderBasicTree->setMesh(basicTreeMesh);
    //renderBasicTree->getMaterial().Texture = (basicTreeTxt);
    renderBasicTree->setShader(Toon);
-   renderBasicTree->setTranslation(SVector3(x, y, z));
    renderBasicTree->setScale(SVector3(scale));
    renderBasicTree->setRotation(SVector3(-90, 0, 0));
+   renderBasicTree->setTranslation(SVector3(x, y + scale/4.0f, z));
 
    app.getSceneManager().addSceneObject(renderBasicTree);
 }
