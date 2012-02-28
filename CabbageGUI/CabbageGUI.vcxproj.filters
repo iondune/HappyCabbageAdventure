@@ -5,6 +5,7 @@
     <ClInclude Include="liboglft\OGLFT.h">
       <Filter>liboglft</Filter>
     </ClInclude>
+    <ClInclude Include="CFont.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="liboglft">

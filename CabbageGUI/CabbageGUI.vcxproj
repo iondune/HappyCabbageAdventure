@@ -71,6 +71,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CabbageGUI.h" />
+    <ClInclude Include="CFont.h" />
     <ClInclude Include="liboglft\OGLFT.h" />
   </ItemGroup>
   <ItemGroup>
