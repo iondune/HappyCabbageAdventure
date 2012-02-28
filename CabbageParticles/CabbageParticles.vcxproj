@@ -84,6 +84,7 @@
     <ClCompile Include="CPDeath.cpp" />
     <ClCompile Include="CPFlame.cpp" />
     <ClCompile Include="CPLaser.cpp" />
+    <ClCompile Include="CPLaser2.cpp" />
     <ClCompile Include="CPLeaf.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +94,7 @@
     <ClInclude Include="CPCube.h" />
     <ClInclude Include="CPDeath.h" />
     <ClInclude Include="CPFlame.h" />
+    <ClInclude Include="CPLaser2.h" />
     <ClInclude Include="CPLeaf.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
