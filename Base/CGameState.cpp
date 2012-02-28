@@ -419,6 +419,8 @@ void CGameState::oldDisplay() {
       particleLaserFireEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 3.5f, CUBE_PARTICLE);
       particleLaserFireEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
       particleLaserFireEngine->setLookRight(PlayerView->getLookRight());
+
+      Player->setImpulse(SVector2((PlayerView->getLookRight()?-1:1)*12.0f, 0.0f), 0.1);
    }
    if(particleLaserFireEngine && !particleLaserFireEngine->dead) {
       particleLaserFireEngine->step(Application.getElapsedTime());
