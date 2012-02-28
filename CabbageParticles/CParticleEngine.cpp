@@ -24,8 +24,11 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
          case DEATH_PARTICLE:
             particles.push_back(cPtr = new CPDeath());
             break;
-         case LASER_PARTICLE:
+         case LASER_CHARGING_PARTICLE:
             particles.push_back(cPtr = new CPLaser());
+            break;
+         case LASER_FIRING_PARTICLE:
+            particles.push_back(cPtr = new CPLaser2());
             break;
       }
       cPtr->setCenterPos(&centerPos);
@@ -84,7 +87,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
             }
             sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 15);
             break;
-         case LASER_PARTICLE:
+         case LASER_CHARGING_PARTICLE:
             temp = (float)rand()/(float)RAND_MAX*0.3f + 0.3f;
             if(rand() % 4 == 0) {
                colorArr.push_back(new SVector3(1));
@@ -93,6 +96,16 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
                colorArr.push_back(new SVector3(temp*3, temp*3, temp*1));
             }
             sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 10);
+            break;
+         case LASER_FIRING_PARTICLE:
+            temp = (float)rand()/(float)RAND_MAX*0.3f + 0.3f;
+            if(rand() % 4 == 0) {
+               colorArr.push_back(new SVector3(1));
+            }
+            else {
+               colorArr.push_back(new SVector3(temp*3, temp*3, temp*1));
+            }
+            sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 30);
             break;
       }
    }
@@ -124,7 +137,10 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
    case DEATH_PARTICLE:
       textureToUse = "Textures/particleStar.bmp";
       break;
-   case LASER_PARTICLE:
+   case LASER_CHARGING_PARTICLE:
+      textureToUse = "Textures/particle2.bmp";
+      break;
+   case LASER_FIRING_PARTICLE:
       textureToUse = "Textures/particle2.bmp";
       break;
    }

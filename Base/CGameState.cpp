@@ -416,7 +416,7 @@ void CGameState::oldDisplay() {
       particleLaserEngine = NULL;
       lDown = 0;
       PlayerView->setShader(Toon);
-      particleLaserFireEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 3.5f, CUBE_PARTICLE);
+      particleLaserFireEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 0.5f, LASER_FIRING_PARTICLE);
       particleLaserFireEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
       particleLaserFireEngine->setLookRight(PlayerView->getLookRight());
 
@@ -560,7 +560,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_l){
          //GameplayManager->setChargingLaser
          if(!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead))
-            particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 3.5f, LASER_PARTICLE);
+            particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 3.5f, LASER_CHARGING_PARTICLE);
          lDown = 1;
          PlayerView->setShader(ToonBright);
       }

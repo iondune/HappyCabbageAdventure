@@ -1,9 +1,9 @@
-#ifndef ____CPLASER_H_INCLUDE______________
-#define ____CPLASER_H_INCLUDE______________
+#ifndef ____CPLASER2_H_INCLUDE______________
+#define ____CPLASER2_H_INCLUDE______________
 
 #include "CParticle.h"
 
-class CPLaser : public CParticle {
+class CPLaser2 : public CParticle {
    float Amplitude, Period;
    float sineValue;
    float Size;
