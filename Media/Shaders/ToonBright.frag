@@ -1,4 +1,4 @@
-uniform sampler2D uTexColor;
+// Fragment.GL2
 
 varying vec3 EyespaceNormal;
 varying vec3 Eye;
@@ -8,7 +8,6 @@ varying vec3 vLightColor[4];
 varying vec3 vEye;
 varying float vAttenuation[4];
 uniform int uLightCount;
-varying vec2 vTexCoord;
 
 struct SMaterial
 {
@@ -40,12 +39,13 @@ void main()
     
     float df = vAttenuation[i]*max(0.0, dot(N, L));
     float sf = vAttenuation[i]*max(0.0, dot(N, H));
-    sf = pow(sf, 8.0);
+    sf = pow(sf, 18.0f);
+    //sf = pow(sf, uMaterial.Shininess);
 
     const float A = 0.1;
     const float B = 0.3;
     const float C = 0.6;
-    const float D = 1.0;
+    const float D = 1.1;
     float E = fwidth(df);
 
     if      (df > A - E && df < A + E) diffuse += stepmix(A, B, E, df);
@@ -67,8 +67,9 @@ void main()
     }
   }
 
-    vec3 SpecularColor = texture2D(uTexColor, vTexCoord).xyz;
+    vec3 SpecularColor = (uMaterial.DiffuseColor + vec3(1.0, 1.0, 1.0))/6;
     //vec3 SpecularColor = vec3(1, 1, 1);
-    vec3 color = max(diffuse,0.0) * texture2D(uTexColor, vTexCoord).xyz + max(specular, 0.3f) * SpecularColor; //vec3
+    vec3 color2 = uMaterial.AmbientColor + diffuse * uMaterial.DiffuseColor + specular * SpecularColor; //vec3
+    vec3 color = color2 * vec3(1.5, 1.5, 0.0);
     gl_FragColor = vec4(color, 1.0);
 }

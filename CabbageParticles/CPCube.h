@@ -4,6 +4,10 @@
 #include "CParticle.h"
 
 class CPCube : public CParticle {
+   float yFactor, Amplitude, Period;
+   float sineValue;
+   float Size;
+
    void setupRenderable();
    void updateMatrices(float);
 };

@@ -12,12 +12,9 @@ class CParticle {
    public:
       SVector3 *centerPos;
       int* lookRight;
-      float yFactor, Amplitude, Period;
-      float sineValue;
       float StartFactor, AppearRate, Duration, TotalDuration, Counter;
-      float Size;
-      SVector3 RotationSpeed;
 
+      //SVector3 RotationSpeed;
       SVector3 translate;
 
       void setLookRight(int*);
@@ -26,5 +23,4 @@ class CParticle {
       virtual void setupRenderable()=0;
       virtual void updateMatrices(float)=0;
 };
-
 #endif

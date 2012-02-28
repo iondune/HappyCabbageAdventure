@@ -2,6 +2,7 @@
 #define __CGAMEEVENTRECEIVER_H_
 
 #include "CGameEventManager.h"
+#include "../CabbageParticles/CParticleEngine.h"
 #include "../CabbageFramework/CApplication.h"
 
 extern int numKilled;
@@ -16,6 +17,8 @@ class CGameEventReceiver : public sigslot::has_slots<>
     struct SDeadEnemy
     {
         ISceneObject * Renderable;
+        CParticleEngine *ParticleE;
+
         float DeathTimer;
     };
 

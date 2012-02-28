@@ -3,7 +3,7 @@
 #include "draw.h"
 
 //Boolean integers for keypressing
-int aDown = 0, dDown = 0, spaceDown = 0, wDown = 0, sDown = 0;
+int aDown = 0, dDown = 0, spaceDown = 0, wDown = 0, sDown = 0, lDown = 0;
 int backwardsView = 0, overView = 0;
 
 int WindowWidth, WindowHeight;
@@ -21,6 +21,7 @@ CLight * PlayerLight;
 CObject *Floor, *Block;
 CPlayerView *PlayerView;
 std::vector<CElevator*> elevators;
+int Charged = 0;
 
 CGameplayManager *GameplayManager;
 
@@ -47,6 +48,9 @@ CGameState::CGameState()
 
 void CGameState::loadWorld(std::vector<CPlaceable*> *list)
 {
+   NumTreeTypes = 2;
+   NumFlowerTypes = 2;
+
     int x,y,w,d,h,t;
     //float spd, rng;
 
@@ -68,6 +72,10 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             w = xml->getAttributeValueAsInt(3);
             d = xml->getAttributeValueAsInt(4);
             t = xml->getAttributeValueAsInt(5);
+
+            if (t == -5 && !lowDef)
+               GeneratePlants(x, y, w, h, d);
+
             list->push_back(ptr = new CBlock((float)x,(float)y,w,h,d,t));
             if(xml->getAttributeValueAsInt(6)) {
                ptr->isMovingPlatform = 1;
@@ -125,7 +133,7 @@ void CGameState::EngineInit( void ) {
 
    std::vector<CPlaceable*>::iterator it;
    for(it=list.begin();it<list.end();it++) {
-      (*it)->setupItem(DiffuseTexture, Engine, GameplayManager);
+      (*it)->setupItem(ToonTexture, Engine, GameplayManager);
       printf(" %d\n", (*it)->isMovingPlatform);
       if((*it)->isMovingPlatform) {
          elevators.push_back(((CBlock*)(*it))->elevator);
@@ -192,8 +200,10 @@ void CGameState::EngineInit( void ) {
 
 #define PARTICLE
 #ifdef PARTICLE
-CParticleEngine * particleLeafEngine;
-CParticleEngine * particleCubeEngine;
+CParticleEngine *particleLeafEngine;
+CParticleEngine *particleCubeEngine;
+CParticleEngine *particleLaserEngine;
+CParticleEngine *particleLaserFireEngine;
 #endif
 
 void LoadHUD() {
@@ -208,9 +218,12 @@ void LoadHUD() {
 //Initalizer fxn
 void CGameState::begin()
 {
+   Charged = 0; aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0; lDown = 0;
+   backwardsView = 0; overView = 0;
+
    CApplication::get().getSceneManager().setCullingEnabled(true);
 #ifdef PARTICLE
-   particleLeafEngine = particleCubeEngine = 0;
+   particleLeafEngine = particleCubeEngine = particleLaserEngine = 0;
 #endif
    SPosition2 size = Application.getWindowSize();
    WindowWidth = size.X;
@@ -273,50 +286,6 @@ void CGameState::begin()
 
    int random;
 
-   if(!lowDef) {
-      for (int n = 0; n < 100; n++) {
-         random = rand() % 8;
-
-         if (n % 2 == 0)
-            if (random < 3 ) {
-               drawBlueFlwr(-22.f + n * 2, -1, 2, .6f, Application);
-            }
-            else if (random < 6) {
-               drawPinkFlwr(-22.f + n * 2, -1, 2, .6f, Application);
-            }
-
-            else {
-               drawPoin(-22.f + n * 2, -1, 2, 1.f, Application);
-            }
-         else
-            if (random < 3) {
-               drawBlueFlwr(-22.f + n * 2, -1, -2, .7f, Application);
-            }
-            else if (random < 6) {
-               drawPinkFlwr(-22.f + n * 2, -1, -2, .7f, Application);
-            }
-            else {
-               drawPoin(-22.f + n * 2, .2f, -2, 1.f, Application);
-            }
-      }
-
-      for (int n = 0; n < 50; n++) {
-         random = rand() % 3;
-
-         if (n % 2 == 0)
-            drawBasicTree(-20.4f + n * 4, 2.0f, 2, 8.0f, Application);
-         else {
-
-            if (random < 2) {
-               drawBasicTree(-22.4f + n * 4, 2.0f, -2, 8.0f, Application);
-            }
-            else if (random == 2) {
-               drawChristmasTree(-22.4f + n * 4, 1.4f, -2, 6.0f, Application);
-            }
-         }
-      }
-   }
-
    //Initialize Fxns
    EngineInit();
    ViewInit();
@@ -331,11 +300,13 @@ void CGameState::begin()
    Application.skipElapsedTime();
 }
 
+SRect2 oldMiddle;
+
 void CGameState::oldDisplay() {
    float curXVelocity = Player->getVelocity().X;
    PlayerView->setVelocity(Player->getVelocity());
 
-   if (GameplayManager->isPlayerAlive())
+   if (GameplayManager->isPlayerAlive() && !lDown)
    {
       if(!overView) {
          if(dDown && aDown) {
@@ -431,6 +402,47 @@ void CGameState::oldDisplay() {
       particleCubeEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
       particleCubeEngine->step(Application.getElapsedTime());
    }
+   if(particleLaserEngine && !particleLaserEngine->dead) {
+      particleLaserEngine->setLookRight(PlayerView->getLookRight());
+      particleLaserEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
+      if(GameplayManager->getRecovering() > 0) {
+         lDown = 0;
+         PlayerView->setShader(Toon);
+         particleLaserEngine->deconstruct();
+         delete particleLaserEngine;
+         particleLaserEngine = NULL;
+      }
+      else {
+         particleLaserEngine->step(Application.getElapsedTime());
+      }
+   }
+   if(particleLaserEngine && particleLaserEngine->dead) {
+      particleLaserEngine->deconstruct();
+      delete particleLaserEngine;
+      particleLaserEngine = NULL;
+
+      Charged = 1;
+      lDown = 0;
+   }
+   if(particleLaserFireEngine && !particleLaserFireEngine->dead) {
+      Player->setArea(oldMiddle);
+      Player->setFallAcceleration(50.0f); //for the screen shaking effect
+      particleLaserFireEngine->step(Application.getElapsedTime());
+      lDown = 1;
+      PlayerView->setShader(ToonBright);
+   }
+   if(particleLaserFireEngine && particleLaserFireEngine->dead) {
+      Player->setFallAcceleration(0.0f);
+      PlayerView->setShader(Toon);
+      lDown = 0;
+      Charged = 0;
+      GameplayManager->ShootingLaser = 0;
+      particleLaserFireEngine->deconstruct();
+      delete particleLaserFireEngine;
+      particleLaserFireEngine = NULL;
+      Player->setImpulse(SVector2((PlayerView->getLookRight()?-1:1)*15.0f, 0.0f), 0.1);
+   }
+   PlayerView->Charging = lDown;
 #endif
 
    //draw the ground plane
@@ -520,6 +532,7 @@ void CGameState::OnRenderStart(float const Elapsed)
             Mix_PlayChannel(-1, die, 0); //Only play once
             playDead = false;
          }
+         Charged = 0;
 
          freetype::print(our_font, 50, WindowHeight - 240.f, "GAME OVER! YOU ARE DEAD.");
       }
@@ -562,9 +575,16 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          dDown = 1;
       }
 #ifdef PARTICLE
+      if(Event.Key == SDLK_l){
+         //GameplayManager->setChargingLaser
+         if(!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead))
+            particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 2.3f, LASER_CHARGING_PARTICLE);
+         lDown = 1;
+         PlayerView->setShader(ToonBright);
+      }
       if(Event.Key == SDLK_e) {
          if(!particleCubeEngine || (particleCubeEngine && particleCubeEngine->dead))
-            particleCubeEngine = new CParticleEngine(SVector3(0, 1, 0), 800, 6, CUBE_PARTICLE);
+            particleCubeEngine = new CParticleEngine(SVector3(0, 1, 0), 100, 10, CUBE_PARTICLE);
       }
       if(Event.Key == SDLK_r) {
          if(GameplayManager->getPlayerEnergy() > 0) {
@@ -620,6 +640,31 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_d){
          dDown = 0;
       }
+      if(Event.Key == SDLK_l){
+         if(particleLaserEngine) {
+            particleLaserEngine->deconstruct();
+            delete particleLaserEngine;
+            particleLaserEngine = NULL;
+         }
+         if(Charged) {
+            Charged = 0;
+            oldMiddle = Player->getArea();
+            Player->setVelocity(SVector2(0.0f));
+            GameplayManager->ShootingLaser = 1;
+            if(PlayerView->getLookRight()) {
+               GameplayManager->LaserBox = SRect2(Player->getArea().getCenter() - SVector2(0.5f, 0.0f), Player->getArea().Size + SVector2(5.0f, 0.0f));
+            }
+            else {
+               GameplayManager->LaserBox = SRect2(Player->getArea().getCenter() - SVector2(5.5f, 0.0f), Player->getArea().Size + SVector2(5.0f, 0.0f));
+            }
+
+            particleLaserFireEngine = new CParticleEngine(SVector3(0, 1, 0), 1500, 1.2f, LASER_FIRING_PARTICLE);
+            particleLaserFireEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
+            particleLaserFireEngine->setLookRight(PlayerView->getLookRight());
+         }
+         lDown = 0;
+         PlayerView->setShader(Toon);
+      }
       if(Event.Key == SDLK_k){
       }
       if(Event.Key == SDLK_j){
@@ -635,6 +680,24 @@ void CGameState::end()
    stopSoundtrack();
    //Mix_CloseAudio();
    our_font.clean();
+
+   if(particleLeafEngine) {
+      particleLeafEngine->deconstruct();
+      delete particleLeafEngine;
+   }
+   if(particleCubeEngine) {
+      particleCubeEngine->deconstruct();
+      delete particleCubeEngine;
+   }
+   if(particleLaserEngine) {
+      particleLaserEngine->deconstruct();
+      delete particleLaserEngine;
+   }
+   if(particleLaserFireEngine) {
+      particleLaserFireEngine->deconstruct();
+      delete particleLaserFireEngine;
+   }
+   particleLeafEngine = particleCubeEngine = particleLaserEngine = particleLaserFireEngine = NULL;
 
    Application.getSceneManager().removeAllSceneObjects();
 }
@@ -652,7 +715,7 @@ void CGameState::PrepBlock(float x, float y, float w, float h) {
    blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
    tempBlock->setTexture(dirtTxt);
-   tempBlock->setShader(DiffuseTexture);
+   tempBlock->setShader(ToonTexture);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    tempBlock->setScale(SVector3(w, h, 1));
    tempBlock->setRotation(SVector3(0, 0, 0));
@@ -664,7 +727,7 @@ void CGameState::PrepGrass(float x, float y, float w, float h) {
    blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
    tempBlock->setTexture(grassTxt);
-   tempBlock->setShader(DiffuseTexture);
+   tempBlock->setShader(ToonTexture);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    tempBlock->setScale(SVector3(0, 0, 0));
    Application.getSceneManager().addSceneObject(tempBlock);
@@ -677,7 +740,7 @@ void CGameState::PrepSky() {
    tempBlock->setMesh(cubeMesh);
    tempBlock->setTexture(skyTxt);
    tempBlock->setShader(DiffuseTexture);
-   tempBlock->setTranslation(SVector3(0, 24, -2.5));
+   tempBlock->setTranslation(SVector3(0, 22, -5.0));
    tempBlock->setScale(SVector3(400, 50, 1));
    tempBlock->setCullingEnabled(false);
    Application.getSceneManager().addSceneObject(tempBlock);
@@ -695,12 +758,78 @@ CMeshSceneObject* CGameState::PrepEnemy(float x, float y) {
    return tempEnemy;
 }
 
+void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
+   int numForeground, numBackground;
+   int random;
+   float randScale, randDepth;
+   float div;
+
+   if (w > 0.5f && w < 1.5f)  //If block size roughly 1, don't draw any trees
+      numForeground = numBackground = 0;
+   else {
+      numForeground = w / 2;
+      numBackground = w / 2;
+   }
+
+   div =  w/(float)numBackground;
+
+   printf("y: %f, h: %f, myCalc: %f\n", y, h, y + h/2.0f);
+
+   //Check how many tree-type objects we should draw in the background
+   for (int n = 0; n < numBackground; n++) {
+      random = rand()%2;
+
+      if (random == 0)
+         drawBasicTree(x + (n)*div + div/2.0f, -0.2f, -d/2.0f + .4f, 8.0f, Application);
+      else if (random == 1)
+         drawChristmasTree(x + (n)*div + div/2.0f, 1.4f, -d/2.0f + .4f, 6.0f, Application);
+   }
+
+   //Draw flower-type plants in background
+   for (int n = 0; n < w; n++) {
+      random = rand()%3;
+      randScale = rand()%20;
+      randScale = randScale * .025f;
+      randDepth = rand()%2;
+      randDepth = randDepth*.25f;
+
+      if (random == 0)
+         drawPinkFlwr(x + n + .5f, -1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
+      else if (random == 1)
+         drawBlueFlwr(x + n + .5f, -1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
+      else if (random == 2)
+         drawPoin(x + n + .5f, .2f, -d/2.0f + 1.5f + randDepth, 1.f + randScale, Application);
+   }
+
+
+   //Draw flower-type plants in foreground
+      for (int n = 0; n < w; n++) {
+         random = rand()%3;
+         randScale = rand()%20;
+         randScale = randScale * .025f;
+         randDepth = rand()%2;
+         randDepth = randDepth*.25f;
+
+         if (random == 0)
+            drawPinkFlwr(x + n + .5f, -1.0f, d/2.0f - .4 - randDepth, .4f + randScale, Application);
+         else if (random == 1)
+            drawBlueFlwr(x + n + .5f, -1.0f, d/2.0f - .4 - randDepth, .4f + randScale, Application);
+         else if (random == 2)
+            drawPoin(x + n + .5f, .2f, d/2.0f - .4 - randDepth, .7f + randScale, Application);
+      }
+
+
+}
+
+
 void LoadShaders() {
    Flat = CShaderLoader::loadShader("Diffuse");
    Diffuse = CShaderLoader::loadShader("Diffuse");
-   DiffuseTexture = CShaderLoader::loadShader("ToonTexture");
+   ToonTexture = CShaderLoader::loadShader("ToonTexture");
+   DiffuseTexture = CShaderLoader::loadShader("DiffuseTextureBright");
    normalColor = CShaderLoader::loadShader("Simple");
    Toon = CShaderLoader::loadShader("Toon");
+   ToonBright = CShaderLoader::loadShader("ToonBright");
    BlackShader = CShaderLoader::loadShader("Border");
    //Toon = Diffuse;
 }
@@ -858,7 +987,7 @@ void PrepMeshes()
    renderBlueFlwr = new CMeshSceneObject();
    renderBlueFlwr->setMesh(blueFlwrMesh);
    renderBlueFlwr->setTexture(blueFlwrTxt);
-   renderBlueFlwr->setShader(DiffuseTexture);
+   renderBlueFlwr->setShader(ToonTexture);
    renderBlueFlwr->setTranslation(SVector3(-23.f, .18f, 2));
    renderBlueFlwr->setScale(SVector3(.36f));
    renderBlueFlwr->setRotation(SVector3(-90, 0, 0));
@@ -869,7 +998,7 @@ void PrepMeshes()
    renderPinkFlwr->setTranslation(SVector3(-20, .2f, 2));
    renderPinkFlwr->setScale(SVector3(.36f));
    renderPinkFlwr->setRotation(SVector3(-90, 0, 0));
-   renderPinkFlwr->setShader(DiffuseTexture);
+   renderPinkFlwr->setShader(ToonTexture);
 
    renderFicus = new CMeshSceneObject();
    renderFicus->setMesh(ficusMesh);
@@ -877,7 +1006,7 @@ void PrepMeshes()
    renderFicus->setScale(SVector3(1.0));
    renderFicus->setRotation(SVector3(-90, 0, 0));
    renderFicus->setTexture(blueFlwrTxt);
-   renderFicus->setShader(DiffuseTexture);
+   renderFicus->setShader(ToonTexture);
 
    renderPoin = new CMeshSceneObject();
    renderPoin->setMesh(poinMesh);
@@ -885,7 +1014,7 @@ void PrepMeshes()
    renderPoin->setScale(SVector3(.75));
    renderPoin->setRotation(SVector3(-90, 0, 0));
    renderPoin->setTexture(poinTxt);
-   renderPoin->setShader(DiffuseTexture);
+   renderPoin->setShader(ToonTexture);
 
    renderFlag = new CMeshSceneObject();
    renderFlag->setMesh(flagMesh);
@@ -893,7 +1022,7 @@ void PrepMeshes()
    renderFlag->setRotation(SVector3(-90,0,0));
    renderFlag->setScale(SVector3(.0150f, .00025f,.0016f));
    renderFlag->setTexture(flagTxt);
-   renderFlag->setShader(DiffuseTexture);
+   renderFlag->setShader(ToonTexture);
 
    flagLogo = new CMeshSceneObject();
    flagLogo->setMesh(cabbageMesh);

@@ -14,20 +14,31 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
       switch(particleType) {
          case LEAF_PARTICLE:
             particles.push_back(cPtr = new CPLeaf());
+            cPtr->setAppearRate(2);
             break;
          case CUBE_PARTICLE:
             particles.push_back(cPtr = new CPCube());
+            cPtr->setAppearRate(2);
             break;
          case FLAME_PARTICLE:
             particles.push_back(cPtr = new CPFlame());
+            cPtr->setAppearRate(2);
             break;
          case DEATH_PARTICLE:
             particles.push_back(cPtr = new CPDeath());
+            cPtr->setAppearRate(2);
+            break;
+         case LASER_CHARGING_PARTICLE:
+            particles.push_back(cPtr = new CPLaser());
+            cPtr->setAppearRate(2);
+            break;
+         case LASER_FIRING_PARTICLE:
+            particles.push_back(cPtr = new CPLaser2());
+            cPtr->setAppearRate(0);
             break;
       }
       cPtr->setCenterPos(&centerPos);
       cPtr->setLookRight(&lookRight);
-      cPtr->setAppearRate(2);
       cPtr->TotalDuration = duration;
       cPtr->setupRenderable();
       //CApplication::get().getSceneManager().addSceneObject(cPtr->getRenderable());
@@ -81,13 +92,35 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
             }
             sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 15);
             break;
+         case LASER_CHARGING_PARTICLE:
+            temp = (float)rand()/(float)RAND_MAX*0.3f + 0.3f;
+            if(rand() % 4 == 0) {
+               colorArr.push_back(new SVector3(1));
+            }
+            else {
+               colorArr.push_back(new SVector3(temp*3, temp*3, temp*1));
+            }
+            sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 10);
+            break;
+         case LASER_FIRING_PARTICLE:
+            temp = (float)rand()/(float)RAND_MAX*0.3f + 0.3f;
+            if(rand() % 4 == 0) {
+               colorArr.push_back(new SVector3(1));
+            }
+            else {
+               colorArr.push_back(new SVector3(temp*3, temp*3, temp*1));
+            }
+            sizeArr.push_back((rand() % 5 + 1)*3.0f);
+            break;
       }
    }
    myObj = new CParticleObject();
    //Default bounding box to 0,0,0 to 1,1,1. All of our particle effects at this point (i.e. flame) are 1x1x1
    myObj->setBoundingBox(SBoundingBox3(centerPos - 0.5, centerPos + 0.5));
 
-   char *textureToUse;
+   const char *textureToUse;
+   char buf[50];
+   std::string v = "Textures/particle";
 
    switch(particleType) {
    case LEAF_PARTICLE:
@@ -95,12 +128,25 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
       break;
    case CUBE_PARTICLE:
       textureToUse = "Textures/particleStar.bmp";
+      /* Texture input
+      std::cout << "What particle file?";
+      std::cin >> buf;
+      v.append(buf);
+      v.append(".bmp");
+      textureToUse = v.c_str();
+      */
       break;
    case FLAME_PARTICLE:
       textureToUse = "Textures/particle2.bmp";
       break;
    case DEATH_PARTICLE:
       textureToUse = "Textures/particleStar.bmp";
+      break;
+   case LASER_CHARGING_PARTICLE:
+      textureToUse = "Textures/particle2.bmp";
+      break;
+   case LASER_FIRING_PARTICLE:
+      textureToUse = "Textures/particle2.bmp";
       break;
    }
 
@@ -113,6 +159,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
 void CParticleEngine::setCenterPos(SVector3 cP) {
    centerPos = cP;
    myObj->setBoundingBox(SBoundingBox3(centerPos - 0.5, centerPos + 0.5));
+   SBoundingBox3 box = myObj->getBoundingBox();
 }
 
 void CParticleEngine::setLookRight(int pf) {
@@ -141,11 +188,13 @@ void CParticleEngine::step(float const elapsedTime) {
 }
 
 void CParticleEngine::deconstruct() {
-   std::vector<CParticle*>::iterator it;
-   for(it = particles.begin(); it != particles.end(); it++) {
-      //delete (* it)->getRenderable();
-      delete (* it);
+   if(!dead) {
+      std::vector<CParticle*>::iterator it;
+      for(it = particles.begin(); it != particles.end(); it++) {
+         //delete (* it)->getRenderable();
+         delete (* it);
+      }
+      CApplication::get().getSceneManager().removeSceneObject(myObj);
+      dead = 1;
    }
-   CApplication::get().getSceneManager().removeSceneObject(myObj);
-   dead = 1;
 }

@@ -33,7 +33,7 @@ class CGameState : public CState<CGameState>
    void begin();
    ICamera *Camera;
    float fps, timeTotal;
-   int numFrames;
+   int numFrames, NumTreeTypes, NumFlowerTypes;
    int lowDef;
    const char * levelName;
    void oldDisplay(); 
@@ -48,6 +48,7 @@ class CGameState : public CState<CGameState>
    void PrepBlock(float x, float y, float w, float h);
    void PrepGrass(float x, float y, float w, float h);
    void PrepSky();
+   void GeneratePlants(float x, float y, float w, float h, float d);
    CMeshSceneObject* PrepEnemy(float x, float y);
 };
 #endif

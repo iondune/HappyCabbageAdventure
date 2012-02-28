@@ -4,6 +4,10 @@
 #include "CParticle.h"
 
 class CPFlame : public CParticle {
+   float yFactor, Amplitude, Period;
+   float sineValue;
+   float Size;
+
    float yVelocity, yHeight;
    float maxHeight;
    void setupRenderable();

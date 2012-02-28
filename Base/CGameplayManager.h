@@ -46,6 +46,8 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       void OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With);
       void runDeathSequence(float);
 
+      int ShootingLaser;
+      SRect2 LaserBox;
       int GodMode;
       float GodModeTime;
       void setGodMode(float time);

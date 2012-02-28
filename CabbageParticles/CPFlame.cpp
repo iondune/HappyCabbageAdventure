@@ -15,12 +15,6 @@ void CPFlame::setupRenderable() {
    Period = (float)rand()/(float)RAND_MAX * 0.8f + 0.5f;
    Amplitude = (float)rand()/(float)RAND_MAX * 0.4f - 0.3f;
 
-   RotationSpeed = SVector3(
-         (float)rand()/(float)RAND_MAX * 4 - 2, 
-         (float)rand()/(float)RAND_MAX * 4 - 2,
-         (float)rand()/(float)RAND_MAX * 4 - 2);
-   RotationSpeed *= -yFactor + 2.0f;
-
    StartFactor = (float)rand()/(float)RAND_MAX * AppearRate; 
    Counter = StartFactor;
 
@@ -51,6 +45,5 @@ void CPFlame::updateMatrices(float timeElapsed) {
       translate = SVector3((yFactor - 0.5f) * MIN(1, pow(yHeight / maxHeight, 0.2f)) + 0.5f,
                            yHeight + 0.1f,
                            Amplitude*sin(Period*sineValue));
-      //getRenderable()->setRotation(RotationSpeed*sineValue);
    }
 }

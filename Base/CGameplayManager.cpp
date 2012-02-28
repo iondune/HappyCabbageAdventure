@@ -12,6 +12,7 @@ CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabb
     dead = 0;
     gameOver = 0;
     PlayerLives = 3;
+    ShootingLaser = 0;
 }
 
 void CGameplayManager::UseAbility(int energyCost) {
@@ -63,7 +64,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
         PlayerActor->setImpulse(SVector2(0.f, -0.4f) * 7, 0.5f);
     }
 
-    if (! Other || GodMode)
+    if (! Other || GodMode || ShootingLaser)
         return;
    
     float const HitThreshold = 0.05f;
@@ -87,6 +88,8 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
                 //fprintf(stderr, "Enemy detected as dead! %d\n", it->Renderable);
 
                 Enemies.erase(it);
+
+                PlayerActor->setImpulse(SVector2(0.f, 1.0f), 0.05);
             }
             //Need to rewrite so works without SEnemy
             else
@@ -214,6 +217,26 @@ void CGameplayManager::run(float const TickTime)
         PlayerRecovering -= TickTime;
     if (GodModeTime > 0)
        GodModeTime -= TickTime;
+
+    EnemyList toKill;
+
+    if(ShootingLaser) {
+       for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
+       {
+          if ((*it)->Actor->CollideableType != COLLIDEABLE_TYPE_FLAME) {
+             if(LaserBox.intersects((*it)->Actor->getArea())) {
+                Mix_PlayChannel(-1, killEnemy, 0);
+                toKill.push_back(* it);
+                KillList.push_back(* it);
+             }
+          }
+       }
+       for (EnemyList::iterator it = toKill.begin(); it != toKill.end(); ++ it)
+       {
+          Enemies.erase(std::remove(Enemies.begin(), Enemies.end(), *it), Enemies.end());
+       }
+    }
+
 
     for (EnemyList::iterator it = KillList.begin(); it != KillList.end(); ++ it)
     {

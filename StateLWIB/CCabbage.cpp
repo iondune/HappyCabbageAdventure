@@ -29,7 +29,6 @@ void CCabbage::moveTo(float x,float y) {
 }
 
 CMeshSceneObject * CCabbage::setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager){
-    //Player = Engine->addActor();
-    //Player->setArea(SRect2(CPlaceable::x,y,(float)w,(float)h));
+//    Engine->addActor()->setArea(SRect2(CPlaceable::x,y,(float)w,(float)h));
     return new CMeshSceneObject(); // not sure to really return here
 }

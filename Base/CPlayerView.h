@@ -42,10 +42,14 @@ class CPlayerView {
       State curState;
       float ySineValue;
       float yShadow;
+      float xScale;
+      float yScale;
+      int Charging;
       CPlayerView() {
          ySineValue = 0;
          yShadow = 0;
          lookRight = 1;
+         yScale = xScale = 2.0f;
       }
       int lookRight;
 
@@ -70,6 +74,7 @@ class CPlayerView {
       void setGround(float groundYValue) {
          yShadow = groundYValue;
       }
+      void setShader(CShader * shader);
       void draw();
       void step(float delta);
 };
