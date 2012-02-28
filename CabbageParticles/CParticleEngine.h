@@ -7,6 +7,7 @@
 #include "CPLeaf.h"
 #include "CPFlame.h"
 #include "CPDeath.h"
+#include "CPLaser.h"
 #include "CParticleObject.h"
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
@@ -16,6 +17,7 @@
 #define CUBE_PARTICLE 1
 #define FLAME_PARTICLE 2
 #define DEATH_PARTICLE 3
+#define LASER_PARTICLE 4
 
 class CParticleEngine {
    std::vector<CParticle*> particles;

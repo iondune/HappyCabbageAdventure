@@ -3,7 +3,7 @@
 #include "draw.h"
 
 //Boolean integers for keypressing
-int aDown = 0, dDown = 0, spaceDown = 0, wDown = 0, sDown = 0;
+int aDown = 0, dDown = 0, spaceDown = 0, wDown = 0, sDown = 0, lDown = 0;
 int backwardsView = 0, overView = 0;
 
 int WindowWidth, WindowHeight;
@@ -194,6 +194,7 @@ void CGameState::EngineInit( void ) {
 #ifdef PARTICLE
 CParticleEngine * particleLeafEngine;
 CParticleEngine * particleCubeEngine;
+CParticleEngine * particleLaserEngine;
 #endif
 
 void LoadHUD() {
@@ -210,7 +211,7 @@ void CGameState::begin()
 {
    CApplication::get().getSceneManager().setCullingEnabled(true);
 #ifdef PARTICLE
-   particleLeafEngine = particleCubeEngine = 0;
+   particleLeafEngine = particleCubeEngine = particleLaserEngine = 0;
 #endif
    SPosition2 size = Application.getWindowSize();
    WindowWidth = size.X;
@@ -431,6 +432,11 @@ void CGameState::oldDisplay() {
       particleCubeEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
       particleCubeEngine->step(Application.getElapsedTime());
    }
+   if(particleLaserEngine && !particleLaserEngine->dead) {
+      particleLaserEngine->setLookRight(PlayerView->getLookRight());
+      particleLaserEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
+      particleLaserEngine->step(Application.getElapsedTime());
+   }
 #endif
 
    //draw the ground plane
@@ -561,6 +567,12 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_d){
          dDown = 1;
       }
+      if(Event.Key == SDLK_l){
+         //GameplayManager->setChargingLaser
+         if(!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead))
+            particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 100, 10, LASER_PARTICLE);
+         lDown = 1;
+      }
 #ifdef PARTICLE
       if(Event.Key == SDLK_e) {
          if(!particleCubeEngine || (particleCubeEngine && particleCubeEngine->dead))
@@ -619,6 +631,14 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_d){
          dDown = 0;
+      }
+      if(Event.Key == SDLK_l){
+         if(particleLaserEngine) {
+            particleLaserEngine->deconstruct();
+            delete particleLaserEngine;
+            particleLaserEngine = NULL;
+         }
+         lDown = 0;
       }
       if(Event.Key == SDLK_k){
       }
