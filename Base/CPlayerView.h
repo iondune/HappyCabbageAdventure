@@ -44,6 +44,7 @@ class CPlayerView {
       float yShadow;
       float xScale;
       float yScale;
+      int Charging;
       CPlayerView() {
          ySineValue = 0;
          yShadow = 0;

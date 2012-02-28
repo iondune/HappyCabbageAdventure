@@ -38,6 +38,7 @@ int CPlayerView::getLookRight() {
 }
 
 void CPlayerView::removeFromScene() {
+   Charging = 0;
    if(PlayerRenderable) {
       CApplication::get().getSceneManager().removeSceneObject(PlayerRenderable);
    }
@@ -47,6 +48,7 @@ void CPlayerView::removeFromScene() {
 }
 
 void CPlayerView::addToScene() {
+   Charging = 0;
    if(PlayerRenderable) {
       CApplication::get().getSceneManager().addSceneObject(PlayerRenderable);
    }
@@ -57,10 +59,17 @@ void CPlayerView::addToScene() {
 
 void CPlayerView::draw() {
    int negFactor = 0;
+   PlayerRenderable->setTranslation(SVector3(CenterPosition.X, CenterPosition.Y + 0.065f*sin(ySineValue), 0));
+   renderShadow->setTranslation(SVector3(CenterPosition.X, yShadow + 0.01f, 0));
+   if(Charging) {
+      xScale = yScale = 2.0f;
+      PlayerRenderable->setTranslation(SVector3(CenterPosition.X + 0.02f*sin(100.0f*ySineValue), CenterPosition.Y, 0));
+      PlayerRenderable->setScale(SVector3(xScale, xScale, yScale));
+      return;
+   }
 
    //Set player's current position
    if(!(recovering > 0 && (int)(recovering *100) % 2 != 0)) {
-      PlayerRenderable->setTranslation(SVector3(CenterPosition.X, CenterPosition.Y + 0.065f*sin(ySineValue), 0));
       SVector3 rot = PlayerRenderable->getRotation();
 
       if(!(Velocity.Y > 0.01f || Velocity.Y < -0.01f)) {
@@ -99,7 +108,6 @@ void CPlayerView::draw() {
       PlayerRenderable->setVisible(false);
 
    //Set player's shadow
-   renderShadow->setTranslation(SVector3(CenterPosition.X, yShadow + 0.01f, 0));
    renderShadow->setScale(SVector3((-.05f*sin(ySineValue)+1), 1,
      -0.05f*sin(ySineValue)+1));
 }

@@ -337,7 +337,7 @@ void CGameState::oldDisplay() {
    float curXVelocity = Player->getVelocity().X;
    PlayerView->setVelocity(Player->getVelocity());
 
-   if (GameplayManager->isPlayerAlive())
+   if (GameplayManager->isPlayerAlive() && !lDown)
    {
       if(!overView) {
          if(dDown && aDown) {
@@ -437,11 +437,10 @@ void CGameState::oldDisplay() {
       particleLaserEngine->setLookRight(PlayerView->getLookRight());
       particleLaserEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
       if(GameplayManager->getRecovering() > 0) {
-         if(particleLaserEngine) {
-            particleLaserEngine->deconstruct();
-            delete particleLaserEngine;
-            particleLaserEngine = NULL;
-         }
+         lDown = 0;
+         particleLaserEngine->deconstruct();
+         delete particleLaserEngine;
+         particleLaserEngine = NULL;
       }
       else {
          particleLaserEngine->step(Application.getElapsedTime());
@@ -451,6 +450,7 @@ void CGameState::oldDisplay() {
       particleLaserEngine->deconstruct();
       delete particleLaserEngine;
       particleLaserEngine = NULL;
+      lDown = 0;
       particleLaserFireEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 3.5f, CUBE_PARTICLE);
       particleLaserFireEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
       particleLaserFireEngine->setLookRight(PlayerView->getLookRight());
@@ -458,6 +458,7 @@ void CGameState::oldDisplay() {
    if(particleLaserFireEngine && !particleLaserFireEngine->dead) {
       particleLaserFireEngine->step(Application.getElapsedTime());
    }
+   PlayerView->Charging = lDown;
 #endif
 
    //draw the ground plane
