@@ -40,14 +40,17 @@
     <IncludePath>
         ;$(VisualStudioDir)\Projects\glew-1.7.0\include;
         ;$(VisualStudioDir)\Projects\SDL-1.2.15\include;
-        ;$(VisualStudioDir)\Projects\freetype-2.4.8\include;
+        ;$(VisualStudioDir)\Projects\freetype-2.4.2\include;
         ;$(SolutionDir)\CabbageCore;
+        ;$(SolutionDir)\CabbageFramework;
+        ;$(SolutionDir)\CabbageScene;
+        ;$(SolutionDir)\CabbageGUI;
         ;$(IncludePath);
     </IncludePath>
     <LibraryPath>
         ;$(VisualStudioDir)\Projects\glew-1.7.0\lib;
         ;$(VisualStudioDir)\Projects\SDL-1.2.15\lib\x86;
-        ;$(VisualStudioDir)\Projects\freetype-2.4.8\lib;
+        ;$(VisualStudioDir)\Projects\freetype-2.4.2\lib;
         ;$(LibraryPath);
     </LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -91,7 +94,6 @@
     <None Include="spaceshiptexture.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FreeType.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -12,23 +12,29 @@
 #pragma comment(lib, "SDLmain.lib")
 #pragma comment(lib, "CabbageScene.lib")
 #pragma comment(lib, "CabbageFramework.lib")
+#pragma comment(lib, "CabbageGUI.lib")
 #pragma comment(lib, "OpenGL32.lib")
 #pragma comment(lib, "glu32.lib")
+#ifdef _DEBUG
 #pragma comment(lib, "freetype.lib")
+#else
+#pragma comment(lib, "freetype.lib")
+#endif
 
 #include <GL/glew.h>
 #include <SDL/SDL.h>
 #endif
 
 // Utility classes for loading shaders/meshes
-#include "../CabbageScene/CabbageScene.h"
-#include "../CabbageFramework/CabbageFramework.h"
+#include <CabbageScene.h>
+#include <CabbageFramework.h>
+#include <CabbageGUI.h>
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp" //perspective, trans etc
 #include "glm/gtc/type_ptr.hpp" //value_ptr
 
-#include "FreeType.h"
+//#include "FreeType.h"
 
 class CMainState : public CState<CMainState>
 {
@@ -37,7 +43,9 @@ class CMainState : public CState<CMainState>
 
 public:
 
-    freetype::font_data Font;
+    //freetype::font_data Font;
+	//gltext::Font Font;
+	OGLFT::Face* monochrome;
 
     CMainState()
         : Application(CApplication::get()), WindowWidth(1440), WindowHeight(900), Scale(1), Animate(false), Mode(0), ShowHelp(false)
@@ -136,8 +144,14 @@ public:
 
 		CApplication::get().getSceneManager().addSceneObject(Renderable);
 
-        Font.init("Fonts/DejaVuSansMono.ttf", 14);
-
+        //Font.init("Fonts/DejaVuSansMono.ttf", 14);
+		monochrome = new OGLFT::Translucent( "Fonts/DejaVuSansMono.ttf", 36 );
+		if ( monochrome == 0 || ! monochrome->isValid() ) {
+			std::cerr << "Could not construct face from " << "Fonts/DejaVuSansMono.ttf" << std::endl;
+		}
+		monochrome->setForegroundColor( 1., 0., 0. );
+		monochrome->setBackgroundColor( 0.5, .5, .75, 0.0 );
+		glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
 		Timer = 0.f;
     }
 
@@ -194,9 +208,6 @@ public:
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-
         Camera->update(Elapsed);
 
         Renderable->setTranslation(Translation);
@@ -207,14 +218,27 @@ public:
 
         CApplication::get().getSceneManager().drawAll();
 
-        if (ShowHelp)
+        /*if (ShowHelp)
             freetype::print(Font, 0, (float)Application.getWindowSize().Y - 15.f, "WASD to control camera\nRight click and hold to pan\n\n"\
                 "E to choose Scale tool\nR for Rotate\nT for Translate\nLeft click applies tool\n\n"\
                 "F to use flat shading\nV to use smooth shading\n\n"\
                 "Z to use vertex-lighting shader\nX to use per-pixel lighting shader without specular\nC to use per-pixel lighting shader with specular\n\n"\
                 "1, 2, and 3 to change materials\n\n");
         else
-            freetype::print(Font, 0, (float)Application.getWindowSize().Y - 15.f, "Press F1 to view commands");
+            freetype::print(Font, 0, (float)Application.getWindowSize().Y - 15.f, "Press F1 to view commands");*/
+		glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+		glEnable( GL_BLEND );
+		glViewport( 0, 0, 1440, 900 );
+		glMatrixMode( GL_PROJECTION );
+		glLoadIdentity();
+		glOrtho( 0, 1440, 0, 900, -1, 1 );
+
+		glMatrixMode( GL_MODELVIEW );
+		glLoadIdentity();
+		glEnable(GL_DEPTH_TEST);
+		monochrome->draw( 0., 250., "Hello, World!" );
+		glDisable(GL_DEPTH_TEST);
+		glDisable( GL_BLEND );
 
         SDL_GL_SwapBuffers();
     }
