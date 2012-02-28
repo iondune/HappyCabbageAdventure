@@ -433,6 +433,7 @@ void CGameState::oldDisplay() {
       PlayerView->setShader(Toon);
       lDown = 0;
       Charged = 0;
+      GameplayManager->ShootingLaser = 0;
       particleLaserFireEngine->deconstruct();
       delete particleLaserFireEngine;
       particleLaserFireEngine = NULL;
@@ -645,6 +646,13 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
             Charged = 0;
             oldMiddle = Player->getArea();
             Player->setVelocity(SVector2(0.0f));
+            GameplayManager->ShootingLaser = 1;
+            if(PlayerView->getLookRight()) {
+               GameplayManager->LaserBox = SRect2(Player->getArea().getCenter(), Player->getArea().Size + SVector2(5.0f, 0.0f));
+            }
+            else {
+               GameplayManager->LaserBox = SRect2(Player->getArea().getCenter() - SVector2(5.0f, 0.0f), Player->getArea().Size + SVector2(5.0f, 0.0f));
+            }
 
             particleLaserFireEngine = new CParticleEngine(SVector3(0, 1, 0), 1500, 1.2f, LASER_FIRING_PARTICLE);
             particleLaserFireEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
