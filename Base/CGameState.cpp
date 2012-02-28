@@ -192,9 +192,10 @@ void CGameState::EngineInit( void ) {
 
 #define PARTICLE
 #ifdef PARTICLE
-CParticleEngine * particleLeafEngine;
-CParticleEngine * particleCubeEngine;
-CParticleEngine * particleLaserEngine;
+CParticleEngine *particleLeafEngine;
+CParticleEngine *particleCubeEngine;
+CParticleEngine *particleLaserEngine;
+CParticleEngine *particleLaserFireEngine;
 #endif
 
 void LoadHUD() {
@@ -446,9 +447,17 @@ void CGameState::oldDisplay() {
          particleLaserEngine->step(Application.getElapsedTime());
       }
    }
-   if(particleLaserEngine && particleLaserEngine->dead)
-      printf("Dead now\n");
-
+   if(particleLaserEngine && particleLaserEngine->dead) {
+      particleLaserEngine->deconstruct();
+      delete particleLaserEngine;
+      particleLaserEngine = NULL;
+      particleLaserFireEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 3.5f, CUBE_PARTICLE);
+      particleLaserFireEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
+      particleLaserFireEngine->setLookRight(PlayerView->getLookRight());
+   }
+   if(particleLaserFireEngine && !particleLaserFireEngine->dead) {
+      particleLaserFireEngine->step(Application.getElapsedTime());
+   }
 #endif
 
    //draw the ground plane
