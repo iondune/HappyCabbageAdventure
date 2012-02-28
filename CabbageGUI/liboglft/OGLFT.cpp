@@ -354,7 +354,7 @@ namespace OGLFT {
       if ( string_rotation_ != 0. ) {
 	float angle;
 	if ( string_rotation_ < 0. ) {
-	  angle = 360. - fmod( fabs( string_rotation_ ), 360.f );
+	  angle = 360.f - fmod( fabs( string_rotation_ ), 360.f );
 	}
 	else {
 	  angle = fmod( string_rotation_, 360.f );
@@ -548,7 +548,7 @@ namespace OGLFT {
 
     float angle;
     if ( string_rotation_ < 0. ) {
-      angle = 360. - fmod( fabs( string_rotation_ ), 360.f );
+      angle = 360.f - fmod( fabs( string_rotation_ ), 360.f );
     }
     else {
       angle = fmod( string_rotation_, 360.f );
@@ -1045,7 +1045,7 @@ namespace OGLFT {
       case LEFT:
 	dx = -bbox.x_min_; break;
       case CENTER:
-	dx = -( bbox.x_min_ + bbox.x_max_ ) / 2.; break;
+	dx = -( bbox.x_min_ + bbox.x_max_ ) / 2.f; break;
       case RIGHT:
 	dx = -bbox.x_max_; break;
       default:
@@ -1055,7 +1055,7 @@ namespace OGLFT {
       case BOTTOM:
 	dy = -bbox.y_min_; break;
       case MIDDLE:
-	dy = -( bbox.y_min_ + bbox.y_max_ ) / 2.; break;
+	dy = -( bbox.y_min_ + bbox.y_max_ ) / 2.f; break;
       case TOP:
 	dy = -bbox.y_max_; break;
       default:
@@ -1105,7 +1105,7 @@ namespace OGLFT {
       case LEFT:
 	dx = -bbox.x_min_; break;
       case CENTER:
-	dx = -( bbox.x_min_ + bbox.x_max_ ) / 2.; break;
+	dx = -( bbox.x_min_ + bbox.x_max_ ) / 2.f; break;
       case RIGHT:
 	dx = -bbox.x_max_; break;
       default:
@@ -1115,7 +1115,7 @@ namespace OGLFT {
       case BOTTOM:
 	dy = -bbox.y_min_; break;
       case MIDDLE:
-	dy = -( bbox.y_min_ + bbox.y_max_ ) / 2.; break;
+	dy = -( bbox.y_min_ + bbox.y_max_ ) / 2.f; break;
       case TOP:
 	dy = -bbox.y_max_; break;
       default:
@@ -1124,9 +1124,9 @@ namespace OGLFT {
 
       // There is probably a less expensive way to compute this
 
-      glRotatef( string_rotation_, 0., 0., 1. );
+      glRotatef( string_rotation_, 0., 0., 1.f );
       glTranslatef( dx, dy, 0 );
-      glRotatef( -string_rotation_, 0., 0., 1. );
+      glRotatef( -string_rotation_, 0., 0., 1.f );
     }
 
     glTranslatef( x, y, z );
@@ -1421,19 +1421,19 @@ namespace OGLFT {
     GLdouble x, y, z;
     gluUnProject( bbox.x_min_, bbox.y_min_, 0., modelview, projection, viewport,
 		  &x, &y, &z );
-    bbox.x_min_ = x - x0;
-    bbox.y_min_ = y - y0;
+    bbox.x_min_ = (float) (x - x0);
+    bbox.y_min_ = (float) (y - y0);
 
     gluUnProject( bbox.x_max_, bbox.y_max_, 0., modelview, projection, viewport,
 		  &x, &y, &z );
-    bbox.x_max_ = x - x0;
-    bbox.y_max_ = y - y0;
+    bbox.x_max_ = (float) (x - x0);
+    bbox.y_max_ = (float) (y - y0);
 
     gluUnProject( bbox.advance_.dx_, bbox.advance_.dy_, 0., modelview, projection,
 		  viewport,
 		  &x, &y, &z );
-    bbox.advance_.dx_ = x - x0;
-    bbox.advance_.dy_ = y - y0;
+    bbox.advance_.dx_ = (float) (x - x0);
+    bbox.advance_.dy_ = (float) (y - y0);
 
     return bbox;
   }
@@ -1547,7 +1547,7 @@ namespace OGLFT {
     if ( error != 0 )
       return;
 
-    rotation_offset_y_ = rotation_reference_face_->glyph->bitmap.rows / 2.;
+    rotation_offset_y_ = rotation_reference_face_->glyph->bitmap.rows / 2.f;
   }
 
   void Raster::clearCaches ( void )
@@ -1679,10 +1679,10 @@ namespace OGLFT {
     GLubyte* inverted_bitmap = invertBitmap( bitmap_glyph->bitmap );
 
     glBitmap( bitmap_glyph->bitmap.width, bitmap_glyph->bitmap.rows,
-	      -bitmap_glyph->left,
-	      bitmap_glyph->bitmap.rows - bitmap_glyph->top,
-	      face->glyph->advance.x / 64.,
-	      face->glyph->advance.y / 64.,
+	      (float) -bitmap_glyph->left,
+	      (float) bitmap_glyph->bitmap.rows - bitmap_glyph->top,
+	      face->glyph->advance.x / 64.f,
+	      face->glyph->advance.y / 64.f,
 	      inverted_bitmap );
 
     FT_Done_Glyph( glyph );
@@ -1799,8 +1799,8 @@ namespace OGLFT {
     glPixelTransferf( GL_ALPHA_BIAS, background_color_[A] );
 
     glBitmap( 0, 0, 0, 0,
-	      bitmap_glyph->left,
-	      bitmap_glyph->top - bitmap_glyph->bitmap.rows,
+	      (float) bitmap_glyph->left,
+	      (float) bitmap_glyph->top - bitmap_glyph->bitmap.rows,
 	      0 );
 
     glDrawPixels( bitmap_glyph->bitmap.width, bitmap_glyph->bitmap.rows,
@@ -1811,9 +1811,9 @@ namespace OGLFT {
     // (without querying the state)
 
     glBitmap( 0, 0, 0, 0,
-	      -bitmap_glyph->left + face->glyph->advance.x / 64.,
+	      -bitmap_glyph->left + face->glyph->advance.x / 64.f,
 	      bitmap_glyph->bitmap.rows - bitmap_glyph->top +
-	      face->glyph->advance.y / 64.,
+	      face->glyph->advance.y / 64.f,
 	      0 );
 
     FT_Done_Glyph( glyph );
@@ -1940,8 +1940,8 @@ namespace OGLFT {
     // OpenGL have a similar function for pixmaps?)
 
     glBitmap( 0, 0, 0, 0,
-	      bitmap_glyph->left,
-	      bitmap_glyph->top - bitmap_glyph->bitmap.rows,
+	      (float) bitmap_glyph->left,
+	      (float) bitmap_glyph->top - bitmap_glyph->bitmap.rows,
 	      0 );
 
     glDrawPixels( bitmap_glyph->bitmap.width, bitmap_glyph->bitmap.rows,
@@ -1952,9 +1952,9 @@ namespace OGLFT {
     // (without querying the state)
 
     glBitmap( 0, 0, 0, 0,
-	      -bitmap_glyph->left + face->glyph->advance.x / 64.,
+	      -bitmap_glyph->left + face->glyph->advance.x / 64.f,
 	      bitmap_glyph->bitmap.rows - bitmap_glyph->top +
-	      face->glyph->advance.y / 64.,
+	      face->glyph->advance.y / 64.f,
 	      0 );
 
     FT_Done_Glyph( glyph );
@@ -2129,8 +2129,8 @@ namespace OGLFT {
       ( 72. * rotation_reference_face_->units_per_EM );
 
     rotation_offset_y_ =
-      ( rotation_reference_face_->glyph->metrics.horiBearingY / 2. ) / 64.
-      * vector_scale_;
+      ( rotation_reference_face_->glyph->metrics.horiBearingY / 2.f ) / 64.f
+      * (float) vector_scale_;
   }
 
   double Polygonal::height ( void ) const
@@ -2176,7 +2176,7 @@ namespace OGLFT {
     bbox = ft_bbox;
     bbox.advance_ = faces_[f].face_->glyph->advance;
 
-    bbox *= ( point_size_ * resolution_ ) / ( 72. * faces_[f].face_->units_per_EM );
+    bbox *= ( point_size_ * resolution_ ) / ( 72.f * faces_[f].face_->units_per_EM );
 
     return bbox;
   }
@@ -2285,30 +2285,30 @@ namespace OGLFT {
     if ( error != 0 )
       return;
 
-    vector_scale_ = ( point_size_ * resolution_ ) / ( 72. * face->units_per_EM );
+    vector_scale_ = ( point_size_ * resolution_ ) / ( 72.f * face->units_per_EM );
 
     if ( character_rotation_.active_ ) {
       glPushMatrix();
-      glTranslatef( ( face->glyph->metrics.width / 2. +
-		      face->glyph->metrics.horiBearingX ) / 64.
-		    * vector_scale_,
+      glTranslatef( ( face->glyph->metrics.width / 2.f +
+		      face->glyph->metrics.horiBearingX ) / 64.f
+		    * (float) vector_scale_,
 		    rotation_offset_y_,
-		    0. );
+		    0.f );
 
-      if ( character_rotation_.x_ != 0. )
-	glRotatef( character_rotation_.x_, 1., 0., 0. );
+      if ( character_rotation_.x_ != 0.f )
+	glRotatef( character_rotation_.x_, 1.f, 0.f, 0.f );
 
-      if ( character_rotation_.y_ != 0. )
-	glRotatef( character_rotation_.y_, 0., 1., 0. );
+      if ( character_rotation_.y_ != 0.f )
+	glRotatef( character_rotation_.y_, 0.f, 1.f, 0.f );
 
-      if ( character_rotation_.z_ != 0. )
-	glRotatef( character_rotation_.z_, 0., 0., 1. );
+      if ( character_rotation_.z_ != 0.f )
+	glRotatef( character_rotation_.z_, 0.f, 0.f, 1.f );
 
-      glTranslatef( -( face->glyph->metrics.width / 2. +
-		      face->glyph->metrics.horiBearingX ) / 64.
-		    * vector_scale_,
+      glTranslatef( -( face->glyph->metrics.width / 2.f +
+		      face->glyph->metrics.horiBearingX ) / 64.f
+		    * (float) vector_scale_,
 		    -rotation_offset_y_,
-		    0. );
+		    0.f );
     }
 
     contour_open_ = false;
@@ -2333,9 +2333,9 @@ namespace OGLFT {
 
     // Drawing a character always advances the MODELVIEW.
 
-    glTranslatef( face->glyph->advance.x / 64. * vector_scale_,
-		  face->glyph->advance.y / 64. * vector_scale_,
-		  0. );
+    glTranslatef( face->glyph->advance.x / 64.f * (float) vector_scale_,
+		  face->glyph->advance.y / 64.f * (float) vector_scale_,
+		  0.f );
 
     for ( VILI vili = vertices_.begin(); vili != vertices_.end(); vili++ )
       delete *vili;
@@ -2561,39 +2561,39 @@ namespace OGLFT {
     if ( error != 0 )
       return;
 
-    vector_scale_ = ( point_size_ * resolution_ ) / ( 72. * face->units_per_EM );
+    vector_scale_ = ( point_size_ * resolution_ ) / ( 72.f * face->units_per_EM );
 
     if ( character_rotation_.active_ ) {
       glPushMatrix();
-      glTranslatef( ( face->glyph->metrics.width / 2. +
-		      face->glyph->metrics.horiBearingX ) / 64.
-		    * vector_scale_,
+      glTranslatef( ( face->glyph->metrics.width / 2.f +
+		      face->glyph->metrics.horiBearingX ) / 64.f
+		    * (float) vector_scale_,
 		    rotation_offset_y_,
-		    0. );
+		    0.f );
 
       if ( character_rotation_.x_ != 0. )
-	glRotatef( character_rotation_.x_, 1., 0., 0. );
+	glRotatef( character_rotation_.x_, 1.f, 0.f, 0.f );
 
       if ( character_rotation_.y_ != 0. )
-	glRotatef( character_rotation_.y_, 0., 1., 0. );
+	glRotatef( character_rotation_.y_, 0.f, 1.f, 0.f );
 
       if ( character_rotation_.z_ != 0. )
-	glRotatef( character_rotation_.z_, 0., 0., 1. );
+	glRotatef( character_rotation_.z_, 0.f, 0.f, 1.f );
 
-      glTranslatef( -( face->glyph->metrics.width / 2. +
-		      face->glyph->metrics.horiBearingX ) / 64.
-		    * vector_scale_,
+      glTranslatef( -( face->glyph->metrics.width / 2.f +
+		      face->glyph->metrics.horiBearingX ) / 64.f
+		    * (float) vector_scale_,
 		    -rotation_offset_y_,
-		    0. );
+		    0.f );
     }
 
-    if ( depth_offset_ != 0. ) {
+    if ( depth_offset_ != 0.f ) {
       glPushMatrix();
-      glTranslatef( 0., 0., depth_offset_ );
-      glNormal3f( 0., 0., 1. );
+      glTranslatef( 0.f, 0.f, depth_offset_ );
+      glNormal3f( 0.f, 0.f, 1.f );
     }
     else {
-      glNormal3f( 0., 0., -1. );
+      glNormal3f( 0.f, 0.f, -1.f );
     }
 
     glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
@@ -2627,9 +2627,9 @@ namespace OGLFT {
 
     // Drawing a character always advances the MODELVIEW.
 
-    glTranslatef( face->glyph->advance.x / 64 * vector_scale_,
-		  face->glyph->advance.y / 64 * vector_scale_,
-		  0. );
+    glTranslatef( face->glyph->advance.x / 64 * (float) vector_scale_,
+		  face->glyph->advance.y / 64 * (float) vector_scale_,
+		  0.f );
 
     for ( VILI vili = extra_vertices_.begin(); vili != extra_vertices_.end(); vili++ )
       delete *vili;
@@ -3319,7 +3319,7 @@ namespace OGLFT {
     if ( error != 0 )
       return;
 
-    rotation_offset_y_ = rotation_reference_face_->glyph->bitmap.rows / 2.;
+    rotation_offset_y_ = rotation_reference_face_->glyph->bitmap.rows / 2.f;
   }
 
   BBox Texture::measure ( unsigned char c )
@@ -3445,39 +3445,39 @@ namespace OGLFT {
 
     if ( character_rotation_.active_ ) {
       glPushMatrix();
-      glTranslatef( ( texture_info.width_ / 2. +
+      glTranslatef( ( texture_info.width_ / 2.f +
 		      texture_info.left_bearing_ ),
-		    rotation_offset_y_, 0. );
+		    rotation_offset_y_, 0.f );
 
       if ( character_rotation_.x_ != 0. )
-	glRotatef( character_rotation_.x_, 1., 0., 0. );
+	glRotatef( character_rotation_.x_, 1.f, 0.f, 0.f );
 
       if ( character_rotation_.y_ != 0. )
-	glRotatef( character_rotation_.y_, 0., 1., 0. );
+	glRotatef( character_rotation_.y_, 0.f, 1.f, 0.f );
 
       if ( character_rotation_.z_ != 0. )
-	glRotatef( character_rotation_.z_, 0., 0., 1. );
+	glRotatef( character_rotation_.z_, 0.f, 0.f, 1.f );
 
-      glTranslatef( -( texture_info.width_ / 2. +
+      glTranslatef( -( texture_info.width_ / 2.f +
 		      texture_info.left_bearing_ ),
-		    -rotation_offset_y_, 0. );
+		    -rotation_offset_y_, 0.f );
     }
 
     glBegin( GL_QUADS );
 
     glTexCoord2i( 0, 0 );
-    glVertex2f( texture_info.left_bearing_, texture_info.bottom_bearing_ );
+    glVertex2i( texture_info.left_bearing_, texture_info.bottom_bearing_ );
 
     glTexCoord2f( texture_info.texture_s_, 0. );
-    glVertex2f( texture_info.left_bearing_ + texture_info.width_,
+    glVertex2i( texture_info.left_bearing_ + texture_info.width_,
 		texture_info.bottom_bearing_ );
 
     glTexCoord2f( texture_info.texture_s_, texture_info.texture_t_ );
-    glVertex2f( texture_info.left_bearing_ + texture_info.width_,
+    glVertex2i( texture_info.left_bearing_ + texture_info.width_,
 		texture_info.bottom_bearing_ + texture_info.height_ );
 
     glTexCoord2f( 0., texture_info.texture_t_ );
-    glVertex2f( texture_info.left_bearing_,
+    glVertex2i( texture_info.left_bearing_,
 		texture_info.bottom_bearing_ + texture_info.height_ );
     
     glEnd();
@@ -3487,9 +3487,9 @@ namespace OGLFT {
     }
 
     // Drawing a character always advances the MODELVIEW.
-    glTranslatef( texture_info.advance_.x / 64.,
-		  texture_info.advance_.y / 64.,
-		  0. );
+    glTranslatef( texture_info.advance_.x / 64.f,
+		  texture_info.advance_.y / 64.f,
+		  0.f );
   }
 
   void Texture::clearCaches ( void )

@@ -125,16 +125,16 @@ namespace OGLFT {
     //! Initialize an advance from a FreeType advance member.
     Advance ( FT_Vector v )
     {
-      dx_ = v.x / 64.;
-      dy_ = v.y / 64.;
+      dx_ = v.x / 64.f;
+      dy_ = v.y / 64.f;
     }
 
     //! Increment Advance with a FreeType advance member.
     //! \return a reference to oneself.
     Advance& operator+= ( const FT_Vector v )
     {
-      dx_ += v.x / 64.;
-      dy_ += v.y / 64.;
+      dx_ += v.x / 64.f;
+      dy_ += v.y / 64.f;
       return *this;
     }
   };
@@ -160,16 +160,16 @@ namespace OGLFT {
      */
     BBox ( FT_BBox ft_bbox )
     {
-      x_min_ = ft_bbox.xMin / 64.;
-      y_min_ = ft_bbox.yMin / 64.;
-      x_max_ = ft_bbox.xMax / 64.;
-      y_max_ = ft_bbox.yMax / 64.;
+      x_min_ = ft_bbox.xMin / 64.f;
+      y_min_ = ft_bbox.yMin / 64.f;
+      x_max_ = ft_bbox.xMax / 64.f;
+      y_max_ = ft_bbox.yMax / 64.f;
     }
 
     //! Scale the bounding box by a constant.
     //! \param k a constant to scale the bounding box by.
     //! \return a reference to oneself.
-    BBox& operator*= ( double k )
+    BBox& operator*= ( float k )
     {
       x_min_ *= k;
       y_min_ *= k;
