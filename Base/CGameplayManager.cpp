@@ -228,8 +228,6 @@ void CGameplayManager::run(float const TickTime)
                 Mix_PlayChannel(-1, killEnemy, 0);
                 toKill.push_back(* it);
                 KillList.push_back(* it);
-
-                Enemies.erase(it);
              }
           }
        }

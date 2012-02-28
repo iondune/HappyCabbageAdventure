@@ -649,7 +649,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
             Player->setVelocity(SVector2(0.0f));
             GameplayManager->ShootingLaser = 1;
             if(PlayerView->getLookRight()) {
-               GameplayManager->LaserBox = SRect2(Player->getArea().getCenter(), Player->getArea().Size + SVector2(5.0f, 0.0f));
+               GameplayManager->LaserBox = SRect2(Player->getArea().getCenter() - SVector2(0.5f, 0.0f), Player->getArea().Size + SVector2(5.0f, 0.0f));
             }
             else {
                GameplayManager->LaserBox = SRect2(Player->getArea().getCenter() - SVector2(5.5f, 0.0f), Player->getArea().Size + SVector2(5.0f, 0.0f));
