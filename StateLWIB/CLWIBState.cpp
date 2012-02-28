@@ -88,8 +88,11 @@ void CLWIBState::begin()
    Diffuse = CShaderLoader::loadShader("Diffuse");
    DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture");
    DiffuseTextureBright = CShaderLoader::loadShader("DiffuseTextureBright");
-
-
+   
+   float const LightBrightness = 1.0f;
+   Application.getSceneManager().Lights.push_back(new CLight()); 
+   Application.getSceneManager().Lights.back()->Color = SVector3(LightBrightness);
+   Application.getSceneManager().Lights.back()->Position = SVector3(-5.f, 200.f, 500.f);
    //Load the meshes into VBOs
 
    srand((unsigned int) time(0));
@@ -396,7 +399,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                     enemyType = 0;
             } else {
                 if (cDown == 0) { 
-                    if (textureType < 3 && textureType >= 0 && textureType != 2)
+                    if (textureType < 2  && textureType >= 0 && textureType != 2)
                         textureType++;
                     else if (textureType == 2) {
                         textureType = -5;
@@ -414,18 +417,18 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                     }
                 }
             }
-            if (cDown == 1) {
-                if(blockWidth < 10 && textureType != 2)
+            if (cDown == 1&& textureType != 2) {
+                if(blockWidth < 10 && textureType != -5)
                     blockWidth++;
                 PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             }
-            if (cDown == 2) {
-                if(blockHeight < 10 && textureType != 2)
+            if (cDown == 2&& textureType != 2) {
+                if(blockHeight < 10 && textureType != -5)
                     blockHeight++;
                 PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             }
-            if (cDown == 3) {
-                if(blockDepth < 6 && textureType != 2)
+            if (cDown == 3&& textureType != 2) {
+                if(blockDepth < 6 && textureType != -5)
                     blockDepth++;
                 PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             }
@@ -455,18 +458,18 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                     }
                 }
-                if(cDown == 1) {
-                    if(blockWidth > 1 && textureType != 2) 
+                if(cDown == 1&& textureType != 2) {
+                    if(blockWidth > 1 && textureType != -5) 
                         blockWidth--;
                     PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                 }
-                if(cDown == 2) {
-                    if(blockWidth > 1 && textureType != 2)
+                if(cDown == 2&& textureType != 2) {
+                    if(blockWidth > 1 && textureType != -5)
                         blockWidth--;
                     PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                 }
-                if(cDown == 3) {
-                    if(blockDepth > 1 && textureType != 2)
+                if(cDown == 3&& textureType != 2) {
+                    if(blockDepth > 1 && textureType != -5)
                         blockDepth--;
                     PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                 }
@@ -663,6 +666,7 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
       return;
    }
 
+
    printf("Placed enemy starting at %0.2f, %0.2f\n", x, y);
    CMeshSceneObject *tempEnemy;
    CEnemy *tempPlaceable;
@@ -726,6 +730,8 @@ void CLWIBState::PrepCabbage(float x, float y) {
 void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t) {
    if(x < -25 || y < -25 || x >= 200 || y >= 75)
       return;
+   if(t == -5 && (int)y != -5)
+       return;
    int i,j, ret=0;
    for(i=0;i<w;i++) {
       for(j=0;j<h;j++) {
