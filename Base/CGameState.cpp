@@ -564,7 +564,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 #ifdef PARTICLE
       if(Event.Key == SDLK_e) {
          if(!particleCubeEngine || (particleCubeEngine && particleCubeEngine->dead))
-            particleCubeEngine = new CParticleEngine(SVector3(0, 1, 0), 800, 6, CUBE_PARTICLE);
+            particleCubeEngine = new CParticleEngine(SVector3(0, 1, 0), 100, 10, CUBE_PARTICLE);
       }
       if(Event.Key == SDLK_r) {
          if(GameplayManager->getPlayerEnergy() > 0) {

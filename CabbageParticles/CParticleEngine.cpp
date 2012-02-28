@@ -87,7 +87,9 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
    //Default bounding box to 0,0,0 to 1,1,1. All of our particle effects at this point (i.e. flame) are 1x1x1
    myObj->setBoundingBox(SBoundingBox3(centerPos - 0.5, centerPos + 0.5));
 
-   char *textureToUse;
+   const char *textureToUse;
+   char buf[50];
+   std::string v = "Textures/particle";
 
    switch(particleType) {
    case LEAF_PARTICLE:
@@ -95,6 +97,13 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
       break;
    case CUBE_PARTICLE:
       textureToUse = "Textures/particleStar.bmp";
+      /* Texture input
+      std::cout << "What particle file?";
+      std::cin >> buf;
+      v.append(buf);
+      v.append(".bmp");
+      textureToUse = v.c_str();
+      */
       break;
    case FLAME_PARTICLE:
       textureToUse = "Textures/particle2.bmp";
@@ -113,6 +122,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
 void CParticleEngine::setCenterPos(SVector3 cP) {
    centerPos = cP;
    myObj->setBoundingBox(SBoundingBox3(centerPos - 0.5, centerPos + 0.5));
+   SBoundingBox3 box = myObj->getBoundingBox();
 }
 
 void CParticleEngine::setLookRight(int pf) {
