@@ -218,6 +218,9 @@ void LoadHUD() {
 //Initalizer fxn
 void CGameState::begin()
 {
+   Charged = 0; aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0; lDown = 0;
+   backwardsView = 0; overView = 0;
+
    CApplication::get().getSceneManager().setCullingEnabled(true);
 #ifdef PARTICLE
    particleLeafEngine = particleCubeEngine = particleLaserEngine = 0;
@@ -677,6 +680,24 @@ void CGameState::end()
    stopSoundtrack();
    //Mix_CloseAudio();
    our_font.clean();
+
+   if(particleLeafEngine) {
+      particleLeafEngine->deconstruct();
+      delete particleLeafEngine;
+   }
+   if(particleCubeEngine) {
+      particleCubeEngine->deconstruct();
+      delete particleCubeEngine;
+   }
+   if(particleLaserEngine) {
+      particleLaserEngine->deconstruct();
+      delete particleLaserEngine;
+   }
+   if(particleLaserFireEngine) {
+      particleLaserFireEngine->deconstruct();
+      delete particleLaserFireEngine;
+   }
+   particleLeafEngine = particleCubeEngine = particleLaserEngine = particleLaserFireEngine = NULL;
 
    Application.getSceneManager().removeAllSceneObjects();
 }
