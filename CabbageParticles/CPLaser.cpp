@@ -5,7 +5,7 @@ void CPLaser::setupRenderable() {
 
    xFactor = (float)rand()/(float)RAND_MAX * 3 - 1.5f;
    yFactor = (float)rand()/(float)RAND_MAX * 3 - 1.5f;
-   Amplitude = (float)rand()/(float)RAND_MAX * 0.5f + 0.5; 
+   Amplitude = (float)rand()/(float)RAND_MAX * 0.7f + 0.2; 
    zFactor = (float)rand()/(float)RAND_MAX * 2 - 1;
    reflectX = rand() % 2 * 2 - 1;
    reflectY = rand() % 2 * 2 - 1;
@@ -26,7 +26,7 @@ void CPLaser::updateMatrices(float timeElapsed) {
    else if(Duration == -1) {}
    else {
       sineValue += 4*timeElapsed;
-      Amplitude = Amplitude + (Amplitude < 0 ? 1 : -1)*0.56f*timeElapsed; 
+      Amplitude = Amplitude + (Amplitude < 0 ? 1 : -1)*1.5f*timeElapsed; 
       if(Amplitude <= 0.01 && Amplitude >= -0.01)
          Amplitude = 0;
       Duration += timeElapsed;

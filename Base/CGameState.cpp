@@ -21,6 +21,7 @@ CLight * PlayerLight;
 CObject *Floor, *Block;
 CPlayerView *PlayerView;
 std::vector<CElevator*> elevators;
+int Charged = 0;
 
 CGameplayManager *GameplayManager;
 
@@ -95,14 +96,6 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             list->push_back(cen = new CEnemy((float)x,(float)y,w,h,t));
             cen->setShader(Diffuse);
             cen->isMovingPlatform = 0;
-         }
-         if(!strcmp("CCabbage",xml->getNodeName())) {
-            x = xml->getAttributeValueAsInt(0);
-            y = xml->getAttributeValueAsInt(1);
-            h = xml->getAttributeValueAsInt(2);
-            w = xml->getAttributeValueAsInt(3);
-            t = xml->getAttributeValueAsInt(4);
-            Player->setArea(SRect2((float)x,(float)y,(float)h,(float)w));
          }
          break;
       }
@@ -304,6 +297,8 @@ void CGameState::begin()
    Application.skipElapsedTime();
 }
 
+SRect2 oldMiddle;
+
 void CGameState::oldDisplay() {
    float curXVelocity = Player->getVelocity().X;
    PlayerView->setVelocity(Player->getVelocity());
@@ -422,16 +417,27 @@ void CGameState::oldDisplay() {
       particleLaserEngine->deconstruct();
       delete particleLaserEngine;
       particleLaserEngine = NULL;
-      lDown = 0;
-      PlayerView->setShader(Toon);
-      particleLaserFireEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 3.5f, CUBE_PARTICLE);
-      particleLaserFireEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
-      particleLaserFireEngine->setLookRight(PlayerView->getLookRight());
 
-      Player->setImpulse(SVector2((PlayerView->getLookRight()?-1:1)*12.0f, 0.0f), 0.1);
+      Charged = 1;
+      lDown = 0;
    }
    if(particleLaserFireEngine && !particleLaserFireEngine->dead) {
+      Player->setArea(oldMiddle);
+      Player->setFallAcceleration(50.0f); //for the screen shaking effect
       particleLaserFireEngine->step(Application.getElapsedTime());
+      lDown = 1;
+      PlayerView->setShader(ToonBright);
+   }
+   if(particleLaserFireEngine && particleLaserFireEngine->dead) {
+      Player->setFallAcceleration(0.0f);
+      PlayerView->setShader(Toon);
+      lDown = 0;
+      Charged = 0;
+      GameplayManager->ShootingLaser = 0;
+      particleLaserFireEngine->deconstruct();
+      delete particleLaserFireEngine;
+      particleLaserFireEngine = NULL;
+      Player->setImpulse(SVector2((PlayerView->getLookRight()?-1:1)*15.0f, 0.0f), 0.1);
    }
    PlayerView->Charging = lDown;
 #endif
@@ -568,7 +574,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_l){
          //GameplayManager->setChargingLaser
          if(!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead))
-            particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 3.5f, LASER_PARTICLE);
+            particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 2.3f, LASER_CHARGING_PARTICLE);
          lDown = 1;
          PlayerView->setShader(ToonBright);
       }
@@ -635,6 +641,22 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
             particleLaserEngine->deconstruct();
             delete particleLaserEngine;
             particleLaserEngine = NULL;
+         }
+         if(Charged) {
+            Charged = 0;
+            oldMiddle = Player->getArea();
+            Player->setVelocity(SVector2(0.0f));
+            GameplayManager->ShootingLaser = 1;
+            if(PlayerView->getLookRight()) {
+               GameplayManager->LaserBox = SRect2(Player->getArea().getCenter(), Player->getArea().Size + SVector2(5.0f, 0.0f));
+            }
+            else {
+               GameplayManager->LaserBox = SRect2(Player->getArea().getCenter() - SVector2(5.0f, 0.0f), Player->getArea().Size + SVector2(5.0f, 0.0f));
+            }
+
+            particleLaserFireEngine = new CParticleEngine(SVector3(0, 1, 0), 1500, 1.2f, LASER_FIRING_PARTICLE);
+            particleLaserFireEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
+            particleLaserFireEngine->setLookRight(PlayerView->getLookRight());
          }
          lDown = 0;
          PlayerView->setShader(Toon);

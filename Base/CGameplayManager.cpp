@@ -12,6 +12,7 @@ CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabb
     dead = 0;
     gameOver = 0;
     PlayerLives = 3;
+    ShootingLaser = 0;
 }
 
 void CGameplayManager::UseAbility(int energyCost) {
@@ -216,6 +217,21 @@ void CGameplayManager::run(float const TickTime)
         PlayerRecovering -= TickTime;
     if (GodModeTime > 0)
        GodModeTime -= TickTime;
+
+    if(ShootingLaser) {
+       for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
+       {
+          if ((*it)->Actor->CollideableType != COLLIDEABLE_TYPE_FLAME) {
+             if(LaserBox.intersects((*it)->Actor->getArea())) {
+                Mix_PlayChannel(-1, killEnemy, 0);
+                KillList.push_back(* it);
+
+                Enemies.erase(it);
+             }
+          }
+       }
+    }
+
 
     for (EnemyList::iterator it = KillList.begin(); it != KillList.end(); ++ it)
     {
