@@ -96,6 +96,14 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             cen->setShader(Diffuse);
             cen->isMovingPlatform = 0;
          }
+         if(!strcmp("CCabbage",xml->getNodeName())) {
+            x = xml->getAttributeValueAsInt(0);
+            y = xml->getAttributeValueAsInt(1);
+            h = xml->getAttributeValueAsInt(2);
+            w = xml->getAttributeValueAsInt(3);
+            t = xml->getAttributeValueAsInt(4);
+            Player->setArea(SRect2((float)x,(float)y,(float)h,(float)w));
+         }
          break;
       }
    }

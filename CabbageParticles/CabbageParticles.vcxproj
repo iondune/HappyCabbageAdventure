@@ -83,6 +83,7 @@
     <ClCompile Include="CPCube.cpp" />
     <ClCompile Include="CPDeath.cpp" />
     <ClCompile Include="CPFlame.cpp" />
+    <ClCompile Include="CPLaser.cpp" />
     <ClCompile Include="CPLeaf.cpp" />
   </ItemGroup>
   <ItemGroup>

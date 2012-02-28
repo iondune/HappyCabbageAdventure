@@ -173,20 +173,16 @@ void CLWIBState::OnRenderStart(float const Elapsed)
         if (cDown == 0) {
             if (textureType == 0) {
                 freetype::print(our_font, 20, WindowHeight - 150.f, "Placing grass block\n");
-                PreviewEnemy->setMesh(appleMesh);
             }
             if (textureType == 1) {
                 freetype::print(our_font, 20, WindowHeight - 150.f, "Placing dirt block\n");
-                PreviewEnemy->setMesh(orangeMesh);
             }
             if (textureType == 2) {
                 freetype::print(our_font, 20, WindowHeight - 150.f, "Placing rock block \n");
-                PreviewEnemy->setMesh(kiwiMesh);
             }
 
             if (textureType == -5) {
                 freetype::print(our_font, 20, WindowHeight - 150.f, "ground block\n");
-                PreviewEnemy->setMesh(cubeMesh);
             }
         }
         if (cDown == 1) {
@@ -229,11 +225,12 @@ void CLWIBState::OnRenderStart(float const Elapsed)
 
         if (enemyType == 5) {
            freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Blade\n");
-           PreviewEnemy->setMesh(cubeMesh);
+           PreviewEnemy->setMesh(bladeMesh);
         }
     }
     if (oneDown && !showHelp && !tDown && !twoDown) {
         freetype::print(our_font, 20, WindowHeight - 100.f, "Insert Cabbage\n\n");
+        PreviewCabbage->setMesh(cabbageMesh);
     }
     if (tDown && !showHelp )
         freetype::print(our_font, 20, WindowHeight - 100.f, "Remove mode\n\n");
@@ -611,7 +608,7 @@ void CLWIBState::PrepPreviews() {
    bladeMesh = CMeshLoader::load3dsMesh("Models/trap1.3ds");
 
    blocks.push_back(PreviewCabbage = new CMeshSceneObject());
-   //PreviewCabbage->setMesh(cabbageMesh
+   //PreviewCabbage->setMesh(appleMesh);
    
    if(appleMesh) {
       appleMesh->resizeMesh(SVector3(1));
@@ -635,14 +632,20 @@ void CLWIBState::PrepPreviews() {
       bladeMesh->centerMeshByExtents(SVector3(0));
       bladeMesh->calculateNormalsPerFace();
    }
-   /*PreviewCabbage->setShader(Diffuse);
+   if (cabbageMesh) {
+      cabbageMesh->resizeMesh(SVector3(1));
+      cabbageMesh->centerMeshByExtents(SVector3(0));
+      cabbageMesh->calculateNormalsPerVertex();
+   }
+   PreviewCabbage->setShader(Diffuse);
    PreviewCabbage->setRotation(SVector3(-90, 0, 0));
-   PreviewCabbage->setScale(SVector3(0.5,0.5, 0.5));*/
+   PreviewCabbage->setScale(SVector3(0.5,0.5, 0.5));
    PreviewEnemy->setShader(Diffuse);
    PreviewEnemy->setRotation(SVector3(-90, 0, 0));
    PreviewBlock->setScale(SVector3(1, 1, 1));
 
    CApplication::get().getSceneManager().addSceneObject(PreviewEnemy);
+   CApplication::get().getSceneManager().addSceneObject(PreviewCabbage);
    PreviewEnemy->setVisible(false);
 }
 
@@ -714,7 +717,7 @@ void CLWIBState::PrepCabbage(float x, float y) {
    placeables.push_back(tempPlaceable = new CCabbage(x, y, 1, 1));
    tempCabbage->setMesh(cabbageMesh);
    tempCabbage->setShader(Diffuse);
-   tempCabbage->setTranslation(SVector3((x+(x+1.5f))/2, (y+(y))/2, 0));
+   tempCabbage->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
    tempCabbage->setRotation(SVector3(-90, 0, 0));
    tempCabbage->setScale(SVector3(0.5, 0.5, 0.5));
    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;

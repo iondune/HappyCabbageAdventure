@@ -304,7 +304,7 @@ void COverworldState::PrepMeshes()
    renderMap->setCullingEnabled(false);
 
    //Set up player renderable
-   CMesh *playerMesh = CMeshLoader::load3dsMesh("Models/crappycabbage.3ds");
+   CMesh *playerMesh = CMeshLoader::load3dsMesh("Models/crappycabbage2.3ds");
    if (playerMesh) {
       playerMesh->resizeMesh(SVector3(0.5f));
       playerMesh->centerMeshByExtents(SVector3(0));
