@@ -218,6 +218,9 @@ void LoadHUD() {
 //Initalizer fxn
 void CGameState::begin()
 {
+   Charged = 0; aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0; lDown = 0;
+   backwardsView = 0; overView = 0;
+
    CApplication::get().getSceneManager().setCullingEnabled(true);
 #ifdef PARTICLE
    particleLeafEngine = particleCubeEngine = particleLaserEngine = 0;
@@ -529,6 +532,7 @@ void CGameState::OnRenderStart(float const Elapsed)
             Mix_PlayChannel(-1, die, 0); //Only play once
             playDead = false;
          }
+         Charged = 0;
 
          freetype::print(our_font, 50, WindowHeight - 240.f, "GAME OVER! YOU ARE DEAD.");
       }
@@ -648,10 +652,10 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
             Player->setVelocity(SVector2(0.0f));
             GameplayManager->ShootingLaser = 1;
             if(PlayerView->getLookRight()) {
-               GameplayManager->LaserBox = SRect2(Player->getArea().getCenter(), Player->getArea().Size + SVector2(5.0f, 0.0f));
+               GameplayManager->LaserBox = SRect2(Player->getArea().getCenter() - SVector2(0.5f, 0.0f), Player->getArea().Size + SVector2(5.0f, 0.0f));
             }
             else {
-               GameplayManager->LaserBox = SRect2(Player->getArea().getCenter() - SVector2(5.0f, 0.0f), Player->getArea().Size + SVector2(5.0f, 0.0f));
+               GameplayManager->LaserBox = SRect2(Player->getArea().getCenter() - SVector2(5.5f, 0.0f), Player->getArea().Size + SVector2(5.0f, 0.0f));
             }
 
             particleLaserFireEngine = new CParticleEngine(SVector3(0, 1, 0), 1500, 1.2f, LASER_FIRING_PARTICLE);
@@ -676,6 +680,24 @@ void CGameState::end()
    stopSoundtrack();
    //Mix_CloseAudio();
    our_font.clean();
+
+   if(particleLeafEngine) {
+      particleLeafEngine->deconstruct();
+      delete particleLeafEngine;
+   }
+   if(particleCubeEngine) {
+      particleCubeEngine->deconstruct();
+      delete particleCubeEngine;
+   }
+   if(particleLaserEngine) {
+      particleLaserEngine->deconstruct();
+      delete particleLaserEngine;
+   }
+   if(particleLaserFireEngine) {
+      particleLaserFireEngine->deconstruct();
+      delete particleLaserFireEngine;
+   }
+   particleLeafEngine = particleCubeEngine = particleLaserEngine = particleLaserFireEngine = NULL;
 
    Application.getSceneManager().removeAllSceneObjects();
 }
