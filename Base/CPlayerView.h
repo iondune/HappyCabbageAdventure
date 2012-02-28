@@ -74,6 +74,7 @@ class CPlayerView {
       void setGround(float groundYValue) {
          yShadow = groundYValue;
       }
+      void setShader(CShader * shader);
       void draw();
       void step(float delta);
 };

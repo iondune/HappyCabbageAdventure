@@ -132,3 +132,7 @@ void CPlayerView::establishCamera(ICamera *Camera, int angle) {
    Camera->setLookDirection(camLook);
    Camera->recalculateViewMatrix();
 }
+
+void CPlayerView::setShader(CShader *shad) {
+   PlayerRenderable->setShader(shad);
+}
