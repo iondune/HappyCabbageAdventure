@@ -297,6 +297,8 @@ void CGameState::begin()
    Application.skipElapsedTime();
 }
 
+SRect2 oldMiddle;
+
 void CGameState::oldDisplay() {
    float curXVelocity = Player->getVelocity().X;
    PlayerView->setVelocity(Player->getVelocity());
@@ -420,11 +422,14 @@ void CGameState::oldDisplay() {
       lDown = 0;
    }
    if(particleLaserFireEngine && !particleLaserFireEngine->dead) {
+      Player->setArea(oldMiddle);
+      Player->setFallAcceleration(50.0f); //for the screen shaking effect
       particleLaserFireEngine->step(Application.getElapsedTime());
       lDown = 1;
       PlayerView->setShader(ToonBright);
    }
    if(particleLaserFireEngine && particleLaserFireEngine->dead) {
+      Player->setFallAcceleration(0.0f);
       PlayerView->setShader(Toon);
       lDown = 0;
       Charged = 0;
@@ -638,12 +643,12 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          }
          if(Charged) {
             Charged = 0;
+            oldMiddle = Player->getArea();
+            Player->setVelocity(SVector2(0.0f));
 
             particleLaserFireEngine = new CParticleEngine(SVector3(0, 1, 0), 1500, 1.2f, LASER_FIRING_PARTICLE);
             particleLaserFireEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
             particleLaserFireEngine->setLookRight(PlayerView->getLookRight());
-
-
          }
          lDown = 0;
          PlayerView->setShader(Toon);
