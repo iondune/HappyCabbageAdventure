@@ -64,7 +64,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
         PlayerActor->setImpulse(SVector2(0.f, -0.4f) * 7, 0.5f);
     }
 
-    if (! Other || GodMode)
+    if (! Other || GodMode || ShootingLaser)
         return;
    
     float const HitThreshold = 0.05f;
@@ -218,17 +218,24 @@ void CGameplayManager::run(float const TickTime)
     if (GodModeTime > 0)
        GodModeTime -= TickTime;
 
+    EnemyList toKill;
+
     if(ShootingLaser) {
        for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
        {
           if ((*it)->Actor->CollideableType != COLLIDEABLE_TYPE_FLAME) {
              if(LaserBox.intersects((*it)->Actor->getArea())) {
                 Mix_PlayChannel(-1, killEnemy, 0);
+                toKill.push_back(* it);
                 KillList.push_back(* it);
 
                 Enemies.erase(it);
              }
           }
+       }
+       for (EnemyList::iterator it = toKill.begin(); it != toKill.end(); ++ it)
+       {
+          Enemies.erase(std::remove(Enemies.begin(), Enemies.end(), *it), Enemies.end());
        }
     }
 

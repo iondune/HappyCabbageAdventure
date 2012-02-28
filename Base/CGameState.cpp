@@ -529,6 +529,7 @@ void CGameState::OnRenderStart(float const Elapsed)
             Mix_PlayChannel(-1, die, 0); //Only play once
             playDead = false;
          }
+         Charged = 0;
 
          freetype::print(our_font, 50, WindowHeight - 240.f, "GAME OVER! YOU ARE DEAD.");
       }
@@ -651,7 +652,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
                GameplayManager->LaserBox = SRect2(Player->getArea().getCenter(), Player->getArea().Size + SVector2(5.0f, 0.0f));
             }
             else {
-               GameplayManager->LaserBox = SRect2(Player->getArea().getCenter() - SVector2(5.0f, 0.0f), Player->getArea().Size + SVector2(5.0f, 0.0f));
+               GameplayManager->LaserBox = SRect2(Player->getArea().getCenter() - SVector2(5.5f, 0.0f), Player->getArea().Size + SVector2(5.0f, 0.0f));
             }
 
             particleLaserFireEngine = new CParticleEngine(SVector3(0, 1, 0), 1500, 1.2f, LASER_FIRING_PARTICLE);
