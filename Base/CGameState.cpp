@@ -125,7 +125,7 @@ void CGameState::EngineInit( void ) {
 
    std::vector<CPlaceable*>::iterator it;
    for(it=list.begin();it<list.end();it++) {
-      (*it)->setupItem(DiffuseTexture, Engine, GameplayManager);
+      (*it)->setupItem(ToonTexture, Engine, GameplayManager);
       printf(" %d\n", (*it)->isMovingPlatform);
       if((*it)->isMovingPlatform) {
          elevators.push_back(((CBlock*)(*it))->elevator);
@@ -652,7 +652,7 @@ void CGameState::PrepBlock(float x, float y, float w, float h) {
    blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
    tempBlock->setTexture(dirtTxt);
-   tempBlock->setShader(DiffuseTexture);
+   tempBlock->setShader(ToonTexture);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    tempBlock->setScale(SVector3(w, h, 1));
    tempBlock->setRotation(SVector3(0, 0, 0));
@@ -664,7 +664,7 @@ void CGameState::PrepGrass(float x, float y, float w, float h) {
    blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
    tempBlock->setTexture(grassTxt);
-   tempBlock->setShader(DiffuseTexture);
+   tempBlock->setShader(ToonTexture);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    tempBlock->setScale(SVector3(0, 0, 0));
    Application.getSceneManager().addSceneObject(tempBlock);
@@ -698,7 +698,8 @@ CMeshSceneObject* CGameState::PrepEnemy(float x, float y) {
 void LoadShaders() {
    Flat = CShaderLoader::loadShader("Diffuse");
    Diffuse = CShaderLoader::loadShader("Diffuse");
-   DiffuseTexture = CShaderLoader::loadShader("ToonTexture");
+   ToonTexture = CShaderLoader::loadShader("ToonTexture");
+   DiffuseTexture = CShaderLoader::loadShader("DiffuseTextureBright");
    normalColor = CShaderLoader::loadShader("Simple");
    Toon = CShaderLoader::loadShader("Toon");
    BlackShader = CShaderLoader::loadShader("Border");
@@ -858,7 +859,7 @@ void PrepMeshes()
    renderBlueFlwr = new CMeshSceneObject();
    renderBlueFlwr->setMesh(blueFlwrMesh);
    renderBlueFlwr->setTexture(blueFlwrTxt);
-   renderBlueFlwr->setShader(DiffuseTexture);
+   renderBlueFlwr->setShader(ToonTexture);
    renderBlueFlwr->setTranslation(SVector3(-23.f, .18f, 2));
    renderBlueFlwr->setScale(SVector3(.36f));
    renderBlueFlwr->setRotation(SVector3(-90, 0, 0));
@@ -869,7 +870,7 @@ void PrepMeshes()
    renderPinkFlwr->setTranslation(SVector3(-20, .2f, 2));
    renderPinkFlwr->setScale(SVector3(.36f));
    renderPinkFlwr->setRotation(SVector3(-90, 0, 0));
-   renderPinkFlwr->setShader(DiffuseTexture);
+   renderPinkFlwr->setShader(ToonTexture);
 
    renderFicus = new CMeshSceneObject();
    renderFicus->setMesh(ficusMesh);
@@ -877,7 +878,7 @@ void PrepMeshes()
    renderFicus->setScale(SVector3(1.0));
    renderFicus->setRotation(SVector3(-90, 0, 0));
    renderFicus->setTexture(blueFlwrTxt);
-   renderFicus->setShader(DiffuseTexture);
+   renderFicus->setShader(ToonTexture);
 
    renderPoin = new CMeshSceneObject();
    renderPoin->setMesh(poinMesh);
@@ -885,7 +886,7 @@ void PrepMeshes()
    renderPoin->setScale(SVector3(.75));
    renderPoin->setRotation(SVector3(-90, 0, 0));
    renderPoin->setTexture(poinTxt);
-   renderPoin->setShader(DiffuseTexture);
+   renderPoin->setShader(ToonTexture);
 
    renderFlag = new CMeshSceneObject();
    renderFlag->setMesh(flagMesh);
@@ -893,7 +894,7 @@ void PrepMeshes()
    renderFlag->setRotation(SVector3(-90,0,0));
    renderFlag->setScale(SVector3(.0150f, .00025f,.0016f));
    renderFlag->setTexture(flagTxt);
-   renderFlag->setShader(DiffuseTexture);
+   renderFlag->setShader(ToonTexture);
 
    flagLogo = new CMeshSceneObject();
    flagLogo->setMesh(cabbageMesh);

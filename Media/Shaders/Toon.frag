@@ -39,7 +39,8 @@ void main()
     
     float df = vAttenuation[i]*max(0.0, dot(N, L));
     float sf = vAttenuation[i]*max(0.0, dot(N, H));
-    sf = pow(sf, uMaterial.Shininess);
+    sf = pow(sf, 18.0f);
+    //sf = pow(sf, uMaterial.Shininess);
 
     const float A = 0.1;
     const float B = 0.3;
@@ -66,7 +67,8 @@ void main()
     }
   }
 
-    vec3 SpecularColor = vec3(1, 1, 1);
+    vec3 SpecularColor = (uMaterial.DiffuseColor + vec3(1.0, 1.0, 1.0))/6;
+    //vec3 SpecularColor = vec3(1, 1, 1);
     vec3 color = uMaterial.AmbientColor + diffuse * uMaterial.DiffuseColor + specular * SpecularColor; //vec3
     gl_FragColor = vec4(color, 1.0);
 }

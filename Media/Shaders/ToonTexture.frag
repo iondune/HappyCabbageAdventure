@@ -40,7 +40,7 @@ void main()
     
     float df = vAttenuation[i]*max(0.0, dot(N, L));
     float sf = vAttenuation[i]*max(0.0, dot(N, H));
-    sf = pow(sf, 10000000.0);
+    sf = pow(sf, 8.0);
 
     const float A = 0.1;
     const float B = 0.3;
@@ -67,7 +67,8 @@ void main()
     }
   }
 
-    vec3 SpecularColor = vec3(1, 1, 1);
-    vec3 color = max(diffuse,0.4) * texture2D(uTexColor, vTexCoord).xyz + specular * SpecularColor; //vec3
+    vec3 SpecularColor = texture2D(uTexColor, vTexCoord).xyz;
+    //vec3 SpecularColor = vec3(1, 1, 1);
+    vec3 color = max(diffuse,0.0) * texture2D(uTexColor, vTexCoord).xyz + max(specular, 0.3f) * SpecularColor; //vec3
     gl_FragColor = vec4(color, 1.0);
 }

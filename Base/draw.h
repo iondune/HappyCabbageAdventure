@@ -3,7 +3,7 @@
 #include "../CabbageCore/SVector3.h"
 
 //Variables need to create VBOs of meshes, textures, and shaders
-CShader *Shader, *Flat, *Diffuse, *BlackShader, *DiffuseTexture, *normalColor, *Toon;  //Use Diffuse for trees (doesn't need texture)
+CShader *Shader, *Flat, *Diffuse, *BlackShader, *DiffuseTexture, *normalColor, *Toon, *ToonTexture;  //Use Diffuse for trees (doesn't need texture)
 
 CImage *grassImg, *skyImg, *dirtImg, *blueFlwrImg, *pinkFlwrImg, *ficusImg,
        *poinImg, *flagImg;
