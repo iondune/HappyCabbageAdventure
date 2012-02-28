@@ -14,26 +14,31 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
       switch(particleType) {
          case LEAF_PARTICLE:
             particles.push_back(cPtr = new CPLeaf());
+            cPtr->setAppearRate(2);
             break;
          case CUBE_PARTICLE:
             particles.push_back(cPtr = new CPCube());
+            cPtr->setAppearRate(2);
             break;
          case FLAME_PARTICLE:
             particles.push_back(cPtr = new CPFlame());
+            cPtr->setAppearRate(2);
             break;
          case DEATH_PARTICLE:
             particles.push_back(cPtr = new CPDeath());
+            cPtr->setAppearRate(2);
             break;
          case LASER_CHARGING_PARTICLE:
             particles.push_back(cPtr = new CPLaser());
+            cPtr->setAppearRate(2);
             break;
          case LASER_FIRING_PARTICLE:
             particles.push_back(cPtr = new CPLaser2());
+            cPtr->setAppearRate(0);
             break;
       }
       cPtr->setCenterPos(&centerPos);
       cPtr->setLookRight(&lookRight);
-      cPtr->setAppearRate(2);
       cPtr->TotalDuration = duration;
       cPtr->setupRenderable();
       //CApplication::get().getSceneManager().addSceneObject(cPtr->getRenderable());
@@ -105,7 +110,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
             else {
                colorArr.push_back(new SVector3(temp*3, temp*3, temp*1));
             }
-            sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 30);
+            sizeArr.push_back((rand() % 5 + 1)*3.0f);
             break;
       }
    }

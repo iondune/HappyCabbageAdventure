@@ -4,11 +4,7 @@
 #include "CParticle.h"
 
 class CPLaser2 : public CParticle {
-   float Amplitude, Period;
-   float sineValue;
-   float Size;
-
-   float reflectX, reflectY, xFactor, yFactor, zFactor;
+   float tickValue, xValue, yValue, zValue;
    void setupRenderable();
    void updateMatrices(float);
 };

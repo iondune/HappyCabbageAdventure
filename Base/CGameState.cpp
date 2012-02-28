@@ -21,6 +21,7 @@ CLight * PlayerLight;
 CObject *Floor, *Block;
 CPlayerView *PlayerView;
 std::vector<CElevator*> elevators;
+int Charged = 0;
 
 CGameplayManager *GameplayManager;
 
@@ -414,16 +415,23 @@ void CGameState::oldDisplay() {
       particleLaserEngine->deconstruct();
       delete particleLaserEngine;
       particleLaserEngine = NULL;
-      lDown = 0;
-      PlayerView->setShader(Toon);
-      particleLaserFireEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 0.5f, LASER_FIRING_PARTICLE);
-      particleLaserFireEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
-      particleLaserFireEngine->setLookRight(PlayerView->getLookRight());
 
-      Player->setImpulse(SVector2((PlayerView->getLookRight()?-1:1)*12.0f, 0.0f), 0.1);
+      Charged = 1;
+      lDown = 0;
    }
    if(particleLaserFireEngine && !particleLaserFireEngine->dead) {
       particleLaserFireEngine->step(Application.getElapsedTime());
+      lDown = 1;
+      PlayerView->setShader(ToonBright);
+   }
+   if(particleLaserFireEngine && particleLaserFireEngine->dead) {
+      PlayerView->setShader(Toon);
+      lDown = 0;
+      Charged = 0;
+      particleLaserFireEngine->deconstruct();
+      delete particleLaserFireEngine;
+      particleLaserFireEngine = NULL;
+      Player->setImpulse(SVector2((PlayerView->getLookRight()?-1:1)*15.0f, 0.0f), 0.1);
    }
    PlayerView->Charging = lDown;
 #endif
@@ -560,7 +568,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_l){
          //GameplayManager->setChargingLaser
          if(!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead))
-            particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 3.5f, LASER_CHARGING_PARTICLE);
+            particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 2.3f, LASER_CHARGING_PARTICLE);
          lDown = 1;
          PlayerView->setShader(ToonBright);
       }
@@ -627,6 +635,15 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
             particleLaserEngine->deconstruct();
             delete particleLaserEngine;
             particleLaserEngine = NULL;
+         }
+         if(Charged) {
+            Charged = 0;
+
+            particleLaserFireEngine = new CParticleEngine(SVector3(0, 1, 0), 1500, 1.2f, LASER_FIRING_PARTICLE);
+            particleLaserFireEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
+            particleLaserFireEngine->setLookRight(PlayerView->getLookRight());
+
+
          }
          lDown = 0;
          PlayerView->setShader(Toon);
