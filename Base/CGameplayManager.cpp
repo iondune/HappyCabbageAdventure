@@ -44,20 +44,15 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
        printf("Flag collision\n");
 
     int birdCollision = 0;
-    //printf("With's type: %d, Object's type: %d\n", With->CollideableType, Object->CollideableType);
+
     if((With->CollideableType == COLLIDEABLE_TYPE_ACTOR || With == PlayerActor || With->CollideableType == COLLIDEABLE_TYPE_BLOCK)
-          && Object->CollideableType == COLLIDEABLE_TYPE_KIWI) {
-       //printf("Hey 15\n");
-       //SRect2 area = ((Cabbage::Collider::CActor*)Object)->getArea();
-       //((Cabbage::Collider::CActor*)Object)->setArea(SRect2(area.Position.X + 1.5, area.Position.Y + 0.2, area.Size.X, area.Size.Y));
+      && Object->CollideableType == COLLIDEABLE_TYPE_KIWI) {
        ((Cabbage::Collider::CActor*)Object)->setImpulse(SVector2(0.03f, 0.3f)*7, 0.2f);
+
        if(With->CollideableType == COLLIDEABLE_TYPE_ACTOR) {
           ((Cabbage::Collider::CActor*)With)->setImpulse(SVector2(0.00f, -0.3f), 0.2f);
        }
        birdCollision = 1;
-    }
-
-    if (Object == PlayerActor && With->CollideableType == COLLIDEABLE_TYPE_FLAME) {
     }
 
     if(GodMode && birdCollision == 1 && PlayerCollideable) {
@@ -81,7 +76,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
         if (Other == (*it)->Actor)
         {
 
-            if (PlayerActor->getArea().Position.Y > Other->getArea().otherCorner().Y - HitThreshold && (*it)->Actor->CollideableType != COLLIDEABLE_TYPE_FLAME)
+            if (PlayerActor->getArea().Position.Y > Other->getArea().otherCorner().Y - HitThreshold && (*it)->Actor->CollideableType != COLLIDEABLE_TYPE_FLAME && (*it)->Actor->CollideableType != COLLIDEABLE_TYPE_PKIWI)
             {
                 Mix_PlayChannel(-1, killEnemy, 0);
                 KillList.push_back(* it);
@@ -94,6 +89,12 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
             //Need to rewrite so works without SEnemy
             else
             {
+               //Check if it was a projectile.  If so, remove it.
+               if ((*it)->Actor->CollideableType == COLLIDEABLE_TYPE_PKIWI) {
+                  KillList.push_back(*it);
+                  Enemies.erase(it);
+               }
+
                 if (GodModeTime > 0)
                    continue;
                 if (isPlayerAlive() && PlayerRecovering <= 0.f)
