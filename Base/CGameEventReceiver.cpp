@@ -64,7 +64,7 @@ void CGameEventReceiver::OnGameTickStart(float const Elapsed)
    }
 
    if(playerDamagedEngine && !playerDamagedEngine->dead) {
-      playerDamagedEngine->setCenterPos(SVector3(Player->getArea().getCenter(), 0.0f));
+      //playerDamagedEngine->setCenterPos(SVector3(Player->getArea().getCenter(), 0.0f));
       playerDamagedEngine->step(Elapsed);
    }
    else if(playerDamagedEngine && playerDamagedEngine->dead) {
