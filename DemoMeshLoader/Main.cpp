@@ -138,7 +138,8 @@ public:
 		SkyBox->setCullingEnabled(false);
 
 		CApplication::get().getSceneManager().addSceneObject(Renderable);
-
+		CGUIFontWidget * Font = new CGUIFontWidget("Fonts/DejaVuSansMono.ttf", 14.f);
+		GUIEngine.addWidget(Font);
         //Font.init("Fonts/DejaVuSansMono.ttf", 14);
 		
 		Timer = 0.f;

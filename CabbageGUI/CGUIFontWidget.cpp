@@ -29,9 +29,10 @@ void CGUIFontWidget::makeRenderer(std::string const & FileName, float const Size
 }
 
 CGUIFontWidget::CGUIFontWidget(std::string const & FileName, float const Size)
+	: Renderer(0)
 {
 	makeRenderer(FileName, Size);
-	
+	setColor(SColor(0, 0, 0));
 }
 
 void CGUIFontWidget::draw()

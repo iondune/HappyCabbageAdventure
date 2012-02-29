@@ -119,7 +119,6 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
    myObj->setBoundingBox(SBoundingBox3(centerPos - 0.5, centerPos + 0.5));
 
    const char *textureToUse;
-   char buf[50];
    std::string v = "Textures/particle";
 
    switch(particleType) {
