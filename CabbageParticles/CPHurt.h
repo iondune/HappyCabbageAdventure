@@ -4,8 +4,10 @@
 #include "CParticle.h"
 
 class CPHurt : public CParticle {
-   float tickValue, xValue, yValue, zValue;
+   float tickValue;
+   SVector3 position, velocity;
    void setupRenderable();
+   void setCenterPos(SVector3*);
    void updateMatrices(float);
 };
 

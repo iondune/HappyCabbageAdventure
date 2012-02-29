@@ -105,7 +105,8 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
 
                     Event.DamagedBy = enemy;
                     Event.Damagee = PlayerActor;
-                    GameEventManager->OnPlayerDamaged(Event);
+                    if(PlayerHealth > 1)
+                       GameEventManager->OnPlayerDamaged(Event);
 
                     //Chris Code.  Damage Sound plays here
                     if(playTakeDmg) {
