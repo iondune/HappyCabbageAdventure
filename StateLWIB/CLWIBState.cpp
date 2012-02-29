@@ -348,7 +348,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 redo.push_back(blocks.back());
                 redoPlaceables.push_back(placeables.back());
 
-               /* int i,j;
+                int i,j;
                 for(i = 0; i < m_block->w; i++) {
                     for(j = 0; j < m_block->h; j++) {
                         blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].o = false;
@@ -357,7 +357,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                         blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapX = -1;
                         blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapY = -1;
                     }
-                }*/
+                }
 
                 placeables.pop_back();
                 blocks.pop_back();
@@ -568,7 +568,7 @@ void CLWIBState::loadWorld() {
                 moving = xml->getAttributeValueAsInt(6);
                 range = (int) xml->getAttributeValueAsFloat(7); //Range
                 speed = (int) xml->getAttributeValueAsFloat(8); //Speed
-                PrepBlock((float)x,(float)y,w,h,d,t);
+                PrepBlock((float)x,(float)y,w,h,d,t,moving);
                 printf("texture is %d\n", t);
            }
            if(!strcmp("CEnemy", xml->getNodeName()))
@@ -824,7 +824,7 @@ void CLWIBState::PrepCabbage(float x, float y) {
     redoPlaceables.clear();
 }
 
-void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t) {
+void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int moving) {
    if(x < -25 || y < -25 || x >= 200 || y >= 75)
       return;
    if(t == -5 && (int)y != -5)
@@ -847,7 +847,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t) {
    CMeshSceneObject *tempBlock;
    CBlock *tempPlaceable;
    blocks.push_back(tempBlock = new CMeshSceneObject());
-   placeables.push_back(tempPlaceable = new CBlock(x, y, w, h, d, t));
+   placeables.push_back(tempPlaceable = new CBlock(x, y, w, h, d, t, moving));
    tempBlock->setMesh(cubeMesh);
    if (textureType == -5) {
        tempBlock->setTexture("Textures/GrassyGrass.bmp");
@@ -877,7 +877,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t) {
    Application.getSceneManager().addSceneObject(tempBlock);
    redo.clear();
    redoPlaceables.clear();
-   if(mDown) {
+   if(moving) {
       tempPlaceable->isMovingPlatform = 1;
       tempPlaceable->Range = 2;
       tempPlaceable->Speed = 1;
@@ -951,7 +951,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
              PrepCabbage(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
          }
          else if (!tDown && !oneDown && !threeDown &&!twoDown) {
-            PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,textureType);
+            PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,textureType,mDown);
          }
          else {
             if(lastMouseOveredBlock.o) {
@@ -1008,7 +1008,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
             }
          }
          if(!threeDown && !tDown && !twoDown && mouseDown) {
-            PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth, textureType);
+            PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth, textureType,mDown);
          }
          lastMouseOveredBlock = m_qd;
       }
@@ -1040,7 +1040,7 @@ void CLWIBState::stepCamera(float delta) {
       look.Y -= delta*factor;
    }
    if(!tDown && !twoDown && mouseDown) {
-      PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,textureType);
+      PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,textureType,mDown);
    }
 }
 

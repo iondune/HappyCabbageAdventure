@@ -112,6 +112,7 @@
     <ClInclude Include="header.h" />
     <ClInclude Include="irrxml-1.2\src\irrXML.h" />
     <ClInclude Include="Materials.h" />
+    <ClInclude Include="PKiwi.h" />
     <ClInclude Include="SDL_mixer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +130,7 @@
     <ClCompile Include="irrxml-1.2\src\irrXML.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Materials.cpp" />
+    <ClCompile Include="PKiwi.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

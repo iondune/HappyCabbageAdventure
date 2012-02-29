@@ -1,6 +1,6 @@
 #include "CBlock.h"
 
-CBlock::CBlock(float nx, float ny, int width, int height, int depth, int texture)
+CBlock::CBlock(float nx, float ny, int width, int height, int depth, int texture, int moving)
 {
    x = nx; y = ny;
    w = width; h = height;
