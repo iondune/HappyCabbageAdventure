@@ -28,6 +28,17 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
     Cabbage::Collider::CCollideable * Other = 0;
     Cabbage::Collider::CCollideable * PlayerCollideable = 0;
     Cabbage::Collider::CCollideable * Flag = 0;
+    Cabbage::Collider::CCollideable * Projectile = 0;
+
+    //Read that a projectile collided with something
+    if (Object->CollideableType == COLLIDEABLE_TYPE_PKIWI) {
+       Projectile = Object;
+    }
+
+    if (With->CollideableType == COLLIDEABLE_TYPE_PKIWI) {
+       Projectile = With;
+    }
+
     if (Object == PlayerActor) {
        PlayerCollideable = PlayerActor;
        Other = With;
@@ -59,7 +70,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
         PlayerActor->setImpulse(SVector2(0.f, -0.4f) * 7, 0.5f);
     }
 
-    if (! Other || GodMode || ShootingLaser)
+    if (/*! Other || */GodMode || ShootingLaser)
         return;
    
     float const HitThreshold = 0.05f;
@@ -73,7 +84,12 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
 
     for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
     {
-        if (Other == (*it)->Actor)
+       //Remove projectile from scene
+       if (Projectile == (*it)->Actor) {
+          KillList.push_back(*it);
+       }
+
+       if (Other == (*it)->Actor)
         {
 
             if (PlayerActor->getArea().Position.Y > Other->getArea().otherCorner().Y - HitThreshold && (*it)->Actor->CollideableType != COLLIDEABLE_TYPE_FLAME && (*it)->Actor->CollideableType != COLLIDEABLE_TYPE_PKIWI)
@@ -89,12 +105,6 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
             //Need to rewrite so works without SEnemy
             else
             {
-               //Check if it was a projectile.  If so, remove it.
-               if ((*it)->Actor->CollideableType == COLLIDEABLE_TYPE_PKIWI) {
-                  KillList.push_back(*it);
-                  Enemies.erase(it);
-               }
-
                 if (GodModeTime > 0)
                    continue;
                 if (isPlayerAlive() && PlayerRecovering <= 0.f)
