@@ -2,24 +2,10 @@
 
 void CPLeaf::setupRenderable() {
    sineValue = 0;
-   /*
-   renderable = new CMeshSceneObject();
-   CMesh * cube = CMeshLoader::loadAsciiMesh("Disc");
-   cube->calculateNormalsPerFace();
-   renderable->setMesh(cube);
-   renderable->setScale(SVector3(0.13, 0.26, 0.13));
-   renderable->setTranslation(* centerPos);
-   CMaterial mat;
-   mat.Texture = CImageLoader::loadTexture("Textures/grass.bmp");
-   renderable->setMaterial(mat);
-   renderable->setShader(CShaderLoader::loadShader("DiffuseTextureBright"));
-   */
 
    yFactor = (float)rand()/(float)RAND_MAX * 0.6f - 0.3f;
    Amplitude = (float)rand()/(float)RAND_MAX * 0.5f + 0.3f;
    Period = (float)rand()/(float)RAND_MAX * 2 + 1;
-   StartFactor = (float)rand()/(float)RAND_MAX * AppearRate; 
-   Counter = StartFactor;
 }
 
 void CPLeaf::updateMatrices(float timeElapsed) {
