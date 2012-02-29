@@ -1,8 +1,10 @@
-#ifndef _CABBAGE_SCENE_CCAMERA_H_INCLUDED_
-#define _CABBAGE_SCENE_CCAMERA_H_INCLUDED_
+#ifndef _CABBAGE_SCENE_CORTHOCAMERA_H_INCLUDED_
+#define _CABBAGE_SCENE_CORTHOCAMERA_H_INCLUDED_
 
 #include <SVector3.h>
 #include <glm/glm.hpp>
+
+#include <CCamera.h>
 
 class COrthoCamera : public ICamera
 {

@@ -1,8 +1,8 @@
 #ifndef _CABBAGE_SCENE_CCAMERA_H_INCLUDED_
 #define _CABBAGE_SCENE_CCAMERA_H_INCLUDED_
 
-#include "../CabbageCore/SVector3.h"
-#include "../CabbageCore/glm/glm.hpp"
+#include <SVector3.h>
+#include <glm/glm.hpp>
 
 class ICamera
 {

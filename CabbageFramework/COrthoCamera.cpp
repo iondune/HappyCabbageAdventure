@@ -1,4 +1,4 @@
-#include "CCamera.h"
+#include "COrthoCamera.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include "../CabbageFramework/CApplication.h"

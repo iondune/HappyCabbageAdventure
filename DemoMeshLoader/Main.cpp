@@ -137,13 +137,6 @@ public:
 		SkyBox->setTexture("../DemoMeshLoader/stars.bmp");
 		SkyBox->setCullingEnabled(false);
 
-		CMeshSceneObject * DD = new CMeshSceneObject();
-		DD->setMesh(Cube);
-		DD->setShader(CShaderLoader::loadShader("DiffuseTexture"));
-		DD->setScale(SVector3(50.f));
-		DD->setTexture("../DemoMeshLoader/stars.bmp");
-		SceneManager.addDirectObject(DD);
-
 		CApplication::get().getSceneManager().addSceneObject(Renderable);
 
         //Font.init("Fonts/DejaVuSansMono.ttf", 14);

@@ -42,6 +42,9 @@
         ;$(VisualStudioDir)\Projects\SDL-1.2.15\include;
         ;$(VisualStudioDir)\Projects\freetype-2.4.8\include;
         ;$(SolutionDir)\CabbageCore;
+        ;$(SolutionDir)\CabbageFramework;
+        ;$(SolutionDir)\CabbageScene;
+        ;$(SolutionDir)\CabbageGUI;
         ;$(IncludePath);
     </IncludePath>
     <LibraryPath>
