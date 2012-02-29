@@ -31,6 +31,8 @@ public:
 	void setTexture(std::string const & texture);
 	void setTexture(std::string const & texture, int const renderable);
 
+	CShader const * const getShader() const;
+
 };
 
 #endif
