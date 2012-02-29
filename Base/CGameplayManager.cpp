@@ -70,7 +70,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
         PlayerActor->setImpulse(SVector2(0.f, -0.4f) * 7, 0.5f);
     }
 
-    if (/*! Other || */GodMode || ShootingLaser)
+    if ((!Other && !Projectile) || GodMode || ShootingLaser)
         return;
    
     float const HitThreshold = 0.05f;
