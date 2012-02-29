@@ -20,7 +20,7 @@ void PrepPreviews();
 float previewBlockMouseX, previewBlockMouseY; 
 float lastBlockPlacedLocationX, lastBlockPlacedLocationY;
 using namespace Cabbage::Collider;
-CMeshSceneObject *PreviewBlock, *PreviewEnemy, *PreviewCabbage, *PreviewGround;
+CMeshSceneObject *PreviewBlock, *PreviewEnemy, *PreviewCabbage, *PreviewGround, *PreviewFlag;
 
 CLWIBState::CLWIBState()
 : Application (CApplication::get())
@@ -127,20 +127,30 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    PreviewCabbage->setTranslation(SVector3(x+0.5f,y+0.5f, 0));
 
    if(tDown) {
+      PreviewFlag->setVisible(false);
       PreviewCabbage->setVisible(false); 
       PreviewBlock->setVisible(false);
       PreviewEnemy->setVisible(false);
    }
    else if(twoDown) {
+      PreviewFlag->setVisible(false);
       PreviewCabbage->setVisible(false); 
       PreviewEnemy->setVisible(true);
       PreviewBlock->setVisible(false);
    }
    else if(oneDown) {
    
+      PreviewFlag->setVisible(false);
       PreviewCabbage->setVisible(true); 
       PreviewEnemy->setVisible(false);
       PreviewBlock->setVisible(false);
+   }
+   else if(threeDown) {
+      PreviewFlag->setVisible(true);
+      PreviewCabbage->setVisible(false); 
+      PreviewEnemy->setVisible(false);
+      PreviewBlock->setVisible(false);
+    
    }
    else {
       PreviewCabbage->setVisible(false); 
@@ -168,7 +178,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
     }
     else
         freetype::print(our_font, 15, WindowHeight - 50.f, "Press F1 For Help");
-    if (!twoDown && !showHelp && !tDown && !oneDown) {
+    if (!twoDown && !showHelp && !tDown && !oneDown && !threeDown) {
         freetype::print(our_font, 20, WindowHeight - 100.f, "Placing block\n\n");
         if (cDown == 0) {
             if (textureType == 0) {
@@ -198,7 +208,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
            freetype::print(our_font, 20, WindowHeight - 200.f, "block depth is %d\n", blockDepth);
         }
     }
-    if (twoDown && !showHelp && !tDown && !oneDown) {
+    if (twoDown && !showHelp && !tDown && !oneDown && !threeDown) {
         freetype::print(our_font, 20, WindowHeight - 100.f, "Placing enemy\n");
         if (enemyType == 0) {
             freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Apple\n");
@@ -228,8 +238,12 @@ void CLWIBState::OnRenderStart(float const Elapsed)
            PreviewEnemy->setMesh(bladeMesh);
         }
     }
-    if (oneDown && !showHelp && !tDown && !twoDown) {
+    if (oneDown && !showHelp && !tDown && !twoDown && !threeDown) {
         freetype::print(our_font, 20, WindowHeight - 100.f, "Insert Cabbage\n\n");
+        PreviewCabbage->setMesh(cabbageMesh);
+    }
+    if (threeDown && !showHelp && !tDown && !twoDown && !oneDown) {
+        freetype::print(our_font, 20, WindowHeight - 100.f, "Insert flag\n\n");
         PreviewCabbage->setMesh(cabbageMesh);
     }
     if (tDown && !showHelp )
@@ -266,6 +280,17 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 oneDown = 0;
             else {
                 oneDown = 1;
+                threeDown = 0; 
+                tDown = 0;
+                twoDown = 0;
+            }
+        }
+        if(Event.Key == SDLK_3){
+            if (threeDown == 1)
+                threeDown = 0;
+            else {
+                threeDown = 1;
+                oneDown = 0;
                 tDown = 0;
                 twoDown = 0;
             }
@@ -297,6 +322,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
             }
             else {
                 twoDown = 1; //enemy
+                threeDown = 0; 
                 tDown = 0;
                 oneDown = 0;
                 blockWidth = 1;
@@ -365,6 +391,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 tDown = 1; //remove
                 twoDown = 0;
                 oneDown = 0;
+                threeDown = 0; 
             }
         }
         if(Event.Key == SDLK_m){
@@ -488,18 +515,12 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_d){
          dDown = 0;
       }
-      /*if(Event.Key == SDLK_e){
-         twoDown = 0;
-      }*/
       if(Event.Key == SDLK_f){
          fDown = 0;
       }
       if(Event.Key == SDLK_g){
          gDown = 0;
       }
-     /* if(Event.Key == SDLK_t){
-         tDown = 0;
-      }*/
       if(Event.Key == SDLK_k){
       }
       if(Event.Key == SDLK_j){
@@ -551,13 +572,22 @@ void CLWIBState::loadWorld() {
            {
               x = xml->getAttributeValueAsInt(0);
               y = xml->getAttributeValueAsInt(1);
-              h = xml->getAttributeValueAsInt(2);
-              w = xml->getAttributeValueAsInt(3);
               t = xml->getAttributeValueAsInt(4);
               PrepEnemy((float)x,(float)y,t);
            }
+           if(!strcmp("CCabbage", xml->getNodeName()))
+           {
+              x = xml->getAttributeValueAsInt(0);
+              y = xml->getAttributeValueAsInt(1);
+              PrepCabbage((float)x,(float)y);
+           }
+           if(!strcmp("CFlag`", xml->getNodeName()))
+           {
+              x = xml->getAttributeValueAsInt(0);
+              y = xml->getAttributeValueAsInt(1);
+              PrepFlag((float)x,(float)y);
+           }
          break;
-        
         }
     }
 }
@@ -606,6 +636,9 @@ void CLWIBState::PrepPreviews() {
    kiwiMesh = CMeshLoader::load3dsMesh("Models/killerkiwi.3ds");
    cabbageMesh = CMeshLoader::load3dsMesh("Models/crappycabbage.3ds");
    bladeMesh = CMeshLoader::load3dsMesh("Models/trap1.3ds");
+   flagMesh = CMeshLoader::load3dsMesh("Models/flag2.3ds");
+   
+   blocks.push_back(PreviewFlag = new CMeshSceneObject());
 
    blocks.push_back(PreviewCabbage = new CMeshSceneObject());
    //PreviewCabbage->setMesh(appleMesh);
@@ -637,13 +670,24 @@ void CLWIBState::PrepPreviews() {
       cabbageMesh->centerMeshByExtents(SVector3(0));
       cabbageMesh->calculateNormalsPerVertex();
    }
+   if (flagMesh) {
+      flagMesh->resizeMesh(SVector3(1));
+      flagMesh->centerMeshByExtents(SVector3(0));
+      flagMesh->calculateNormalsPerVertex();
+   }
+   PreviewFlag->setShader(Diffuse);
+   PreviewFlag->setRotation(SVector3(-90, 0, 0));
+   PreviewFlag->setScale(SVector3(0.5,0.5, 0.5));
+   //
    PreviewCabbage->setShader(Diffuse);
-   PreviewCabbage->setRotation(SVector3(-90, 0, 0));
-   PreviewCabbage->setScale(SVector3(0.5,0.5, 0.5));
+   PreviewCabbage->setRotation(SVector3(0, 0, 0));
+   PreviewCabbage->setScale(SVector3(.0150f, .00025f,.0016f));
+   //
    PreviewEnemy->setShader(Diffuse);
    PreviewEnemy->setRotation(SVector3(-90, 0, 0));
    PreviewBlock->setScale(SVector3(1, 1, 1));
 
+  // CApplication::get().getSceneManager().addSceneObject(PreviewFlag);
    CApplication::get().getSceneManager().addSceneObject(PreviewEnemy);
    CApplication::get().getSceneManager().addSceneObject(PreviewCabbage);
    PreviewEnemy->setVisible(false);
@@ -659,6 +703,36 @@ void initBlockMap() {
          blockMap[i][j].mapX = -1;
          blockMap[i][j].mapY = -1;
       }
+}
+
+void CLWIBState::PrepFlag(float x, float y) {
+
+   if(x < -25 || y < -25 || x >= 200 || y >= 75)
+      return;
+   if(blockMap[(int)x+25][(int)(y-0.5+25)].o) {
+      printf("Blockmap space occupied. Did not place Cabbage\n");
+      return;
+   }
+
+   printf("Placed flag starting at %0.2f, %0.2f\n", x, y);
+   CMeshSceneObject *tempFlag;
+   CFlag *tempPlaceable;
+   blocks.push_back(tempFlag = new CMeshSceneObject());
+   placeables.push_back(tempPlaceable = new CFlag(x, y, 1, 1));
+   tempFlag->setMesh(flagMesh);
+   tempFlag->setShader(Diffuse);
+   tempFlag->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
+   tempFlag->setRotation(SVector3(-90, 0, 0));
+   tempFlag->setScale(SVector3(0.5, 0.5, 0.5));
+   blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
+   blockMap[(int)x+25][(int)(y-0.5+25)].r = tempFlag;
+   blockMap[(int)x+25][(int)(y-0.5+25)].p = tempPlaceable;
+   blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
+   blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
+   Application.getSceneManager().addSceneObject(tempFlag);
+   redo.clear();
+   redoPlaceables.clear();
+
 }
 
 void CLWIBState::PrepEnemy(float x, float y, int type) {
@@ -842,28 +916,20 @@ float pitchphi, yawtheta;
 int mouseDown;
 void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
    if(Event.Button.Value == SMouseEvent::EButton::Left) {
-      if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click && fDown) {
-         if(blockWidth < 10)
-            blockWidth++;
-         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, 1));
-         return;
-      }
-      if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click && gDown) {
-         if(blockHeight < 10)
-            blockHeight++;
-         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, 1));
-         return;
-      }
       if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
          mouseDown = 1;
-         if(!tDown && twoDown && !oneDown) {
+         if(!tDown && twoDown && !oneDown && !threeDown) {
             printf("Here\n");
             PrepEnemy(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY),enemyType);
          }
-         if(!tDown && oneDown && !twoDown) {
+         if(!tDown && !twoDown && !oneDown && threeDown) {
+            printf("Here\n");
+            PrepFlag(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
+         }
+         if(!tDown && oneDown && !threeDown && !twoDown) {
              PrepCabbage(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
          }
-         else if (!tDown && !oneDown && !twoDown) {
+         else if (!tDown && !oneDown && !threeDown &&!twoDown) {
             PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,textureType);
          }
          else {
@@ -916,26 +982,12 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          if(lastMouseOveredBlock.o && m_qd.r != lastMouseOveredBlock.r) {
             lastMouseOveredBlock.r->setShader(DiffuseTexture);
          }
-         if(!tDown && !twoDown && mouseDown) {
+         if(!threeDown && !tDown && !twoDown && mouseDown) {
             PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth, textureType);
          }
          lastMouseOveredBlock = m_qd;
       }
    }
-   /*else if(Event.Button.Value == SMouseEvent::EButton::Right) {
-      if(Event.Pressed && fDown) {
-         if(blockWidth > 1)
-            blockWidth--;
-         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, 1));
-         return;
-      }
-      if(Event.Pressed && gDown) {
-         if(blockHeight > 1)
-            blockHeight--;
-         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, 1));
-         return;
-      }
-   }*/
 }
 
   
