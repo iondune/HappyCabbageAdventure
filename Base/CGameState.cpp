@@ -74,7 +74,7 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             t = xml->getAttributeValueAsInt(5);
 
             if (t == -5 && !lowDef)
-               GeneratePlants(x, y, w, h, d);
+               GeneratePlants((float) x, (float) y, (float) w, (float) h, (float) d);
 
             list->push_back(ptr = new CBlock((float)x,(float)y,w,h,d,t));
             if(xml->getAttributeValueAsInt(6)) {
@@ -295,8 +295,6 @@ void CGameState::begin()
 
    srand((unsigned int) time(NULL));
 
-   int random;
-
    //Initialize Fxns
    EngineInit();
    ViewInit();
@@ -451,7 +449,7 @@ void CGameState::oldDisplay() {
       particleLaserFireEngine->deconstruct();
       delete particleLaserFireEngine;
       particleLaserFireEngine = NULL;
-      Player->setImpulse(SVector2((PlayerView->getLookRight()?-1:1)*15.0f, 0.0f), 0.1);
+      Player->setImpulse(SVector2((PlayerView->getLookRight()?-1:1)*15.0f, 0.0f), 0.1f);
    }
    PlayerView->Charging = lDown;
 #endif
@@ -781,8 +779,8 @@ void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
    if (w > 0.5f && w < 1.5f)  //If block size roughly 1, don't draw any trees
       numForeground = numBackground = 0;
    else {
-      numForeground = w / 2;
-      numBackground = w / 2;
+      numForeground = (int) w / 2;
+      numBackground = (int) w / 2;
    }
 
    div =  w/(float)numBackground;
@@ -802,10 +800,10 @@ void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
    //Draw flower-type plants in background
    for (int n = 0; n < w; n++) {
       random = rand()%3;
-      randScale = rand()%20;
+      randScale = (float) (rand()%20);
       randScale = randScale * .025f;
-      randDepth = rand()%2;
-      randDepth = randDepth*.25f;
+      randDepth = (float) (rand()%2);
+      randDepth = (float) randDepth*.25f;
 
       if (random == 0)
          drawPinkFlwr(x + n + .5f, -1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
