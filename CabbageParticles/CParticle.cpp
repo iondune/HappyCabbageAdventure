@@ -12,5 +12,7 @@ void CParticle::setAppearRate(float r) {
    Duration = 0;
    Counter = 0;
    AppearRate = r;
-}
 
+   StartFactor = (float)rand()/(float)RAND_MAX * AppearRate; 
+   Counter = StartFactor;
+}

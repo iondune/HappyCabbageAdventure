@@ -220,6 +220,7 @@ void CGameState::begin()
 {
    Charged = 0; aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0; lDown = 0;
    backwardsView = 0; overView = 0;
+   GameEventReceiver = CGameEventReceiver();
 
    CApplication::get().getSceneManager().setCullingEnabled(true);
 #ifdef PARTICLE
@@ -371,7 +372,7 @@ void CGameState::oldDisplay() {
    else
    {
       if(spaceDown) {
-         printf("Revive player like so\n");
+         //printf("Revive player like so\n");
       }
       Player->setAction(CActor::EActionType::None);
       PlayerView->setState(CPlayerView::State::Standing);
@@ -698,6 +699,9 @@ void CGameState::end()
       delete particleLaserFireEngine;
    }
    particleLeafEngine = particleCubeEngine = particleLaserEngine = particleLaserFireEngine = NULL;
+
+   GameEventManager->OnEnemyDeath.disconnect(& GameEventReceiver);
+   Application.getEventManager().OnGameTickStart.disconnect(& GameEventReceiver);
 
    Application.getSceneManager().removeAllSceneObjects();
 }
