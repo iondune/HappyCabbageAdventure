@@ -1,7 +1,7 @@
 FILES = Main.cpp FreeType.cpp
 
 DIRECTORIES = -I../CabbageCore/:../CabbageScene/ -L../lib/
-INCLUDE=-I../CabbageCore
+INCLUDE = -I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB
 
 OPENGL = -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL
 CABBAGE = -lCabbageScene -lCabbageFramework
