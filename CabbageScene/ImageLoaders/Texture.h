@@ -4,8 +4,6 @@
 //#include "MainHeader.h"
 //#include "TextureHeader.h"
 
-#include <windows.h>
-#include <windowsx.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -15,6 +13,8 @@
 #endif
 
 #ifdef _WIN32
+#include <windows.h>
+#include <windowsx.h>
 #include <GL/glew.h>
 #endif
 
