@@ -45,7 +45,6 @@ public:
 
     //freetype::font_data Font;
 	//gltext::Font Font;
-	OGLFT::Face* monochrome;
 
     CMainState()
         : Application(CApplication::get()), WindowWidth(1440), WindowHeight(900), Scale(1), Animate(false), Mode(0), ShowHelp(false)
@@ -145,13 +144,7 @@ public:
 		CApplication::get().getSceneManager().addSceneObject(Renderable);
 
         //Font.init("Fonts/DejaVuSansMono.ttf", 14);
-		monochrome = new OGLFT::Translucent( "Fonts/DejaVuSansMono.ttf", 36 );
-		if ( monochrome == 0 || ! monochrome->isValid() ) {
-			std::cerr << "Could not construct face from " << "Fonts/DejaVuSansMono.ttf" << std::endl;
-		}
-		monochrome->setForegroundColor( 1., 0., 0. );
-		monochrome->setBackgroundColor( 0.5, .5, .75, 0.0 );
-		glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
+		
 		Timer = 0.f;
     }
 
@@ -226,19 +219,7 @@ public:
                 "1, 2, and 3 to change materials\n\n");
         else
             freetype::print(Font, 0, (float)Application.getWindowSize().Y - 15.f, "Press F1 to view commands");*/
-		glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-		glEnable( GL_BLEND );
-		glViewport( 0, 0, 1440, 900 );
-		glMatrixMode( GL_PROJECTION );
-		glLoadIdentity();
-		glOrtho( 0, 1440, 0, 900, -1, 1 );
-
-		glMatrixMode( GL_MODELVIEW );
-		glLoadIdentity();
-		glEnable(GL_DEPTH_TEST);
-		monochrome->draw( 0., 250., "Hello, World!" );
-		glDisable(GL_DEPTH_TEST);
-		glDisable( GL_BLEND );
+		
 
         SDL_GL_SwapBuffers();
     }

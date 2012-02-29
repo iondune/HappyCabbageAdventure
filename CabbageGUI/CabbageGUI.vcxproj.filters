@@ -5,7 +5,9 @@
     <ClInclude Include="liboglft\OGLFT.h">
       <Filter>liboglft</Filter>
     </ClInclude>
-    <ClInclude Include="CFont.h" />
+    <ClInclude Include="CGUIEngine.h" />
+    <ClInclude Include="CGUIWidget.h" />
+    <ClInclude Include="CGUIFontWidget.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="liboglft">
@@ -16,5 +18,8 @@
     <ClCompile Include="liboglft\OGLFT.cpp">
       <Filter>liboglft</Filter>
     </ClCompile>
+    <ClCompile Include="CGUIFontWidget.cpp" />
+    <ClCompile Include="CGUIEngine.cpp" />
+    <ClCompile Include="CGUIWidget.cpp" />
   </ItemGroup>
 </Project>
