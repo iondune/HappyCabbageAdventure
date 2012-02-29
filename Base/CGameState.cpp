@@ -103,7 +103,7 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             h = xml->getAttributeValueAsInt(2);
             w = xml->getAttributeValueAsInt(3);
             t = xml->getAttributeValueAsInt(4);
-            Player->setArea(SRect2((float)x, (float)y, (float)h, (float)w))
+            Player->setArea(SRect2((float)x, (float)y, (float)h, (float)w));
          }
          break;
 
