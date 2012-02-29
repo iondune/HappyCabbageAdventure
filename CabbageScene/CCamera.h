@@ -43,17 +43,4 @@ public:
 
 };
 
-class COrthoCamera : public ICamera
-{
-
-public:
-
-	COrthoCamera(float const Near, float const Far);
-
-    COrthoCamera(float const Left, float const Right, float const Bottom, float const Top, float const Near, float const Far);
-
-    virtual void setProjection(float const Left, float const Right, float const Bottom, float const Top, float const Near, float const Far);
-
-};
-
 #endif

@@ -74,6 +74,7 @@ void CApplication::init(SPosition2 const & windowSize)
     EventManager = new CEventManager();
     StateManager = new CStateManager();
     SceneManager = new CSceneManager();
+	GUIEngine = new CGUIEngine(windowSize);
 
     EventManager->OnGameTickStart.connect(StateManager, & CStateManager::OnGameTickStart);
     EventManager->OnGameTickEnd.connect(StateManager, & CStateManager::OnGameTickEnd);
@@ -105,6 +106,11 @@ CStateManager & CApplication::getStateManager()
 CSceneManager & CApplication::getSceneManager()
 {
     return * SceneManager;
+}
+
+CGUIEngine & CApplication::getGUIEngine()
+{
+	return * GUIEngine;
 }
 
 void CApplication::skipElapsedTime()

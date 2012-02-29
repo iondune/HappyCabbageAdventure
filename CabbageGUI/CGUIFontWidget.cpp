@@ -6,8 +6,6 @@
 //#define OGLFT_NO_QT
 #include "liboglft\OGLFT.h"
 
-#include <CApplication.h>
-
 void CGUIFontWidget::makeRenderer(std::string const & FileName, float const Size)
 {
 	if (Renderer)
@@ -39,14 +37,10 @@ CGUIFontWidget::CGUIFontWidget(std::string const & FileName, float const Size)
 void CGUIFontWidget::draw()
 {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_BLEND);
-	glViewport(0, 0, CApplication::get().getWindowSize().X, CApplication::get().getWindowSize().Y);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0, 1.f, 0, 1.f, -1, 1);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	glEnable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
 	Renderer->draw(Position.X, Position.Y, Text.c_str());
 	glDisable(GL_DEPTH_TEST);

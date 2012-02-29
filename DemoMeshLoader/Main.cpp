@@ -40,6 +40,8 @@ class CMainState : public CState<CMainState>
 {
 
     CApplication & Application;
+	CSceneManager & SceneManager;
+	CGUIEngine & GUIEngine;
 
 public:
 
@@ -47,7 +49,8 @@ public:
 	//gltext::Font Font;
 
     CMainState()
-        : Application(CApplication::get()), WindowWidth(1440), WindowHeight(900), Scale(1), Animate(false), Mode(0), ShowHelp(false)
+        : Application(CApplication::get()), WindowWidth(1440), WindowHeight(900), Scale(1), Animate(false), Mode(0), ShowHelp(false),
+		SceneManager(CApplication::get().getSceneManager()), GUIEngine(CApplication::get().getGUIEngine())
     {}
 
 	CMeshSceneObject * WingMan;
@@ -219,7 +222,7 @@ public:
                 "1, 2, and 3 to change materials\n\n");
         else
             freetype::print(Font, 0, (float)Application.getWindowSize().Y - 15.f, "Press F1 to view commands");*/
-		
+		GUIEngine.drawAll();
 
         SDL_GL_SwapBuffers();
     }

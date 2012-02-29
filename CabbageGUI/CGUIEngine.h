@@ -16,7 +16,7 @@ class CGUIEngine
 
 public:
 
-	CGUIEngine();
+	CGUIEngine(SPosition2 const & screenSize);
 
 	void addWidget(CGUIWidget * Widget);
 	void removeWidget(CGUIWidget * Widget);
@@ -24,7 +24,7 @@ public:
 
 	void drawAll();
 
-	void setScreenSize(SPosition2 screenSize);
+	void setScreenSize(SPosition2 const & screenSize);
 	SPosition2 const getScreenSize() const;
 
 };
