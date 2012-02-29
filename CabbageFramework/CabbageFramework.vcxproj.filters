@@ -4,11 +4,19 @@
     <ClCompile Include="CApplication.cpp" />
     <ClCompile Include="CEventManager.cpp" />
     <ClCompile Include="CStateManager.cpp" />
-    <ClCompile Include="CCameraControl.cpp" />
+    <ClCompile Include="CCameraControl.cpp">
+      <Filter>Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="COrthoCamera.cpp">
+      <Filter>Cameras</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="sigslot">
       <UniqueIdentifier>{cefff7c2-b7cf-4b35-bd49-ea9be8b7279d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cameras">
+      <UniqueIdentifier>{28db67e1-a733-4fab-a6d0-7e9c1dfa0e4a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -19,7 +27,12 @@
     <ClInclude Include="CEventManager.h" />
     <ClInclude Include="CStateManager.h" />
     <ClInclude Include="CabbageFramework.h" />
-    <ClInclude Include="CCameraControl.h" />
+    <ClInclude Include="CCameraControl.h">
+      <Filter>Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="COrthoCamera.h">
+      <Filter>Cameras</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />

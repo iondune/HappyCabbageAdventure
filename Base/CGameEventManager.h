@@ -42,7 +42,7 @@ public:
 
     sigslot::signal1<SPlayerDeathEvent const &> OnPlayerDeath;
 
-    sigslot::signal1<SPlayerDamagedEvent const &> OnPlayerDamaged;
+	sigslot::signal1<SPlayerDamagedEvent const &> OnPlayerDamaged;
 
 
 };

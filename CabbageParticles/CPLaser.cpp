@@ -5,10 +5,10 @@ void CPLaser::setupRenderable() {
 
    xFactor = (float)rand()/(float)RAND_MAX * 3 - 1.5f;
    yFactor = (float)rand()/(float)RAND_MAX * 3 - 1.5f;
-   Amplitude = (float)rand()/(float)RAND_MAX * 0.7f + 0.2; 
+   Amplitude = (float)rand()/(float)RAND_MAX * 0.7f + 0.2f; 
    zFactor = (float)rand()/(float)RAND_MAX * 2 - 1;
-   reflectX = rand() % 2 * 2 - 1;
-   reflectY = rand() % 2 * 2 - 1;
+   reflectX = (float) (rand() % 2 * 2 - 1);
+   reflectY = (float) (rand() % 2 * 2 - 1);
 
    Size = (float)rand()/(float)RAND_MAX*0.8f + 0.2f;
 }

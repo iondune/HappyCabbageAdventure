@@ -15,7 +15,7 @@ public:
     {}
 
 	SColor(float red, float green, float blue)
-        : Red(red), Green(green), Blue(blue)
+        : Red(red), Green(green), Blue(blue), Alpha(1.f)
     {}
 
 	SColor(float red, float green, float blue, float alpha)

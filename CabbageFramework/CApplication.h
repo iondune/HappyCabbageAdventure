@@ -1,8 +1,9 @@
 #ifndef _CABBAGECOLLIDER_CAPPLICATION_H_INCLUDED_
 #define _CABBAGECOLLIDER_CAPPLICATION_H_INCLUDED_
 
-#include "../CabbageCore/CabbageCore.h"
-#include "../CabbageScene/CabbageScene.h"
+#include <CabbageCore.h>
+#include <CabbageScene.h>
+#include <CabbageGUI.h>
 
 #include "CEventManager.h"
 #include "CStateManager.h"
@@ -14,6 +15,7 @@ class CApplication
     CEventManager * EventManager;
     CStateManager * StateManager;
     CSceneManager * SceneManager;
+	CGUIEngine * GUIEngine;
 
     // Attributes
     SPosition2 WindowSize;
@@ -39,6 +41,7 @@ public:
     CEventManager & getEventManager();
     CStateManager & getStateManager();
     CSceneManager & getSceneManager();
+	CGUIEngine & getGUIEngine();
 
     void run();
 
