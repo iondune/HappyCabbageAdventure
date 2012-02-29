@@ -1,8 +1,8 @@
 #ifndef _CABBAGE_SCENE_CCAMERA_H_INCLUDED_
 #define _CABBAGE_SCENE_CCAMERA_H_INCLUDED_
 
-#include "../CabbageCore/SVector3.h"
-#include "../CabbageCore/glm/glm.hpp"
+#include <SVector3.h>
+#include <glm/glm.hpp>
 
 class ICamera
 {
@@ -40,19 +40,6 @@ public:
     CPerspectiveCamera(float const AspectRatio = 16.f/9.f, float const Near = 0.1f, float const Far = 100.f, float const FOV = 60.f);
 
     virtual void setProjection(float const FOV, float const AspectRatio, float const Near, float const Far);
-
-};
-
-class COrthoCamera : public ICamera
-{
-
-public:
-
-	COrthoCamera(float const Near, float const Far);
-
-    COrthoCamera(float const Left, float const Right, float const Bottom, float const Top, float const Near, float const Far);
-
-    virtual void setProjection(float const Left, float const Right, float const Bottom, float const Top, float const Near, float const Far);
 
 };
 

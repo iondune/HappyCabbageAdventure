@@ -71,10 +71,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CabbageGUI.h" />
-    <ClInclude Include="CFont.h" />
+    <ClInclude Include="CGUIFontWidget.h" />
+    <ClInclude Include="CGUIEngine.h" />
+    <ClInclude Include="CGUIWidget.h" />
     <ClInclude Include="liboglft\OGLFT.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CGUIEngine.cpp" />
+    <ClCompile Include="CGUIFontWidget.cpp" />
+    <ClCompile Include="CGUIWidget.cpp" />
     <ClCompile Include="liboglft\OGLFT.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

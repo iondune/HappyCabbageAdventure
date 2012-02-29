@@ -21,6 +21,7 @@
 #pragma comment(lib, "StateOverworld.lib")
 #pragma comment(lib, "CabbageSound.lib")
 #pragma comment(lib, "CabbageParticles.lib")
+#pragma comment(lib, "CabbageGUI.lib")
 #pragma comment(lib, "StateLWIB.lib")
 #pragma comment(lib, "OpenGL32.lib")
 #pragma comment(lib, "glu32.lib")

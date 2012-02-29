@@ -222,7 +222,7 @@ void LoadHUD() {
    DD->setShader(CShaderLoader::loadShader("DiffuseTexture"));
    DD->setScale(SVector3(50.f));
    DD->setTexture("Textures/HealthCabbage0.bmp");
-   CApplication::get().getSceneManager().addDirectObject(DD);
+   //CApplication::get().getSceneManager().addDirectObject(DD);
 }
 
 //Initalizer fxn
