@@ -27,7 +27,10 @@ void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
    fprintf(stderr, "Removing enemy %d\n", Event.Enemy);
 
    SDeadEnemy DeadEnemy;
-   DeadEnemy.DeathTimer = 6.f;
+   if (Event.Enemy.Actor->CollideableType == COLLIDEABLE_TYPE_PKIWI)
+      DeadEnemy.DeathTimer = .0f;
+   else
+      DeadEnemy.DeathTimer = 6.f;
    DeadEnemy.Renderable = Event.Enemy.Renderable;
 
       DeadEnemy.Renderable->setScale(SVector3(1.f, 1.0f, 0.4f));
