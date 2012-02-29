@@ -50,6 +50,9 @@ qd blockMap[225][100];
 //Initalizer fxn
 void CLWIBState::begin()
 {
+   cabbageFlag = 0; // for cabbage
+   xCabbage = 0; // for cabbage
+   yCabbage = 0;// for cabbage
    textureType = 0;
    enemyType = 0;
    aDown = dDown = spaceDown = wDown = sDown = gDown = fDown = tDown = eDown = mDown = oneDown = twoDown = threeDown = cDown = 0;
@@ -345,7 +348,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 redo.push_back(blocks.back());
                 redoPlaceables.push_back(placeables.back());
 
-                int i,j;
+               /* int i,j;
                 for(i = 0; i < m_block->w; i++) {
                     for(j = 0; j < m_block->h; j++) {
                         blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].o = false;
@@ -354,7 +357,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                         blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapX = -1;
                         blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapY = -1;
                     }
-                }
+                }*/
 
                 placeables.pop_back();
                 blocks.pop_back();
@@ -628,7 +631,6 @@ void CLWIBState::PrepPreviews() {
   
    PreviewBlock->setShader(DiffuseTexture);
    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
-   CApplication::get().getSceneManager().addSceneObject(PreviewBlock);
 
    blocks.push_back(PreviewEnemy = new CMeshSceneObject());
    appleMesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
@@ -639,7 +641,6 @@ void CLWIBState::PrepPreviews() {
    flagMesh = CMeshLoader::load3dsMesh("Models/flag2.3ds");
    
    blocks.push_back(PreviewFlag = new CMeshSceneObject());
-
    blocks.push_back(PreviewCabbage = new CMeshSceneObject());
    //PreviewCabbage->setMesh(appleMesh);
    
@@ -680,14 +681,15 @@ void CLWIBState::PrepPreviews() {
    PreviewFlag->setScale(SVector3(0.5,0.5, 0.5));
    //
    PreviewCabbage->setShader(Diffuse);
-   PreviewCabbage->setRotation(SVector3(0, 0, 0));
+   PreviewCabbage->setRotation(SVector3(90, 0, 0));
    PreviewCabbage->setScale(SVector3(.0150f, .00025f,.0016f));
    //
    PreviewEnemy->setShader(Diffuse);
    PreviewEnemy->setRotation(SVector3(-90, 0, 0));
    PreviewBlock->setScale(SVector3(1, 1, 1));
 
-  // CApplication::get().getSceneManager().addSceneObject(PreviewFlag);
+   CApplication::get().getSceneManager().addSceneObject(PreviewBlock);
+   CApplication::get().getSceneManager().addSceneObject(PreviewFlag);
    CApplication::get().getSceneManager().addSceneObject(PreviewEnemy);
    CApplication::get().getSceneManager().addSceneObject(PreviewCabbage);
    PreviewEnemy->setVisible(false);
@@ -775,33 +777,51 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
    redoPlaceables.clear();
 }
 
+qd lastCabbage = blockMap[0][0];
+
 void CLWIBState::PrepCabbage(float x, float y) {
 
-   if(x < -25 || y < -25 || x >= 200 || y >= 75)
-      return;
-   if(blockMap[(int)x+25][(int)(y-0.5+25)].o) {
-      printf("Blockmap space occupied. Did not place Cabbage\n");
-      return;
-   }
+    if(x < -25 || y < -25 || x >= 200 || y >= 75)
+        return;
+    if(blockMap[(int)x+25][(int)(y-0.5+25)].o) {
+        printf("Blockmap space occupied. Did not place Cabbage\n");
+        return;
+    }
 
-   printf("Placed cabbage starting at %0.2f, %0.2f\n", x, y);
-   CMeshSceneObject *tempCabbage;
-   CCabbage *tempPlaceable;
-   blocks.push_back(tempCabbage = new CMeshSceneObject());
-   placeables.push_back(tempPlaceable = new CCabbage(x, y, 1, 1));
-   tempCabbage->setMesh(cabbageMesh);
-   tempCabbage->setShader(Diffuse);
-   tempCabbage->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
-   tempCabbage->setRotation(SVector3(-90, 0, 0));
-   tempCabbage->setScale(SVector3(0.5, 0.5, 0.5));
-   blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
-   blockMap[(int)x+25][(int)(y-0.5+25)].r = tempCabbage;
-   blockMap[(int)x+25][(int)(y-0.5+25)].p = tempPlaceable;
-   blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
-   blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
-   Application.getSceneManager().addSceneObject(tempCabbage);
-   redo.clear();
-   redoPlaceables.clear();
+    if (cabbageFlag == 1) {
+        blockMap[(int)xCabbage+25][(int)(yCabbage-0.5+25)].o = false;
+        blockMap[(int)xCabbage+25][(int)(yCabbage-0.5+25)].r = NULL;
+        blockMap[(int)xCabbage+25][(int)(yCabbage-0.5+25)].p = NULL;
+        blockMap[(int)xCabbage+25][(int)(yCabbage-0.5+25)].mapX = -1;
+        blockMap[(int)xCabbage+25][(int)(yCabbage-0.5+25)].mapY = -1;
+        printf("tempx = %d, tempy =  %d\n",xCabbage ,yCabbage);
+        placeables.erase(std::remove(placeables.begin(), placeables.end(), lastCabbage.p), placeables.end());
+        blocks.erase(std::remove(blocks.begin(), blocks.end(), lastCabbage.r), blocks.end());
+        Application.getSceneManager().removeSceneObject(lastCabbage.r);
+    } 
+
+    printf("Placed cabbage starting at %0.2f, %0.2f\n", x, y);
+    CMeshSceneObject *tempCabbage;
+    CCabbage *tempPlaceable;
+    blocks.push_back(tempCabbage = new CMeshSceneObject());
+    placeables.push_back(tempPlaceable = new CCabbage(x, y, 1, 1));
+    tempCabbage->setMesh(cabbageMesh);
+    tempCabbage->setShader(Diffuse);
+    tempCabbage->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
+    tempCabbage->setRotation(SVector3(-90, 0, 0));
+    tempCabbage->setScale(SVector3(0.5, 0.5, 0.5));
+    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
+    blockMap[(int)x+25][(int)(y-0.5+25)].r = tempCabbage;
+    blockMap[(int)x+25][(int)(y-0.5+25)].p = tempPlaceable;
+    blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
+    blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
+    xCabbage = x, yCabbage = y;
+
+    lastCabbage = blockMap[(int)x+25][(int)(y-0.5+25)];
+    Application.getSceneManager().addSceneObject(tempCabbage);
+    cabbageFlag = 1;
+    redo.clear();
+    redoPlaceables.clear();
 }
 
 void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t) {
@@ -915,6 +935,7 @@ int startx, starty;
 float pitchphi, yawtheta;
 int mouseDown;
 void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
+    qd tempHolder;
    if(Event.Button.Value == SMouseEvent::EButton::Left) {
       if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
          mouseDown = 1;
@@ -942,7 +963,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
                int x = lastMouseOveredBlock.mapX;
                int y = lastMouseOveredBlock.mapY;
 
-               int i,j;
+               /*int i,j;
                for(i = 0; i < lastMouseOveredBlock.p->w; i++) {
                   for(j = 0; j < lastMouseOveredBlock.p->h; j++) {
                      blockMap[x+i][y+j].o = false;
@@ -951,7 +972,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
                      blockMap[x+i][y+j].mapX = -1;
                      blockMap[x+i][y+j].mapY = -1;
                   }
-               }
+               }*/
                lastMouseOveredBlock = blockMap[x][y];
             }
          }

@@ -25,6 +25,9 @@ class CLWIBState : public CState<CLWIBState>
    //Boolean integers for keypressing
    int aDown , dDown , spaceDown , wDown , sDown , gDown , fDown , tDown, eDown, mDown, cDown;
    int oneDown, twoDown, threeDown;
+   int cabbageFlag;
+   int xCabbage;
+   int yCabbage;
    int blockCycle;
    bool showHelp;
    freetype::font_data our_font;
