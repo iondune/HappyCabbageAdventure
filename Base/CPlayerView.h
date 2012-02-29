@@ -53,6 +53,7 @@ class CPlayerView {
          lookRight = 1;
          yScale = xScale = 2.0f;
          time = 0;
+         shakeFactor = SVector3(0.0f);
       }
       int lookRight;
 
