@@ -28,14 +28,15 @@ class CGameState : public CState<CGameState>
 
    public:
    CGameState();
-   void EngineInit( void );
    //Initalizer fxn
-   void begin();
    ICamera *Camera;
    float fps, timeTotal;
    int numFrames, NumTreeTypes, NumFlowerTypes;
    int lowDef;
    const char * levelName;
+
+   void EngineInit( void );
+   void begin();
    void oldDisplay(); 
    void loadWorld(std::vector<CPlaceable*> *list);
    //Runs at very start of display

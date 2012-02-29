@@ -11,12 +11,8 @@ void CPFlame::setupRenderable() {
    yVelocity = (float)rand()/(float)RAND_MAX * 0.8f + 0.5f;
    yHeight = 0;
 
-
    Period = (float)rand()/(float)RAND_MAX * 0.8f + 0.5f;
    Amplitude = (float)rand()/(float)RAND_MAX * 0.4f - 0.3f;
-
-   StartFactor = (float)rand()/(float)RAND_MAX * AppearRate; 
-   Counter = StartFactor;
 
    Size = (float)rand()/(float)RAND_MAX*0.8f + 0.2f;
    maxHeight = 1 + 0.1f*cos(yFactor*5*M_PI);

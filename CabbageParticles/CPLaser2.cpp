@@ -5,11 +5,6 @@ void CPLaser2::setupRenderable() {
    yValue = (float)rand()/(float)RAND_MAX * 1 - 0.5f;
    xValue = (float)rand()/(float)RAND_MAX * 20 - 10;
    zValue = (float)rand()/(float)RAND_MAX * 1 - 0.5f;
-   
-
-   StartFactor = (float)rand()/(float)RAND_MAX * AppearRate; 
-   Counter = StartFactor;
-
 }
 
 void CPLaser2::updateMatrices(float timeElapsed) {

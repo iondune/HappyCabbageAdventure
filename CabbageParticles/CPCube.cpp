@@ -6,8 +6,6 @@ void CPCube::setupRenderable() {
    yFactor = (float)rand()/(float)RAND_MAX * 1.5f - 0.2f;
    Amplitude = 0.4f*(yFactor + 1);
    Period = (float)rand()/(float)RAND_MAX * 2 + 1;
-   StartFactor = (float)rand()/(float)RAND_MAX * AppearRate; 
-   Counter = StartFactor;
 
    Size = (float)rand()/(float)RAND_MAX*0.8f + 0.2f;
 }

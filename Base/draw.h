@@ -34,7 +34,7 @@ void drawBlueFlwr(float x, float y, float z, float scale, CApplication app) {
    renderBlueFlwr = new CMeshSceneObject();
    renderBlueFlwr->setMesh(blueFlwrMesh);
    renderBlueFlwr->setTexture(blueFlwrTxt);
-   renderBlueFlwr->setShader(DiffuseTexture);
+   renderBlueFlwr->setShader(ToonTexture);
    renderBlueFlwr->setTranslation(SVector3(x, y, z));
    renderBlueFlwr->setScale(SVector3(scale));
    renderBlueFlwr->setRotation(SVector3(-90, 0, 0));
@@ -53,7 +53,7 @@ void drawPinkFlwr(float x, float y, float z, float scale, CApplication app) {
    renderPinkFlwr = new CMeshSceneObject();
    renderPinkFlwr->setMesh(pinkFlwrMesh);
    renderPinkFlwr->setTexture(pinkFlwrTxt);
-   renderPinkFlwr->setShader(DiffuseTexture);
+   renderPinkFlwr->setShader(ToonTexture);
    renderPinkFlwr->setTranslation(SVector3(x, y, z));
    renderPinkFlwr->setScale(SVector3(scale));
    renderPinkFlwr->setRotation(SVector3(-90, 0, 0));
@@ -72,7 +72,7 @@ void drawPoin(float x, float y, float z, float scale, CApplication app) {
    renderPoin = new CMeshSceneObject();
    renderPoin->setMesh(poinMesh);
    renderPoin->setTexture(poinTxt);
-   renderPoin->setShader(DiffuseTexture);
+   renderPoin->setShader(ToonTexture);
    renderPoin->setTranslation(SVector3(x, y, z));
    renderPoin->setScale(SVector3(scale));
    renderPoin->setRotation(SVector3(-90, 0, 0));
@@ -92,7 +92,7 @@ void drawFicus(float x, float y, float z, float scale, CApplication app) {
    renderFicus->setMesh(ficusMesh);
    //This is on purpose for now, will hopefully find a better texture later
    renderFicus->setTexture(blueFlwrTxt);
-   renderFicus->setShader(DiffuseTexture);
+   renderFicus->setShader(ToonTexture);
    renderFicus->setTranslation(SVector3(x, y, z));
    renderFicus->setScale(SVector3(scale));
    renderFicus->setRotation(SVector3(-90, 0, 0));

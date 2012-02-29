@@ -9,8 +9,6 @@ void CPLaser::setupRenderable() {
    zFactor = (float)rand()/(float)RAND_MAX * 2 - 1;
    reflectX = rand() % 2 * 2 - 1;
    reflectY = rand() % 2 * 2 - 1;
-   StartFactor = (float)rand()/(float)RAND_MAX * AppearRate; 
-   Counter = StartFactor;
 
    Size = (float)rand()/(float)RAND_MAX*0.8f + 0.2f;
 }

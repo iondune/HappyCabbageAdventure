@@ -15,6 +15,13 @@ void CPlayerView::setState(CPlayerView::State const value) {
    curState = value;
 }
 void CPlayerView::step(float delta) {
+   if(time < 0)
+      time = 0;
+   time+=delta;
+   //printf("%0f\n", (time - (int)time));
+   delta *= 1000.0f;
+   if((int)((time - (int)time)*20.0f) % 2 == 0)
+      shakeFactor = SVector3((float)rand()/(float)RAND_MAX * 0.3f - 0.15f, (float)rand()/(float)RAND_MAX * 0.3f - 0.15f, 0);
    if(!(Velocity.Y > 0.01 || Velocity.Y < -0.01)) {
       if(curState == CPlayerView::State::Standing) {
          ySineValue += 0.005f*delta;
@@ -112,7 +119,7 @@ void CPlayerView::draw() {
      -0.05f*sin(ySineValue)+1));
 }
 
-void CPlayerView::establishCamera(ICamera *Camera, int angle) {
+void CPlayerView::establishCamera(ICamera *Camera, int angle, int shaking) {
    SVector3 camPos, camLook;
 
    if(angle == 0) {
@@ -128,6 +135,10 @@ void CPlayerView::establishCamera(ICamera *Camera, int angle) {
       camPos = SVector3(CenterPosition.X + 4, CenterPosition.Y + 4, 1);
    }
    camLook = SVector3(CenterPosition.X, CenterPosition.Y, 0) - camPos;
+   if(shaking) {
+      camPos += shakeFactor;
+   }
+
    Camera->setPosition(camPos);
    Camera->setLookDirection(camLook);
    Camera->recalculateViewMatrix();

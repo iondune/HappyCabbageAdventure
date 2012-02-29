@@ -97,7 +97,17 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             cen->setShader(Diffuse);
             cen->isMovingPlatform = 0;
          }
+         if(!strcmp("CCabbage",xml->getNodeName())) {
+            x = xml->getAttributeValueAsInt(0);
+            y = xml->getAttributeValueAsInt(1);
+            h = xml->getAttributeValueAsInt(2);
+            w = xml->getAttributeValueAsInt(3);
+            t = xml->getAttributeValueAsInt(4);
+            Player->setArea(SRect2((float)x, (float)y, (float)h, (float)w));
+         }
          break;
+
+
       }
    }
 }
@@ -220,6 +230,7 @@ void CGameState::begin()
 {
    Charged = 0; aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0; lDown = 0;
    backwardsView = 0; overView = 0;
+   GameEventReceiver = CGameEventReceiver();
 
    CApplication::get().getSceneManager().setCullingEnabled(true);
 #ifdef PARTICLE
@@ -371,7 +382,7 @@ void CGameState::oldDisplay() {
    else
    {
       if(spaceDown) {
-         printf("Revive player like so\n");
+         //printf("Revive player like so\n");
       }
       Player->setAction(CActor::EActionType::None);
       PlayerView->setState(CPlayerView::State::Standing);
@@ -384,13 +395,13 @@ void CGameState::oldDisplay() {
    Engine->updateAll(Application.getElapsedTime());
    GameplayManager->run(Application.getElapsedTime());
 
-   PlayerView->step(Application.getElapsedTime()*1000);
+   PlayerView->step(Application.getElapsedTime());
 
    SVector2 middleOfPlayer = Player->getArea().getCenter();
    PlayerView->setMiddle(middleOfPlayer);
    PlayerView->setGround(Engine->getHeightBelow(Player));
 
-   PlayerView->establishCamera(Camera, ANGLE(overView, backwardsView));
+   PlayerView->establishCamera(Camera, ANGLE(overView, backwardsView), !!particleLaserFireEngine);
 
 #ifdef PARTICLE
    if(particleLeafEngine && !particleLeafEngine->dead) {
@@ -426,7 +437,7 @@ void CGameState::oldDisplay() {
    }
    if(particleLaserFireEngine && !particleLaserFireEngine->dead) {
       Player->setArea(oldMiddle);
-      Player->setFallAcceleration(50.0f); //for the screen shaking effect
+      Player->setFallAcceleration(0.0f); //for the screen shaking effect
       particleLaserFireEngine->step(Application.getElapsedTime());
       lDown = 1;
       PlayerView->setShader(ToonBright);
@@ -577,7 +588,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 #ifdef PARTICLE
       if(Event.Key == SDLK_l){
          //GameplayManager->setChargingLaser
-         if(!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead))
+         if(!particleLaserFireEngine && (!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead)))
             particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 2.3f, LASER_CHARGING_PARTICLE);
          lDown = 1;
          PlayerView->setShader(ToonBright);
@@ -698,6 +709,9 @@ void CGameState::end()
       delete particleLaserFireEngine;
    }
    particleLeafEngine = particleCubeEngine = particleLaserEngine = particleLaserFireEngine = NULL;
+
+   GameEventManager->OnEnemyDeath.disconnect(& GameEventReceiver);
+   Application.getEventManager().OnGameTickStart.disconnect(& GameEventReceiver);
 
    Application.getSceneManager().removeAllSceneObjects();
 }

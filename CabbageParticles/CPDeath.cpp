@@ -6,8 +6,6 @@ void CPDeath::setupRenderable() {
    yFactor = (float)rand()/(float)RAND_MAX * 0.6f - 0.3f;
    Amplitude = (float)rand()/(float)RAND_MAX * 0.5f + 0.3f;
    Period = (float)rand()/(float)RAND_MAX * 2 + 1;
-   StartFactor = (float)rand()/(float)RAND_MAX * AppearRate; 
-   Counter = StartFactor;
 }
 
 void CPDeath::updateMatrices(float timeElapsed) {
