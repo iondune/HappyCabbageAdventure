@@ -39,6 +39,9 @@
 #include <GL/glew.h>
 #endif
 
+#define OGLFT_NO_SOLID
+#define OGLFT_NO_QT
+
 #ifndef OGLFT_NO_SOLID
 #include <GL/gle.h>
 #endif
@@ -75,7 +78,11 @@ namespace OGLFT {
   };
 
   //! Callback from GLU tessellation routines.
+#ifdef __unix__
+  typedef void (* GLUTessCallback)();
+#else
   typedef void (_stdcall *GLUTessCallback)();
+#endif
 
   //! The FreeType library instance.
   /*!

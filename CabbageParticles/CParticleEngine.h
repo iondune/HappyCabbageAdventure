@@ -9,6 +9,7 @@
 #include "CPDeath.h"
 #include "CPLaser.h"
 #include "CPLaser2.h"
+#include "CPHurt.h"
 #include "CParticleObject.h"
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
@@ -20,6 +21,7 @@
 #define DEATH_PARTICLE 3
 #define LASER_CHARGING_PARTICLE 4
 #define LASER_FIRING_PARTICLE 5
+#define HURT_PARTICLE 6
 
 class CParticleEngine {
    std::vector<CParticle*> particles;

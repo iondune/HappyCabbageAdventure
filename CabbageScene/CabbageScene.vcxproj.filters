@@ -58,6 +58,9 @@
     <ClInclude Include="CTextureLoader.h">
       <Filter>Textures</Filter>
     </ClInclude>
+    <ClInclude Include="ImageLoaders\Texture.h">
+      <Filter>Textures\ImageLoaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CImage.cpp">
@@ -103,6 +106,9 @@
     <ClCompile Include="CMeshSceneObject.cpp">
       <Filter>Scene Objects</Filter>
     </ClCompile>
+    <ClCompile Include="ImageLoaders\Texture.cpp">
+      <Filter>Textures\ImageLoaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
@@ -122,6 +128,9 @@
     </Filter>
     <Filter Include="Camera">
       <UniqueIdentifier>{c1d26830-6476-405b-8d0a-3cce26f3f79b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Textures\ImageLoaders">
+      <UniqueIdentifier>{71a5ca5a-383b-4820-9fa4-87022bc65fc2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

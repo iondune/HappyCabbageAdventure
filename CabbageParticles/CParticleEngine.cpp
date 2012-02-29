@@ -36,6 +36,10 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
             particles.push_back(cPtr = new CPLaser2());
             cPtr->setAppearRate(0);
             break;
+         case HURT_PARTICLE:
+            particles.push_back(cPtr = new CPHurt());
+            cPtr->setAppearRate(0);
+            break;
       }
       cPtr->setCenterPos(&centerPos);
       cPtr->setLookRight(&lookRight);
@@ -112,6 +116,16 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
             }
             sizeArr.push_back((rand() % 5 + 1)*3.0f);
             break;
+         case HURT_PARTICLE:
+            temp = (float)rand()/(float)RAND_MAX*0.3f + 0.3f;
+            if(rand() % 4 == 0) {
+               colorArr.push_back(new SVector3(1));
+            }
+            else {
+               colorArr.push_back(new SVector3(temp*3, temp*3, temp*1));
+            }
+            sizeArr.push_back((rand() % 5 + 1)*3.0f);
+            break;
       }
    }
    myObj = new CParticleObject();
@@ -119,7 +133,6 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
    myObj->setBoundingBox(SBoundingBox3(centerPos - 0.5, centerPos + 0.5));
 
    const char *textureToUse;
-   char buf[50];
    std::string v = "Textures/particle";
 
    switch(particleType) {
@@ -146,6 +159,9 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
       textureToUse = "Textures/particle2.bmp";
       break;
    case LASER_FIRING_PARTICLE:
+      textureToUse = "Textures/particle2.bmp";
+      break;
+   case HURT_PARTICLE:
       textureToUse = "Textures/particle2.bmp";
       break;
    }

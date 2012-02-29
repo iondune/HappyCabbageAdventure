@@ -1,7 +1,7 @@
 OBJECT_FILES=`find | grep '\.o$$' | sed "/sdlmixer/d"`
 
 
-all: build-Sound build-CabbageFramework build-CabbageParticles build-CabbageScene build-CabbageCollider build-CLWIB build-MainMenu build-Overworld build-base build-MeshLoaderDemo build-CabbageColliderDemo
+all: build-Sound build-CabbageFramework build-CabbageParticles build-CabbageScene build-CabbageCollider build-CLWIB build-MainMenu build-Overworld build-base build-MeshLoaderDemo build-CabbageColliderDemo build-CabbageGUI
 
 build-Sound:
 	cd ./CabbageSound && $(MAKE)
@@ -21,13 +21,16 @@ build-CabbageScene:
 build-CabbageCollider:
 	cd ./CabbageCollider && $(MAKE)
 
+build-CabbageGUI:
+	cd ./CabbageGUI && $(MAKE)
+
 build-MeshLoaderDemo: build-CabbageScene
 	cd ./DemoMeshLoader && $(MAKE)
 
 build-CabbageColliderDemo: build-CabbageCollider build-CabbageScene
 	cd ./DemoCabbageCollider && $(MAKE)
 
-build-base: build-CabbageCollider build-CabbageScene build-CabbageFramework build-CabbageParticles
+build-base: build-CabbageCollider build-CabbageScene build-CabbageFramework build-CabbageParticles build-CabbageGUI
 	cd ./Base && $(MAKE)
 
 build-CabbageFramework:
@@ -40,7 +43,7 @@ build-CabbageParticles:
 clean:
 	rm -f $(OBJECT_FILES)
 	rm -f Base/cabbage DemoCabbageCollider/CabbageColliderDemo DemoMeshLoader/MeshLoaderDemo
-	rm -f lib/libCLWIB.a lib/libCabbageCollider.a lib/libCabbageFramework.a lib/libCabbageParticles.a lib/libCabbageScene.a lib/libCabbageSound.a lib/libOverworldState.a
+	rm -f lib/libCLWIB.a lib/libCabbageCollider.a lib/libCabbageFramework.a lib/libCabbageParticles.a lib/libCabbageScene.a lib/libCabbageSound.a lib/libOverworldState.a lib/libCabbageGUI.a
 
 #	cd ./CabbageScene && $(MAKE) $@ && cd ../StateOverworld && $(MAKE) $@ && cd ../StateLWIB && $(MAKE) $@ && cd ../CabbageSound && $(MAKE) $@ && cd ../CabbageCollider && $(MAKE) $@ && cd ../DemoMeshLoader && $(MAKE) $@ && cd ../DemoCabbageCollider && $(MAKE) $@ && cd ../CabbageFramework && $(MAKE) $@
 

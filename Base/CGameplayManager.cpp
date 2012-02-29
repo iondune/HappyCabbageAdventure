@@ -89,7 +89,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
 
                 Enemies.erase(it);
 
-                PlayerActor->setImpulse(SVector2(0.f, 1.0f), 0.05);
+                PlayerActor->setImpulse(SVector2(0.f, 1.0f), 0.05f);
             }
             //Need to rewrite so works without SEnemy
             else
@@ -104,6 +104,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
                     enemy.Renderable = (*it)->Renderable;
 
                     Event.DamagedBy = enemy;
+                    Event.Damagee = PlayerActor;
                     GameEventManager->OnPlayerDamaged(Event);
 
                     //Chris Code.  Damage Sound plays here

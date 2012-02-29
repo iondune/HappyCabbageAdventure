@@ -23,11 +23,12 @@ class CGameEventReceiver : public sigslot::has_slots<>
     };
 
     std::vector<SDeadEnemy> DeadEnemies;
+    CParticleEngine *playerDamagedEngine;
 
     public:
 
         void OnEnemyDeath(SEnemyDeathEvent const & Event);
-
+        void OnPlayerDamaged(SPlayerDamagedEvent const & Event);
         void OnGameTickStart(float const Elapsed);
 
 };

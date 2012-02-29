@@ -42,6 +42,9 @@
     <ClCompile Include="CPLaser2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CPHurt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CParticle.h">
@@ -66,6 +69,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CPLaser2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CPHurt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

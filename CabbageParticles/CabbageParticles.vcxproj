@@ -44,6 +44,7 @@
         ;$(SolutionDir)\CabbageCore;
         ;$(SolutionDir)\CabbageScene;
         ;$(SolutionDir)\CabbageFramework;
+        ;$(SolutionDir)\CabbageGUI;
         ;$(IncludePath);
     </IncludePath>
     <LibraryPath>
@@ -83,6 +84,7 @@
     <ClCompile Include="CPCube.cpp" />
     <ClCompile Include="CPDeath.cpp" />
     <ClCompile Include="CPFlame.cpp" />
+    <ClCompile Include="CPHurt.cpp" />
     <ClCompile Include="CPLaser.cpp" />
     <ClCompile Include="CPLaser2.cpp" />
     <ClCompile Include="CPLeaf.cpp" />
@@ -94,6 +96,7 @@
     <ClInclude Include="CPCube.h" />
     <ClInclude Include="CPDeath.h" />
     <ClInclude Include="CPFlame.h" />
+    <ClInclude Include="CPHurt.h" />
     <ClInclude Include="CPLaser2.h" />
     <ClInclude Include="CPLeaf.h" />
   </ItemGroup>

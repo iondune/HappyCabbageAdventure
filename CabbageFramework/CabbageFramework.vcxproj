@@ -40,6 +40,8 @@
     <IncludePath>
         ;$(VisualStudioDir)\Projects\glew-1.7.0\include;
         ;$(VisualStudioDir)\Projects\SDL-1.2.15\include;
+        ;$(SolutionDir)\CabbageScene;
+        ;$(SolutionDir)\CabbageGUI;
         ;$(SolutionDir)\CabbageCore;
         ;$(IncludePath);
     </IncludePath>
@@ -71,6 +73,7 @@
     <ClCompile Include="CApplication.cpp" />
     <ClCompile Include="CCameraControl.cpp" />
     <ClCompile Include="CEventManager.cpp" />
+    <ClCompile Include="COrthoCamera.cpp" />
     <ClCompile Include="CStateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +81,7 @@
     <ClInclude Include="CApplication.h" />
     <ClInclude Include="CCameraControl.h" />
     <ClInclude Include="CEventManager.h" />
+    <ClInclude Include="COrthoCamera.h" />
     <ClInclude Include="CStateManager.h" />
     <ClInclude Include="sigslot\sigslot.h" />
   </ItemGroup>

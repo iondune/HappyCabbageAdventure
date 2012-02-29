@@ -1,8 +1,8 @@
-FILES = CParticle.cpp CParticleEngine.cpp CPLeaf.cpp CPCube.cpp CParticleObject.cpp CPFlame.cpp CPDeath.cpp CPLaser.cpp CPLaser2.cpp 
+FILES = CParticle.cpp CParticleEngine.cpp CPLeaf.cpp CPCube.cpp CParticleObject.cpp CPFlame.cpp CPDeath.cpp CPLaser.cpp CPLaser2.cpp CPHurt.cpp
 
 OFILES = $(FILES:%.cpp=%.o)
 
-DIRECTORIES = -I../CabbageCore/
+DIRECTORIES = -I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI
 
 ifeq (${__MINGW__},1)
 OPENGL = -mwindows -lopengl32 -lglew32 `sdl-config --cflags` -lglu32 -DGL_GLEXT_PROTOTYPES `sdl-config --libs`
@@ -18,6 +18,9 @@ CParticle.o: CParticle.cpp CParticle.h
 
 CPCube.o: CPCube.cpp CPCube.h
 	g++ -O1 -o CPCube.o CPCube.cpp -c $(DIRECTORIES) $(OPENGL)
+
+CPHurt.o: CPHurt.cpp CPHurt.h
+	g++ -O1 -o CPHurt.o CPHurt.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CPLaser.o: CPLaser.cpp CPLaser.h
 	g++ -O1 -o CPLaser.o CPLaser.cpp -c $(DIRECTORIES) $(OPENGL)

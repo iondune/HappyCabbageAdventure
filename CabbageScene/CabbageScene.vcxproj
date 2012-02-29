@@ -85,6 +85,7 @@
     <ClInclude Include="CImageLoader.h" />
     <ClInclude Include="CRenderable.h" />
     <ClInclude Include="CTextureLoader.h" />
+    <ClInclude Include="ImageLoaders\Texture.h" />
     <ClInclude Include="ISceneObject.h" />
     <ClInclude Include="SAttribute.h" />
     <ClInclude Include="SVertex.h" />
@@ -105,6 +106,7 @@
     <ClCompile Include="CTexture.cpp" />
     <ClCompile Include="CImageLoader.cpp" />
     <ClCompile Include="CRenderable.cpp" />
+    <ClCompile Include="ImageLoaders\Texture.cpp" />
     <ClCompile Include="ISceneObject.cpp" />
   </ItemGroup>
   <ItemGroup>

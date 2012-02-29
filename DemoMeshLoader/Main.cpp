@@ -40,15 +40,17 @@ class CMainState : public CState<CMainState>
 {
 
     CApplication & Application;
+	CSceneManager & SceneManager;
+	CGUIEngine & GUIEngine;
 
 public:
 
     //freetype::font_data Font;
 	//gltext::Font Font;
-	OGLFT::Face* monochrome;
 
     CMainState()
-        : Application(CApplication::get()), WindowWidth(1440), WindowHeight(900), Scale(1), Animate(false), Mode(0), ShowHelp(false)
+        : Application(CApplication::get()), WindowWidth(1440), WindowHeight(900), Scale(1), Animate(false), Mode(0), ShowHelp(false),
+		SceneManager(CApplication::get().getSceneManager()), GUIEngine(CApplication::get().getGUIEngine())
     {}
 
 	CMeshSceneObject * WingMan;
@@ -72,6 +74,7 @@ public:
 
         // Setup scene
         CSceneManager & SceneManager = CApplication::get().getSceneManager();
+
         SceneManager.Lights.push_back(new CLight());
         SceneManager.Lights.back()->Color = SVector3(0.5f, 0.2f, 0.2f);
         SceneManager.Lights.back()->Position = SVector3(1.f, 2.f, 3.f);
@@ -135,23 +138,29 @@ public:
 		SkyBox->setTexture("../DemoMeshLoader/stars.bmp");
 		SkyBox->setCullingEnabled(false);
 
-		CMeshSceneObject * DD = new CMeshSceneObject();
-		DD->setMesh(Cube);
-		DD->setShader(CShaderLoader::loadShader("DiffuseTexture"));
-		DD->setScale(SVector3(50.f));
-		DD->setTexture("../DemoMeshLoader/stars.bmp");
-		SceneManager.addDirectObject(DD);
-
 		CApplication::get().getSceneManager().addSceneObject(Renderable);
 
+		CGUIImageWidget * Image = new CGUIImageWidget("../DemoMeshLoader/spaceshiptexture.bmp", SVector2(0.2f, 0.2f));
+		GUIEngine.addWidget(Image);
+
+		Image = new CGUIImageWidget(CImageLoader::loadTGAImage("../DemoMeshLoader/24bit.tga"), SVector2(0.2f, 0.2f));
+		Image->setPosition(SVector2(0.2f, 0.f));
+		GUIEngine.addWidget(Image);
+
+		Image = new CGUIImageWidget(CImageLoader::loadTGAImage("../DemoMeshLoader/32bit.tga"), SVector2(0.2f, 0.2f));
+		Image->setPosition(SVector2(0.4f, 0.f));
+		GUIEngine.addWidget(Image);
+
+
+		CGUIFontWidget * Font = new CGUIFontWidget("Fonts/DejaVuSansMono.ttf", 36.f);
+		Font->setPosition(SVector2(0, 0.25f));
+		Font->setText("Hello, world!");
+		Font->setColor(SColor(1, 1, 1));
+		GUIEngine.addWidget(Font);
+
+		
         //Font.init("Fonts/DejaVuSansMono.ttf", 14);
-		monochrome = new OGLFT::Translucent( "Fonts/DejaVuSansMono.ttf", 36 );
-		if ( monochrome == 0 || ! monochrome->isValid() ) {
-			std::cerr << "Could not construct face from " << "Fonts/DejaVuSansMono.ttf" << std::endl;
-		}
-		monochrome->setForegroundColor( 1., 0., 0. );
-		monochrome->setBackgroundColor( 0.5, .5, .75, 0.0 );
-		glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
+		
 		Timer = 0.f;
     }
 
@@ -226,19 +235,7 @@ public:
                 "1, 2, and 3 to change materials\n\n");
         else
             freetype::print(Font, 0, (float)Application.getWindowSize().Y - 15.f, "Press F1 to view commands");*/
-		glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-		glEnable( GL_BLEND );
-		glViewport( 0, 0, 1440, 900 );
-		glMatrixMode( GL_PROJECTION );
-		glLoadIdentity();
-		glOrtho( 0, 1440, 0, 900, -1, 1 );
-
-		glMatrixMode( GL_MODELVIEW );
-		glLoadIdentity();
-		glEnable(GL_DEPTH_TEST);
-		monochrome->draw( 0., 250., "Hello, World!" );
-		glDisable(GL_DEPTH_TEST);
-		glDisable( GL_BLEND );
+		GUIEngine.drawAll();
 
         SDL_GL_SwapBuffers();
     }

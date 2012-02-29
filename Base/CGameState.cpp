@@ -74,7 +74,7 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             t = xml->getAttributeValueAsInt(5);
 
             if (t == -5 && !lowDef)
-               GeneratePlants(x, y, w, h, d);
+               GeneratePlants((float) x, (float) y, (float) w, (float) h, (float) d);
 
             list->push_back(ptr = new CBlock((float)x,(float)y,w,h,d,t));
             if(xml->getAttributeValueAsInt(6)) {
@@ -132,6 +132,7 @@ void CGameState::EngineInit( void ) {
 
    GameEventManager = & GameplayManager->getGameEventManager();
    GameEventManager->OnEnemyDeath.connect(& GameEventReceiver, &CGameEventReceiver::OnEnemyDeath);
+   GameEventManager->OnPlayerDamaged.connect(& GameEventReceiver, &CGameEventReceiver::OnPlayerDamaged);
    Application.getEventManager().OnGameTickStart.connect(& GameEventReceiver, & CGameEventReceiver::OnGameTickStart);
 
    float i = 0;
@@ -222,7 +223,7 @@ void LoadHUD() {
    DD->setShader(CShaderLoader::loadShader("DiffuseTexture"));
    DD->setScale(SVector3(50.f));
    DD->setTexture("Textures/HealthCabbage0.bmp");
-   CApplication::get().getSceneManager().addDirectObject(DD);
+   //CApplication::get().getSceneManager().addDirectObject(DD);
 }
 
 //Initalizer fxn
@@ -294,8 +295,6 @@ void CGameState::begin()
    Application.getSceneManager().addSceneObject(flagLogo);
 
    srand((unsigned int) time(NULL));
-
-   int random;
 
    //Initialize Fxns
    EngineInit();
@@ -395,13 +394,13 @@ void CGameState::oldDisplay() {
    Engine->updateAll(Application.getElapsedTime());
    GameplayManager->run(Application.getElapsedTime());
 
-   PlayerView->step(Application.getElapsedTime()*1000);
+   PlayerView->step(Application.getElapsedTime());
 
    SVector2 middleOfPlayer = Player->getArea().getCenter();
    PlayerView->setMiddle(middleOfPlayer);
    PlayerView->setGround(Engine->getHeightBelow(Player));
 
-   PlayerView->establishCamera(Camera, ANGLE(overView, backwardsView));
+   PlayerView->establishCamera(Camera, ANGLE(overView, backwardsView), !!particleLaserFireEngine);
 
 #ifdef PARTICLE
    if(particleLeafEngine && !particleLeafEngine->dead) {
@@ -437,7 +436,7 @@ void CGameState::oldDisplay() {
    }
    if(particleLaserFireEngine && !particleLaserFireEngine->dead) {
       Player->setArea(oldMiddle);
-      Player->setFallAcceleration(50.0f); //for the screen shaking effect
+      Player->setFallAcceleration(0.0f); //for the screen shaking effect
       particleLaserFireEngine->step(Application.getElapsedTime());
       lDown = 1;
       PlayerView->setShader(ToonBright);
@@ -451,7 +450,7 @@ void CGameState::oldDisplay() {
       particleLaserFireEngine->deconstruct();
       delete particleLaserFireEngine;
       particleLaserFireEngine = NULL;
-      Player->setImpulse(SVector2((PlayerView->getLookRight()?-1:1)*15.0f, 0.0f), 0.1);
+      Player->setImpulse(SVector2((PlayerView->getLookRight()?-1:1)*15.0f, 0.0f), 0.1f);
    }
    PlayerView->Charging = lDown;
 #endif
@@ -588,7 +587,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 #ifdef PARTICLE
       if(Event.Key == SDLK_l){
          //GameplayManager->setChargingLaser
-         if(!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead))
+         if(!particleLaserFireEngine && (!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead)))
             particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 2.3f, LASER_CHARGING_PARTICLE);
          lDown = 1;
          PlayerView->setShader(ToonBright);
@@ -711,6 +710,7 @@ void CGameState::end()
    particleLeafEngine = particleCubeEngine = particleLaserEngine = particleLaserFireEngine = NULL;
 
    GameEventManager->OnEnemyDeath.disconnect(& GameEventReceiver);
+   GameEventManager->OnPlayerDamaged.disconnect(& GameEventReceiver);
    Application.getEventManager().OnGameTickStart.disconnect(& GameEventReceiver);
 
    Application.getSceneManager().removeAllSceneObjects();
@@ -781,8 +781,8 @@ void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
    if (w > 0.5f && w < 1.5f)  //If block size roughly 1, don't draw any trees
       numForeground = numBackground = 0;
    else {
-      numForeground = w / 2;
-      numBackground = w / 2;
+      numForeground = (int) w / 2;
+      numBackground = (int) w / 2;
    }
 
    div =  w/(float)numBackground;
@@ -802,10 +802,10 @@ void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
    //Draw flower-type plants in background
    for (int n = 0; n < w; n++) {
       random = rand()%3;
-      randScale = rand()%20;
+      randScale = (float) (rand()%20);
       randScale = randScale * .025f;
-      randDepth = rand()%2;
-      randDepth = randDepth*.25f;
+      randDepth = (float) (rand()%2);
+      randDepth = (float) randDepth*.25f;
 
       if (random == 0)
          drawPinkFlwr(x + n + .5f, -1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
@@ -819,17 +819,17 @@ void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
    //Draw flower-type plants in foreground
       for (int n = 0; n < w; n++) {
          random = rand()%3;
-         randScale = rand()%20;
-         randScale = randScale * .025f;
-         randDepth = rand()%2;
-         randDepth = randDepth*.25f;
+         randScale = (float) (rand()%20);
+         randScale = randScale * 0.025f;
+         randDepth = (float) (rand()%2);
+         randDepth = randDepth*0.25f;
 
          if (random == 0)
-            drawPinkFlwr(x + n + .5f, -1.0f, d/2.0f - .4 - randDepth, .4f + randScale, Application);
+            drawPinkFlwr(x + n + 0.5f, -1.0f, d/2.0f - 0.4f - randDepth, 0.4f + randScale, Application);
          else if (random == 1)
-            drawBlueFlwr(x + n + .5f, -1.0f, d/2.0f - .4 - randDepth, .4f + randScale, Application);
+            drawBlueFlwr(x + n + 0.5f, -1.0f, d/2.0f - 0.4f - randDepth, 0.4f + randScale, Application);
          else if (random == 2)
-            drawPoin(x + n + .5f, .2f, d/2.0f - .4 - randDepth, .7f + randScale, Application);
+            drawPoin(x + n + 0.5f, 0.2f, d/2.0f - 0.4f - randDepth, 0.7f + randScale, Application);
       }
 
 
