@@ -111,6 +111,12 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             h = xml->getAttributeValueAsInt(2);
             w = xml->getAttributeValueAsInt(3);
             t = xml->getAttributeValueAsInt(4);
+            Block = Engine->addObject();
+            Block->setArea(SRect2((float)x,(float)y, 1, 5));
+            //PrepBlock(x,y+1,1,1);
+            flagLogo->setTranslation(SVector3((float)x, (float) y+.9f, 1.0f));
+            renderFlag->setTranslation(SVector3((float)x,(float) y+.5f, 1.0f));
+            GameplayManager->setVictoryFlag(Block);
          }
          break;
 
@@ -162,12 +168,13 @@ void CGameState::EngineInit( void ) {
          printf("this is NOT a moving platform\n");
    }
 
-   Block = Engine->addObject();
+/*   Block = Engine->addObject();
    Block->setArea(SRect2(172.f,0.f, 4.f, 10.f));
    PrepBlock(172,0,4,10);
    if(lastOne) {
+   renderFlag->setTranslation(SVector3(170, .5f, 1.0f));
       GameplayManager->setVictoryFlag(Block);
-   }
+   }*/
 
 
    /*
@@ -1039,7 +1046,7 @@ void PrepMeshes()
 
    renderFlag = new CMeshSceneObject();
    renderFlag->setMesh(flagMesh);
-   renderFlag->setTranslation(SVector3(170, .5f, 1.0f));
+  // renderFlag->setTranslation(SVector3(170, .5f, 1.0f));
    renderFlag->setRotation(SVector3(-90,0,0));
    renderFlag->setScale(SVector3(.0150f, .00025f,.0016f));
    renderFlag->setTexture(flagTxt);
@@ -1047,7 +1054,7 @@ void PrepMeshes()
 
    flagLogo = new CMeshSceneObject();
    flagLogo->setMesh(cabbageMesh);
-   flagLogo->setTranslation(SVector3(170, .9f, 1.0f));
+   //flagLogo->setTranslation(SVector3(170, .9f, 1.0f));
    flagLogo->setRotation(SVector3(-90,0,0));
    flagLogo->setScale(SVector3(.75f));
    flagLogo->setShader(Flat);
