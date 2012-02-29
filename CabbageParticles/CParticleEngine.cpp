@@ -117,14 +117,8 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
             sizeArr.push_back((rand() % 5 + 1)*3.0f);
             break;
          case HURT_PARTICLE:
-            temp = (float)rand()/(float)RAND_MAX*0.3f + 0.3f;
-            if(rand() % 4 == 0) {
-               colorArr.push_back(new SVector3(1));
-            }
-            else {
-               colorArr.push_back(new SVector3(temp*3, temp*3, temp*1));
-            }
-            sizeArr.push_back((rand() % 5 + 1)*3.0f);
+            colorArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*0.2f + 0.1f, 1.0f, (float)rand()/(float)RAND_MAX*0.4f + 0.1f));
+            sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 25);
             break;
       }
    }
@@ -162,7 +156,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
       textureToUse = "Textures/particle2.bmp";
       break;
    case HURT_PARTICLE:
-      textureToUse = "Textures/particle2.bmp";
+      textureToUse = "Textures/particleLeaf.bmp";
       break;
    }
 

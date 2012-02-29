@@ -2,9 +2,12 @@
 
 void CPHurt::setupRenderable() {
    tickValue = 0;
-   yValue = (float)rand()/(float)RAND_MAX * 1 - 0.5f;
-   xValue = (float)rand()/(float)RAND_MAX * 20 - 10;
-   zValue = (float)rand()/(float)RAND_MAX * 1 - 0.5f;
+   position = SVector3((float)rand()/(float)RAND_MAX * 1 - 0.5f, (float)rand()/(float)RAND_MAX * 0.3, (float)rand()/(float)RAND_MAX * 1 - 0.5);
+   velocity = ((*centerPos - position) - *centerPos) * SVector3(-0.3f, -1.4f, -0.7f); 
+}
+
+void CPHurt::setCenterPos(SVector3 *cPos) {
+   centerPos = cPos;
 }
 
 void CPHurt::updateMatrices(float timeElapsed) {
@@ -17,21 +20,15 @@ void CPHurt::updateMatrices(float timeElapsed) {
    }
    else if(Duration == -1) {}
    else {
-      tickValue += 4*timeElapsed;
+      tickValue += timeElapsed*0.1f;
       Duration += timeElapsed;
 
-      xValue += 20*timeElapsed;
-      if(xValue < 0 || xValue > 5) {
-         translate = SVector3(-50);
-         if(xValue > 5)
-            xValue -= 6;
-      }
-      else {
-         translate = SVector3((*lookRight?1:-1)*xValue,
-               yValue * ((xValue > 1 || xValue <= 0) ? 1 : xValue),
-               zValue);
-      }
 
+      velocity -= SVector3(0.0f, 0.08f, 0.0f)*tickValue;
+      //velocity.X /= 1.05f;
+      //velocity.Z /= 1.05f;
+      position += velocity*tickValue;
+      translate = position; 
       //getRenderable()->setRotation(RotationSpeed*sineValue);
    }
 }

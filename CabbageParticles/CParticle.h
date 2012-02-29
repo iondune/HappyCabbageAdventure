@@ -18,7 +18,7 @@ class CParticle {
       SVector3 translate;
 
       void setLookRight(int*);
-      void setCenterPos(SVector3*);
+      virtual void setCenterPos(SVector3*);
       void setAppearRate(float r);
       virtual void setupRenderable()=0;
       virtual void updateMatrices(float)=0;

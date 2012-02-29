@@ -10,6 +10,7 @@ CGameEventReceiver::CGameEventReceiver()
    printf("Here!!!\n");
    DeadEnemies.clear();
    playerDamagedEngine = NULL;
+   Player = NULL;
 }
 
 void CGameEventReceiver::OnPlayerDamaged(SPlayerDamagedEvent const & Event) {
@@ -18,7 +19,8 @@ void CGameEventReceiver::OnPlayerDamaged(SPlayerDamagedEvent const & Event) {
       delete playerDamagedEngine;
       playerDamagedEngine = NULL;
    }
-   playerDamagedEngine = new CParticleEngine(SVector3(Event.Damagee->getArea().getCenter(), 0.0f), 50, 5.6f, HURT_PARTICLE);
+   playerDamagedEngine = new CParticleEngine(SVector3(Event.Damagee->getArea().getCenter(), 0.0f), 6, 0.8, HURT_PARTICLE);
+   Player = Event.Damagee;
 }
 
 void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
@@ -62,12 +64,13 @@ void CGameEventReceiver::OnGameTickStart(float const Elapsed)
    }
 
    if(playerDamagedEngine && !playerDamagedEngine->dead) {
+      playerDamagedEngine->setCenterPos(SVector3(Player->getArea().getCenter(), 0.0f));
       playerDamagedEngine->step(Elapsed);
-
    }
    else if(playerDamagedEngine && playerDamagedEngine->dead) {
       playerDamagedEngine->deconstruct();
       delete playerDamagedEngine;
       playerDamagedEngine = NULL;
+      Player = NULL;
    }
 }
