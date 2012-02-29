@@ -90,7 +90,7 @@ void EKiwi::update(float const TickTime) {
       float xDist = curX - Manager->getPlayerLocation().X;
 
       //Drop bomb projectile
-      if (xDist < 1.f && !bombDropped && Direction == 0) {
+      if (xDist < .2f && !bombDropped && Direction == 0) {
          printf("curX: %f, playerX: %f\n", curX, Manager->getPlayerLocation().X);
          printf("Dropping bomb\n");
          DropBomb();
@@ -98,7 +98,7 @@ void EKiwi::update(float const TickTime) {
          printf("Bomb dropped.\n");
       }
 
-      else if (xDist > -1.f && !bombDropped && Direction == 1) {
+      else if (xDist > -.2f && !bombDropped && Direction == 1) {
          DropBomb();
          bombDropped = true;
       }

@@ -12,7 +12,7 @@ void CMainMenuState::setupTextures()
    {
       woodTexture = new CTexture(CImageLoader::loadImage("wood011.bmp"));
    }
-   skyTexture = new CTexture(CImageLoader::loadImage("sky.bmp"));
+   skyTexture = new CTexture(CImageLoader::loadImage("background.bmp"));
 }
 
 void CMainMenuState::setupMeshes()
