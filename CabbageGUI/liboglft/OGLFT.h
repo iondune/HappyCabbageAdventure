@@ -78,7 +78,9 @@ namespace OGLFT {
   };
 
   //! Callback from GLU tessellation routines.
-#ifdef __unix__
+#ifdef __MINGW__ 
+  typedef void (* GLUTessCallback)();
+#elif defined __unix__
   typedef void (* GLUTessCallback)();
 #else
   typedef void (_stdcall *GLUTessCallback)();
