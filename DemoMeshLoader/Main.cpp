@@ -138,10 +138,18 @@ public:
 		SkyBox->setCullingEnabled(false);
 
 		CApplication::get().getSceneManager().addSceneObject(Renderable);
+
+		CGUIImageWidget * Image = new CGUIImageWidget("../DemoMeshLoader/spaceshiptexture.bmp", SVector2(0.8f, 0.8f));
+		GUIEngine.addWidget(Image);
+
+
 		CGUIFontWidget * Font = new CGUIFontWidget("Fonts/DejaVuSansMono.ttf", 36.f);
 		Font->setPosition(SVector2(0, 0.25f));
 		Font->setText("Hello, world!");
+		Font->setColor(SColor(1, 1, 1));
 		GUIEngine.addWidget(Font);
+
+		
         //Font.init("Fonts/DejaVuSansMono.ttf", 14);
 		
 		Timer = 0.f;

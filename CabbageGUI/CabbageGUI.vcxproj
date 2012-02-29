@@ -42,6 +42,7 @@
         ;$(VisualStudioDir)\Projects\SDL-1.2.15\include;
         ;$(VisualStudioDir)\Projects\freetype-2.4.2\include;
         ;$(SolutionDir)\CabbageCore;
+        ;$(SolutionDir)\CabbageScene;
         ;$(IncludePath);
     </IncludePath>
   </PropertyGroup>
@@ -73,12 +74,14 @@
     <ClInclude Include="CabbageGUI.h" />
     <ClInclude Include="CGUIFontWidget.h" />
     <ClInclude Include="CGUIEngine.h" />
+    <ClInclude Include="CGUIImageWidget.h" />
     <ClInclude Include="CGUIWidget.h" />
     <ClInclude Include="liboglft\OGLFT.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CGUIEngine.cpp" />
     <ClCompile Include="CGUIFontWidget.cpp" />
+    <ClCompile Include="CGUIImageWidget.cpp" />
     <ClCompile Include="CGUIWidget.cpp" />
     <ClCompile Include="liboglft\OGLFT.cpp" />
   </ItemGroup>
