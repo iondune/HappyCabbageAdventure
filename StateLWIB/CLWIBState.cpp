@@ -963,7 +963,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
                int x = lastMouseOveredBlock.mapX;
                int y = lastMouseOveredBlock.mapY;
 
-               /*int i,j;
+               int i,j;
                for(i = 0; i < lastMouseOveredBlock.p->w; i++) {
                   for(j = 0; j < lastMouseOveredBlock.p->h; j++) {
                      blockMap[x+i][y+j].o = false;
@@ -972,7 +972,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
                      blockMap[x+i][y+j].mapX = -1;
                      blockMap[x+i][y+j].mapY = -1;
                   }
-               }*/
+               }
                lastMouseOveredBlock = blockMap[x][y];
             }
          }
@@ -994,14 +994,18 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          if(oldx == x && oldy == y)
             return;
          qd m_qd;
+         CShader *tempShader;
          m_qd = blockMap[(int)x+25][(int)(y-0.5+25)];
+         tempShader = CShaderLoader::loadShader("DiffuseTexture");
          if(tDown) {
             if(m_qd.o && m_qd.r != lastMouseOveredBlock.r) {
-               m_qd.r->setShader(DiffuseTextureBright);
+
+                tempShader = m_qd.r->getShader(); 
+                m_qd.r->setShader(DiffuseTextureBright);
             }
-         }
-         if(lastMouseOveredBlock.o && m_qd.r != lastMouseOveredBlock.r) {
-            lastMouseOveredBlock.r->setShader(DiffuseTexture);
+            if(lastMouseOveredBlock.o && m_qd.r != lastMouseOveredBlock.r) {
+                lastMouseOveredBlock.r->setShader(tempShader);
+            }
          }
          if(!threeDown && !tDown && !twoDown && mouseDown) {
             PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth, textureType);
