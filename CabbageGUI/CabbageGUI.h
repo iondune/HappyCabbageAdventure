@@ -4,5 +4,6 @@
 #include "CGUIEngine.h"
 #include "CGUIFontWidget.h"
 #include "CGUIWidget.h"
+#include "CGUIImageWidget.h"
 
 #endif

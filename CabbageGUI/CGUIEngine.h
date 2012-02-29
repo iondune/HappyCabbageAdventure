@@ -13,16 +13,17 @@ class CGUIEngine
 
 	std::vector<CGUIWidget *> Widgets;
 
+	SPosition2 const ScreenSize;
+
 public:
 
-	CGUIEngine();
+	CGUIEngine(SPosition2 const & screenSize);
 
 	void addWidget(CGUIWidget * Widget);
 	void removeWidget(CGUIWidget * Widget);
 	void removeAllWidgets();
 
 	void drawAll();
-
 
 };
 

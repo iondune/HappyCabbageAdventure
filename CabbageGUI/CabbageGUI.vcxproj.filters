@@ -8,6 +8,7 @@
     <ClInclude Include="CGUIEngine.h" />
     <ClInclude Include="CGUIWidget.h" />
     <ClInclude Include="CGUIFontWidget.h" />
+    <ClInclude Include="CGUIImageWidget.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="liboglft">
@@ -21,5 +22,6 @@
     <ClCompile Include="CGUIFontWidget.cpp" />
     <ClCompile Include="CGUIEngine.cpp" />
     <ClCompile Include="CGUIWidget.cpp" />
+    <ClCompile Include="CGUIImageWidget.cpp" />
   </ItemGroup>
 </Project>
