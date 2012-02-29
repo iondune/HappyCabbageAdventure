@@ -11,12 +11,11 @@
 class CGUIEngine
 {
 
-	SPosition2 ScreenSize;
 	std::vector<CGUIWidget *> Widgets;
 
 public:
 
-	CGUIEngine(SPosition2 const & screenSize);
+	CGUIEngine();
 
 	void addWidget(CGUIWidget * Widget);
 	void removeWidget(CGUIWidget * Widget);
@@ -24,8 +23,6 @@ public:
 
 	void drawAll();
 
-	void setScreenSize(SPosition2 const & screenSize);
-	SPosition2 const getScreenSize() const;
 
 };
 

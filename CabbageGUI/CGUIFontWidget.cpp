@@ -42,9 +42,9 @@ void CGUIFontWidget::draw()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glEnable(GL_BLEND);
-	glEnable(GL_DEPTH_TEST);
-	Renderer->draw(Position.X, Position.Y, Text.c_str());
 	glDisable(GL_DEPTH_TEST);
+	Renderer->draw(Position.X, Position.Y, Text.c_str());
+	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 }
 

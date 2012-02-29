@@ -11,8 +11,7 @@
 #include <GL/glew.h>
 #endif
 
-CGUIEngine::CGUIEngine(SPosition2 const & screenSize)
-	: ScreenSize(screenSize)
+CGUIEngine::CGUIEngine()
 {}
 
 void CGUIEngine::addWidget(CGUIWidget * Widget)
@@ -32,21 +31,11 @@ void CGUIEngine::removeAllWidgets()
 
 void CGUIEngine::drawAll()
 {
-	glViewport(0, 0, ScreenSize.X, ScreenSize.Y);
+	//glViewport(0, 0, ScreenSize.X, ScreenSize.Y);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0, (float) ScreenSize.X, 0, (float) ScreenSize.Y, -1, 1);
+	glOrtho(0, 1, 0, 1, -1, 1);
 
 	for (std::vector<CGUIWidget *>::iterator it = Widgets.begin(); it != Widgets.end(); ++ it)
 		(* it)->draw();
-}
-
-void CGUIEngine::setScreenSize(SPosition2 const & screenSize)
-{
-	ScreenSize = screenSize;
-}
-
-SPosition2 const CGUIEngine::getScreenSize() const
-{
-	return ScreenSize;
 }
