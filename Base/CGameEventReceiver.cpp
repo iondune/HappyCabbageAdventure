@@ -13,13 +13,12 @@ CGameEventReceiver::CGameEventReceiver()
 }
 
 void CGameEventReceiver::OnPlayerDamaged(SPlayerDamagedEvent const & Event) {
-   printf("Salud\n");
    if(playerDamagedEngine) {
       playerDamagedEngine->deconstruct();
       delete playerDamagedEngine;
       playerDamagedEngine = NULL;
    }
-   playerDamagedEngine = new CParticleEngine(SVector3(Event.Damagee->getArea().getCenter(), 0.0f), 50, 5.6, DEATH_PARTICLE);
+   playerDamagedEngine = new CParticleEngine(SVector3(Event.Damagee->getArea().getCenter(), 0.0f), 50, 5.6, HURT_PARTICLE);
 }
 
 void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
