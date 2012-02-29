@@ -817,17 +817,17 @@ void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
    //Draw flower-type plants in foreground
       for (int n = 0; n < w; n++) {
          random = rand()%3;
-         randScale = rand()%20;
-         randScale = randScale * .025f;
-         randDepth = rand()%2;
-         randDepth = randDepth*.25f;
+         randScale = (float) (rand()%20);
+         randScale = randScale * 0.025f;
+         randDepth = (float) (rand()%2);
+         randDepth = randDepth*0.25f;
 
          if (random == 0)
-            drawPinkFlwr(x + n + .5f, -1.0f, d/2.0f - .4 - randDepth, .4f + randScale, Application);
+            drawPinkFlwr(x + n + 0.5f, -1.0f, d/2.0f - 0.4f - randDepth, 0.4f + randScale, Application);
          else if (random == 1)
-            drawBlueFlwr(x + n + .5f, -1.0f, d/2.0f - .4 - randDepth, .4f + randScale, Application);
+            drawBlueFlwr(x + n + 0.5f, -1.0f, d/2.0f - 0.4f - randDepth, 0.4f + randScale, Application);
          else if (random == 2)
-            drawPoin(x + n + .5f, .2f, d/2.0f - .4 - randDepth, .7f + randScale, Application);
+            drawPoin(x + n + 0.5f, 0.2f, d/2.0f - 0.4f - randDepth, 0.7f + randScale, Application);
       }
 
 

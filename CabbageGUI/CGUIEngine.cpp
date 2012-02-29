@@ -35,7 +35,7 @@ void CGUIEngine::drawAll()
 	glViewport(0, 0, ScreenSize.X, ScreenSize.Y);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0, 1.f, 0, 1.f, -1, 1);
+	glOrtho(0, (float) ScreenSize.X, 0, (float) ScreenSize.Y, -1, 1);
 
 	for (std::vector<CGUIWidget *>::iterator it = Widgets.begin(); it != Widgets.end(); ++ it)
 		(* it)->draw();

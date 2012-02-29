@@ -139,6 +139,8 @@ public:
 
 		CApplication::get().getSceneManager().addSceneObject(Renderable);
 		CGUIFontWidget * Font = new CGUIFontWidget("Fonts/DejaVuSansMono.ttf", 14.f);
+		Font->setPosition(SVector2(0, 250.f));
+		Font->setText("Hello, world!");
 		GUIEngine.addWidget(Font);
         //Font.init("Fonts/DejaVuSansMono.ttf", 14);
 		
