@@ -45,6 +45,9 @@ CRenderable.o: CRenderable.cpp
 CShader.o: CShader.cpp
 	g++ -O1 -o CShader.o CShader.cpp -c $(DIRECTORIES) $(OPENGL)
 
+ImageLoaders/Texture.o: ImageLoaders/Texture.cpp ImageLoaders/Texture.h
+	g++ -O1 -o $@ ImageLoaders/Texture.cpp -c $(DIRECTORIES) $(OPENGL)
+
 CTexture.o: CTexture.cpp
 	g++ -O1 -o CTexture.o CTexture.cpp -c $(DIRECTORIES) $(OPENGL)
 

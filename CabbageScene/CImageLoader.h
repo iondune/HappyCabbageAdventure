@@ -4,6 +4,7 @@
 #include "CImage.h"
 #include "CTexture.h"
 
+#include <string.h>
 #include <string>
 #include <map>
 
