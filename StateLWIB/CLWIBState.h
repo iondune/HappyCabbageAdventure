@@ -9,6 +9,7 @@
 #include "CPlaceable.h"
 #include "CBlock.h"
 #include "CCabbage.h"
+#include "CFlag.h"
 #include "../Base/irrxml-1.2/src/irrXML.h"
 #include "wmlwriter_src/xmlwriter.h"
 
@@ -31,7 +32,7 @@ class CLWIBState : public CState<CLWIBState>
    int WindowWidth, WindowHeight;
 
 
-   CMesh *cubeMesh, *appleMesh, *orangeMesh, *kiwiMesh, *cabbageMesh, *groundMesh, *bladeMesh;
+   CMesh *cubeMesh, *appleMesh, *orangeMesh, *kiwiMesh, *cabbageMesh, *groundMesh, *bladeMesh, *flagMesh;
 
    float xp2w(int oldX);
    float yp2w(int oldY);
@@ -58,6 +59,7 @@ class CLWIBState : public CState<CLWIBState>
    void PrepBlock(float x, float y, int w, int h, int d, int t); 
    void PrepEnemy(float x, float y, int type); 
    void PrepCabbage(float x, float y);
+   void PrepFlag(float X ,float y);
    void PrepGrass(float x, float y, float w, float h);
    void PrepPreviews();
 
