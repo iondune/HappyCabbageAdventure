@@ -53,6 +53,9 @@
     <ClCompile Include="EBlade.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PKiwi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGameEventManager.h">
@@ -104,6 +107,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EBlade.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PKiwi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
