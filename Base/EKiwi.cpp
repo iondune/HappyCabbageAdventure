@@ -15,6 +15,7 @@ EKiwi::EKiwi(float x, float y, float w, float h, CGameplayManager* manager, int 
    OrigX = x;
 
    rotateBird = 0.0f;
+   bombDropped = false;
 }
 
 //Loads and moves the mesh
@@ -28,7 +29,7 @@ void EKiwi::loadMesh() {
    }
 
    else
-      printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
+      printf("ERROR.  KIWI MESH DID NOT LOAD PROPERLY.\n");
 
    Renderable->setMesh(mesh);
    //Renderable->getMaterial().Texture = new CTexture(CImageLoader::loadImage("Textures/kiwi.bmp"));
@@ -85,6 +86,22 @@ void EKiwi::update(float const TickTime) {
       else
          Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
       oldSineValue = SineValue;
+
+      float xDist = curX - Manager->getPlayerLocation().X;
+
+      //Drop bomb projectile
+      if (xDist < 1.f && !bombDropped && Direction == 0) {
+         printf("curX: %f, playerX: %f\n", curX, Manager->getPlayerLocation().X);
+         printf("Dropping bomb\n");
+         DropBomb();
+         bombDropped = true;
+         printf("Bomb dropped.\n");
+      }
+
+      else if (xDist > -1.f && !bombDropped && Direction == 1) {
+         DropBomb();
+         bombDropped = true;
+      }
    }
    else
    {
@@ -107,5 +124,13 @@ void EKiwi::doRenderable() {
    else if(Actor->getVelocity().X > 0.01f)
       Renderable->setScale(SVector3(1,1,1));
 
+}
+
+void EKiwi::DropBomb() {
+   SVector2 pos = Actor->getArea().Position;
+   if (Direction == 0)
+      CBadGuy::makeBadGuy(pos.X + w/2.f - .05f, pos.Y - .5f, w, h, pKiwi, Manager);
+   else
+      CBadGuy::makeBadGuy(pos.X - w/2.f - .05f, pos.Y - .5f, w, h, pKiwi, Manager);
 }
 

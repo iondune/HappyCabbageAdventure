@@ -21,9 +21,11 @@ public:
    void loadMesh();
    void loadActor();
    void doRenderable();
+   void DropBomb();
 
    float OrigX, SineValue, rotateBird;
    int Direction;
+   bool bombDropped;
 };
 
 #endif /* EKIWI_H_ */

@@ -4,6 +4,7 @@
 #include "EKiwi.h"
 #include "EFlame.h"
 #include "EBlade.h"
+#include "PKiwi.h"
 
 void CBadGuy::setShader(CShader* shade) {
    CBadGuy::Shader = shade;
@@ -31,6 +32,10 @@ void CBadGuy::makeBadGuy(float x, float y, float w, float h, EnemyType enemy, CG
 
    else if (enemy == blade) {
       temp = new EBlade(x, y, w, h, manager);
+   }
+
+   else if (enemy == pKiwi) {
+      temp = new PKiwi(x, y, w, h, manager);
    }
 
    else {

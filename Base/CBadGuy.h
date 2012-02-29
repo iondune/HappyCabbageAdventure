@@ -17,7 +17,8 @@ public:
       kiwi,
       grape,
       flame,
-      blade
+      blade,
+      pKiwi
    };
 
    float x, y, w, h;
