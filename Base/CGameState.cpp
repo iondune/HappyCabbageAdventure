@@ -132,6 +132,7 @@ void CGameState::EngineInit( void ) {
 
    GameEventManager = & GameplayManager->getGameEventManager();
    GameEventManager->OnEnemyDeath.connect(& GameEventReceiver, &CGameEventReceiver::OnEnemyDeath);
+   GameEventManager->OnPlayerDamaged.connect(& GameEventReceiver, &CGameEventReceiver::OnPlayerDamaged);
    Application.getEventManager().OnGameTickStart.connect(& GameEventReceiver, & CGameEventReceiver::OnGameTickStart);
 
    float i = 0;
@@ -711,6 +712,7 @@ void CGameState::end()
    particleLeafEngine = particleCubeEngine = particleLaserEngine = particleLaserFireEngine = NULL;
 
    GameEventManager->OnEnemyDeath.disconnect(& GameEventReceiver);
+   GameEventManager->OnPlayerDamaged.disconnect(& GameEventReceiver);
    Application.getEventManager().OnGameTickStart.disconnect(& GameEventReceiver);
 
    Application.getSceneManager().removeAllSceneObjects();

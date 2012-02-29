@@ -3,6 +3,7 @@
 
 
 #include "../CabbageFramework/sigslot/sigslot.h"
+#include "../CabbageCollider/CEngine.h"
 #include "CGameplayManager.h"
 
 class CRenderable;
@@ -27,6 +28,7 @@ struct SPlayerDeathEvent
 struct SPlayerDamagedEvent
 {
     CGameplayManager::SEnemy DamagedBy;
+    Cabbage::Collider::CActor *Damagee;
 };
 
 class CGameEventManager
