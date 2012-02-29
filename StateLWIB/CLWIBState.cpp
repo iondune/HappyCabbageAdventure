@@ -545,7 +545,23 @@ void CLWIBState::loadWorld() {
     int moving, range, speed;
     std::string name;
     //float spd, rng;
-     
+    while(blocks.size() > 3 && placeables.size() > 0 ) {
+        Application.getSceneManager().removeSceneObject(blocks.back());
+        blocks.pop_back();
+        CPlaceable *m_block = placeables.back();
+        placeables.pop_back();
+
+        int i,j;
+        for(i = 0; i < m_block->w; i++) {
+            for(j = 0; j < m_block->h; j++) {
+                blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].o = false;
+                blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].r = NULL;
+                blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].p = NULL;
+                blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapX = -1;
+                blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapY = -1;
+            }
+        }
+    }
     cout << "Enter the name of the file you want to load: ";
     cin >> name;
     irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader(name.c_str());
@@ -849,16 +865,14 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
    blocks.push_back(tempBlock = new CMeshSceneObject());
    placeables.push_back(tempPlaceable = new CBlock(x, y, w, h, d, t, moving));
    tempBlock->setMesh(cubeMesh);
-   if (textureType == -5) {
-       tempBlock->setTexture("Textures/GrassyGrass.bmp");
-        printf("loaded groundBlockmesh\n");
-   }
    if (t == 0)
         tempBlock->setTexture("Textures/grass.bmp");
    else if (t == 1)
         tempBlock->setTexture("Textures/dirt.bmp");
    else if (t == 2)
         tempBlock->setTexture("Textures/rock.bmp");
+   else if (t == -5)
+        tempBlock->setTexture("Textures/GrassyGrass.bmp");
    else
        printf("texture doesn't exist\n");
    tempBlock->setShader(DiffuseTexture);
