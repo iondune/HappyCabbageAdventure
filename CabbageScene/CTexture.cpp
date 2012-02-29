@@ -22,10 +22,10 @@ CTexture::CTexture(CImage * image)
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE); // We don't combine the color with the original surface color, use only the texture map.
 
     // Finally we define the 2d texture
-    glTexImage2D(GL_TEXTURE_2D, 0, 3, Width, Height, 0, GL_RGB, GL_UNSIGNED_BYTE, image->getImageData());
+	glTexImage2D(GL_TEXTURE_2D, 0, image->hasAlpha() ? 4 : 3, Width, Height, 0, image->hasAlpha() ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, image->getImageData());
 
     // And create 2d mipmaps for the minifying function
-    gluBuild2DMipmaps(GL_TEXTURE_2D, 3, Width, Height, GL_RGB, GL_UNSIGNED_BYTE, image->getImageData());
+    gluBuild2DMipmaps(GL_TEXTURE_2D, image->hasAlpha() ? 4 : 3, Width, Height, image->hasAlpha() ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, image->getImageData());
 }
 
 GLuint const CTexture::getTextureHandle() const

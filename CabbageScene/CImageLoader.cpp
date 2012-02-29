@@ -115,3 +115,18 @@ CImage * const CImageLoader::loadImage(std::string const & fileName, bool const 
 
     return Image;
 }
+
+#include "ImageLoaders/Texture.h"
+
+CImage * const CImageLoader::loadTGAImage(std::string const & fileName)
+{
+	Texture tex;
+	if (! LoadTGA(& tex, fileName.c_str()))
+		return 0;
+
+	CImage * Image = new CImage((char *)tex.imageData, tex.width, tex.height, tex.bpp == 32);
+	char Data[1000];
+	memcpy(Data, tex.imageData, 1000);
+
+	return Image;
+}

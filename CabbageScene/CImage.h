@@ -22,15 +22,18 @@ class CImage
     int Width;
     int Height;
 
-    CImage(char * imageData, int width, int height);
+	bool Alpha;
+
+    CImage(char * imageData, int width, int height, bool const alpha = false);
 
 public:
 
     ~CImage();
 
-    int const getWidth();
-    int const getHeight();
-    char const * const getImageData();
+    int const getWidth() const;
+    int const getHeight() const;
+    char const * const getImageData() const;
+	bool const hasAlpha() const;
 
 };
 

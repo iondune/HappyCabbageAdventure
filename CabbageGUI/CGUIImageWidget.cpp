@@ -18,8 +18,6 @@ CGUIImageWidget::CGUIImageWidget(std::string const & imagePath, SVector2 const &
 
 void CGUIImageWidget::draw()
 {
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 	glEnable(GL_TEXTURE_2D);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, Image->getTextureHandle());
@@ -31,6 +29,7 @@ void CGUIImageWidget::draw()
 	glScalef(Size.X, Size.Y, 1.f);
 
 	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable(GL_DEPTH_TEST);
 
 	glBegin(GL_QUADS);

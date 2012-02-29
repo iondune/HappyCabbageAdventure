@@ -74,6 +74,7 @@ public:
 
         // Setup scene
         CSceneManager & SceneManager = CApplication::get().getSceneManager();
+
         SceneManager.Lights.push_back(new CLight());
         SceneManager.Lights.back()->Color = SVector3(0.5f, 0.2f, 0.2f);
         SceneManager.Lights.back()->Position = SVector3(1.f, 2.f, 3.f);
@@ -139,7 +140,15 @@ public:
 
 		CApplication::get().getSceneManager().addSceneObject(Renderable);
 
-		CGUIImageWidget * Image = new CGUIImageWidget("../DemoMeshLoader/spaceshiptexture.bmp", SVector2(0.8f, 0.8f));
+		CGUIImageWidget * Image = new CGUIImageWidget("../DemoMeshLoader/spaceshiptexture.bmp", SVector2(0.2f, 0.2f));
+		GUIEngine.addWidget(Image);
+
+		Image = new CGUIImageWidget(CImageLoader::loadTGAImage("../DemoMeshLoader/24bit.tga"), SVector2(0.2f, 0.2f));
+		Image->setPosition(SVector2(0.2f, 0.f));
+		GUIEngine.addWidget(Image);
+
+		Image = new CGUIImageWidget(CImageLoader::loadTGAImage("../DemoMeshLoader/32bit.tga"), SVector2(0.2f, 0.2f));
+		Image->setPosition(SVector2(0.4f, 0.f));
 		GUIEngine.addWidget(Image);
 
 

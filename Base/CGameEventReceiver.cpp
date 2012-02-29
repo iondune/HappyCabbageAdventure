@@ -18,7 +18,7 @@ void CGameEventReceiver::OnPlayerDamaged(SPlayerDamagedEvent const & Event) {
       delete playerDamagedEngine;
       playerDamagedEngine = NULL;
    }
-   playerDamagedEngine = new CParticleEngine(SVector3(Event.Damagee->getArea().getCenter(), 0.0f), 50, 5.6, HURT_PARTICLE);
+   playerDamagedEngine = new CParticleEngine(SVector3(Event.Damagee->getArea().getCenter(), 0.0f), 50, 5.6f, HURT_PARTICLE);
 }
 
 void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
