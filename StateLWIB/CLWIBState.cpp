@@ -146,16 +146,17 @@ void CLWIBState::OnRenderStart(float const Elapsed)
       PreviewFlag->setVisible(false);
       PreviewCabbage->setVisible(true); 
       PreviewEnemy->setVisible(false);
-      PreviewBlock->setVisible(false);
+      PreviewBlock->setVisible(true);
    }
    else if(threeDown) {
       PreviewFlag->setVisible(true);
       PreviewCabbage->setVisible(false); 
       PreviewEnemy->setVisible(false);
-      PreviewBlock->setVisible(false);
+      PreviewBlock->setVisible(true);
     
    }
    else {
+      PreviewFlag->setVisible(false);
       PreviewCabbage->setVisible(false); 
       PreviewBlock->setVisible(true);
       PreviewEnemy->setVisible(false);
