@@ -71,8 +71,21 @@ void CSceneObject::setTexture(std::string const & texture, int const renderable)
 
 CShader const * const CSceneObject::getShader() const
 {
-	CShader * Shader = 0;
+	CShader const * Shader = 0;
 	for (std::vector<CRenderable *>::const_iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
+	{
+		if (! Shader)
+			Shader = (* it)->getShader();
+		else if (Shader != (* it)->getShader())
+			return 0;
+	}
+	return Shader;
+}
+
+CShader * CSceneObject::getShader()
+{
+	CShader * Shader = 0;
+	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
 	{
 		if (! Shader)
 			Shader = (* it)->getShader();
