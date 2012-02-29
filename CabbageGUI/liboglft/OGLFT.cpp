@@ -24,10 +24,10 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+#include "OGLFT.h"
 #ifndef OGLFT_NO_QT
 #include <qregexp.h>
 #endif
-#include "OGLFT.h"
 
 namespace OGLFT {
 

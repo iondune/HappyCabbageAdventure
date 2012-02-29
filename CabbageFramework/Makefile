@@ -2,7 +2,7 @@ FILES = CApplication.cpp CEventManager.cpp CStateManager.cpp
 
 OFILES = $(FILES:%.cpp=%.o)
 
-DIRECTORIES = -I../CabbageCore/ -I../CabbageScene/
+DIRECTORIES=-I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI
 
 ifeq (${__MINGW__},1)
 OPENGL = `sdl-config --cflags` -DGL_GLEXT_PROTOTYPES `sdl-config --libs`

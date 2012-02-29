@@ -4,7 +4,7 @@
 
 //#define OGLFT_NO_SOLID
 //#define OGLFT_NO_QT
-#include "liboglft\OGLFT.h"
+#include "liboglft/OGLFT.h"
 
 void CGUIFontWidget::makeRenderer(std::string const & FileName, float const Size)
 {
