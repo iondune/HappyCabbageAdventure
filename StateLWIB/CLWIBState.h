@@ -59,7 +59,7 @@ class CLWIBState : public CState<CLWIBState>
    void OnMouseEvent(SMouseEvent const & Event);
    void end();
 
-   void PrepBlock(float x, float y, int w, int h, int d, int t); 
+   void PrepBlock(float x, float y, int w, int h, int d, int t, int moving); 
    void PrepEnemy(float x, float y, int type); 
    void PrepCabbage(float x, float y);
    void PrepFlag(float X ,float y);

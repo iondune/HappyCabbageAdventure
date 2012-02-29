@@ -24,23 +24,26 @@ void CGameEventReceiver::OnPlayerDamaged(SPlayerDamagedEvent const & Event) {
 }
 
 void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
-   //fprintf(stderr, "Removing enemy %d\n", Event.Enemy);
-   //fprintf(stderr, "Removing renderable %d\n", Event.Renderable);
+   fprintf(stderr, "Removing enemy %d\n", Event.Enemy);
 
    SDeadEnemy DeadEnemy;
-   DeadEnemy.DeathTimer = 6.f;
+   if (Event.Enemy.Actor->CollideableType == COLLIDEABLE_TYPE_PKIWI)
+      DeadEnemy.DeathTimer = .0f;
+   else
+      DeadEnemy.DeathTimer = 6.f;
    DeadEnemy.Renderable = Event.Enemy.Renderable;
 
-   DeadEnemy.Renderable->setScale(SVector3(1.f, 1.0f, 0.4f));
-   DeadEnemy.Renderable->setTranslation(DeadEnemy.Renderable->getTranslation() - SVector3(0.f, 0.5f, 0.f));
+      DeadEnemy.Renderable->setScale(SVector3(1.f, 1.0f, 0.4f));
+      DeadEnemy.Renderable->setTranslation(DeadEnemy.Renderable->getTranslation() - SVector3(0.f, 0.5f, 0.f));
 
-   DeadEnemy.ParticleE = new CParticleEngine(DeadEnemy.Renderable->getTranslation(), 100, 6, DEATH_PARTICLE);
+      DeadEnemy.ParticleE = new CParticleEngine(DeadEnemy.Renderable->getTranslation(), 100, 6, DEATH_PARTICLE);
+
+      numKilled++;
 
    DeadEnemies.push_back(DeadEnemy);
 
    //CApplication::get().getSceneManager().removeSceneObject(Event.Renderable);
 
-   numKilled++;
 }
 
 void CGameEventReceiver::OnGameTickStart(float const Elapsed)

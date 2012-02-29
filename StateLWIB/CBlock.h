@@ -16,7 +16,7 @@ class CBlock : public CPlaceable
    public:
    Cabbage::Collider::CElevator* elevator;
    int Speed, Range;
-   CBlock(float nx, float ny, int width, int height, int depth, int texture);
+   CBlock(float nx, float ny, int width, int height, int depth, int texture, int moving);
    int z, t;
    void writeXML(xmlwriter *);
    void moveTo(float,float);

@@ -51,7 +51,7 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
    NumTreeTypes = 2;
    NumFlowerTypes = 2;
 
-    int x,y,w,d,h,t;
+    int x,y,w,d,h,t, moving;
     //float spd, rng;
 
     irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader(levelName);
@@ -72,11 +72,11 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             w = xml->getAttributeValueAsInt(3);
             d = xml->getAttributeValueAsInt(4);
             t = xml->getAttributeValueAsInt(5);
-
+            moving = xml->getAttributeValueAsInt(6);
             if (t == -5 && !lowDef)
                GeneratePlants((float) x, (float) y, (float) w, (float) h, (float) d);
 
-            list->push_back(ptr = new CBlock((float)x,(float)y,w,h,d,t));
+            list->push_back(ptr = new CBlock((float)x,(float)y,w,h,d,t,moving));
             if(xml->getAttributeValueAsInt(6)) {
                ptr->isMovingPlatform = 1;
                ptr->Range = (int) xml->getAttributeValueAsFloat(7); //Range
@@ -104,6 +104,13 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             w = xml->getAttributeValueAsInt(3);
             t = xml->getAttributeValueAsInt(4);
             Player->setArea(SRect2((float)x, (float)y, (float)h, (float)w));
+         }
+         if(!strcmp("CFlag", xml->getNodeName())) {
+            x = xml->getAttributeValueAsInt(0);
+            y = xml->getAttributeValueAsInt(1);
+            h = xml->getAttributeValueAsInt(2);
+            w = xml->getAttributeValueAsInt(3);
+            t = xml->getAttributeValueAsInt(4);
          }
          break;
 
