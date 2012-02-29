@@ -44,12 +44,15 @@ class CPlayerView {
       float yShadow;
       float xScale;
       float yScale;
+      float time;
+      SVector3 shakeFactor;
       int Charging;
       CPlayerView() {
          ySineValue = 0;
          yShadow = 0;
          lookRight = 1;
          yScale = xScale = 2.0f;
+         time = 0;
       }
       int lookRight;
 
@@ -67,7 +70,7 @@ class CPlayerView {
       void setVelocity(SVector2 vel) {
          Velocity = vel;
       }
-      void establishCamera(ICamera*,int);
+      void establishCamera(ICamera*,int,int);
       void setMiddle(SVector2 middle) {
          CenterPosition = middle;
       }
