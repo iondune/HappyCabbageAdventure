@@ -1,6 +1,7 @@
 // http://nehe.gamedev.net/data/lessons/lesson.asp?lesson=33
 
 #include "Texture.h"
+#include <string.h>
 
 TGAHeader tgaheader;									// TGA header
 TGA tga;												// TGA image data
