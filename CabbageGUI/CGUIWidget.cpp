@@ -26,3 +26,13 @@ void CGUIWidget::setRotation(float  const rotation)
 
 void CGUIWidget::draw()
 {}
+
+bool const CGUIWidget::isVisible() const
+{
+	return Visible;
+}
+
+void CGUIWidget::setVisible(bool const visible)
+{
+	Visible = visible;
+}

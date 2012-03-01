@@ -39,6 +39,9 @@ CGUIFontWidget::CGUIFontWidget(std::string const & FileName, float const Size)
 
 void CGUIFontWidget::draw()
 {
+	if (! Visible)
+		return;
+
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glMatrixMode(GL_MODELVIEW);
