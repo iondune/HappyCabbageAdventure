@@ -152,24 +152,26 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 		if(mouse_y >.375f*maxY && mouse_y < .5f*maxY)
 		{
     	   if (curDirection == 'l' && curAngle <= 15) {
-    		   curAngle +=100.f*Elapsed;
+    		   curAngle += 15.f*Elapsed*(16.f - fabs(curAngle));
 
     		   StartGame->setRotation(curAngle);
     		   StartFont->setRotation(curAngle);
     	   }
 
-    	   else {
+    	   if (curAngle > 15) {
+			   curAngle = 15;
     		   curDirection = 'r';
     	   }
 
     	   if (curDirection == 'r' && curAngle >= -15) {
-    		   curAngle -=100.f*Elapsed;
+    		   curAngle -= 15.f*Elapsed*(16.f - fabs(curAngle));
 
     		   StartGame->setRotation(curAngle);
     		   StartFont->setRotation(curAngle);
     	   }
 
-    	   else {
+    	   if (curAngle < -15) {
+			   curAngle = -15;
     		   curDirection = 'l';
     	   }
        }
