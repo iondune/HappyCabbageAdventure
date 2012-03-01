@@ -4,6 +4,11 @@ CMainMenuState::CMainMenuState()
 : Application (CApplication::get())
 {
   WoodTexture = BackgroundTexture = 0;
+
+	size = Application.getWindowSize();
+	maxX = (float) size.X;
+	maxY = (float) size.Y;
+	sineValue = 0.0f;
 }
 
 void CMainMenuState::setupTextures()
@@ -13,7 +18,6 @@ void CMainMenuState::setupTextures()
 }
 
 void CMainMenuState::setupButtons() {
-	SPosition2 size = Application.getWindowSize();
 	float ratio = (float)size.X/(float) size.Y;
 
 	StartGame = new CGUIImageWidget(WoodTexture, SVector2(.4f, .12f));
@@ -118,7 +122,7 @@ void CMainMenuState::begin()
    our_font.init("WIFFLES_.TTF", 30);
    glClearColor(0.f,0.f,0.f,0.f);
 
-   curAngle = 0;
+   curAngle = 0.f;
    curDirection = 'l';
 
    RenderLogo->setCullingEnabled(false);
@@ -135,9 +139,111 @@ void CMainMenuState::end()
 
 void CMainMenuState::OnRenderStart(float const Elapsed)
 {
-   Application.get().getSceneManager().drawAll();
-   Application.getGUIEngine().drawAll();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	Application.get().getSceneManager().drawAll();
+	Application.getGUIEngine().drawAll();
+
+	SDL_GetMouseState(&mouse_x, &mouse_y);
+
+	if (mouse_x < .675f*maxX && mouse_x > .35f*maxX) {
+		if(mouse_y >.375f*maxY && mouse_y < .5f*maxY)
+		{
+    	   if (curDirection == 'l' && curAngle <= 15) {
+    		   curAngle +=100.f*Elapsed;
+
+    		   StartGame->setRotation(curAngle);
+    		   StartFont->setRotation(curAngle);
+    	   }
+
+    	   else {
+    		   curDirection = 'r';
+    	   }
+
+    	   if (curDirection == 'r' && curAngle >= -15) {
+    		   curAngle -=100.f*Elapsed;
+
+    		   StartGame->setRotation(curAngle);
+    		   StartFont->setRotation(curAngle);
+    	   }
+
+    	   else {
+    		   curDirection = 'l';
+    	   }
+       }
+
+		else {
+			StartGame->setRotation(0.f);
+			StartFont->setRotation(0.f);
+		}
+
+       if(mouse_y >.55f*maxY && mouse_y < .667f*maxY)
+       {
+    	   if (curDirection == 'l' && curAngle <= 15) {
+    		   curAngle +=100.f*Elapsed;
+    		   StartEditor->setRotation(curAngle);
+    		   EditorFont->setRotation(curAngle);
+    	   }
+
+    	   else {
+    		   curDirection = 'r';
+    	   }
+
+    	   if (curDirection == 'r' && curAngle >= -15) {
+    		   curAngle -=100.f*Elapsed;
+    		   StartEditor->setRotation(curAngle);
+    		   EditorFont->setRotation(curAngle);
+    	   }
+
+    	   else {
+    		   curDirection = 'l';
+    	   }
+       }
+
+       else {
+    	   StartEditor->setRotation(0.f);
+    	   EditorFont->setRotation(0.f);
+       }
+
+       if(mouse_y >.735f*maxY  && mouse_y < .86f*maxY)
+       {
+    	   if (curDirection == 'l' && curAngle <= 15) {
+    		   curAngle +=100.f*Elapsed;
+    		   ExitGame->setRotation(curAngle);
+    		   ExitFont->setRotation(curAngle);
+    	   }
+
+    	   else {
+    		   curDirection = 'r';
+    	   }
+
+    	   if (curDirection == 'r' && curAngle >= -15) {
+    		   curAngle -=100.f*Elapsed;
+    		   ExitGame->setRotation(curAngle);
+    		   ExitFont->setRotation(curAngle);
+    	   }
+
+    	   else {
+    		   curDirection = 'l';
+    	   }
+       }
+
+       else {
+    	   ExitGame->setRotation(0.f);
+    	   ExitFont->setRotation(0.f);
+       }
+   }
+	else {
+		curAngle = 0.f;
+		curDirection = 'l';
+
+		StartGame->setRotation(0.f);
+		StartFont->setRotation(0.f);
+		StartEditor->setRotation(0.f);
+		EditorFont->setRotation(0.f);
+		ExitGame->setRotation(0.f);
+		ExitFont->setRotation(0.f);
+	}
 
    /*
    SDL_GetMouseState(&mouse_x, &mouse_y);
@@ -146,7 +252,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 
    if(mouse_x < 540 && mouse_x > 280 && mouse_y >225 && mouse_y < 300)
    {
-      if (curDirection == 'l' && curAngle <= 20) {
+      if (curDirection == 'l' && curAngle <= 15) {
          glPushMatrix();
          glRotatef(curAngle+=.1f, 0, 0, 1);
          drawButton();
@@ -157,7 +263,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
          curDirection = 'r';
       }
 
-      if (curDirection == 'r' && curAngle >= -20) {
+      if (curDirection == 'r' && curAngle >= -15) {
          glPushMatrix();
          glRotatef(curAngle-=.1f, 0, 0, 1);
          drawButton();
@@ -174,7 +280,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
       glRotatef(curAngle,0,0,1);
       glScalef(1,.8f+.3f*cos(curAngle/5),1);
       glTranslatef(-80,0,0);
-     freetype::print(our_font, 320, 200, "New Game", curAngle);
+     freetype::print(our_font, 315, 150, "New Game", curAngle);
      glPopMatrix();
    }
 
@@ -187,7 +293,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 
    if(mouse_x < 540 && mouse_x > 280 && mouse_y > 330 && mouse_y < 400)
    {
-      if (curDirection == 'l' && curAngle <= 20) {
+      if (curDirection == 'l' && curAngle <= 15) {
          glPushMatrix();
          glRotatef(curAngle+=.1f, 0, 0, 1);
          drawButton();
@@ -198,7 +304,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
          curDirection = 'r';
       }
 
-      if (curDirection == 'r' && curAngle >= -20) {
+      if (curDirection == 'r' && curAngle >= -15) {
          glPushMatrix();
          glRotatef(curAngle-=.1f, 0, 0, 1);
          //drawButton();
@@ -221,7 +327,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 
    else {
       //drawButton();
-      //freetype::print(our_font, 310, 220.f, "Stage Editor");
+      //freetype::print(our_font, 310, 215.f, "Stage Editor");
    }
 
    glTranslatef(0, -0.35f, 0);
@@ -229,7 +335,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 
    if(mouse_x < 540 && mouse_x > 280 && mouse_y > 435 && mouse_y < 510)
    {
-      if (curDirection == 'l' && curAngle <= 20) {
+      if (curDirection == 'l' && curAngle <= 15) {
          glPushMatrix();
          glRotatef(curAngle+=.1f, 0, 0, 1);
          drawButton();
@@ -240,7 +346,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
          curDirection = 'r';
       }
 
-      if (curDirection == 'r' && curAngle >= -20) {
+      if (curDirection == 'r' && curAngle >= -15) {
          glPushMatrix();
          glRotatef(curAngle-=.1f, 0, 0, 1);
          drawButton();
@@ -291,10 +397,6 @@ void CMainMenuState::OnRenderEnd(float const Elapsed)
 
 void CMainMenuState::OnMouseEvent(SMouseEvent const & Event)
 {
-	SPosition2 size = Application.getWindowSize();
-	float maxX = (float) size.X;
-	float maxY = (float) size.Y;
-
 	if(Event.Type.Value == SMouseEvent::EType::Click){
 
       switch (Event.Button.Value){
