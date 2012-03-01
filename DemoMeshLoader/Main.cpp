@@ -143,11 +143,11 @@ public:
 		CGUIImageWidget * Image = new CGUIImageWidget("../DemoMeshLoader/spaceshiptexture.bmp", SVector2(0.2f, 0.2f));
 		GUIEngine.addWidget(Image);
 
-		Image = new CGUIImageWidget(CImageLoader::loadTGAImage("../DemoMeshLoader/24bit.tga"), SVector2(0.2f, 0.2f));
+		Image = new CGUIImageWidget(CImageLoader::loadTexture("../Base/Textures/sky.bmp"), SVector2(0.2f, 0.2f));
 		Image->setPosition(SVector2(0.2f, 0.f));
 		GUIEngine.addWidget(Image);
 
-		Image = new CGUIImageWidget(CImageLoader::loadTGAImage("../DemoMeshLoader/32bit.tga"), SVector2(0.2f, 0.2f));
+		Image = new CGUIImageWidget(CImageLoader::loadTexture("../Base/wood011.bmp"), SVector2(0.2f, 0.2f));
 		Image->setPosition(SVector2(0.4f, 0.f));
 		GUIEngine.addWidget(Image);
 

@@ -118,7 +118,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
             break;
          case HURT_PARTICLE:
             colorArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*0.2f + 0.1f, 1.0f, (float)rand()/(float)RAND_MAX*0.4f + 0.1f));
-            sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 25);
+            sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 65);
             break;
       }
    }
