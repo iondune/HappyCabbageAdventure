@@ -32,9 +32,14 @@ void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
    }
    else {
       DeadEnemy.DeathTimer = 6.f;
-      if(rand()%2 == 0)
-         CItem::makeItem(Event.Enemy.Actor->getArea().Position.X + Event.Enemy.Actor->getArea().Size.X / 2.0f - 0.3f
-               , Event.Enemy.Actor->getArea().getCenter().Y, 1.0f, 1.0f, CItem::health, Event.Manager);
+      if(rand()%2 == 0) {
+    	  if (rand()%2 == 0)
+    		  CItem::makeItem(Event.Enemy.Actor->getArea().Position.X + Event.Enemy.Actor->getArea().Size.X / 2.0f - 0.3f
+    				  , Event.Enemy.Actor->getArea().getCenter().Y, 1.0f, 1.0f, CItem::health, Event.Manager);
+    	  else
+    		  CItem::makeItem(Event.Enemy.Actor->getArea().Position.X + Event.Enemy.Actor->getArea().Size.X / 2.0f - 0.3f
+    				  , Event.Enemy.Actor->getArea().getCenter().Y, 1.0f, 1.0f, CItem::energy, Event.Manager);
+      }
    }
    DeadEnemy.Renderable = Event.Enemy.Renderable;
 

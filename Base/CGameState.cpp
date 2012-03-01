@@ -22,6 +22,7 @@ CObject *Floor, *Block, *victoryBlock;
 CPlayerView *PlayerView;
 std::vector<CElevator*> elevators;
 int Charged = 0;
+int prevHealth = 0;
 
 CGameplayManager *GameplayManager;
 
@@ -249,7 +250,11 @@ void CGameState::LoadHUD() {
 	Health1 = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/HealthCabbage1.tga"), SVector2(.1f, .1f));
 	Health1->setPosition(SVector2(.05f, .9f));
 
+	CabbageFace = new CGUIImageWidget(CImageLoader::loadTGAImage("../Media/cabbage.tga"), SVector2(.15f, .15f));
+	CabbageFace->setPosition(SVector2(.02f, .9f));
 
+
+	Application.getGUIEngine().addWidget(CabbageFace);
 	Application.getGUIEngine().addWidget(Health1);
 	Application.getGUIEngine().addWidget(Health2);
 	Application.getGUIEngine().addWidget(Health3);
@@ -584,6 +589,8 @@ void CGameState::OnRenderStart(float const Elapsed)
       numFrames = 0;
    }
 
+   UpdateLeaves();
+
    //Draw Text
    freetype::print(our_font, 30, WindowHeight-40.f, "Elapsed Time: %0.0f\n"
          "Energy: %d\nnumKilled: %d\nFPS: %0.2f ", Application.getRunTime(), GameplayManager->getPlayerEnergy(), numKilled, fps);
@@ -742,6 +749,45 @@ void CGameState::end()
 
    Application.getSceneManager().removeAllSceneObjects();
    Application.getGUIEngine().removeAllWidgets();
+}
+
+void CGameState::UpdateLeaves() {
+	int curHealth = GameplayManager->getPlayerHealth();
+
+	if (curHealth == 4) {
+		if (prevHealth == 5)
+			Health5->setVisible(false);
+		else if (prevHealth == 3)
+			Health4->setVisible(true);
+	}
+
+	else if (curHealth == 3) {
+		if (prevHealth == 4)
+			Health4->setVisible(false);
+		else if (prevHealth == 2)
+			Health3->setVisible(true);
+	}
+
+	else if (curHealth == 2) {
+		if (prevHealth == 3)
+			Health3->setVisible(false);
+		else if (prevHealth == 2)
+			Health2->setVisible(true);
+	}
+
+	else if (curHealth == 1) {
+		if (prevHealth == 2)
+			Health2->setVisible(false);
+		else if (prevHealth == 1)
+			Health1->setVisible(true);
+	}
+
+	else if (curHealth == 0) {
+		if (prevHealth == 1)
+			Health1->setVisible(false);
+	}
+
+	prevHealth = curHealth;
 }
 
 void CGameState::PrepShadow() {
