@@ -280,7 +280,7 @@ void CSceneManager::drawAll()
 
 			glActiveTexture(GL_TEXTURE1);
 			glBindTexture(GL_TEXTURE_2D, CTextureLoader::loadTexture("randNormals.bmp")->getTextureHandle());
-			glGenerateMipmap(GL_TEXTURE_2D);
+			//glGenerateMipmap(GL_TEXTURE_2D);
 
 			Context.uniform("rnm", 1);
 			Context.uniform("normalMap", 0);
@@ -342,7 +342,7 @@ void CSceneManager::drawAll()
 				glActiveTexture(GL_TEXTURE0);
 				glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO_BLUR1]);
 
-				glGenerateMipmap(GL_TEXTURE_2D);
+				//glGenerateMipmap(GL_TEXTURE_2D);
 
 				Context.uniform("uTexColor", 0);
 
@@ -377,7 +377,7 @@ void CSceneManager::drawAll()
          glEnable(GL_TEXTURE_2D);
          glActiveTexture(GL_TEXTURE0);
          glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SCENE]);
-         glGenerateMipmap(GL_TEXTURE_2D);
+         //glGenerateMipmap(GL_TEXTURE_2D);
 
          glBegin(GL_QUADS);
 			 glTexCoord2i(0, 0);
@@ -405,7 +405,7 @@ void CSceneManager::drawAll()
          glEnable(GL_TEXTURE_2D);
          glActiveTexture(GL_TEXTURE0);
          glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SCRATCH1]);
-         glGenerateMipmap(GL_TEXTURE_2D);
+         //glGenerateMipmap(GL_TEXTURE_2D);
 
          glBegin(GL_QUADS);
 			 glTexCoord2i(0, 0);
@@ -442,11 +442,11 @@ void CSceneManager::drawAll()
 
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, DoSSAO ? textureId[DoBlur ? EFBO_SSAO_BLUR2 : EFBO_SSAO_RAW] : White->getTextureHandle());
-		glGenerateMipmap(GL_TEXTURE_2D);
+		//glGenerateMipmap(GL_TEXTURE_2D);
 
 		glActiveTexture(GL_TEXTURE2);
 		glBindTexture(GL_TEXTURE_2D, DoBloom ? textureId[EFBO_SCRATCH2] : Magenta->getTextureHandle());
-		glGenerateMipmap(GL_TEXTURE_2D);
+		//glGenerateMipmap(GL_TEXTURE_2D);
 		
 		Context.uniform("scene", 0);
 		Context.uniform("ssao", 1);
