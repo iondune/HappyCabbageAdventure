@@ -22,6 +22,7 @@ public:
 	void removeSceneObject(CRenderable * Renderable);
 
     void draw(CScene const * const scene);
+	void drawNormals(CScene const * const scene);
 
 	void setShader(CShader * shader);
 	void setShader(std::string const & shader);

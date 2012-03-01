@@ -198,6 +198,78 @@ void CRenderable::draw(CScene const * const scene)
     }
 }
 
+
+void CRenderable::drawNormals(CScene const * const scene)
+{
+    // If no ibo loaded, we can't draw anything
+    // If the ibo loaded hasn't been synced as an index buffer object, 
+    if (! IndexBufferObject)
+    {
+        std::cout << "Failed to draw object normals, no IBO." << std::endl;
+        return;
+    }
+
+	if (! IndexBufferObject->isIndexBuffer())
+	{
+        std::cout << "Failed to draw object normals, IBO is not index buffer." << std::endl;
+        return;
+    }
+
+	static CShader * NormalsShader = 0;
+	if (! NormalsShader)
+		NormalsShader = CShaderLoader::loadShader("NormalColor");
+
+    // Create shader context and link all variables required by the shader
+    CShaderContext ShaderContext(* NormalsShader);
+
+    // Set up transform matrices
+	ModelMatrix = Transformation() * Parent->getAbsoluteTransformation();
+
+    // Pass values to shader
+	std::map<std::string, IAttribute const *>::iterator aNormalIt = Attributes.find("aNormal");
+	std::map<std::string, IAttribute const *>::iterator aPositionIt = Attributes.find("aPosition");
+
+	if (aNormalIt == Attributes.end())
+	{
+        std::cerr << "Failed to draw object normals, normal attribute not found." << std::endl;
+		return;
+	}
+
+	if (aPositionIt == Attributes.end())
+	{
+        std::cerr << "Failed to draw object normals, position attribute not found." << std::endl;
+		return;
+	}
+
+	aNormalIt->second->bind(NormalsShader->getAttributeHandles().find("aNormal")->second.Handle, ShaderContext);
+	aPositionIt->second->bind(NormalsShader->getAttributeHandles().find("aPosition")->second.Handle, ShaderContext);
+
+	ShaderContext.uniform("uModelMatrix", ModelMatrix);
+	ShaderContext.uniform("uViewMatrix", scene->getActiveCamera()->getViewMatrix());
+	ShaderContext.uniform("uProjMatrix", scene->getActiveCamera()->getProjectionMatrix());
+
+    // If the ibo is dirty, sync it!
+    if (IndexBufferObject->isDirty())
+        IndexBufferObject->syncData();
+
+    // And bind the synced buffer object to shader...
+    ShaderContext.bindIndexBufferObject(IndexBufferObject->getHandle());
+
+    if(DrawType == GL_POINTS) {
+       glEnable(GL_POINT_SPRITE);
+       glEnable(GL_ALPHA);
+       glEnable(GL_BLEND);
+       glDrawArrays(DrawType, 0, Size);
+       glDisable(GL_BLEND);
+       glDisable(GL_ALPHA);
+       glDisable(GL_POINT_SPRITE);
+    }
+    else {
+       // Finally draw!
+       glDrawElements(DrawType, IndexBufferObject->getElements().size(), GL_UNSIGNED_SHORT, 0);
+    }
+}
+
 void CRenderable::addAttribute(std::string const & label, IAttribute const * const attribute)
 {
     Attributes[label] = attribute;

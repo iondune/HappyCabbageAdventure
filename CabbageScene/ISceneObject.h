@@ -68,6 +68,7 @@ public:
 
 	virtual void update();
     virtual void draw(CScene const * const scene);
+	virtual void drawNormals(CScene const * const scene);
 
     SBoundingBox3 const & getBoundingBox() const;
     SBoundingBox3 & getBoundingBox();

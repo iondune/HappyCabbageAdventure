@@ -77,6 +77,7 @@ public:
     void setDrawType(GLenum const drawType);
 
     virtual void draw(CScene const * const scene);
+	virtual void drawNormals(CScene const * const scene);
 
     void addAttribute(std::string const & label, IAttribute const * const attribute);
     void addUniform(std::string const & label, IUniform const * const uniform);
