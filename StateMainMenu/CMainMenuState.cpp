@@ -13,8 +13,22 @@ void CMainMenuState::setupTextures()
 }
 
 void CMainMenuState::setupButtons() {
-	StartGame = new CGUIImageWidget(WoodTexture, SVector2(0.65f, .25f));
-	StartEditor = new CGUIImageWidget(WoodTexture, SVector2(0.65f, .25f));
+	SPosition2 size = Application.getWindowSize();
+	float ratio = (float)size.X/(float) size.Y;
+
+	StartGame = new CGUIImageWidget(WoodTexture, SVector2(.4f, .12f));
+	StartGame->setPosition(SVector2(ratio/2.f - .2f, .5f));
+
+	StartEditor = new CGUIImageWidget(WoodTexture, SVector2(.4f, .12f));
+	StartEditor->setPosition(SVector2(ratio/2.f - .2f, .32f));
+
+	ExitGame = new CGUIImageWidget(WoodTexture, SVector2(.4f, .12f));
+	ExitGame->setPosition(SVector2(ratio/2.f - .2f, .14f));
+
+	//StartEditor = new CGUIImageWidget(WoodTexture, SVector2(0.65f, .25f));
+	Application.getGUIEngine().addWidget(StartGame);
+	Application.getGUIEngine().addWidget(StartEditor);
+	Application.getGUIEngine().addWidget(ExitGame);
 }
 
 void CMainMenuState::setupMeshes()
@@ -81,6 +95,7 @@ void CMainMenuState::begin()
 
    setupTextures();
    setupMeshes();
+   setupButtons();
    our_font.init("WIFFLES_.TTF", 30);
    glClearColor(0.f,0.f,0.f,0.f);
 
@@ -255,6 +270,19 @@ void CMainMenuState::OnRenderEnd(float const Elapsed)
 
 void CMainMenuState::OnMouseEvent(SMouseEvent const & Event)
 {
+/*	 if(Event.Location.Y >225 && Event.Location.Y < 300)
+	 {
+		 printf("Top button\n");
+	 }
+	 else if(Event.Location.Y >330 && Event.Location.Y < 400)
+	 {
+		printf("Mid button\n");
+	 }
+	 else if(Event.Location.Y >441  && Event.Location.Y < 516)
+	 {
+		 printf("Bottom button\n");
+	 }*/
+
 	if(Event.Type.Value == SMouseEvent::EType::Click){
 
       switch (Event.Button.Value){
@@ -273,7 +301,7 @@ void CMainMenuState::OnMouseEvent(SMouseEvent const & Event)
                printf("mid button hit (Before)!!\n");
                CApplication::get().getStateManager().setState(& CLWIBState::get());
             } 
-            else if(Event.Location.Y >435  && Event.Location.Y < 510)
+            else if(Event.Location.Y >441  && Event.Location.Y < 516)
             {
                printf("Exiting program.\n");
                exit(1);
