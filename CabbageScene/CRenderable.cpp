@@ -67,7 +67,7 @@ void CRenderable::loadShaderVariables(CShader const * const shader, CScene const
         if (Attribute)
 			LoadedAttributes[it->second.Handle] = Attribute;
         else
-            std::cout << "Attribute required by shader but not found in renderable: " << it->first << std::endl;
+            ;//std::cout << "Attribute required by shader but not found in renderable: " << it->first << std::endl;
     }
 
     // Check the existences of all required uniform uniforms - skipping implicit uniforms
@@ -81,7 +81,7 @@ void CRenderable::loadShaderVariables(CShader const * const shader, CScene const
 		if (Uniform)
 			LoadedUniforms[it->second.Handle] = Uniform;
         else
-            std::cout << "Uniform required by shader but not found in renderable or scene: " << it->first << std::endl;
+            ;//std::cout << "Uniform required by shader but not found in renderable or scene: " << it->first << std::endl;
     }
 }
 
