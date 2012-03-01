@@ -24,8 +24,10 @@ void CGUIImageWidget::draw()
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
-	glTranslatef(Position.X, Position.Y, 0.f);
+	
+	glTranslatef(Position.X + Size.X / 2.f, Position.Y + Size.Y / 2.f, 0.f);
+	glRotatef(Rotation, 0, 0, 1);
+	glTranslatef(-Size.X / 2.f, -Size.Y / 2.f, 0.f);
 	glScalef(Size.X, Size.Y, 1.f);
 
 	glEnable(GL_BLEND);
