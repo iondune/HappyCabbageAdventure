@@ -34,6 +34,7 @@ class CGameState : public CState<CGameState>
    int numFrames, NumTreeTypes, NumFlowerTypes;
    int lowDef;
    const char * levelName;
+   CGUIImageWidget *Health5, *Health4, *Health3, *Health2, *Health1;
 
    void EngineInit( void );
    void begin();

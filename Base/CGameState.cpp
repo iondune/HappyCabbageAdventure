@@ -278,17 +278,6 @@ void CGameState::begin()
     SceneManager.Lights.back()->Color = SVector3(LightBrightness);
     SceneManager.Lights.back()->Position = SVector3(-5.f, 200.f, 500.f);
 
-    /*
-    SceneManager.Lights.push_back(new CLight());
-    SceneManager.Lights.back()->Color = SVector3(LightBrightness);
-    SceneManager.Lights.back()->Position = SVector3(0.f, 500.f, 0.f);
-    */
-
-    //PlayerLight = new CLight();
-    //SceneManager.Lights.push_back(PlayerLight);
-    //PlayerLight->Color = SVector3(0.0f);
-    //PlayerLight->Position = SVector3(0.f, 0.f, 200.f);
-
    LoadShaders();
 
    Load3DS();
@@ -301,6 +290,19 @@ void CGameState::begin()
    PrepMeshes();
 
    PrepShadow();
+
+   //Prepare GUI
+   Health5 = new CGUIImageWidget("Textures/HealthCabbage5.bmp", SVector2(.14f, .1f));
+   Health4 = new CGUIImageWidget("Textures/HealthCabbage5.bmp", SVector2(.13f, .1f));
+   Health3 = new CGUIImageWidget("Textures/HealthCabbage5.bmp", SVector2(.12f, .1f));
+   Health2 = new CGUIImageWidget("Textures/HealthCabbage5.bmp", SVector2(.11f, .1f));
+   Health1 = new CGUIImageWidget("Textures/HealthCabbage5.bmp", SVector2(.1f, .1f));
+
+   Application.getGUIEngine().addWidget(Health5);
+   Application.getGUIEngine().addWidget(Health4);
+   Application.getGUIEngine().addWidget(Health3);
+   Application.getGUIEngine().addWidget(Health2);
+   Application.getGUIEngine().addWidget(Health1);
 
 
    Application.getSceneManager().addSceneObject(renderDerp);
@@ -538,6 +540,7 @@ void CGameState::OnRenderStart(float const Elapsed)
    oldDisplay();
 
    Application.getSceneManager().drawAll();
+   Application.getGUIEngine().drawAll();
 
    if (! GameplayManager->isPlayerAlive() || GameplayManager->isWon()) {
       if(GameplayManager->isWon()) {
@@ -573,7 +576,7 @@ void CGameState::OnRenderStart(float const Elapsed)
 
    //Draw Text
    freetype::print(our_font, 10, WindowHeight-40.f, "Elapsed Time: %0.0f\n"
-         "Health: %d\nEnergy: %d\nnumKilled: %d\nFPS: %0.2f ", Application.getRunTime(), GameplayManager->getPlayerHealth(), GameplayManager->getPlayerEnergy(), numKilled, fps);
+         "Energy: %d\nnumKilled: %d\nFPS: %0.2f ", Application.getRunTime(), GameplayManager->getPlayerEnergy(), numKilled, fps);
 
 
    SDL_GL_SwapBuffers();

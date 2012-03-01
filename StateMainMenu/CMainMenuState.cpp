@@ -129,6 +129,7 @@ void CMainMenuState::end()
 {
     Application.getSceneManager().Lights.clear();
     Application.getSceneManager().removeAllSceneObjects();
+    Application.getGUIEngine().removeAllWidgets();
 }
 
 
