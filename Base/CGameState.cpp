@@ -32,6 +32,9 @@ void ViewInit( void ) {
 }
 
 void BlockMesh() {
+   cubeMesh = CMeshLoader::createCubeMesh();
+   cubeMesh->linearizeIndices();
+   cubeMesh->calculateNormalsPerFace();
 }
 
 void DiscMesh() {
