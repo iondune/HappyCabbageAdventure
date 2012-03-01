@@ -35,16 +35,6 @@ namespace Cabbage
             ActorList Actors;
 
             ICollisionResponder * CollisionResponder;
-            void removeObject(CObject * Object)
-            {
-               for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
-                  if (* it == Object )
-                  {
-                     Objects.erase(it);
-                     return;
-                  }
-            }
-
 
             void performTick(float const TickTime)
             {
@@ -95,6 +85,17 @@ namespace Cabbage
             float Timer;
 
          public:
+
+            void removeObject(CObject * Object)
+            {
+               for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
+                  if (* it == Object )
+                  {
+                     Objects.erase(it);
+                     return;
+                  }
+            }
+
 
             CEngine()
                : Timer(0.f), CollisionResponder(0)
