@@ -782,7 +782,7 @@ void CGameState::UpdateEnergy(float const Elapsed) {
 	}
 
 	if (energyStatus > curEnergy) {
-		printf("Enter\n");
+		//printf("Enter\n");
 		energyStatus -= .7f*Elapsed;
 		CabbageMeter->setSize(SVector2(.3f*energyStatus/3.f, .1f));
 
