@@ -71,6 +71,8 @@ void CApplication::init(SPosition2 const & windowSize)
 {
     WindowSize = windowSize;
 
+    setupRenderContext();
+
     EventManager = new CEventManager();
     StateManager = new CStateManager();
     SceneManager = new CSceneManager();
@@ -82,8 +84,6 @@ void CApplication::init(SPosition2 const & windowSize)
     EventManager->OnRenderEnd.connect(StateManager, & CStateManager::OnRenderEnd);
     EventManager->OnKeyboardEvent.connect(StateManager, & CStateManager::OnKeyboardEvent);
     EventManager->OnMouseEvent.connect(StateManager, & CStateManager::OnMouseEvent);
-
-    setupRenderContext();
 }
 
 CApplication & CApplication::get()

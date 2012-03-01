@@ -9,11 +9,17 @@ class CGUIWidget
 protected:
 
 	SVector2 Position;
+	float Rotation;
 
 public:
 
+	CGUIWidget::CGUIWidget();
+
 	SVector2 const & getPosition() const;
 	void setPosition(SVector2 const & position);
+
+	float const getRotation() const;
+	void setRotation(float  const rotation);
 
 	virtual void draw();
 

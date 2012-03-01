@@ -127,9 +127,58 @@ void CScene::update()
 	RootObject.update();
 }
 
+
+GLuint textureId;
+GLuint fboId;
+
 CSceneManager::CSceneManager()
 {
     CurrentScene = this;
+
+
+	bool fboUsed = true;
+	unsigned int const TEXTURE_WIDTH = 1440;
+	unsigned int const TEXTURE_HEIGHT = 900;
+
+	// create a texture object
+	glGenTextures(1, &textureId);
+	glBindTexture(GL_TEXTURE_2D, textureId);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE); // automatic mipmap
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, TEXTURE_WIDTH, TEXTURE_HEIGHT, 0,
+				 GL_RGBA, GL_UNSIGNED_BYTE, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// create a renderbuffer object to store depth info
+	GLuint rboId;
+	glGenRenderbuffers(1, &rboId);
+	glBindRenderbuffer(GL_RENDERBUFFER, rboId);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT,
+							 TEXTURE_WIDTH, TEXTURE_HEIGHT);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+
+	// create a framebuffer object
+	glGenFramebuffers(1, &fboId);
+	glBindFramebuffer(GL_FRAMEBUFFER, fboId);
+
+	// attach the texture to FBO color attachment point
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+							  GL_TEXTURE_2D, textureId, 0);
+
+	// attach the renderbuffer to depth attachment point
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+								 GL_RENDERBUFFER, rboId);
+
+	// check FBO status
+	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+	if(status != GL_FRAMEBUFFER_COMPLETE)
+		fboUsed = false;
+
+	// switch back to window-system-provided framebuffer
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void CSceneManager::addSceneObject(ISceneObject * sceneObject)
@@ -151,7 +200,45 @@ void CSceneManager::drawAll()
 {
     CurrentScene->update();
 
+	//glBindFramebuffer(GL_FRAMEBUFFER, fboId);
+
     RootObject.draw(CurrentScene);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	/*
+	glBindTexture(GL_TEXTURE_2D, textureId);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(0, 1440, 900, 1, -1, 1);
+
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glDisable(GL_DEPTH_TEST);
+
+		glBegin(GL_QUADS);
+			glTexCoord2i(0, 0);
+			glVertex2i(0, 0);
+
+			glTexCoord2i(1, 0);
+			glVertex2i(1, 0);
+
+			glTexCoord2i(1, 1);
+			glVertex2i(1, 1);
+
+			glTexCoord2i(0, 1);
+			glVertex2i(0, 1);
+		glEnd();
+
+		glEnable(GL_DEPTH_TEST);
+		glDisable(GL_BLEND);
+		glDisable(GL_TEXTURE_2D);
+
+	glBindTexture(GL_TEXTURE_2D, 0);*/
 
     SceneChanged = false;
 }
