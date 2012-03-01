@@ -44,8 +44,8 @@ int main(int argc, char * argv[])
    }
 
     CApplication & Application = CApplication::get();
-    Application.init(SPosition2(800, 600));
-    //Application.init(SPosition2(1024, 768));
+    //Application.init(SPosition2(800, 600));
+    Application.init(SPosition2(1200, 900));
 
     CStateManager & StateManager = Application.getStateManager();
     StateManager.setState(& CMainMenuState::get());
