@@ -146,7 +146,7 @@ CTexture * White;
 #include "CTextureLoader.h"
 
 CSceneManager::CSceneManager(SPosition2 const & screenSize)
-	: DoSSAO(false), OnlySSAO(false)
+	: DoSSAO(false), OnlySSAO(false), DoBloom(false)
 {
     CurrentScene = this;
 
