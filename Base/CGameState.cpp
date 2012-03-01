@@ -193,6 +193,12 @@ void CGameState::LoadHUD() {
 	Health1 = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/HealthCabbage1.tga"), SVector2(.1f, .1f));
 	Health1->setPosition(SVector2(.01f, .9f));
 
+	CabbageEnergyBar = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/EnergyBarTop.tga"), SVector2(.3f, .1f));
+	CabbageEnergyBar->setPosition(SVector2(.02f, .82f));
+
+	CabbageMeter = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/EnergyBarBottom.tga"), SVector2(.3f, .1f));
+	CabbageMeter->setPosition(SVector2(.02f, .82f));
+
 	//CabbageFace = new CGUIImageWidget(CImageLoader::loadTGAImage("../Media/cabbage.tga"), SVector2(.15f, .15f));
 	//CabbageFace->setPosition(SVector2(.02f, .9f));
 
@@ -203,13 +209,16 @@ void CGameState::LoadHUD() {
 	Application.getGUIEngine().addWidget(Health3);
 	Application.getGUIEngine().addWidget(Health4);
 	Application.getGUIEngine().addWidget(Health5);
+	Application.getGUIEngine().addWidget(CabbageMeter);
+	Application.getGUIEngine().addWidget(CabbageEnergyBar);
+
 }
 
 //Initalizer fxn
 void CGameState::begin()
 {
    Charged = 0; aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0; lDown = 0;
-   backwardsView = 0; overView = 0;
+   backwardsView = 0; overView = 0; energyStatus = 3.f; prevEnergy = 3.f;
    GameEventReceiver = CGameEventReceiver();
    oldFern = false;
 
@@ -506,6 +515,7 @@ void CGameState::OnRenderStart(float const Elapsed)
    }
 
    UpdateLeaves();
+   UpdateEnergy(Elapsed);
 
    //Draw Text
    /*freetype::print(our_font, 30, WindowHeight-40.f, "Elapsed Time: %0.0f\n"
@@ -691,7 +701,11 @@ void CGameState::end()
 void CGameState::UpdateLeaves() {
 	int curHealth = GameplayManager->getPlayerHealth();
 
-	if (curHealth == 4) {
+	if (curHealth == 5) {
+		if (prevHealth == 4)
+			Health5->setVisible(true);
+	}
+	else if (curHealth == 4) {
 		if (prevHealth == 5)
 			Health5->setVisible(false);
 		else if (prevHealth == 3)
@@ -747,6 +761,32 @@ void CGameState::UpdateLeaves() {
 	}
 
 	prevHealth = curHealth;
+}
+
+void CGameState::UpdateEnergy(float const Elapsed) {
+	float curEnergy = (float)GameplayManager->getPlayerEnergy();
+
+	printf("curEnergy is %f, energyStatus is %f\n", curEnergy, energyStatus);
+	if (energyStatus < 0.17f) {
+		CabbageMeter->setSize(SVector2(0.f, .1f));
+		energyStatus = 0.f;
+	}
+
+	if (energyStatus > 3.f) {
+		energyStatus = 3.f;
+	}
+
+	if (energyStatus > curEnergy) {
+		printf("Enter\n");
+		energyStatus -= .7f*Elapsed;
+		CabbageMeter->setSize(SVector2(.3f*energyStatus/3.f, .1f));
+
+	}
+
+	else if (energyStatus < curEnergy) {
+		energyStatus +=.7f*Elapsed;
+		CabbageMeter->setSize(SVector2(.3f*energyStatus/3.f, .1f));
+	}
 }
 
 void CGameState::PrepShadow() {

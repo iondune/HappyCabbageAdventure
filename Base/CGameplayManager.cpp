@@ -61,11 +61,13 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
       for(ItemList::iterator it = Items.begin(); it != Items.end(); ++ it) {
          if (Other == (*it)->Actor) {
             if((*it)->Type == CItem::health) {
-               PlayerHealth++;
+            	if (getPlayerHealth() < 5)
+            		PlayerHealth++;
                KillItemList.push_back(*it);
             }
             else if ((*it)->Type == CItem::energy) {
-            	PlayerEnergy++;
+            	if (getPlayerEnergy() < 3)
+            		PlayerEnergy++;
             	KillItemList.push_back(*it);
             }
             return;
