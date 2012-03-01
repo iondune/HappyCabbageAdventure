@@ -1,5 +1,5 @@
 ROOT_CABBAGE_DIR=../
-SOURCES=main.cpp CGameState.cpp CPlayerView.cpp FreeType.cpp CGameplayManager.cpp CGameEventReceiver.cpp ./irrxml-1.2/src/irrXML.cpp CBadGuy.cpp EApple.cpp EOrange.cpp EKiwi.cpp EFlame.cpp EBlade.cpp PKiwi.cpp
+SOURCES=main.cpp CGameState.cpp CPlayerView.cpp FreeType.cpp CGameplayManager.cpp CGameEventReceiver.cpp ./irrxml-1.2/src/irrXML.cpp CBadGuy.cpp EApple.cpp EOrange.cpp EKiwi.cpp EFlame.cpp EBlade.cpp PKiwi.cpp CItem.cpp CIHealth.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o) ../StateMainMenu/CMainMenuState.o ../StateOverworld/COverworldState.o
 CABBAGE= -L../lib/ -lCabbageSound -lCabbageCollider -lCabbageFramework -lCabbageScene -lCLWIB -lOverworldState -lCabbageParticles -lCabbageGUI
 
@@ -56,6 +56,11 @@ EBlade.o: EBlade.cpp EBlade.h CBadGuy.h
 	g++ -O1 $(INCLUDE) `sdl-config --cflags` -c EBlade.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 PKiwi.o: PKiwi.cpp PKiwi.h CBadGuy.h
 	g++ -O1 $(INCLUDE) `sdl-config --cflags` -c PKiwi.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+CIHealth.o: CIHealth.cpp CIHealth.h CItem.h
+	g++ -O1 $(INCLUDE) `sdl-config --cflags` -c CIHealth.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+CItem.o: CItem.cpp CItem.h
+	g++ -O1 $(INCLUDE) `sdl-config --cflags` -c CItem.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+
 
 
 qclean:
