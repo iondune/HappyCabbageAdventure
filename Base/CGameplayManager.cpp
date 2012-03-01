@@ -63,26 +63,29 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
    int birdCollision = 0;
 
    if(PlayerCollideable && Other->CollideableType == COLLIDEABLE_TYPE_ITEM) {
+      ItemList ToKill;
       for(ItemList::iterator it = Items.begin(); it != Items.end(); ++ it) {
          if (Other == (*it)->Actor) {
             if((*it)->Type == CItem::health) {
-            	if (getPlayerHealth() < 5) {
-            		PlayerHealth++;
-					printf("health is %d\n", PlayerHealth);
-				}
-				Items.erase(it);
+               if (getPlayerHealth() < 5) {
+                  PlayerHealth++;
+                  printf("health is %d\n", PlayerHealth);
+               }
                KillItemList.push_back(*it);
             }
             else if ((*it)->Type == CItem::energy) {
-            	if (getPlayerEnergy() < 3)
-            		PlayerEnergy++;
-            	KillItemList.push_back(*it);
-				Items.erase(it);
+               if (getPlayerEnergy() < 3)
+                  PlayerEnergy++;
+               KillItemList.push_back(*it);
             }
-            return;
+            ToKill.push_back(*it);
          }
       }
+      for(ItemList::iterator it = ToKill.begin(); it != ToKill.end(); ++ it) {
+         Items.erase(std::remove(Items.begin(), Items.end(), *it), Items.end());
+      }
    }
+   //return;
 
    if((With->CollideableType == COLLIDEABLE_TYPE_ACTOR || With == PlayerActor || With->CollideableType == COLLIDEABLE_TYPE_BLOCK)
          && Object->CollideableType == COLLIDEABLE_TYPE_KIWI) {
