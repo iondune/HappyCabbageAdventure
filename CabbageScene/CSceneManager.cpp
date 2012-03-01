@@ -135,6 +135,7 @@ enum EFBOID
 	EFBO_SSAO_RAW,
 	EFBO_SSAO_BLUR1,
 	EFBO_SSAO_BLUR2,
+	EFBO_SSAO_NORMALS,
 	FBO_COUNT 
 };
 
@@ -234,7 +235,7 @@ void CSceneManager::drawAll()
 	if (DoSSAO)
 	{
 	// Draw normal colors
-	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCRATCH1]);
+	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO_NORMALS]);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	enableDebugData(EDebugData::NormalColors);
@@ -264,7 +265,7 @@ void CSceneManager::drawAll()
 
 		glEnable(GL_TEXTURE_2D);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SCRATCH1]);
+		glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO_NORMALS]);
 
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, CTextureLoader::loadTexture("randNormals.bmp")->getTextureHandle());
