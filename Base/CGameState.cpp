@@ -18,7 +18,7 @@ using namespace Cabbage::Collider;
 CEngine *Engine;
 CActor *Player, *Derp;
 CLight * PlayerLight;
-CObject *Floor, *Block;
+CObject *Floor, *Block, *victoryBlock;
 CPlayerView *PlayerView;
 std::vector<CElevator*> elevators;
 int Charged = 0;
@@ -111,12 +111,12 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             h = xml->getAttributeValueAsInt(2);
             w = xml->getAttributeValueAsInt(3);
             t = xml->getAttributeValueAsInt(4);
-            Block = Engine->addObject();
-            Block->setArea(SRect2((float)x,(float)y, 1, 5));
+            victoryBlock = Engine->addObject();
+            victoryBlock->setArea(SRect2((float)x,(float)y, 1, 5));
             //PrepBlock(x,y+1,1,1);
             flagLogo->setTranslation(SVector3((float)x, (float) y+.9f, 1.0f));
             renderFlag->setTranslation(SVector3((float)x,(float) y+.5f, 1.0f));
-            GameplayManager->setVictoryFlag(Block);
+            GameplayManager->setVictoryFlag(victoryBlock);
          }
          break;
 
@@ -549,6 +549,7 @@ void CGameState::OnRenderStart(float const Elapsed)
             Mix_PlayChannel(-1, victory,0);
             playVictory = false;
          }
+         Engine->removeObject(victoryBlock);
          freetype::print(our_font, 50, WindowHeight - 240.f, "CONGRATULATIONS! YOU HAVE WON!");
       }
 

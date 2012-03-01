@@ -103,7 +103,16 @@ namespace Collider
 					return;
 				}
 		}
-
+		void removeObject(CObject * Object)
+		{
+			for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
+				if (* it == Object )
+				{
+					Objects.erase(it);
+					return;
+				}
+		}
+                 
 		void updateAll(float const Elapsed)
 		{
 			static int const TicksPerSecond = 200;
