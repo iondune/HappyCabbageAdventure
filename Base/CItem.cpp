@@ -10,7 +10,8 @@ void CItem::makeItem(float x, float y, float w, float h, ItemType item, CGamepla
    CItem* temp;
 
    if (item == health) {
-      temp = new CIHealth(x, y, w, h, manager);
+      temp = new CIHealth(x, y, 0.0f, 0.0f, manager);
+      //temp = new CIHealth(x, y, w*0.4f, h*0.4f, manager);
    }
    else {
       printf("Invalid item type requested or not implemented.\n");

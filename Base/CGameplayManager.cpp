@@ -55,6 +55,9 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
        printf("Flag collision\n");
 
     int birdCollision = 0;
+    if(With->CollideableType == COLLIDEABLE_TYPE_HEALTH) {
+       printf("Collide with item\n");
+    }
 
     if((With->CollideableType == COLLIDEABLE_TYPE_ACTOR || With == PlayerActor || With->CollideableType == COLLIDEABLE_TYPE_BLOCK)
       && Object->CollideableType == COLLIDEABLE_TYPE_KIWI) {
@@ -262,6 +265,8 @@ void CGameplayManager::run(float const TickTime)
        GameEventManager->OnEnemyDeath(Event);
 
        Engine->removeActor((*it)->Actor);
+
+       CItem::makeItem((*it)->Actor->getArea().getCenter().X, (*it)->Actor->getArea().getCenter().Y, 1.0f, 1.0f, CItem::health, this);
     }
 
     KillList.clear();
@@ -275,6 +280,13 @@ void CGameplayManager::run(float const TickTime)
        float enemyCenterY = (*it)->Actor->getArea().getCenter().Y;
 
        if ((enemyCenterX < cabbageCenterX + 7 && enemyCenterX > cabbageCenterX - 7) && (enemyCenterY < cabbageCenterY + 7 && enemyCenterY > cabbageCenterY - 7))
+          (*it)->update(TickTime);
+    }
+    for (ItemList::iterator it = Items.begin(); it != Items.end(); ++ it) {
+       float itemCenterX = (*it)->Actor->getArea().getCenter().X;
+       float itemCenterY = (*it)->Actor->getArea().getCenter().Y;
+
+       if ((itemCenterX < cabbageCenterX + 7 && itemCenterX > cabbageCenterX - 7) && (itemCenterY < cabbageCenterY + 7 && itemCenterY > cabbageCenterY - 7))
           (*it)->update(TickTime);
     }
     runDeathSequence(TickTime);

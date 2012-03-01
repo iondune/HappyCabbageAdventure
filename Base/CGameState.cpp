@@ -514,6 +514,12 @@ void CGameState::oldDisplay() {
       (*it)->doRenderable();
    }
 
+   //ITEMS DISPLAY
+   for (std::vector<CItem*>::iterator it = GameplayManager->Items.begin(); it != GameplayManager->Items.end(); ++ it)
+   {
+      (*it)->doRenderable();
+   }
+
    std::vector<CElevator*>::iterator it;
    for(it=elevators.begin();it<elevators.end();it++) {
       CElevator * ptr = (*it);

@@ -29,9 +29,9 @@ void CIHealth::loadMesh() {
 
    Renderable->setMesh(mesh);
    Renderable->setShader("Toon");
-   Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
-   Renderable->setScale(SVector3(1, 1, 1));
-   Renderable->setRotation(SVector3(-90, 0, 0));
+   //Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2 + 10.6f, 0));
+   //Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
+   Renderable->setScale(SVector3(0.4f));
 
    CApplication::get().getSceneManager().addSceneObject(Renderable);
 }
@@ -43,14 +43,17 @@ void CIHealth::loadActor() {
 
    //Set actor attributes
    Actor->getAttributes().MaxWalk = 0.0f;
-   Actor->CollideableType = COLLIDEABLE_TYPE_BLOCK;
+   Actor->CollideableType = COLLIDEABLE_TYPE_HEALTH;
 }
 
 //Updates AI's decision per frame
 void CIHealth::update(float const TickTime) {
-   Time += TickTime;
+   Time += 140*TickTime;
+   if(Time >= 180.0f)
+      Time = 0;
 }
 
 void CIHealth::doRenderable() {
-   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, 0));
+   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y + 0.2f, 0));
+   Renderable->setRotation(SVector3(-90, 0, 90 + Time));
 }
