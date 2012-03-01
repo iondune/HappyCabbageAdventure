@@ -27,10 +27,15 @@ void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
    fprintf(stderr, "Removing enemy %d\n", Event.Enemy);
 
    SDeadEnemy DeadEnemy;
-   if (Event.Enemy.Actor->CollideableType == COLLIDEABLE_TYPE_PKIWI)
+   if (Event.Enemy.Actor->CollideableType == COLLIDEABLE_TYPE_PKIWI) {
       DeadEnemy.DeathTimer = .0f;
-   else
+   }
+   else {
       DeadEnemy.DeathTimer = 6.f;
+      if(rand()%2 == 0)
+         CItem::makeItem(Event.Enemy.Actor->getArea().Position.X + Event.Enemy.Actor->getArea().Size.X / 2.0f - 0.3f
+               , Event.Enemy.Actor->getArea().getCenter().Y, 1.0f, 1.0f, CItem::health, Event.Manager);
+   }
    DeadEnemy.Renderable = Event.Enemy.Renderable;
 
       DeadEnemy.Renderable->setScale(SVector3(1.f, 1.0f, 0.4f));

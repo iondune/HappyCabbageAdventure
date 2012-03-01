@@ -276,12 +276,12 @@ void CGameplayManager::run(float const TickTime)
       enemy.Actor = (*it)->Actor;
       enemy.Renderable = (*it)->Renderable;
       Event.Enemy = enemy;
+      Event.Manager = this;
 
       GameEventManager->OnEnemyDeath(Event);
 
       Engine->removeActor((*it)->Actor);
 
-      CItem::makeItem((*it)->Actor->getArea().getCenter().X, (*it)->Actor->getArea().getCenter().Y, 1.0f, 1.0f, CItem::health, this);
    }
 
    KillList.clear();

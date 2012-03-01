@@ -11,6 +11,7 @@ class CRenderable;
 struct SEnemyDeathEvent
 {
     CGameplayManager::SEnemy Enemy;
+    CGameplayManager *Manager;
 };
 
 struct SEnemyDamagedEvent
