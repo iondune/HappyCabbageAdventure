@@ -338,6 +338,104 @@ void CSceneManager::drawAll()
 		glDisable(GL_TEXTURE_2D);
 
 	glBindTexture(GL_TEXTURE_2D, 0);*/
+
+   if (DoBloom)
+   {
+      //BLURH
+      // Draw blurH effect
+      glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCRATCH1]);
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      glUseProgram((CShaderLoader::loadShader("BlurH"))->getProgramHandle());
+
+      // Draw blurV quad
+      {
+         glEnable(GL_TEXTURE_2D);
+         glActiveTexture(GL_TEXTURE0);
+         glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SCENE]);
+         glGenerateMipmap(GL_TEXTURE_2D);
+
+         glMatrixMode(GL_PROJECTION);
+         glLoadIdentity();
+         glOrtho(0, 1, 0, 1, -1, 1);
+
+         glMatrixMode(GL_MODELVIEW);
+         glLoadIdentity();
+
+         glDisable(GL_DEPTH_TEST);
+
+         glBegin(GL_QUADS);
+         glTexCoord2i(0, 0);
+         glVertex2i(0, 0);
+
+         glTexCoord2i(1, 0);
+         glVertex2i(1, 0);
+
+         glTexCoord2i(1, 1);
+         glVertex2i(1, 1);
+
+         glTexCoord2i(0, 1);
+         glVertex2i(0, 1);
+         glEnd();
+
+         glEnable(GL_DEPTH_TEST);
+         glDisable(GL_TEXTURE_2D);
+
+         glActiveTexture(GL_TEXTURE0);
+         glBindTexture(GL_TEXTURE_2D, 0);
+      }
+
+      //BLURV
+      // Draw blurV effect
+      glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCRATCH2]);
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      glUseProgram((CShaderLoader::loadShader("BlurV"))->getProgramHandle());
+
+      // Draw blurV quad
+      {
+         glEnable(GL_TEXTURE_2D);
+         glActiveTexture(GL_TEXTURE0);
+         glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SCRATCH1]);
+         glGenerateMipmap(GL_TEXTURE_2D);
+
+         glMatrixMode(GL_PROJECTION);
+         glLoadIdentity();
+         glOrtho(0, 1, 0, 1, -1, 1);
+
+         glMatrixMode(GL_MODELVIEW);
+         glLoadIdentity();
+
+         glDisable(GL_DEPTH_TEST);
+
+         glBegin(GL_QUADS);
+         glTexCoord2i(0, 0);
+         glVertex2i(0, 0);
+
+         glTexCoord2i(1, 0);
+         glVertex2i(1, 0);
+
+         glTexCoord2i(1, 1);
+         glVertex2i(1, 1);
+
+         glTexCoord2i(0, 1);
+         glVertex2i(0, 1);
+         glEnd();
+
+         glEnable(GL_DEPTH_TEST);
+         glDisable(GL_TEXTURE_2D);
+
+         glActiveTexture(GL_TEXTURE0);
+         glBindTexture(GL_TEXTURE_2D, 0);
+         glUseProgram(0);
+      }
+   }
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	// Draw Texture
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+
+   // THE FINAL RENDER
 	// Draw SSAO quad
 	{
 		CShaderContext Context(* BlendShader);
@@ -349,9 +447,14 @@ void CSceneManager::drawAll()
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, DoSSAO ? textureId[EFBO_SSAO] : White->getTextureHandle());
 		glGenerateMipmap(GL_TEXTURE_2D);
+
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, DoBloom ? textureId[EFBO_SCRATCH2] : White->getTextureHandle());
+		glGenerateMipmap(GL_TEXTURE_2D);
 		
 		Context.uniform("scene", 0);
 		Context.uniform("ssao", 1);
+		Context.uniform("bloom", 2);
 
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
@@ -379,6 +482,8 @@ void CSceneManager::drawAll()
 			glEnable(GL_DEPTH_TEST);
 			glDisable(GL_TEXTURE_2D);
 
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, 0);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glActiveTexture(GL_TEXTURE0);

@@ -609,6 +609,10 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 	{
 		CApplication::get().getSceneManager().DoSSAO = Event.Pressed;
 	}
+	if (Event.Key == SDLK_b)
+	{
+		CApplication::get().getSceneManager().DoBloom = Event.Pressed;
+	}
 	if (Event.Key == ::SDLK_COMMA)
 	{
 		CApplication::get().getSceneManager().OnlySSAO = Event.Pressed;
