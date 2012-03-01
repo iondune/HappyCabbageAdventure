@@ -7,6 +7,8 @@
 #include "CObject.h"
 #include "CActor.h"
 
+#define WITHIN(x,y,z) (y-x < z ? 1 : (x-y < z ? 1 : 0))
+
 namespace Cabbage
 {
    namespace Collider
@@ -48,7 +50,7 @@ namespace Cabbage
 
                   for (ObjectList::iterator jt = Objects.begin(); jt != Objects.end(); ++ jt)
                   {
-                     if((*it)->CollideableType >= (*jt)->CollideableType) {
+                     if(WITHIN((*it)->CollideableLevel, (*jt)->CollideableLevel, 2)) {
                         bool Alighted = (* it)->updateCollision(* jt, TickTime, CollisionResponder);
                         if (Alighted)
                            Which = (* jt);
@@ -57,7 +59,7 @@ namespace Cabbage
 
                   for (ActorList::iterator jt = Actors.begin(); jt != Actors.end(); ++ jt)
                   {
-                     if((*it)->CollideableType >= (*jt)->CollideableType) {
+                     if(WITHIN((*it)->CollideableLevel, (*jt)->CollideableLevel, 2)) {
                         if (* it != * jt)
                         {
                            bool Alighted = (* it)->updateCollision(* jt, TickTime, CollisionResponder);

@@ -43,7 +43,7 @@ void CIHealth::loadActor() {
 
    //Set actor attributes
    Actor->CollideableType = COLLIDEABLE_TYPE_ITEM;
-   Actor->CollideableLevel = 2;
+   Actor->CollideableLevel = 3;
 }
 
 //Updates AI's decision per frame
