@@ -128,6 +128,7 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
 }
 
 void CGameState::EngineInit( void ) {
+   elevators.clear();
    if(Engine) {
       Engine->removeAll();
    }
@@ -147,6 +148,7 @@ void CGameState::EngineInit( void ) {
    GameplayManager = new CGameplayManager(Player, Engine);
    if(numLives != -3)
       GameplayManager->setLives(numLives);
+   numLives = GameplayManager->getPlayerLives();
 
    GameEventManager = & GameplayManager->getGameEventManager();
    GameEventManager->OnEnemyDeath.connect(& GameEventReceiver, &CGameEventReceiver::OnEnemyDeath);
@@ -220,6 +222,8 @@ void CGameState::LoadHUD() {
 void CGameState::Initialize() {
    Charged = 0; aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0; lDown = 0;
    backwardsView = 0; overView = 0; energyStatus = 3.f; prevEnergy = 3.f;
+   prevHealth = 0;
+
    GameEventReceiver = CGameEventReceiver();
    oldFern = false;
 
@@ -260,9 +264,23 @@ void CGameState::Initialize() {
    RestartGameText->setPosition(SVector2(0.25f, 0.75f));
    RestartGameText->setColor(FontColor);
 
+   LivesText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
+   LivesText->setText("Lives: ");
+   LivesText->setVisible(true);
+   LivesText->setPosition(SVector2(0.02f, 0.80f));
+   LivesText->setColor(SColor(0.0f, 1.0f, 0.0f));
+
+   LivesText2 = new CGUIFontWidget("WIFFLES_.TTF", 31.f);
+   LivesText2->setText("Lives: ");
+   LivesText2->setVisible(true);
+   LivesText2->setPosition(SVector2(0.019f, 0.795f));
+   LivesText2->setColor(SColor(0.0f, 0.0f, 0.0f));
+
    Application.getGUIEngine().addWidget(GameWinText);
    Application.getGUIEngine().addWidget(GameOverText);
    Application.getGUIEngine().addWidget(RestartGameText);
+   Application.getGUIEngine().addWidget(LivesText2);
+   Application.getGUIEngine().addWidget(LivesText);
 
    Camera = new CPerspectiveCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
    Application.getSceneManager().setActiveCamera(Camera);
@@ -411,6 +429,11 @@ void CGameState::oldDisplay() {
    PlayerView->setRecovering(GameplayManager->getRecovering());
 
    Derp->setJumping(true);
+
+   char buf[30];
+   sprintf(buf, "Lives: %d", numLives);
+   LivesText2->setText(buf);
+   LivesText->setText(buf);
 
    Engine->updateAll(Application.getElapsedTime());
    GameplayManager->run(Application.getElapsedTime());
@@ -772,7 +795,7 @@ void CGameState::UpdateLeaves() {
 	else if (curHealth == 2) {
 		if (prevHealth == 3)
 			Health3->setVisible(false);
-		else if (prevHealth == 2)
+		else if (prevHealth == 1)
 			Health2->setVisible(true);
 	}
 
