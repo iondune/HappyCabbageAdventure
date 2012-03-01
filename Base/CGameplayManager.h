@@ -6,11 +6,15 @@
 #include "../CabbageParticles/CParticleEngine.h"
 #include "CPlayerView.h"
 
+#include "CItem.h"
+#include "CIHealth.h"
 #include "EApple.h"
 
 class CGameEventManager;
 class CRenderable;
 class EApple;
+class CItem;
+class CIHealth;
 
 
 class CGameplayManager : public Cabbage::Collider::ICollisionResponder
@@ -27,6 +31,9 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 
       typedef std::vector<CBadGuy*> EnemyList;
       EnemyList Enemies, KillList;
+
+      typedef std::vector<CItem*> ItemList;
+      ItemList Items, KillItemList;
 
    private:
       CParticleEngine * playerDeathParticleEngine; 
