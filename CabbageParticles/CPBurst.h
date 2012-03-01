@@ -4,15 +4,17 @@
 #include "CParticle.h"
 #include "CEngine.h"
 
-class CGameState;
 class CPBurst : public CParticle {
-   float zFactor, zVelocity;
+   float zFactor, zVelocity, zAcceleration;
    float Size;
 
    Cabbage::Collider::CActor *Actor;
+   Cabbage::Collider::CEngine *Engine;
 
    void setupRenderable();
    void updateMatrices(float);
+   public:
+      void setEngine(Cabbage::Collider::CEngine *engine);
 };
 
 #endif

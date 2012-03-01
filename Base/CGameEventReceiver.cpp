@@ -31,7 +31,7 @@ void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
       DeadEnemy.DeathTimer = .0f;
    }
    else {
-      DeadEnemy.DeathTimer = 6.f;
+      DeadEnemy.DeathTimer = 4.f;
       if(rand()%2 == 0) {
     	  if (rand()%2 == 0)
     		  CItem::makeItem(Event.Enemy.Actor->getArea().Position.X + Event.Enemy.Actor->getArea().Size.X / 2.0f - 0.3f
@@ -46,7 +46,8 @@ void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
       DeadEnemy.Renderable->setScale(SVector3(1.f, 1.0f, 0.4f));
       DeadEnemy.Renderable->setTranslation(DeadEnemy.Renderable->getTranslation() - SVector3(0.f, 0.5f, 0.f));
 
-      DeadEnemy.ParticleE = new CParticleEngine(DeadEnemy.Renderable->getTranslation(), 100, 6, DEATH_PARTICLE);
+      DeadEnemy.ParticleE = new CParticleEngine(DeadEnemy.Renderable->getTranslation(), 20, 4, BURST_PARTICLE);
+      DeadEnemy.ParticleE->UsePhysics(Event.Manager->getEngine());
 
       numKilled++;
 
@@ -64,9 +65,10 @@ void CGameEventReceiver::OnGameTickStart(float const Elapsed)
       it->DeathTimer -= Elapsed;
       if(it->ParticleE)
          it->ParticleE->step(Elapsed);
+      if (it->DeathTimer < 3.5f)
+         CApplication::get().getSceneManager().removeSceneObject(it->Renderable);
       if (it->DeathTimer < 0.f)
       {
-         CApplication::get().getSceneManager().removeSceneObject(it->Renderable);
          it->ParticleE->deconstruct();
          delete it->ParticleE;
          it->ParticleE = NULL;

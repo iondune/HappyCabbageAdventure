@@ -126,9 +126,6 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
    }
 }
 
-CEngine *CGameState::getPhysicsEngine() {
-   return Engine;
-}
 void CGameState::EngineInit( void ) {
    Engine = new CEngine();
    Player = Engine->addActor();

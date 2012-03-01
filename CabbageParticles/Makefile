@@ -37,6 +37,9 @@ CPLeaf.o: CPLeaf.cpp CPLeaf.h
 CPFlame.o: CPFlame.cpp CPFlame.h
 	g++ -O1 -o CPFlame.o CPFlame.cpp -c $(DIRECTORIES) $(OPENGL)
 
+CPBurst.o: CPBurst.cpp CPBurst.h
+	g++ -O1 -o CPBurst.o CPBurst.cpp -c $(DIRECTORIES) $(OPENGL)
+
 CPDeath.o: CPDeath.cpp CPDeath.h
 	g++ -O1 -o CPDeath.o CPDeath.cpp -c $(DIRECTORIES) $(OPENGL)
 

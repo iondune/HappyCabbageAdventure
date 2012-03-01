@@ -104,6 +104,7 @@ namespace Collider
 		
 		~CActor();
 
+      float Gravity;
 		bool collidesWith(CObject * Object) const;
 		bool isAbove(CObject * Object, float & height) const;
 

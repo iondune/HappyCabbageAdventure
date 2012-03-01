@@ -18,8 +18,7 @@
 #define COLLIDEABLE_TYPE_PLAYER 500
 #define COLLIDEABLE_TYPE_COLLIDEABLE -1 
 
-#define WITHIN(x,y,z) ((x)>(y)?((x)-(y)<(z)?1:0):((y)-(x)<(z)?1:0))
-#define CAN_COLLIDE(x,y) ((x & y) > 0)
+#define CAN_COLLIDE(x,y) ((x == INTERACTOR_NONCOLLIDERS && y == x) ? 0 : ((x & y) > 0))
 #define INTERACTOR_ALL -1 
 #define INTERACTOR_BLOCKS 1
 #define INTERACTOR_ITEMS 2

@@ -48,7 +48,6 @@ class CGameState : public CState<CGameState>
    void OnKeyboardEvent(SKeyboardEvent const & Event);
    //Runs at program close (currently not implemented)
    void end();
-   CEngine *getPhysicsEngine();
    void PrepShadow();
    void PrepBlock(float x, float y, float w, float h);
    void PrepGrass(float x, float y, float w, float h);

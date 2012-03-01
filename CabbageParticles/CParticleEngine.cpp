@@ -1,8 +1,8 @@
 #include "CParticleEngine.h"
 
-CParticleEngine::UsePhysics(Cabbage::Collider::CEngine *engine) {
+void CParticleEngine::UsePhysics(Cabbage::Collider::CEngine *engine) {
    for(int i = 0; i < numParticles; i++) {
-      (CPBurst*)(particles[i])->setEngine(engine);
+      ((CPBurst*)particles[i])->setEngine(engine);
    }
 }
 
@@ -21,37 +21,48 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
          case LEAF_PARTICLE:
             particles.push_back(cPtr = new CPLeaf());
             cPtr->setAppearRate(2);
+            cPtr->useCenterPos = 1;
             break;
          case CUBE_PARTICLE:
             particles.push_back(cPtr = new CPCube());
             cPtr->setAppearRate(2);
+            cPtr->useCenterPos = 1;
             break;
          case FLAME_PARTICLE:
             particles.push_back(cPtr = new CPFlame());
             cPtr->setAppearRate(2);
+            cPtr->useCenterPos = 1;
             break;
          case DEATH_PARTICLE:
             particles.push_back(cPtr = new CPDeath());
             cPtr->setAppearRate(2);
+            cPtr->useCenterPos = 1;
             break;
          case LASER_CHARGING_PARTICLE:
             particles.push_back(cPtr = new CPLaser());
             cPtr->setAppearRate(2);
+            cPtr->useCenterPos = 1;
             break;
          case LASER_FIRING_PARTICLE:
             particles.push_back(cPtr = new CPLaser2());
             cPtr->setAppearRate(0);
+            cPtr->useCenterPos = 1;
             break;
          case HURT_PARTICLE:
             particles.push_back(cPtr = new CPHurt());
             cPtr->setAppearRate(0);
+            cPtr->useCenterPos = 1;
+            break;
+         case BURST_PARTICLE:
+            particles.push_back(cPtr = new CPBurst());
+            cPtr->setAppearRate(0);
+            cPtr->useCenterPos = 0;
             break;
       }
       cPtr->setCenterPos(&centerPos);
       cPtr->setLookRight(&lookRight);
       cPtr->TotalDuration = duration;
       cPtr->setupRenderable();
-      //CApplication::get().getSceneManager().addSceneObject(cPtr->getRenderable());
    }
 
    float temp;
@@ -126,6 +137,16 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
             colorArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*0.2f + 0.1f, 1.0f, (float)rand()/(float)RAND_MAX*0.4f + 0.1f));
             sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 65);
             break;
+         case BURST_PARTICLE:
+            temp = (float)rand()/(float)RAND_MAX*0.3f + 0.3f;
+            if(rand() % 2 == 0)
+               colorArr.push_back(new SVector3(1.0f));
+            else
+               colorArr.push_back(new SVector3(temp*3, temp*3, temp*1));
+            //colorArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*0.2f + 0.4f, (float)rand()/(float)RAND_MAX*0.2f + 0.8f, (float)rand()/(float)RAND_MAX*0.4f + 0.4f));
+
+            sizeArr.push_back((float)rand()/(float)RAND_MAX*0 + 35);
+            break;
       }
    }
    myObj = new CParticleObject();
@@ -164,6 +185,9 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
    case HURT_PARTICLE:
       textureToUse = "Textures/particleLeaf.bmp";
       break;
+   case BURST_PARTICLE:
+      textureToUse = "Textures/particleStar.bmp";
+      break;
    }
 
 
@@ -190,7 +214,13 @@ void CParticleEngine::step(float const elapsedTime) {
       for(it = particles.begin(), i = 0; it != particles.end(); it++, i++) {
          (* it)->updateMatrices(elapsedTime);
          for(int j = 0; j < 3; j++) {
-            (*(positionArr[i]))[j] = (* it)->translate[j] + centerPos[j];
+            if((*it)->useCenterPos == 1) {
+               (*(positionArr[i]))[j] = (* it)->translate[j] + centerPos[j];
+            }
+            else {
+               //printf("Not using center pos %0.2f %0.2f %0.2f\n", (*it)->translate.X, (*it)->translate.Y, (*it)->translate.Z);
+               (*(positionArr[i]))[j] = (* it)->translate[j];
+            }
             if((* it)->Duration == -1 || (* it)->Counter > 0) {
                (*(positionArr[i]))[j] = -50;
             }
