@@ -101,6 +101,7 @@
     <ClInclude Include="CGameEventReceiver.h" />
     <ClInclude Include="CGameplayManager.h" />
     <ClInclude Include="CGameState.h" />
+    <ClInclude Include="CItem.h" />
     <ClInclude Include="CPlayerView.h" />
     <ClInclude Include="draw.h" />
     <ClInclude Include="EApple.h" />
@@ -120,6 +121,7 @@
     <ClCompile Include="CGameEventReceiver.cpp" />
     <ClCompile Include="CGameplayManager.cpp" />
     <ClCompile Include="CGameState.cpp" />
+    <ClCompile Include="CItem.cpp" />
     <ClCompile Include="CPlayerView.cpp" />
     <ClCompile Include="EApple.cpp" />
     <ClCompile Include="EBlade.cpp" />
