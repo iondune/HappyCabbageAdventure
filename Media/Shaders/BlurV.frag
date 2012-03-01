@@ -2,7 +2,7 @@ uniform sampler2D uTexColor;
 
 void main()
 {
-    float blurSize = 0.003;
+    float blurSize = 0.0015;
     vec2 vTexCoord = gl_TexCoord[0].st;
     vec3 color = (texture2D(uTexColor, vec2(vTexCoord.x, vTexCoord.y - 4.0*blurSize))*0.05 +
                   texture2D(uTexColor, vec2(vTexCoord.x, vTexCoord.y - 3.0*blurSize))*0.1 +
