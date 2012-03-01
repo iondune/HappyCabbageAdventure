@@ -527,17 +527,25 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
 	if (Event.Key == SDLK_c)
 		CApplication::get().getSceneManager().setCullingEnabled(! Event.Pressed);
-	if (Event.Key == SDLK_n)
+
+	if (! Event.Pressed)
 	{
-		CApplication::get().getSceneManager().DoSSAO = Event.Pressed;
-	}
-	if (Event.Key == SDLK_b)
-	{
-		CApplication::get().getSceneManager().DoBloom = Event.Pressed;
-	}
-	if (Event.Key == ::SDLK_COMMA)
-	{
-		CApplication::get().getSceneManager().OnlySSAO = Event.Pressed;
+		if (Event.Key == SDLK_n)
+		{
+			CApplication::get().getSceneManager().DoSSAO = ! CApplication::get().getSceneManager().DoSSAO;
+		}
+		if (Event.Key == SDLK_b)
+		{
+			CApplication::get().getSceneManager().DoBloom = ! CApplication::get().getSceneManager().DoBloom;
+		}
+		if (Event.Key == ::SDLK_COMMA)
+		{
+			CApplication::get().getSceneManager().OnlySSAO = ! CApplication::get().getSceneManager().OnlySSAO;
+		}
+		if (Event.Key == ::SDLK_SLASH)
+		{
+			CApplication::get().getSceneManager().DoBlur = ! CApplication::get().getSceneManager().DoBlur;
+		}
 	}
 	if (Event.Key == SDLK_PERIOD)
 	{
