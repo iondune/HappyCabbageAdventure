@@ -1,5 +1,11 @@
 #include "CParticleEngine.h"
 
+CParticleEngine::UsePhysics(Cabbage::Collider::CEngine *engine) {
+   for(int i = 0; i < numParticles; i++) {
+      (CPBurst*)(particles[i])->setEngine(engine);
+   }
+}
+
 CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) {
    centerPos = pos;
    numParticles = max;

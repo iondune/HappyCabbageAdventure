@@ -13,6 +13,7 @@
 #include "CParticleObject.h"
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
+#include "../CabbageCollider/CEngine.h"
 
 
 #define LEAF_PARTICLE 0
@@ -41,6 +42,7 @@ class CParticleEngine {
       //Duration in milliseconds
       CParticleEngine(SVector3 pos, int maxParticles, float duration, int);
       void setCenterPos(SVector3 cP);
+      void UsePhysics(Cabbage::Collider::CEngine *engine);
       void setLookRight(int pf);
       void step(float const elapsedTime);
       void deconstruct();
