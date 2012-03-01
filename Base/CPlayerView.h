@@ -16,12 +16,15 @@
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
 
+#define CAM_TIMER 0.5f
+
 class CPlayerView {
    SVector2 CenterPosition;
    SVector2 Velocity;
    CMeshSceneObject *PlayerRenderable, *renderShadow;
    float recovering;
    private:
+    float zCam,zCamShift,zCamTimer;
    public:
       class State {
          public:
@@ -44,7 +47,7 @@ class CPlayerView {
       float yShadow;
       float xScale;
       float yScale;
-      float time;
+      float time,timeChange;
       SVector3 shakeFactor;
       int Charging;
       CPlayerView() {
@@ -54,6 +57,8 @@ class CPlayerView {
          yScale = xScale = 2.0f;
          time = 0;
          shakeFactor = SVector3(0.0f);
+         zCam = 0.0f;
+         zCamTimer = 0.0f;
       }
       int lookRight;
 

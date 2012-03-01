@@ -30,17 +30,18 @@ class CGameState : public CState<CGameState>
    CGameState();
    //Initalizer fxn
    ICamera *Camera;
-   float fps, timeTotal;
+   float fps, timeTotal, prevEnergy, energyStatus;
    int numFrames, NumTreeTypes, NumFlowerTypes, lowDef, prevHealth;
    const char * levelName;
    bool oldFern;
-   CGUIImageWidget *Health5, *Health4, *Health3, *Health2, *Health1, *CabbageFace;
+   CGUIImageWidget *Health5, *Health4, *Health3, *Health2, *Health1, *CabbageFace, *CabbageEnergyBar, *CabbageMeter;
 
    void EngineInit( void );
    void begin();
    void LoadHUD();
    void oldDisplay();
    void UpdateLeaves();
+   void UpdateEnergy(float const Elapsed);
    void loadWorld(std::vector<CPlaceable*> *list);
    //Runs at very start of display
    void OnRenderStart(float const Elapsed);

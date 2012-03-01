@@ -101,7 +101,7 @@ public:
 
     void drawAll();
 
-	bool DoSSAO, OnlySSAO, DoBloom;
+	bool DoSSAO, OnlySSAO, DoBloom, DoBlur;
 };
 
 #endif

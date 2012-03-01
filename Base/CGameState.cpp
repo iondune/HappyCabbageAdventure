@@ -32,9 +32,6 @@ void ViewInit( void ) {
 }
 
 void BlockMesh() {
-   cubeMesh = CMeshLoader::createCubeMesh();
-   cubeMesh->linearizeIndices();
-   cubeMesh->calculateNormalsPerFace();
 }
 
 void DiscMesh() {
@@ -193,6 +190,12 @@ void CGameState::LoadHUD() {
 	Health1 = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/HealthCabbage1.tga"), SVector2(.1f, .1f));
 	Health1->setPosition(SVector2(.01f, .9f));
 
+	CabbageEnergyBar = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/EnergyBarTop.tga"), SVector2(.3f, .1f));
+	CabbageEnergyBar->setPosition(SVector2(.02f, .82f));
+
+	CabbageMeter = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/EnergyBarBottom.tga"), SVector2(.3f, .1f));
+	CabbageMeter->setPosition(SVector2(.02f, .82f));
+
 	//CabbageFace = new CGUIImageWidget(CImageLoader::loadTGAImage("../Media/cabbage.tga"), SVector2(.15f, .15f));
 	//CabbageFace->setPosition(SVector2(.02f, .9f));
 
@@ -203,13 +206,16 @@ void CGameState::LoadHUD() {
 	Application.getGUIEngine().addWidget(Health3);
 	Application.getGUIEngine().addWidget(Health4);
 	Application.getGUIEngine().addWidget(Health5);
+	Application.getGUIEngine().addWidget(CabbageMeter);
+	Application.getGUIEngine().addWidget(CabbageEnergyBar);
+
 }
 
 //Initalizer fxn
 void CGameState::begin()
 {
    Charged = 0; aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0; lDown = 0;
-   backwardsView = 0; overView = 0;
+   backwardsView = 0; overView = 0; energyStatus = 3.f; prevEnergy = 3.f;
    GameEventReceiver = CGameEventReceiver();
    oldFern = false;
 
@@ -506,6 +512,7 @@ void CGameState::OnRenderStart(float const Elapsed)
    }
 
    UpdateLeaves();
+   UpdateEnergy(Elapsed);
 
    //Draw Text
    /*freetype::print(our_font, 30, WindowHeight-40.f, "Elapsed Time: %0.0f\n"
@@ -520,17 +527,25 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
 	if (Event.Key == SDLK_c)
 		CApplication::get().getSceneManager().setCullingEnabled(! Event.Pressed);
-	if (Event.Key == SDLK_n)
+
+	if (! Event.Pressed)
 	{
-		CApplication::get().getSceneManager().DoSSAO = Event.Pressed;
-	}
-	if (Event.Key == SDLK_b)
-	{
-		CApplication::get().getSceneManager().DoBloom = Event.Pressed;
-	}
-	if (Event.Key == ::SDLK_COMMA)
-	{
-		CApplication::get().getSceneManager().OnlySSAO = Event.Pressed;
+		if (Event.Key == SDLK_n)
+		{
+			CApplication::get().getSceneManager().DoSSAO = ! CApplication::get().getSceneManager().DoSSAO;
+		}
+		if (Event.Key == SDLK_b)
+		{
+			CApplication::get().getSceneManager().DoBloom = ! CApplication::get().getSceneManager().DoBloom;
+		}
+		if (Event.Key == ::SDLK_COMMA)
+		{
+			CApplication::get().getSceneManager().OnlySSAO = ! CApplication::get().getSceneManager().OnlySSAO;
+		}
+		if (Event.Key == ::SDLK_SLASH)
+		{
+			CApplication::get().getSceneManager().DoBlur = ! CApplication::get().getSceneManager().DoBlur;
+		}
 	}
 	if (Event.Key == SDLK_PERIOD)
 	{
@@ -753,6 +768,32 @@ void CGameState::UpdateLeaves() {
 	prevHealth = curHealth;
 }
 
+void CGameState::UpdateEnergy(float const Elapsed) {
+	float curEnergy = (float)GameplayManager->getPlayerEnergy();
+
+	printf("curEnergy is %f, energyStatus is %f\n", curEnergy, energyStatus);
+	if (energyStatus < 0.17f) {
+		CabbageMeter->setSize(SVector2(0.f, .1f));
+		energyStatus = 0.f;
+	}
+
+	if (energyStatus > 3.f) {
+		energyStatus = 3.f;
+	}
+
+	if (energyStatus > curEnergy) {
+		printf("Enter\n");
+		energyStatus -= .7f*Elapsed;
+		CabbageMeter->setSize(SVector2(.3f*energyStatus/3.f, .1f));
+
+	}
+
+	else if (energyStatus < curEnergy) {
+		energyStatus +=.7f*Elapsed;
+		CabbageMeter->setSize(SVector2(.3f*energyStatus/3.f, .1f));
+	}
+}
+
 void CGameState::PrepShadow() {
    renderShadow = new CMeshSceneObject();
    renderShadow->setMesh(discMesh);
@@ -791,8 +832,8 @@ void CGameState::PrepSky() {
    tempBlock->setMesh(cubeMesh);
    tempBlock->setTexture(skyTxt);
    tempBlock->setShader(DiffuseTexture);
-   tempBlock->setTranslation(SVector3(0, 22, -5.0));
-   tempBlock->setScale(SVector3(400, 50, 1));
+   tempBlock->setTranslation(SVector3(75, 17, -5.0));
+   tempBlock->setScale(SVector3(250, -50, 1));
    tempBlock->setCullingEnabled(false);
    Application.getSceneManager().addSceneObject(tempBlock);
 
