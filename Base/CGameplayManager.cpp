@@ -270,13 +270,21 @@ void CGameplayManager::run(float const TickTime)
     float cabbageCenterX = PlayerActor->getArea().getCenter().X;
     float cabbageCenterY = PlayerActor->getArea().getCenter().Y;
 
-    for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it) {
+   /* for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it) {
        float enemyCenterX = (*it)->Actor->getArea().getCenter().X;
        float enemyCenterY = (*it)->Actor->getArea().getCenter().Y;
 
        if ((enemyCenterX < cabbageCenterX + 7 && enemyCenterX > cabbageCenterX - 7) && (enemyCenterY < cabbageCenterY + 7 && enemyCenterY > cabbageCenterY - 7))
           (*it)->update(TickTime);
+    }*/
+    for (int n = 0; n < Enemies.size(); ++n) {
+        float enemyCenterX = Enemies[n]->Actor->getArea().getCenter().X;
+        float enemyCenterY = Enemies[n]->Actor->getArea().getCenter().Y;
+
+       if ((enemyCenterX < cabbageCenterX + 7 && enemyCenterX > cabbageCenterX - 7) && (enemyCenterY < cabbageCenterY + 7 && enemyCenterY > cabbageCenterY - 7))
+          Enemies[n]->update(TickTime);
     }
+
     runDeathSequence(TickTime);
 }
 

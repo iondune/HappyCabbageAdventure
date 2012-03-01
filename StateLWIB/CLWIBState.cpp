@@ -287,6 +287,10 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 threeDown = 0; 
                 tDown = 0;
                 twoDown = 0;
+                blockWidth = 1;
+                blockHeight = 1;
+                blockDepth = 1;
+                PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             }
         }
         if(Event.Key == SDLK_3){
@@ -297,6 +301,10 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 oneDown = 0;
                 tDown = 0;
                 twoDown = 0;
+                blockWidth = 1;
+                blockHeight = 1;
+                blockDepth = 1;
+                PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             }
         }
         if(Event.Key == SDLK_w){
@@ -402,10 +410,12 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
             mDown = 1; //move
         }
         if(Event.Key == SDLK_c){
-            if(cDown <= 3)
-                cDown++;
-            else
-                cDown = 0;
+            if (!oneDown && !twoDown && !threeDown && !tDown) {
+                if(cDown <= 3)
+                    cDown++;
+                else
+                    cDown = 0;
+            }
         }
         if(Event.Key == SDLK_SPACE) {
             spaceDown = 1;
@@ -492,8 +502,8 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                     PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                 }
                 if(cDown == 2&& textureType != 2) {
-                    if(blockWidth > 1 && textureType != -5)
-                        blockWidth--;
+                    if(blockHeight > 1 && textureType != -5)
+                        blockHeight--;
                     PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                 }
                 if(cDown == 3&& textureType != 2) {
@@ -655,7 +665,7 @@ void CLWIBState::PrepPreviews() {
    kiwiMesh = CMeshLoader::load3dsMesh("Models/killerkiwi.3ds");
    cabbageMesh = CMeshLoader::load3dsMesh("Models/crappycabbage.3ds");
    bladeMesh = CMeshLoader::load3dsMesh("Models/trap1.3ds");
-   flagMesh = CMeshLoader::load3dsMesh("Models/flag2.3ds");
+   flagMesh = CMeshLoader::load3dsMesh("Models/flag.3ds");
    
    blocks.push_back(PreviewFlag = new CMeshSceneObject());
    blocks.push_back(PreviewCabbage = new CMeshSceneObject());

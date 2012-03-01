@@ -1049,7 +1049,7 @@ void PrepMeshes()
 
    renderFlag = new CMeshSceneObject();
    renderFlag->setMesh(flagMesh);
-  // renderFlag->setTranslation(SVector3(170, .5f, 1.0f));
+   renderFlag->setTranslation(SVector3(170, 100.f, 1.0f));
    renderFlag->setRotation(SVector3(-90,0,0));
    renderFlag->setScale(SVector3(.0150f, .00025f,.0016f));
    renderFlag->setTexture(flagTxt);
@@ -1057,7 +1057,7 @@ void PrepMeshes()
 
    flagLogo = new CMeshSceneObject();
    flagLogo->setMesh(cabbageMesh);
-   //flagLogo->setTranslation(SVector3(170, .9f, 1.0f));
+   flagLogo->setTranslation(SVector3(170, 100.f, 1.0f));
    flagLogo->setRotation(SVector3(-90,0,0));
    flagLogo->setScale(SVector3(.75f));
    flagLogo->setShader(Flat);
