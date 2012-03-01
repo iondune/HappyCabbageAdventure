@@ -19,7 +19,7 @@ public:
    };
 
    float x, y, w, h;
-   ItemType Enemy;
+   ItemType Type;
    CGameplayManager* Manager;
    Cabbage::Collider::CActor* Actor;
    CMeshSceneObject* Renderable;

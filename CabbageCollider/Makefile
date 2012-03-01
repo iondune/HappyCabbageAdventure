@@ -1,4 +1,4 @@
-FILES = CActor.cpp CCollideable.cpp CObject.cpp CNonCollideableObject.cpp
+FILES = CActor.cpp CCollideable.cpp CObject.cpp 
 
 OFILES = $(FILES:%.cpp=%.o)
 
@@ -16,9 +16,6 @@ CCollideable.o: CCollideable.cpp *.h
 
 CObject.o: CObject.cpp *.h
 	g++ -O1 -o $@ CObject.cpp -c $(DIRECTORIES) $(OPENGL)
-
-CNonCollideableObject.o: CNonCollideableObject.cpp *.h
-	g++ -O1 -o $@ CNonCollideableObject.cpp -c $(DIRECTORIES) $(OPENGL)
 
 ../lib/libCabbageCollider.a: $(OFILES)
 	rm -f $@

@@ -39,11 +39,11 @@ void CIHealth::loadMesh() {
 //Adds actor to engine and preps engine
 void CIHealth::loadActor() {
    Actor = Manager->getEngine()->addActor();
-   Actor->setArea(SRect2(SVector2(x, y), SVector2(w, h)));
+   Actor->setArea(SRect2(SVector2(x, y) + h*0.4f, SVector2(w, h)*0.8f));
 
    //Set actor attributes
-   Actor->getAttributes().MaxWalk = 0.0f;
-   Actor->CollideableType = COLLIDEABLE_TYPE_HEALTH;
+   Actor->CollideableType = COLLIDEABLE_TYPE_ITEM;
+   Actor->CollideableLevel = 2;
 }
 
 //Updates AI's decision per frame
@@ -54,6 +54,6 @@ void CIHealth::update(float const TickTime) {
 }
 
 void CIHealth::doRenderable() {
-   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y + 0.2f, 0));
+   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y + 0.1f, 0));
    Renderable->setRotation(SVector3(-90, 0, 90 + Time));
 }

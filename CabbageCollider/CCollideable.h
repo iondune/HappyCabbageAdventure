@@ -11,8 +11,9 @@
 #define COLLIDEABLE_TYPE_FLAME 16
 #define COLLIDEABLE_TYPE_PKIWI 17
 
-#define COLLIDEABLE_TYPE_HEALTH 100 
-#define COLLIDEABLE_TYPE_ENERGY 101 
+#define COLLIDEABLE_TYPE_ITEM 100 
+#define COLLIDEABLE_TYPE_HEALTH 101 
+#define COLLIDEABLE_TYPE_ENERGY 102 
 
 #define COLLIDEABLE_TYPE_PLAYER 500
 #define COLLIDEABLE_TYPE_COLLIDEABLE -1 
@@ -54,7 +55,7 @@ namespace Collider
 		SMaterial const & getMaterial() const;
 		SMaterial & getMaterial();
 
-      int CollideableType;
+      int CollideableType, CollideableLevel;
 
 		virtual void draw();
 
