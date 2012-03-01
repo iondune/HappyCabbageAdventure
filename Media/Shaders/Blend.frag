@@ -13,6 +13,7 @@ void main()
       gl_FragColor = color2;
    }
 //Do bloom (brighter color)
+   //else if(color.r > 0.5 && color.g > 0.5 && color.b > 0.5) {
    else if(color.r > color2.r && color.g > color2.g && color.b > color2.b) {
       gl_FragColor = color;
    }
