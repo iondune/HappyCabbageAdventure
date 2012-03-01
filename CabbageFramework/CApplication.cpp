@@ -75,7 +75,7 @@ void CApplication::init(SPosition2 const & windowSize)
 
     EventManager = new CEventManager();
     StateManager = new CStateManager();
-    SceneManager = new CSceneManager();
+    SceneManager = new CSceneManager(windowSize);
 	GUIEngine = new CGUIEngine(windowSize);
 
     EventManager->OnGameTickStart.connect(StateManager, & CStateManager::OnGameTickStart);
