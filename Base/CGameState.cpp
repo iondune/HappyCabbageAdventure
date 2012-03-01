@@ -130,6 +130,7 @@ void CGameState::EngineInit( void ) {
    Player = Engine->addActor();
    Player->setArea(SRect2(-24.5f, 3, 1, 1));
    Player->CollideableType = COLLIDEABLE_TYPE_PLAYER;
+   Player->CollideableLevel = 2;
 
    Derp = Engine->addActor();
    Derp->setArea(SRect2(-17, 0, 1, 1));
@@ -512,6 +513,12 @@ void CGameState::oldDisplay() {
 
    //ENEMY DISPLAY
    for (std::vector<CBadGuy*>::iterator it = GameplayManager->Enemies.begin(); it != GameplayManager->Enemies.end(); ++ it)
+   {
+      (*it)->doRenderable();
+   }
+
+   //ITEMS DISPLAY
+   for (std::vector<CItem*>::iterator it = GameplayManager->Items.begin(); it != GameplayManager->Items.end(); ++ it)
    {
       (*it)->doRenderable();
    }

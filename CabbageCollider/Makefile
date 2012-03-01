@@ -1,4 +1,4 @@
-FILES = CActor.cpp CCollideable.cpp CObject.cpp
+FILES = CActor.cpp CCollideable.cpp CObject.cpp 
 
 OFILES = $(FILES:%.cpp=%.o)
 
