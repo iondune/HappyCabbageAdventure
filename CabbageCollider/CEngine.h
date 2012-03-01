@@ -7,7 +7,12 @@
 #include "CObject.h"
 #include "CActor.h"
 
-#define WITHIN(x,y,z) ((x)>(y)?((x)-(y)<(z)?1:0):((y)-(x)<(z)?1:0))
+/*
+#define INTERACTOR_
+#define INTERACTOR_
+#define INTERACTOR_
+*/
+#define INTERACTOR_NON 128
 
 namespace Cabbage
 {
@@ -50,7 +55,7 @@ namespace Cabbage
 
                   for (ObjectList::iterator jt = Objects.begin(); jt != Objects.end(); ++ jt)
                   {
-                     if(WITHIN((*it)->CollideableLevel, (*jt)->CollideableLevel, 2)) {
+                     if(CAN_COLLIDE((*it)->CollideableLevel, (*jt)->CollideableLevel)) {
                         //printf("%d and %d are within 2\n", (*it)->CollideableLevel, (*jt)->CollideableLevel);
                         bool Alighted = (* it)->updateCollision(* jt, TickTime, CollisionResponder);
                         if (Alighted)
@@ -60,7 +65,7 @@ namespace Cabbage
 
                   for (ActorList::iterator jt = Actors.begin(); jt != Actors.end(); ++ jt)
                   {
-                     if(WITHIN((*it)->CollideableLevel, (*jt)->CollideableLevel, 2)) {
+                     if(CAN_COLLIDE((*it)->CollideableLevel, (*jt)->CollideableLevel)) {
                         //printf("%d and %d are within 2\n", (*it)->CollideableLevel, (*jt)->CollideableLevel);
                         if (* it != * jt)
                         {

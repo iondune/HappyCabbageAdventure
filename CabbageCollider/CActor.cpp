@@ -43,6 +43,7 @@ namespace Collider
 		: Standing(0), JumpTimer(0.f), FallAcceleration(0), Impulse(false), ControlFall(true) 
    {
       CollideableType = COLLIDEABLE_TYPE_ACTOR;
+      CollideableLevel = INTERACTOR_BLOCKS | INTERACTOR_ACTORS;
    }
 
 	CActor::~CActor()
