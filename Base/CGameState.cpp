@@ -33,14 +33,14 @@ void ViewInit( void ) {
 
 void BlockMesh() {
    cubeMesh = CMeshLoader::createCubeMesh();
-   //cubeMesh->linearizeIndices();
+   cubeMesh->linearizeIndices();
    cubeMesh->calculateNormalsPerFace();
 }
 
 void DiscMesh() {
    discMesh = CMeshLoader::createDiscMesh();
-   discMesh->linearizeIndices();
-   discMesh->calculateNormalsPerFace();
+   //discMesh->linearizeIndices();
+   //discMesh->calculateNormalsPerFace();
 }
 
 CGameState::CGameState()
@@ -604,7 +604,21 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
 	if (Event.Key == SDLK_c)
 		CApplication::get().getSceneManager().setCullingEnabled(! Event.Pressed);
-
+	if (Event.Key == SDLK_n)
+	{
+		CApplication::get().getSceneManager().DoSSAO = Event.Pressed;
+	}
+	if (Event.Key == ::SDLK_COMMA)
+	{
+		CApplication::get().getSceneManager().OnlySSAO = Event.Pressed;
+	}
+	if (Event.Key == SDLK_PERIOD)
+	{
+		if (Event.Pressed)
+			CApplication::get().getSceneManager().enableDebugData(EDebugData::NormalColors);
+		else
+			CApplication::get().getSceneManager().disableDebugData(EDebugData::NormalColors);
+	}
    if(Event.Pressed){
       if(Event.Key == SDLK_w){
          wDown = 1;

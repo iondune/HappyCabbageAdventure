@@ -91,6 +91,9 @@ bool const ISceneObject::isDebugDataEnabled(EDebugData::Domain const type) const
 
 void ISceneObject::enableDebugData(EDebugData::Domain const type)
 {
+	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
+		(* it)->enableDebugData(type);
+
     if (type == EDebugData::None)
         DebugDataFlags = 0;
     else
@@ -99,6 +102,9 @@ void ISceneObject::enableDebugData(EDebugData::Domain const type)
 
 void ISceneObject::disableDebugData(EDebugData::Domain const type)
 {
+	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
+		(* it)->disableDebugData(type);
+
     if (type == EDebugData::None)
         DebugDataFlags = 0;
     else

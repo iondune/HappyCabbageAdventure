@@ -127,24 +127,42 @@ void CScene::update()
 	RootObject.update();
 }
 
+enum EFBOID
+{
+	EFBO_SCENE,
+	EFBO_NORMALS,
+	EFBO_SSAO,
+	FBO_COUNT 
+};
 
-GLuint textureId[2];
-GLuint fboId[2];
-GLuint rboId[2];
+GLuint textureId[FBO_COUNT];
+GLuint fboId[FBO_COUNT];
+GLuint rboId[FBO_COUNT];
+CShader * SSAOShader;
+CShader * BlendShader;
+CTexture * White;
 
 #include "CTextureLoader.h"
 
 CSceneManager::CSceneManager(SPosition2 const & screenSize)
+	: DoSSAO(false), OnlySSAO(false)
 {
     CurrentScene = this;
 
 	bool fboUsed = true;
-	unsigned int const TEXTURE_WIDTH = screenSize.X;
-	unsigned int const TEXTURE_HEIGHT = screenSize.Y;
+	
 
 	// create a texture object
-	for (int i = 0; i < 2; ++ i)
+	for (int i = 0; i < FBO_COUNT; ++ i)
 	{
+		unsigned int  TEXTURE_WIDTH = screenSize.X;
+		unsigned int  TEXTURE_HEIGHT = screenSize.Y;
+
+		if (i == EFBO_SSAO || i == EFBO_NORMALS)
+		{
+			//TEXTURE_WIDTH /= 4;
+			//TEXTURE_HEIGHT /= 4;
+		}
 		glGenTextures(1, &textureId[i]);
 		glBindTexture(GL_TEXTURE_2D, textureId[i]);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -183,6 +201,10 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 		// switch back to window-system-provided framebuffer
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
+
+	SSAOShader = CShaderLoader::loadShader("SSAO");
+	BlendShader = CShaderLoader::loadShader("Blend");
+	White = CTextureLoader::loadTexture("White.bmp");
 }
 
 void CSceneManager::addSceneObject(ISceneObject * sceneObject)
@@ -200,23 +222,103 @@ void CSceneManager::removeAllSceneObjects()
    RootObject.removeChildren();
 }
 
+#define SSAO
+
 void CSceneManager::drawAll()
 {
     CurrentScene->update();
 
-	glBindFramebuffer(GL_FRAMEBUFFER, fboId[0]);
+#ifdef SSAO
+	if (DoSSAO)
+	{
+	// Draw normal colors
+	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_NORMALS]);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	enableDebugData(EDebugData::NormalColors);
+    RootObject.draw(CurrentScene);
+	disableDebugData(EDebugData::NormalColors);
+	}
+#endif
+
+	// Draw regular scene
+	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCENE]);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     RootObject.draw(CurrentScene);
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	
 
+#ifdef SSAO
+	if (DoSSAO)
+	{
+	// Draw SSAO effect
+	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO]);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, textureId[0]);
+
+	// Draw SSAO quad
+	{
+		CShaderContext Context(* SSAOShader);
+
+		glEnable(GL_TEXTURE_2D);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureId[EFBO_NORMALS]);
+
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, CTextureLoader::loadTexture("randNormals.bmp")->getTextureHandle());
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		/*Context.uniform("totStrength", 1.38f);
+		Context.uniform("strength", 0.14f);
+		Context.uniform("offset", 18.0f);
+		Context.uniform("falloff", 0.0002f);
+		Context.uniform("rad", 0.00006f);*/
+
+		Context.uniform("rnm", 1);
+		Context.uniform("normalMap", 0);
+
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			glOrtho(0, 1, 0, 1, -1, 1);
+
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+
+			glDisable(GL_DEPTH_TEST);
+
+			glBegin(GL_QUADS);
+				glTexCoord2i(0, 0);
+				glVertex2i(0, 0);
+
+				glTexCoord2i(1, 0);
+				glVertex2i(1, 0);
+
+				glTexCoord2i(1, 1);
+				glVertex2i(1, 1);
+			
+				glTexCoord2i(0, 1);
+				glVertex2i(0, 1);
+			glEnd();
+
+			glEnable(GL_DEPTH_TEST);
+			glDisable(GL_TEXTURE_2D);
+
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	}
+#endif
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+
+	// Draw Texture
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	/*glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO]);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
 		glMatrixMode(GL_PROJECTION);
@@ -245,7 +347,53 @@ void CSceneManager::drawAll()
 		glEnable(GL_DEPTH_TEST);
 		glDisable(GL_TEXTURE_2D);
 
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);*/
+	// Draw SSAO quad
+	{
+		CShaderContext Context(* BlendShader);
+
+		glEnable(GL_TEXTURE_2D);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, OnlySSAO ? White->getTextureHandle() : textureId[EFBO_SCENE]);
+
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, DoSSAO ? textureId[EFBO_SSAO] : White->getTextureHandle());
+		glGenerateMipmap(GL_TEXTURE_2D);
+		
+		Context.uniform("scene", 0);
+		Context.uniform("ssao", 1);
+
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			glOrtho(0, 1, 0, 1, -1, 1);
+
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+
+			glDisable(GL_DEPTH_TEST);
+
+			glBegin(GL_QUADS);
+				glTexCoord2i(0, 0);
+				glVertex2i(0, 0);
+
+				glTexCoord2i(1, 0);
+				glVertex2i(1, 0);
+
+				glTexCoord2i(1, 1);
+				glVertex2i(1, 1);
+			
+				glTexCoord2i(0, 1);
+				glVertex2i(0, 1);
+			glEnd();
+
+			glEnable(GL_DEPTH_TEST);
+			glDisable(GL_TEXTURE_2D);
+
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
 
     SceneChanged = false;
 }
@@ -285,4 +433,16 @@ CMeshSceneObject * CSceneManager::addMeshSceneObject(std::string const & Mesh, s
    Object->setMaterial(Material);
    addSceneObject(Object);
    return Object;
+}
+
+
+	
+void CScene::enableDebugData(EDebugData::Domain const type)
+{
+	RootObject.enableDebugData(type);
+}
+
+void CScene::disableDebugData(EDebugData::Domain const type)
+{
+	RootObject.disableDebugData(type);
 }
