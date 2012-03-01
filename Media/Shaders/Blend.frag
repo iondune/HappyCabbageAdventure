@@ -8,7 +8,7 @@ void main()
 {
     vec4 color = texture2D(bloom, uv);
     vec4 color2 = texture2D(scene, uv)*texture2D(ssao, uv).r;
-    if(color.g > 0.1 && color.g < 1.0) {
+    if(color.r > color2.r && color.g > color2.g && color.b > color2.b) {
        gl_FragColor = color;
     }
     else {
