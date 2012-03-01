@@ -231,13 +231,29 @@ CParticleEngine *particleLaserEngine;
 CParticleEngine *particleLaserFireEngine;
 #endif
 
-void LoadHUD() {
-   CMeshSceneObject * DD = new CMeshSceneObject();
-   DD->setMesh(CMeshLoader::loadAsciiMesh("Cube"));
-   DD->setShader(CShaderLoader::loadShader("DiffuseTexture"));
-   DD->setScale(SVector3(50.f));
-   DD->setTexture("Textures/HealthCabbage0.bmp");
-   //CApplication::get().getSceneManager().addDirectObject(DD);
+void CGameState::LoadHUD() {
+	//Prepare GUI
+	Health5 = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/HealthCabbage5.tga"), SVector2(.1f, .1f));
+	Health5->setPosition(SVector2(.25f, .9f));
+
+	Health4 = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/HealthCabbage4.tga"), SVector2(.1f, .1f));
+	Health4->setPosition(SVector2(.2f, .9f));
+
+	Health3 = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/HealthCabbage3.tga"), SVector2(.1f, .1f));
+	Health3->setPosition(SVector2(.15f, .9f));
+
+	Health2 = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/HealthCabbage2.tga"), SVector2(.1f, .1f));
+	Health2->setPosition(SVector2(.1f, .9f));
+
+	Health1 = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/HealthCabbage1.tga"), SVector2(.1f, .1f));
+	Health1->setPosition(SVector2(.05f, .9f));
+
+
+	Application.getGUIEngine().addWidget(Health1);
+	Application.getGUIEngine().addWidget(Health2);
+	Application.getGUIEngine().addWidget(Health3);
+	Application.getGUIEngine().addWidget(Health4);
+	Application.getGUIEngine().addWidget(Health5);
 }
 
 //Initalizer fxn
@@ -291,20 +307,6 @@ void CGameState::begin()
 
    PrepShadow();
 
-   //Prepare GUI
-   Health5 = new CGUIImageWidget("Textures/HealthCabbage5.bmp", SVector2(.14f, .1f));
-   Health4 = new CGUIImageWidget("Textures/HealthCabbage5.bmp", SVector2(.13f, .1f));
-   Health3 = new CGUIImageWidget("Textures/HealthCabbage5.bmp", SVector2(.12f, .1f));
-   Health2 = new CGUIImageWidget("Textures/HealthCabbage5.bmp", SVector2(.11f, .1f));
-   Health1 = new CGUIImageWidget("Textures/HealthCabbage5.bmp", SVector2(.1f, .1f));
-
-   Application.getGUIEngine().addWidget(Health5);
-   Application.getGUIEngine().addWidget(Health4);
-   Application.getGUIEngine().addWidget(Health3);
-   Application.getGUIEngine().addWidget(Health2);
-   Application.getGUIEngine().addWidget(Health1);
-
-
    Application.getSceneManager().addSceneObject(renderDerp);
    Application.getSceneManager().addSceneObject(playerRenderable);
    Application.getSceneManager().addSceneObject(renderFlag);
@@ -316,7 +318,7 @@ void CGameState::begin()
    EngineInit();
    ViewInit();
    GameplayManager->playerView = PlayerView;
-   //LoadHUD();
+   LoadHUD();
    fps = timeTotal = 0;
    numFrames = 0;
 
@@ -575,7 +577,7 @@ void CGameState::OnRenderStart(float const Elapsed)
    }
 
    //Draw Text
-   freetype::print(our_font, 10, WindowHeight-40.f, "Elapsed Time: %0.0f\n"
+   freetype::print(our_font, 30, WindowHeight-40.f, "Elapsed Time: %0.0f\n"
          "Energy: %d\nnumKilled: %d\nFPS: %0.2f ", Application.getRunTime(), GameplayManager->getPlayerEnergy(), numKilled, fps);
 
 
@@ -731,6 +733,7 @@ void CGameState::end()
    Application.getEventManager().OnGameTickStart.disconnect(& GameEventReceiver);
 
    Application.getSceneManager().removeAllSceneObjects();
+   Application.getGUIEngine().removeAllWidgets();
 }
 
 void CGameState::PrepShadow() {
@@ -825,7 +828,7 @@ void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
       randDepth = (float) randDepth*.25f;
 
       if (random == 0)
-         drawPinkFlwr(x + n + .5f, -1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
+         drawWhiteFlwr(x + n + .5f, -1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
       else if (random == 1)
          drawBlueFlwr(x + n + .5f, -1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
       else if (random == 2)
@@ -842,7 +845,7 @@ void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
          randDepth = randDepth*0.25f;
 
          if (random == 0)
-            drawPinkFlwr(x + n + 0.5f, -1.0f, d/2.0f - 0.4f - randDepth, 0.4f + randScale, Application);
+            drawWhiteFlwr(x + n + 0.5f, -1.0f, d/2.0f - 0.4f - randDepth, 0.4f + randScale, Application);
          else if (random == 1)
             drawBlueFlwr(x + n + 0.5f, -1.0f, d/2.0f - 0.4f - randDepth, 0.4f + randScale, Application);
          else if (random == 2)
@@ -925,7 +928,7 @@ void Load3DS()
 
 
 
-   blueFlwrMesh = CMeshLoader::load3dsMesh("Models/blueFlower.3ds");
+   blueFlwrMesh = CMeshLoader::load3dsMesh("Models/simpleflower1.3ds");
    if (blueFlwrMesh) {
       blueFlwrMesh->centerMeshByExtents(SVector3(0));
       blueFlwrMesh->calculateNormalsPerFace();
@@ -936,10 +939,11 @@ void Load3DS()
 
 
 
-   pinkFlwrMesh = CMeshLoader::load3dsMesh("Models/pinkFlower.3ds");
-   if (pinkFlwrMesh) {
-      pinkFlwrMesh->centerMeshByExtents(SVector3(0));
-      pinkFlwrMesh->calculateNormalsPerFace();
+   whiteFlwrMesh = CMeshLoader::load3dsMesh("Models/simpleflower2.3ds");
+   if (whiteFlwrMesh) {
+      whiteFlwrMesh->centerMeshByExtents(SVector3(0));
+      whiteFlwrMesh->resizeMesh(SVector3(.8f));
+      whiteFlwrMesh->calculateNormalsPerFace();
    }
    else {
       fprintf(stderr, "Failed to load pink flower mesh.\n");
@@ -982,7 +986,7 @@ void LoadTextures()
    skyImg = CImageLoader::loadImage("Textures/sky.bmp");
    dirtImg = CImageLoader::loadImage("Textures/dirt.bmp");
    blueFlwrImg = CImageLoader::loadImage("Textures/blueFlower.bmp");
-   pinkFlwrImg = CImageLoader::loadImage("Textures/pinkFlower.bmp");
+   whiteFlwrImg = CImageLoader::loadImage("Textures/pinkFlower.bmp");
    poinImg = CImageLoader::loadImage("Textures/poin.bmp");
    flagImg = CImageLoader::loadImage("Textures/white.bmp");
 
@@ -990,7 +994,7 @@ void LoadTextures()
    skyTxt = new CTexture(skyImg);
    dirtTxt = new CTexture(dirtImg);
    blueFlwrTxt = new CTexture(blueFlwrImg);
-   pinkFlwrTxt = new CTexture(pinkFlwrImg);
+   whiteFlwrTxt = new CTexture(whiteFlwrImg);
    poinTxt = new CTexture(poinImg);
    flagTxt = new CTexture(flagImg);
 }
@@ -1017,19 +1021,17 @@ void PrepMeshes()
 
    renderBlueFlwr = new CMeshSceneObject();
    renderBlueFlwr->setMesh(blueFlwrMesh);
-   renderBlueFlwr->setTexture(blueFlwrTxt);
-   renderBlueFlwr->setShader(ToonTexture);
+   renderBlueFlwr->setShader(Toon);
    renderBlueFlwr->setTranslation(SVector3(-23.f, .18f, 2));
    renderBlueFlwr->setScale(SVector3(.36f));
    renderBlueFlwr->setRotation(SVector3(-90, 0, 0));
 
-   renderPinkFlwr = new CMeshSceneObject();
-   renderPinkFlwr->setMesh(pinkFlwrMesh);
-   renderPinkFlwr->setTexture(pinkFlwrTxt);
-   renderPinkFlwr->setTranslation(SVector3(-20, .2f, 2));
-   renderPinkFlwr->setScale(SVector3(.36f));
-   renderPinkFlwr->setRotation(SVector3(-90, 0, 0));
-   renderPinkFlwr->setShader(ToonTexture);
+   renderWhiteFlwr = new CMeshSceneObject();
+   renderWhiteFlwr->setMesh(whiteFlwrMesh);
+   renderWhiteFlwr->setTranslation(SVector3(-20, .2f, 2));
+   renderWhiteFlwr->setScale(SVector3(.36f));
+   renderWhiteFlwr->setRotation(SVector3(0, 90, 0));
+   renderWhiteFlwr->setShader(Toon);
 
    renderFicus = new CMeshSceneObject();
    renderFicus->setMesh(ficusMesh);

@@ -60,6 +60,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       int const getPlayerLives() const;
 
       void UseAbility(int energyCost);
+      int const DamagePlayer(int damageTaken, CBadGuy* attacker, Cabbage::Collider::CCollideable* Other);
       float getRecovering() {return PlayerRecovering;}
       void setRecovering(float val) {PlayerRecovering = val;}
 

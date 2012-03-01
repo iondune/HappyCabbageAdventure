@@ -19,6 +19,49 @@ void CGameplayManager::UseAbility(int energyCost) {
    PlayerEnergy -= energyCost;
 }
 
+int const CGameplayManager::DamagePlayer(int damageTaken, CBadGuy* attacker, Cabbage::Collider::CCollideable* Other) {
+	SPlayerDamagedEvent Event;
+	SEnemy enemy;
+	enemy.Actor = attacker->Actor;
+	enemy.Renderable = attacker->Renderable;
+
+	Event.DamagedBy = enemy;
+	Event.Damagee = PlayerActor;
+	if(PlayerHealth > 1)
+		GameEventManager->OnPlayerDamaged(Event);
+
+	//Chris Code.  Damage Sound plays here
+	if(playTakeDmg) {
+		Mix_PlayChannel(-1, takeDmg, 0);
+	}
+
+	PlayerHealth = PlayerHealth - damageTaken;
+
+	//Remove Leaves from GUI
+
+
+	if (PlayerHealth <= 0)
+	{
+		SPlayerDeathEvent Event;
+		Event.KilledBy = enemy;
+		GameEventManager->OnPlayerDeath(Event);
+	}
+
+	float const KnockbackSpeed = 7.f;
+	float const KnockbackDuration = 0.2f;
+
+	PlayerRecovering = KnockbackDuration*3;
+
+	if (PlayerActor->getArea().getCenter().X > Other->getArea().getCenter().X)
+		PlayerActor->setImpulse(SVector2(1.f, 0.4f) * KnockbackSpeed, KnockbackDuration);
+	else
+		PlayerActor->setImpulse(SVector2(-1.f, 0.4f) * KnockbackSpeed, KnockbackDuration);
+	if (PlayerActor->getArea().getCenter().Y <= Other->getArea().getCenter().Y)
+		PlayerActor->addImpulse(SVector2(0.f, -0.75f) * KnockbackSpeed);
+	else
+		PlayerActor->addImpulse(SVector2(0.f, -0.75f) * KnockbackSpeed);
+}
+
 void CGameplayManager::setGodMode(float time) {
    GodModeTime = time;
 }
@@ -109,45 +152,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
                    continue;
                 if (isPlayerAlive() && PlayerRecovering <= 0.f)
                 {
-                    SPlayerDamagedEvent Event;
-                    SEnemy enemy;
-                    enemy.Actor = (*it)->Actor;
-                    enemy.Renderable = (*it)->Renderable;
-
-                    Event.DamagedBy = enemy;
-                    Event.Damagee = PlayerActor;
-                    if(PlayerHealth > 1)
-                       GameEventManager->OnPlayerDamaged(Event);
-
-                    //Chris Code.  Damage Sound plays here
-                    if(playTakeDmg) {
-                       Mix_PlayChannel(-1, takeDmg, 0);
-                    }
-
-                    -- PlayerHealth;
-
-                    if (PlayerHealth <= 0)
-                    {
-                        SPlayerDeathEvent Event;
-                        Event.KilledBy = enemy;
-                        GameEventManager->OnPlayerDeath(Event);
-                    }
-
-                    float const KnockbackSpeed = 7.f;
-                    float const KnockbackDuration = 0.2f;
-
-                    PlayerRecovering = KnockbackDuration*3;
-
-                    if (PlayerActor->getArea().getCenter().X > Other->getArea().getCenter().X)
-                        PlayerActor->setImpulse(SVector2(1.f, 0.4f) * KnockbackSpeed, KnockbackDuration);
-                    else
-                       PlayerActor->setImpulse(SVector2(-1.f, 0.4f) * KnockbackSpeed, KnockbackDuration);
-                    if (PlayerActor->getArea().getCenter().Y <= Other->getArea().getCenter().Y)
-                       PlayerActor->addImpulse(SVector2(0.f, -0.75f) * KnockbackSpeed);
-                    else
-                       PlayerActor->addImpulse(SVector2(0.f, -0.75f) * KnockbackSpeed);
-
-
+                    DamagePlayer(1, (*it), Other);
                 }
             }
             break;

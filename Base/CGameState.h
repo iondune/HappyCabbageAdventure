@@ -38,6 +38,7 @@ class CGameState : public CState<CGameState>
 
    void EngineInit( void );
    void begin();
+   void LoadHUD();
    void oldDisplay(); 
    void loadWorld(std::vector<CPlaceable*> *list);
    //Runs at very start of display
