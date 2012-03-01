@@ -18,6 +18,7 @@
 #include "../Base/CGameState.h"
 #include "../StateOverworld/COverworldState.h"
 #include "../CabbageSound/sound.h"
+#include "CabbageGUI.h"
 
 
 
@@ -30,9 +31,10 @@ class CMainMenuState : public CState<CMainMenuState>
 
       ICamera *Camera;
 
-      CTexture * woodTexture, * skyTexture;
-      CMesh *logoMesh;
-      CMeshSceneObject *renderLogo;
+      CTexture * WoodTexture, * BackgroundTexture;
+      CMesh *LogoMesh, *CubeMesh;
+      CMeshSceneObject *RenderLogo, *RenderBackground;
+      CGUIImageWidget *StartGame, *StartEditor, *ExitGame;
 
       CMainMenuState();
       int mouse_x, mouse_y;
@@ -41,8 +43,7 @@ class CMainMenuState : public CState<CMainMenuState>
       
       void setupTextures();
       void setupMeshes();
-
-      void drawSky(int backwards);
+      void setupButtons();
 
       void drawButton();
       void rotateButton();
