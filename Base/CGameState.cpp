@@ -687,7 +687,11 @@ void CGameState::end()
 void CGameState::UpdateLeaves() {
 	int curHealth = GameplayManager->getPlayerHealth();
 
-	if (curHealth == 4) {
+	if (curHealth == 5) {
+		if (prevHealth == 4)
+			Health5->setVisible(true);
+	}
+	else if (curHealth == 4) {
 		if (prevHealth == 5)
 			Health5->setVisible(false);
 		else if (prevHealth == 3)
