@@ -140,7 +140,11 @@ void CGameState::EngineInit( void ) {
 
    SRect2 area;
 
-   GameplayManager = new CGameplayManager(Player, Engine);
+   if(!GameplayManager)
+      GameplayManager = new CGameplayManager(Player, Engine);
+   else {
+      GameplayManager->Clear(Player, Engine);
+   }
 
    GameEventManager = & GameplayManager->getGameEventManager();
    GameEventManager->OnEnemyDeath.connect(& GameEventReceiver, &CGameEventReceiver::OnEnemyDeath);
@@ -211,9 +215,7 @@ void CGameState::LoadHUD() {
 
 }
 
-//Initalizer fxn
-void CGameState::begin()
-{
+void CGameState::Initialize() {
    Charged = 0; aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0; lDown = 0;
    backwardsView = 0; overView = 0; energyStatus = 3.f; prevEnergy = 3.f;
    GameEventReceiver = CGameEventReceiver();
@@ -279,8 +281,13 @@ void CGameState::begin()
    numFrames = 0;
 
    printf("CGameState:  Begin Function Complete\n");
+}
 
-
+//Initalizer fxn
+void CGameState::begin()
+{
+   GameplayManager = NULL;
+   Initialize();
    Application.skipElapsedTime();
 }
 
@@ -354,8 +361,16 @@ void CGameState::oldDisplay() {
    }
    else
    {
-      if(spaceDown) {
-         //printf("Revive player like so\n");
+      if(!GameplayManager->isPlayerAlive() && spaceDown) {
+         if(GameplayManager->getPlayerLives() > 0) {
+            GameplayManager->subPlayerLife();
+            end();
+            Initialize();
+            printf("Lives: %d\n", GameplayManager->getPlayerLives());
+            return;
+         }
+         else
+            printf("Game over!\n");
       }
       Player->setAction(CActor::EActionType::None);
       PlayerView->setState(CPlayerView::State::Standing);

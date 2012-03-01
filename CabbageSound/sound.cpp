@@ -77,9 +77,11 @@ void startSoundtrack() {
 }
 
 void stopSoundtrack() {
-   musicOn = false;
-   Mix_HaltMusic();
-   Mix_FreeMusic(music);
+   if(musicOn) {
+      musicOn = false;
+      Mix_HaltMusic();
+      Mix_FreeMusic(music);
+   }
 }
 
 
