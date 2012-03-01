@@ -92,16 +92,12 @@ CMeshSceneObject * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngin
    if(t != -5) {
       tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
       tempBlock->setScale(SVector3((float) w, (float) h, (float) z));
-
-      printf("Block:  y %f  h %d\n", y, h);
    }
    else /* For ground blocks */{
       tempBlock->setTranslation(SVector3((x+(x+w))/2, y+.84f*h, 0));
       tempBlock->setScale(SVector3((float) w, (float) z, (float) h)); //w, h, z
-
-      printf("y is %f\n", y);
-      printf("h is %d\n", h);
    }
+
    tempBlock->setRotation(SVector3(t==-5?-90.f:0, 0, 0));
    CApplication::get().getSceneManager().addSceneObject(tempBlock);
 

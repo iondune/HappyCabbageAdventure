@@ -11,15 +11,89 @@ CTexture *grassTxt, *skyTxt, *dirtTxt, *blueFlwrTxt, *whiteFlwrTxt, *ficusTxt, *
 
 CMesh *basicTreeMesh, *cabbageMesh, *christmasTreeMesh, *cubeMesh, *discMesh,
       *blueFlwrMesh, *whiteFlwrMesh, *ficusMesh, *fernMesh, *enemyMesh,
-      *flagMesh, *derpMesh;
+      *flagMesh, *derpMesh, *purpleFlwrMesh, *yellowFlwrMesh, *tealFlwrMesh, *whiteSunflwrMesh;
 
 CMeshSceneObject *renderShadow, *playerRenderable, *renderChristmasTree,
   *renderBasicTree, *renderBlueFlwr, *renderWhiteFlwr, *renderFicus, *renderFern,
-  *tempRender, *renderFlag, *flagLogo, *renderDerp;
+  *tempRender, *renderFlag, *flagLogo, *renderDerp, *renderPurpleFlwr, *renderYellowFlwr,
+  *renderTealFlwr, *renderWhiteSunflwr;
 
 std::vector<CMeshSceneObject*> blocks, enemies, blueFlwrs, whiteFlwrs, ficuses,
-  basicTrees, xmasTrees, ferns;
+  basicTrees, xmasTrees, ferns, tealFlwrs, purpleFlwrs, yellowFlwrs, whiteSunflwrs;
 
+
+
+void drawYellowFlwr(float x, float y, float z, float scale, CApplication app) {
+
+   if (y == -1) {
+      y = scale / 2.0f;
+   }
+
+   yellowFlwrs.push_back(tempRender = new CMeshSceneObject());
+
+   renderYellowFlwr = new CMeshSceneObject();
+   renderYellowFlwr->setMesh(yellowFlwrMesh);
+   renderYellowFlwr->setShader(Toon);
+   renderYellowFlwr->setTranslation(SVector3(x, y, z));
+   renderYellowFlwr->setScale(SVector3(scale));
+   renderYellowFlwr->setRotation(SVector3(-90, 0, 0));
+
+   app.getSceneManager().addSceneObject(renderYellowFlwr);
+}
+
+void drawTealFlwr(float x, float y, float z, float scale, CApplication app) {
+
+   if (y == -1) {
+      y = scale / 2.0f;
+   }
+
+   tealFlwrs.push_back(tempRender = new CMeshSceneObject());
+
+   renderTealFlwr = new CMeshSceneObject();
+   renderTealFlwr->setMesh(tealFlwrMesh);
+   renderTealFlwr->setShader(Toon);
+   renderTealFlwr->setTranslation(SVector3(x, y, z));
+   renderTealFlwr->setScale(SVector3(scale));
+   renderTealFlwr->setRotation(SVector3(-90, 0, 0));
+
+   app.getSceneManager().addSceneObject(renderTealFlwr);
+}
+
+void drawPurpleFlwr(float x, float y, float z, float scale, CApplication app) {
+
+   if (y == -1) {
+      y = scale / 2.0f;
+   }
+
+   purpleFlwrs.push_back(tempRender = new CMeshSceneObject());
+
+   renderPurpleFlwr = new CMeshSceneObject();
+   renderPurpleFlwr->setMesh(purpleFlwrMesh);
+   renderPurpleFlwr->setShader(Toon);
+   renderPurpleFlwr->setTranslation(SVector3(x, y, z));
+   renderPurpleFlwr->setScale(SVector3(scale));
+   renderPurpleFlwr->setRotation(SVector3(-90, 0, 0));
+
+   app.getSceneManager().addSceneObject(renderPurpleFlwr);
+}
+
+void drawWhiteSunflwr(float x, float y, float z, float scale, CApplication app) {
+
+   if (y == -1) {
+      y = scale / 2.0f;
+   }
+
+   whiteSunflwrs.push_back(tempRender = new CMeshSceneObject());
+
+   renderWhiteSunflwr = new CMeshSceneObject();
+   renderWhiteSunflwr->setMesh(whiteSunflwrMesh);
+   renderWhiteSunflwr->setShader(Toon);
+   renderWhiteSunflwr->setTranslation(SVector3(x, y, z));
+   renderWhiteSunflwr->setScale(SVector3(scale));
+   renderWhiteSunflwr->setRotation(SVector3(-90, 0, 0));
+
+   app.getSceneManager().addSceneObject(renderWhiteSunflwr);
+}
 
 void drawBlueFlwr(float x, float y, float z, float scale, CApplication app) {
 
@@ -49,7 +123,7 @@ void drawWhiteFlwr(float x, float y, float z, float scale, CApplication app) {
 
    renderWhiteFlwr = new CMeshSceneObject();
    renderWhiteFlwr->setMesh(whiteFlwrMesh);
-   renderWhiteFlwr->setShader(Diffuse);
+   renderWhiteFlwr->setShader(ToonBright);
    renderWhiteFlwr->setTranslation(SVector3(x, y, z));
    renderWhiteFlwr->setScale(SVector3(scale));
    renderWhiteFlwr->setRotation(SVector3(-90, 0, -80));

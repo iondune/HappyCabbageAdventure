@@ -160,69 +160,12 @@ void CGameState::EngineInit( void ) {
    std::vector<CPlaceable*>::iterator it;
    for(it=list.begin();it<list.end();it++) {
       (*it)->setupItem(ToonTexture, Engine, GameplayManager);
-      printf(" %d\n", (*it)->isMovingPlatform);
+
       if((*it)->isMovingPlatform) {
          elevators.push_back(((CBlock*)(*it))->elevator);
          lastOne = ((CBlock*)(*it))->elevator;
-         printf("this is a moving platform\n");
       }
-      else
-         printf("this is NOT a moving platform\n");
    }
-
-/*   Block = Engine->addObject();
-   Block->setArea(SRect2(172.f,0.f, 4.f, 10.f));
-   PrepBlock(172,0,4,10);
-   if(lastOne) {
-   renderFlag->setTranslation(SVector3(170, .5f, 1.0f));
-      GameplayManager->setVictoryFlag(Block);
-   }*/
-
-
-   /*
-   for(j = 0; j < 10; j+=2.5f) {
-      Block = Engine->addObject();
-      area = SRect2(-15.f + j, 1.5f + j, 2.f, 1);
-      PrepBlock(-15.f + j, 1.5f + j, 2.f, 1);
-      Block->setArea(area);
-   }
-
-   Block = Engine->addObject();
-   area = SRect2(-22.f, 7.f, 6.f, 0.2f);
-   PrepBlock(-22.f, 7.f, 6.f, 0.2f);
-   Block->setArea(area);
-
-   Block = Engine->addObject();
-   area = SRect2(-22.f, 7.f, 0.2f, 3.f);
-   PrepBlock(-22.f, 7.f, 0.2f, 3.f);
-   Block->setArea(area);
-
-   for(; i < 12; i++) {
-      Block = Engine->addObject();
-      area = SRect2(-i + 5.f, 0.f, 1.f, i+1.f);
-      PrepBlock(-i + 5.f, 0.f, 1.f, i+1.f);
-      Block->setArea(area);
-   }
-
-   for(i=0; i < 7; i++) {
-      Block = Engine->addObject();
-      area = SRect2(i + 15, 0, 1, i+1);
-      PrepBlock(i + 15, 0, 1, i+1);
-      Block->setArea(area);
-   }
-
-   for(i=0; i < 2; i++) {
-      Block = Engine->addObject();
-      area = SRect2(24, 2+i*4, 2, 1);
-      PrepBlock(24, 2+i*4, 2, 1);
-      Block->setArea(area);
-   }
-
-   Block = Engine->addObject();
-   area = SRect2(27.5, 4, 2, 1);
-   PrepBlock(27.5, 4, 2, 1);
-   Block->setArea(area);
-   */
 }
 
 #define PARTICLE
@@ -236,25 +179,25 @@ CParticleEngine *particleLaserFireEngine;
 void CGameState::LoadHUD() {
 	//Prepare GUI
 	Health5 = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/HealthCabbage5.tga"), SVector2(.1f, .1f));
-	Health5->setPosition(SVector2(.25f, .9f));
+	Health5->setPosition(SVector2(.21f, .9f));
 
 	Health4 = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/HealthCabbage4.tga"), SVector2(.1f, .1f));
-	Health4->setPosition(SVector2(.2f, .9f));
+	Health4->setPosition(SVector2(.16f, .9f));
 
 	Health3 = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/HealthCabbage3.tga"), SVector2(.1f, .1f));
-	Health3->setPosition(SVector2(.15f, .9f));
+	Health3->setPosition(SVector2(.11f, .9f));
 
 	Health2 = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/HealthCabbage2.tga"), SVector2(.1f, .1f));
-	Health2->setPosition(SVector2(.1f, .9f));
+	Health2->setPosition(SVector2(.06f, .9f));
 
 	Health1 = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/HealthCabbage1.tga"), SVector2(.1f, .1f));
-	Health1->setPosition(SVector2(.05f, .9f));
+	Health1->setPosition(SVector2(.01f, .9f));
 
-	CabbageFace = new CGUIImageWidget(CImageLoader::loadTGAImage("../Media/cabbage.tga"), SVector2(.15f, .15f));
-	CabbageFace->setPosition(SVector2(.02f, .9f));
+	//CabbageFace = new CGUIImageWidget(CImageLoader::loadTGAImage("../Media/cabbage.tga"), SVector2(.15f, .15f));
+	//CabbageFace->setPosition(SVector2(.02f, .9f));
 
 
-	Application.getGUIEngine().addWidget(CabbageFace);
+	//Application.getGUIEngine().addWidget(CabbageFace);
 	Application.getGUIEngine().addWidget(Health1);
 	Application.getGUIEngine().addWidget(Health2);
 	Application.getGUIEngine().addWidget(Health3);
@@ -480,36 +423,6 @@ void CGameState::oldDisplay() {
    PlayerView->Charging = lDown;
 #endif
 
-   //draw the ground plane
-   //drawPlane();
-   //drawSky(backwardsView);
-   //drawDirt(backwardsView);
-
-   /*
-   //Chris Code, draw Trees
-   addTrees(NUM_TREES, basicTree);
-
-   glPushMatrix();
-
-   glTranslatef(-12.5, TREE_Y_OFFSET - .1, -2);
-   glScalef(1.5, 1.5, 1.5);
-
-   drawTree(christmasTree, DARK_GREEN_SHINY);
-
-   glPopMatrix();
-
-   glPushMatrix();
-
-   glTranslatef(10, TREE_Y_OFFSET - .7, 2.0);
-
-   drawTree(christmasTree, DARK_GREEN_SHINY);
-
-   glTranslatef(7, 0, 0);
-   drawTree(christmasTree, DARK_GREEN_SHINY);
-
-   glPopMatrix();
-   */
-
    PlayerView->draw();
 
    //Draw derp (enemy)
@@ -593,8 +506,8 @@ void CGameState::OnRenderStart(float const Elapsed)
    UpdateLeaves();
 
    //Draw Text
-   freetype::print(our_font, 30, WindowHeight-40.f, "Elapsed Time: %0.0f\n"
-         "Energy: %d\nnumKilled: %d\nFPS: %0.2f ", Application.getRunTime(), GameplayManager->getPlayerEnergy(), numKilled, fps);
+   /*freetype::print(our_font, 30, WindowHeight-40.f, "Elapsed Time: %0.0f\n"
+         "Energy: %d\nnumKilled: %d\nFPS: %0.2f ", Application.getRunTime(), GameplayManager->getPlayerEnergy(), numKilled, fps);*/
 
 
    SDL_GL_SwapBuffers();
@@ -804,6 +717,28 @@ void CGameState::UpdateLeaves() {
 	else if (curHealth == 0) {
 		if (prevHealth == 1)
 			Health1->setVisible(false);
+		else if (prevHealth == 2) {
+			Health1->setVisible(false);
+			Health2->setVisible(false);
+		}
+		else if (prevHealth == 3) {
+			Health1->setVisible(false);
+			Health2->setVisible(false);
+			Health3->setVisible(false);
+		}
+		else if (prevHealth == 4) {
+			Health1->setVisible(false);
+			Health2->setVisible(false);
+			Health3->setVisible(false);
+			Health4->setVisible(false);
+		}
+		else if (prevHealth == 5 || prevHealth == 0) {
+			Health1->setVisible(false);
+			Health2->setVisible(false);
+			Health3->setVisible(false);
+			Health4->setVisible(false);
+			Health5->setVisible(false);
+		}
 	}
 
 	prevHealth = curHealth;
@@ -880,8 +815,6 @@ void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
 
    div =  w/(float)numBackground;
 
-   printf("y: %f, h: %f, myCalc: %f\n", y, h, y + h/2.0f);
-
    //Check how many tree-type objects we should draw in the background
    for (int n = 0; n < numBackground; n++) {
       random = rand()%2;
@@ -894,29 +827,43 @@ void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
 
    //Draw flower-type plants in background
    for (int n = 0; n < w; n++) {
-      random = rand()%5;
+      random = rand()%6;
+      float subrand = rand()%5;
       randScale = (float) (rand()%20);
       randScale = randScale * .025f;
       randDepth = (float) (rand()%2);
       randDepth = (float) randDepth*.25f;
 
       if (random == 0 || random == 1)
-         drawWhiteFlwr(x + n + .5f, -1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
-      else if (random == 2 || random == 3)
-         drawBlueFlwr(x + n + .5f, -1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
-      else if (random == 4 && !oldFern) {
+         drawWhiteFlwr(x + n + .5f, -1.f, -d/2.0f + 1.6f + randDepth, .7f, Application);
+      else if (random == 2 || random == 3 || random == 4) {
+    	  if (subrand == 0)
+    		  drawYellowFlwr(x + n + .5f, -1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
+    	  else if (subrand == 1)
+    		  drawBlueFlwr(x + n + .5f, -1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
+    	  else if (subrand == 2)
+    		  drawWhiteSunflwr(x + n + .5f, -1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
+    	  else if (subrand == 3)
+    		  drawTealFlwr(x + n + .5f, -1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
+    	  else if (subrand == 4)
+    		  drawPurpleFlwr(x + n + .5f, -1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
+      }
+      else if (random == 5 && !oldFern) {
          drawFern(x + n + .5f, .2f, -d/2.0f + 1.5f + randDepth, 1.f + randScale, Application);
          oldFern = true;
       }
+      else if (random == 5 && oldFern)
+     	 n--;
 
-      if (random != 4)
+      if (random != 5)
     	  oldFern = false;
    }
 
 
    //Draw flower-type plants in foreground
       for (int n = 0; n < w; n++) {
-         random = rand()%5;
+         random = rand()%6;
+         float subrand = rand()%5;
          randScale = (float) (rand()%10);
          randScale = randScale * 0.025f;
          randDepth = (float) (rand()%2);
@@ -924,16 +871,26 @@ void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
 
          if (random == 0 || random == 1)
             drawWhiteFlwr(x + n + 0.5f, -1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application);
-         else if (random == 2 || random == 3)
-            drawBlueFlwr(x + n + 0.5f, -1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application);
-         else if (random == 4 && !oldFern) {
+         else if (random == 2 || random == 3 || random == 4) {
+        	 if (subrand == 0)
+        		 drawBlueFlwr(x + n + 0.5f, -1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application);
+        	 else if (subrand == 1)
+        		 drawTealFlwr(x + n + 0.5f, -1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application);
+        	 else if (subrand == 2)
+        		 drawPurpleFlwr(x + n + 0.5f, -1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application);
+        	 else if (subrand == 3)
+        		 drawYellowFlwr(x + n + 0.5f, -1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application);
+        	 else if (subrand == 3)
+        		 drawWhiteSunflwr(x + n + 0.5f, -1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application);
+         }
+         else if (random == 5 && !oldFern) {
             drawFern(x + n + 0.5f, 0.2f, d/2.0f - 0.6f, 0.7f, Application);
             oldFern = true;
          }
-         else if (random == 4 && oldFern)
+         else if (random == 5 && oldFern)
         	 n--;
 
-         if (random != 4)
+         if (random != 5)
        	  oldFern = false;
       }
 }
@@ -1028,6 +985,35 @@ void Load3DS()
       whiteFlwrMesh->resizeMesh(SVector3(.8f));
       whiteFlwrMesh->calculateNormalsPerFace();
    }
+
+   whiteSunflwrMesh = CMeshLoader::load3dsMesh("Models/sunflowerwhite.3ds");
+   if (whiteSunflwrMesh) {
+	   whiteSunflwrMesh->centerMeshByExtents(SVector3(0));
+	   whiteSunflwrMesh->resizeMesh(SVector3(.8f));
+	   whiteSunflwrMesh->calculateNormalsPerFace();
+   }
+
+   yellowFlwrMesh = CMeshLoader::load3dsMesh("Models/sunfloweryellow.3ds");
+   if (yellowFlwrMesh) {
+	   yellowFlwrMesh->centerMeshByExtents(SVector3(0));
+	   yellowFlwrMesh->resizeMesh(SVector3(.8f));
+	   yellowFlwrMesh->calculateNormalsPerFace();
+   }
+
+   purpleFlwrMesh = CMeshLoader::load3dsMesh("Models/sunflowerpurple.3ds");
+   if (purpleFlwrMesh) {
+	   purpleFlwrMesh->centerMeshByExtents(SVector3(0));
+	   purpleFlwrMesh->resizeMesh(SVector3(.8f));
+	   purpleFlwrMesh->calculateNormalsPerFace();
+   }
+
+   tealFlwrMesh = CMeshLoader::load3dsMesh("Models/sunflowerteal.3ds");
+   if (tealFlwrMesh) {
+	   tealFlwrMesh->centerMeshByExtents(SVector3(0));
+	   tealFlwrMesh->resizeMesh(SVector3(.8f));
+   	   tealFlwrMesh->calculateNormalsPerFace();
+   }
+
    else {
       fprintf(stderr, "Failed to load pink flower mesh.\n");
    }
@@ -1114,6 +1100,34 @@ void PrepMeshes()
    renderWhiteFlwr->setScale(SVector3(.36f));
    renderWhiteFlwr->setRotation(SVector3(0, 90, 0));
    renderWhiteFlwr->setShader(Toon);
+
+   renderWhiteSunflwr = new CMeshSceneObject();
+   renderWhiteSunflwr->setMesh(whiteFlwrMesh);
+   renderWhiteSunflwr->setTranslation(SVector3(-20, .2f, 2));
+   renderWhiteSunflwr->setScale(SVector3(.36f));
+   renderWhiteSunflwr->setRotation(SVector3(0, 90, 0));
+   renderWhiteSunflwr->setShader(Toon);
+
+   renderPurpleFlwr = new CMeshSceneObject();
+   renderPurpleFlwr->setMesh(whiteFlwrMesh);
+   renderPurpleFlwr->setTranslation(SVector3(-20, .2f, 2));
+   renderPurpleFlwr->setScale(SVector3(.36f));
+   renderPurpleFlwr->setRotation(SVector3(0, 90, 0));
+   renderPurpleFlwr->setShader(Toon);
+
+   renderYellowFlwr = new CMeshSceneObject();
+   renderYellowFlwr->setMesh(whiteFlwrMesh);
+   renderYellowFlwr->setTranslation(SVector3(-20, .2f, 2));
+   renderYellowFlwr->setScale(SVector3(.36f));
+   renderYellowFlwr->setRotation(SVector3(0, 90, 0));
+   renderYellowFlwr->setShader(Toon);
+
+   renderTealFlwr = new CMeshSceneObject();
+   renderTealFlwr->setMesh(whiteFlwrMesh);
+   renderTealFlwr->setTranslation(SVector3(-20, .2f, 2));
+   renderTealFlwr->setScale(SVector3(.36f));
+   renderTealFlwr->setRotation(SVector3(0, 90, 0));
+   renderTealFlwr->setShader(Toon);
 
    renderFicus = new CMeshSceneObject();
    renderFicus->setMesh(ficusMesh);
