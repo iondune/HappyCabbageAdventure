@@ -17,6 +17,9 @@ CGUIImageWidget::CGUIImageWidget(std::string const & imagePath, SVector2 const &
 
 void CGUIImageWidget::draw()
 {
+	if (! Visible)
+		return;
+
 	glEnable(GL_TEXTURE_2D);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, Image->getTextureHandle());

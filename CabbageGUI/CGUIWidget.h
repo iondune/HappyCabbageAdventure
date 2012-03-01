@@ -11,6 +11,8 @@ protected:
 	SVector2 Position;
 	float Rotation;
 
+	bool Visible;
+
 public:
 
 	CGUIWidget();
@@ -22,6 +24,9 @@ public:
 	void setRotation(float  const rotation);
 
 	virtual void draw();
+
+	bool const isVisible() const;
+	void setVisible(bool const visible);
 
 };
 
