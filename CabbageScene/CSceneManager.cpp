@@ -152,7 +152,7 @@ GLuint randNorm;
 #define SSAO_MULT 1
 
 CSceneManager::CSceneManager(SPosition2 const & screenSize)
-	: DoSSAO(false), OnlySSAO(false), DoBloom(false), DoBlur(false), OnlyNormals(false)
+	: DoSSAO(false), OnlySSAO(false), DoBloom(true), DoBlur(false), OnlyNormals(false)
 {
     CurrentScene = this;
 
