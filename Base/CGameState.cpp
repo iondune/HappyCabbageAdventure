@@ -431,6 +431,7 @@ void CGameState::oldDisplay() {
    Derp->setJumping(true);
 
    char buf[30];
+   numLives = GameplayManager->getPlayerLives();
    sprintf(buf, "Lives: %d", numLives);
    LivesText2->setText(buf);
    LivesText->setText(buf);
