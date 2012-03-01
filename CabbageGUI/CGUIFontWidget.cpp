@@ -25,6 +25,8 @@ void CGUIFontWidget::makeRenderer(std::string const & FileName, float const Size
 		return;
 	}
 	Renderer->setBackgroundColor(0.f, 0.f, 0.f, 0.f);
+	Renderer->setHorizontalJustification(OGLFT::Face::CENTER);
+	Renderer->setVerticalJustification(OGLFT::Face::MIDDLE);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 }
 
@@ -41,9 +43,13 @@ void CGUIFontWidget::draw()
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
 	glEnable(GL_BLEND);
 	glDisable(GL_DEPTH_TEST);
+
+	Renderer->setStringRotation(Rotation);
 	Renderer->draw(Position.X, Position.Y, Text.c_str());
+
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 }

@@ -1033,14 +1033,13 @@ namespace OGLFT {
     if ( !advance_ )
       glPushMatrix();
 
+    GLfloat dx = 0, dy = 0;
+
     if ( horizontal_justification_ != ORIGIN ||
 	 vertical_justification_ != BASELINE ) {
       glPushMatrix();
 
       BBox bbox = measure_nominal( s );
-
-      GLfloat dx = 0, dy = 0;
-
       switch ( horizontal_justification_ ) {
       case LEFT:
 	dx = -bbox.x_min_; break;
@@ -1069,7 +1068,7 @@ namespace OGLFT {
       glRotatef( -string_rotation_, 0., 0., 1. );
     }
 
-    glTranslatef( x, y, 0. );
+    glTranslatef( x - dx, y - dy, 0. );
 
     glColor4f( foreground_color_[R], foreground_color_[G], foreground_color_[B],
 	       foreground_color_[A] );
