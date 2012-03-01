@@ -29,19 +29,21 @@ void CMainMenuState::setupButtons() {
 	ExitGame = new CGUIImageWidget(WoodTexture, SVector2(.4f, .12f));
 	ExitGame->setPosition(SVector2(ratio/2.f - .2f, .14f));
 
+   SColor FontColor(1.0f, 1.0f, 1.0f);
+
 	StartFont = new CGUIFontWidget("JustAnotherFont.TTF", 32.f);
 	StartFont->setText("Start Game");
-	StartFont->setColor(SColor(1.f, 1.f, 0.f));
+	StartFont->setColor(FontColor);
 	StartFont->setPosition(SVector2(ratio/2.f - .175f, .5 + .05f));
 
 	EditorFont = new CGUIFontWidget("JustAnotherFont.TTF", 32.f);
 	EditorFont->setText("Level Editor");
-	EditorFont->setColor(SColor(1.f, 1.f, 0.f));
+	EditorFont->setColor(FontColor);
 	EditorFont->setPosition(SVector2(ratio/2.f - .179f, .32 + .05f));
 
 	ExitFont = new CGUIFontWidget("JustAnotherFont.TTF", 32.f);
 	ExitFont->setText("Exit Game");
-	ExitFont->setColor(SColor(1.f, 1.f, 0.f));
+	ExitFont->setColor(FontColor);
 	ExitFont->setPosition(SVector2(ratio/2.f - .162f, .14f + .05f));
 
 	//StartEditor = new CGUIImageWidget(WoodTexture, SVector2(0.65f, .25f));

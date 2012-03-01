@@ -95,6 +95,11 @@ namespace Cabbage
 
          public:
 
+            void removeAll() {
+               Objects.clear();
+               Actors.clear();
+            }
+
             void removeObject(CObject * Object)
             {
                for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)

@@ -23,6 +23,7 @@ CPlayerView *PlayerView;
 std::vector<CElevator*> elevators;
 int Charged = 0;
 int prevHealth = 0;
+int numLives = -3;
 
 CGameplayManager *GameplayManager;
 
@@ -127,6 +128,9 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
 }
 
 void CGameState::EngineInit( void ) {
+   if(Engine) {
+      Engine->removeAll();
+   }
    Engine = new CEngine();
    Player = Engine->addActor();
    Player->setArea(SRect2(-24.5f, 3, 1, 1));
@@ -143,11 +147,9 @@ void CGameState::EngineInit( void ) {
 
    SRect2 area;
 
-   if(!GameplayManager)
-      GameplayManager = new CGameplayManager(Player, Engine);
-   else {
-      GameplayManager->Clear(Player, Engine);
-   }
+   GameplayManager = new CGameplayManager(Player, Engine);
+   if(numLives != -3)
+      GameplayManager->setLives(numLives);
 
    GameEventManager = & GameplayManager->getGameEventManager();
    GameEventManager->OnEnemyDeath.connect(& GameEventReceiver, &CGameEventReceiver::OnEnemyDeath);
@@ -366,6 +368,7 @@ void CGameState::oldDisplay() {
    {
       if(!GameplayManager->isPlayerAlive() && spaceDown) {
          if(GameplayManager->getPlayerLives() > 0) {
+            numLives = GameplayManager->getPlayerLives();
             end();
             Initialize();
             return;
