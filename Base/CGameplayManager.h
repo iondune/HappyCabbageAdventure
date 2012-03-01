@@ -52,6 +52,8 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 
       void OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With);
       void runDeathSequence(float);
+      void Clear(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CEngine * engine);
+      void Clear();
 
       int ShootingLaser;
       SRect2 LaserBox;
@@ -66,6 +68,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       int const getPlayerHealth() const;
       int const getPlayerEnergy() const;
       int const getPlayerLives() const;
+      void subPlayerLife() {PlayerLives--;}
 
       void UseAbility(int energyCost);
       int const DamagePlayer(int damageTaken, CBadGuy* attacker, Cabbage::Collider::CCollideable* Other);

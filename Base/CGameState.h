@@ -50,6 +50,7 @@ class CGameState : public CState<CGameState>
    void OnRenderStart(float const Elapsed);
    //Sends event every time key pressed (also when held)
    void OnKeyboardEvent(SKeyboardEvent const & Event);
+   void Initialize();
    //Runs at program close (currently not implemented)
    void end();
    void PrepShadow();

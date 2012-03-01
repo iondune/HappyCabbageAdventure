@@ -12,6 +12,20 @@ CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabb
    dead = 0;
    gameOver = 0;
    PlayerLives = 3;
+   PlayerHealth = 5; PlayerRecovering = false; PlayerActor = playerActor; Engine = engine; PlayerEnergy = 3;
+   ShootingLaser = 0;
+   JustKilled = 0;
+}
+
+void CGameplayManager::Clear(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CEngine * engine) {
+   Engine->setCollisionResponder(this);
+   GameEventManager = new CGameEventManager();
+   won = 0;
+   GodMode = 0;
+   GodModeTime = 0;
+   dead = 0;
+   gameOver = 0;
+   PlayerHealth = 5; PlayerRecovering = false; PlayerActor = playerActor; Engine = engine; PlayerEnergy = 3;
    ShootingLaser = 0;
    JustKilled = 0;
 }
