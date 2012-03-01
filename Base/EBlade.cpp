@@ -11,6 +11,7 @@ EBlade::EBlade(float x, float y, float w, float h, CGameplayManager* manager) {
    loadActor();
 
    BladeRotate= 0.0f;
+   Time = 0.0f;
 }
 
 //Loads and moves the mesh
