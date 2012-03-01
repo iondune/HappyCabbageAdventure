@@ -5,21 +5,21 @@
 //Variables need to create VBOs of meshes, textures, and shaders
 CShader *Shader, *Flat, *Diffuse, *BlackShader, *DiffuseTexture, *normalColor, *Toon, *ToonTexture, *ToonBright;  //Use Diffuse for trees (doesn't need texture)
 
-CImage *grassImg, *skyImg, *dirtImg, *blueFlwrImg, *pinkFlwrImg, *ficusImg,
+CImage *grassImg, *skyImg, *dirtImg, *blueFlwrImg, *whiteFlwrImg, *ficusImg,
        *poinImg, *flagImg;
 
-CTexture *grassTxt, *skyTxt, *dirtTxt, *blueFlwrTxt, *pinkFlwrTxt, *ficusTxt,
+CTexture *grassTxt, *skyTxt, *dirtTxt, *blueFlwrTxt, *whiteFlwrTxt, *ficusTxt,
          *poinTxt, *flagTxt;
 
 CMesh *basicTreeMesh, *cabbageMesh, *christmasTreeMesh, *cubeMesh, *discMesh,
-      *blueFlwrMesh, *pinkFlwrMesh, *ficusMesh, *poinMesh, *enemyMesh, 
+      *blueFlwrMesh, *whiteFlwrMesh, *ficusMesh, *poinMesh, *enemyMesh,
       *flagMesh, *derpMesh;
 
 CMeshSceneObject *renderShadow, *playerRenderable, *renderChristmasTree,
-  *renderBasicTree, *renderBlueFlwr, *renderPinkFlwr, *renderFicus, *renderPoin,
+  *renderBasicTree, *renderBlueFlwr, *renderWhiteFlwr, *renderFicus, *renderPoin,
   *tempRender, *renderFlag, *flagLogo, *renderDerp;
 
-std::vector<CMeshSceneObject*> blocks, enemies, blueFlwrs, pinkFlwrs, ficuses,
+std::vector<CMeshSceneObject*> blocks, enemies, blueFlwrs, whiteFlwrs, ficuses,
   basicTrees, xmasTrees, poins;
 
 
@@ -33,8 +33,7 @@ void drawBlueFlwr(float x, float y, float z, float scale, CApplication app) {
 
    renderBlueFlwr = new CMeshSceneObject();
    renderBlueFlwr->setMesh(blueFlwrMesh);
-   renderBlueFlwr->setTexture(blueFlwrTxt);
-   renderBlueFlwr->setShader(ToonTexture);
+   renderBlueFlwr->setShader(Toon);
    renderBlueFlwr->setTranslation(SVector3(x, y, z));
    renderBlueFlwr->setScale(SVector3(scale));
    renderBlueFlwr->setRotation(SVector3(-90, 0, 0));
@@ -42,23 +41,22 @@ void drawBlueFlwr(float x, float y, float z, float scale, CApplication app) {
    app.getSceneManager().addSceneObject(renderBlueFlwr);
 }
 
-void drawPinkFlwr(float x, float y, float z, float scale, CApplication app) {
+void drawWhiteFlwr(float x, float y, float z, float scale, CApplication app) {
 
    if (y == -1) {
       y = scale / 2.0f;
    }
 
-   pinkFlwrs.push_back(tempRender = new CMeshSceneObject());
+   whiteFlwrs.push_back(tempRender = new CMeshSceneObject());
 
-   renderPinkFlwr = new CMeshSceneObject();
-   renderPinkFlwr->setMesh(pinkFlwrMesh);
-   renderPinkFlwr->setTexture(pinkFlwrTxt);
-   renderPinkFlwr->setShader(ToonTexture);
-   renderPinkFlwr->setTranslation(SVector3(x, y, z));
-   renderPinkFlwr->setScale(SVector3(scale));
-   renderPinkFlwr->setRotation(SVector3(-90, 0, 0));
+   renderWhiteFlwr = new CMeshSceneObject();
+   renderWhiteFlwr->setMesh(whiteFlwrMesh);
+   renderWhiteFlwr->setShader(Toon);
+   renderWhiteFlwr->setTranslation(SVector3(x, y, z));
+   renderWhiteFlwr->setScale(SVector3(scale));
+   renderWhiteFlwr->setRotation(SVector3(-90, 0, -80));
 
-   app.getSceneManager().addSceneObject(renderPinkFlwr);
+   app.getSceneManager().addSceneObject(renderWhiteFlwr);
 }
 
 void drawPoin(float x, float y, float z, float scale, CApplication app) {
@@ -90,9 +88,7 @@ void drawFicus(float x, float y, float z, float scale, CApplication app) {
 
    renderFicus = new CMeshSceneObject();
    renderFicus->setMesh(ficusMesh);
-   //This is on purpose for now, will hopefully find a better texture later
-   renderFicus->setTexture(blueFlwrTxt);
-   renderFicus->setShader(ToonTexture);
+   renderFicus->setShader(Toon);
    renderFicus->setTranslation(SVector3(x, y, z));
    renderFicus->setScale(SVector3(scale));
    renderFicus->setRotation(SVector3(-90, 0, 0));
@@ -129,7 +125,6 @@ void drawChristmasTree(float x, float y, float z, float scale, CApplication app)
 
    renderChristmasTree = new CMeshSceneObject();
    renderChristmasTree->setMesh(christmasTreeMesh);
-   //renderChristmasTree->getMaterial().Texture = (basicTreeTxt);
    renderChristmasTree->setShader(Toon);
    renderChristmasTree->setTranslation(SVector3(x, y, z));
    renderChristmasTree->setScale(SVector3(scale));
