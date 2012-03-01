@@ -128,7 +128,7 @@ void CGameState::EngineInit( void ) {
    Player = Engine->addActor();
    Player->setArea(SRect2(-24.5f, 3, 1, 1));
    Player->CollideableType = COLLIDEABLE_TYPE_PLAYER;
-   Player->CollideableLevel = 2;
+   Player->CollideableLevel |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
 
    Derp = Engine->addActor();
    Derp->setArea(SRect2(-17, 0, 1, 1));
@@ -771,7 +771,7 @@ void CGameState::UpdateLeaves() {
 void CGameState::UpdateEnergy(float const Elapsed) {
 	float curEnergy = (float)GameplayManager->getPlayerEnergy();
 
-	printf("curEnergy is %f, energyStatus is %f\n", curEnergy, energyStatus);
+	//printf("curEnergy is %f, energyStatus is %f\n", curEnergy, energyStatus);
 	if (energyStatus < 0.17f) {
 		CabbageMeter->setSize(SVector2(0.f, .1f));
 		energyStatus = 0.f;
