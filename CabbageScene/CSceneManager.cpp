@@ -141,7 +141,7 @@ GLuint fboId[FBO_COUNT];
 GLuint rboId[FBO_COUNT];
 CShader * SSAOShader;
 CShader * BlendShader;
-CTexture * White;
+CTexture * White, *Black;
 
 #include "CTextureLoader.h"
 
@@ -201,6 +201,7 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 	SSAOShader = CShaderLoader::loadShader("SSAO");
 	BlendShader = CShaderLoader::loadShader("Blend");
 	White = CTextureLoader::loadTexture("White.bmp");
+	Black = CTextureLoader::loadTexture("Black.bmp");
 }
 
 void CSceneManager::addSceneObject(ISceneObject * sceneObject)
@@ -449,7 +450,7 @@ void CSceneManager::drawAll()
 		glGenerateMipmap(GL_TEXTURE_2D);
 
 		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, DoBloom ? textureId[EFBO_SCRATCH2] : White->getTextureHandle());
+		glBindTexture(GL_TEXTURE_2D, DoBloom ? textureId[EFBO_SCRATCH2] : Black->getTextureHandle());
 		glGenerateMipmap(GL_TEXTURE_2D);
 		
 		Context.uniform("scene", 0);
