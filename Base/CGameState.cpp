@@ -401,6 +401,7 @@ void CGameState::oldDisplay() {
       particleLaserEngine = NULL;
 
       Charged = 1;
+      GameplayManager->UseAbility(1);
       lDown = 0;
    }
    if(particleLaserFireEngine && !particleLaserFireEngine->dead) {
@@ -554,10 +555,13 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 #ifdef PARTICLE
       if(Event.Key == SDLK_l){
          //GameplayManager->setChargingLaser
-         if(!particleLaserFireEngine && (!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead)))
-            particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 2.3f, LASER_CHARGING_PARTICLE);
-         lDown = 1;
-         PlayerView->setShader(ToonBright);
+         if(GameplayManager->getPlayerEnergy() > 0) {
+            if(!particleLaserFireEngine && (!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead))) {
+               particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 2.3f, LASER_CHARGING_PARTICLE);
+            }
+            PlayerView->setShader(ToonBright);
+            lDown = 1;
+         }
       }
       if(Event.Key == SDLK_e) {
          if(!particleCubeEngine || (particleCubeEngine && particleCubeEngine->dead))
