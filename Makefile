@@ -4,47 +4,46 @@ OBJECT_FILES=`find | grep '\.o$$' | sed "/sdlmixer/d"`
 all: build-Sound build-CabbageFramework build-CabbageParticles build-CabbageScene build-CabbageCollider build-CLWIB build-MainMenu build-Overworld build-base build-MeshLoaderDemo build-CabbageColliderDemo build-CabbageGUI
 
 build-Sound:
-	cd ./CabbageSound && $(MAKE)
+	cd ./CabbageSound && make -j
 
 build-CLWIB:
-	cd ./StateLWIB && $(MAKE) lib
+	cd ./StateLWIB && make -j lib
 
 build-MainMenu:
 	cd ./StateMainMenu && ./que
 	
 build-Overworld:
-	cd ./StateOverworld && $(MAKE)
+	cd ./StateOverworld && make -j
 	
 build-CabbageScene:
-	cd ./CabbageScene && $(MAKE)
+	cd ./CabbageScene && make -j
 
 build-CabbageCollider:
-	cd ./CabbageCollider && $(MAKE)
+	cd ./CabbageCollider && make -j
 
 build-CabbageGUI:
-	cd ./CabbageGUI && $(MAKE)
+	cd ./CabbageGUI && make -j
 
 build-MeshLoaderDemo: build-CabbageScene
-	cd ./DemoMeshLoader && $(MAKE)
+	cd ./DemoMeshLoader && make -j
 
 build-CabbageColliderDemo: build-CabbageCollider build-CabbageScene
-	cd ./DemoCabbageCollider && $(MAKE)
+	cd ./DemoCabbageCollider && make -j
 
 build-base: build-CabbageCollider build-CabbageScene build-CabbageFramework build-CabbageParticles build-CabbageGUI
-	cd ./Base && $(MAKE)
+	cd ./Base && make -j
 
 build-CabbageFramework:
-	cd ./CabbageFramework && $(MAKE)
+	cd ./CabbageFramework && make -j
 
 build-CabbageParticles:
-	cd ./CabbageParticles && $(MAKE)
-	
+	cd ./CabbageParticles && make -j
 	
 clean:
 	rm -f $(OBJECT_FILES)
 	rm -f Base/cabbage DemoCabbageCollider/CabbageColliderDemo DemoMeshLoader/MeshLoaderDemo
 	rm -f lib/libCLWIB.a lib/libCabbageCollider.a lib/libCabbageFramework.a lib/libCabbageParticles.a lib/libCabbageScene.a lib/libCabbageSound.a lib/libOverworldState.a lib/libCabbageGUI.a
 
-#	cd ./CabbageScene && $(MAKE) $@ && cd ../StateOverworld && $(MAKE) $@ && cd ../StateLWIB && $(MAKE) $@ && cd ../CabbageSound && $(MAKE) $@ && cd ../CabbageCollider && $(MAKE) $@ && cd ../DemoMeshLoader && $(MAKE) $@ && cd ../DemoCabbageCollider && $(MAKE) $@ && cd ../CabbageFramework && $(MAKE) $@
+#	cd ./CabbageScene && make -j $@ && cd ../StateOverworld && make -j $@ && cd ../StateLWIB && make -j $@ && cd ../CabbageSound && make -j $@ && cd ../CabbageCollider && make -j $@ && cd ../DemoMeshLoader && make -j $@ && cd ../DemoCabbageCollider && make -j $@ && cd ../CabbageFramework && make -j $@
 
 
