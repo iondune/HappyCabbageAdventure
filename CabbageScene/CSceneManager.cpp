@@ -196,6 +196,8 @@ void CSceneManager::removeAllSceneObjects()
    RootObject.removeChildren();
 }
 
+#include "CTextureLoader.h"
+
 void CSceneManager::drawAll()
 {
     CurrentScene->update();
@@ -205,19 +207,19 @@ void CSceneManager::drawAll()
     RootObject.draw(CurrentScene);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	/*
+	
+	/*glEnable(GL_TEXTURE_2D);
+    glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, textureId);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		glOrtho(0, 1440, 900, 1, -1, 1);
+		glOrtho(0, 1, 0, 1, -1, 1);
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glDisable(GL_DEPTH_TEST);
 
 		glBegin(GL_QUADS);
@@ -235,7 +237,6 @@ void CSceneManager::drawAll()
 		glEnd();
 
 		glEnable(GL_DEPTH_TEST);
-		glDisable(GL_BLEND);
 		glDisable(GL_TEXTURE_2D);
 
 	glBindTexture(GL_TEXTURE_2D, 0);*/
