@@ -131,6 +131,8 @@ void CScene::update()
 GLuint textureId;
 GLuint fboId;
 
+#include "CTextureLoader.h"
+
 CSceneManager::CSceneManager()
 {
     CurrentScene = this;
@@ -179,6 +181,9 @@ CSceneManager::CSceneManager()
 
 	// switch back to window-system-provided framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	//CTexture * Texture = new CTexture(CImageLoader::loadTGAImage("32bit.tga"));
+	//textureId = Texture->getTextureHandle();
 }
 
 void CSceneManager::addSceneObject(ISceneObject * sceneObject)
@@ -196,19 +201,22 @@ void CSceneManager::removeAllSceneObjects()
    RootObject.removeChildren();
 }
 
-#include "CTextureLoader.h"
-
 void CSceneManager::drawAll()
 {
     CurrentScene->update();
 
-	//glBindFramebuffer(GL_FRAMEBUFFER, fboId);
+	glBindFramebuffer(GL_FRAMEBUFFER, fboId);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     RootObject.draw(CurrentScene);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	
-	/*glEnable(GL_TEXTURE_2D);
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+	glEnable(GL_TEXTURE_2D);
     glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, textureId);
 	glGenerateMipmap(GL_TEXTURE_2D);
@@ -239,7 +247,7 @@ void CSceneManager::drawAll()
 		glEnable(GL_DEPTH_TEST);
 		glDisable(GL_TEXTURE_2D);
 
-	glBindTexture(GL_TEXTURE_2D, 0);*/
+	glBindTexture(GL_TEXTURE_2D, 0);
 
     SceneChanged = false;
 }
