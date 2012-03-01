@@ -237,6 +237,15 @@ void CGameState::begin()
 
    //Initialize Font
    our_font.init("WIFFLES_.TTF", 30);
+   GameWinText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
+   GameWinText->setText("CONGRATULATIONS! YOU HAVE WON!");
+   GameWinText->setVisible(false);
+   GameWinText->setPosition(SVector2(0.5f, 0.6f));
+
+   GameOverText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
+   GameOverText->setText("GAME OVER! YOU ARE DEAD.");
+   GameOverText->setVisible(false);
+   GameOverText->setPosition(SVector2(0.5f, 0.6f));
 
    Camera = new CPerspectiveCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
    Application.getSceneManager().setActiveCamera(Camera);
@@ -486,7 +495,7 @@ void CGameState::OnRenderStart(float const Elapsed)
             playVictory = false;
          }
          Engine->removeObject(victoryBlock);
-         freetype::print(our_font, 50, WindowHeight - 240.f, "CONGRATULATIONS! YOU HAVE WON!");
+		 GameWinText->setVisible(true);
       }
 
       else {
@@ -498,7 +507,7 @@ void CGameState::OnRenderStart(float const Elapsed)
          }
          Charged = 0;
 
-         freetype::print(our_font, 50, WindowHeight - 240.f, "GAME OVER! YOU ARE DEAD.");
+		 GameOverText->setVisible(true);
       }
    }
 

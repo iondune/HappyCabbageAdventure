@@ -10,6 +10,7 @@
 #include "../StateLWIB/CEnemy.h"
 #include "../StateLWIB/CPlaceable.h"
 #include "../CabbageParticles/CParticleEngine.h"
+#include "../CabbageGUI/CabbageGUI.h"
 #include "CGameplayManager.h"
 #include "CGameEventReceiver.h"
 #include "irrxml-1.2/src/irrXML.h"
@@ -25,6 +26,8 @@ class CGameState : public CState<CGameState>
    CGameEventManager * GameEventManager;
    CGameEventReceiver GameEventReceiver;
    freetype::font_data our_font;
+
+   CGUIFontWidget * GameOverText, * GameWinText;
 
    public:
    CGameState();
