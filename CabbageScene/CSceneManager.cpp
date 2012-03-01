@@ -143,8 +143,6 @@ CSceneManager::CSceneManager()
 	unsigned int const TEXTURE_WIDTH = 1440;
 	unsigned int const TEXTURE_HEIGHT = 900;
 
-	//CTexture * Texture2 = new CTexture(1440, 900);
-
 	// create a texture object
 	glGenTextures(1, &textureId);
 	glBindTexture(GL_TEXTURE_2D, textureId);
@@ -156,7 +154,6 @@ CSceneManager::CSceneManager()
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, TEXTURE_WIDTH, TEXTURE_HEIGHT, 0,
 				 GL_RGBA, GL_UNSIGNED_BYTE, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
-	//textureId = Texture2->getTextureHandle();
 
 	// create a renderbuffer object to store depth info
 	glGenRenderbuffers(1, &rboId);
@@ -184,9 +181,6 @@ CSceneManager::CSceneManager()
 
 	// switch back to window-system-provided framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	
-	//textureId = Texture->getTextureHandle();
 }
 
 void CSceneManager::addSceneObject(ISceneObject * sceneObject)
@@ -209,14 +203,12 @@ void CSceneManager::drawAll()
     CurrentScene->update();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, fboId);
-	glBindRenderbuffer(GL_RENDERBUFFER, rboId);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     RootObject.draw(CurrentScene);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -228,7 +220,7 @@ void CSceneManager::drawAll()
 
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		glOrtho(-1, 2, -1, 2, -1, 1);
+		glOrtho(0, 1, 0, 1, -1, 1);
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
@@ -255,9 +247,6 @@ void CSceneManager::drawAll()
 	glBindTexture(GL_TEXTURE_2D, 0);
 
     SceneChanged = false;
-
-	static CTexture * Texture = 0;
-	if (! Texture) Texture = new CTexture(CImageLoader::loadTGAImage("32bit.tga"));
 }
 
 CMeshSceneObject * CSceneManager::addMeshSceneObject(CMesh * Mesh)

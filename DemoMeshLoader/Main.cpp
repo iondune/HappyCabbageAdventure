@@ -127,8 +127,8 @@ public:
 		WingMan = new CMeshSceneObject();
 		WingMan->setMesh(MeshVertex);
 		WingMan->setShader("DiffuseTexture");
-		//WingMan->setTexture("../Base/Textures/GrassyGrass.bmp", 2);
-		//WingMan->setTexture("../Base/Textures/DirtyDirt.bmp", 3);
+		WingMan->setTexture("../Base/Textures/GrassyGrass.bmp", 2);
+		WingMan->setTexture("../Base/Textures/DirtyDirt.bmp", 3);
 		ISceneObject * Dummy = new ISceneObject();
 		Dummy->setTranslation(SVector3(1.5f,0,0));
 		WingMan->setParent(Dummy);
@@ -137,12 +137,12 @@ public:
 		CMesh * Cube = CMeshLoader::createCubeMesh();
 		CMeshSceneObject * SkyBox = SceneManager.addMeshSceneObject(Cube, CShaderLoader::loadShader("DiffuseTexture"));
 		SkyBox->setScale(SVector3(20.f));
-		//SkyBox->setTexture("../DemoMeshLoader/stars.bmp");
+		SkyBox->setTexture("../DemoMeshLoader/stars.bmp");
 		SkyBox->setCullingEnabled(false);
 
 		CApplication::get().getSceneManager().addSceneObject(Renderable);
 
-		/*Image = new CGUIImageWidget("../DemoMeshLoader/spaceshiptexture.bmp", SVector2(0.2f, 0.2f));
+		Image = new CGUIImageWidget("../DemoMeshLoader/spaceshiptexture.bmp", SVector2(0.2f, 0.2f));
 		GUIEngine.addWidget(Image);
 
 		Image = new CGUIImageWidget(CImageLoader::loadTexture("../Base/Textures/sky.bmp"), SVector2(0.2f, 0.2f));
@@ -159,7 +159,7 @@ public:
 		Font->setPosition(SVector2(0, 0.25f));
 		Font->setText("Hello, world!");
 		Font->setColor(SColor(1, 1, 1));
-		GUIEngine.addWidget(Font);*/
+		GUIEngine.addWidget(Font);
 
 		
         //Font.init("Fonts/DejaVuSansMono.ttf", 14);
@@ -173,7 +173,7 @@ public:
     {
 		currentMat = i;
 		CMaterial mat;
-		//mat.Texture = CImageLoader::loadTexture("spaceshiptexture.bmp");
+		mat.Texture = CImageLoader::loadTexture("spaceshiptexture.bmp");
         switch (i)
         {
         default:
@@ -226,8 +226,8 @@ public:
 
 		WingMan->setTranslation(SVector3(0, 0, 0.25f*sin(0.8f*Timer)));
 		
-		//Image->setRotation(Image->getRotation() + 10.f * Elapsed);
-		//Font->setRotation(Font->getRotation() + 17.f * Elapsed);
+		Image->setRotation(Image->getRotation() + 10.f * Elapsed);
+		Font->setRotation(Font->getRotation() + 17.f * Elapsed);
 
         CApplication::get().getSceneManager().drawAll();
 
