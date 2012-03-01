@@ -54,6 +54,7 @@ public:
     {}
 
 	CMeshSceneObject * WingMan;
+	CGUIImageWidget * Image;
 
     void begin()
     {
@@ -140,11 +141,12 @@ public:
 
 		CApplication::get().getSceneManager().addSceneObject(Renderable);
 
-		CGUIImageWidget * Image = new CGUIImageWidget("../DemoMeshLoader/spaceshiptexture.bmp", SVector2(0.2f, 0.2f));
+		Image = new CGUIImageWidget("../DemoMeshLoader/spaceshiptexture.bmp", SVector2(0.2f, 0.2f));
 		GUIEngine.addWidget(Image);
 
 		Image = new CGUIImageWidget(CImageLoader::loadTexture("../Base/Textures/sky.bmp"), SVector2(0.2f, 0.2f));
 		Image->setPosition(SVector2(0.2f, 0.f));
+		Image->setRotation(45.f);
 		GUIEngine.addWidget(Image);
 
 		Image = new CGUIImageWidget(CImageLoader::loadTexture("../Base/wood011.bmp"), SVector2(0.2f, 0.2f));
@@ -224,6 +226,8 @@ public:
         Renderable->setRotation(Rotation);
 
 		WingMan->setTranslation(SVector3(0, 0, 0.25f*sin(0.8f*Timer)));
+		
+		Image->setRotation(Image->getRotation() + 10.f * Elapsed);
 
         CApplication::get().getSceneManager().drawAll();
 

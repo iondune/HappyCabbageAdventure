@@ -12,8 +12,7 @@ CGUIImageWidget::CGUIImageWidget(CTexture * image, SVector2 const & size)
 
 CGUIImageWidget::CGUIImageWidget(std::string const & imagePath, SVector2 const & size)
 	: Size(size), Image(CTextureLoader::loadTexture(imagePath))
-{
-}
+{}
 
 
 void CGUIImageWidget::draw()
