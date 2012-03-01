@@ -771,7 +771,7 @@ void CGameState::UpdateLeaves() {
 void CGameState::UpdateEnergy(float const Elapsed) {
 	float curEnergy = (float)GameplayManager->getPlayerEnergy();
 
-	printf("curEnergy is %f, energyStatus is %f\n", curEnergy, energyStatus);
+	//printf("curEnergy is %f, energyStatus is %f\n", curEnergy, energyStatus);
 	if (energyStatus < 0.17f) {
 		CabbageMeter->setSize(SVector2(0.f, .1f));
 		energyStatus = 0.f;
