@@ -7,9 +7,10 @@
 CTexture::CTexture(CImage * image)
     : Width(image->getWidth()), Height(image->getHeight())
 {
-    static int TextureCounter = 0;
+    //static int TextureCounter = 0;
 
-    TextureHandle = ++ TextureCounter;
+    //TextureHandle = ++ TextureCounter;
+	glGenTextures(1, & TextureHandle);
 
     glBindTexture(GL_TEXTURE_2D, TextureHandle); // Bind the ID texture specified by the 2nd parameter
 
@@ -25,7 +26,8 @@ CTexture::CTexture(CImage * image)
 	glTexImage2D(GL_TEXTURE_2D, 0, image->hasAlpha() ? 4 : 3, Width, Height, 0, image->hasAlpha() ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, image->getImageData());
 
     // And create 2d mipmaps for the minifying function
-    gluBuild2DMipmaps(GL_TEXTURE_2D, image->hasAlpha() ? 4 : 3, Width, Height, image->hasAlpha() ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, image->getImageData());
+    //gluBuild2DMipmaps(GL_TEXTURE_2D, image->hasAlpha() ? 4 : 3, Width, Height, image->hasAlpha() ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, image->getImageData());
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 GLuint const CTexture::getTextureHandle() const
