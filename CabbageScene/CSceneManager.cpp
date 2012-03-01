@@ -236,13 +236,13 @@ void CSceneManager::drawAll()
 #ifdef SSAO
 	if (DoSSAO)
 	{
-	// Draw normal colors
-	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO_NORMALS]);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		// Draw normal colors
+		glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO_NORMALS]);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	enableDebugData(EDebugData::NormalColors);
-    RootObject.draw(CurrentScene);
-	disableDebugData(EDebugData::NormalColors);
+		enableDebugData(EDebugData::NormalColors);
+		RootObject.draw(CurrentScene);
+		disableDebugData(EDebugData::NormalColors);
 	}
 #endif
 
@@ -256,155 +256,152 @@ void CSceneManager::drawAll()
 #ifdef SSAO
 	if (DoSSAO)
 	{
-	// Draw SSAO effect
-	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO_RAW]);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		// Draw SSAO effect
+		glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO_RAW]);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		{
+			CShaderContext Context(* SSAOShader);
 
+			glEnable(GL_TEXTURE_2D);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO_NORMALS]);
 
-	// Draw SSAO quad
-	{
-		CShaderContext Context(* SSAOShader);
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, CTextureLoader::loadTexture("randNormals.bmp")->getTextureHandle());
+			glGenerateMipmap(GL_TEXTURE_2D);
 
-		glEnable(GL_TEXTURE_2D);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO_NORMALS]);
+			Context.uniform("rnm", 1);
+			Context.uniform("normalMap", 0);
 
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, CTextureLoader::loadTexture("randNormals.bmp")->getTextureHandle());
-		glGenerateMipmap(GL_TEXTURE_2D);
+				glMatrixMode(GL_PROJECTION);
+				glLoadIdentity();
+				glOrtho(0, 1, 0, 1, -1, 1);
 
-		Context.uniform("rnm", 1);
-		Context.uniform("normalMap", 0);
+				glMatrixMode(GL_MODELVIEW);
+				glLoadIdentity();
 
-			glMatrixMode(GL_PROJECTION);
-			glLoadIdentity();
-			glOrtho(0, 1, 0, 1, -1, 1);
+				glDisable(GL_DEPTH_TEST);
 
-			glMatrixMode(GL_MODELVIEW);
-			glLoadIdentity();
+				glBegin(GL_QUADS);
+					glTexCoord2i(0, 0);
+					glVertex2i(0, 0);
 
-			glDisable(GL_DEPTH_TEST);
+					glTexCoord2i(1, 0);
+					glVertex2i(1, 0);
 
-			glBegin(GL_QUADS);
-				glTexCoord2i(0, 0);
-				glVertex2i(0, 0);
-
-				glTexCoord2i(1, 0);
-				glVertex2i(1, 0);
-
-				glTexCoord2i(1, 1);
-				glVertex2i(1, 1);
+					glTexCoord2i(1, 1);
+					glVertex2i(1, 1);
 			
-				glTexCoord2i(0, 1);
-				glVertex2i(0, 1);
-			glEnd();
+					glTexCoord2i(0, 1);
+					glVertex2i(0, 1);
+				glEnd();
 
-			glEnable(GL_DEPTH_TEST);
-			glDisable(GL_TEXTURE_2D);
+				glEnable(GL_DEPTH_TEST);
+				glDisable(GL_TEXTURE_2D);
 
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, 0);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, 0);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
 
-	// Draw blur 1
-	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO_BLUR1]);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	{
-		CShaderContext Context(* BlurV);
+		// Draw blur 1
+		glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO_BLUR1]);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		{
+			CShaderContext Context(* BlurV);
 
-		glEnable(GL_TEXTURE_2D);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO_RAW]);
+			glEnable(GL_TEXTURE_2D);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO_RAW]);
 
-		//glGenerateMipmap(GL_TEXTURE_2D);
+			//glGenerateMipmap(GL_TEXTURE_2D);
 
-		Context.uniform("uTexColor", 0);
+			Context.uniform("uTexColor", 0);
 
-			glMatrixMode(GL_PROJECTION);
-			glLoadIdentity();
-			glOrtho(0, 1, 0, 1, -1, 1);
+				glMatrixMode(GL_PROJECTION);
+				glLoadIdentity();
+				glOrtho(0, 1, 0, 1, -1, 1);
 
-			glMatrixMode(GL_MODELVIEW);
-			glLoadIdentity();
+				glMatrixMode(GL_MODELVIEW);
+				glLoadIdentity();
 
-			glDisable(GL_DEPTH_TEST);
+				glDisable(GL_DEPTH_TEST);
 
-			glBegin(GL_QUADS);
-				glTexCoord2i(0, 0);
-				glVertex2i(0, 0);
+				glBegin(GL_QUADS);
+					glTexCoord2i(0, 0);
+					glVertex2i(0, 0);
 
-				glTexCoord2i(1, 0);
-				glVertex2i(1, 0);
+					glTexCoord2i(1, 0);
+					glVertex2i(1, 0);
 
-				glTexCoord2i(1, 1);
-				glVertex2i(1, 1);
+					glTexCoord2i(1, 1);
+					glVertex2i(1, 1);
 			
-				glTexCoord2i(0, 1);
-				glVertex2i(0, 1);
-			glEnd();
+					glTexCoord2i(0, 1);
+					glVertex2i(0, 1);
+				glEnd();
 
-			glEnable(GL_DEPTH_TEST);
-			glDisable(GL_TEXTURE_2D);
+				glEnable(GL_DEPTH_TEST);
+				glDisable(GL_TEXTURE_2D);
 
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
 
-	// Draw blur 2
-	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO_BLUR2]);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	{
-		CShaderContext Context(* BlurH);
+		// Draw blur 2
+		glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO_BLUR2]);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		{
+			CShaderContext Context(* BlurH);
 
-		glEnable(GL_TEXTURE_2D);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO_BLUR1]);
+			glEnable(GL_TEXTURE_2D);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO_BLUR1]);
 
-		glGenerateMipmap(GL_TEXTURE_2D);
+			glGenerateMipmap(GL_TEXTURE_2D);
 
-		Context.uniform("uTexColor", 0);
+			Context.uniform("uTexColor", 0);
 
-			glMatrixMode(GL_PROJECTION);
-			glLoadIdentity();
-			glOrtho(0, 1, 0, 1, -1, 1);
+				glMatrixMode(GL_PROJECTION);
+				glLoadIdentity();
+				glOrtho(0, 1, 0, 1, -1, 1);
 
-			glMatrixMode(GL_MODELVIEW);
-			glLoadIdentity();
+				glMatrixMode(GL_MODELVIEW);
+				glLoadIdentity();
 
-			glDisable(GL_DEPTH_TEST);
+				glDisable(GL_DEPTH_TEST);
 
-			glBegin(GL_QUADS);
-				glTexCoord2i(0, 0);
-				glVertex2i(0, 0);
+				glBegin(GL_QUADS);
+					glTexCoord2i(0, 0);
+					glVertex2i(0, 0);
 
-				glTexCoord2i(1, 0);
-				glVertex2i(1, 0);
+					glTexCoord2i(1, 0);
+					glVertex2i(1, 0);
 
-				glTexCoord2i(1, 1);
-				glVertex2i(1, 1);
+					glTexCoord2i(1, 1);
+					glVertex2i(1, 1);
 			
-				glTexCoord2i(0, 1);
-				glVertex2i(0, 1);
-			glEnd();
+					glTexCoord2i(0, 1);
+					glVertex2i(0, 1);
+				glEnd();
 
-			glEnable(GL_DEPTH_TEST);
-			glDisable(GL_TEXTURE_2D);
+				glEnable(GL_DEPTH_TEST);
+				glDisable(GL_TEXTURE_2D);
 
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, 0);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, 0);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
 	}
 #endif
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 
 	// Draw Texture
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	/*glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO]);
