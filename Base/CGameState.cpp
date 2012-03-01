@@ -546,14 +546,12 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		{
 			CApplication::get().getSceneManager().DoBlur = ! CApplication::get().getSceneManager().DoBlur;
 		}
+		if (Event.Key == ::SDLK_PERIOD)
+		{
+			CApplication::get().getSceneManager().OnlyNormals = ! CApplication::get().getSceneManager().OnlyNormals;
+		}
 	}
-	if (Event.Key == SDLK_PERIOD)
-	{
-		if (Event.Pressed)
-			CApplication::get().getSceneManager().enableDebugData(EDebugData::NormalColors);
-		else
-			CApplication::get().getSceneManager().disableDebugData(EDebugData::NormalColors);
-	}
+
    if(Event.Pressed){
       if(Event.Key == SDLK_w){
          wDown = 1;

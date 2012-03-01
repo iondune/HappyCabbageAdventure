@@ -145,22 +145,25 @@ GLuint rboId[FBO_COUNT];
 CShader * SSAOShader;
 CShader * BlendShader, * BlurV, * BlurH;
 CTexture * White, *Black, *Magenta;
+SPosition2 ScreenSize;
+GLuint randNorm;
 
 #include "CTextureLoader.h"
+#define SSAO_MULT 1
 
 CSceneManager::CSceneManager(SPosition2 const & screenSize)
-	: DoSSAO(false), OnlySSAO(false), DoBloom(false), DoBlur(false)
+	: DoSSAO(false), OnlySSAO(false), DoBloom(false), DoBlur(false), OnlyNormals(false)
 {
     CurrentScene = this;
 
 	bool fboUsed = true;
-	
+	ScreenSize = screenSize;
 
 	// create a texture object
 	for (int i = 0; i < FBO_COUNT; ++ i)
 	{
-		unsigned int  TEXTURE_WIDTH = screenSize.X;
-		unsigned int  TEXTURE_HEIGHT = screenSize.Y;
+		unsigned int  TEXTURE_WIDTH = screenSize.X / (i == EFBO_SSAO_RAW? SSAO_MULT : 1);
+		unsigned int  TEXTURE_HEIGHT = screenSize.Y / (i == EFBO_SSAO_RAW? SSAO_MULT : 1);
 
 		glGenTextures(1, &textureId[i]);
 		glBindTexture(GL_TEXTURE_2D, textureId[i]);
@@ -210,6 +213,8 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 	White = CTextureLoader::loadTexture("White.bmp");
 	Black = CTextureLoader::loadTexture("Black.bmp");
 	Magenta = CTextureLoader::loadTexture("Mag.bmp");
+
+	randNorm = CTextureLoader::loadTexture("randNormals.bmp")->getTextureHandle();
 }
 
 void CSceneManager::addSceneObject(ISceneObject * sceneObject)
@@ -234,26 +239,29 @@ void CSceneManager::drawAll()
     CurrentScene->update();
 
 #ifdef SSAO
-	if (DoSSAO)
+	if (DoSSAO || OnlyNormals)
 	{
 		// Draw normal colors
-		glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO_NORMALS]);
+		glBindFramebuffer(GL_FRAMEBUFFER, fboId[OnlyNormals ? EFBO_SCENE : EFBO_SSAO_NORMALS]);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		enableDebugData(EDebugData::NormalColors);
-		RootObject.draw(CurrentScene);
-		disableDebugData(EDebugData::NormalColors);
+		//enableDebugData(EDebugData::NormalColors);
+		RootObject.drawNormals(CurrentScene);
+		//disableDebugData(EDebugData::NormalColors);
 	}
 #endif
 
 	// Draw regular scene
-	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCENE]);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	if (! OnlyNormals)
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCENE]);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    RootObject.draw(CurrentScene);
+		RootObject.draw(CurrentScene);
+	}
 
 
-
+	// Setup for quad rendering
 	glEnable(GL_TEXTURE_2D);
 
 	glMatrixMode(GL_PROJECTION);
@@ -279,11 +287,13 @@ void CSceneManager::drawAll()
 			glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO_NORMALS]);
 
 			glActiveTexture(GL_TEXTURE1);
-			glBindTexture(GL_TEXTURE_2D, CTextureLoader::loadTexture("randNormals.bmp")->getTextureHandle());
+			glBindTexture(GL_TEXTURE_2D, randNorm);
 			//glGenerateMipmap(GL_TEXTURE_2D);
 
 			Context.uniform("rnm", 1);
 			Context.uniform("normalMap", 0);
+
+			::glViewport(0, 0, ScreenSize.X / SSAO_MULT, ScreenSize.Y / SSAO_MULT);
 
 			glBegin(GL_QUADS);
 				glTexCoord2i(0, 0);
@@ -298,6 +308,8 @@ void CSceneManager::drawAll()
 				glTexCoord2i(0, 1);
 				glVertex2i(0, 1);
 			glEnd();
+
+			::glViewport(0, 0, ScreenSize.X, ScreenSize.Y);
 		}
 
 		if (DoBlur)
