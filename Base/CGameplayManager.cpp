@@ -63,6 +63,10 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
                PlayerHealth++;
                KillItemList.push_back(*it);
             }
+            else if ((*it)->Type == CItem::energy) {
+            	PlayerEnergy++;
+            	KillItemList.push_back(*it);
+            }
             return;
          }
       }

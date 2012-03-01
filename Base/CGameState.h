@@ -31,15 +31,15 @@ class CGameState : public CState<CGameState>
    //Initalizer fxn
    ICamera *Camera;
    float fps, timeTotal;
-   int numFrames, NumTreeTypes, NumFlowerTypes;
-   int lowDef;
+   int numFrames, NumTreeTypes, NumFlowerTypes, lowDef, prevHealth;
    const char * levelName;
-   CGUIImageWidget *Health5, *Health4, *Health3, *Health2, *Health1;
+   CGUIImageWidget *Health5, *Health4, *Health3, *Health2, *Health1, *CabbageFace;
 
    void EngineInit( void );
    void begin();
    void LoadHUD();
-   void oldDisplay(); 
+   void oldDisplay();
+   void UpdateLeaves();
    void loadWorld(std::vector<CPlaceable*> *list);
    //Runs at very start of display
    void OnRenderStart(float const Elapsed);
