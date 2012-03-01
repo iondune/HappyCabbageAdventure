@@ -57,6 +57,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       SRect2 LaserBox;
       int GodMode;
       float GodModeTime;
+      float JustKilled;
       void setGodMode(float time);
       bool const isPlayerAlive() const;
       bool const isWon() const;

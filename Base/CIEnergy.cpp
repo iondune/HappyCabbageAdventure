@@ -49,7 +49,7 @@ void CIEnergy::loadActor() {
 //Updates AI's decision per frame
 void CIEnergy::update(float const TickTime) {
    Time += 140*TickTime;
-   if(Time >= 180.0f)
+   if(Time >= 360.0f)
       Time = 0;
 }
 

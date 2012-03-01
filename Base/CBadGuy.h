@@ -26,6 +26,7 @@ public:
    CGameplayManager* Manager;
    Cabbage::Collider::CActor* Actor;
    CMeshSceneObject* Renderable;
+   int KilledBy;
    //Currently the Shader stuff appears to be acting up.
    CShader* Shader;
 
