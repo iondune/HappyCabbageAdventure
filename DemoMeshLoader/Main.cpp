@@ -55,6 +55,7 @@ public:
 
 	CMeshSceneObject * WingMan;
 	CGUIImageWidget * Image;
+	CGUIFontWidget * Font;
 
     void begin()
     {
@@ -154,7 +155,7 @@ public:
 		GUIEngine.addWidget(Image);
 
 
-		CGUIFontWidget * Font = new CGUIFontWidget("Fonts/DejaVuSansMono.ttf", 36.f);
+		Font = new CGUIFontWidget("Fonts/DejaVuSansMono.ttf", 36.f);
 		Font->setPosition(SVector2(0, 0.25f));
 		Font->setText("Hello, world!");
 		Font->setColor(SColor(1, 1, 1));
@@ -228,6 +229,7 @@ public:
 		WingMan->setTranslation(SVector3(0, 0, 0.25f*sin(0.8f*Timer)));
 		
 		Image->setRotation(Image->getRotation() + 10.f * Elapsed);
+		Font->setRotation(Font->getRotation() + 17.f * Elapsed);
 
         CApplication::get().getSceneManager().drawAll();
 
