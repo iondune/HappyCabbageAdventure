@@ -148,8 +148,11 @@ void CPlayerView::establishCamera(ICamera *Camera, int angle, int shaking) {
       camPos = SVector3(CenterPosition.X + 4, CenterPosition.Y + 4, 1);
    }
    camLook = SVector3(CenterPosition.X, CenterPosition.Y, 0) - camPos;
-   if(shaking) {
+   if(shaking == 1) {
       camPos += shakeFactor;
+   }
+   if(shaking >= 2) {
+      camPos += shakeFactor/3.0f;
    }
 
    Camera->setPosition(camPos);

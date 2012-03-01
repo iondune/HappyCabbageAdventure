@@ -368,7 +368,8 @@ void CGameState::oldDisplay() {
    PlayerView->setMiddle(middleOfPlayer);
    PlayerView->setGround(Engine->getHeightBelow(Player));
 
-   PlayerView->establishCamera(Camera, ANGLE(overView, backwardsView), !!particleLaserFireEngine);
+   PlayerView->establishCamera(Camera, ANGLE(overView, backwardsView), 
+         (!!particleLaserFireEngine ? 1 : 0) + ((GameplayManager->getRecovering() > 0 || GameplayManager->JustKilled) ? 2 : 0));
 
 #ifdef PARTICLE
    if(particleLeafEngine && !particleLeafEngine->dead) {

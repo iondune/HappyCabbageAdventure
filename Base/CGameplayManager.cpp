@@ -13,6 +13,7 @@ CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabb
    gameOver = 0;
    PlayerLives = 3;
    ShootingLaser = 0;
+   JustKilled = 0;
 }
 
 void CGameplayManager::UseAbility(int energyCost) {
@@ -111,6 +112,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
          {
             Mix_PlayChannel(-1, killEnemy, 0);
             KillList.push_back(* it);
+            (* it)->KilledBy = 0;
             //fprintf(stderr, "Enemy detected as dead! %d\n", it->Renderable);
 
             Enemies.erase(it);
@@ -245,6 +247,10 @@ void CGameplayManager::run(float const TickTime)
       PlayerRecovering -= TickTime;
    if (GodModeTime > 0)
       GodModeTime -= TickTime;
+   if (JustKilled > 0)
+      JustKilled -= TickTime;
+   if (JustKilled < 0.f)
+      JustKilled = 0;
 
    EnemyList toKill;
 
@@ -256,6 +262,7 @@ void CGameplayManager::run(float const TickTime)
                Mix_PlayChannel(-1, killEnemy, 0);
                toKill.push_back(* it);
                KillList.push_back(* it);
+               (* it)->KilledBy = 1;
             }
          }
       }
@@ -285,7 +292,8 @@ void CGameplayManager::run(float const TickTime)
       GameEventManager->OnEnemyDeath(Event);
 
       Engine->removeActor((*it)->Actor);
-
+      if((*it)->KilledBy == 0)
+         JustKilled = 0.3f;
    }
 
    KillList.clear();
