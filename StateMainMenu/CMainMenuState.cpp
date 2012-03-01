@@ -25,10 +25,29 @@ void CMainMenuState::setupButtons() {
 	ExitGame = new CGUIImageWidget(WoodTexture, SVector2(.4f, .12f));
 	ExitGame->setPosition(SVector2(ratio/2.f - .2f, .14f));
 
+	StartFont = new CGUIFontWidget("JustAnotherFont.TTF", 32.f);
+	StartFont->setText("Start Game");
+	StartFont->setColor(SColor(1.f, 1.f, 0.f));
+	StartFont->setPosition(SVector2(ratio/2.f - .175f, .5 + .05f));
+
+	EditorFont = new CGUIFontWidget("JustAnotherFont.TTF", 32.f);
+	EditorFont->setText("Level Editor");
+	EditorFont->setColor(SColor(1.f, 1.f, 0.f));
+	EditorFont->setPosition(SVector2(ratio/2.f - .179f, .32 + .05f));
+
+	ExitFont = new CGUIFontWidget("JustAnotherFont.TTF", 32.f);
+	ExitFont->setText("Exit Game");
+	ExitFont->setColor(SColor(1.f, 1.f, 0.f));
+	ExitFont->setPosition(SVector2(ratio/2.f - .162f, .14f + .05f));
+
 	//StartEditor = new CGUIImageWidget(WoodTexture, SVector2(0.65f, .25f));
 	Application.getGUIEngine().addWidget(StartGame);
 	Application.getGUIEngine().addWidget(StartEditor);
 	Application.getGUIEngine().addWidget(ExitGame);
+
+	Application.getGUIEngine().addWidget(StartFont);
+	Application.getGUIEngine().addWidget(EditorFont);
+	Application.getGUIEngine().addWidget(ExitFont);
 }
 
 void CMainMenuState::setupMeshes()
@@ -117,6 +136,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 {
    Application.get().getSceneManager().drawAll();
    Application.getGUIEngine().drawAll();
+
 
    /*
    SDL_GetMouseState(&mouse_x, &mouse_y);
@@ -272,7 +292,7 @@ void CMainMenuState::OnMouseEvent(SMouseEvent const & Event)
 {
 	SPosition2 size = Application.getWindowSize();
 	float maxX = (float) size.X;
-	 float maxY = (float) size.Y;
+	float maxY = (float) size.Y;
 
 	if(Event.Type.Value == SMouseEvent::EType::Click){
 
