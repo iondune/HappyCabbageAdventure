@@ -241,15 +241,28 @@ void CGameState::Initialize() {
 
    //Initialize Font
    our_font.init("WIFFLES_.TTF", 30);
+   SColor FontColor(1.0f, 1.0f, 1.0f);
    GameWinText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
    GameWinText->setText("CONGRATULATIONS! YOU HAVE WON!");
    GameWinText->setVisible(false);
-   GameWinText->setPosition(SVector2(0.5f, 0.6f));
+   GameWinText->setPosition(SVector2(0.3f, 0.75f));
+   GameWinText->setColor(FontColor);
 
    GameOverText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
    GameOverText->setText("GAME OVER! YOU ARE DEAD.");
    GameOverText->setVisible(false);
-   GameOverText->setPosition(SVector2(0.5f, 0.6f));
+   GameOverText->setPosition(SVector2(0.35f, 0.75f));
+   GameOverText->setColor(FontColor);
+
+   RestartGameText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
+   RestartGameText->setText("YOU'VE DIED. PRESS SPACE TO CONTINUE!");
+   RestartGameText->setVisible(false);
+   RestartGameText->setPosition(SVector2(0.25f, 0.75f));
+   RestartGameText->setColor(FontColor);
+
+   Application.getGUIEngine().addWidget(GameWinText);
+   Application.getGUIEngine().addWidget(GameOverText);
+   Application.getGUIEngine().addWidget(RestartGameText);
 
    Camera = new CPerspectiveCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
    Application.getSceneManager().setActiveCamera(Camera);
@@ -298,6 +311,7 @@ void CGameState::Initialize() {
 void CGameState::begin()
 {
    GameplayManager = NULL;
+   numLives = -3;
    Initialize();
    Application.skipElapsedTime();
 }
@@ -379,8 +393,16 @@ void CGameState::oldDisplay() {
             Initialize();
             return;
          }
-         else
-            printf("Game over!\n");
+         else {
+         }
+      }
+      if(!GameplayManager->isPlayerAlive()) {
+         if(GameplayManager->getPlayerLives() <= 0) {
+            GameOverText->setVisible(true);
+         }
+         else {
+            RestartGameText->setVisible(true);
+         }
       }
       Player->setAction(CActor::EActionType::None);
       PlayerView->setState(CPlayerView::State::Standing);
@@ -511,7 +533,7 @@ void CGameState::OnRenderStart(float const Elapsed)
             playVictory = false;
          }
          Engine->removeObject(victoryBlock);
-		 GameWinText->setVisible(true);
+		   GameWinText->setVisible(true);
       }
 
       else {
@@ -523,7 +545,7 @@ void CGameState::OnRenderStart(float const Elapsed)
          }
          Charged = 0;
 
-		 GameOverText->setVisible(true);
+		 //GameOverText->setVisible(true);
       }
    }
 
