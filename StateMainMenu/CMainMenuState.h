@@ -35,6 +35,7 @@ class CMainMenuState : public CState<CMainMenuState>
       CMesh *LogoMesh, *CubeMesh;
       CMeshSceneObject *RenderLogo, *RenderBackground;
       CGUIImageWidget *StartGame, *StartEditor, *ExitGame;
+      CGUIFontWidget *StartFont, *EditorFont, *ExitFont;
 
       CMainMenuState();
       int mouse_x, mouse_y;

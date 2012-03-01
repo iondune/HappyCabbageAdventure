@@ -270,18 +270,9 @@ void CMainMenuState::OnRenderEnd(float const Elapsed)
 
 void CMainMenuState::OnMouseEvent(SMouseEvent const & Event)
 {
-/*	 if(Event.Location.Y >225 && Event.Location.Y < 300)
-	 {
-		 printf("Top button\n");
-	 }
-	 else if(Event.Location.Y >330 && Event.Location.Y < 400)
-	 {
-		printf("Mid button\n");
-	 }
-	 else if(Event.Location.Y >441  && Event.Location.Y < 516)
-	 {
-		 printf("Bottom button\n");
-	 }*/
+	SPosition2 size = Application.getWindowSize();
+	float maxX = (float) size.X;
+	 float maxY = (float) size.Y;
 
 	if(Event.Type.Value == SMouseEvent::EType::Click){
 
@@ -289,19 +280,18 @@ void CMainMenuState::OnMouseEvent(SMouseEvent const & Event)
 
       case SMouseEvent::EButton::Left:
 
-         if(!Event.Pressed && Event.Location.X < 540 && Event.Location.X > 280)
+         if(!Event.Pressed && Event.Location.X < .675f*maxX/*540*/ && Event.Location.X > .35f*maxX/*280*/)
          {
-            if(Event.Location.Y >225 && Event.Location.Y < 300)
+            if(Event.Location.Y >.375f*maxY/*225*/ && Event.Location.Y < .5f*maxY/*300*/)
             {
                CApplication::get().getStateManager().setState(& COverworldState::get());
             } 
-            else if(Event.Location.Y >330 && Event.Location.Y < 400)
+            else if(Event.Location.Y >.55f*maxY/*330*/ && Event.Location.Y < .667f*maxY/*400*/)
             {
                stopSoundtrack();
-               printf("mid button hit (Before)!!\n");
                CApplication::get().getStateManager().setState(& CLWIBState::get());
             } 
-            else if(Event.Location.Y >441  && Event.Location.Y < 516)
+            else if(Event.Location.Y >.735f*maxY/*441*/  && Event.Location.Y < .86f*maxY/*516*/)
             {
                printf("Exiting program.\n");
                exit(1);
