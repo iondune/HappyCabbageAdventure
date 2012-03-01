@@ -6,8 +6,9 @@
 #include "CSceneObject.h"
 #include "CMeshSceneObject.h"
 
-#include "../CabbageCore/SLine3.h"
-#include "../CabbageCore/SColor.h"
+#include <SLine3.h>
+#include <SColor.h>
+#include <SPosition2.h>
 
 
 class CLight
@@ -84,7 +85,7 @@ class CSceneManager : public CScene
 
 public:
 
-    CSceneManager();
+    CSceneManager(SPosition2 const & screenSize);
 
     void addSceneObject(ISceneObject * sceneObject);
     void removeSceneObject(ISceneObject * sceneObject);
