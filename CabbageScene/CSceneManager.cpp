@@ -195,8 +195,10 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 		// check FBO status
 		GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 		if(status != GL_FRAMEBUFFER_COMPLETE)
+		{
 			fboUsed = false;
-
+			std::cerr << "Failed to make FBO!!!!!! -----------------" << std::endl  << std::endl  << std::endl;
+		}
 		// switch back to window-system-provided framebuffer
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
