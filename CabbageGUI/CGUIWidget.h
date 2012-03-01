@@ -13,7 +13,7 @@ protected:
 
 public:
 
-	CGUIWidget::CGUIWidget();
+	CGUIWidget();
 
 	SVector2 const & getPosition() const;
 	void setPosition(SVector2 const & position);
