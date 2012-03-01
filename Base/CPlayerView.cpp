@@ -18,6 +18,8 @@ void CPlayerView::step(float delta) {
    if(time < 0)
       time = 0;
    time+=delta;
+   if(godMode > 0)
+      godMode -= delta;
    //printf("%0f\n", (time - (int)time));
    delta *= 1000.0f;
    if((int)((time - (int)time)*20.0f) % 2 == 0)
@@ -76,7 +78,7 @@ void CPlayerView::draw() {
    }
 
    //Set player's current position
-   if(!(recovering > 0 && (int)(recovering *100) % 2 != 0)) {
+   if(!((recovering > 0 || godMode > 0) && (int)(recovering *100) % 2 != 0)) {
       SVector3 rot = PlayerRenderable->getRotation();
 
       if(!(Velocity.Y > 0.01f || Velocity.Y < -0.01f)) {

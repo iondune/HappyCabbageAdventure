@@ -62,6 +62,8 @@ class CPlayerView {
          PlayerRenderable = render;
          renderShadow = shadowRender;
       }
+      float godMode;
+      void setGodMode(float i) {godMode = i;}
       void removeFromScene();
       void addToScene();
       void setRecovering(float recovVal) {
