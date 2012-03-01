@@ -268,6 +268,7 @@ void CGameState::begin()
    Charged = 0; aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0; lDown = 0;
    backwardsView = 0; overView = 0;
    GameEventReceiver = CGameEventReceiver();
+   oldFern = false;
 
    CApplication::get().getSceneManager().setCullingEnabled(true);
 #ifdef PARTICLE
@@ -875,38 +876,48 @@ void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
 
    //Draw flower-type plants in background
    for (int n = 0; n < w; n++) {
-      random = rand()%3;
+      random = rand()%5;
       randScale = (float) (rand()%20);
       randScale = randScale * .025f;
       randDepth = (float) (rand()%2);
       randDepth = (float) randDepth*.25f;
 
-      if (random == 0)
+      if (random == 0 || random == 1)
          drawWhiteFlwr(x + n + .5f, -1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
-      else if (random == 1)
+      else if (random == 2 || random == 3)
          drawBlueFlwr(x + n + .5f, -1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
-      else if (random == 2)
-         drawPoin(x + n + .5f, .2f, -d/2.0f + 1.5f + randDepth, 1.f + randScale, Application);
+      else if (random == 4 && !oldFern) {
+         drawFern(x + n + .5f, .2f, -d/2.0f + 1.5f + randDepth, 1.f + randScale, Application);
+         oldFern = true;
+      }
+
+      if (random != 4)
+    	  oldFern = false;
    }
 
 
    //Draw flower-type plants in foreground
       for (int n = 0; n < w; n++) {
-         random = rand()%3;
-         randScale = (float) (rand()%20);
+         random = rand()%5;
+         randScale = (float) (rand()%10);
          randScale = randScale * 0.025f;
          randDepth = (float) (rand()%2);
          randDepth = randDepth*0.25f;
 
-         if (random == 0)
-            drawWhiteFlwr(x + n + 0.5f, -1.0f, d/2.0f - 0.4f - randDepth, 0.4f + randScale, Application);
-         else if (random == 1)
-            drawBlueFlwr(x + n + 0.5f, -1.0f, d/2.0f - 0.4f - randDepth, 0.4f + randScale, Application);
-         else if (random == 2)
-            drawPoin(x + n + 0.5f, 0.2f, d/2.0f - 0.4f - randDepth, 0.7f + randScale, Application);
+         if (random == 0 || random == 1)
+            drawWhiteFlwr(x + n + 0.5f, -1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application);
+         else if (random == 2 || random == 3)
+            drawBlueFlwr(x + n + 0.5f, -1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application);
+         else if (random == 4 && !oldFern) {
+            drawFern(x + n + 0.5f, 0.2f, d/2.0f - 0.6f, 0.7f, Application);
+            oldFern = true;
+         }
+         else if (random == 4 && oldFern)
+        	 n--;
+
+         if (random != 4)
+       	  oldFern = false;
       }
-
-
 }
 
 
@@ -1012,13 +1023,14 @@ void Load3DS()
       fprintf(stderr, "Failed to load ficus mesh.\n");
    }
 
-   poinMesh = CMeshLoader::load3dsMesh("Models/poin.3ds");
-   if (poinMesh) {
-      poinMesh->centerMeshByExtents(SVector3(0));
-      poinMesh->calculateNormalsPerFace();
+   fernMesh = CMeshLoader::load3dsMesh("Models/fern.3ds");
+   if (fernMesh) {
+      fernMesh->centerMeshByExtents(SVector3(0));
+      fernMesh->resizeMesh(SVector3(2.f));
+      fernMesh->calculateNormalsPerFace();
    }
    else {
-      fprintf(stderr, "Failed to load poinsetta mesh.\n");
+      fprintf(stderr, "Failed to load fern mesh.\n");
    }
 
    flagMesh = CMeshLoader::load3dsMesh("Models/flag2.3ds");
@@ -1041,7 +1053,6 @@ void LoadTextures()
    dirtImg = CImageLoader::loadImage("Textures/dirt.bmp");
    blueFlwrImg = CImageLoader::loadImage("Textures/blueFlower.bmp");
    whiteFlwrImg = CImageLoader::loadImage("Textures/pinkFlower.bmp");
-   poinImg = CImageLoader::loadImage("Textures/poin.bmp");
    flagImg = CImageLoader::loadImage("Textures/white.bmp");
 
    grassTxt = new CTexture(grassImg);
@@ -1049,7 +1060,6 @@ void LoadTextures()
    dirtTxt = new CTexture(dirtImg);
    blueFlwrTxt = new CTexture(blueFlwrImg);
    whiteFlwrTxt = new CTexture(whiteFlwrImg);
-   poinTxt = new CTexture(poinImg);
    flagTxt = new CTexture(flagImg);
 }
 
@@ -1095,13 +1105,12 @@ void PrepMeshes()
    renderFicus->setTexture(blueFlwrTxt);
    renderFicus->setShader(ToonTexture);
 
-   renderPoin = new CMeshSceneObject();
-   renderPoin->setMesh(poinMesh);
-   renderPoin->setTranslation(SVector3(-19, .5f, 2));
-   renderPoin->setScale(SVector3(.75));
-   renderPoin->setRotation(SVector3(-90, 0, 0));
-   renderPoin->setTexture(poinTxt);
-   renderPoin->setShader(ToonTexture);
+   renderFern = new CMeshSceneObject();
+   renderFern->setMesh(fernMesh);
+   renderFern->setTranslation(SVector3(-19, .5f, 2));
+   renderFern->setScale(SVector3(.75));
+   renderFern->setRotation(SVector3(-90, 0, 0));
+   renderFern->setShader(Toon);
 
    renderFlag = new CMeshSceneObject();
    renderFlag->setMesh(flagMesh);

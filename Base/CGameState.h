@@ -33,6 +33,7 @@ class CGameState : public CState<CGameState>
    float fps, timeTotal;
    int numFrames, NumTreeTypes, NumFlowerTypes, lowDef, prevHealth;
    const char * levelName;
+   bool oldFern;
    CGUIImageWidget *Health5, *Health4, *Health3, *Health2, *Health1, *CabbageFace;
 
    void EngineInit( void );
