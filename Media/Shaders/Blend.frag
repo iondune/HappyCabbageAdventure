@@ -7,7 +7,7 @@ varying vec2 uv;
 void main()
 {
    vec4 color = texture2D(bloom, uv);
-   vec4 color2 = texture2D(scene, uv)*texture2D(ssao, uv).r;
+    vec4 color2 = texture2D(scene, uv)*pow(texture2D(ssao, uv).r, 2.0);
 //Don't do bloom
    if(color.r == 1.0 && color.g == 0.0 && color.b == 1.0) {
       gl_FragColor = color2;

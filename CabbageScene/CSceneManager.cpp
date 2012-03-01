@@ -132,7 +132,9 @@ enum EFBOID
 	EFBO_SCENE,
 	EFBO_SCRATCH1,
 	EFBO_SCRATCH2,
-	EFBO_SSAO,
+	EFBO_SSAO_RAW,
+	EFBO_SSAO_BLUR1,
+	EFBO_SSAO_BLUR2,
 	FBO_COUNT 
 };
 
@@ -252,7 +254,7 @@ void CSceneManager::drawAll()
 	if (DoSSAO)
 	{
 	// Draw SSAO effect
-	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO]);
+	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO_RAW]);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
@@ -304,14 +306,14 @@ void CSceneManager::drawAll()
 	}
 
 	// Draw blur 1
-	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCRATCH1]);
+	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO_BLUR1]);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	{
 		CShaderContext Context(* BlurV);
 
 		glEnable(GL_TEXTURE_2D);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO]);
+		glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO_RAW]);
 
 		//glGenerateMipmap(GL_TEXTURE_2D);
 
@@ -348,14 +350,14 @@ void CSceneManager::drawAll()
 	}
 
 	// Draw blur 2
-	/*glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO]);
+	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO_BLUR2]);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	{
 		CShaderContext Context(* BlurH);
 
 		glEnable(GL_TEXTURE_2D);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SCRATCH1]);
+		glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO_BLUR1]);
 
 		glGenerateMipmap(GL_TEXTURE_2D);
 
@@ -391,7 +393,7 @@ void CSceneManager::drawAll()
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, 0);
-	}*/
+	}
 	}
 #endif
 
@@ -539,7 +541,7 @@ void CSceneManager::drawAll()
 		glBindTexture(GL_TEXTURE_2D, OnlySSAO ? White->getTextureHandle() : textureId[EFBO_SCENE]);
 
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, DoSSAO ? textureId[EFBO_SCRATCH1] : White->getTextureHandle());
+		glBindTexture(GL_TEXTURE_2D, DoSSAO ? textureId[EFBO_SSAO_BLUR2] : White->getTextureHandle());
 		glGenerateMipmap(GL_TEXTURE_2D);
 
 		glActiveTexture(GL_TEXTURE2);
