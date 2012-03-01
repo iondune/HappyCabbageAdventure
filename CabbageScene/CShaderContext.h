@@ -52,7 +52,7 @@ public:
     void uniform(GLuint const uniformHandle, SColor const & uniform);
 
 	template <typename T>
-    void uniform(std::string const & label, T const & uniform)
+    void uniform(std::string const & label, T const & uniformVar)
 	{
 		std::map<std::string, SShaderVariable>::const_iterator it = Shader.UniformHandles.find(label);
 
@@ -63,7 +63,7 @@ public:
 			return;
 		}
 
-		uniform(it->second.Handle, uniform);
+		uniform(it->second.Handle, uniformVar);
 	}
 
 

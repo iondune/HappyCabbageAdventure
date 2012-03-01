@@ -71,10 +71,12 @@ public:
 
     std::vector<CLight *> Lights;
     bool SceneChanged;
-
 	
 	bool const isCullingEnabled() const;
 	void setCullingEnabled(bool const culling);
+	
+    void enableDebugData(EDebugData::Domain const type);
+    void disableDebugData(EDebugData::Domain const type);
 
 };
 
@@ -99,6 +101,7 @@ public:
 
     void drawAll();
 
+	bool DoSSAO, OnlySSAO;
 };
 
 #endif
