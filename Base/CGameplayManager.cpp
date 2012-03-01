@@ -103,6 +103,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
       //Remove projectile from scene
       if (Projectile == (*it)->Actor) {
          KillList.push_back(*it);
+         (*it)->KilledBy = 2;
       }
 
       if (Other == (*it)->Actor)
