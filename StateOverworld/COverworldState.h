@@ -81,7 +81,7 @@ class COverworldState : public CState<COverworldState>
    void stepCamera(float delta);
    void OnMouseEvent(SMouseEvent const & Event);
    */
-   void superInterpolator(SVector3 & curr, SVector3 & change, float delta);
+   void superInterpolator(SVector3 & curr, SVector3 & change, float delta, float transLength);
    void shiftSetter(SVector3 & curr, SVector3 & change, SVector3 & target);
    float angleMaker(SVector3 start, SVector3 toPoint);
    

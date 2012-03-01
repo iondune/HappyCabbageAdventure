@@ -79,9 +79,9 @@ void COverworldState::begin()
 void COverworldState::step(float delta) {
    //rot.X += 10*delta;
 
-  superInterpolator(playerVector, playerVecShift, delta);
-   superInterpolator(look, lookShift, delta);
-   superInterpolator(eye, eyeShift, delta);
+  superInterpolator(playerVector, playerVecShift, delta, TRANSITION_PERIOD);
+   superInterpolator(look, lookShift, delta, TRANSITION_PERIOD);
+   superInterpolator(eye, eyeShift, delta, TRANSITION_PERIOD);
 
    if(transitionTimer == 0.0f)
    {
@@ -436,7 +436,8 @@ void COverworldState::movePlayer() {
   }
 }
 
-void COverworldState::superInterpolator(SVector3 & curr, SVector3 & change, float delta)
+void COverworldState::superInterpolator(SVector3 & curr, SVector3 & change,
+    float delta, float transLength)
 {
   SVector3 zeroV = SVector3(0.0f, 0.0f, 0.0f);
 
@@ -451,7 +452,7 @@ void COverworldState::superInterpolator(SVector3 & curr, SVector3 & change, floa
   }
   else
   {
-    curr = curr + (change * delta/TRANSITION_PERIOD);
+    curr = curr + (change * delta/transLength);
   }
 }
 
@@ -489,63 +490,3 @@ void COverworldState::testFun()
   printf("TEST %f\n", (atan2(temp.X,temp.Z) * RAD_TO_DEG));
 
 }
-/*
-void COverworldState::OnMouseEvent(SMouseEvent const & Event) {
-   if(Event.Button.Value == SMouseEvent::EButton::Left) {
-      if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
-         mouseDown = 1;
-      }
-      else if(!Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
-         mouseDown = 0;
-      }
-      if(mouseDown && Event.Type.Value == SMouseEvent::EType::Move) {
-         int x = Event.Location.X;
-         int y = Event.Location.Y;
-         startx = Event.Location.X - Event.Movement.X;
-         starty = WindowHeight - (Event.Location.Y - Event.Movement.Y) - 1;
-         if(x <= WindowWidth && x >= 0 && y >= 0 && y <= WindowHeight) {
-            int newy = WindowHeight-y-1;
-
-            if((pitchphi < 50*M_PI/180 || (float)(newy-starty)<0) && 
-                  (pitchphi > -50*M_PI/180 || (float)(newy-starty)>0)) {
-               yawtheta += (float)(x-startx)/WindowWidth*M_PI;
-               pitchphi += (float)(newy-starty)/WindowHeight*M_PI;
-
-               look = SVector3(cos(pitchphi)*cos(yawtheta) + eye.X,
-                     sin(pitchphi) + eye.Y,
-                     cos(pitchphi)*cos(M_PI/2 - yawtheta) + eye.Z);
-            }
-            startx = x;
-            starty = newy;
-         }
-      }
-   }
-}
-
-void COverworldState::stepCamera(float delta) {
-   SVector3 zoom = look - eye;
-   zoom *= (1*delta);
-   SVector3 strafe = SVector3(0,1,0).crossProduct(zoom);
-
-   //D
-   if(dDown) {
-      look -= strafe;
-      eye -= strafe;
-   }
-   //A
-   if(aDown) {
-      look += strafe;
-      eye += strafe;
-   }
-   //W
-   if(wDown) {
-      look += zoom;
-      eye += zoom;
-   }
-   //S
-   if(sDown) {
-      look -= zoom;
-      eye -= zoom;
-   }
-}
-*/
