@@ -130,7 +130,8 @@ void CScene::update()
 enum EFBOID
 {
 	EFBO_SCENE,
-	EFBO_NORMALS,
+	EFBO_SCRATCH1,
+	EFBO_SCRATCH2,
 	EFBO_SSAO,
 	FBO_COUNT 
 };
@@ -158,11 +159,6 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 		unsigned int  TEXTURE_WIDTH = screenSize.X;
 		unsigned int  TEXTURE_HEIGHT = screenSize.Y;
 
-		if (i == EFBO_SSAO || i == EFBO_NORMALS)
-		{
-			//TEXTURE_WIDTH /= 4;
-			//TEXTURE_HEIGHT /= 4;
-		}
 		glGenTextures(1, &textureId[i]);
 		glBindTexture(GL_TEXTURE_2D, textureId[i]);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -232,7 +228,7 @@ void CSceneManager::drawAll()
 	if (DoSSAO)
 	{
 	// Draw normal colors
-	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_NORMALS]);
+	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCRATCH1]);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	enableDebugData(EDebugData::NormalColors);
@@ -262,17 +258,11 @@ void CSceneManager::drawAll()
 
 		glEnable(GL_TEXTURE_2D);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, textureId[EFBO_NORMALS]);
+		glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SCRATCH1]);
 
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, CTextureLoader::loadTexture("randNormals.bmp")->getTextureHandle());
 		glGenerateMipmap(GL_TEXTURE_2D);
-
-		/*Context.uniform("totStrength", 1.38f);
-		Context.uniform("strength", 0.14f);
-		Context.uniform("offset", 18.0f);
-		Context.uniform("falloff", 0.0002f);
-		Context.uniform("rad", 0.00006f);*/
 
 		Context.uniform("rnm", 1);
 		Context.uniform("normalMap", 0);
