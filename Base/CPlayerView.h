@@ -16,7 +16,7 @@
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
 
-#define CAM_TIMER 0.5f
+#define CAM_TIMER 0.2f
 
 class CPlayerView {
    SVector2 CenterPosition;
