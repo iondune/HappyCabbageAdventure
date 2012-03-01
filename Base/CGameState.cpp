@@ -782,8 +782,9 @@ void CGameState::UpdateLeaves() {
 	else if (curHealth == 4) {
 		if (prevHealth == 5)
 			Health5->setVisible(false);
-		else if (prevHealth == 3)
+		else if (prevHealth == 3) {
 			Health4->setVisible(true);
+		}
 	}
 
 	else if (curHealth == 3) {

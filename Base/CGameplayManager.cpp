@@ -66,14 +66,18 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
       for(ItemList::iterator it = Items.begin(); it != Items.end(); ++ it) {
          if (Other == (*it)->Actor) {
             if((*it)->Type == CItem::health) {
-            	if (getPlayerHealth() < 5)
+            	if (getPlayerHealth() < 5) {
             		PlayerHealth++;
+					printf("health is %d\n", PlayerHealth);
+				}
+				Items.erase(it);
                KillItemList.push_back(*it);
             }
             else if ((*it)->Type == CItem::energy) {
             	if (getPlayerEnergy() < 3)
             		PlayerEnergy++;
             	KillItemList.push_back(*it);
+				Items.erase(it);
             }
             return;
          }
