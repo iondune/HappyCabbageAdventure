@@ -140,7 +140,7 @@ GLuint textureId[FBO_COUNT];
 GLuint fboId[FBO_COUNT];
 GLuint rboId[FBO_COUNT];
 CShader * SSAOShader;
-CShader * BlendShader;
+CShader * BlendShader, * BlurV, * BlurH;
 CTexture * White;
 
 #include "CTextureLoader.h"
@@ -200,6 +200,8 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 
 	SSAOShader = CShaderLoader::loadShader("SSAO");
 	BlendShader = CShaderLoader::loadShader("Blend");
+	BlurV = CShaderLoader::loadShader("BlurV");
+	BlurH = CShaderLoader::loadShader("BlurH");
 	White = CTextureLoader::loadTexture("White.bmp");
 }
 
@@ -298,6 +300,96 @@ void CSceneManager::drawAll()
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
+
+	// Draw blur 1
+	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCRATCH1]);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	{
+		CShaderContext Context(* BlurV);
+
+		glEnable(GL_TEXTURE_2D);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO]);
+
+		//glGenerateMipmap(GL_TEXTURE_2D);
+
+		Context.uniform("uTexColor", 0);
+
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			glOrtho(0, 1, 0, 1, -1, 1);
+
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+
+			glDisable(GL_DEPTH_TEST);
+
+			glBegin(GL_QUADS);
+				glTexCoord2i(0, 0);
+				glVertex2i(0, 0);
+
+				glTexCoord2i(1, 0);
+				glVertex2i(1, 0);
+
+				glTexCoord2i(1, 1);
+				glVertex2i(1, 1);
+			
+				glTexCoord2i(0, 1);
+				glVertex2i(0, 1);
+			glEnd();
+
+			glEnable(GL_DEPTH_TEST);
+			glDisable(GL_TEXTURE_2D);
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
+	// Draw blur 2
+	/*glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO]);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	{
+		CShaderContext Context(* BlurH);
+
+		glEnable(GL_TEXTURE_2D);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SCRATCH1]);
+
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		Context.uniform("uTexColor", 0);
+
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			glOrtho(0, 1, 0, 1, -1, 1);
+
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+
+			glDisable(GL_DEPTH_TEST);
+
+			glBegin(GL_QUADS);
+				glTexCoord2i(0, 0);
+				glVertex2i(0, 0);
+
+				glTexCoord2i(1, 0);
+				glVertex2i(1, 0);
+
+				glTexCoord2i(1, 1);
+				glVertex2i(1, 1);
+			
+				glTexCoord2i(0, 1);
+				glVertex2i(0, 1);
+			glEnd();
+
+			glEnable(GL_DEPTH_TEST);
+			glDisable(GL_TEXTURE_2D);
+
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}*/
 	}
 #endif
 
@@ -347,7 +439,7 @@ void CSceneManager::drawAll()
 		glBindTexture(GL_TEXTURE_2D, OnlySSAO ? White->getTextureHandle() : textureId[EFBO_SCENE]);
 
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, DoSSAO ? textureId[EFBO_SSAO] : White->getTextureHandle());
+		glBindTexture(GL_TEXTURE_2D, DoSSAO ? textureId[EFBO_SCRATCH1] : White->getTextureHandle());
 		glGenerateMipmap(GL_TEXTURE_2D);
 		
 		Context.uniform("scene", 0);
