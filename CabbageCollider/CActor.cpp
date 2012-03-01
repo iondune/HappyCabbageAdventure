@@ -18,7 +18,6 @@ namespace Cabbage
 namespace Collider
 {
 
-	static float const Gravity = 100.f;
 
 	CActor::SAttributes::SAttributes()
 		: MaxWalk(4.5f), WalkAccel(60.f), JumpAccel(6.4f), JumpLength(0.6f), AirControl(0.75f), AirSpeedFactor(0.7f)
@@ -43,6 +42,8 @@ namespace Collider
 		: Standing(0), JumpTimer(0.f), FallAcceleration(0), Impulse(false), ControlFall(true) 
    {
       CollideableType = COLLIDEABLE_TYPE_ACTOR;
+      CollideableLevel = INTERACTOR_BLOCKS | INTERACTOR_ACTORS;
+      Gravity = 100.0f;
    }
 
 	CActor::~CActor()

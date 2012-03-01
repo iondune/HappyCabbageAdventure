@@ -19,12 +19,24 @@ void CSceneObject::removeSceneObject(CRenderable * Renderable)
 
 void CSceneObject::draw(CScene const * const scene)
 {
-   if(!Visible)
-      return;
+	if (! Visible)
+		return;
+
 	ISceneObject::draw(scene);
 
 	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
 		(* it)->draw(scene);
+}
+
+void CSceneObject::drawNormals(CScene const * const scene)
+{
+	if (! Visible)
+		return;
+
+	ISceneObject::drawNormals(scene);
+
+	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
+		(* it)->drawNormals(scene);
 }
 
 void CSceneObject::setShader(CShader * shader)

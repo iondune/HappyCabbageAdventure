@@ -370,7 +370,7 @@ void COverworldState::levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor)
    switch(iconColor)
    {
      case 1:
-       mat.Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
+       mat.Texture = CImageLoader::loadTexture("Textures/GrassyGrass.bmp");
        break;
 
      case 2:

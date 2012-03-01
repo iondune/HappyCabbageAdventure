@@ -8,7 +8,7 @@ namespace Cabbage
       CObject::CObject()
       {
          CollideableType = COLLIDEABLE_TYPE_BLOCK;
-         CollideableLevel = 2;
+         CollideableLevel = INTERACTOR_ALL;
       }
 
       CObject::~CObject()
@@ -22,7 +22,7 @@ namespace Cabbage
       CElevator::CElevator()
       {
          CollideableType = COLLIDEABLE_TYPE_ELEVATOR;
-         CollideableLevel = 2;
+         CollideableLevel = INTERACTOR_ALL;
          Timer = 0.f;
          Speed = 0.5f;
          Range = 0.5f;

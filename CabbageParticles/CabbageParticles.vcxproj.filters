@@ -45,6 +45,9 @@
     <ClCompile Include="CPHurt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CPBurst.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CParticle.h">
@@ -72,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CPHurt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CPBurst.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

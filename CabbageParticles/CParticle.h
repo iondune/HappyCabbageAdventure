@@ -17,6 +17,7 @@ class CParticle {
       //SVector3 RotationSpeed;
       SVector3 translate;
 
+      int useCenterPos;
       void setLookRight(int*);
       virtual void setCenterPos(SVector3*);
       void setAppearRate(float r);

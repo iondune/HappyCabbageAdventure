@@ -252,7 +252,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
     }
     if (tDown && !showHelp )
         freetype::print(our_font, 20, WindowHeight - 100.f, "Remove mode\n\n");
-    drawSubWindow();
+    //drawSubWindow();
    Application.getSceneManager().drawAll();
 
    SDL_GL_SwapBuffers();

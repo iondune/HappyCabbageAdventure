@@ -45,6 +45,7 @@
         ;$(SolutionDir)\CabbageScene;
         ;$(SolutionDir)\CabbageFramework;
         ;$(SolutionDir)\CabbageGUI;
+        ;$(SolutionDir)\CabbageCollider;
         ;$(IncludePath);
     </IncludePath>
     <LibraryPath>
@@ -81,6 +82,7 @@
     <ClCompile Include="CParticle.cpp" />
     <ClCompile Include="CParticleEngine.cpp" />
     <ClCompile Include="CParticleObject.cpp" />
+    <ClCompile Include="CPBurst.cpp" />
     <ClCompile Include="CPCube.cpp" />
     <ClCompile Include="CPDeath.cpp" />
     <ClCompile Include="CPFlame.cpp" />
@@ -93,6 +95,7 @@
     <ClInclude Include="CParticle.h" />
     <ClInclude Include="CParticleEngine.h" />
     <ClInclude Include="CParticleObject.h" />
+    <ClInclude Include="CPBurst.h" />
     <ClInclude Include="CPCube.h" />
     <ClInclude Include="CPDeath.h" />
     <ClInclude Include="CPFlame.h" />

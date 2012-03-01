@@ -131,7 +131,7 @@ void CGameState::EngineInit( void ) {
    Player = Engine->addActor();
    Player->setArea(SRect2(-24.5f, 3, 1, 1));
    Player->CollideableType = COLLIDEABLE_TYPE_PLAYER;
-   Player->CollideableLevel = 2;
+   Player->CollideableLevel |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
 
    Derp = Engine->addActor();
    Derp->setArea(SRect2(-17, 0, 1, 1));
@@ -143,7 +143,11 @@ void CGameState::EngineInit( void ) {
 
    SRect2 area;
 
-   GameplayManager = new CGameplayManager(Player, Engine);
+   if(!GameplayManager)
+      GameplayManager = new CGameplayManager(Player, Engine);
+   else {
+      GameplayManager->Clear(Player, Engine);
+   }
 
    GameEventManager = & GameplayManager->getGameEventManager();
    GameEventManager->OnEnemyDeath.connect(& GameEventReceiver, &CGameEventReceiver::OnEnemyDeath);
@@ -214,9 +218,7 @@ void CGameState::LoadHUD() {
 
 }
 
-//Initalizer fxn
-void CGameState::begin()
-{
+void CGameState::Initialize() {
    Charged = 0; aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0; lDown = 0;
    backwardsView = 0; overView = 0; energyStatus = 3.f; prevEnergy = 3.f;
    GameEventReceiver = CGameEventReceiver();
@@ -282,8 +284,13 @@ void CGameState::begin()
    numFrames = 0;
 
    printf("CGameState:  Begin Function Complete\n");
+}
 
-
+//Initalizer fxn
+void CGameState::begin()
+{
+   GameplayManager = NULL;
+   Initialize();
    Application.skipElapsedTime();
 }
 
@@ -357,8 +364,16 @@ void CGameState::oldDisplay() {
    }
    else
    {
-      if(spaceDown) {
-         //printf("Revive player like so\n");
+      if(!GameplayManager->isPlayerAlive() && spaceDown) {
+         if(GameplayManager->getPlayerLives() > 0) {
+            GameplayManager->subPlayerLife();
+            end();
+            Initialize();
+            printf("Lives: %d\n", GameplayManager->getPlayerLives());
+            return;
+         }
+         else
+            printf("Game over!\n");
       }
       Player->setAction(CActor::EActionType::None);
       PlayerView->setState(CPlayerView::State::Standing);
@@ -530,25 +545,31 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
 	if (Event.Key == SDLK_c)
 		CApplication::get().getSceneManager().setCullingEnabled(! Event.Pressed);
-	if (Event.Key == SDLK_n)
+
+	if (! Event.Pressed)
 	{
-		CApplication::get().getSceneManager().DoSSAO = Event.Pressed;
+		if (Event.Key == SDLK_n)
+		{
+			CApplication::get().getSceneManager().DoSSAO = ! CApplication::get().getSceneManager().DoSSAO;
+		}
+		if (Event.Key == SDLK_b)
+		{
+			CApplication::get().getSceneManager().DoBloom = ! CApplication::get().getSceneManager().DoBloom;
+		}
+		if (Event.Key == ::SDLK_COMMA)
+		{
+			CApplication::get().getSceneManager().OnlySSAO = ! CApplication::get().getSceneManager().OnlySSAO;
+		}
+		if (Event.Key == ::SDLK_SLASH)
+		{
+			CApplication::get().getSceneManager().DoBlur = ! CApplication::get().getSceneManager().DoBlur;
+		}
+		if (Event.Key == ::SDLK_PERIOD)
+		{
+			CApplication::get().getSceneManager().OnlyNormals = ! CApplication::get().getSceneManager().OnlyNormals;
+		}
 	}
-	if (Event.Key == SDLK_b)
-	{
-		CApplication::get().getSceneManager().DoBloom = Event.Pressed;
-	}
-	if (Event.Key == ::SDLK_COMMA)
-	{
-		CApplication::get().getSceneManager().OnlySSAO = Event.Pressed;
-	}
-	if (Event.Key == SDLK_PERIOD)
-	{
-		if (Event.Pressed)
-			CApplication::get().getSceneManager().enableDebugData(EDebugData::NormalColors);
-		else
-			CApplication::get().getSceneManager().disableDebugData(EDebugData::NormalColors);
-	}
+
    if(Event.Pressed){
       if(Event.Key == SDLK_w){
          wDown = 1;
@@ -766,7 +787,7 @@ void CGameState::UpdateLeaves() {
 void CGameState::UpdateEnergy(float const Elapsed) {
 	float curEnergy = (float)GameplayManager->getPlayerEnergy();
 
-	printf("curEnergy is %f, energyStatus is %f\n", curEnergy, energyStatus);
+	//printf("curEnergy is %f, energyStatus is %f\n", curEnergy, energyStatus);
 	if (energyStatus < 0.17f) {
 		CabbageMeter->setSize(SVector2(0.f, .1f));
 		energyStatus = 0.f;
@@ -777,7 +798,7 @@ void CGameState::UpdateEnergy(float const Elapsed) {
 	}
 
 	if (energyStatus > curEnergy) {
-		printf("Enter\n");
+		//printf("Enter\n");
 		energyStatus -= .7f*Elapsed;
 		CabbageMeter->setSize(SVector2(.3f*energyStatus/3.f, .1f));
 

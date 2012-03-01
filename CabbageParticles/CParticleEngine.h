@@ -10,9 +10,11 @@
 #include "CPLaser.h"
 #include "CPLaser2.h"
 #include "CPHurt.h"
+#include "CPBurst.h"
 #include "CParticleObject.h"
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
+#include "../CabbageCollider/CEngine.h"
 
 
 #define LEAF_PARTICLE 0
@@ -22,6 +24,7 @@
 #define LASER_CHARGING_PARTICLE 4
 #define LASER_FIRING_PARTICLE 5
 #define HURT_PARTICLE 6
+#define BURST_PARTICLE 7
 
 class CParticleEngine {
    std::vector<CParticle*> particles;
@@ -41,6 +44,7 @@ class CParticleEngine {
       //Duration in milliseconds
       CParticleEngine(SVector3 pos, int maxParticles, float duration, int);
       void setCenterPos(SVector3 cP);
+      void UsePhysics(Cabbage::Collider::CEngine *engine);
       void setLookRight(int pf);
       void step(float const elapsedTime);
       void deconstruct();

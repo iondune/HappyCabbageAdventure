@@ -45,6 +45,7 @@
         ;$(SolutionDir)\CabbageFramework;
         ;$(SolutionDir)\CabbageScene;
         ;$(SolutionDir)\CabbageGUI;
+        ;$(SolutionDir)\CabbageCollider;
         ;$(IncludePath);
     </IncludePath>
     <LibraryPath>

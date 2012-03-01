@@ -8,7 +8,7 @@ void main()
 {
    vec4 color = texture2D(bloom, uv);
     vec4 color2 = texture2D(scene, uv);
-    float SSAOconst = pow(texture2D(ssao, uv).r, 2.0);
+    float SSAOconst = pow(texture2D(ssao, uv).r, 1.5);
 //Don't do bloom
    if(color.r == 1.0 && color.g == 0.0 && color.b == 1.0) {
       gl_FragColor = color2*SSAOconst;

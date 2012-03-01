@@ -13,11 +13,30 @@
 #define PI 3.1415
 void CPlayerView::setState(CPlayerView::State const value) {
    curState = value;
+
+
+//printf("vel %f, center %f, timer %f\n", Velocity.Y, CenterPosition.Y, zCamTimer);
+   if(Velocity.Y == 0.00f  && zCamTimer <= 0.0f)
+   {
+     if(CenterPosition.Y > 3.0f)
+     {
+       float zfactor = (CenterPosition.Y - 3.0f) * 1.5f;
+       zCamShift = (zfactor > 8.0f ? 8.0f :  zfactor) - zCam;
+     }
+     else
+     {
+       zCamShift = -zCam;
+     }
+
+     zCamTimer = CAM_TIMER;
+
+   }
 }
 void CPlayerView::step(float delta) {
    if(time < 0)
       time = 0;
    time+=delta;
+   timeChange = delta;
    if(godMode > 0)
       godMode -= delta;
    //printf("%0f\n", (time - (int)time));
@@ -124,24 +143,19 @@ void CPlayerView::draw() {
 void CPlayerView::establishCamera(ICamera *Camera, int angle, int shaking) {
    SVector3 camPos, camLook;
    float zfactor, yfactor;
-   yfactor = (CenterPosition.Y - 4.6f) * 0.7f;
-   zfactor = (CenterPosition.Y - 4.6f) * 1.5f;
+   //yfactor = (CenterPosition.Y - 4.6f) * 0.7f;
 
 
    if(angle == 0) {
-     if(CenterPosition.Y > 4.6f)
+     if(zCamTimer > 0.0f &&  Velocity.Y == 0.00)
      {
-       camPos = SVector3(CenterPosition.X, 
-           CenterPosition.Y + 1.3f /* + (yfactor > 3.0f ? 3.0f : yfactor)*/ , 
-           6.0f + (zfactor > 10.0f ? 10.0f :  zfactor ));
+       zCam += zCamShift * timeChange / CAM_TIMER;
+       zCamTimer -= timeChange;
      }
-     else
-     {
-       camPos = SVector3(CenterPosition.X, CenterPosition.Y + 1.3f, 6);
-     }
+     camPos = SVector3(CenterPosition.X, CenterPosition.Y + 1.3f, 8 + zCam);
    }
    else if(angle == 1) {
-      camPos = SVector3(CenterPosition.X, CenterPosition.Y + 1.3f, 10);
+      camPos = SVector3(CenterPosition.X, CenterPosition.Y + 1.3f, 14 + zCam);
    }
    else if(angle == 2) {
       camPos = SVector3(CenterPosition.X - 4, CenterPosition.Y + 4, 1);
