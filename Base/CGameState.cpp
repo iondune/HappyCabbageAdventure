@@ -366,10 +366,8 @@ void CGameState::oldDisplay() {
    {
       if(!GameplayManager->isPlayerAlive() && spaceDown) {
          if(GameplayManager->getPlayerLives() > 0) {
-            GameplayManager->subPlayerLife();
             end();
             Initialize();
-            printf("Lives: %d\n", GameplayManager->getPlayerLives());
             return;
          }
          else
