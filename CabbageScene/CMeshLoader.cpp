@@ -486,6 +486,10 @@ CMesh * const CMeshLoader::createDiscMesh(unsigned int const Triangles)
         Mesh->Vertices[i*3 + 2].Position.Y = 0;
         Mesh->Vertices[i*3 + 2].Position.Z = 0.5f * cos(float(i+1) / float(Triangles) * 2.f * 3.14159f);
 
+		Mesh->Vertices[i*3 + 0].Normal = SVector3(0, 0, 1);
+		Mesh->Vertices[i*3 + 1].Normal = SVector3(0, 0, 1);
+		Mesh->Vertices[i*3 + 2].Normal = SVector3(0, 0, 1);
+
         Mesh->Triangles[i].Indices[0] = i*3 + 0;
         Mesh->Triangles[i].Indices[1] = i*3 + 1;
         Mesh->Triangles[i].Indices[2] = i*3 + 2;
