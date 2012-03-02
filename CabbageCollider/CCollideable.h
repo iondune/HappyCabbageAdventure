@@ -64,7 +64,7 @@ namespace Collider
 		SMaterial const & getMaterial() const;
 		SMaterial & getMaterial();
 
-      int CollideableType, CollideableLevel;
+      int CollideableType, CanCollideWith, CollideableLevel;
 
 		virtual void draw();
 

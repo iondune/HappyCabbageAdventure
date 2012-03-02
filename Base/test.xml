@@ -39,5 +39,63 @@
 </CEnemy>
 <CEnemy X ="-15" Y ="3" height ="1" width ="1" type ="0">
 </CEnemy>
-<CBlock X ="-19" Y ="0" height ="4" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-19" Y ="0" height ="10" width ="1" depth ="1" texture ="1" isMoving ="0" range ="0" speed ="0">
 </CBlock>
+<CEnemy X ="-18" Y ="4" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-17" Y ="4" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-16" Y ="4" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-15" Y ="4" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-15" Y ="5" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-16" Y ="5" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-17" Y ="5" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-18" Y ="5" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-18" Y ="6" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-17" Y ="6" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-16" Y ="6" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-15" Y ="6" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-15" Y ="7" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-16" Y ="7" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-17" Y ="7" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-18" Y ="7" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-18" Y ="8" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-16" Y ="8" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-17" Y ="8" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-15" Y ="8" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-15" Y ="9" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-16" Y ="9" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-17" Y ="9" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-18" Y ="9" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-20" Y ="0" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-21" Y ="0" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-22" Y ="0" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-23" Y ="0" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="-24" Y ="0" height ="1" width ="1" type ="0">
+</CEnemy>

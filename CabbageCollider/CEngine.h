@@ -43,6 +43,11 @@ namespace Cabbage
 
             ICollisionResponder * CollisionResponder;
 
+            bool CanCollide(CCollideable *a, CCollideable *b) {
+               return a->CollideableLevel & b->CanCollideWith ||
+                  a->CollideableLevel & b->CanCollideWith;
+            }
+
             void performTick(float const TickTime)
             {
                // Perform actor update
@@ -55,7 +60,7 @@ namespace Cabbage
 
                   for (ObjectList::iterator jt = Objects.begin(); jt != Objects.end(); ++ jt)
                   {
-                     if(CAN_COLLIDE((*it)->CollideableLevel, (*jt)->CollideableLevel)) {
+                     if(CanCollide((*it), (*jt))) {
                         //printf("%d and %d are within 2\n", (*it)->CollideableLevel, (*jt)->CollideableLevel);
                         bool Alighted = (* it)->updateCollision(* jt, TickTime, CollisionResponder);
                         if (Alighted)
@@ -65,7 +70,7 @@ namespace Cabbage
 
                   for (ActorList::iterator jt = Actors.begin(); jt != Actors.end(); ++ jt)
                   {
-                     if(CAN_COLLIDE((*it)->CollideableLevel, (*jt)->CollideableLevel)) {
+                     if(CanCollide((*it), (*jt))) {
                         //printf("%d and %d are within 2\n", (*it)->CollideableLevel, (*jt)->CollideableLevel);
                         if (* it != * jt)
                         {

@@ -8,7 +8,8 @@ namespace Cabbage
       CObject::CObject()
       {
          CollideableType = COLLIDEABLE_TYPE_BLOCK;
-         CollideableLevel = INTERACTOR_ALL;
+         CollideableLevel = INTERACTOR_BLOCKS; 
+         CanCollideWith = INTERACTOR_ALL;
       }
 
       CObject::~CObject()

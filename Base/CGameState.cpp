@@ -136,10 +136,12 @@ void CGameState::EngineInit( void ) {
    Player = Engine->addActor();
    Player->setArea(SRect2(-24.5f, 3, 1, 1));
    Player->CollideableType = COLLIDEABLE_TYPE_PLAYER;
-   Player->CollideableLevel |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
+   Player->CollideableLevel |= INTERACTOR_SUPERACTORS;
+   Player->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
 
    Derp = Engine->addActor();
-   Derp->setArea(SRect2(-17, 0, 1, 1));
+   Derp->setArea(SRect2(-22, 3, 1, 1));
+   Derp->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS;
 
    PrepSky();
 

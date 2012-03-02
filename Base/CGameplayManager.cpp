@@ -63,10 +63,14 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
    int birdCollision = 0;
 
    if(PlayerCollideable && Other->CollideableType == COLLIDEABLE_TYPE_ITEM) {
+      printf("Here\n");
       ItemList ToKill;
       for(ItemList::iterator it = Items.begin(); it != Items.end(); ++ it) {
+         printf("Here2\n");
          if (Other == (*it)->Actor) {
+            printf("Here3\n");
             if((*it)->Type == CItem::health) {
+               printf("Here4\n");
                if (getPlayerHealth() < 5) {
                   PlayerHealth++;
                   printf("health is %d\n", PlayerHealth);
@@ -74,6 +78,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
                KillItemList.push_back(*it);
             }
             else if ((*it)->Type == CItem::energy) {
+               printf("Here4\n");
                if (getPlayerEnergy() < 3)
                   PlayerEnergy++;
                KillItemList.push_back(*it);
