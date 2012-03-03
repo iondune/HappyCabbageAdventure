@@ -592,6 +592,7 @@ void CGameState::OnRenderStart(float const Elapsed)
          "Energy: %d\nnumKilled: %d\nFPS: %0.2f ", Application.getRunTime(), GameplayManager->getPlayerEnergy(), numKilled, fps);*/
 
 
+   Application.getSceneManager().endDraw();
    SDL_GL_SwapBuffers();
 }
 

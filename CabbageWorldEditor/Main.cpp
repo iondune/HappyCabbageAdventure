@@ -123,6 +123,7 @@ public:
 
         
 
+        Application.getSceneManager().endDraw();
         SDL_GL_SwapBuffers();
     }
 

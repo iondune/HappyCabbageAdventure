@@ -43,7 +43,7 @@
 </CBlock>
 <CBlock X ="12" Y ="-2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CEnemy X ="7" Y ="1" height ="1" width ="1" type ="2">
+<CEnemy X ="7" Y ="1" height ="1" width ="1" type ="1">
 </CEnemy>
 <CCabbage X ="-11" Y ="0" height ="1" width ="1" isMoving ="0">
 </CCabbage>

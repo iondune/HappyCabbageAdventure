@@ -70,6 +70,7 @@ class CStateManager : public sigslot::has_slots<>
     CStateManager();
 
     IState * CurrentState;
+    float TimeReference;
 
 public:
 
