@@ -20,7 +20,7 @@ void CPlayerView::setState(CPlayerView::State const value) {
    {
      if(CenterPosition.Y > 3.0f)
      {
-       float zfactor = (CenterPosition.Y - 3.0f) * 1.5f;
+       float zfactor = ((CenterPosition.Y > 10.0f ? 6.0f : CenterPosition.Y) - 3.0f) * 1.5f;
        zCamShift = (zfactor > 8.0f ? 8.0f :  zfactor) - zCam;
      }
      else
@@ -147,7 +147,7 @@ void CPlayerView::establishCamera(ICamera *Camera, int angle, int shaking) {
 
 
    if(angle == 0) {
-     if(zCamTimer > 0.0f &&  Velocity.Y == 0.00)
+     if(zCamTimer > 0.0f && (Velocity.Y <= 20.00f && Velocity.Y >= -20.00f))
      {
        zCam += zCamShift * timeChange / CAM_TIMER;
        zCamTimer -= timeChange;

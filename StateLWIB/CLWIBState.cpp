@@ -255,6 +255,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
     //drawSubWindow();
    Application.getSceneManager().drawAll();
 
+   Application.getSceneManager().endDraw();
    SDL_GL_SwapBuffers();
 }
 

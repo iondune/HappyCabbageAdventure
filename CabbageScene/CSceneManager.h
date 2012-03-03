@@ -99,7 +99,8 @@ public:
 	CMeshSceneObject * addMeshSceneObject(CMesh * Mesh, CShader * Shader, CMaterial const & Material);
 	CMeshSceneObject * addMeshSceneObject(std::string const & Mesh, std::string const & Shader, CMaterial const & Material);
 
-    void drawAll();
+   void drawAll();
+   void endDraw();
 
 	bool DoSSAO, OnlySSAO, DoBloom, DoBlur, OnlyNormals;
 };

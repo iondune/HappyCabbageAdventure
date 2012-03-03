@@ -437,7 +437,7 @@ void CSceneManager::drawAll()
       }
    }
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCRATCH1]);
 	// Draw Texture
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -489,7 +489,42 @@ void CSceneManager::drawAll()
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-    SceneChanged = false;
+   SceneChanged = false;
+}
+
+void CSceneManager::endDraw() {
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	// Draw Texture
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   //glUseProgram(0); //Doesn't help
+
+   // THE FINAL RENDER
+	// Draw SSAO quad
+	{
+		glEnable(GL_TEXTURE_2D);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SCRATCH1]);
+		
+		glBegin(GL_QUADS);
+			glTexCoord2i(0, 0);
+			glVertex2i(0, 0);
+
+			glTexCoord2i(1, 0);
+			glVertex2i(1, 0);
+
+			glTexCoord2i(1, 1);
+			glVertex2i(1, 1);
+			
+			glTexCoord2i(0, 1);
+			glVertex2i(0, 1);
+		glEnd();
+	}
+
+	glEnable(GL_DEPTH_TEST);
+	glDisable(GL_TEXTURE_2D);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 CMeshSceneObject * CSceneManager::addMeshSceneObject(CMesh * Mesh)

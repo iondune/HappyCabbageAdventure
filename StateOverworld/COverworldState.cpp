@@ -150,6 +150,7 @@ void COverworldState::OnRenderStart(float const Elapsed)
    }
 
 
+   Application.getSceneManager().endDraw();
    SDL_GL_SwapBuffers();
 }
 
