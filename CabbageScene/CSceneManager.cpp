@@ -493,6 +493,18 @@ void CSceneManager::drawAll()
 }
 
 void CSceneManager::endDraw() {
+	// Setup for quad rendering
+	glEnable(GL_TEXTURE_2D);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0, 1, 0, 1, -1, 1);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	glDisable(GL_DEPTH_TEST);
+
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	// Draw Texture
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
