@@ -135,6 +135,7 @@ void CGameState::EngineInit( void ) {
    Engine = new CEngine();
    Player = Engine->addActor();
    Player->setArea(SRect2(-24.5f, 3, 1, 1));
+   Player->getAttributes().MaxWalk = 3.5f;
    Player->CollideableType = COLLIDEABLE_TYPE_PLAYER;
    Player->CollideableLevel |= INTERACTOR_SUPERACTORS;
    Player->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
@@ -323,6 +324,7 @@ void CGameState::Initialize() {
    LoadHUD();
    fps = timeTotal = 0;
    numFrames = 0;
+   moveDown = 0.0f;
 
    printf("CGameState:  Begin Function Complete\n");
 }
@@ -593,6 +595,9 @@ void CGameState::OnRenderStart(float const Elapsed)
          "Energy: %d\nnumKilled: %d\nFPS: %0.2f ", Application.getRunTime(), GameplayManager->getPlayerEnergy(), numKilled, fps);*/
 
 
+   if(moveDown > 0.0f) {
+      moveDown -= Application.getElapsedTime();
+   }
    Application.getSceneManager().endDraw();
    SDL_GL_SwapBuffers();
 }
@@ -635,9 +640,23 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          sDown = 1;
       }
       if(Event.Key == SDLK_a){
+         if(moveDown > 0.0f) {
+            Player->getAttributes().MaxWalk = 5.5f;
+            moveDown = 0.0f;
+         }
+         else {
+            moveDown = 0.3f;
+         }
          aDown = 1;
       }
       if(Event.Key == SDLK_d){
+         if(moveDown > 0.0f) {
+            Player->getAttributes().MaxWalk = 5.5f;
+            moveDown = 0.0f;
+         }
+         else {
+            moveDown = 0.3f;
+         }
          dDown = 1;
       }
 #ifdef PARTICLE
@@ -704,9 +723,11 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          sDown = 0;
       }
       if(Event.Key == SDLK_a){
+         Player->getAttributes().MaxWalk = 3.5f;
          aDown = 0;
       }
       if(Event.Key == SDLK_d){
+         Player->getAttributes().MaxWalk = 3.5f;
          dDown = 0;
       }
       if(Event.Key == SDLK_l){

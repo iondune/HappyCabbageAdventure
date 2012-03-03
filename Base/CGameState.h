@@ -33,7 +33,7 @@ class CGameState : public CState<CGameState>
    CGameState();
    //Initalizer fxn
    ICamera *Camera;
-   float fps, timeTotal, prevEnergy, energyStatus;
+   float fps, timeTotal, prevEnergy, energyStatus, moveDown;
    int numFrames, NumTreeTypes, NumFlowerTypes, lowDef, prevHealth;
    const char * levelName;
    bool oldFern;
