@@ -152,7 +152,7 @@ GLuint randNorm;
 #define SSAO_MULT 1
 
 CSceneManager::CSceneManager(SPosition2 const & screenSize)
-	: DoSSAO(false), OnlySSAO(false), DoBloom(true), DoBlur(false), OnlyNormals(false)
+	: DoSSAO(false), OnlySSAO(false), DoBloom(true), DoBlur(false), OnlyNormals(false), FinalBlurSize(0.0f)
 {
     CurrentScene = this;
 
@@ -354,6 +354,8 @@ void CSceneManager::drawAll()
 				glActiveTexture(GL_TEXTURE0);
 				glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO_BLUR1]);
 
+            Context.uniform("BlurSize", 1.0f);
+
 				//glGenerateMipmap(GL_TEXTURE_2D);
 
 				Context.uniform("uTexColor", 0);
@@ -382,14 +384,15 @@ void CSceneManager::drawAll()
       // Draw blurH effect
       glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCRATCH1]);
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-      glUseProgram((CShaderLoader::loadShader("BlurH"))->getProgramHandle());
 
       // Draw blurV quad
       {
          glEnable(GL_TEXTURE_2D);
+         CShaderContext Context(* BlurH);
          glActiveTexture(GL_TEXTURE0);
          glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SCENE]);
          //glGenerateMipmap(GL_TEXTURE_2D);
+         Context.uniform("BlurSize", 1.0f);
 
          glBegin(GL_QUADS);
 			 glTexCoord2i(0, 0);
@@ -507,15 +510,18 @@ void CSceneManager::endDraw() {
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	// Draw Texture
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
    //glUseProgram(0); //Doesn't help
 
    // THE FINAL RENDER
 	// Draw SSAO quad
 	{
 		glEnable(GL_TEXTURE_2D);
+      CShaderContext Context(* BlurH);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SCRATCH1]);
+      Context.uniform("BlurSize", FinalBlurSize);
 		
 		glBegin(GL_QUADS);
 			glTexCoord2i(0, 0);

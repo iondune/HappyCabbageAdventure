@@ -103,6 +103,7 @@ public:
    void endDraw();
 
 	bool DoSSAO, OnlySSAO, DoBloom, DoBlur, OnlyNormals;
+   float FinalBlurSize;
 };
 
 #endif
