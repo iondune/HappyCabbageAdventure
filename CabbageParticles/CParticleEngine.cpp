@@ -2,7 +2,7 @@
 
 void CParticleEngine::UsePhysics(Cabbage::Collider::CEngine *engine) {
    for(int i = 0; i < numParticles; i++) {
-      ((CPBurst*)particles[i])->setEngine(engine);
+      ((CPhysicsParticle*)particles[i])->setEngine(engine);
    }
 }
 
@@ -56,6 +56,11 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
          case BURST_PARTICLE:
             particles.push_back(cPtr = new CPBurst());
             cPtr->setAppearRate(0);
+            cPtr->useCenterPos = 0;
+            break;
+         case DUST_PARTICLE:
+            particles.push_back(cPtr = new CPDust());
+            cPtr->setAppearRate(2.0f);
             cPtr->useCenterPos = 0;
             break;
       }
@@ -147,6 +152,16 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
 
             sizeArr.push_back((float)rand()/(float)RAND_MAX*0 + 35);
             break;
+         case DUST_PARTICLE:
+            temp = (float)rand()/(float)RAND_MAX*0.3f + 0.3f;
+            if(rand() % 6 == 0)
+               colorArr.push_back(new SVector3(1.0f));
+            else
+               colorArr.push_back(new SVector3(temp*3, temp*3, temp*1));
+            //colorArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*0.2f + 0.4f, (float)rand()/(float)RAND_MAX*0.2f + 0.8f, (float)rand()/(float)RAND_MAX*0.4f + 0.4f));
+
+            sizeArr.push_back((float)rand()/(float)RAND_MAX*10 + 10);
+            break;
       }
    }
    myObj = new CParticleObject();
@@ -187,6 +202,9 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
       break;
    case BURST_PARTICLE:
       textureToUse = "Textures/particleStar.bmp";
+      break;
+   case DUST_PARTICLE:
+      textureToUse = "Textures/particle2.bmp";
       break;
    }
 

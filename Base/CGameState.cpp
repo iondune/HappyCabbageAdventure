@@ -182,6 +182,7 @@ CParticleEngine *particleLeafEngine;
 CParticleEngine *particleCubeEngine;
 CParticleEngine *particleLaserEngine;
 CParticleEngine *particleLaserFireEngine;
+CParticleEngine *particleDustEngine;
 #endif
 
 void CGameState::LoadHUD() {
@@ -232,7 +233,7 @@ void CGameState::Initialize() {
 
    CApplication::get().getSceneManager().setCullingEnabled(true);
 #ifdef PARTICLE
-   particleLeafEngine = particleCubeEngine = particleLaserEngine = 0;
+   particleLeafEngine = particleCubeEngine = particleLaserEngine = particleLaserFireEngine = particleDustEngine = 0;
 #endif
    SPosition2 size = Application.getWindowSize();
    WindowWidth = size.X;
@@ -453,6 +454,11 @@ void CGameState::oldDisplay() {
          (!!particleLaserFireEngine ? 1 : 0) + ((GameplayManager->getRecovering() > 0 || GameplayManager->JustKilled) ? 2 : 0));
 
 #ifdef PARTICLE
+   if(particleDustEngine && !particleDustEngine->dead) {
+      particleDustEngine->setLookRight(PlayerView->getLookRight());
+      particleDustEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
+      particleDustEngine->step(Application.getElapsedTime());
+   }
    if(particleLeafEngine && !particleLeafEngine->dead) {
       particleLeafEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
       particleLeafEngine->step(Application.getElapsedTime());
@@ -641,6 +647,14 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_a){
          if(moveDown > 0.0f) {
+            if(particleDustEngine) {
+               particleDustEngine->deconstruct();
+               delete particleDustEngine;
+               particleDustEngine = NULL;
+            }
+            particleDustEngine = new CParticleEngine(SVector3(0, 1, 0), 70, -1.0f, DUST_PARTICLE);
+            particleDustEngine->UsePhysics(Engine);
+
             Player->getAttributes().MaxWalk = 5.5f;
             moveDown = 0.0f;
          }
@@ -651,6 +665,14 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_d){
          if(moveDown > 0.0f) {
+            if(particleDustEngine) {
+               particleDustEngine->deconstruct();
+               delete particleDustEngine;
+               particleDustEngine = NULL;
+            }
+            particleDustEngine = new CParticleEngine(SVector3(0, 1, 0), 70, -1.0f, DUST_PARTICLE);
+            particleDustEngine->UsePhysics(Engine);
+
             Player->getAttributes().MaxWalk = 5.5f;
             moveDown = 0.0f;
          }
@@ -723,10 +745,22 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          sDown = 0;
       }
       if(Event.Key == SDLK_a){
+         if(particleDustEngine) {
+            particleDustEngine->deconstruct();
+            delete particleDustEngine;
+            particleDustEngine = NULL;
+         }
+
          Player->getAttributes().MaxWalk = 3.5f;
          aDown = 0;
       }
       if(Event.Key == SDLK_d){
+         if(particleDustEngine) {
+            particleDustEngine->deconstruct();
+            delete particleDustEngine;
+            particleDustEngine = NULL;
+         }
+
          Player->getAttributes().MaxWalk = 3.5f;
          dDown = 0;
       }
@@ -787,7 +821,11 @@ void CGameState::end()
       particleLaserFireEngine->deconstruct();
       delete particleLaserFireEngine;
    }
-   particleLeafEngine = particleCubeEngine = particleLaserEngine = particleLaserFireEngine = NULL;
+   if(particleDustEngine) {
+      particleDustEngine->deconstruct();
+      delete particleDustEngine;
+   }
+   particleLeafEngine = particleCubeEngine = particleLaserEngine = particleLaserFireEngine = particleDustEngine = NULL;
 
    GameEventManager->OnEnemyDeath.disconnect(& GameEventReceiver);
    GameEventManager->OnPlayerDamaged.disconnect(& GameEventReceiver);

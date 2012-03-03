@@ -27,7 +27,7 @@ void CPFlame::updateMatrices(float timeElapsed) {
    }
    else {
       sineValue += 4*timeElapsed;
-      Duration += timeElapsed;
+      //Duration += timeElapsed;
 
       yHeight += yVelocity*timeElapsed;
 
