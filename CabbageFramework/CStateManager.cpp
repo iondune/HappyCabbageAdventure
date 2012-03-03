@@ -1,7 +1,7 @@
 #include "CStateManager.h"
 
 CStateManager::CStateManager()
-    : CurrentState(0), TimeReference(0)
+    : CurrentState(0)
 {}
 
 
@@ -20,12 +20,11 @@ void CStateManager::OnGameTickEnd(float const Elapsed)
 
 void CStateManager::OnRenderStart(float const Elapsed)
 {
-    if (CurrentState) {
-        TimeReference += Elapsed;
+    if (CurrentState)
         CurrentState->OnRenderStart(Elapsed);
-    }
 }
 
+#include "CApplication.h"
 void CStateManager::OnRenderEnd(float const Elapsed)
 {
     if (CurrentState)
@@ -46,7 +45,7 @@ void CStateManager::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 void CStateManager::setState(IState * State)
 {
-    Uint32 now = SDL_GetTicks();
+    CApplication::get().getSceneManager().blurSceneOut(0.3f);
     if (CurrentState) {
         CurrentState->end();
     }
@@ -54,6 +53,7 @@ void CStateManager::setState(IState * State)
     CurrentState = State;
 
     CurrentState->begin();
+    CApplication::get().getSceneManager().blurSceneIn(0.3f);
 }
 
 void CStateManager::shutDown()

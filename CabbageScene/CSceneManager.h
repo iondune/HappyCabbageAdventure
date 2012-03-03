@@ -80,6 +80,7 @@ public:
 
 };
 
+class CApplication;
 class CSceneManager : public CScene
 {
 
@@ -101,9 +102,13 @@ public:
 
    void drawAll();
    void endDraw();
+   void blurSceneIn(float seconds);
+   void blurSceneOut(float seconds);
+
 
 	bool DoSSAO, OnlySSAO, DoBloom, DoBlur, OnlyNormals;
-   float FinalBlurSize;
+   float FinalBlurSize, Dim;
+   float BlurInTime, BlurOutTime, CurTime;
 };
 
 #endif

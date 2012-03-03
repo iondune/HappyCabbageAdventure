@@ -34,7 +34,7 @@ void soundInit() {
    playDead = true;
    playVictory = true;
    playTakeDmg = true;
-   playJump = true;
+   playJump = false;
    musicOn = true;
 }
 

@@ -355,6 +355,7 @@ void CSceneManager::drawAll()
 				glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO_BLUR1]);
 
             Context.uniform("BlurSize", 1.0f);
+            Context.uniform("DimAmount", 0.0f);
 
 				//glGenerateMipmap(GL_TEXTURE_2D);
 
@@ -393,7 +394,7 @@ void CSceneManager::drawAll()
          glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SCENE]);
          //glGenerateMipmap(GL_TEXTURE_2D);
          Context.uniform("BlurSize", 1.0f);
-
+         Context.uniform("DimAmount", 0.0f);
          glBegin(GL_QUADS);
 			 glTexCoord2i(0, 0);
 			 glVertex2i(0, 0);
@@ -495,7 +496,90 @@ void CSceneManager::drawAll()
    SceneChanged = false;
 }
 
+#include "CApplication.h"
+#define MAX(x,y) ((x)>(y)?(x):(y))
+#define MIN(x,y) ((x)<(y)?(x):(y))
+void CSceneManager::blurSceneIn(float seconds) {
+   BlurOutTime = 0;
+   BlurInTime = seconds;
+   CurTime = CApplication::get().getRunTime();
+   /*
+   float now = CApplication::get().getRunTime();
+   float difference = CApplication::get().getRunTime() - now;
+
+   float drawTimer = 10.0f;
+
+   float oldBlur = FinalBlurSize;
+   while(difference < seconds) {
+      Dim = 1.0f - (seconds - difference)/seconds;
+      FinalBlurSize = MAX(oldBlur - difference/ 0.1f, 0.0f);
+
+      if(drawTimer == 10.0f) {
+         endDraw();
+         SDL_GL_SwapBuffers();
+      }
+      drawTimer -= CApplication::get().getRunTime() - difference;
+      if(drawTimer <= 0.0f)
+         drawTimer = 10.0f;
+
+      difference = CApplication::get().getRunTime() - now;
+   }
+   */
+}
+
+void CSceneManager::blurSceneOut(float seconds) {
+   BlurOutTime = seconds;
+   BlurInTime = 0;
+   CurTime = CApplication::get().getRunTime();
+
+
+   float now = CApplication::get().getRunTime();
+   float difference = CApplication::get().getRunTime() - now;
+
+   float drawTimer = 10.0f;
+
+   while(difference < seconds) {
+      Dim = (seconds - difference)/seconds;
+      FinalBlurSize = difference/ 0.1f;
+
+      if(drawTimer == 10.0f) {
+         endDraw();
+         SDL_GL_SwapBuffers();
+      }
+      drawTimer -= CApplication::get().getRunTime() - difference;
+      if(drawTimer <= 0.0f)
+         drawTimer = 10.0f;
+
+      difference = CApplication::get().getRunTime() - now;
+   }
+}
+
+
 void CSceneManager::endDraw() {
+   if(CurTime == -1.0f) {
+      Dim = 1.0f;
+   }
+   if(BlurInTime > 0.0f) {
+      FinalBlurSize = 0.0f;
+      Dim = MAX(1.0f - (BlurInTime - (CApplication::get().getRunTime() - CurTime))/BlurInTime, 0.0f);
+      //printf("Diff: %0.2f\n", (CApplication::get().getRunTime() - CurTime));
+      if((CApplication::get().getRunTime() - CurTime) > BlurInTime) {
+         BlurInTime = 0.0f;
+         CurTime = -1.0f;
+      }
+   }
+   /*
+   if(BlurOutTime > 0.0f) {
+      FinalBlurSize = 0.0f;
+      Dim = MIN((BlurOutTime - (CApplication::get().getRunTime() - CurTime))/BlurOutTime, 1.0f);
+      if((CApplication::get().getRunTime() - CurTime) > BlurOutTime) {
+         BlurOutTime = 0.0f;
+         CurTime = -1.0f;
+      }
+   }
+   */
+
+
 	// Setup for quad rendering
 	glEnable(GL_TEXTURE_2D);
 
@@ -522,6 +606,7 @@ void CSceneManager::endDraw() {
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SCRATCH1]);
       Context.uniform("BlurSize", FinalBlurSize);
+      Context.uniform("DimAmount", Dim);
 		
 		glBegin(GL_QUADS);
 			glTexCoord2i(0, 0);

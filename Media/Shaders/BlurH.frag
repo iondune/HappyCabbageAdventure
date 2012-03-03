@@ -1,5 +1,6 @@
 uniform sampler2D uTexColor;
 uniform float BlurSize;
+uniform float DimAmount;
 
 void main()
 {
@@ -15,5 +16,5 @@ void main()
                   texture2D(uTexColor, vec2(vTexCoord.x + 3.0*blurSize, vTexCoord.y))*0.1 +
                   texture2D(uTexColor, vec2(vTexCoord.x + 4.0*blurSize, vTexCoord.y))*0.05
                  ).xyz / 2.5;
-    gl_FragColor = vec4(color, 1.0);
+    gl_FragColor = vec4(color, 1.0)*DimAmount;
 }

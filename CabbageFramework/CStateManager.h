@@ -62,6 +62,7 @@ public:
 
 };
 
+class CApplication;
 class CStateManager : public sigslot::has_slots<>
 {
 
@@ -70,7 +71,6 @@ class CStateManager : public sigslot::has_slots<>
     CStateManager();
 
     IState * CurrentState;
-    float TimeReference;
 
 public:
 
