@@ -568,6 +568,7 @@ void CGameState::OnRenderStart(float const Elapsed)
             Mix_HaltMusic();
             Mix_PlayChannel(-1, die, 0); //Only play once
             playDead = false;
+            spaceDown = 0;
          }
          Charged = 0;
 

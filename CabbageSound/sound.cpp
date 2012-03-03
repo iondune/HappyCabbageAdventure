@@ -68,7 +68,7 @@ void setupSoundtrack(char *startMusic) {
    killEnemy = Mix_LoadWAV(temp.c_str());
 
    //Decrease volume of jump
-   Mix_VolumeChunk(jump, 64);
+   Mix_VolumeChunk(jump, 32);
 }
 
 void startSoundtrack() {
