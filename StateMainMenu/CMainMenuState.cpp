@@ -121,7 +121,6 @@ void CMainMenuState::begin()
    setupTextures();
    setupMeshes();
    setupButtons();
-   our_font.init("WIFFLES_.TTF", 30);
    glClearColor(0.f,0.f,0.f,0.f);
 
    curAngle = 0.f;

@@ -78,7 +78,6 @@ void CLWIBState::begin()
    SDL_WM_SetCaption("Happy Cabbage Adventure", NULL);
 
    //Initialize Font
-   our_font.init("WIFFLES_.TTF", 30);
 
    eye = SVector3(0,0,10);
    look = SVector3(0,0,-1);

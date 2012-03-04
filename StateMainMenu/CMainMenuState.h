@@ -27,7 +27,6 @@ class CMainMenuState : public CState<CMainMenuState>
    CApplication &Application;
    public:
 
-      freetype::font_data our_font;
 
       ICamera *Camera;
 

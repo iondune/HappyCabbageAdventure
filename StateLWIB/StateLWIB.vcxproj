@@ -88,7 +88,6 @@
     <ClInclude Include="CFlag.h" />
     <ClInclude Include="CLWIBState.h" />
     <ClInclude Include="CPlaceable.h" />
-    <ClInclude Include="FreeType.h" />
     <ClInclude Include="header.h" />
     <ClInclude Include="Materials.h" />
     <ClInclude Include="wmlwriter_src\xmlwriter.h" />
@@ -99,7 +98,6 @@
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CFlag.cpp" />
     <ClCompile Include="CLWIBState.cpp" />
-    <ClCompile Include="FreeType.cpp" />
     <ClCompile Include="Materials.cpp" />
     <ClCompile Include="wmlwriter_src\xmlwriter.cpp" />
   </ItemGroup>
