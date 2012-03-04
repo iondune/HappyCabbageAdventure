@@ -291,7 +291,7 @@ void COverworldState::LoadShaders() {
 void COverworldState::PrepMeshes()
 {
    //Set up world map renderable
-   CMesh *mapMesh = CMeshLoader::load3dsMesh("Models/world.3ds");
+   CMesh *mapMesh = CMeshLoader::load3dsMesh("Base/world.3ds");
    if(mapMesh) {
       mapMesh->centerMeshByExtents(SVector3(0));
       mapMesh->calculateNormalsPerFace();
@@ -299,13 +299,13 @@ void COverworldState::PrepMeshes()
    
    CMaterial mat;
 
-   mat.Texture = CImageLoader::loadTexture("Models/world.bmp");
+   mat.Texture = CImageLoader::loadTexture("../Models/Base/world.bmp");
    renderMap = CApplication::get().getSceneManager().addMeshSceneObject(mapMesh, DiffuseTexture);
    renderMap->setMaterial(mat);
    renderMap->setCullingEnabled(false);
 
    //Set up player renderable
-   CMesh *playerMesh = CMeshLoader::load3dsMesh("Models/crappycabbage2.3ds");
+   CMesh *playerMesh = CMeshLoader::load3dsMesh("Base/crappycabbage2.3ds");
    if (playerMesh) {
       playerMesh->resizeMesh(SVector3(0.5f));
       playerMesh->centerMeshByExtents(SVector3(0));
@@ -324,7 +324,7 @@ void COverworldState::PrepMeshes()
 
    (playerRender);
 
-   CMesh *arrowMesh = CMeshLoader::load3dsMesh("Models/arrow.3ds");
+   CMesh *arrowMesh = CMeshLoader::load3dsMesh("Base/arrow.3ds");
    if (arrowMesh) {
      arrowMesh->resizeMesh(SVector3(0.5f));
      arrowMesh->centerMeshByExtents(SVector3(0));
@@ -345,7 +345,7 @@ void COverworldState::PrepMeshes()
 
 
 
-   CMesh *discMesh = CMeshLoader::loadAsciiMesh("Disc");
+   CMesh *discMesh = CMeshLoader::createDiscMesh();
    discMesh->linearizeIndices();
    discMesh->calculateNormalsPerFace();
 
@@ -371,15 +371,15 @@ void COverworldState::levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor)
    switch(iconColor)
    {
      case 1:
-       mat.Texture = CImageLoader::loadTexture("Textures/GrassyGrass.bmp");
+       mat.Texture = CImageLoader::loadTexture("Base/GrassyGrass.bmp");
        break;
 
      case 2:
-       mat.Texture = CImageLoader::loadTexture("Models/disc_orange.bmp");
+       mat.Texture = CImageLoader::loadTexture("../Models/disc_orange.bmp");
        break;
        
      default:
-       mat.Texture = CImageLoader::loadTexture("Models/disc_red.bmp");
+       mat.Texture = CImageLoader::loadTexture("../Models/disc_red.bmp");
        break;
    }
    discRender->setMaterial(mat);

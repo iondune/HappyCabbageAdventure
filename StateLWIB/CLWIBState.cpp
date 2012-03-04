@@ -666,18 +666,18 @@ void CLWIBState::PrepPreviews() {
    blocks.push_back(PreviewBlock = new CMeshSceneObject());
    PreviewBlock->setMesh(cubeMesh);
 
-   PreviewBlock->setTexture("Textures/white.bmp");
+   PreviewBlock->setTexture("Colors/white.bmp");
   
    PreviewBlock->setShader(DiffuseTexture);
    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
 
    blocks.push_back(PreviewEnemy = new CMeshSceneObject());
-   appleMesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
-   orangeMesh = CMeshLoader::load3dsMesh("Models/orange.3ds");
-   kiwiMesh = CMeshLoader::load3dsMesh("Models/killerkiwi.3ds");
-   cabbageMesh = CMeshLoader::load3dsMesh("Models/crappycabbage.3ds");
-   bladeMesh = CMeshLoader::load3dsMesh("Models/trap1.3ds");
-   flagMesh = CMeshLoader::load3dsMesh("Models/flag.3ds");
+   appleMesh = CMeshLoader::load3dsMesh("Base/appleEnemy.3ds");
+   orangeMesh = CMeshLoader::load3dsMesh("Base/orange.3ds");
+   kiwiMesh = CMeshLoader::load3dsMesh("Base/killerkiwi.3ds");
+   cabbageMesh = CMeshLoader::load3dsMesh("Base/crappycabbage.3ds");
+   bladeMesh = CMeshLoader::load3dsMesh("Base/trap1.3ds");
+   flagMesh = CMeshLoader::load3dsMesh("Base/flag.3ds");
    
    blocks.push_back(PreviewFlag = new CMeshSceneObject());
    blocks.push_back(PreviewCabbage = new CMeshSceneObject());
@@ -889,13 +889,13 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
    placeables.push_back(tempPlaceable = new CBlock(x, y, w, h, d, t, moving));
    tempBlock->setMesh(cubeMesh);
    if (t == 0)
-        tempBlock->setTexture("Textures/grass.bmp");
+        tempBlock->setTexture("Base/grass.bmp");
    else if (t == 1)
-        tempBlock->setTexture("Textures/dirt.bmp");
+        tempBlock->setTexture("Base/dirt.bmp");
    else if (t == 2)
-        tempBlock->setTexture("Textures/rock.bmp");
+        tempBlock->setTexture("Base/rock.bmp");
    else if (t == -5)
-        tempBlock->setTexture("Textures/GrassyGrass.bmp");
+        tempBlock->setTexture("Base/GrassyGrass.bmp");
    else
        printf("texture doesn't exist\n");
    tempBlock->setShader(DiffuseTexture);
@@ -927,7 +927,7 @@ void CLWIBState::PrepGrass(float x, float y, float w, float h) {
    blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
 
-   tempBlock->setTexture("Textures/sky.bmp");
+   tempBlock->setTexture("Base/sky.bmp");
    tempBlock->setShader(DiffuseTexture);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    tempBlock->setScale(SVector3(w, h, .5));
@@ -936,7 +936,7 @@ void CLWIBState::PrepGrass(float x, float y, float w, float h) {
    blocks.push_back(tempyBlock = new CMeshSceneObject());
    tempyBlock->setMesh(cubeMesh);
 
-   tempyBlock->setTexture("Textures/sky.bmp");
+   tempyBlock->setTexture("Base/sky.bmp");
    tempyBlock->setShader(DiffuseTexture);
    tempyBlock->setTranslation(SVector3(172, (y+(y+h))/2, 0));
    tempyBlock->setScale(SVector3(w, h, .5));
@@ -949,7 +949,7 @@ void CLWIBState::PrepSky() {
    CMeshSceneObject *tempBlock;
    blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
-   tempBlock->setTexture("Textures/sky.bmp");
+   tempBlock->setTexture("Base/sky.bmp");
    tempBlock->setShader(DiffuseTexture);
    tempBlock->setTranslation(SVector3(0, 24, -2.5));
    tempBlock->setScale(SVector3(400, 50, 1));

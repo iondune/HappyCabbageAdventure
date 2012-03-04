@@ -20,7 +20,7 @@ EOrange::EOrange(float x, float y, float w, float h, CGameplayManager* manager) 
 //Loads and moves the mesh
 void EOrange::loadMesh() {
    Renderable = new CMeshSceneObject();
-   CMesh *mesh = CMeshLoader::load3dsMesh("Models/orange.3ds");
+   CMesh *mesh = CMeshLoader::load3dsMesh("Base/orange.3ds");
    if(mesh) {
       mesh->resizeMesh(SVector3(1));
       mesh->centerMeshByExtents(SVector3(0));
@@ -31,7 +31,7 @@ void EOrange::loadMesh() {
       printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
 
    Renderable->setMesh(mesh);
-   Renderable->setTexture("Textures/orange.bmp");
+   Renderable->setTexture("Base/orange.bmp");
 
    Renderable->setShader("Toon");
    Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
