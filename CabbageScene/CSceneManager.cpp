@@ -514,16 +514,16 @@ void CSceneManager::blurSceneOut(float seconds) {
 
 	float drawTimer = 10.0f;
 
-	while(difference < seconds) {
+	while (difference < seconds) {
 		Dim = (seconds - difference)/seconds;
 		FinalBlurSize = difference/ 0.1f;
 
-		if(drawTimer == 10.0f) {
+		if (drawTimer == 10.0f) {
 			endDraw();
 			SDL_GL_SwapBuffers();
 		}
 		drawTimer -= CApplication::get().getRunTime() - difference;
-		if(drawTimer <= 0.0f)
+		if (drawTimer <= 0.0f)
 			drawTimer = 10.0f;
 
 		difference = CApplication::get().getRunTime() - now;
