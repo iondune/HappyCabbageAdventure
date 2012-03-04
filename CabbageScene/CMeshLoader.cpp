@@ -12,7 +12,7 @@
 #pragma warning(disable: 4996)
 
 std::map<std::string, CMesh *> CMeshLoader::LoadedMeshes;
-std::string CMeshLoader::MeshDirectory = "";
+std::string CMeshLoader::MeshDirectory = "../Media/Models/";
 
 static long filelength(int f)
 {

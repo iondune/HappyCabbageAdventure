@@ -13,8 +13,8 @@ CMainMenuState::CMainMenuState()
 
 void CMainMenuState::setupTextures()
 {
-   WoodTexture = new CTexture(CImageLoader::loadTGAImage("wood.tga"));
-   BackgroundTexture = new CTexture(CImageLoader::loadImage("../Media/background.bmp"));
+   WoodTexture = new CTexture(CImageLoader::loadTGAImage("MainMenu/wood.tga"));
+   BackgroundTexture = new CTexture(CImageLoader::loadImage("../background.bmp"));
 }
 
 void CMainMenuState::setupButtons() {
@@ -62,7 +62,7 @@ void CMainMenuState::setupMeshes()
   Toon = CShaderLoader::loadShader("Toon");
   Texture = CShaderLoader::loadShader("ToonTexture");
 
-  LogoMesh = CMeshLoader::load3dsMesh("../Base/Models/HappyLogo3.3ds");
+  LogoMesh = CMeshLoader::load3dsMesh("Base/HappyLogo3.3ds");
   if (LogoMesh)
   {
     LogoMesh->resizeMesh(SVector3(0.4f));
