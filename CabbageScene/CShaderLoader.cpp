@@ -122,7 +122,7 @@ CShader * const CShaderLoader::loadShader(std::string const & name)
 
 
     // Compile Shader
-	std::cout << "--- Compiling Shader -------------------" << std::endl;
+	std::cout << "--- Compiling Shader ----------------------------------------------------------" << std::endl;
     {
         glCompileShader(VS);
         GLint vCompiled;
@@ -134,7 +134,7 @@ CShader * const CShaderLoader::loadShader(std::string const & name)
             glDeleteShader(VS);
             glDeleteShader(FS);
 			
-			std::cerr << "----------------------------------------" << std::endl << std::endl;
+			std::cerr << "-------------------------------------------------------------------------------" << std::endl << std::endl;
             return 0;
         }
     }
@@ -149,7 +149,7 @@ CShader * const CShaderLoader::loadShader(std::string const & name)
             std::cerr << "Error compiling shader: " << fragFileName << std::endl;
             glDeleteShader(VS);
             glDeleteShader(FS);
-			std::cerr << "----------------------------------------" << std::endl << std::endl;
+			std::cerr << "-------------------------------------------------------------------------------" << std::endl << std::endl;
             return 0;
         }
     }
@@ -170,7 +170,7 @@ CShader * const CShaderLoader::loadShader(std::string const & name)
     }
 
     std::cout << "Sucessfully installed shader! (" << Shader->Handle << ")" << std::endl;
-	std::cout << "----------------------------------------" << std::endl << std::endl;
+	std::cout << "-------------------------------------------------------------------------------" << std::endl << std::endl;
 
     // Load all attributes and save handles
     GLint total = 0;
