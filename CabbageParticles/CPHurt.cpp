@@ -2,7 +2,7 @@
 
 void CPHurt::setupRenderable() {
    tickValue = 0;
-   position = SVector3((float)rand()/(float)RAND_MAX * 1 - 0.5f, (float)rand()/(float)RAND_MAX * 0.3, (float)rand()/(float)RAND_MAX * 1 - 0.5);
+   position = SVector3((float)rand()/(float)RAND_MAX * 1 - 0.5f, (float)rand()/(float)RAND_MAX * 0.3f, (float)rand()/(float)RAND_MAX * 1 - 0.5f);
    velocity = ((*centerPos - position) - *centerPos) * SVector3(-0.3f, -1.4f, -0.7f); 
 }
 

@@ -838,12 +838,12 @@ void CLWIBState::PrepCabbage(float x, float y) {
     tempCabbage->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
     tempCabbage->setRotation(SVector3(-90, 0, 0));
     tempCabbage->setScale(SVector3(0.5, 0.5, 0.5));
-    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
-    blockMap[(int)x+25][(int)(y-0.5+25)].r = tempCabbage;
-    blockMap[(int)x+25][(int)(y-0.5+25)].p = tempPlaceable;
-    blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
-    blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
-    xCabbage = x, yCabbage = y;
+    blockMap[(int)x+25][(int)(y-0.5f+25)].o = true;
+    blockMap[(int)x+25][(int)(y-0.5f+25)].r = tempCabbage;
+    blockMap[(int)x+25][(int)(y-0.5f+25)].p = tempPlaceable;
+    blockMap[(int)x+25][(int)(y-0.5f+25)].mapX = (int)x+25;
+    blockMap[(int)x+25][(int)(y-0.5f+25)].mapY = (int)(y-0.5f+25);
+    xCabbage = (int) x, yCabbage = (int) y;
 
     lastCabbage = blockMap[(int)x+25][(int)(y-0.5+25)];
     Application.getSceneManager().addSceneObject(tempCabbage);
@@ -961,7 +961,6 @@ int startx, starty;
 float pitchphi, yawtheta;
 int mouseDown;
 void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
-    qd tempHolder;
    if(Event.Button.Value == SMouseEvent::EButton::Left) {
       if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
          mouseDown = 1;

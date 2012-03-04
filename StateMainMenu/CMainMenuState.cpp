@@ -34,12 +34,12 @@ void CMainMenuState::setupButtons() {
 	StartFont = new CGUIFontWidget("JustAnotherFont.TTF", 32.f);
 	StartFont->setText("Start Game");
 	StartFont->setColor(FontColor);
-	StartFont->setPosition(SVector2(ratio/2.f - .175f, .5 + .05f));
+	StartFont->setPosition(SVector2(ratio/2.f - 0.175f, 0.5f + 0.05f));
 
 	EditorFont = new CGUIFontWidget("JustAnotherFont.TTF", 32.f);
 	EditorFont->setText("Level Editor");
 	EditorFont->setColor(FontColor);
-	EditorFont->setPosition(SVector2(ratio/2.f - .179f, .32 + .05f));
+	EditorFont->setPosition(SVector2(ratio/2.f - 0.179f, 0.32f + 0.05f));
 
 	ExitFont = new CGUIFontWidget("JustAnotherFont.TTF", 32.f);
 	ExitFont->setText("Exit Game");
