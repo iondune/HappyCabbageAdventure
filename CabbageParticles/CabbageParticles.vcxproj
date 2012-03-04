@@ -85,8 +85,10 @@
     <ClCompile Include="CPBurst.cpp" />
     <ClCompile Include="CPCube.cpp" />
     <ClCompile Include="CPDeath.cpp" />
+    <ClCompile Include="CPDust.cpp" />
     <ClCompile Include="CPFlame.cpp" />
     <ClCompile Include="CPHurt.cpp" />
+    <ClCompile Include="CPhysicsParticle.cpp" />
     <ClCompile Include="CPLaser.cpp" />
     <ClCompile Include="CPLaser2.cpp" />
     <ClCompile Include="CPLeaf.cpp" />
@@ -98,8 +100,11 @@
     <ClInclude Include="CPBurst.h" />
     <ClInclude Include="CPCube.h" />
     <ClInclude Include="CPDeath.h" />
+    <ClInclude Include="CPDust.h" />
     <ClInclude Include="CPFlame.h" />
     <ClInclude Include="CPHurt.h" />
+    <ClInclude Include="CPhysicsParticle.h" />
+    <ClInclude Include="CPLaser.h" />
     <ClInclude Include="CPLaser2.h" />
     <ClInclude Include="CPLeaf.h" />
   </ItemGroup>
