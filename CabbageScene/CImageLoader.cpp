@@ -1,6 +1,7 @@
 #include "CImageLoader.h"
 
 #include <cstdio>
+#include <iostream>
 
 struct SBitmapInfo
 {
@@ -25,7 +26,7 @@ struct SBitmapInfo
 std::map<std::string, CImage *> CImageLoader::LoadedImages;
 std::map<std::string, CTexture *> CImageLoader::LoadedTextures;
 
-std::string CImageLoader::ImageDirectory = "";
+std::string CImageLoader::ImageDirectory = "../Media/Textures/";
 std::string & CImageLoader::TextureDirectory = CImageLoader::ImageDirectory;
 
 CTexture * const CImageLoader::loadTexture(std::string const & fileName, bool const useCache)
@@ -40,9 +41,18 @@ CTexture * const CImageLoader::loadTexture(std::string const & fileName, bool co
 		}
 	}
 
-    CTexture * Texture = new CTexture(loadImage(fileName, useCache));
+	CImage * Image = loadImage(fileName, useCache);
+	if (! Image)
+	{
+		std::cerr << "Failed to load image with file name '" << fileName << "', aborting creation of texture." << std::endl;
+		return 0;
+	}
+
+    CTexture * Texture = new CTexture(Image);
+
 	if (useCache)
 		LoadedTextures[fileName] = Texture;
+
     return Texture;
 }
 
@@ -65,8 +75,10 @@ CImage * const CImageLoader::loadImage(std::string const & fileName, bool const 
     SBitmapInfo infoheader;
 
     if( (file = fopen((ImageDirectory + fileName).c_str(), "rb"))==NULL)
+	{
+		std::cerr << "Failed to open bmp image file: '" << (ImageDirectory + fileName) << "'." << std::endl;
         return 0; // Open the file for reading
-
+	}
     fseek(file, 18, SEEK_CUR);  /* start reading width & height */
     fread(&infoheader.biWidth, sizeof(int), 1, file);
 
@@ -121,8 +133,11 @@ CImage * const CImageLoader::loadImage(std::string const & fileName, bool const 
 CImage * const CImageLoader::loadTGAImage(std::string const & fileName)
 {
 	Texture tex;
-	if (! LoadTGA(& tex, fileName.c_str()))
+	if (! LoadTGA(& tex, (ImageDirectory + fileName).c_str()))
+	{
+		std::cerr << "Failed to open tga image file: '" << (ImageDirectory + fileName) << "'." << std::endl;
 		return 0;
+	}
 
 	CImage * Image = new CImage((char *)tex.imageData, tex.width, tex.height, tex.bpp == 32);
 	char Data[1000];

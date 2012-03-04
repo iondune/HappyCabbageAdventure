@@ -48,7 +48,11 @@ CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName, bool const 
 
     unsigned short l_face_flags; //Flag that stores some face information
 
-    if ((l_file=fopen ((MeshDirectory + fileName).c_str(), "rb"))== NULL) return 0; //Open the file
+    if ((l_file=fopen ((MeshDirectory + fileName).c_str(), "rb"))== NULL)
+	{
+		std::cerr << "Failed to open 3ds mesh file: '" << (MeshDirectory + fileName) << "'." << std::endl;
+		return 0; //Open the file
+	}
 
     CMesh * MeshWrapper = new CMesh();
     CMesh::SMeshBuffer * Mesh = new CMesh::SMeshBuffer();
@@ -294,20 +298,6 @@ CMesh * const CMeshLoader::loadAsciiMesh(std::string const & fileName)
         return it->second;
     }
 
-    if (fileName == "Cube")
-    {
-        CMesh * Mesh = createCubeMesh();
-        LoadedMeshes["Cube"] = Mesh;
-        return Mesh;
-    }
-
-    if (fileName == "Disc")
-    {
-        CMesh * Mesh = createDiscMesh();
-        LoadedMeshes["Disc"] = Mesh;
-        return Mesh;
-    }
-
     CMesh * MeshWrapper = new CMesh();
     CMesh::SMeshBuffer * Mesh = new CMesh::SMeshBuffer();
 
@@ -316,7 +306,7 @@ CMesh * const CMeshLoader::loadAsciiMesh(std::string const & fileName)
 
     if (! File.is_open())
     {
-        std::cerr << "Unable to open mesh file: " << fileName << std::endl;
+        std::cerr << "Unable to open ascii mesh file: " << fileName << std::endl;
         return 0;
     }
 
