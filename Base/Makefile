@@ -1,5 +1,5 @@
 ROOT_CABBAGE_DIR=../
-SOURCES=main.cpp CGameState.cpp CPlayerView.cpp FreeType.cpp CGameplayManager.cpp CGameEventReceiver.cpp ./irrxml-1.2/src/irrXML.cpp CBadGuy.cpp EApple.cpp EOrange.cpp EKiwi.cpp EFlame.cpp EBlade.cpp PKiwi.cpp CItem.cpp CIHealth.cpp CIEnergy.cpp
+SOURCES=main.cpp CGameState.cpp CPlayerView.cpp CGameplayManager.cpp CGameEventReceiver.cpp ./irrxml-1.2/src/irrXML.cpp CBadGuy.cpp EApple.cpp EOrange.cpp EKiwi.cpp EFlame.cpp EBlade.cpp PKiwi.cpp CItem.cpp CIHealth.cpp CIEnergy.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o) ../StateMainMenu/CMainMenuState.o ../StateOverworld/COverworldState.o
 CABBAGE= -L../lib/ -lCabbageSound -lCabbageCollider -lCabbageFramework -lCabbageScene -lCLWIB -lOverworldState -lCabbageParticles -lCabbageGUI
 
@@ -40,8 +40,6 @@ CGameEventReceiver.o: CGameEventReceiver.cpp CGameEventReceiver.h
 	g++ -O1 $(INCLUDE) `sdl-config --cflags` -c CGameEventReceiver.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CGameplayManager.o: CGameplayManager.cpp CGameplayManager.h
 	g++ -O1 $(INCLUDE) `sdl-config --cflags` -c CGameplayManager.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
-FreeType.o: FreeType.cpp FreeType.h
-	g++ -O1 `freetype-config --cflags` -c FreeType.cpp
 CBadGuy.o: CBadGuy.cpp CBadGuy.h
 	g++ -O1 $(INCLUDE) `sdl-config --cflags` -c CBadGuy.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 EApple.o: EApple.cpp EApple.h CBadGuy.h

@@ -105,7 +105,27 @@ void CRenderable::setIndexBufferObject(CBufferObject<GLushort> * indexBufferObje
     IndexBufferObject = indexBufferObject;
 }
 
-void CRenderable::draw(CScene const * const scene)
+CShader * CRenderable::updateShaderVariables(CScene const * const Scene)
+{
+	CShader * ShaderToUse = Shader;
+
+    if (! ShaderToUse)
+        ShaderToUse = CShaderLoader::loadShader("Simple");
+
+    // If normal colors are being shown, switch to the normal color shader
+    if (Parent->isDebugDataEnabled(EDebugData::NormalColors))
+    {
+        if (! NormalColorShader)
+            NormalColorShader = CShaderLoader::loadShader("NormalColor");
+        ShaderToUse = NormalColorShader;
+    }
+
+    loadShaderVariables(ShaderToUse, Scene);
+
+	return ShaderToUse;
+}
+
+void CRenderable::draw(CScene const * const Scene)
 {
     // If no ibo loaded, we can't draw anything
     // If the ibo loaded hasn't been synced as an index buffer object, 
@@ -121,20 +141,7 @@ void CRenderable::draw(CScene const * const scene)
         return;
     }
 
-    CShader * ShaderToUse = Shader;
-
-    if (! ShaderToUse)
-        ShaderToUse = CShaderLoader::loadShader("Simple");
-
-    // If normal colors are being shown, switch to the normal color shader
-    if (Parent->isDebugDataEnabled(EDebugData::NormalColors))
-    {
-        if (! NormalColorShader)
-            NormalColorShader = CShaderLoader::loadShader("NormalColor");
-        ShaderToUse = NormalColorShader;
-    }
-
-    loadShaderVariables(ShaderToUse, scene);
+    CShader * ShaderToUse = updateShaderVariables(Scene);
 
     // Create shader context and link all variables required by the shader
     CShaderContext ShaderContext(* ShaderToUse);
@@ -170,25 +177,27 @@ void CRenderable::draw(CScene const * const scene)
     // And bind the synced buffer object to shader...
     ShaderContext.bindIndexBufferObject(IndexBufferObject->getHandle());
 
-    if(DrawType == GL_POINTS) {
-       glEnable(GL_POINT_SPRITE);
-       glEnable(GL_ALPHA);
-       glEnable(GL_BLEND);
-       glDrawArrays(DrawType, 0, Size);
-       glDisable(GL_BLEND);
-       glDisable(GL_ALPHA);
-       glDisable(GL_POINT_SPRITE);
+	// Finally draw!
+    if(DrawType == GL_POINTS)
+	{
+		glEnable(GL_POINT_SPRITE);
+		glEnable(GL_ALPHA);
+		glEnable(GL_BLEND);
+		glDrawArrays(DrawType, 0, Size);
+		glDisable(GL_BLEND);
+		glDisable(GL_ALPHA);
+		glDisable(GL_POINT_SPRITE);
     }
-    else {
-       // Finally draw!
-       glDrawElements(DrawType, IndexBufferObject->getElements().size(), GL_UNSIGNED_SHORT, 0);
+    else
+	{
+		glDrawElements(DrawType, IndexBufferObject->getElements().size(), GL_UNSIGNED_SHORT, 0);
     }
 
     // Draw the normal object if it is enabled
     if (Parent->isDebugDataEnabled(EDebugData::Normals) && NormalObject)
     {
         NormalObject->Transformation = Transformation;
-        NormalObject->draw(scene);
+        NormalObject->draw(Scene);
     }
 
     // Cleanup the texture if it was used

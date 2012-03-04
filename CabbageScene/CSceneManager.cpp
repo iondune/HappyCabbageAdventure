@@ -214,7 +214,7 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 	Black = CTextureLoader::loadTexture("Colors/Black.bmp");
 	Magenta = CTextureLoader::loadTexture("Colors/Magenta.bmp");
 
-	randNorm = CTextureLoader::loadTexture("SSAO/randNormals.bmp")->getTextureHandle();
+	randNorm = CTextureLoader::loadTexture("SSAO/RandNormals.bmp")->getTextureHandle();
 }
 
 void CSceneManager::addSceneObject(ISceneObject * sceneObject)
@@ -245,9 +245,7 @@ void CSceneManager::drawAll()
 		glBindFramebuffer(GL_FRAMEBUFFER, fboId[OnlyNormals ? EFBO_SCENE : EFBO_SSAO_NORMALS]);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		//enableDebugData(EDebugData::NormalColors);
 		RootObject.drawNormals(CurrentScene);
-		//disableDebugData(EDebugData::NormalColors);
 	}
 #endif
 
@@ -497,88 +495,63 @@ void CSceneManager::drawAll()
 }
 
 #include "CApplication.h"
-#define MAX(x,y) ((x)>(y)?(x):(y))
-#define MIN(x,y) ((x)<(y)?(x):(y))
-void CSceneManager::blurSceneIn(float seconds) {
-   BlurOutTime = 0;
-   BlurInTime = seconds;
-   CurTime = CApplication::get().getRunTime();
-   /*
-   float now = CApplication::get().getRunTime();
-   float difference = CApplication::get().getRunTime() - now;
-
-   float drawTimer = 10.0f;
-
-   float oldBlur = FinalBlurSize;
-   while(difference < seconds) {
-      Dim = 1.0f - (seconds - difference)/seconds;
-      FinalBlurSize = MAX(oldBlur - difference/ 0.1f, 0.0f);
-
-      if(drawTimer == 10.0f) {
-         endDraw();
-         SDL_GL_SwapBuffers();
-      }
-      drawTimer -= CApplication::get().getRunTime() - difference;
-      if(drawTimer <= 0.0f)
-         drawTimer = 10.0f;
-
-      difference = CApplication::get().getRunTime() - now;
-   }
-   */
+void CSceneManager::blurSceneIn(float seconds, float const RunTime)
+{
+	std::cout << "Blurring in scene..." << std::endl;
+	BlurOutTime = 0;
+	BlurInTime = seconds;
+	CurTime = RunTime;
 }
 
-void CSceneManager::blurSceneOut(float seconds) {
-   BlurOutTime = seconds;
-   BlurInTime = 0;
-   CurTime = CApplication::get().getRunTime();
+void CSceneManager::blurSceneOut(float seconds, float const RunTime)
+{
+	BlurOutTime = seconds;
+	BlurInTime = 0;
+	CurTime = RunTime;
 
 
-   float now = CApplication::get().getRunTime();
-   float difference = CApplication::get().getRunTime() - now;
+	float now = RunTime;
+	float difference = RunTime - now;
 
-   float drawTimer = 10.0f;
+	float drawTimer = 10.0f;
 
-   while(difference < seconds) {
-      Dim = (seconds - difference)/seconds;
-      FinalBlurSize = difference/ 0.1f;
+	while (difference < seconds)
+	{
+		CApplication::get().updateTime();
 
-      if(drawTimer == 10.0f) {
-         endDraw();
-         SDL_GL_SwapBuffers();
-      }
-      drawTimer -= CApplication::get().getRunTime() - difference;
-      if(drawTimer <= 0.0f)
-         drawTimer = 10.0f;
+		Dim = (seconds - difference)/seconds;
+		FinalBlurSize = difference/ 0.1f;
 
-      difference = CApplication::get().getRunTime() - now;
-   }
+		if (drawTimer == 10.0f)
+		{
+			endDraw();
+			SDL_GL_SwapBuffers();
+		}
+
+		drawTimer -= CApplication::get().getRunTime() - difference;
+
+		if (drawTimer <= 0.0f)
+			drawTimer = 10.0f;
+
+		difference = CApplication::get().getRunTime() - now;
+	}
 }
 
+void CSceneManager::endDraw()
+{
+	if(CurTime == -1.0f)
+		Dim = 1.0f;
 
-void CSceneManager::endDraw() {
-   if(CurTime == -1.0f) {
-      Dim = 1.0f;
-   }
-   if(BlurInTime > 0.0f) {
-      FinalBlurSize = 0.0f;
-      Dim = MAX(1.0f - (BlurInTime - (CApplication::get().getRunTime() - CurTime))/BlurInTime, 0.0f);
-      //printf("Diff: %0.2f\n", (CApplication::get().getRunTime() - CurTime));
-      if((CApplication::get().getRunTime() - CurTime) > BlurInTime) {
-         BlurInTime = 0.0f;
-         CurTime = -1.0f;
-      }
-   }
-   /*
-   if(BlurOutTime > 0.0f) {
-      FinalBlurSize = 0.0f;
-      Dim = MIN((BlurOutTime - (CApplication::get().getRunTime() - CurTime))/BlurOutTime, 1.0f);
-      if((CApplication::get().getRunTime() - CurTime) > BlurOutTime) {
-         BlurOutTime = 0.0f;
-         CurTime = -1.0f;
-      }
-   }
-   */
-
+	if(BlurInTime > 0.0f)
+	{
+		FinalBlurSize = 0.0f;
+		Dim = std::max(1.0f - (BlurInTime - (CApplication::get().getRunTime() - CurTime))/BlurInTime, 0.0f);
+		if((CApplication::get().getRunTime() - CurTime) > BlurInTime)
+		{
+			BlurInTime = 0.0f;
+			CurTime = -1.0f;
+		}
+	}
 
 	// Setup for quad rendering
 	glEnable(GL_TEXTURE_2D);
@@ -677,4 +650,10 @@ void CScene::enableDebugData(EDebugData::Domain const type)
 void CScene::disableDebugData(EDebugData::Domain const type)
 {
 	RootObject.disableDebugData(type);
+}
+
+
+void CSceneManager::load()
+{
+	RootObject.load(this);
 }

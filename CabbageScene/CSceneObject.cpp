@@ -106,3 +106,13 @@ CShader * CSceneObject::getShader()
 	}
 	return Shader;
 }
+
+void CSceneObject::load(CScene const * const Scene)
+{
+	ISceneObject::load(Scene);
+
+	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
+	{
+		(* it)->updateShaderVariables(Scene);
+	}
+}

@@ -12,17 +12,13 @@ void CPDust::setEngine(Cabbage::Collider::CEngine *engine) {
    ready = 0;
    Engine = engine;
    Actor = Engine->addActor();
-   Engine->removeActor(Actor);
+   Actor->CollideableLevel = INTERACTOR_NONCOLLIDERS;
+   Actor->CanCollideWith = INTERACTOR_BLOCKS;
 }
 
 void CPDust::setupActor() {
-   Engine->removeActor(Actor);
-   Actor = Engine->addActor();
-   Actor->CollideableLevel = INTERACTOR_NONCOLLIDERS;
-   Actor->CanCollideWith = INTERACTOR_BLOCKS;
-   //Actor->setArea(SRect2(0.0f, 0.0f, 0.001, 0.001));
    Actor->setArea(SRect2(centerPos->X, centerPos->Y - 0.5f, 0.001f, 0.001f));
-   //Actor->setArea(SRect2(centerPos->X + RAND_POS_NEG(0.3f), centerPos->Y + RAND_POS_NEG(0.3f), 0.05, 0.05));
+   Actor->setVelocity(SVector2(0.0f));
    Actor->setImpulse(SVector2(((*lookRight)?1:-1)*((float)rand()/(float)RAND_MAX*3.6f + 0.9f), (float)rand()/(float)RAND_MAX*0.3f + 0.9f), 0.1f);
    Actor->Gravity = 40.0f;
 }
@@ -39,11 +35,6 @@ void CPDust::updateMatrices(float timeElapsed) {
          setupActor();
       }
    }
-   /*
-   else if(Duration == -1) {
-      Engine->removeActor(Actor);
-   }
-   */
    else {
       Duration += timeElapsed;
       zFactor += zVelocity * Actor->getVelocity().X * timeElapsed;
