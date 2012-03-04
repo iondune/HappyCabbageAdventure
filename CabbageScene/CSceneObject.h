@@ -35,6 +35,8 @@ public:
 	CShader const * const getShader() const;
 	CShader * getShader();
 
+	virtual void load(CScene const * const Scene);
+
 };
 
 #endif

@@ -27,6 +27,7 @@ class CApplication
     CApplication();
 
     float ElapsedTime;
+	float RunTime;
 
     unsigned int Time0, Time1;
 
@@ -45,6 +46,7 @@ public:
 
     void run();
 
+	void updateTime();
     float const getElapsedTime() const;
     float const getRunTime() const;
 

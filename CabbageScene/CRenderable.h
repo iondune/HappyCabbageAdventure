@@ -84,6 +84,8 @@ public:
     void removeAttribute(std::string const & label);
     void removeUniform(std::string const & label);
 
+	CShader * updateShaderVariables(CScene const * const Scene);
+
 	IAttribute const * const getAttribute(std::string const & label);
 	IUniform const * const getUniform(std::string const & label);
 	

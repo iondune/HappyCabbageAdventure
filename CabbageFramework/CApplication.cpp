@@ -121,11 +121,21 @@ void CApplication::skipElapsedTime()
     Time0 = SDL_GetTicks();
 }
 
+void CApplication::updateTime()
+{
+	Time1 = SDL_GetTicks();
+	ElapsedTime = (float) (Time1 - Time0) / 1000.f;
+	RunTime += ElapsedTime;
+	Time0 = Time1;
+}
+
 void CApplication::run()
 {
     Running = true;
 
 	Time0 = SDL_GetTicks();
+
+	RunTime = ElapsedTime = 0.f;
 
 	while (Running)
 	{
@@ -207,9 +217,7 @@ void CApplication::run()
             } // switch (Event.type)
         } // while (SDL_PollEvent(& Event))
 
-        Time1 = SDL_GetTicks();
-        ElapsedTime = (float) (Time1 - Time0) / 1000.f;
-        Time0 = Time1;
+        updateTime();
 
         EventManager->OnGameTickStart(ElapsedTime);
         EventManager->OnGameTickEnd(ElapsedTime);
@@ -229,7 +237,7 @@ float const CApplication::getElapsedTime() const
 
 float const CApplication::getRunTime() const
 {
-   return (float) SDL_GetTicks() / 1000.f;
+	return RunTime;
 }
 
 SPosition2 const & CApplication::getWindowSize() const

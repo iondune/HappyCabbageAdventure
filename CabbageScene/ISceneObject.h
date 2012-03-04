@@ -101,6 +101,8 @@ public:
 	bool const isCullingEnabled() const;
 	void setCullingEnabled(bool const culling);
 
+	virtual void load(CScene const * const Scene);
+
 };
 
 #endif

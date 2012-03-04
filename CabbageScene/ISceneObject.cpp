@@ -228,3 +228,9 @@ void ISceneObject::setCullingEnabled(bool const culling)
 {
 	UseCulling = culling;
 }
+
+void ISceneObject::load(CScene const * const Scene)
+{
+	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
+		(* it)->load(Scene);
+}

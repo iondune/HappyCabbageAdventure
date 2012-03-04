@@ -102,8 +102,10 @@ public:
 
 	void drawAll();
 	void endDraw();
-	void blurSceneIn(float seconds);
-	void blurSceneOut(float seconds);
+	void blurSceneIn(float seconds, float const RunTime);
+	void blurSceneOut(float seconds, float const RunTime);
+
+	void load();
 
 
 	bool DoSSAO, OnlySSAO, DoBloom, DoBlur, OnlyNormals;

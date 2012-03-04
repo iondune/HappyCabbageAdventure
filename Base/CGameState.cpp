@@ -333,10 +333,13 @@ void CGameState::Initialize() {
 //Initalizer fxn
 void CGameState::begin()
 {
-   GameplayManager = NULL;
-   numLives = -3;
-   Initialize();
-   Application.skipElapsedTime();
+	std::cout << "Start gamestate init..." << std::endl;
+	GameplayManager = NULL;
+	numLives = -3;
+	Initialize();
+	CApplication::get().getSceneManager().load();
+	Application.skipElapsedTime();
+	std::cout << "Finished gamestate init..." << std::endl;
 }
 
 SRect2 oldMiddle;
