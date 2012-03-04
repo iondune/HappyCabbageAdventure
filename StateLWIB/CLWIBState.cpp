@@ -447,7 +447,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                     enemyType++;
                 else
                     enemyType = 0;
-            } else {
+            } else if (!oneDown && !threeDown && !tDown){
                 if (cDown == 0) { 
                     if (textureType < 2  && textureType >= 0 && textureType != 2)
                         textureType++;
@@ -489,7 +489,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                     enemyType--;
                 else
                     enemyType = 0;
-            } else {
+            } else if (!oneDown && !threeDown && !tDown){
                 if (cDown == 0) {
                     if (textureType != 0 && textureType > 0)   
                         textureType--;
