@@ -245,9 +245,7 @@ void CSceneManager::drawAll()
 		glBindFramebuffer(GL_FRAMEBUFFER, fboId[OnlyNormals ? EFBO_SCENE : EFBO_SSAO_NORMALS]);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		//enableDebugData(EDebugData::NormalColors);
 		RootObject.drawNormals(CurrentScene);
-		//disableDebugData(EDebugData::NormalColors);
 	}
 #endif
 
@@ -500,58 +498,36 @@ void CSceneManager::drawAll()
 #define MAX(x,y) ((x)>(y)?(x):(y))
 #define MIN(x,y) ((x)<(y)?(x):(y))
 void CSceneManager::blurSceneIn(float seconds) {
-   BlurOutTime = 0;
-   BlurInTime = seconds;
-   CurTime = CApplication::get().getRunTime();
-   /*
-   float now = CApplication::get().getRunTime();
-   float difference = CApplication::get().getRunTime() - now;
-
-   float drawTimer = 10.0f;
-
-   float oldBlur = FinalBlurSize;
-   while(difference < seconds) {
-      Dim = 1.0f - (seconds - difference)/seconds;
-      FinalBlurSize = MAX(oldBlur - difference/ 0.1f, 0.0f);
-
-      if(drawTimer == 10.0f) {
-         endDraw();
-         SDL_GL_SwapBuffers();
-      }
-      drawTimer -= CApplication::get().getRunTime() - difference;
-      if(drawTimer <= 0.0f)
-         drawTimer = 10.0f;
-
-      difference = CApplication::get().getRunTime() - now;
-   }
-   */
+	BlurOutTime = 0;
+	BlurInTime = seconds;
+	CurTime = CApplication::get().getRunTime();
 }
 
 void CSceneManager::blurSceneOut(float seconds) {
-   BlurOutTime = seconds;
-   BlurInTime = 0;
-   CurTime = CApplication::get().getRunTime();
+	BlurOutTime = seconds;
+	BlurInTime = 0;
+	CurTime = CApplication::get().getRunTime();
 
 
-   float now = CApplication::get().getRunTime();
-   float difference = CApplication::get().getRunTime() - now;
+	float now = CApplication::get().getRunTime();
+	float difference = CApplication::get().getRunTime() - now;
 
-   float drawTimer = 10.0f;
+	float drawTimer = 10.0f;
 
-   while(difference < seconds) {
-      Dim = (seconds - difference)/seconds;
-      FinalBlurSize = difference/ 0.1f;
+	while(difference < seconds) {
+		Dim = (seconds - difference)/seconds;
+		FinalBlurSize = difference/ 0.1f;
 
-      if(drawTimer == 10.0f) {
-         endDraw();
-         SDL_GL_SwapBuffers();
-      }
-      drawTimer -= CApplication::get().getRunTime() - difference;
-      if(drawTimer <= 0.0f)
-         drawTimer = 10.0f;
+		if(drawTimer == 10.0f) {
+			endDraw();
+			SDL_GL_SwapBuffers();
+		}
+		drawTimer -= CApplication::get().getRunTime() - difference;
+		if(drawTimer <= 0.0f)
+			drawTimer = 10.0f;
 
-      difference = CApplication::get().getRunTime() - now;
-   }
+		difference = CApplication::get().getRunTime() - now;
+	}
 }
 
 

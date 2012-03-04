@@ -100,15 +100,15 @@ public:
 	CMeshSceneObject * addMeshSceneObject(CMesh * Mesh, CShader * Shader, CMaterial const & Material);
 	CMeshSceneObject * addMeshSceneObject(std::string const & Mesh, std::string const & Shader, CMaterial const & Material);
 
-   void drawAll();
-   void endDraw();
-   void blurSceneIn(float seconds);
-   void blurSceneOut(float seconds);
+	void drawAll();
+	void endDraw();
+	void blurSceneIn(float seconds);
+	void blurSceneOut(float seconds);
 
 
 	bool DoSSAO, OnlySSAO, DoBloom, DoBlur, OnlyNormals;
-   float FinalBlurSize, Dim;
-   float BlurInTime, BlurOutTime, CurTime;
+	float FinalBlurSize, Dim;
+	float BlurInTime, BlurOutTime, CurTime;
 };
 
 #endif
