@@ -104,6 +104,7 @@ void CLWIBState::begin()
    BlocksInit();
    PrepPreviews();
    prepText();
+   prepHud();
    printf("END OF BEGIN\n");
 
 }
@@ -167,7 +168,6 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    //Application.getSceneManager().drawAll();
 
    //Draw Text
-   //freetype::print(our_font, 10, WindowHeight-40.f, "Elapsed Time: %0.0f ", Application.getRunTime());
    if (!showHelp)
        freetype::print(our_font, (float)WindowWidth/2, (float)WindowHeight/2, "+");
 
@@ -1087,6 +1087,28 @@ void CLWIBState::prepText() {
  
 }
 
+void CLWIBState::prepHud() {
+   CTexture *test = new CTexture(CImageLoader::loadTGAImage("wood.tga"));
+    
+    /* leftArrow = new CGUIImageWidget() ;
+    rightArrow = new CGUIImageWidget();
+    cabbage = new CGUIImageWidget();
+    flag = new CGUIImageWidget();
+    grassBlock = new CGUIImageWidget(test,SVector2(.1f, .1f));
+    grassBlock->setPosition(SVector2(1.05f, .5f));
+    rockBlock = new CGUIImageWidget(test,SVector2(.1f, .1f));
+    grassBlock->setPosition(SVector2(1.15f, .5f));
+    groundBlock = new CGUIImageWidget(test,SVector2(.5f, .5f));
+    dirtBlock = new CGUIImageWidget(test,SVector2(.5f, .5f));
+    appleE =new CGUIImageWidget() ;
+    orangeE =new CGUIImageWidget() ;
+    kiwiE = new CGUIImageWidget();
+    fireE = new CGUIImageWidget();
+    bladeE = new CGUIImageWidget();
+    cycleLeft = new CGUIImageWidget();
+    cycleRight = new CGUIImageWidget();*/
+   // Application.getGUIEngine().addWidget(grassBlock);
+}
 void CLWIBState::stepCamera(float delta) {
    float factor = 6;
    //D

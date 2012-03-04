@@ -34,10 +34,14 @@ class CLWIBState : public CState<CLWIBState>
    int enemyType, textureType;
    int WindowWidth, WindowHeight;
    // GUIImageWidget
-   CGUIFontWidget *block1, *block2, *block3, *block4, *block5;
-   CGUIFontWidget *enemy1, *enemy2, *enemy3, *enemy4, *enemy5;
-   CGUIFontWidget *flag, *cabbage, *remove, *help;
+   CGUIFontWidget *block1, *block2, *block3;
+   CGUIFontWidget *help;
 
+   // GUIImagewidgets
+   CGUIImageWidget *leftArrow, *rightArrow, *cabbage, *flag;
+   CGUIImageWidget *grassBlock, *rockBlock, *groundBlock, *dirtBlock;
+   CGUIImageWidget *appleE, *orangeE, *kiwiE, *fireE, *bladeE;
+   CGUIImageWidget *cycleLeft, *cycleRight;
     //CMESH stuff
    CMesh *cubeMesh, *appleMesh, *orangeMesh, *kiwiMesh, *cabbageMesh, *groundMesh, *bladeMesh, *flagMesh;
 
@@ -71,17 +75,12 @@ class CLWIBState : public CState<CLWIBState>
    void PrepPreviews();
 
    void PrepSky();
-
    void loadWorld();
-
    void printXML();
-
    void drawSubWindow();
-
    void BlocksInit( void ); 
-  
    void prepText();
-
+   void prepHud();
    void stepCamera(float delta);
 
 };
