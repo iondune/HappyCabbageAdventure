@@ -169,14 +169,14 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
    myObj->setBoundingBox(SBoundingBox3(centerPos - 0.5, centerPos + 0.5));
 
    const char *textureToUse;
-   std::string v = "Textures/particle";
+   std::string v = "Base/particle";
 
    switch(particleType) {
    case LEAF_PARTICLE:
-      textureToUse = "Textures/particleStar.bmp";
+      textureToUse = "Base/particleStar.bmp";
       break;
    case CUBE_PARTICLE:
-      textureToUse = "Textures/particleStar.bmp";
+      textureToUse = "Base/particleStar.bmp";
       /* Texture input
       std::cout << "What particle file?";
       std::cin >> buf;
@@ -186,25 +186,25 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
       */
       break;
    case FLAME_PARTICLE:
-      textureToUse = "Textures/particle2.bmp";
+      textureToUse = "Base/particle2.bmp";
       break;
    case DEATH_PARTICLE:
-      textureToUse = "Textures/particleStar.bmp";
+      textureToUse = "Base/particleStar.bmp";
       break;
    case LASER_CHARGING_PARTICLE:
-      textureToUse = "Textures/particle2.bmp";
+      textureToUse = "Base/particle2.bmp";
       break;
    case LASER_FIRING_PARTICLE:
-      textureToUse = "Textures/particle2.bmp";
+      textureToUse = "Base/particle2.bmp";
       break;
    case HURT_PARTICLE:
-      textureToUse = "Textures/particleLeaf.bmp";
+      textureToUse = "Base/particleLeaf.bmp";
       break;
    case BURST_PARTICLE:
-      textureToUse = "Textures/particleStar.bmp";
+      textureToUse = "Base/particleStar.bmp";
       break;
    case DUST_PARTICLE:
-      textureToUse = "Textures/particle2.bmp";
+      textureToUse = "Base/particle2.bmp";
       break;
    }
 

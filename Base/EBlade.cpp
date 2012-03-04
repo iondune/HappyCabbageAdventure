@@ -17,7 +17,7 @@ EBlade::EBlade(float x, float y, float w, float h, CGameplayManager* manager) {
 //Loads and moves the mesh
 void EBlade::loadMesh() {
    Renderable = new CMeshSceneObject();
-   CMesh *mesh = CMeshLoader::load3dsMesh("Models/trap1.3ds");
+   CMesh *mesh = CMeshLoader::load3dsMesh("Base/trap1.3ds");
    if(mesh) {
       mesh->resizeMesh(SVector3(1));
       mesh->centerMeshByExtents(SVector3(0));

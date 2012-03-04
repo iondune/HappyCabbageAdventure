@@ -78,7 +78,6 @@ void CLWIBState::begin()
    SDL_WM_SetCaption("Happy Cabbage Adventure", NULL);
 
    //Initialize Font
-   our_font.init("WIFFLES_.TTF", 30);
 
    eye = SVector3(0,0,10);
    look = SVector3(0,0,-1);
@@ -169,7 +168,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
 
    //Draw Text
    if (!showHelp)
-       freetype::print(our_font, (float)WindowWidth/2, (float)WindowHeight/2, "+");
+       //freetype::print(our_font, (float)WindowWidth/2, (float)WindowHeight/2, "+");
 
    if (showHelp) {
        block3->setVisible(false);
@@ -655,7 +654,7 @@ void CLWIBState::printXML() {
 void CLWIBState::end()
 {
    Application.getGUIEngine().removeAllWidgets(); 
-   our_font.clean();
+   //our_font.clean();
    placeables.clear();
    redoPlaceables.clear();
    blocks.clear();
@@ -667,18 +666,18 @@ void CLWIBState::PrepPreviews() {
    blocks.push_back(PreviewBlock = new CMeshSceneObject());
    PreviewBlock->setMesh(cubeMesh);
 
-   PreviewBlock->setTexture("Textures/white.bmp");
+   PreviewBlock->setTexture("Colors/white.bmp");
   
    PreviewBlock->setShader(DiffuseTexture);
    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
 
    blocks.push_back(PreviewEnemy = new CMeshSceneObject());
-   appleMesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
-   orangeMesh = CMeshLoader::load3dsMesh("Models/orange.3ds");
-   kiwiMesh = CMeshLoader::load3dsMesh("Models/killerkiwi.3ds");
-   cabbageMesh = CMeshLoader::load3dsMesh("Models/crappycabbage.3ds");
-   bladeMesh = CMeshLoader::load3dsMesh("Models/trap1.3ds");
-   flagMesh = CMeshLoader::load3dsMesh("Models/flag.3ds");
+   appleMesh = CMeshLoader::load3dsMesh("Base/appleEnemy.3ds");
+   orangeMesh = CMeshLoader::load3dsMesh("Base/orange.3ds");
+   kiwiMesh = CMeshLoader::load3dsMesh("Base/killerkiwi.3ds");
+   cabbageMesh = CMeshLoader::load3dsMesh("Base/crappycabbage.3ds");
+   bladeMesh = CMeshLoader::load3dsMesh("Base/trap1.3ds");
+   flagMesh = CMeshLoader::load3dsMesh("Base/flag.3ds");
    
    blocks.push_back(PreviewFlag = new CMeshSceneObject());
    blocks.push_back(PreviewCabbage = new CMeshSceneObject());
@@ -850,12 +849,12 @@ void CLWIBState::PrepCabbage(float x, float y) {
     tempCabbage->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
     tempCabbage->setRotation(SVector3(-90, 0, 0));
     tempCabbage->setScale(SVector3(0.5, 0.5, 0.5));
-    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
-    blockMap[(int)x+25][(int)(y-0.5+25)].r = tempCabbage;
-    blockMap[(int)x+25][(int)(y-0.5+25)].p = tempPlaceable;
-    blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
-    blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
-    xCabbage = x, yCabbage = y;
+    blockMap[(int)x+25][(int)(y-0.5f+25)].o = true;
+    blockMap[(int)x+25][(int)(y-0.5f+25)].r = tempCabbage;
+    blockMap[(int)x+25][(int)(y-0.5f+25)].p = tempPlaceable;
+    blockMap[(int)x+25][(int)(y-0.5f+25)].mapX = (int)x+25;
+    blockMap[(int)x+25][(int)(y-0.5f+25)].mapY = (int)(y-0.5f+25);
+    xCabbage = (int) x, yCabbage = (int) y;
 
     lastCabbage = blockMap[(int)x+25][(int)(y-0.5+25)];
     Application.getSceneManager().addSceneObject(tempCabbage);
@@ -890,13 +889,13 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
    placeables.push_back(tempPlaceable = new CBlock(x, y, w, h, d, t, moving));
    tempBlock->setMesh(cubeMesh);
    if (t == 0)
-        tempBlock->setTexture("Textures/grass.bmp");
+        tempBlock->setTexture("Base/grass.bmp");
    else if (t == 1)
-        tempBlock->setTexture("Textures/dirt.bmp");
+        tempBlock->setTexture("Base/dirt.bmp");
    else if (t == 2)
-        tempBlock->setTexture("Textures/rock.bmp");
+        tempBlock->setTexture("Base/rock.bmp");
    else if (t == -5)
-        tempBlock->setTexture("Textures/GrassyGrass.bmp");
+        tempBlock->setTexture("Base/GrassyGrass.bmp");
    else
        printf("texture doesn't exist\n");
    tempBlock->setShader(DiffuseTexture);
@@ -928,7 +927,7 @@ void CLWIBState::PrepGrass(float x, float y, float w, float h) {
    blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
 
-   tempBlock->setTexture("Textures/sky.bmp");
+   tempBlock->setTexture("Base/sky.bmp");
    tempBlock->setShader(DiffuseTexture);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    tempBlock->setScale(SVector3(w, h, .5));
@@ -937,7 +936,7 @@ void CLWIBState::PrepGrass(float x, float y, float w, float h) {
    blocks.push_back(tempyBlock = new CMeshSceneObject());
    tempyBlock->setMesh(cubeMesh);
 
-   tempyBlock->setTexture("Textures/sky.bmp");
+   tempyBlock->setTexture("Base/sky.bmp");
    tempyBlock->setShader(DiffuseTexture);
    tempyBlock->setTranslation(SVector3(172, (y+(y+h))/2, 0));
    tempyBlock->setScale(SVector3(w, h, .5));
@@ -950,7 +949,7 @@ void CLWIBState::PrepSky() {
    CMeshSceneObject *tempBlock;
    blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
-   tempBlock->setTexture("Textures/sky.bmp");
+   tempBlock->setTexture("Base/sky.bmp");
    tempBlock->setShader(DiffuseTexture);
    tempBlock->setTranslation(SVector3(0, 24, -2.5));
    tempBlock->setScale(SVector3(400, 50, 1));
@@ -973,7 +972,6 @@ int startx, starty;
 float pitchphi, yawtheta;
 int mouseDown;
 void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
-    qd tempHolder;
    if(Event.Button.Value == SMouseEvent::EButton::Left) {
       if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
          mouseDown = 1;

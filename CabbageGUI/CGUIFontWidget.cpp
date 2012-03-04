@@ -6,12 +6,18 @@
 //#define OGLFT_NO_QT
 #include "liboglft/OGLFT.h"
 
+std::string CGUIFontWidget::FontDirectory = "../Media/Fonts/";
+
 void CGUIFontWidget::makeRenderer(std::string const & FileName, float const Size)
 {
 	if (Renderer)
 		delete Renderer;
 
-	Renderer = new OGLFT::Translucent(FileName.c_str(), Size);
+	Renderer = new OGLFT::Translucent((FontDirectory + FileName).c_str(), Size);
+	if (! Renderer)
+	{
+		std::cerr << "Failed to open ttf font file: '" << (FontDirectory + FileName) << "'." << std::endl;
+	}
 
 	if (Renderer == 0 || ! Renderer->isValid())
 	{
@@ -50,8 +56,11 @@ void CGUIFontWidget::draw()
 	glEnable(GL_BLEND);
 	glDisable(GL_DEPTH_TEST);
 
-	Renderer->setStringRotation(Rotation);
-	Renderer->draw(Position.X, Position.Y, Text.c_str());
+	if (Renderer)
+	{
+		Renderer->setStringRotation(Rotation);
+		Renderer->draw(Position.X, Position.Y, Text.c_str()); 
+	}
 
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
@@ -59,12 +68,13 @@ void CGUIFontWidget::draw()
 
 void CGUIFontWidget::setColor(SColor const & Color)
 {
-	Renderer->setForegroundColor(Color.Red, Color.Green, Color.Blue, Color.Alpha);
+	if (Renderer)
+		Renderer->setForegroundColor(Color.Red, Color.Green, Color.Blue, Color.Alpha);
 }
 
 SColor const CGUIFontWidget::getColor()
 {
-	return SColor(Renderer->foregroundRed(), Renderer->foregroundGreen(), Renderer->foregroundBlue(), Renderer->foregroundAlpha());
+	return Renderer ? SColor(Renderer->foregroundRed(), Renderer->foregroundGreen(), Renderer->foregroundBlue(), Renderer->foregroundAlpha()) : SColor();
 }
 
 void CGUIFontWidget::setText(std::string const & text)

@@ -142,8 +142,6 @@ void CPlayerView::draw() {
 
 void CPlayerView::establishCamera(ICamera *Camera, int angle, int shaking) {
    SVector3 camPos, camLook;
-   float zfactor, yfactor;
-   //yfactor = (CenterPosition.Y - 4.6f) * 0.7f;
 
 
    if(angle == 0) {

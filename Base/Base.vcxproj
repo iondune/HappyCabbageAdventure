@@ -38,30 +38,30 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <IncludePath>
-        ;$(VisualStudioDir)\Projects\glew-1.7.0\include;
-        ;$(VisualStudioDir)\Projects\SDL-1.2.15\include;
-        ;$(VisualStudioDir)\Projects\freetype-2.4.2\include;
-        ;$(SolutionDir)\CabbageCore;
-        ;$(SolutionDir)\CabbageFramework;
-        ;$(SolutionDir)\CabbageScene;
-        ;$(SolutionDir)\CabbageGUI;
-        ;$(SolutionDir)\CabbageParticle;
-        ;$(SolutionDir)\CabbageCollider;
-        ;$(IncludePath);
+      ;$(VisualStudioDir)\Projects\glew-1.7.0\include;
+      ;$(VisualStudioDir)\Projects\SDL-1.2.15\include;
+      ;$(VisualStudioDir)\Projects\freetype-2.4.2\include;
+      ;$(SolutionDir)\CabbageCore;
+      ;$(SolutionDir)\CabbageFramework;
+      ;$(SolutionDir)\CabbageScene;
+      ;$(SolutionDir)\CabbageGUI;
+      ;$(SolutionDir)\CabbageParticle;
+      ;$(SolutionDir)\CabbageCollider;
+      ;$(IncludePath);
     </IncludePath>
     <LibraryPath>
-        ;$(VisualStudioDir)\Projects\glew-1.7.0\lib;
-        ;$(VisualStudioDir)\Projects\SDL-1.2.15\lib\x86;
-        ;$(VisualStudioDir)\Projects\freetype-2.4.2\lib;
-        ;$(LibraryPath);
+      ;$(VisualStudioDir)\Projects\glew-1.7.0\lib;
+      ;$(VisualStudioDir)\Projects\SDL-1.2.15\lib\x86;
+      ;$(VisualStudioDir)\Projects\freetype-2.4.2\lib;
+      ;$(LibraryPath);
     </LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-        ;$(SolutionDir)\Debug;
-        ;$(LibraryPath);
+      ;$(SolutionDir)\Debug;
+      ;$(LibraryPath);
     </LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-        ;$(SolutionDir)\Release;
-        ;$(LibraryPath);
+      ;$(SolutionDir)\Release;
+      ;$(LibraryPath);
     </LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -112,7 +112,6 @@
     <ClInclude Include="EFlame.h" />
     <ClInclude Include="EKiwi.h" />
     <ClInclude Include="EOrange.h" />
-    <ClInclude Include="FreeType.h" />
     <ClInclude Include="header.h" />
     <ClInclude Include="irrxml-1.2\src\irrXML.h" />
     <ClInclude Include="Materials.h" />
@@ -133,7 +132,6 @@
     <ClCompile Include="EFlame.cpp" />
     <ClCompile Include="EKiwi.cpp" />
     <ClCompile Include="EOrange.cpp" />
-    <ClCompile Include="FreeType.cpp" />
     <ClCompile Include="irrxml-1.2\src\irrXML.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Materials.cpp" />

@@ -23,9 +23,6 @@
     <ClCompile Include="CPlayerView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FreeType.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="irrxml-1.2\src\irrXML.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -83,9 +80,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="draw.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FreeType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="header.h">

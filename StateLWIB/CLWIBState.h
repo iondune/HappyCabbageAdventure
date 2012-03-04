@@ -30,7 +30,6 @@ class CLWIBState : public CState<CLWIBState>
    int yCabbage;
    int blockCycle;
    bool showHelp;
-   freetype::font_data our_font;
    int enemyType, textureType;
    int WindowWidth, WindowHeight;
    // GUIImageWidget

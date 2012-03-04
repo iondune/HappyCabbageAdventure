@@ -18,7 +18,7 @@ CIHealth::CIHealth(float x, float y, float w, float h, CGameplayManager* manager
 //Loads and moves the mesh
 void CIHealth::loadMesh() {
    Renderable = new CMeshSceneObject();
-   CMesh *mesh = CMeshLoader::load3dsMesh("Models/healthboost.3ds");
+   CMesh *mesh = CMeshLoader::load3dsMesh("Base/healthboost.3ds");
    if(mesh) {
       mesh->resizeMesh(SVector3(1));
       mesh->centerMeshByExtents(SVector3(0));

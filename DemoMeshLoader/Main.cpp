@@ -127,8 +127,8 @@ public:
 		WingMan = new CMeshSceneObject();
 		WingMan->setMesh(MeshVertex);
 		WingMan->setShader("DiffuseTexture");
-		WingMan->setTexture("../Base/Textures/GrassyGrass.bmp", 2);
-		WingMan->setTexture("../Base/Textures/DirtyDirt.bmp", 3);
+		WingMan->setTexture("Base/GrassyGrass.bmp", 2);
+		WingMan->setTexture("Base/DirtyDirt.bmp", 3);
 		ISceneObject * Dummy = new ISceneObject();
 		Dummy->setTranslation(SVector3(1.5f,0,0));
 		WingMan->setParent(Dummy);
@@ -137,20 +137,20 @@ public:
 		CMesh * Cube = CMeshLoader::createCubeMesh();
 		CMeshSceneObject * SkyBox = SceneManager.addMeshSceneObject(Cube, CShaderLoader::loadShader("DiffuseTexture"));
 		SkyBox->setScale(SVector3(20.f));
-		SkyBox->setTexture("../DemoMeshLoader/stars.bmp");
+		SkyBox->setTexture("../../DemoMeshLoader/stars.bmp");
 		SkyBox->setCullingEnabled(false);
 
 		CApplication::get().getSceneManager().addSceneObject(Renderable);
 
-		Image = new CGUIImageWidget("../DemoMeshLoader/spaceshiptexture.bmp", SVector2(0.2f, 0.2f));
+		Image = new CGUIImageWidget("../../DemoMeshLoader/spaceshiptexture.bmp", SVector2(0.2f, 0.2f));
 		GUIEngine.addWidget(Image);
 
-		Image = new CGUIImageWidget(CImageLoader::loadTexture("../Base/Textures/sky.bmp"), SVector2(0.2f, 0.2f));
+		Image = new CGUIImageWidget(CImageLoader::loadTexture("Base/sky.bmp"), SVector2(0.2f, 0.2f));
 		Image->setPosition(SVector2(0.2f, 0.f));
 		Image->setRotation(45.f);
 		GUIEngine.addWidget(Image);
 
-		Image = new CGUIImageWidget(CImageLoader::loadTexture("../Base/wood011.bmp"), SVector2(0.2f, 0.2f));
+		Image = new CGUIImageWidget(CImageLoader::loadTexture("MainMenu/wood.tga"), SVector2(0.2f, 0.2f));
 		Image->setPosition(SVector2(0.4f, 0.f));
 		GUIEngine.addWidget(Image);
 

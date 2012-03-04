@@ -14,7 +14,7 @@ PKiwi::PKiwi(float x, float y, float w, float h, CGameplayManager* manager) {
 //Loads and moves the mesh
 void PKiwi::loadMesh() {
    Renderable = new CMeshSceneObject();
-   CMesh *mesh = CMeshLoader::load3dsMesh("Models/orange.3ds");
+   CMesh *mesh = CMeshLoader::load3dsMesh("Base/orange.3ds");
    if(mesh) {
       mesh->resizeMesh(SVector3(1));
       mesh->centerMeshByExtents(SVector3(0));

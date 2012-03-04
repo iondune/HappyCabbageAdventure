@@ -32,6 +32,8 @@ public:
 	void setText(std::string const & text);
 	std::string const & getText() const;
 
+	static std::string FontDirectory;
+
 };
 
 #endif

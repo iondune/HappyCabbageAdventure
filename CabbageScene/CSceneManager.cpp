@@ -210,11 +210,11 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 	BlendShader = CShaderLoader::loadShader("Blend");
 	BlurV = CShaderLoader::loadShader("BlurV");
 	BlurH = CShaderLoader::loadShader("BlurH");
-	White = CTextureLoader::loadTexture("White.bmp");
-	Black = CTextureLoader::loadTexture("Black.bmp");
-	Magenta = CTextureLoader::loadTexture("Mag.bmp");
+	White = CTextureLoader::loadTexture("Colors/White.bmp");
+	Black = CTextureLoader::loadTexture("Colors/Black.bmp");
+	Magenta = CTextureLoader::loadTexture("Colors/Magenta.bmp");
 
-	randNorm = CTextureLoader::loadTexture("randNormals.bmp")->getTextureHandle();
+	randNorm = CTextureLoader::loadTexture("SSAO/randNormals.bmp")->getTextureHandle();
 }
 
 void CSceneManager::addSceneObject(ISceneObject * sceneObject)
