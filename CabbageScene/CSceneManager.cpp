@@ -214,7 +214,7 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 	Black = CTextureLoader::loadTexture("Colors/Black.bmp");
 	Magenta = CTextureLoader::loadTexture("Colors/Magenta.bmp");
 
-	randNorm = CTextureLoader::loadTexture("SSAO/randNormals.bmp")->getTextureHandle();
+	randNorm = CTextureLoader::loadTexture("SSAO/RandNormals.bmp")->getTextureHandle();
 }
 
 void CSceneManager::addSceneObject(ISceneObject * sceneObject)
