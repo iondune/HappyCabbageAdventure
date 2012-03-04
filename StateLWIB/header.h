@@ -35,7 +35,6 @@
 
 //Local Include Section
 #include "../CabbageCollider/CEngine.h"
-#include "FreeType.h"
 
 #include "Materials.h"
 #include "../CabbageSound/sound.h"

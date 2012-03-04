@@ -25,7 +25,6 @@ class CGameState : public CState<CGameState>
    CApplication & Application;
    CGameEventManager * GameEventManager;
    CGameEventReceiver GameEventReceiver;
-   freetype::font_data our_font;
 
    CGUIFontWidget * GameOverText, * GameWinText, *RestartGameText, *LivesText, *LivesText2;
 

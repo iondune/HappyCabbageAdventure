@@ -58,10 +58,13 @@ void CApplication::setupRenderContext()
     double const VersionNumber = std::atof((char const *)glGetString(GL_VERSION));
     if (VersionNumber < 2.0)
     {
-        std::cerr << "Your OpenGL Version Number (" << std::setprecision(2) << VersionNumber << ") is not high enough for shaders. Please download and install the latest drivers for your graphics hardware.";
+        std::cerr << "Your OpenGL Version Number (" << std::setprecision(2) << VersionNumber << 
+			") is not high enough for shaders. Please download and install the latest drivers"
+			"for your graphics hardware." << 
+			std::endl << std::endl;
     }
 
-    std::cerr << "Your OpenGL Version Number: " << std::setprecision(2) << VersionNumber << std::endl;
+    std::cerr << "Your OpenGL Version Number: " << std::setprecision(2) << VersionNumber << std::endl << std::endl;
 
     glViewport(0, 0, (GLsizei)(WindowSize.X), (GLsizei)(WindowSize.Y));
 }

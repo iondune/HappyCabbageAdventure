@@ -42,7 +42,6 @@
 
 //Local Include Section
 #include "../CabbageCollider/CEngine.h"
-#include "FreeType.h"
 #include "CPlayerView.h"
 
 #include "Materials.h"

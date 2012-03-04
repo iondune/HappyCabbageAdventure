@@ -1011,7 +1011,7 @@ void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
    //Draw flower-type plants in background
    for (int n = 0; n < w; n++) {
       random = rand()%6;
-      float subrand = rand()%5;
+      float subrand = (float) (rand()%5);
       randScale = (float) (rand()%20);
       randScale = randScale * .025f;
       randDepth = (float) (rand()%2);
@@ -1046,7 +1046,7 @@ void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
    //Draw flower-type plants in foreground
       for (int n = 0; n < w; n++) {
          random = rand()%6;
-         float subrand = rand()%5;
+         float subrand = (float) (rand()%5);
          randScale = (float) (rand()%10);
          randScale = randScale * 0.025f;
          randDepth = (float) (rand()%2);

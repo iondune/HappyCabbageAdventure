@@ -13,8 +13,8 @@ CMainMenuState::CMainMenuState()
 
 void CMainMenuState::setupTextures()
 {
-   WoodTexture = new CTexture(CImageLoader::loadTGAImage("wood.tga"));
-   BackgroundTexture = new CTexture(CImageLoader::loadImage("../Media/background.bmp"));
+   WoodTexture = new CTexture(CImageLoader::loadTGAImage("MainMenu/wood.tga"));
+   BackgroundTexture = new CTexture(CImageLoader::loadImage("../background.bmp"));
 }
 
 void CMainMenuState::setupButtons() {
@@ -34,12 +34,12 @@ void CMainMenuState::setupButtons() {
 	StartFont = new CGUIFontWidget("JustAnotherFont.TTF", 32.f);
 	StartFont->setText("Start Game");
 	StartFont->setColor(FontColor);
-	StartFont->setPosition(SVector2(ratio/2.f - .175f, .5 + .05f));
+	StartFont->setPosition(SVector2(ratio/2.f - 0.175f, 0.5f + 0.05f));
 
 	EditorFont = new CGUIFontWidget("JustAnotherFont.TTF", 32.f);
 	EditorFont->setText("Level Editor");
 	EditorFont->setColor(FontColor);
-	EditorFont->setPosition(SVector2(ratio/2.f - .179f, .32 + .05f));
+	EditorFont->setPosition(SVector2(ratio/2.f - 0.179f, 0.32f + 0.05f));
 
 	ExitFont = new CGUIFontWidget("JustAnotherFont.TTF", 32.f);
 	ExitFont->setText("Exit Game");
@@ -62,7 +62,7 @@ void CMainMenuState::setupMeshes()
   Toon = CShaderLoader::loadShader("Toon");
   Texture = CShaderLoader::loadShader("ToonTexture");
 
-  LogoMesh = CMeshLoader::load3dsMesh("../Base/Models/HappyLogo3.3ds");
+  LogoMesh = CMeshLoader::load3dsMesh("Base/HappyLogo3.3ds");
   if (LogoMesh)
   {
     LogoMesh->resizeMesh(SVector3(0.4f));
@@ -121,7 +121,6 @@ void CMainMenuState::begin()
    setupTextures();
    setupMeshes();
    setupButtons();
-   our_font.init("WIFFLES_.TTF", 30);
    glClearColor(0.f,0.f,0.f,0.f);
 
    curAngle = 0.f;
