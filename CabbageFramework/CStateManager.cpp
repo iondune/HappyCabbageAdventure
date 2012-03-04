@@ -45,7 +45,7 @@ void CStateManager::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 void CStateManager::setState(IState * State)
 {
-	static float const Fadetime = 1.3f;
+	static float const Fadetime = 0.3f;
 	CApplication::get().getSceneManager().blurSceneOut(Fadetime, CApplication::get().getRunTime());
 
 	if (CurrentState)
