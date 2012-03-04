@@ -187,25 +187,25 @@ CParticleEngine *particleDustEngine;
 
 void CGameState::LoadHUD() {
 	//Prepare GUI
-	Health5 = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/HealthCabbage5.tga"), SVector2(.1f, .1f));
+	Health5 = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage5.tga"), SVector2(.1f, .1f));
 	Health5->setPosition(SVector2(.21f, .9f));
 
-	Health4 = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/HealthCabbage4.tga"), SVector2(.1f, .1f));
+	Health4 = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage4.tga"), SVector2(.1f, .1f));
 	Health4->setPosition(SVector2(.16f, .9f));
 
-	Health3 = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/HealthCabbage3.tga"), SVector2(.1f, .1f));
+	Health3 = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage3.tga"), SVector2(.1f, .1f));
 	Health3->setPosition(SVector2(.11f, .9f));
 
-	Health2 = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/HealthCabbage2.tga"), SVector2(.1f, .1f));
+	Health2 = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage2.tga"), SVector2(.1f, .1f));
 	Health2->setPosition(SVector2(.06f, .9f));
 
-	Health1 = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/HealthCabbage1.tga"), SVector2(.1f, .1f));
+	Health1 = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage1.tga"), SVector2(.1f, .1f));
 	Health1->setPosition(SVector2(.01f, .9f));
 
-	CabbageEnergyBar = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/EnergyBarTop.tga"), SVector2(.3f, .1f));
+	CabbageEnergyBar = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/EnergyBarTop.tga"), SVector2(.3f, .1f));
 	CabbageEnergyBar->setPosition(SVector2(.02f, .82f));
 
-	CabbageMeter = new CGUIImageWidget(CImageLoader::loadTGAImage("Textures/EnergyBarBottom.tga"), SVector2(.3f, .1f));
+	CabbageMeter = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/EnergyBarBottom.tga"), SVector2(.3f, .1f));
 	CabbageMeter->setPosition(SVector2(.02f, .82f));
 
 	//CabbageFace = new CGUIImageWidget(CImageLoader::loadTGAImage("../Media/cabbage.tga"), SVector2(.15f, .15f));
@@ -248,7 +248,7 @@ void CGameState::Initialize() {
    SDL_WM_SetCaption("Happy Cabbage Adventure", NULL);
 
    //Initialize Font
-   our_font.init("WIFFLES_.TTF", 30);
+   //our_font.init("WIFFLES_.TTF", 30);
    SColor FontColor(1.0f, 1.0f, 1.0f);
    GameWinText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
    GameWinText->setText("CONGRATULATIONS! YOU HAVE WON!");
@@ -803,7 +803,7 @@ void CGameState::end()
 {   
    stopSoundtrack();
    //Mix_CloseAudio();
-   our_font.clean();
+   //our_font.clean();
 
    if(particleLeafEngine) {
       particleLeafEngine->deconstruct();
@@ -1094,7 +1094,7 @@ void LoadShaders() {
 
 void Load3DS()
 {
-   enemyMesh = CMeshLoader::load3dsMesh("Models/appleEnemy.3ds");
+   enemyMesh = CMeshLoader::load3dsMesh("Base/appleEnemy.3ds");
    if(enemyMesh) {
       enemyMesh->resizeMesh(SVector3(1));
       enemyMesh->centerMeshByExtents(SVector3(0));
@@ -1105,7 +1105,7 @@ void Load3DS()
       fprintf(stderr, "Failed to load the enemy mesh\n");
    }
 
-   derpMesh = CMeshLoader::load3dsMesh("Models/derp.3ds");
+   derpMesh = CMeshLoader::load3dsMesh("Base/derp.3ds");
 
    if(derpMesh) {
       derpMesh->resizeMesh(SVector3(1.0));
@@ -1117,7 +1117,7 @@ void Load3DS()
       fprintf(stderr, "Failed to load derp mesh\n");
    }
 
-   basicTreeMesh = CMeshLoader::load3dsMesh("Models/tree4.3ds");
+   basicTreeMesh = CMeshLoader::load3dsMesh("Base/tree4.3ds");
    if (basicTreeMesh) {
       basicTreeMesh->resizeMesh(SVector3(0.5));
       basicTreeMesh->centerMeshByExtents(SVector3(0));
@@ -1127,7 +1127,7 @@ void Load3DS()
       fprintf(stderr, "Failed to load the basic tree mesh\n");
    }
 
-   christmasTreeMesh = CMeshLoader::load3dsMesh("Models/christmasTree3.3ds");
+   christmasTreeMesh = CMeshLoader::load3dsMesh("Base/christmasTree3.3ds");
    if (christmasTreeMesh) {
       christmasTreeMesh->resizeMesh(SVector3(0.5));
       christmasTreeMesh->centerMeshByExtents(SVector3(0));
@@ -1139,7 +1139,7 @@ void Load3DS()
 
 
 
-   cabbageMesh = CMeshLoader::load3dsMesh("Models/crappycabbage2.3ds");
+   cabbageMesh = CMeshLoader::load3dsMesh("Base/crappycabbage2.3ds");
    if (cabbageMesh) {
       cabbageMesh->resizeMesh(SVector3(0.5));
       cabbageMesh->centerMeshByExtents(SVector3(0));
@@ -1151,7 +1151,7 @@ void Load3DS()
 
 
 
-   blueFlwrMesh = CMeshLoader::load3dsMesh("Models/simpleflower1.3ds");
+   blueFlwrMesh = CMeshLoader::load3dsMesh("Base/simpleflower1.3ds");
    if (blueFlwrMesh) {
       blueFlwrMesh->centerMeshByExtents(SVector3(0));
       blueFlwrMesh->calculateNormalsPerFace();
@@ -1162,35 +1162,35 @@ void Load3DS()
 
 
 
-   whiteFlwrMesh = CMeshLoader::load3dsMesh("Models/simpleflower2.3ds");
+   whiteFlwrMesh = CMeshLoader::load3dsMesh("Base/simpleflower2.3ds");
    if (whiteFlwrMesh) {
       whiteFlwrMesh->centerMeshByExtents(SVector3(0));
       whiteFlwrMesh->resizeMesh(SVector3(.8f));
       whiteFlwrMesh->calculateNormalsPerFace();
    }
 
-   whiteSunflwrMesh = CMeshLoader::load3dsMesh("Models/sunflowerwhite.3ds");
+   whiteSunflwrMesh = CMeshLoader::load3dsMesh("Base/sunflowerwhite.3ds");
    if (whiteSunflwrMesh) {
 	   whiteSunflwrMesh->centerMeshByExtents(SVector3(0));
 	   whiteSunflwrMesh->resizeMesh(SVector3(.8f));
 	   whiteSunflwrMesh->calculateNormalsPerFace();
    }
 
-   yellowFlwrMesh = CMeshLoader::load3dsMesh("Models/sunfloweryellow.3ds");
+   yellowFlwrMesh = CMeshLoader::load3dsMesh("Base/sunfloweryellow.3ds");
    if (yellowFlwrMesh) {
 	   yellowFlwrMesh->centerMeshByExtents(SVector3(0));
 	   yellowFlwrMesh->resizeMesh(SVector3(.8f));
 	   yellowFlwrMesh->calculateNormalsPerFace();
    }
 
-   purpleFlwrMesh = CMeshLoader::load3dsMesh("Models/sunflowerpurple.3ds");
+   purpleFlwrMesh = CMeshLoader::load3dsMesh("Base/sunflowerpurple.3ds");
    if (purpleFlwrMesh) {
 	   purpleFlwrMesh->centerMeshByExtents(SVector3(0));
 	   purpleFlwrMesh->resizeMesh(SVector3(.8f));
 	   purpleFlwrMesh->calculateNormalsPerFace();
    }
 
-   tealFlwrMesh = CMeshLoader::load3dsMesh("Models/sunflowerteal.3ds");
+   tealFlwrMesh = CMeshLoader::load3dsMesh("Base/sunflowerteal.3ds");
    if (tealFlwrMesh) {
 	   tealFlwrMesh->centerMeshByExtents(SVector3(0));
 	   tealFlwrMesh->resizeMesh(SVector3(.8f));
@@ -1201,7 +1201,7 @@ void Load3DS()
       fprintf(stderr, "Failed to load pink flower mesh.\n");
    }
 
-   ficusMesh = CMeshLoader::load3dsMesh("Models/ficus.3ds");
+   ficusMesh = CMeshLoader::load3dsMesh("Base/ficus.3ds");
    if (ficusMesh) {
       ficusMesh->centerMeshByExtents(SVector3(0));
       ficusMesh->calculateNormalsPerFace();
@@ -1210,7 +1210,7 @@ void Load3DS()
       fprintf(stderr, "Failed to load ficus mesh.\n");
    }
 
-   fernMesh = CMeshLoader::load3dsMesh("Models/fern.3ds");
+   fernMesh = CMeshLoader::load3dsMesh("Base/fern.3ds");
    if (fernMesh) {
       fernMesh->centerMeshByExtents(SVector3(0));
       fernMesh->resizeMesh(SVector3(2.f));
@@ -1220,7 +1220,7 @@ void Load3DS()
       fprintf(stderr, "Failed to load fern mesh.\n");
    }
 
-   flagMesh = CMeshLoader::load3dsMesh("Models/flag2.3ds");
+   flagMesh = CMeshLoader::load3dsMesh("Base/flag2.3ds");
    if (flagMesh) {
       flagMesh->centerMeshByExtents(SVector3(0));
       flagMesh->calculateNormalsPerFace();
@@ -1235,12 +1235,12 @@ void Load3DS()
 
 void LoadTextures()
 {
-   grassImg = CImageLoader::loadImage("Textures/grass.bmp");
-   skyImg = CImageLoader::loadImage("Textures/sky.bmp");
-   dirtImg = CImageLoader::loadImage("Textures/dirt.bmp");
-   blueFlwrImg = CImageLoader::loadImage("Textures/blueFlower.bmp");
-   whiteFlwrImg = CImageLoader::loadImage("Textures/pinkFlower.bmp");
-   flagImg = CImageLoader::loadImage("Textures/white.bmp");
+   grassImg = CImageLoader::loadImage("Base/grass.bmp");
+   skyImg = CImageLoader::loadImage("Base/sky.bmp");
+   dirtImg = CImageLoader::loadImage("Base/dirt.bmp");
+   blueFlwrImg = CImageLoader::loadImage("Base/blueFlower.bmp");
+   whiteFlwrImg = CImageLoader::loadImage("Base/pinkFlower.bmp");
+   flagImg = CImageLoader::loadImage("Base/white.bmp");
 
    grassTxt = new CTexture(grassImg);
    skyTxt = new CTexture(skyImg);

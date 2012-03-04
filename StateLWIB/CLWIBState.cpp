@@ -168,7 +168,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    //Draw Text
    //freetype::print(our_font, 10, WindowHeight-40.f, "Elapsed Time: %0.0f ", Application.getRunTime());
    if (!showHelp)
-       freetype::print(our_font, (float)WindowWidth/2, (float)WindowHeight/2, "+");
+       //freetype::print(our_font, (float)WindowWidth/2, (float)WindowHeight/2, "+");
 
    if (showHelp) {
        block3->setVisible(false);
@@ -654,7 +654,7 @@ void CLWIBState::printXML() {
 void CLWIBState::end()
 {
    Application.getGUIEngine().removeAllWidgets(); 
-   our_font.clean();
+   //our_font.clean();
    placeables.clear();
    redoPlaceables.clear();
    blocks.clear();
