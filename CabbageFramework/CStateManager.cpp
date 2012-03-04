@@ -24,6 +24,7 @@ void CStateManager::OnRenderStart(float const Elapsed)
         CurrentState->OnRenderStart(Elapsed);
 }
 
+#include "CApplication.h"
 void CStateManager::OnRenderEnd(float const Elapsed)
 {
     if (CurrentState)
@@ -44,12 +45,15 @@ void CStateManager::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 void CStateManager::setState(IState * State)
 {
-    if (CurrentState)
+    CApplication::get().getSceneManager().blurSceneOut(0.3f);
+    if (CurrentState) {
         CurrentState->end();
+    }
 
     CurrentState = State;
 
     CurrentState->begin();
+    CApplication::get().getSceneManager().blurSceneIn(0.3f);
 }
 
 void CStateManager::shutDown()

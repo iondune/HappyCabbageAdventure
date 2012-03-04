@@ -99,3 +99,11 @@
 </CEnemy>
 <CEnemy X ="-24" Y ="0" height ="1" width ="1" type ="0">
 </CEnemy>
+<CBlock X ="-21" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-20" Y ="5" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-22" Y ="7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-20" Y ="9" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>

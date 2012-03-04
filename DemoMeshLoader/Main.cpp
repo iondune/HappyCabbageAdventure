@@ -241,6 +241,7 @@ public:
             freetype::print(Font, 0, (float)Application.getWindowSize().Y - 15.f, "Press F1 to view commands");*/
 		GUIEngine.drawAll();
 
+        CApplication::get().getSceneManager().endDraw();
         SDL_GL_SwapBuffers();
     }
 

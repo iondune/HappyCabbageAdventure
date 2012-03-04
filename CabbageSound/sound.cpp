@@ -34,7 +34,7 @@ void soundInit() {
    playDead = true;
    playVictory = true;
    playTakeDmg = true;
-   playJump = true;
+   playJump = false;
    musicOn = true;
 }
 
@@ -68,7 +68,7 @@ void setupSoundtrack(char *startMusic) {
    killEnemy = Mix_LoadWAV(temp.c_str());
 
    //Decrease volume of jump
-   Mix_VolumeChunk(jump, 64);
+   Mix_VolumeChunk(jump, 32);
 }
 
 void startSoundtrack() {

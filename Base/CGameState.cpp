@@ -135,6 +135,7 @@ void CGameState::EngineInit( void ) {
    Engine = new CEngine();
    Player = Engine->addActor();
    Player->setArea(SRect2(-24.5f, 3, 1, 1));
+   Player->getAttributes().MaxWalk = 3.5f;
    Player->CollideableType = COLLIDEABLE_TYPE_PLAYER;
    Player->CollideableLevel |= INTERACTOR_SUPERACTORS;
    Player->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
@@ -181,6 +182,7 @@ CParticleEngine *particleLeafEngine;
 CParticleEngine *particleCubeEngine;
 CParticleEngine *particleLaserEngine;
 CParticleEngine *particleLaserFireEngine;
+CParticleEngine *particleDustEngine;
 #endif
 
 void CGameState::LoadHUD() {
@@ -231,7 +233,7 @@ void CGameState::Initialize() {
 
    CApplication::get().getSceneManager().setCullingEnabled(true);
 #ifdef PARTICLE
-   particleLeafEngine = particleCubeEngine = particleLaserEngine = 0;
+   particleLeafEngine = particleCubeEngine = particleLaserEngine = particleLaserFireEngine = particleDustEngine = 0;
 #endif
    SPosition2 size = Application.getWindowSize();
    WindowWidth = size.X;
@@ -323,6 +325,7 @@ void CGameState::Initialize() {
    LoadHUD();
    fps = timeTotal = 0;
    numFrames = 0;
+   moveDown = 0.0f;
 
    printf("CGameState:  Begin Function Complete\n");
 }
@@ -451,6 +454,11 @@ void CGameState::oldDisplay() {
          (!!particleLaserFireEngine ? 1 : 0) + ((GameplayManager->getRecovering() > 0 || GameplayManager->JustKilled) ? 2 : 0));
 
 #ifdef PARTICLE
+   if(particleDustEngine && !particleDustEngine->dead) {
+      particleDustEngine->setLookRight(PlayerView->getLookRight());
+      particleDustEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
+      particleDustEngine->step(Application.getElapsedTime());
+   }
    if(particleLeafEngine && !particleLeafEngine->dead) {
       particleLeafEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
       particleLeafEngine->step(Application.getElapsedTime());
@@ -568,6 +576,7 @@ void CGameState::OnRenderStart(float const Elapsed)
             Mix_HaltMusic();
             Mix_PlayChannel(-1, die, 0); //Only play once
             playDead = false;
+            spaceDown = 0;
          }
          Charged = 0;
 
@@ -592,6 +601,10 @@ void CGameState::OnRenderStart(float const Elapsed)
          "Energy: %d\nnumKilled: %d\nFPS: %0.2f ", Application.getRunTime(), GameplayManager->getPlayerEnergy(), numKilled, fps);*/
 
 
+   if(moveDown > 0.0f) {
+      moveDown -= Application.getElapsedTime();
+   }
+   Application.getSceneManager().endDraw();
    SDL_GL_SwapBuffers();
 }
 
@@ -633,9 +646,39 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          sDown = 1;
       }
       if(Event.Key == SDLK_a){
+         if(moveDown > 0.0f) {
+            if(particleDustEngine) {
+               particleDustEngine->deconstruct();
+               delete particleDustEngine;
+               particleDustEngine = NULL;
+            }
+            particleDustEngine = new CParticleEngine(SVector3(0, 1, 0), 70, -1.0f, DUST_PARTICLE);
+            particleDustEngine->UsePhysics(Engine);
+
+            Player->getAttributes().MaxWalk = 5.5f;
+            moveDown = 0.0f;
+         }
+         else {
+            moveDown = 0.3f;
+         }
          aDown = 1;
       }
       if(Event.Key == SDLK_d){
+         if(moveDown > 0.0f) {
+            if(particleDustEngine) {
+               particleDustEngine->deconstruct();
+               delete particleDustEngine;
+               particleDustEngine = NULL;
+            }
+            particleDustEngine = new CParticleEngine(SVector3(0, 1, 0), 70, -1.0f, DUST_PARTICLE);
+            particleDustEngine->UsePhysics(Engine);
+
+            Player->getAttributes().MaxWalk = 5.5f;
+            moveDown = 0.0f;
+         }
+         else {
+            moveDown = 0.3f;
+         }
          dDown = 1;
       }
 #ifdef PARTICLE
@@ -702,9 +745,23 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          sDown = 0;
       }
       if(Event.Key == SDLK_a){
+         if(particleDustEngine) {
+            particleDustEngine->deconstruct();
+            delete particleDustEngine;
+            particleDustEngine = NULL;
+         }
+
+         Player->getAttributes().MaxWalk = 3.5f;
          aDown = 0;
       }
       if(Event.Key == SDLK_d){
+         if(particleDustEngine) {
+            particleDustEngine->deconstruct();
+            delete particleDustEngine;
+            particleDustEngine = NULL;
+         }
+
+         Player->getAttributes().MaxWalk = 3.5f;
          dDown = 0;
       }
       if(Event.Key == SDLK_l){
@@ -764,7 +821,11 @@ void CGameState::end()
       particleLaserFireEngine->deconstruct();
       delete particleLaserFireEngine;
    }
-   particleLeafEngine = particleCubeEngine = particleLaserEngine = particleLaserFireEngine = NULL;
+   if(particleDustEngine) {
+      particleDustEngine->deconstruct();
+      delete particleDustEngine;
+   }
+   particleLeafEngine = particleCubeEngine = particleLaserEngine = particleLaserFireEngine = particleDustEngine = NULL;
 
    GameEventManager->OnEnemyDeath.disconnect(& GameEventReceiver);
    GameEventManager->OnPlayerDamaged.disconnect(& GameEventReceiver);

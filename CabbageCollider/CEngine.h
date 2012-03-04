@@ -45,7 +45,7 @@ namespace Cabbage
 
             bool CanCollide(CCollideable *a, CCollideable *b) {
                return a->CollideableLevel & b->CanCollideWith ||
-                  a->CollideableLevel & b->CanCollideWith;
+                  b->CollideableLevel & a->CanCollideWith;
             }
 
             void performTick(float const TickTime)

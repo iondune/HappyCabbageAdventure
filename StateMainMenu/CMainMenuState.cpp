@@ -396,6 +396,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 
    glEnable(GL_LIGHTING);*/
 
+	Application.get().getSceneManager().endDraw();
    SDL_GL_SwapBuffers();
 }
 void CMainMenuState::OnRenderEnd(float const Elapsed)

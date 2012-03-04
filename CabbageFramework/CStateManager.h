@@ -62,6 +62,7 @@ public:
 
 };
 
+class CApplication;
 class CStateManager : public sigslot::has_slots<>
 {
 
