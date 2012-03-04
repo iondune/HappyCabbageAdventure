@@ -103,6 +103,7 @@ void CLWIBState::begin()
    //Initialize Fxns
    BlocksInit();
    PrepPreviews();
+   prepText();
    printf("END OF BEGIN\n");
 
 }
@@ -163,98 +164,108 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    }
 
 
-   Application.getSceneManager().drawAll();
+   //Application.getSceneManager().drawAll();
 
    //Draw Text
    //freetype::print(our_font, 10, WindowHeight-40.f, "Elapsed Time: %0.0f ", Application.getRunTime());
    if (!showHelp)
        freetype::print(our_font, (float)WindowWidth/2, (float)WindowHeight/2, "+");
-      
-    if (showHelp) {
-        freetype::print(our_font, 15, WindowHeight - 230.f, \
-            "WASD to control camera\n"\
-            "You add blocks by defualt\n"\
-            "press Z/X change block type\n"\
-            "Press E to place enemies press Z/X add different enemies\n"\
-            "Press F/G to make blocks shorter/longer\n"\
-            "Press H/J to make blocks skinny/wider\n"\
-            "press R to Redo action\n");
-    }
-    else
-        freetype::print(our_font, 15, WindowHeight - 50.f, "Press F1 For Help");
-    if (!twoDown && !showHelp && !tDown && !oneDown && !threeDown) {
-        freetype::print(our_font, 20, WindowHeight - 100.f, "Placing block\n\n");
-        if (cDown == 0) {
-            if (textureType == 0) {
-                freetype::print(our_font, 20, WindowHeight - 150.f, "Placing grass block\n");
-            }
-            if (textureType == 1) {
-                freetype::print(our_font, 20, WindowHeight - 150.f, "Placing dirt block\n");
-            }
-            if (textureType == 2) {
-                freetype::print(our_font, 20, WindowHeight - 150.f, "Placing rock block \n");
-            }
 
-            if (textureType == -5) {
-                freetype::print(our_font, 20, WindowHeight - 150.f, "ground block\n");
-            }
-        }
-        if (cDown == 1) {
-           freetype::print(our_font, 20, WindowHeight - 150.f, "changing block width\n");
-           freetype::print(our_font, 20, WindowHeight - 200.f, "block width is %d\n", blockWidth);
-        }
-        if (cDown == 2) {
-           freetype::print(our_font, 20, WindowHeight - 150.f, "changing block height\n");
-           freetype::print(our_font, 20, WindowHeight - 200.f, "block height is %d\n", blockHeight);
-        }
-        if (cDown == 3) {
-           freetype::print(our_font, 20, WindowHeight - 150.f, "changing block depth\n");
-           freetype::print(our_font, 20, WindowHeight - 200.f, "block depth is %d\n", blockDepth);
-        }
-    }
-    if (twoDown && !showHelp && !tDown && !oneDown && !threeDown) {
-        freetype::print(our_font, 20, WindowHeight - 100.f, "Placing enemy\n");
-        if (enemyType == 0) {
-            freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Apple\n");
+   if (showHelp) {
+       block3->setVisible(false);
+       block2->setVisible(false);
+       block1->setText("You add blocks by defualt\n"\
+           "press Z/X change block type\n"\
+           "Press E to place enemies press Z/X add different enemies\n"\
+           "Press F/G to make blocks shorter/longer\n"\
+           "Press H/J to make blocks skinny/wider\n"\
+           "press R to Redo action\n");
+   }
+   else
+       help->setText("Press F1 For Help");
+   if (!twoDown && !showHelp && !tDown && !oneDown && !threeDown) {
+       block2->setVisible(true);
+       block1->setText("Placing Block");
+       if (cDown == 0) {
+           block3->setVisible(false);
+           if (textureType == 0) {
+               block2->setText("Placing grass block");
+           }
+           if (textureType == 1) {
+               block2->setText("Placing dirt block");
+           }
+           if (textureType == 2) {
+               block2->setText("Placing rock block");
+           }
+
+           if (textureType == -5) {
+               block2->setText("Placing ground block");
+           }
+       }
+       if (cDown == 1) {
+           block3->setVisible(true);
+           block2->setText("changing block width\n");
+       }
+       if (cDown == 2) {
+           block3->setVisible(true);
+           block2->setText("changing block height\n");
+       }
+       if (cDown == 3) {
+           block3->setVisible(true);
+           block2->setText("changing block depth\n");
+       }
+   }
+   if (twoDown && !showHelp && !tDown && !oneDown && !threeDown) {
+       block3->setVisible(false);
+       block2->setVisible(true);
+       block1->setText("Placing enemy");
+       if (enemyType == 0) {
+           block2->setText("Placing Apple\n");
            PreviewEnemy->setMesh(appleMesh);
-        }
-        if (enemyType == 1) {
-            freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Orange\n");
-            PreviewEnemy->setMesh(orangeMesh);
-        }
-        if (enemyType == 2) {
-            freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Kiwi\n");
-            PreviewEnemy->setMesh(kiwiMesh);
-        }
+       }
+       if (enemyType == 1) {
+           block2->setText("Placing Orange\n");
+           PreviewEnemy->setMesh(orangeMesh);
+       }
+       if (enemyType == 2) {
+           block2->setText("Placing Kiwi\n");
+           PreviewEnemy->setMesh(kiwiMesh);
+       }
 
-        if (enemyType == 3) {
-            freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Grape\n");
-            PreviewEnemy->setMesh(cubeMesh);
-        }
-
-        if (enemyType == 4) {
-           freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Flame\n");
+       if (enemyType == 3) {
+           block2->setText("Placing Grape\n");
            PreviewEnemy->setMesh(cubeMesh);
-        }
+       }
 
-        if (enemyType == 5) {
-           freetype::print(our_font, 20, WindowHeight - 150.f, "Placing Blade\n");
+       if (enemyType == 4) {
+           block2->setText("Placing Flame\n");
+           PreviewEnemy->setMesh(cubeMesh);
+       }
+
+       if (enemyType == 5) {
+           block2->setText("Placing Blade\n");
            PreviewEnemy->setMesh(bladeMesh);
-        }
-    }
-    if (oneDown && !showHelp && !tDown && !twoDown && !threeDown) {
-        freetype::print(our_font, 20, WindowHeight - 100.f, "Insert Cabbage\n\n");
-        PreviewCabbage->setMesh(cabbageMesh);
-    }
-    if (threeDown && !showHelp && !tDown && !twoDown && !oneDown) {
-        freetype::print(our_font, 20, WindowHeight - 100.f, "Insert flag\n\n");
-        PreviewCabbage->setMesh(cabbageMesh);
-    }
-    if (tDown && !showHelp )
-        freetype::print(our_font, 20, WindowHeight - 100.f, "Remove mode\n\n");
-    //drawSubWindow();
+       }
+   }
+   if (oneDown && !showHelp && !tDown && !twoDown && !threeDown) {
+       block3->setVisible(false);
+       block2->setVisible(false);
+       block1->setText("Insert Cabbage");
+       PreviewCabbage->setMesh(cabbageMesh);
+   }
+   if (threeDown && !showHelp && !tDown && !twoDown && !oneDown) {
+       block3->setVisible(false);
+       block2->setVisible(false);
+       block1->setText("Insert flag");
+       PreviewCabbage->setMesh(cabbageMesh);
+   }
+   if (tDown && !showHelp ){
+       block1->setText("Remove mode");
+   }
+   //drawSubWindow();
    Application.getSceneManager().drawAll();
 
+   Application.getGUIEngine().drawAll(); 
    Application.getSceneManager().endDraw();
    SDL_GL_SwapBuffers();
 }
@@ -643,6 +654,7 @@ void CLWIBState::printXML() {
 //Runs at program close (currently not implemented)
 void CLWIBState::end()
 {
+   Application.getGUIEngine().removeAllWidgets(); 
    our_font.clean();
    placeables.clear();
    redoPlaceables.clear();
@@ -1041,7 +1053,39 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
    }
 }
 
-  
+void CLWIBState::prepText() {
+    
+    SColor FontColor(1.0f, 1.0f, 1.0f);
+    help = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
+    help->setText("Press F1 for help\n");
+    help->setPosition(SVector2(.05f, .95f));
+    help->setColor(FontColor);
+    help->setVisible(true);
+
+    block1 = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
+    block1->setText("Inserting block\n");
+    block1->setPosition(SVector2(.05f, .9f));
+    block1->setColor(FontColor);
+    block1->setVisible(true);
+    
+    block2 = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
+    block2->setText("grassTexture\n");
+    block2->setPosition(SVector2(.05f, .85f));
+    block2->setColor(FontColor);
+    block2->setVisible(true);
+
+    block3 = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
+    block3->setText("block width is\n");
+    block3->setPosition(SVector2(.05f, .80f));
+    block3->setColor(FontColor);
+    block3->setVisible(true);
+
+    Application.getGUIEngine().addWidget(block1);
+    Application.getGUIEngine().addWidget(block2);
+    Application.getGUIEngine().addWidget(block3);
+    Application.getGUIEngine().addWidget(help);
+ 
+}
 
 void CLWIBState::stepCamera(float delta) {
    float factor = 6;

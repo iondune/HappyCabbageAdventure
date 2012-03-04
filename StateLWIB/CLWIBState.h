@@ -33,8 +33,12 @@ class CLWIBState : public CState<CLWIBState>
    freetype::font_data our_font;
    int enemyType, textureType;
    int WindowWidth, WindowHeight;
+   // GUIImageWidget
+   CGUIFontWidget *block1, *block2, *block3, *block4, *block5;
+   CGUIFontWidget *enemy1, *enemy2, *enemy3, *enemy4, *enemy5;
+   CGUIFontWidget *flag, *cabbage, *remove, *help;
 
-
+    //CMESH stuff
    CMesh *cubeMesh, *appleMesh, *orangeMesh, *kiwiMesh, *cabbageMesh, *groundMesh, *bladeMesh, *flagMesh;
 
    float xp2w(int oldX);
@@ -75,6 +79,8 @@ class CLWIBState : public CState<CLWIBState>
    void drawSubWindow();
 
    void BlocksInit( void ); 
+  
+   void prepText();
 
    void stepCamera(float delta);
 
