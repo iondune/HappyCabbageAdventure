@@ -73,16 +73,16 @@ public:
 
 	CApplicationEventReceiver();
 
-	void OnKeyboardEvent(SKeyboardEvent const & Event);
-	void OnMouseEvent(SMouseEvent const & Event);
+	virtual void OnKeyboardEvent(SKeyboardEvent const & Event);
+	virtual void OnMouseEvent(SMouseEvent const & Event);
 
-	void OnGameTickStart(float const Elapsed);
-	void OnGameTickEnd(float const Elapsed);
+	virtual void OnGameTickStart(float const Elapsed);
+	virtual void OnGameTickEnd(float const Elapsed);
 
-	void OnRenderStart(float const Elapsed);
-	void OnRenderEnd(float const Elapsed);
+	virtual void OnRenderStart(float const Elapsed);
+	virtual void OnRenderEnd(float const Elapsed);
 
-	void OnApplicationExit();
+	virtual void OnApplicationExit();
 
 };
 
