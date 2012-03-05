@@ -113,6 +113,6 @@ void CSceneObject::load(CScene const * const Scene)
 
 	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
 	{
-		(* it)->updateShaderVariables(Scene);
+		(* it)->load(Scene);
 	}
 }

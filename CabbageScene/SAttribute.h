@@ -7,6 +7,7 @@
 struct IAttribute
 {
 	virtual void bind(GLint const handle, CShaderContext & shaderContext) const =0;
+	virtual void load() const =0;
 };
 
 template <typename T>
@@ -22,6 +23,12 @@ struct SAttribute : public IAttribute
 	SAttribute(CBufferObject<T> * buffer, int const elementSize = 4)
 		: Buffer(buffer), ElementSize(elementSize)
 	{}
+
+	void load() const
+	{
+		if (Buffer && Buffer->isDirty())
+			Buffer->syncData();
+	}
 
 	void bind(GLint const handle, CShaderContext & shaderContext) const
 	{

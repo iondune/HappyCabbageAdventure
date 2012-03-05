@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageCore", "CabbageCore\CabbageCore.vcxproj", "{C0397D79-C283-45CD-B54E-CA0234CAA8EF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageScene", "CabbageScene\CabbageScene.vcxproj", "{8389DE31-B188-40BA-983F-D0BB58DDB9FB}"
-	ProjectSection(ProjectDependencies) = postProject
-		{C0397D79-C283-45CD-B54E-CA0234CAA8EF} = {C0397D79-C283-45CD-B54E-CA0234CAA8EF}
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{BB29EC0A-4703-4E49-906A-2F40D35A07FF}"
 	ProjectSection(SolutionItems) = preProject
@@ -14,9 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{BB29EC0A
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageCollider", "CabbageCollider\CabbageCollider.vcxproj", "{10A797C8-94C1-4EA0-89FF-7E03C5943D82}"
-	ProjectSection(ProjectDependencies) = postProject
-		{C0397D79-C283-45CD-B54E-CA0234CAA8EF} = {C0397D79-C283-45CD-B54E-CA0234CAA8EF}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageFramework", "CabbageFramework\CabbageFramework.vcxproj", "{C8987DB4-983C-4801-BBBE-072704FAF615}"
 EndProject
@@ -117,16 +111,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageSound", "CabbageSound\CabbageSound.vcxproj", "{9EC4EF67-EDCE-4FDA-97E9-CADBBEAB2D89}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageParticles", "CabbageParticles\CabbageParticles.vcxproj", "{75299A5D-B7AF-4B26-8B18-3116172F330D}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8389DE31-B188-40BA-983F-D0BB58DDB9FB} = {8389DE31-B188-40BA-983F-D0BB58DDB9FB}
-		{C0397D79-C283-45CD-B54E-CA0234CAA8EF} = {C0397D79-C283-45CD-B54E-CA0234CAA8EF}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageGUI", "CabbageGUI\CabbageGUI.vcxproj", "{B139B8AE-77AA-4A47-9E7F-B95B4BCDFD1C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8389DE31-B188-40BA-983F-D0BB58DDB9FB} = {8389DE31-B188-40BA-983F-D0BB58DDB9FB}
-		{C0397D79-C283-45CD-B54E-CA0234CAA8EF} = {C0397D79-C283-45CD-B54E-CA0234CAA8EF}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -129,5 +129,8 @@
     <Filter Include="Textures\ImageLoaders">
       <UniqueIdentifier>{71a5ca5a-383b-4820-9fa4-87022bc65fc2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Advanced">
+      <UniqueIdentifier>{5567e89f-e7c8-44e0-a2f2-980bc96f2038}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

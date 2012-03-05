@@ -80,13 +80,6 @@ void CApplication::init(SPosition2 const & windowSize)
     StateManager = new CStateManager();
     SceneManager = new CSceneManager(windowSize);
 	GUIEngine = new CGUIEngine(windowSize);
-
-    EventManager->OnGameTickStart.connect(StateManager, & CStateManager::OnGameTickStart);
-    EventManager->OnGameTickEnd.connect(StateManager, & CStateManager::OnGameTickEnd);
-    EventManager->OnRenderStart.connect(StateManager, & CStateManager::OnRenderStart);
-    EventManager->OnRenderEnd.connect(StateManager, & CStateManager::OnRenderEnd);
-    EventManager->OnKeyboardEvent.connect(StateManager, & CStateManager::OnKeyboardEvent);
-    EventManager->OnMouseEvent.connect(StateManager, & CStateManager::OnMouseEvent);
 }
 
 CApplication & CApplication::get()

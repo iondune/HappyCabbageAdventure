@@ -63,7 +63,8 @@ public:
 };
 
 class CApplication;
-class CStateManager : public sigslot::has_slots<>
+
+class CStateManager : public CApplicationEventReceiver
 {
 
     friend class CApplication;

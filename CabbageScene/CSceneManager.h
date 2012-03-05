@@ -30,6 +30,7 @@ public:
     CLight()
 		: BindColor(Color), BindPosition(Position)
     {}
+
 };
 
 class CScene
@@ -85,6 +86,8 @@ class CSceneManager : public CScene
 {
 
     CScene * CurrentScene;
+
+	GLuint QuadHandle;
 
 public:
 

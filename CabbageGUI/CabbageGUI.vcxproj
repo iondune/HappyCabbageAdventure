@@ -38,12 +38,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <IncludePath>
-        ;$(VisualStudioDir)\Projects\glew-1.7.0\include;
-        ;$(VisualStudioDir)\Projects\SDL-1.2.15\include;
-        ;$(VisualStudioDir)\Projects\freetype-2.4.2\include;
-        ;$(SolutionDir)\CabbageCore;
-        ;$(SolutionDir)\CabbageScene;
-        ;$(IncludePath);
+      ;$(VisualStudioDir)\Projects\glew-1.7.0\include;
+      ;$(VisualStudioDir)\Projects\SDL-1.2.15\include;
+      ;$(VisualStudioDir)\Projects\freetype-2.4.2\include;
+      ;$(SolutionDir)\CabbageCore;
+      ;$(SolutionDir)\CabbageScene;
+      ;$(SolutionDir)\CabbageFramework;
+      ;$(SolutionDir)\CabbageGUI;
+      ;$(IncludePath);
     </IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
