@@ -472,15 +472,15 @@ void CMainMenuState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 void CMainMenuState::OnWidgetHover(CGUIWidget * Widget)
 {
-	std::cout << "Widget hovered! " << Widget << std::endl;
+	//std::cout << "Widget hovered! " << Widget << std::endl;
 }
 
 void CMainMenuState::OnWidgetUnHover(CGUIWidget * Widget)
 {
-	std::cout << "Widget unhovered! " << Widget << std::endl;
+	//std::cout << "Widget unhovered! " << Widget << std::endl;
 }
 
 void CMainMenuState::OnWidgetClick(CGUIWidget * Widget)
 {
-	std::cout << "Widget clicked! " << Widget << std::endl;
+	//std::cout << "Widget clicked! " << Widget << std::endl;
 }
