@@ -156,24 +156,34 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 {
     CurrentScene = this;
 
-	bool fboUsed = true;
+	/*
+	 * Create a simple quad VBO to use for draw operations!
+	 */
+	GLfloat QuadVertices[] = 
+	{
+		-1.0, -1.0,
+		 1.0, -1.0,
+		 1.0,  1.0,
+		-1.0,  1.0
+	};
+
+	glGenBuffers(1, & QuadHandle);
+	glBindBuffer(GL_ARRAY_BUFFER, QuadHandle);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(QuadVertices), QuadVertices, GL_STATIC_DRAW);
+
 	ScreenSize = screenSize;
 
-	// create a texture object
+	// create fbos!
 	for (int i = 0; i < FBO_COUNT; ++ i)
 	{
 		unsigned int  TEXTURE_WIDTH = screenSize.X / (i == EFBO_SSAO_RAW? SSAO_MULT : 1);
 		unsigned int  TEXTURE_HEIGHT = screenSize.Y / (i == EFBO_SSAO_RAW? SSAO_MULT : 1);
 
-		glGenTextures(1, &textureId[i]);
+		glGenTextures(1, & textureId[i]);
 		glBindTexture(GL_TEXTURE_2D, textureId[i]);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE); // automatic mipmap
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, TEXTURE_WIDTH, TEXTURE_HEIGHT, 0,
-					 GL_RGBA, GL_UNSIGNED_BYTE, 0);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, TEXTURE_WIDTH, TEXTURE_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		// create a renderbuffer object to store depth info
@@ -199,9 +209,10 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 		GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 		if(status != GL_FRAMEBUFFER_COMPLETE)
 		{
-			fboUsed = false;
+			//fboUsed = false;
 			std::cerr << "Failed to make FBO!!!!!! -----------------" << std::endl  << std::endl  << std::endl;
 		}
+
 		// switch back to window-system-provided framebuffer
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
@@ -291,7 +302,7 @@ void CSceneManager::drawAll()
 			Context.uniform("rnm", 1);
 			Context.uniform("normalMap", 0);
 
-			::glViewport(0, 0, ScreenSize.X / SSAO_MULT, ScreenSize.Y / SSAO_MULT);
+			glViewport(0, 0, ScreenSize.X / SSAO_MULT, ScreenSize.Y / SSAO_MULT);
 
 			glBegin(GL_QUADS);
 				glTexCoord2i(0, 0);
