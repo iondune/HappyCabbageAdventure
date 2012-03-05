@@ -1,7 +1,7 @@
 #include "CMainMenuState.h"
 
 CMainMenuState::CMainMenuState() 
-	: Application (CApplication::get()), CGUIEventReceiver(& CApplication::get().getGUIEngine())
+	: Application (CApplication::get())
 {
   WoodTexture = BackgroundTexture = 0;
 
