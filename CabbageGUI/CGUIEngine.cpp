@@ -78,14 +78,18 @@ CGUIEventManager const * const CGUIEngine::getEventManager() const
 
 void CGUIEngine::OnMouseEvent(SMouseEvent const & Event)
 {
+	SVector2 RelativeLocation = Event.RelativeLocation;
+	RelativeLocation.X *= ScreenSize.X / (float) ScreenSize.Y;
+	RelativeLocation.Y = 1.f - RelativeLocation.Y;
+
 	switch (Event.Type.Value)
 	{
 	case SMouseEvent::EType::Click:
 
-		if (Event.Pressed && Event.Button == SMouseEvent::EButton::Left)
+		if (! Event.Pressed && Event.Button == SMouseEvent::EButton::Left)
 		{
 			for (std::vector<CGUIWidget *>::iterator it = Widgets.begin(); it != Widgets.end(); ++ it)
-				if ((* it)->getBoundingBox().isPointInside(Event.RelativeLocation))
+				if ((* it)->getBoundingBox().isPointInside(RelativeLocation))
 					EventManager.OnWidgetClick(* it);
 		}
 
@@ -95,18 +99,18 @@ void CGUIEngine::OnMouseEvent(SMouseEvent const & Event)
 
 		for (std::vector<CGUIWidget *>::iterator it = Widgets.begin(); it != Widgets.end(); ++ it)
 		{
-			if ((* it)->getBoundingBox().isPointInside(Event.RelativeLocation))
+			if ((* it)->getBoundingBox().isPointInside(RelativeLocation))
 			{
-				if ((* it)->isHovered())
-				{
-					EventManager.OnWidgetUnHover(* it);
-					(* it)->Hovered = false;
-				}
-				else
+				if (! (* it)->isHovered())
 				{
 					EventManager.OnWidgetHover(* it);
 					(* it)->Hovered = true;
 				}
+			}
+			else if ((* it)->isHovered())
+			{
+				EventManager.OnWidgetUnHover(* it);
+				(* it)->Hovered = false;
 			}
 		}
 

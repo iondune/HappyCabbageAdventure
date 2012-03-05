@@ -1,7 +1,7 @@
 #include "CMainMenuState.h"
 
 CMainMenuState::CMainMenuState() 
-: Application (CApplication::get())
+	: Application (CApplication::get()), CGUIEventReceiver(& CApplication::get().getGUIEngine())
 {
   WoodTexture = BackgroundTexture = 0;
 
@@ -21,13 +21,13 @@ void CMainMenuState::setupButtons() {
 	float ratio = (float)size.X/(float) size.Y;
 
 	StartGame = new CGUIImageWidget(WoodTexture, SVector2(.4f, .12f));
-	StartGame->setPosition(SVector2(ratio/2.f - .2f, .5f));
+	StartGame->setPosition(SVector2(ratio/2.f - 0.2f, 0.5f));
 
 	StartEditor = new CGUIImageWidget(WoodTexture, SVector2(.4f, .12f));
-	StartEditor->setPosition(SVector2(ratio/2.f - .2f, .32f));
+	StartEditor->setPosition(SVector2(ratio/2.f - 0.2f, 0.32f));
 
 	ExitGame = new CGUIImageWidget(WoodTexture, SVector2(.4f, .12f));
-	ExitGame->setPosition(SVector2(ratio/2.f - .2f, .14f));
+	ExitGame->setPosition(SVector2(ratio/2.f - 0.2f, 0.14f));
 
    SColor FontColor(1.0f, 1.0f, 1.0f);
 
@@ -48,12 +48,12 @@ void CMainMenuState::setupButtons() {
 
 	//StartEditor = new CGUIImageWidget(WoodTexture, SVector2(0.65f, .25f));
 	Application.getGUIEngine().addWidget(StartGame);
-	Application.getGUIEngine().addWidget(StartEditor);
-	Application.getGUIEngine().addWidget(ExitGame);
+	//Application.getGUIEngine().addWidget(StartEditor);
+	//Application.getGUIEngine().addWidget(ExitGame);
 
-	Application.getGUIEngine().addWidget(StartFont);
-	Application.getGUIEngine().addWidget(EditorFont);
-	Application.getGUIEngine().addWidget(ExitFont);
+	//Application.getGUIEngine().addWidget(StartFont);
+	//Application.getGUIEngine().addWidget(EditorFont);
+	//Application.getGUIEngine().addWidget(ExitFont);
 }
 
 void CMainMenuState::setupMeshes()
@@ -468,4 +468,19 @@ void CMainMenuState::OnKeyboardEvent(SKeyboardEvent const & Event)
          printf("Set shader to BlurV\n");
       }
    }
+}
+
+void CMainMenuState::OnWidgetHover(CGUIWidget * Widget)
+{
+	std::cout << "Widget hovered! " << Widget << std::endl;
+}
+
+void CMainMenuState::OnWidgetUnHover(CGUIWidget * Widget)
+{
+	std::cout << "Widget unhovered! " << Widget << std::endl;
+}
+
+void CMainMenuState::OnWidgetClick(CGUIWidget * Widget)
+{
+	std::cout << "Widget clicked! " << Widget << std::endl;
 }

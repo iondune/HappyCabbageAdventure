@@ -1,7 +1,7 @@
 #include "CGUIWidget.h"
 
 CGUIWidget::CGUIWidget()
-	: Rotation(0.f), Visible(true)
+	: Rotation(0.f), Visible(true), Hovered(false)
 {}
 
 SVector2 const & CGUIWidget::getPosition() const

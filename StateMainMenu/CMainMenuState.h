@@ -22,7 +22,7 @@
 
 
 
-class CMainMenuState : public CState<CMainMenuState>
+class CMainMenuState : public CState<CMainMenuState>, public CGUIEventReceiver
 {
    CApplication &Application;
    public:
@@ -55,6 +55,9 @@ class CMainMenuState : public CState<CMainMenuState>
       void OnRenderEnd(float const Elapsed);
       void OnMouseEvent(SMouseEvent const & Event);
       void OnKeyboardEvent(SKeyboardEvent const & Event);
+	  void OnWidgetClick(CGUIWidget * Widget);
+	  void OnWidgetHover(CGUIWidget * Widget);
+	  void OnWidgetUnHover(CGUIWidget * Widget);
 };
 
 #endif
