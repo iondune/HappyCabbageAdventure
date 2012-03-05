@@ -207,6 +207,16 @@ void CRenderable::draw(CScene const * const Scene)
     }
 }
 
+void CRenderable::load(CScene const * const Scene)
+{
+	updateShaderVariables(Scene);
+
+	if (IndexBufferObject && IndexBufferObject->isDirty())
+        IndexBufferObject->syncData();
+
+	for (std::map<GLint, IAttribute const *>::iterator it = LoadedAttributes.begin(); it != LoadedAttributes.end(); ++ it)
+        it->second->load();
+}
 
 void CRenderable::drawNormals(CScene const * const scene)
 {
