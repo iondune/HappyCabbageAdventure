@@ -11,6 +11,32 @@
 #include <GL/glew.h>
 #endif
 
+
+CGUIEventReceiver::CGUIEventReceiver(CGUIEngine * engine)
+	: Engine(engine)
+{
+	Engine->getEventManager()->OnWidgetClick.connect(this, & CGUIEventReceiver::OnWidgetClick);
+	Engine->getEventManager()->OnWidgetHover.connect(this, & CGUIEventReceiver::OnWidgetHover);
+	Engine->getEventManager()->OnWidgetUnHover.connect(this, & CGUIEventReceiver::OnWidgetUnHover);
+}
+
+CGUIEventReceiver::~CGUIEventReceiver()
+{
+	Engine->getEventManager()->OnWidgetClick.disconnect(this);
+	Engine->getEventManager()->OnWidgetHover.disconnect(this);
+	Engine->getEventManager()->OnWidgetUnHover.disconnect(this);
+}
+
+void CGUIEventReceiver::OnWidgetHover(CGUIWidget * Widget)
+{}
+
+void CGUIEventReceiver::OnWidgetUnHover(CGUIWidget * Widget)
+{}
+
+void CGUIEventReceiver::OnWidgetClick(CGUIWidget * Widget)
+{}
+
+
 CGUIEngine::CGUIEngine(SPosition2 const & screenSize)
 	: ScreenSize(screenSize)
 {}
@@ -38,4 +64,14 @@ void CGUIEngine::drawAll()
 
 	for (std::vector<CGUIWidget *>::iterator it = Widgets.begin(); it != Widgets.end(); ++ it)
 		(* it)->draw();
+}
+
+CGUIEventManager * const CGUIEngine::getEventManager()
+{
+	return & EventManager;
+}
+
+CGUIEventManager const * const CGUIEngine::getEventManager() const
+{
+	return & EventManager;
 }

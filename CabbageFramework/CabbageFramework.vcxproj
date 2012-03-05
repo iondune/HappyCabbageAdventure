@@ -43,6 +43,7 @@
         ;$(SolutionDir)\CabbageScene;
         ;$(SolutionDir)\CabbageGUI;
         ;$(SolutionDir)\CabbageCore;
+        ;$(SolutionDir)\CabbageFramework;
         ;$(IncludePath);
     </IncludePath>
   </PropertyGroup>

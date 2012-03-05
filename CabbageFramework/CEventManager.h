@@ -62,6 +62,30 @@ struct SMouseEvent
 
 };
 
+class CApplication;
+
+class CApplicationEventReceiver : public sigslot::has_slots<>
+{
+
+	CApplication * const Application;
+
+public:
+
+	CApplicationEventReceiver();
+
+	void OnKeyboardEvent(SKeyboardEvent const & Event);
+	void OnMouseEvent(SMouseEvent const & Event);
+
+	void OnGameTickStart(float const Elapsed);
+	void OnGameTickEnd(float const Elapsed);
+
+	void OnRenderStart(float const Elapsed);
+	void OnRenderEnd(float const Elapsed);
+
+	void OnApplicationExit();
+
+};
+
 class CEventManager
 {
 
