@@ -37,7 +37,7 @@ protected:
 
 public:
 
-	CGUIEventReceiver(CGUIEngine * engine);
+	CGUIEventReceiver();
 
 	virtual ~CGUIEventReceiver();
 

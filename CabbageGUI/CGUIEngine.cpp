@@ -2,6 +2,8 @@
 
 #include <algorithm>
 
+#include <CApplication.h>
+
 #ifdef __unix__
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -12,8 +14,8 @@
 #endif
 
 
-CGUIEventReceiver::CGUIEventReceiver(CGUIEngine * engine)
-	: Engine(engine)
+CGUIEventReceiver::CGUIEventReceiver()
+	: Engine(& CApplication::get().getGUIEngine())
 {
 	Engine->getEventManager()->OnWidgetClick.connect(this, & CGUIEventReceiver::OnWidgetClick);
 	Engine->getEventManager()->OnWidgetHover.connect(this, & CGUIEventReceiver::OnWidgetHover);
