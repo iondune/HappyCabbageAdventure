@@ -120,6 +120,14 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             renderFlag->setTranslation(SVector3((float)x,(float) y+.5f, 1.0f));
             GameplayManager->setVictoryFlag(victoryBlock);
          }
+         if(!strcmp("CPItem",xml->getNodeName())) {
+            CPItem * stuff;
+            x = xml->getAttributeValueAsInt(0);
+            y = xml->getAttributeValueAsInt(1);
+            t = xml->getAttributeValueAsInt(2);
+            list->push_back(stuff = new CPItem((float)x,(float)y,t));
+            stuff->isMovingPlatform = 0;
+         }
          break;
 
 

@@ -10,6 +10,7 @@
 #include "CBlock.h"
 #include "CCabbage.h"
 #include "CFlag.h"
+#include "CPItem.h"
 #include "../Base/irrxml-1.2/src/irrXML.h"
 #include "wmlwriter_src/xmlwriter.h"
 
@@ -24,13 +25,13 @@ class CLWIBState : public CState<CLWIBState>
 
    //Boolean integers for keypressing
    int aDown , dDown , spaceDown , wDown , sDown , gDown , fDown , tDown, eDown, mDown, cDown;
-   int oneDown, twoDown, threeDown;
+   int oneDown, twoDown, threeDown, fourDown;
    int cabbageFlag;
    int xCabbage;
    int yCabbage;
    int blockCycle;
    bool showHelp;
-   int enemyType, textureType;
+   int enemyType, textureType, itemType;
    int WindowWidth, WindowHeight;
    // GUIImageWidget
    CGUIFontWidget *block1, *block2, *block3;
@@ -43,7 +44,7 @@ class CLWIBState : public CState<CLWIBState>
    CGUIImageWidget *cycleLeft, *cycleRight;
     //CMESH stuff
    CMesh *cubeMesh, *appleMesh, *orangeMesh, *kiwiMesh, *cabbageMesh, *groundMesh, *bladeMesh, *flagMesh;
-
+   CMesh *health, *energy;
    float xp2w(int oldX);
    float yp2w(int oldY);
 
@@ -70,6 +71,7 @@ class CLWIBState : public CState<CLWIBState>
    void PrepEnemy(float x, float y, int type); 
    void PrepCabbage(float x, float y);
    void PrepFlag(float X ,float y);
+   void PrepItem(float x, float y, int type);
    void PrepGrass(float x, float y, float w, float h);
    void PrepPreviews();
 

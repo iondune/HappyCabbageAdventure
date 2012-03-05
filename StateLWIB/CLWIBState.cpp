@@ -20,7 +20,7 @@ void PrepPreviews();
 float previewBlockMouseX, previewBlockMouseY; 
 float lastBlockPlacedLocationX, lastBlockPlacedLocationY;
 using namespace Cabbage::Collider;
-CMeshSceneObject *PreviewBlock, *PreviewEnemy, *PreviewCabbage, *PreviewGround, *PreviewFlag;
+CMeshSceneObject *PreviewBlock, *PreviewEnemy, *PreviewCabbage, *PreviewGround, *PreviewFlag, *PreviewItem;
 
 CLWIBState::CLWIBState()
 : Application (CApplication::get())
@@ -55,6 +55,7 @@ void CLWIBState::begin()
    yCabbage = 0;// for cabbage
    textureType = 0;
    enemyType = 0;
+   itemType = 0;
    aDown = dDown = spaceDown = wDown = sDown = gDown = fDown = tDown = eDown = mDown = oneDown = twoDown = threeDown = cDown = 0;
    cubeMesh = CMeshLoader::createCubeMesh();
    cubeMesh->calculateNormalsPerFace();
@@ -129,14 +130,18 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    PreviewBlock->setTranslation(SVector3(x+(float)blockWidth/2,y+(float)blockHeight/2, 0));
    PreviewEnemy->setTranslation(SVector3(x+0.5f,y+0.5f, 0));
    PreviewCabbage->setTranslation(SVector3(x+0.5f,y+0.5f, 0));
+   PreviewFlag->setTranslation(SVector3(x+0.5f,y+0.5f, 0));
+   PreviewItem->setTranslation(SVector3(x+0.5f,y+0.5f, 0));
 
    if(tDown) {
+      PreviewItem->setVisible(false);
       PreviewFlag->setVisible(false);
       PreviewCabbage->setVisible(false); 
       PreviewBlock->setVisible(false);
       PreviewEnemy->setVisible(false);
    }
    else if(twoDown) {
+      PreviewItem->setVisible(false);
       PreviewFlag->setVisible(false);
       PreviewCabbage->setVisible(false); 
       PreviewEnemy->setVisible(true);
@@ -144,19 +149,29 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    }
    else if(oneDown) {
    
+      PreviewItem->setVisible(false);
       PreviewFlag->setVisible(false);
       PreviewCabbage->setVisible(true); 
       PreviewEnemy->setVisible(false);
       PreviewBlock->setVisible(true);
    }
    else if(threeDown) {
+      PreviewItem->setVisible(false);
       PreviewFlag->setVisible(true);
       PreviewCabbage->setVisible(false); 
       PreviewEnemy->setVisible(false);
-      PreviewBlock->setVisible(true);
+      PreviewBlock->setVisible(false);
     
    }
+   else if(fourDown) {
+      PreviewItem->setVisible(true);
+      PreviewFlag->setVisible(false);
+      PreviewCabbage->setVisible(false); 
+      PreviewBlock->setVisible(false);
+      PreviewEnemy->setVisible(false);
+   }
    else {
+      PreviewItem->setVisible(false);
       PreviewFlag->setVisible(false);
       PreviewCabbage->setVisible(false); 
       PreviewBlock->setVisible(true);
@@ -182,7 +197,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    }
    else
        help->setText("Press F1 For Help");
-   if (!twoDown && !showHelp && !tDown && !oneDown && !threeDown) {
+   if (!twoDown && !showHelp && !tDown && !oneDown && !threeDown && !fourDown) {
        block2->setVisible(true);
        block1->setText("Placing Block");
        if (cDown == 0) {
@@ -214,7 +229,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
            block2->setText("changing block depth\n");
        }
    }
-   if (twoDown && !showHelp && !tDown && !oneDown && !threeDown) {
+   if (twoDown && !showHelp && !tDown && !oneDown && !threeDown&& !fourDown) {
        block3->setVisible(false);
        block2->setVisible(true);
        block1->setText("Placing enemy");
@@ -246,17 +261,35 @@ void CLWIBState::OnRenderStart(float const Elapsed)
            PreviewEnemy->setMesh(bladeMesh);
        }
    }
-   if (oneDown && !showHelp && !tDown && !twoDown && !threeDown) {
+   if (oneDown && !showHelp && !tDown && !twoDown && !threeDown&& !fourDown) {
        block3->setVisible(false);
        block2->setVisible(false);
        block1->setText("Insert Cabbage");
        PreviewCabbage->setMesh(cabbageMesh);
    }
-   if (threeDown && !showHelp && !tDown && !twoDown && !oneDown) {
+   if (threeDown && !showHelp && !tDown && !twoDown && !oneDown&& !fourDown) {
        block3->setVisible(false);
        block2->setVisible(false);
        block1->setText("Insert flag");
-       PreviewCabbage->setMesh(cabbageMesh);
+       PreviewCabbage->setMesh(flagMesh);
+   }
+   if (!threeDown && !showHelp && !tDown && !twoDown && !oneDown && fourDown) {
+        block3->setVisible(false);
+        block2->setVisible(true);
+        block1->setText("Insert item");
+        if (itemType == 0)  {// health
+            block2->setText("Adding Health");
+            PreviewItem->setMesh(health);
+        }
+        else if (itemType == 1) { // energy
+            block2->setText("Adding Energy");
+            PreviewItem->setMesh(energy);
+        }
+        else if (itemType == 2) {// life
+            block2->setText("Adding life");
+        }
+        else if (itemType == 3) // powerup
+            block2->setText("Adding powerup");
    }
    if (tDown && !showHelp ){
        block1->setText("Remove mode");
@@ -298,6 +331,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 threeDown = 0; 
                 tDown = 0;
                 twoDown = 0;
+                fourDown = 0;
                 blockWidth = 1;
                 blockHeight = 1;
                 blockDepth = 1;
@@ -309,6 +343,22 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 threeDown = 0;
             else {
                 threeDown = 1;
+                oneDown = 0;
+                tDown = 0;
+                twoDown = 0;
+                fourDown = 0;
+                blockWidth = 1;
+                blockHeight = 1;
+                blockDepth = 1;
+                PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+            }
+        }
+        if (Event.Key == SDLK_4) {
+            if (fourDown == 1)
+                fourDown = 0;
+            else {
+                fourDown = 1;
+                threeDown = 0;
                 oneDown = 0;
                 tDown = 0;
                 twoDown = 0;
@@ -348,6 +398,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 threeDown = 0; 
                 tDown = 0;
                 oneDown = 0;
+                fourDown = 0;
                 blockWidth = 1;
                 blockHeight = 1;
                 blockDepth = 1;
@@ -415,6 +466,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 twoDown = 0;
                 oneDown = 0;
                 threeDown = 0; 
+                fourDown = 0;
             }
         }
         if(Event.Key == SDLK_m){
@@ -446,7 +498,12 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                     enemyType++;
                 else
                     enemyType = 0;
-            } else if (!oneDown && !threeDown && !tDown){
+            } else if (fourDown) {
+                if (itemType < 2) 
+                    itemType++;
+                else
+                    itemType = 0;
+            } else if (!oneDown && !threeDown && !tDown && !fourDown){
                 if (cDown == 0) { 
                     if (textureType < 2  && textureType >= 0 && textureType != 2)
                         textureType++;
@@ -465,21 +522,22 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                     }
                 }
-            }
-            if (cDown == 1&& textureType != 2) {
-                if(blockWidth < 10 && textureType != -5)
-                    blockWidth++;
-                PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
-            }
-            if (cDown == 2&& textureType != 2) {
-                if(blockHeight < 10 && textureType != -5)
-                    blockHeight++;
-                PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
-            }
-            if (cDown == 3&& textureType != 2) {
-                if(blockDepth < 6 && textureType != -5)
-                    blockDepth++;
-                PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+            
+                if (cDown == 1&& textureType != 2) {
+                    if(blockWidth < 10 && textureType != -5)
+                        blockWidth++;
+                    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                }
+                if (cDown == 2&& textureType != 2) {
+                    if(blockHeight < 10 && textureType != -5)
+                        blockHeight++;
+                    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                }
+                if (cDown == 3&& textureType != 2) {
+                    if(blockDepth < 6 && textureType != -5)
+                        blockDepth++;
+                    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                }
             }
         } 
         if (Event.Key == SDLK_z) { // subtracting generally
@@ -487,7 +545,12 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 if (enemyType != 0) 
                     enemyType--;
                 else
-                    enemyType = 0;
+                    enemyType = 5;
+            } else if (fourDown) {
+                if (itemType != 0)
+                    itemType--;
+                else
+                    itemType = 1;
             } else if (!oneDown && !threeDown && !tDown){
                 if (cDown == 0) {
                     if (textureType != 0 && textureType > 0)   
@@ -557,7 +620,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
          spaceDown = 0;
       }
       if(Event.Key == SDLK_F1) {
-         showHelp = false;
+          showHelp = false;
       }
    }
 }
@@ -622,11 +685,18 @@ void CLWIBState::loadWorld() {
               y = xml->getAttributeValueAsInt(1);
               PrepCabbage((float)x,(float)y);
            }
-           if(!strcmp("CFlag`", xml->getNodeName()))
+           if(!strcmp("CFlag", xml->getNodeName()))
            {
               x = xml->getAttributeValueAsInt(0);
               y = xml->getAttributeValueAsInt(1);
               PrepFlag((float)x,(float)y);
+           }
+           if (!strcmp("CPItem", xml->getNodeName()))
+           {
+                x = xml->getAttributeValueAsInt(0);
+                y = xml->getAttributeValueAsInt(1);
+                t = xml->getAttributeValueAsInt(2);
+                PrepItem((float)x, (float)y, t);
            }
          break;
         }
@@ -665,12 +735,13 @@ void CLWIBState::end()
 void CLWIBState::PrepPreviews() {
    blocks.push_back(PreviewBlock = new CMeshSceneObject());
    PreviewBlock->setMesh(cubeMesh);
-
    PreviewBlock->setTexture("Colors/white.bmp");
-  
    PreviewBlock->setShader(DiffuseTexture);
    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
 
+   blocks.push_back(PreviewFlag = new CMeshSceneObject());
+   blocks.push_back(PreviewCabbage = new CMeshSceneObject());
+   blocks.push_back(PreviewItem = new CMeshSceneObject());
    blocks.push_back(PreviewEnemy = new CMeshSceneObject());
    appleMesh = CMeshLoader::load3dsMesh("Base/appleEnemy.3ds");
    orangeMesh = CMeshLoader::load3dsMesh("Base/orange.3ds");
@@ -678,9 +749,8 @@ void CLWIBState::PrepPreviews() {
    cabbageMesh = CMeshLoader::load3dsMesh("Base/crappycabbage.3ds");
    bladeMesh = CMeshLoader::load3dsMesh("Base/trap1.3ds");
    flagMesh = CMeshLoader::load3dsMesh("Base/flag.3ds");
-   
-   blocks.push_back(PreviewFlag = new CMeshSceneObject());
-   blocks.push_back(PreviewCabbage = new CMeshSceneObject());
+   health = CMeshLoader::load3dsMesh("Base/healthboost.3ds");
+   energy = CMeshLoader::load3dsMesh("Base/energyboost.3ds");
    //PreviewCabbage->setMesh(appleMesh);
    
    if(appleMesh) {
@@ -715,10 +785,22 @@ void CLWIBState::PrepPreviews() {
       flagMesh->centerMeshByExtents(SVector3(0));
       flagMesh->calculateNormalsPerVertex();
    }
+   if (health) {
+   health->resizeMesh(SVector3(1));
+      health->centerMeshByExtents(SVector3(0));
+      health->calculateNormalsPerFace();
+   }
+   if (energy) {
+   energy->resizeMesh(SVector3(1));
+      energy->centerMeshByExtents(SVector3(0));
+      energy->calculateNormalsPerFace();
+   }
+   PreviewFlag->setMesh(flagMesh);
    PreviewFlag->setShader(Diffuse);
    PreviewFlag->setRotation(SVector3(-90, 0, 0));
    PreviewFlag->setScale(SVector3(0.5,0.5, 0.5));
    //
+   PreviewCabbage->setMesh(cabbageMesh);
    PreviewCabbage->setShader(Diffuse);
    PreviewCabbage->setRotation(SVector3(90, 0, 0));
    PreviewCabbage->setScale(SVector3(.0150f, .00025f,.0016f));
@@ -726,7 +808,13 @@ void CLWIBState::PrepPreviews() {
    PreviewEnemy->setShader(Diffuse);
    PreviewEnemy->setRotation(SVector3(-90, 0, 0));
    PreviewBlock->setScale(SVector3(1, 1, 1));
+   //
+   PreviewItem->setMesh(health);
+   PreviewItem->setShader(Diffuse);
+   PreviewItem->setRotation(SVector3(-90, 0, 0));
+   PreviewItem->setScale(SVector3(1, 1, 1));
 
+   CApplication::get().getSceneManager().addSceneObject(PreviewItem);
    CApplication::get().getSceneManager().addSceneObject(PreviewBlock);
    CApplication::get().getSceneManager().addSceneObject(PreviewFlag);
    CApplication::get().getSceneManager().addSceneObject(PreviewEnemy);
@@ -744,6 +832,39 @@ void initBlockMap() {
          blockMap[i][j].mapX = -1;
          blockMap[i][j].mapY = -1;
       }
+}
+
+void CLWIBState::PrepItem(float x, float y, int item) {
+
+   if(x < -25 || y < -25 || x >= 200 || y >= 75)
+      return;
+   if(blockMap[(int)x+25][(int)(y-0.5+25)].o) {
+      printf("Blockmap space occupied. Did not place Cabbage\n");
+      return;
+   }
+
+   printf("Placed item starting at %0.2f, %0.2f\n", x, y);
+   CMeshSceneObject *tempItem;
+   CPItem *tempPlaceable;
+   blocks.push_back(tempItem = new CMeshSceneObject());
+   placeables.push_back(tempPlaceable = new CPItem(x, y, item));
+   if (item == 0)
+       tempItem->setMesh(health);
+   if (item == 1)
+       tempItem->setMesh(energy);
+   tempItem->setShader(Diffuse);
+   tempItem->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
+   tempItem->setRotation(SVector3(-90, 0, 0));
+   tempItem->setScale(SVector3(0.5, 0.5, 0.5));
+   blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
+   blockMap[(int)x+25][(int)(y-0.5+25)].r = tempItem;
+   blockMap[(int)x+25][(int)(y-0.5+25)].p = tempPlaceable;
+   blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
+   blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
+   Application.getSceneManager().addSceneObject(tempItem);
+   redo.clear();
+   redoPlaceables.clear();
+
 }
 
 void CLWIBState::PrepFlag(float x, float y) {
@@ -975,19 +1096,20 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
    if(Event.Button.Value == SMouseEvent::EButton::Left) {
       if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
          mouseDown = 1;
-         if(!tDown && twoDown && !oneDown && !threeDown) {
-            printf("Here\n");
+         if(!tDown && twoDown && !oneDown && !threeDown && !fourDown) {
             PrepEnemy(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY),enemyType);
          }
-         if(!tDown && !twoDown && !oneDown && threeDown) {
-            printf("Here\n");
+         if(!tDown && !twoDown && !oneDown && threeDown&& !fourDown) {
             PrepFlag(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
          }
-         if(!tDown && oneDown && !threeDown && !twoDown) {
+         if(!tDown && oneDown && !threeDown && !twoDown&& !fourDown) {
              PrepCabbage(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
          }
-         else if (!tDown && !oneDown && !threeDown &&!twoDown) {
+         else if (!tDown && !oneDown && !threeDown &&!twoDown && !fourDown) {
             PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,textureType,mDown);
+         }
+         else if (!tDown && !oneDown && !threeDown &&!twoDown && fourDown) {
+            PrepItem(round(eye.X + previewBlockMouseX),round(eye.Y + previewBlockMouseY),itemType);
          }
          else {
             if(lastMouseOveredBlock.o) {

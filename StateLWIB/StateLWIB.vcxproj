@@ -86,6 +86,7 @@
     <ClInclude Include="CCabbage.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CFlag.h" />
+    <ClInclude Include="CPItem.h" />
     <ClInclude Include="CLWIBState.h" />
     <ClInclude Include="CPlaceable.h" />
     <ClInclude Include="header.h" />
@@ -97,6 +98,7 @@
     <ClCompile Include="CCabbage.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CFlag.cpp" />
+    <ClCompile Include="CPItem.cpp" />
     <ClCompile Include="CLWIBState.cpp" />
     <ClCompile Include="Materials.cpp" />
     <ClCompile Include="wmlwriter_src\xmlwriter.cpp" />
