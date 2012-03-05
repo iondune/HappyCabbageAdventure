@@ -59,7 +59,7 @@ void CGUIFontWidget::draw()
 	if (Renderer)
 	{
 		Renderer->setStringRotation(Rotation);
-		Renderer->draw(Position.X, Position.Y, Text.c_str()); 
+		Renderer->draw(Box.Position.X, Box.Position.Y, Text.c_str()); 
 	}
 
 	glEnable(GL_DEPTH_TEST);
@@ -80,6 +80,11 @@ SColor const CGUIFontWidget::getColor()
 void CGUIFontWidget::setText(std::string const & text)
 {
 	Text = text;
+	if (Renderer)
+	{
+		OGLFT::BBox BBox = Renderer->measure_nominal(text.c_str());
+		Box.Size = SVector2(BBox.x_max_ - BBox.x_min_, BBox.y_max_ - BBox.y_min_);
+	}
 }
 
 std::string const & CGUIFontWidget::getText() const

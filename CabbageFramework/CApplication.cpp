@@ -149,6 +149,8 @@ void CApplication::run()
 					SMouseEvent MouseEvent;
 					MouseEvent.Type = SMouseEvent::EType::Click;
 					MouseEvent.Location = EventManager->MouseLocation;
+					MouseEvent.RelativeLocation = SVector2(MouseEvent.Location.X / (float) WindowSize.X,
+						MouseEvent.Location.Y / (float) WindowSize.Y);
 					MouseEvent.Pressed = Event.button.state == SDL_PRESSED;
 
 					switch (Event.button.button)

@@ -1,7 +1,8 @@
 #ifndef _CABBAGECOLLIDER_CEVENTMANAGER_H_INCLUDED_
 #define _CABBAGECOLLIDER_CEVENTMANAGER_H_INCLUDED_
 
-#include "../CabbageCore/SPosition2.h"
+#include <SPosition2.h>
+#include <SVector2.h>
 
 #include "sigslot/sigslot.h"
 
@@ -66,6 +67,7 @@ struct SMouseEvent
     };
 
     SPosition2 Location, Movement;
+	SVector2 RelativeLocation;
     EButton Button;
     EType Type;
     bool Pressed;

@@ -6,12 +6,12 @@ CGUIWidget::CGUIWidget()
 
 SVector2 const & CGUIWidget::getPosition() const
 {
-	return Position;
+	return Box.Position;
 }
 
 void CGUIWidget::setPosition(SVector2 const & position)
 {
-	Position = position;
+	Box.Position = position;
 }
 
 float const CGUIWidget::getRotation() const
@@ -32,7 +32,17 @@ bool const CGUIWidget::isVisible() const
 	return Visible;
 }
 
+bool const CGUIWidget::isHovered() const
+{
+	return Hovered;
+}
+
 void CGUIWidget::setVisible(bool const visible)
 {
 	Visible = visible;
+}
+
+SRect2 const & CGUIWidget::getBoundingBox() const
+{
+	return Box;
 }

@@ -12,7 +12,6 @@ class CGUIImageWidget : public CGUIWidget
 {
 
 	CTexture * Image;
-	SVector2 Size;
 
 public:
 

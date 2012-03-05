@@ -33,10 +33,18 @@ public:
 
 	bool const intersects(SRect2 const & r) const
 	{
-		return (otherCorner().Y > r.Position.Y &&
-			Position.Y < r.otherCorner().Y &&
-			otherCorner().X > r.Position.X &&
+		return (otherCorner().Y > r.Position.Y && 
+			Position.Y < r.otherCorner().Y && 
+			otherCorner().X > r.Position.X && 
 			Position.X < r.otherCorner().X);
+	}
+
+	bool const isPointInside(SVector2 const & v) const
+	{
+		return (otherCorner().Y > v.Y && 
+			Position.Y < v.Y && 
+			otherCorner().X > v.X && 
+			Position.X < v.X);
 	}
 
 };

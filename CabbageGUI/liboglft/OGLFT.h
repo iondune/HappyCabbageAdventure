@@ -941,6 +941,9 @@ namespace OGLFT {
      */
     int descender ( void ) { return faces_.front().face_->descender; }
 
+	
+    BBox measure_nominal ( const char* s );
+
   protected:
     // The various styles override these routines
 
@@ -971,7 +974,6 @@ namespace OGLFT {
 
   private:
     void init ( void );
-    BBox measure_nominal ( const char* s );
 #ifndef OGLFT_NO_QT
     BBox measure_nominal ( const QString& s );
     QString format_number ( const QString& format, double number );

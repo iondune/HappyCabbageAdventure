@@ -82,13 +82,33 @@ void CGUIEngine::OnMouseEvent(SMouseEvent const & Event)
 	{
 	case SMouseEvent::EType::Click:
 
-		if (Event.Button == SMouseEvent::EButton::Left)
+		if (Event.Pressed && Event.Button == SMouseEvent::EButton::Left)
 		{
+			for (std::vector<CGUIWidget *>::iterator it = Widgets.begin(); it != Widgets.end(); ++ it)
+				if ((* it)->getBoundingBox().isPointInside(Event.RelativeLocation))
+					EventManager.OnWidgetClick(* it);
 		}
 
 		break;
 
 	case SMouseEvent::EType::Move:
+
+		for (std::vector<CGUIWidget *>::iterator it = Widgets.begin(); it != Widgets.end(); ++ it)
+		{
+			if ((* it)->getBoundingBox().isPointInside(Event.RelativeLocation))
+			{
+				if ((* it)->isHovered())
+				{
+					EventManager.OnWidgetUnHover(* it);
+					(* it)->Hovered = false;
+				}
+				else
+				{
+					EventManager.OnWidgetHover(* it);
+					(* it)->Hovered = true;
+				}
+			}
+		}
 
 		break;
 	}

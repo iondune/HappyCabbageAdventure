@@ -2,16 +2,20 @@
 #define _CABBAGEGUI_CGUIWIDGET_H_INCLUDED_
 
 #include <SVector2.h>
+#include <SRect2.h>
 
 class CGUIWidget
 {
 
 protected:
 
-	SVector2 Position;
+	SRect2 Box;
 	float Rotation;
 
 	bool Visible;
+	bool Hovered;
+
+	friend class CGUIEngine;
 
 public:
 
@@ -27,6 +31,9 @@ public:
 
 	bool const isVisible() const;
 	void setVisible(bool const visible);
+	bool const isHovered() const;
+
+	SRect2 const & getBoundingBox() const;
 
 };
 
