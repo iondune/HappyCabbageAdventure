@@ -34,6 +34,16 @@ struct SMouseEvent
 
         EButton(Domain const value);
 
+		bool const operator == (Domain const rhs) const
+		{
+			return Value == rhs;
+		}
+
+		bool const operator == (EButton const rhs) const
+		{
+			return Value == rhs.Value;
+		}
+
     };
 
     class EType

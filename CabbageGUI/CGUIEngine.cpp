@@ -75,3 +75,21 @@ CGUIEventManager const * const CGUIEngine::getEventManager() const
 {
 	return & EventManager;
 }
+
+void CGUIEngine::OnMouseEvent(SMouseEvent const & Event)
+{
+	switch (Event.Type.Value)
+	{
+	case SMouseEvent::EType::Click:
+
+		if (Event.Button == SMouseEvent::EButton::Left)
+		{
+		}
+
+		break;
+
+	case SMouseEvent::EType::Move:
+
+		break;
+	}
+}

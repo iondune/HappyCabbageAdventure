@@ -9,6 +9,7 @@
 
 // Cabbage
 #include <SPosition2.h>
+#include <CEventManager.h>
 
 // Local
 #include "CGUIWidget.h"
@@ -46,7 +47,7 @@ public:
 
 };
 
-class CGUIEngine
+class CGUIEngine : public CApplicationEventReceiver
 {
 
 	std::vector<CGUIWidget *> Widgets;
@@ -67,6 +68,8 @@ public:
 
 	CGUIEventManager * const getEventManager();
 	CGUIEventManager const * const getEventManager() const;
+
+	void OnMouseEvent(SMouseEvent const & Event);
 
 };
 
