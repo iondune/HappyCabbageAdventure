@@ -57,21 +57,31 @@ static inline void printProgramInfoLog(GLuint programHandle)
     }
 }
 
-std::map<std::string, CShader *> CShaderLoader::LoadedShaders;
+std::map<std::pair<std::string, std::string>, CShader *> CShaderLoader::LoadedShaders;
 
 std::string CShaderLoader::ShaderDirectory = "../Media/Shaders/";
 
+
+
+
 CShader * const CShaderLoader::loadShader(std::string const & name)
 {
-    std::map<std::string, CShader *>::iterator it = LoadedShaders.find(name);
+	return loadShader(name + ".vert", name + ".frag");
+}
+
+CShader * const CShaderLoader::loadShader(std::string const & vertName, std::string const & fragName)
+{
+	std::string const vertFileName = ShaderDirectory + vertName;
+    std::string const fragFileName = ShaderDirectory + fragName;
+
+	std::pair<std::string, std::string> ShaderLabel(vertFileName, fragFileName);
+
+	std::map<std::pair<std::string, std::string>, CShader *>::iterator it = LoadedShaders.find(ShaderLabel);
 
     if (it != LoadedShaders.end())
     {
         return it->second;
     }
-
-    std::string const vertFileName = ShaderDirectory + name + ".vert";
-    std::string const fragFileName = ShaderDirectory + name + ".frag";
 
     // Create OpenGL Shader objects
     GLuint VS = glCreateShader(GL_VERTEX_SHADER);
@@ -206,6 +216,6 @@ CShader * const CShaderLoader::loadShader(std::string const & name)
         delete nameBuffer;
     }
 
-    LoadedShaders[name] = Shader;
+    LoadedShaders[ShaderLabel] = Shader;
     return Shader;
 }

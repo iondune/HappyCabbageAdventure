@@ -6,13 +6,15 @@
 class CShaderLoader
 {
 
-    static std::map<std::string, CShader *> LoadedShaders;
+	static std::map<std::pair<std::string, std::string>, CShader *> LoadedShaders;
 
 public:
 
-    static CShader * const loadShader(std::string const & name);
+	static CShader * const loadShader(std::string const & name);
 
-    static std::string ShaderDirectory;
+	static CShader * const loadShader(std::string const & vertName, std::string const & fragName);
+
+	static std::string ShaderDirectory;
 
 };
 
