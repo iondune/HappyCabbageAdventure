@@ -48,12 +48,12 @@ void CMainMenuState::setupButtons() {
 
 	//StartEditor = new CGUIImageWidget(WoodTexture, SVector2(0.65f, .25f));
 	Application.getGUIEngine().addWidget(StartGame);
-	//Application.getGUIEngine().addWidget(StartEditor);
-	//Application.getGUIEngine().addWidget(ExitGame);
+	Application.getGUIEngine().addWidget(StartEditor);
+	Application.getGUIEngine().addWidget(ExitGame);
 
-	//Application.getGUIEngine().addWidget(StartFont);
-	//Application.getGUIEngine().addWidget(EditorFont);
-	//Application.getGUIEngine().addWidget(ExitFont);
+	Application.getGUIEngine().addWidget(StartFont);
+	Application.getGUIEngine().addWidget(EditorFont);
+	Application.getGUIEngine().addWidget(ExitFont);
 }
 
 void CMainMenuState::setupMeshes()
