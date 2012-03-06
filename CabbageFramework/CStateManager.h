@@ -71,7 +71,7 @@ class CStateManager : public CApplicationEventReceiver
 
     CStateManager();
 
-    IState * CurrentState;
+    IState * CurrentState, * NextState;
 
 public:
 
@@ -87,6 +87,8 @@ public:
     void setState(IState * State);
 
 	void shutDown();
+
+	void actuate();
 
 };
 

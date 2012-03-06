@@ -222,6 +222,8 @@ void CApplication::run()
         EventManager->OnRenderStart(ElapsedTime);
         EventManager->OnRenderEnd(ElapsedTime);
 
+		StateManager->actuate();
+
     } // while (Running)
 
 	StateManager->shutDown();
