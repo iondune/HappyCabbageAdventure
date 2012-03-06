@@ -24,7 +24,7 @@ void CGameEventReceiver::OnPlayerDamaged(SPlayerDamagedEvent const & Event) {
 }
 
 void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
-   fprintf(stderr, "Removing enemy %d\n", Event.Enemy);
+   //fprintf(stderr, "Removing enemy %d\n", Event.Enemy);
 
    SDeadEnemy DeadEnemy;
    if (Event.Enemy.Actor->CollideableType == COLLIDEABLE_TYPE_PKIWI) {
