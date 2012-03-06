@@ -184,7 +184,7 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		// For some reason this is needed to make it work
-		static bool const Work = true;
+		bool const Work = i == EFBO_SSAO_NORMALS;
 
 		if (Work)
 		{
@@ -300,13 +300,11 @@ void CSceneManager::drawAll()
 			
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO_NORMALS]);
+			Context.uniform("normalMap", 0);
 
 			glActiveTexture(GL_TEXTURE1);
 			glBindTexture(GL_TEXTURE_2D, randNorm);
-			//glGenerateMipmap(GL_TEXTURE_2D);
-
 			Context.uniform("rnm", 1);
-			Context.uniform("normalMap", 0);
 
 			glViewport(0, 0, ScreenSize.X / SSAO_MULT, ScreenSize.Y / SSAO_MULT);
 
