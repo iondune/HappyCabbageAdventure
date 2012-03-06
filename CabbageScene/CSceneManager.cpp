@@ -218,7 +218,7 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 	}
 
 	SSAOShader = CShaderLoader::loadShader("SSAO");
-	BlendShader = CShaderLoader::loadShader("Blend");
+	BlendShader = CShaderLoader::loadShader("FBO/QuadCopyUV.glsl", "Blend.frag");
 	BlurV = CShaderLoader::loadShader("BlurV");
 	BlurH = CShaderLoader::loadShader("BlurH");
 	White = CTextureLoader::loadTexture("Colors/White.bmp");
@@ -477,19 +477,9 @@ void CSceneManager::drawAll()
 		Context.uniform("ssao", 1);
 		Context.uniform("bloom", 2);
 
-		glBegin(GL_QUADS);
-			glTexCoord2i(0, 0);
-			glVertex2i(0, 0);
+		Context.bindBufferObject("aPosition", QuadHandle, 2);
 
-			glTexCoord2i(1, 0);
-			glVertex2i(1, 0);
-
-			glTexCoord2i(1, 1);
-			glVertex2i(1, 1);
-			
-			glTexCoord2i(0, 1);
-			glVertex2i(0, 1);
-		glEnd();
+		glDrawArrays(GL_QUADS, 0, 4);
 	}
 
 	glEnable(GL_DEPTH_TEST);
