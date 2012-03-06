@@ -441,6 +441,7 @@ void CMainMenuState::OnMouseEvent(SMouseEvent const & Event)
 void CMainMenuState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
    if(Event.Pressed && Event.Key == SDLK_a) {
+      /*
       if(RenderBackground->getShader() == CShaderLoader::loadShader("BlurV")) {
          RenderBackground->setShader("NotBlur");
          printf("Set shader to NotBlur\n");
@@ -453,8 +454,10 @@ void CMainMenuState::OnKeyboardEvent(SKeyboardEvent const & Event)
          RenderBackground->setShader("BlurH");
          printf("Set shader to BlurH\n");
       }
+      */
    }
    if(Event.Pressed && Event.Key == SDLK_s) {
+      /*
       if(RenderBackground->getShader() == CShaderLoader::loadShader("BlurH")) {
          RenderBackground->setShader("NotBlur");
          printf("Set shader to NotBlur\n");
@@ -467,6 +470,7 @@ void CMainMenuState::OnKeyboardEvent(SKeyboardEvent const & Event)
          RenderBackground->setShader("BlurV");
          printf("Set shader to BlurV\n");
       }
+      */
    }
 }
 
