@@ -49,20 +49,20 @@ void CStateManager::setState(IState * State)
 }
 
 void CStateManager::doStateChange() {
-   if(NextState) {
-      static float const Fadetime = 0.3f;
-      CApplication::get().getSceneManager().blurSceneOut(Fadetime, CApplication::get().getRunTime());
+   if(!NextState)
+      return;
+   static float const Fadetime = 0.3f;
+   CApplication::get().getSceneManager().blurSceneOut(Fadetime, CApplication::get().getRunTime());
 
-      if (CurrentState)
-         CurrentState->end();
+   if (CurrentState)
+      CurrentState->end();
 
-      CurrentState = NextState;
-      NextState = NULL;
+   CurrentState = NextState;
+   NextState = NULL;
 
-      CurrentState->begin();
+   CurrentState->begin();
 
-      CApplication::get().getSceneManager().blurSceneIn(Fadetime, CApplication::get().getRunTime());
-   }
+   CApplication::get().getSceneManager().blurSceneIn(Fadetime, CApplication::get().getRunTime());
 }
 
 void CStateManager::shutDown()
