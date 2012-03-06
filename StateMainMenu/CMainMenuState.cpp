@@ -402,45 +402,10 @@ void CMainMenuState::OnRenderEnd(float const Elapsed)
 {
 }
 
-
-void CMainMenuState::OnMouseEvent(SMouseEvent const & Event)
-{
-	if(Event.Type.Value == SMouseEvent::EType::Click){
-
-      switch (Event.Button.Value){
-
-      case SMouseEvent::EButton::Left:
-
-         if(!Event.Pressed && Event.Location.X < .675f*maxX/*540*/ && Event.Location.X > .35f*maxX/*280*/)
-         {
-            if(Event.Location.Y >.375f*maxY/*225*/ && Event.Location.Y < .5f*maxY/*300*/)
-            {
-               CApplication::get().getStateManager().setState(& COverworldState::get());
-            } 
-            else if(Event.Location.Y >.55f*maxY/*330*/ && Event.Location.Y < .667f*maxY/*400*/)
-            {
-               stopSoundtrack();
-               CApplication::get().getStateManager().setState(& CLWIBState::get());
-            } 
-            else if(Event.Location.Y >.735f*maxY/*441*/  && Event.Location.Y < .86f*maxY/*516*/)
-            {
-               printf("Exiting program.\n");
-               exit(1);
-            }
-         }
-         break;
-      case SMouseEvent::EButton::Right:
-         //printf(" Right\n", Event.Pressed);
-         break;
-      case SMouseEvent::EButton::Middle:
-         //printf(" Middle\n", Event.Pressed);
-         break;
-      }
-   }
-}
 void CMainMenuState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
    if(Event.Pressed && Event.Key == SDLK_a) {
+      /*
       if(RenderBackground->getShader() == CShaderLoader::loadShader("BlurV")) {
          RenderBackground->setShader("NotBlur");
          printf("Set shader to NotBlur\n");
@@ -453,8 +418,10 @@ void CMainMenuState::OnKeyboardEvent(SKeyboardEvent const & Event)
          RenderBackground->setShader("BlurH");
          printf("Set shader to BlurH\n");
       }
+      */
    }
    if(Event.Pressed && Event.Key == SDLK_s) {
+      /*
       if(RenderBackground->getShader() == CShaderLoader::loadShader("BlurH")) {
          RenderBackground->setShader("NotBlur");
          printf("Set shader to NotBlur\n");
@@ -467,6 +434,7 @@ void CMainMenuState::OnKeyboardEvent(SKeyboardEvent const & Event)
          RenderBackground->setShader("BlurV");
          printf("Set shader to BlurV\n");
       }
+      */
    }
 }
 
@@ -482,5 +450,19 @@ void CMainMenuState::OnWidgetUnHover(CGUIWidget * Widget)
 
 void CMainMenuState::OnWidgetClick(CGUIWidget * Widget)
 {
-	//std::cout << "Widget clicked! " << Widget << std::endl;
+   if(Widget == StartGame) {
+      CApplication::get().getStateManager().setState(& COverworldState::get());
+   }
+   else if(Widget == StartEditor) {
+      stopSoundtrack();
+      CApplication::get().getStateManager().setState(& CLWIBState::get());
+   }
+   else if(Widget == ExitGame) {
+      CApplication::get().close();
+      //exit(1);
+   }
+   /*
+     */
+
+   //std::cout << "Widget clicked! " << Widget << std::endl;
 }

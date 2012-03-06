@@ -222,7 +222,7 @@ void CApplication::run()
         EventManager->OnRenderStart(ElapsedTime);
         EventManager->OnRenderEnd(ElapsedTime);
 
-		StateManager->actuate();
+        StateManager->doStateChange();
 
     } // while (Running)
 

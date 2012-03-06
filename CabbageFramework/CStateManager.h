@@ -71,7 +71,7 @@ class CStateManager : public CApplicationEventReceiver
 
     CStateManager();
 
-    IState * CurrentState, * NextState;
+    IState * CurrentState;
 
 public:
 
@@ -85,10 +85,10 @@ public:
     void OnKeyboardEvent(SKeyboardEvent const & Event);
 
     void setState(IState * State);
+    IState * NextState;
+    void doStateChange();
 
 	void shutDown();
-
-	void actuate();
 
 };
 

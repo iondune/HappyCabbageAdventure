@@ -53,11 +53,10 @@ class CMainMenuState : public CState<CMainMenuState>, public CGUIEventReceiver
       void end();
       void OnRenderStart(float const Elapsed);
       void OnRenderEnd(float const Elapsed);
-      void OnMouseEvent(SMouseEvent const & Event);
       void OnKeyboardEvent(SKeyboardEvent const & Event);
-	  void OnWidgetClick(CGUIWidget * Widget);
-	  void OnWidgetHover(CGUIWidget * Widget);
-	  void OnWidgetUnHover(CGUIWidget * Widget);
+      void OnWidgetClick(CGUIWidget * Widget);
+      void OnWidgetHover(CGUIWidget * Widget);
+      void OnWidgetUnHover(CGUIWidget * Widget);
 };
 
 #endif
