@@ -14,6 +14,7 @@ class CPhysicsParticle : public CParticle {
    Cabbage::Collider::CEngine *Engine;
 
    virtual void setEngine(Cabbage::Collider::CEngine *engine);
+   virtual void deconstruct();
 };
 
 #endif

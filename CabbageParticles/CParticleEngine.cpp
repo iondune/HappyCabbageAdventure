@@ -256,6 +256,7 @@ void CParticleEngine::deconstruct() {
       std::vector<CParticle*>::iterator it;
       for(it = particles.begin(); it != particles.end(); it++) {
          //delete (* it)->getRenderable();
+         (* it)->deconstruct();
          delete (* it);
       }
       CApplication::get().getSceneManager().removeSceneObject(myObj);

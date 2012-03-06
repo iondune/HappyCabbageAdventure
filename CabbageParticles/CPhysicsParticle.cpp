@@ -10,3 +10,9 @@ void CPhysicsParticle::setEngine(Cabbage::Collider::CEngine *engine) {
    //Actor->Gravity = 30.0f;
 }
 
+
+void CPhysicsParticle::deconstruct() {
+   if(Actor && Engine) {
+      Engine->removeActor(Actor);
+   }
+}

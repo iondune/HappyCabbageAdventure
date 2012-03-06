@@ -16,3 +16,8 @@ void CParticle::setAppearRate(float r) {
    StartFactor = (float)rand()/(float)RAND_MAX * AppearRate; 
    Counter = StartFactor;
 }
+
+
+void CParticle::deconstruct() {
+
+}

@@ -52,6 +52,8 @@ namespace Cabbage
             {
                // Perform actor update
                // 
+               int numThings = Actors.size() + Objects.size();
+               //printf("There are %d things\n", numThings);
                for (ActorList::iterator it = Actors.begin(); it != Actors.end(); ++ it)
                {
                   (* it)->updateVectors(TickTime);

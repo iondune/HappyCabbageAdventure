@@ -1,5 +1,5 @@
 ROOT_CABBAGE_DIR=../
-SOURCES=CLWIBState.cpp Materials.cpp ./wmlwriter_src/xmlwriter.cpp CBlock.cpp CEnemy.cpp CCabbage.cpp CFlag.cpp 
+SOURCES=CLWIBState.cpp Materials.cpp ./wmlwriter_src/xmlwriter.cpp CBlock.cpp CEnemy.cpp CCabbage.cpp CFlag.cpp CPItem.cpp 
 OBJECTS=$(SOURCES:%.cpp=%.o)
 CABBAGE=-L../lib/ -lCabbageCollider -lCabbageFramework -lCabbageScene
 COMPILER_VERSION=-std=c++0x
@@ -36,6 +36,8 @@ CBlock.o: CBlock.cpp CBlock.h CPlaceable.h
 	g++ -O1 $(INCLUDE) -DGL_GLEXT_PROTOTYPES `sdl-config --cflags` -c CBlock.cpp
 CEnemy.o: CEnemy.cpp CEnemy.h CPlaceable.h
 	g++ -O1 $(INCLUDE) -DGL_GLEXT_PROTOTYPES `sdl-config --cflags` -c CEnemy.cpp
+CPItem.o: CPItem.cpp CPItem.h CPlaceable.h
+	g++ -O1 $(INCLUDE) -DGL_GLEXT_PROTOTYPES `sdl-config --cflags` -c CPItem.cpp
 CCabbage.o: CCabbage.cpp CCabbage.h CPlaceable.h
 	g++ -O1 $(INCLUDE) -DGL_GLEXT_PROTOTYPES `sdl-config --cflags` -c CCabbage.cpp
 CFlag.o: CFlag.cpp CFlag.h CPlaceable.h

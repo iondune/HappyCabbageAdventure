@@ -19,6 +19,8 @@ class CParticle {
 
       int useCenterPos;
       void setLookRight(int*);
+
+      virtual void deconstruct();
       virtual void setCenterPos(SVector3*);
       void setAppearRate(float r);
       virtual void setupRenderable()=0;
