@@ -16,11 +16,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Makefile" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="COverworldState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
   </ItemGroup>
 </Project>

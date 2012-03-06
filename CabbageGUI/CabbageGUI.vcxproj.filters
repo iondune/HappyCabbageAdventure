@@ -24,4 +24,7 @@
     <ClCompile Include="CGUIWidget.cpp" />
     <ClCompile Include="CGUIImageWidget.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+  </ItemGroup>
 </Project>

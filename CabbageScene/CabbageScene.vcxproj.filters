@@ -133,4 +133,7 @@
       <UniqueIdentifier>{5567e89f-e7c8-44e0-a2f2-980bc96f2038}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+  </ItemGroup>
 </Project>

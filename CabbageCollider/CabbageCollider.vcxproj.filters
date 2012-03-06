@@ -11,4 +11,7 @@
     <ClCompile Include="CObject.cpp" />
     <ClCompile Include="CCollideable.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+  </ItemGroup>
 </Project>

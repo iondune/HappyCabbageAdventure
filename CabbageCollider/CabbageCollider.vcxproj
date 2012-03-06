@@ -21,6 +21,9 @@
     <ClCompile Include="CCollideable.cpp" />
     <ClCompile Include="CObject.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{10A797C8-94C1-4EA0-89FF-7E03C5943D82}</ProjectGuid>
     <RootNamespace>CabbageCollider</RootNamespace>

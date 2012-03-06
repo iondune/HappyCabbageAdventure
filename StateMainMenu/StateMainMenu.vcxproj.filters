@@ -21,6 +21,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="que" />
+    <None Include="Makefile" />
   </ItemGroup>
 </Project>
