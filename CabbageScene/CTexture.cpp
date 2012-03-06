@@ -23,6 +23,9 @@ CTexture::CTexture(CImage * image)
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
 
+		// Deprecated, but needed for our immediate-mode GUI Widgets (for now)
+		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
 		glTexImage2D(GL_TEXTURE_2D, 0, image->hasAlpha() ? 4 : 3, Width, Height, 0, image->hasAlpha() ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, image->getImageData());
 		gluBuild2DMipmaps(GL_TEXTURE_2D, image->hasAlpha() ? 4 : 3, Width, Height, image->hasAlpha() ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, image->getImageData());
 
