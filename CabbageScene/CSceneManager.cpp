@@ -364,7 +364,7 @@ void CSceneManager::drawAll()
 				glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO_BLUR1]);
 
             Context.uniform("BlurSize", 1.0f);
-            Context.uniform("DimAmount", 0.0f);
+            Context.uniform("DimAmount", 1.0f);
 
 				//glGenerateMipmap(GL_TEXTURE_2D);
 
@@ -403,7 +403,7 @@ void CSceneManager::drawAll()
          glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SCENE]);
          //glGenerateMipmap(GL_TEXTURE_2D);
          Context.uniform("BlurSize", 1.0f);
-         Context.uniform("DimAmount", 0.0f);
+         Context.uniform("DimAmount", 1.0f);
          glBegin(GL_QUADS);
 			 glTexCoord2i(0, 0);
 			 glVertex2i(0, 0);
