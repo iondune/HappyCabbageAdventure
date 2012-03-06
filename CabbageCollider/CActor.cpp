@@ -20,8 +20,15 @@ namespace Collider
 
 
 	CActor::SAttributes::SAttributes()
-		: MaxWalk(4.5f), WalkAccel(60.f), JumpAccel(6.4f), JumpLength(0.6f), AirControl(0.75f), AirSpeedFactor(0.7f)
-	{}
+      : MaxWalk(4.5f),
+      WalkAccel(60.f),
+      JumpAccel(6.4f),
+      JumpLength(0.6f),
+      AirControl(0.75f),
+      AirSpeedFactor(0.7f),
+      AirStandingFriction(0.99f),
+      GroundStandingFriction(0.95f)
+   {}
 
 
 	CActor::EActionType::EActionType()
@@ -147,9 +154,9 @@ namespace Collider
 		if (! Moving)
 		{
 			if (Standing)
-				Velocity.X *= 0.95f; // Slowdown factor
+				Velocity.X *= Attributes.GroundStandingFriction; // Slowdown factor
 			else
-				Velocity.X *= 0.99f; // Air Slowdown factor
+				Velocity.X *= Attributes.AirStandingFriction; // Air Slowdown factor
 		}
 		
 

@@ -42,6 +42,9 @@ namespace Collider
 			float AirControl;
 			float AirSpeedFactor;
 
+         float AirStandingFriction;
+         float GroundStandingFriction;
+
 			SAttributes();
 		};
 
