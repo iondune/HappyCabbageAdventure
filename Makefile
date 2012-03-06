@@ -10,7 +10,7 @@ build-CLWIB:
 	cd ./StateLWIB && make -j lib
 
 build-MainMenu:
-	cd ./StateMainMenu && ./que
+	cd ./StateMainMenu && make -j
 	
 build-Overworld:
 	cd ./StateOverworld && make -j
