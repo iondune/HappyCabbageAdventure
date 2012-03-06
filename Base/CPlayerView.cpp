@@ -150,10 +150,10 @@ void CPlayerView::establishCamera(ICamera *Camera, int angle, int shaking) {
        zCam += zCamShift * timeChange / CAM_TIMER;
        zCamTimer -= timeChange;
      }
-     camPos = SVector3(CenterPosition.X, CenterPosition.Y + 1.3f, 8 + zCam);
+     camPos = SVector3(CenterPosition.X, CenterPosition.Y + 1.3f, 9.5f + zCam);
    }
    else if(angle == 1) {
-      camPos = SVector3(CenterPosition.X, CenterPosition.Y + 1.3f, 14 + zCam);
+      camPos = SVector3(CenterPosition.X, CenterPosition.Y + 1.3f, 15.0f + zCam);
    }
    else if(angle == 2) {
       camPos = SVector3(CenterPosition.X - 4, CenterPosition.Y + 4, 1);
