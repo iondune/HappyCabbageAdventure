@@ -182,7 +182,20 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 		glGenTextures(1, & textureId[i]);
 		glBindTexture(GL_TEXTURE_2D, textureId[i]);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+		// For some reason this is needed to make it work
+		static bool const Work = true;
+
+		if (Work)
+		{
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
+		}
+		else
+		{
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		}
+
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, TEXTURE_WIDTH, TEXTURE_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -272,13 +285,6 @@ void CSceneManager::drawAll()
 
 	// Setup for quad rendering
 	glEnable(GL_TEXTURE_2D);
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0, 1, 0, 1, -1, 1);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
 
 	glDisable(GL_DEPTH_TEST);
 
@@ -505,13 +511,6 @@ void CSceneManager::endDraw()
 
 	// Setup for quad rendering
 	glEnable(GL_TEXTURE_2D);
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0, 1, 0, 1, -1, 1);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
 
 	glDisable(GL_DEPTH_TEST);
 
