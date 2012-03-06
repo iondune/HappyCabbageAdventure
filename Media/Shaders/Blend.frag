@@ -2,13 +2,13 @@ uniform sampler2D scene;
 uniform sampler2D ssao;
 uniform sampler2D bloom;
 
-varying vec2 vTexCoords;
+varying vec2 vTexCoord;
 
 void main()
 {
-   vec4 color = texture2D(bloom, vTexCoords);
-    vec4 color2 = texture2D(scene, vTexCoords);
-    float SSAOconst = pow(texture2D(ssao, vTexCoords).r, 1.5);
+   vec4 color = texture2D(bloom, vTexCoord);
+    vec4 color2 = texture2D(scene, vTexCoord);
+    float SSAOconst = pow(texture2D(ssao, vTexCoord).r, 1.5);
 //Don't do bloom
    if(color.r == 1.0 && color.g == 0.0 && color.b == 1.0) {
       gl_FragColor = color2*SSAOconst;

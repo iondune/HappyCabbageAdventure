@@ -217,10 +217,10 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
-	SSAOShader = CShaderLoader::loadShader("SSAO");
+	SSAOShader = CShaderLoader::loadShader("FBO/QuadCopyUV.glsl", "SSAO.frag");
 	BlendShader = CShaderLoader::loadShader("FBO/QuadCopyUV.glsl", "Blend.frag");
-	BlurV = CShaderLoader::loadShader("BlurV");
-	BlurH = CShaderLoader::loadShader("BlurH");
+	BlurV = CShaderLoader::loadShader("FBO/QuadCopyUV.glsl", "BlurV.frag");
+	BlurH = CShaderLoader::loadShader("FBO/QuadCopyUV.glsl", "BlurH.frag");
 	White = CTextureLoader::loadTexture("Colors/White.bmp");
 	Black = CTextureLoader::loadTexture("Colors/Black.bmp");
 	Magenta = CTextureLoader::loadTexture("Colors/Magenta.bmp");
@@ -304,19 +304,9 @@ void CSceneManager::drawAll()
 
 			glViewport(0, 0, ScreenSize.X / SSAO_MULT, ScreenSize.Y / SSAO_MULT);
 
-			glBegin(GL_QUADS);
-				glTexCoord2i(0, 0);
-				glVertex2i(0, 0);
+			Context.bindBufferObject("aPosition", QuadHandle, 2);
 
-				glTexCoord2i(1, 0);
-				glVertex2i(1, 0);
-
-				glTexCoord2i(1, 1);
-				glVertex2i(1, 1);
-			
-				glTexCoord2i(0, 1);
-				glVertex2i(0, 1);
-			glEnd();
+		glDrawArrays(GL_QUADS, 0, 4);
 
 			::glViewport(0, 0, ScreenSize.X, ScreenSize.Y);
 		}
@@ -337,19 +327,9 @@ void CSceneManager::drawAll()
 
 				Context.uniform("uTexColor", 0);
 
-				glBegin(GL_QUADS);
-					glTexCoord2i(0, 0);
-					glVertex2i(0, 0);
+				Context.bindBufferObject("aPosition", QuadHandle, 2);
 
-					glTexCoord2i(1, 0);
-					glVertex2i(1, 0);
-
-					glTexCoord2i(1, 1);
-					glVertex2i(1, 1);
-			
-					glTexCoord2i(0, 1);
-					glVertex2i(0, 1);
-				glEnd();
+		glDrawArrays(GL_QUADS, 0, 4);
 
 			}
 
@@ -370,19 +350,9 @@ void CSceneManager::drawAll()
 
 				Context.uniform("uTexColor", 0);
 
-				glBegin(GL_QUADS);
-					glTexCoord2i(0, 0);
-					glVertex2i(0, 0);
+				Context.bindBufferObject("aPosition", QuadHandle, 2);
 
-					glTexCoord2i(1, 0);
-					glVertex2i(1, 0);
-
-					glTexCoord2i(1, 1);
-					glVertex2i(1, 1);
-			
-					glTexCoord2i(0, 1);
-					glVertex2i(0, 1);
-				glEnd();
+		glDrawArrays(GL_QUADS, 0, 4);
 			}
 		}
 	}
@@ -404,49 +374,28 @@ void CSceneManager::drawAll()
          //glGenerateMipmap(GL_TEXTURE_2D);
          Context.uniform("BlurSize", 1.0f);
          Context.uniform("DimAmount", 1.0f);
-         glBegin(GL_QUADS);
-			 glTexCoord2i(0, 0);
-			 glVertex2i(0, 0);
 
-			 glTexCoord2i(1, 0);
-			 glVertex2i(1, 0);
+         Context.bindBufferObject("aPosition", QuadHandle, 2);
 
-			 glTexCoord2i(1, 1);
-			 glVertex2i(1, 1);
-
-			 glTexCoord2i(0, 1);
-			 glVertex2i(0, 1);
-         glEnd();
+		glDrawArrays(GL_QUADS, 0, 4);
       }
 
       //BLURV
       // Draw blurV effect
       glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCRATCH2]);
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-      glUseProgram((CShaderLoader::loadShader("BlurV"))->getProgramHandle());
 
       // Draw blurV quad
       {
+		  CShaderContext Context(* BlurV);
          glEnable(GL_TEXTURE_2D);
          glActiveTexture(GL_TEXTURE0);
          glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SCRATCH1]);
          //glGenerateMipmap(GL_TEXTURE_2D);
 
-         glBegin(GL_QUADS);
-			 glTexCoord2i(0, 0);
-			 glVertex2i(0, 0);
+		Context.bindBufferObject("aPosition", QuadHandle, 2);
 
-			 glTexCoord2i(1, 0);
-			 glVertex2i(1, 0);
-
-			 glTexCoord2i(1, 1);
-			 glVertex2i(1, 1);
-
-			 glTexCoord2i(0, 1);
-			 glVertex2i(0, 1);
-         glEnd();
-
-         glUseProgram(0);
+		glDrawArrays(GL_QUADS, 0, 4);
       }
    }
 
@@ -582,19 +531,9 @@ void CSceneManager::endDraw()
       Context.uniform("BlurSize", FinalBlurSize);
       Context.uniform("DimAmount", Dim);
 		
-		glBegin(GL_QUADS);
-			glTexCoord2i(0, 0);
-			glVertex2i(0, 0);
+		Context.bindBufferObject("aPosition", QuadHandle, 2);
 
-			glTexCoord2i(1, 0);
-			glVertex2i(1, 0);
-
-			glTexCoord2i(1, 1);
-			glVertex2i(1, 1);
-			
-			glTexCoord2i(0, 1);
-			glVertex2i(0, 1);
-		glEnd();
+		glDrawArrays(GL_QUADS, 0, 4);
 	}
 
 	glEnable(GL_DEPTH_TEST);
