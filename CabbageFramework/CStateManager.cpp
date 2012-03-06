@@ -45,17 +45,24 @@ void CStateManager::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 void CStateManager::setState(IState * State)
 {
-	static float const Fadetime = 0.3f;
-	CApplication::get().getSceneManager().blurSceneOut(Fadetime, CApplication::get().getRunTime());
+   NextState = State;
+}
 
-	if (CurrentState)
-		CurrentState->end();
+void CStateManager::doStateChange() {
+   if(NextState) {
+      static float const Fadetime = 0.3f;
+      CApplication::get().getSceneManager().blurSceneOut(Fadetime, CApplication::get().getRunTime());
 
-	CurrentState = State;
+      if (CurrentState)
+         CurrentState->end();
 
-	CurrentState->begin();
+      CurrentState = NextState;
+      NextState = NULL;
 
-	CApplication::get().getSceneManager().blurSceneIn(Fadetime, CApplication::get().getRunTime());
+      CurrentState->begin();
+
+      CApplication::get().getSceneManager().blurSceneIn(Fadetime, CApplication::get().getRunTime());
+   }
 }
 
 void CStateManager::shutDown()

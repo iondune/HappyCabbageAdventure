@@ -451,17 +451,14 @@ void CMainMenuState::OnWidgetUnHover(CGUIWidget * Widget)
 void CMainMenuState::OnWidgetClick(CGUIWidget * Widget)
 {
    if(Widget == StartGame) {
-      end();
       CApplication::get().getStateManager().setState(& COverworldState::get());
    }
    else if(Widget == StartEditor) {
-      end();
       stopSoundtrack();
       CApplication::get().getStateManager().setState(& CLWIBState::get());
    }
    else if(Widget == ExitGame) {
-      end();
-      //CApplication::get().close();
+      CApplication::get().close();
       //exit(1);
    }
    /*

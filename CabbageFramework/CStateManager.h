@@ -85,6 +85,8 @@ public:
     void OnKeyboardEvent(SKeyboardEvent const & Event);
 
     void setState(IState * State);
+    IState * NextState;
+    void doStateChange();
 
 	void shutDown();
 
