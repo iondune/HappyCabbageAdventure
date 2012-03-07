@@ -100,6 +100,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FBO", "FBO", "{29852449-F038-4BA2-8C8B-E16A347D766F}"
 	ProjectSection(SolutionItems) = preProject
 		Media\Shaders\FBO\QuadCopy.glsl = Media\Shaders\FBO\QuadCopy.glsl
+		Media\Shaders\FBO\QuadCopyUV.glsl = Media\Shaders\FBO\QuadCopyUV.glsl
 	EndProjectSection
 EndProject
 Global
