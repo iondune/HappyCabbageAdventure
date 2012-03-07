@@ -11,5 +11,6 @@
     <ClInclude Include="SLine3.h" />
     <ClInclude Include="SBoundingBox3.h" />
     <ClInclude Include="STransformation3.h" />
+    <ClInclude Include="SSize2.h" />
   </ItemGroup>
 </Project>

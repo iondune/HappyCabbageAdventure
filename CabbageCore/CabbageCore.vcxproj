@@ -67,6 +67,7 @@
     <ClInclude Include="SLine3.h" />
     <ClInclude Include="SPosition2.h" />
     <ClInclude Include="SRect2.h" />
+    <ClInclude Include="SSize2.h" />
     <ClInclude Include="STransformation3.h" />
     <ClInclude Include="SVector2.h" />
     <ClInclude Include="SVector3.h" />

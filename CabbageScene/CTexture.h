@@ -11,7 +11,7 @@
 #include <GL\glew.h>
 #endif
 
-#include "../CabbageCore/SVector2.h"
+#include <SSize2.h>
 #include "CImage.h"
 
 class STextureCreationFlags
@@ -33,17 +33,20 @@ class CTexture
 {
 
     GLuint TextureHandle;
-    int Width;
-    int Height;
+	SSize2 Size;
 
 public:
 
     CTexture(CImage * Image, STextureCreationFlags const Flags = STextureCreationFlags());
-	CTexture(int const width, int const height, bool const Alpha, STextureCreationFlags const Flags = STextureCreationFlags());
+	CTexture(int const Width, int const Height, bool const Alpha, STextureCreationFlags const Flags = STextureCreationFlags());
+	CTexture(SPosition2 const & size, bool const Alpha, STextureCreationFlags const Flags = STextureCreationFlags());
 	CTexture(GLuint const textureHandle);
+
+	~CTexture();
 
     GLuint const getTextureHandle() const;
 
+	SSize2 const & getSize() const;
     int const getWidth() const;
     int const getHeight() const;
 

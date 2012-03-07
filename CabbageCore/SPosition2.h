@@ -10,17 +10,31 @@ public:
 
 	int X, Y;
 
+	int & Width, & Height;
+
 	SPosition2()
-		: X(0), Y(0)
+		: X(0), Y(0), Width(X), Height(Y)
 	{}
 
 	SPosition2(int in)
-		: X(in), Y(in)
+		: X(in), Y(in), Width(X), Height(Y)
 	{}
 
 	SPosition2(int in_x, int in_y)
-		: X(in_x), Y(in_y)
+		: X(in_x), Y(in_y), Width(X), Height(Y)
 	{}
+
+	SPosition2(SPosition2 const & rhs)
+		: X(rhs.X), Y(rhs.Y), Width(X), Height(Y)
+	{}
+
+	SPosition2 & operator = (SPosition2 const & oth)
+	{
+		X = oth.X;
+		Y = oth.Y;
+
+		return * this;
+	}
 
 	int const operator[] (int i) const
 	{
@@ -139,6 +153,8 @@ public:
 	}
 
 };
+
+#include "SSize2.h"
 
 
 #endif
