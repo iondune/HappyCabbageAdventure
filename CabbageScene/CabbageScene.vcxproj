@@ -74,6 +74,7 @@
     <ClInclude Include="CabbageScene.h" />
     <ClInclude Include="CBufferObject.h" />
     <ClInclude Include="CCamera.h" />
+    <ClInclude Include="CFrameBufferObject.h" />
     <ClInclude Include="CImage.h" />
     <ClInclude Include="CMaterial.h" />
     <ClInclude Include="CMesh.h" />
@@ -97,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCamera.cpp" />
+    <ClCompile Include="CFrameBufferObject.cpp" />
     <ClCompile Include="CImage.cpp" />
     <ClCompile Include="CMaterial.cpp" />
     <ClCompile Include="CMesh.cpp" />

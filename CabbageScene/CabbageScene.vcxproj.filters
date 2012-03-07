@@ -64,6 +64,9 @@
     <ClInclude Include="CRenderBufferObject.h">
       <Filter>Advanced</Filter>
     </ClInclude>
+    <ClInclude Include="CFrameBufferObject.h">
+      <Filter>Advanced</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CImage.cpp">
@@ -113,6 +116,9 @@
       <Filter>Textures\ImageLoaders</Filter>
     </ClCompile>
     <ClCompile Include="CRenderBufferObject.cpp">
+      <Filter>Advanced</Filter>
+    </ClCompile>
+    <ClCompile Include="CFrameBufferObject.cpp">
       <Filter>Advanced</Filter>
     </ClCompile>
   </ItemGroup>

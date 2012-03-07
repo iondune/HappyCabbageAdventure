@@ -9,6 +9,9 @@
 #include <GL/glew.h>
 #endif
 
+#include <SSize2.h>
+
+
 class CRenderBufferObject
 {
 
@@ -16,7 +19,7 @@ class CRenderBufferObject
 
 public:
 
-	CRenderBufferObject();
+	CRenderBufferObject(GLenum const Format, SSize2 const & Size);
 	~CRenderBufferObject();
 
 	GLuint const getHandle();
