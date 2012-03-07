@@ -47,6 +47,8 @@ int main(int argc, char * argv[])
     //Application.init(SPosition2(800, 600));
     Application.init(SPosition2(1200, 900));
 
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
     CStateManager & StateManager = Application.getStateManager();
     StateManager.setState(& CMainMenuState::get());
     //StateManager.setState(& COverworldState::get());

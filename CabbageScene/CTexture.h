@@ -14,6 +14,21 @@
 #include "../CabbageCore/SVector2.h"
 #include "CImage.h"
 
+class STextureCreationFlags
+{
+
+public:
+
+	STextureCreationFlags();
+
+	bool MipMaps;
+	GLenum Wrap;
+	GLenum Filter;
+
+	void apply() const;
+
+};
+
 class CTexture
 {
 
@@ -23,12 +38,16 @@ class CTexture
 
 public:
 
-    CTexture(CImage * image);
+    CTexture(CImage * Image, STextureCreationFlags const Flags = STextureCreationFlags());
+	CTexture(int const width, int const height, bool const Alpha, STextureCreationFlags const Flags = STextureCreationFlags());
+	CTexture(GLuint const textureHandle);
 
     GLuint const getTextureHandle() const;
 
     int const getWidth() const;
     int const getHeight() const;
+
+	bool const isValid() const;
 
 };
 
