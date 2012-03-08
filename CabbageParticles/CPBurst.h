@@ -7,6 +7,7 @@
 
 class CPBurst : public CPhysicsParticle {
    float zFactor, zVelocity, zAcceleration;
+   float BlinkFreq, BlinkTime;
    float Size;
 
    void setupRenderable();

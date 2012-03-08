@@ -236,7 +236,6 @@ void CParticleEngine::step(float const elapsedTime) {
                (*(positionArr[i]))[j] = (* it)->translate[j] + centerPos[j];
             }
             else {
-               //printf("Not using center pos %0.2f %0.2f %0.2f\n", (*it)->translate.X, (*it)->translate.Y, (*it)->translate.Z);
                (*(positionArr[i]))[j] = (* it)->translate[j];
             }
             if((* it)->Duration == -1 || (* it)->Counter > 0) {

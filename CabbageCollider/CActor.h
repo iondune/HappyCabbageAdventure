@@ -45,6 +45,8 @@ namespace Collider
          float AirStandingFriction;
          float GroundStandingFriction;
 
+         float Bounce;
+
 			SAttributes();
 		};
 

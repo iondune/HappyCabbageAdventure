@@ -27,7 +27,8 @@ namespace Collider
       AirControl(0.75f),
       AirSpeedFactor(0.7f),
       AirStandingFriction(0.99f),
-      GroundStandingFriction(0.95f)
+      GroundStandingFriction(0.95f),
+      Bounce(0.0f)
    {}
 
 
@@ -283,6 +284,15 @@ namespace Collider
 		{
 			Velocity.Y *= -Object->getMaterial().Elasticity;
 			Jumping = false;
+		}
+
+		if (CollisionType & ECollisionType::Down)
+		{
+         if(Attributes.Bounce > 0.01f) {
+            Velocity.Y = Attributes.Bounce;
+            Attributes.Bounce *= 0.5f;
+         }
+			//Jumping = false;
 		}
 
 		if (CollisionType & ECollisionType::Left || CollisionType & ECollisionType::Right)

@@ -5,6 +5,9 @@
 void CPBurst::setupRenderable() {
    zVelocity = (float)(rand() % 2 * 2 - 1)*((float)rand()/(float)RAND_MAX * 0.4f + 0.1f);
    zFactor = 0;
+
+   BlinkFreq = (float)rand()/(float)RAND_MAX*2.6f + 15.2f;
+   BlinkTime = (float)rand()/(float)RAND_MAX*0.6f + 2.2f;
    Counter = 0;
 }
 
@@ -17,18 +20,22 @@ void CPBurst::setEngine(Cabbage::Collider::CEngine *engine) {
    //Actor->setArea(SRect2(centerPos->X + RAND_POS_NEG(0.3f), centerPos->Y + RAND_POS_NEG(0.3f), 0.05, 0.05));
    Actor->setImpulse(SVector2((float)(rand() % 2 * 2 - 1)*((float)rand()/(float)RAND_MAX*2.6f + 0.8f), (float)rand()/(float)RAND_MAX*3.6f + 0.6f), 0.1f);
    Actor->Gravity = 30.0f;
+   Actor->getAttributes().Bounce = (float)rand()/(float)RAND_MAX*2.6f + 1.2f;
 }
 
 void CPBurst::updateMatrices(float timeElapsed) {
    if(Counter > 0) {
       Counter -= timeElapsed;
    }
-   else if(Duration == -1) {
-      Engine->removeActor(Actor);
-   }
    else {
       Duration += timeElapsed;
       zFactor += zVelocity * Actor->getVelocity().X * timeElapsed;
-      translate = SVector3(Actor->getArea().getCenter() + 0.1f, zFactor);
+      /*
+      if(Duration >= BlinkTime && (int)(Duration * BlinkFreq) % 2 == 0) {
+         translate = SVector3(-50.f); 
+      }
+      else
+      */
+         translate = SVector3(Actor->getArea().getCenter() + 0.1f, zFactor);
    }
 }
