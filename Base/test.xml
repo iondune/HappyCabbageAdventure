@@ -27,3 +27,5 @@
 </CBlock>
 <CEnemy X ="-14" Y ="4" height ="1" width ="1" type ="2">
 </CEnemy>
+<CEnemy X ="-15" Y ="5" height ="1" width ="1" type ="2">
+</CEnemy>
