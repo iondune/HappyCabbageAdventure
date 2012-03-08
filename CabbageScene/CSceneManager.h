@@ -5,6 +5,7 @@
 
 #include "CSceneObject.h"
 #include "CMeshSceneObject.h"
+#include "CFrameBufferObject.h"
 
 #include <SLine3.h>
 #include <SColor.h>
@@ -82,6 +83,7 @@ public:
 };
 
 class CApplication;
+
 class CSceneManager : public CScene
 {
 
