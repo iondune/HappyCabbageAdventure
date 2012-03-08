@@ -91,6 +91,8 @@ class CSceneManager : public CScene
 
 	GLuint QuadHandle;
 
+	CFrameBufferObject * SceneBuffer;
+
 public:
 
     CSceneManager(SPosition2 const & screenSize);
