@@ -1,10 +1,13 @@
 #include "CGameplayManager.h"
 #include "CGameEventManager.h"
+#include "EKiwi.h"
 
 CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CEngine * engine)
 : PlayerActor(playerActor), PlayerRecovering(false), PlayerHealth(5), Engine(engine), PlayerEnergy(3)
 {
    Engine->setCollisionResponder(this);
+   NULL_BLOCK = Engine->addObject();
+   NULL_BLOCK->setArea(SRect2(-50.f, -50.f, 0.01f, 0.01f));
    GameEventManager = new CGameEventManager();
    won = 0;
    GodMode = 0;
@@ -88,12 +91,34 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
 
    if((With->CollideableType == COLLIDEABLE_TYPE_ACTOR || With == PlayerActor || With->CollideableType == COLLIDEABLE_TYPE_BLOCK)
          && Object->CollideableType == COLLIDEABLE_TYPE_KIWI) {
-      ((Cabbage::Collider::CActor*)Object)->setImpulse(SVector2(0.03f, 0.3f)*7, 0.2f);
 
       if(With->CollideableType == COLLIDEABLE_TYPE_ACTOR) {
          ((Cabbage::Collider::CActor*)With)->setImpulse(SVector2(0.00f, -0.3f), 0.2f);
       }
       birdCollision = 1;
+
+      if(With == PlayerActor) {
+         ((Cabbage::Collider::CActor*)Object)->setImpulse(SVector2(0.03f, 0.3f)*7, 0.2f);
+      }
+      else {
+         Object->CollideableLevel = INTERACTOR_SUPERNONCOLLIDERS;
+         Object->CanCollideWith = INTERACTOR_SUPERACTORS;
+
+         for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
+         {
+            //Remove projectile from scene
+            if (Object == (*it)->Actor) {
+               Cabbage::Collider::CActor* actor = (*it)->Actor;
+               ((EKiwi*)(*it))->inZ = 1;
+               ((EKiwi*)(*it))->lastX = Object->getArea().getCenter().X;
+
+               SVector2 newPos = actor->LastPosition + actor->Movement;
+               SVector2 size = actor->getArea().Size;
+               actor->setArea(SRect2(newPos, size));
+               return;
+            }
+         }
+      }
    }
 
    if(GodMode && birdCollision == 1 && PlayerCollideable) {
@@ -181,7 +206,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
 
             }
          }
-         break;
+         return;
       }
    }
 }
@@ -316,12 +341,25 @@ void CGameplayManager::run(float const TickTime)
    float cabbageCenterX = PlayerActor->getArea().getCenter().X;
    float cabbageCenterY = PlayerActor->getArea().getCenter().Y;
 
-   for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it) {
-      float enemyCenterX = (*it)->Actor->getArea().getCenter().X;
-      float enemyCenterY = (*it)->Actor->getArea().getCenter().Y;
+   for (int i = 0; i < Enemies.size(); i++) {
+      float enemyCenterX = Enemies[i]->Actor->getArea().getCenter().X;
+      float enemyCenterY = Enemies[i]->Actor->getArea().getCenter().Y;
 
-      if ((enemyCenterX < cabbageCenterX + 9 && enemyCenterX > cabbageCenterX - 9))// && (enemyCenterY < cabbageCenterY + 9 && enemyCenterY > cabbageCenterY - 9))
-         (*it)->update(TickTime);
+      if ((enemyCenterX < cabbageCenterX + 9 && enemyCenterX > cabbageCenterX - 9)) {// && (enemyCenterY < cabbageCenterY + 9 && enemyCenterY > cabbageCenterY - 9))
+         if(Enemies[i]->Actor->CollideableType == COLLIDEABLE_TYPE_KIWI) {
+            EKiwi *kPtr = (EKiwi*)Enemies[i];
+            if(kPtr->inZ && (
+                     (kPtr->Actor->getArea().getCenter().X - kPtr->lastX > 0.4f) ||
+                     (kPtr->Actor->getArea().getCenter().X - kPtr->lastX < -0.4f))
+                     ) {
+               kPtr->inZ = 0;
+               kPtr->Actor->CollideableLevel = INTERACTOR_ACTORS;
+               kPtr->Actor->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_ACTORS;
+
+            }
+         }
+         Enemies[i]->update(TickTime);
+      }
    }
    for (ItemList::iterator it = Items.begin(); it != Items.end(); ++ it) {
       float itemCenterX = (*it)->Actor->getArea().getCenter().X;

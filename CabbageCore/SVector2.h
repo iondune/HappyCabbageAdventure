@@ -2,6 +2,7 @@
 #define _CABBAGE_CORE_SVECTOR2_H_INCLUDED_
 
 #include <cmath>
+#include <stdio.h>
 
 class SVector2
 {

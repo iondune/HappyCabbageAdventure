@@ -1,4 +1,5 @@
 FILES = CParticle.cpp CParticleEngine.cpp CPLeaf.cpp CPCube.cpp CParticleObject.cpp CPFlame.cpp CPDeath.cpp CPLaser.cpp CPLaser2.cpp CPHurt.cpp CPBurst.cpp CPhysicsParticle.cpp CPDust.cpp
+CC=g++ -O1
 
 OFILES = $(FILES:%.cpp=%.o)
 
@@ -14,43 +15,43 @@ endif
 all: ../lib/libCabbageParticles.a
 
 CParticle.o: CParticle.cpp CParticle.h
-	g++ -O1 -o CParticle.o CParticle.cpp -c $(DIRECTORIES) $(OPENGL)
+	$(CC) -o CParticle.o CParticle.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CPCube.o: CPCube.cpp CPCube.h
-	g++ -O1 -o CPCube.o CPCube.cpp -c $(DIRECTORIES) $(OPENGL)
+	$(CC) -o CPCube.o CPCube.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CPHurt.o: CPHurt.cpp CPHurt.h
-	g++ -O1 -o CPHurt.o CPHurt.cpp -c $(DIRECTORIES) $(OPENGL)
+	$(CC) -o CPHurt.o CPHurt.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CPLaser.o: CPLaser.cpp CPLaser.h
-	g++ -O1 -o CPLaser.o CPLaser.cpp -c $(DIRECTORIES) $(OPENGL)
+	$(CC) -o CPLaser.o CPLaser.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CPLaser2.o: CPLaser2.cpp CPLaser2.h
-	g++ -O1 -o CPLaser2.o CPLaser2.cpp -c $(DIRECTORIES) $(OPENGL)
+	$(CC) -o CPLaser2.o CPLaser2.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CParticleObject.o: CParticleObject.cpp CParticleObject.h
-	g++ -O1 -I../CabbageScene/ -o CParticleObject.o CParticleObject.cpp -c $(DIRECTORIES) $(OPENGL)
+	$(CC) -I../CabbageScene/ -o CParticleObject.o CParticleObject.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CPLeaf.o: CPLeaf.cpp CPLeaf.h
-	g++ -O1 -o CPLeaf.o CPLeaf.cpp -c $(DIRECTORIES) $(OPENGL)
+	$(CC) -o CPLeaf.o CPLeaf.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CPFlame.o: CPFlame.cpp CPFlame.h
-	g++ -O1 -o CPFlame.o CPFlame.cpp -c $(DIRECTORIES) $(OPENGL)
+	$(CC) -o CPFlame.o CPFlame.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CPBurst.o: CPBurst.cpp CPBurst.h
-	g++ -O1 -o CPBurst.o CPBurst.cpp -c $(DIRECTORIES) $(OPENGL)
+	$(CC) -o CPBurst.o CPBurst.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CPDust.o: CPDust.cpp CPDust.h
-	g++ -O1 -o CPDust.o CPDust.cpp -c $(DIRECTORIES) $(OPENGL)
+	$(CC) -o CPDust.o CPDust.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CPhysicsParticle.o: CPhysicsParticle.cpp CPhysicsParticle.h
-	g++ -O1 -o CPhysicsParticle.o CPhysicsParticle.cpp -c $(DIRECTORIES) $(OPENGL)
+	$(CC) -o CPhysicsParticle.o CPhysicsParticle.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CPDeath.o: CPDeath.cpp CPDeath.h
-	g++ -O1 -o CPDeath.o CPDeath.cpp -c $(DIRECTORIES) $(OPENGL)
+	$(CC) -o CPDeath.o CPDeath.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CParticleEngine.o: CParticleEngine.cpp CParticleEngine.h CParticle.h CParticle.cpp
-	g++ -O1 -o CParticleEngine.o CParticleEngine.cpp -c $(DIRECTORIES) $(OPENGL)
+	$(CC) -o CParticleEngine.o CParticleEngine.cpp -c $(DIRECTORIES) $(OPENGL)
 
 ../lib/libCabbageParticles.a: $(OFILES)
 	rm -f $@

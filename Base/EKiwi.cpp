@@ -16,6 +16,9 @@ EKiwi::EKiwi(float x, float y, float w, float h, CGameplayManager* manager, int 
 
    rotateBird = 0.0f;
    bombDropped = false;
+
+   inZ = 0;
+   zTimer = 0.0f;
 }
 
 //Loads and moves the mesh
@@ -57,18 +60,35 @@ void EKiwi::loadActor() {
 
    Actor->getAttributes().AirControl = 1.0f;
    Actor->getAttributes().AirSpeedFactor = 1.0f;
+   Actor->getAttributes().Reacts = 0;
    Actor->CollideableType = COLLIDEABLE_TYPE_KIWI;
    printf("Actor collideable type: %d\n", Actor->CollideableType);
 }
 
 float oldSineValue = 0.0f;
 
+#define Z_SPEED 0.2f
 //Updates AI's decision per frame
 void EKiwi::update(float const TickTime) {
    if (Manager->isPlayerAlive())
    {
+      if(zTimer < 0.0f)
+         zTimer = 0.0f;
+      if(inZ) {
+         if(zTimer >= Z_SPEED)
+            zTimer = Z_SPEED; 
+         else {
+            zTimer += TickTime;
+         }
+      }
+      else {
+         if(zTimer > 0.0f)
+            zTimer -= TickTime;
+         else {
+         }
+      }
       float curX = Actor->getArea().Position.X;
-      SineValue = sin(curX - OrigX);
+      SineValue = 0.6f*sin(curX - OrigX);
 
       y = Actor->getArea().Position.Y;
       y -= oldSineValue;
@@ -87,20 +107,21 @@ void EKiwi::update(float const TickTime) {
          Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
       oldSineValue = SineValue;
 
-      float xDist = curX - Manager->getPlayerLocation().X;
+      if(!inZ) {
+         float xDist = curX - Manager->getPlayerLocation().X;
 
-      //Drop bomb projectile
-      if (xDist < .2f && !bombDropped && Direction == 0) {
-         printf("curX: %f, playerX: %f\n", curX, Manager->getPlayerLocation().X);
-         printf("Dropping bomb\n");
-         DropBomb();
-         bombDropped = true;
-         printf("Bomb dropped.\n");
-      }
-
-      else if (xDist > -.2f && !bombDropped && Direction == 1) {
-         DropBomb();
-         bombDropped = true;
+         //Drop bomb projectile
+         if (xDist < .2f && !bombDropped && Direction == 0) {
+            printf("curX: %f, playerX: %f\n", curX, Manager->getPlayerLocation().X);
+            printf("Dropping bomb\n");
+            DropBomb();
+            bombDropped = true;
+            printf("Bomb dropped.\n");
+         }
+         else if (xDist > -.2f && !bombDropped && Direction == 1) {
+            DropBomb();
+            bombDropped = true;
+         }
       }
    }
    else
@@ -117,7 +138,7 @@ void EKiwi::doRenderable() {
 
    Renderable->setRotation(SVector3(-90 + rotateBird, 0, -90));
 
-   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, 0));
+   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, zTimer*0.9*(1.0f/Z_SPEED)));
 
    if(Actor->getVelocity().X < -0.01f)
       Renderable->setScale(SVector3(-1,1,1));

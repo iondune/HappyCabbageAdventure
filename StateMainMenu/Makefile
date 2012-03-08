@@ -4,11 +4,12 @@ OBJECTS=$(SOURCES:%.cpp=%.o)
 CABBAGE=-L../lib/ -lCabbageCollider -lCabbageFramework -lCabbageScene
 COMPILER_VERSION=-std=c++0x
 INCLUDE = -I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI
+CC=g++ -O1
 
 all: $(OBJECTS)
 
 CMainMenuState.o: CMainMenuState.cpp CMainMenuState.h
-	g++ -O1 $(INCLUDE) -DGL_GLEXT_PROTOTYPES `sdl-config --cflags` -c CMainMenuState.cpp
+	$(CC) $(INCLUDE) -DGL_GLEXT_PROTOTYPES `sdl-config --cflags` -c CMainMenuState.cpp
 
 clean:
 	rm -f $(OBJECTS)

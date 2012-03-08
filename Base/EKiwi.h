@@ -17,6 +17,8 @@ class EKiwi : public CBadGuy
 public:
    EKiwi(float x, float y, float w, float h, CGameplayManager* manager, int direction);
 
+   float lastX, zTimer;
+
    void update(const float TickTime);
    void loadMesh();
    void loadActor();
@@ -24,6 +26,7 @@ public:
    void DropBomb();
 
    float OrigX, SineValue, rotateBird;
+   int inZ;
    int Direction;
    bool bombDropped;
 };

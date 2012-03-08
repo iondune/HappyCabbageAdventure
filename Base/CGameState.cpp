@@ -96,7 +96,7 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             w = xml->getAttributeValueAsInt(3);
             t = xml->getAttributeValueAsInt(4);
             list->push_back(cen = new CEnemy((float)x,(float)y,w,h,t));
-            cen->setShader(Diffuse);
+            cen->setShader(Toon);
             cen->isMovingPlatform = 0;
          }
          if(!strcmp("CCabbage",xml->getNodeName())) {

@@ -28,6 +28,7 @@ namespace Collider
       AirSpeedFactor(0.7f),
       AirStandingFriction(0.99f),
       GroundStandingFriction(0.95f),
+      Reacts(1),
       Bounce(0.0f)
    {}
 
@@ -295,7 +296,7 @@ namespace Collider
 			//Jumping = false;
 		}
 
-		if (CollisionType & ECollisionType::Left || CollisionType & ECollisionType::Right)
+		if (Attributes.Reacts && (CollisionType & ECollisionType::Left || CollisionType & ECollisionType::Right))
 			Velocity.X *= -Object->getMaterial().Elasticity;
 
 		return (CollisionType & ECollisionType::Down) != 0;
