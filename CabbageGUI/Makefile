@@ -1,5 +1,5 @@
 FILES = CGUIEngine.cpp CGUIImageWidget.cpp CGUIFontWidget.cpp CGUIWidget.cpp liboglft/OGLFT.cpp
-CC=g++ -g
+CC=g++ -O1
 
 OFILES = $(FILES:%.cpp=%.o)
 
