@@ -2,6 +2,7 @@ ROOT_CABBAGE_DIR=../
 SOURCES=main.cpp CGameState.cpp CPlayerView.cpp CGameplayManager.cpp CGameEventReceiver.cpp ./irrxml-1.2/src/irrXML.cpp CBadGuy.cpp EApple.cpp EOrange.cpp EKiwi.cpp EFlame.cpp EBlade.cpp PKiwi.cpp CItem.cpp CIHealth.cpp CIEnergy.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o) ../StateMainMenu/CMainMenuState.o ../StateOverworld/COverworldState.o
 CABBAGE= -L../lib/ -lCabbageSound -lCabbageCollider -lCabbageFramework -lCabbageScene -lCLWIB -lOverworldState -lCabbageParticles -lCabbageGUI
+CC=g++
 
 COMPILER_VERSION=-std=c++0x
 INCLUDE=-I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI
@@ -23,43 +24,43 @@ endif
 all: ${TARGET} 
 
 cabbage: ${OBJECTS} ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCLWIB.a ../lib/libOverworldState.a ../lib/libCabbageParticles.a ../lib/libCabbageGUI.a
-	g++ -O1 ${COMPILER_VERSION} ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL `sdl-config --cflags --libs` ${CABBAGE} ${MIXLIB} `freetype-config --libs` -g -o $@
+	$(CC) ${COMPILER_VERSION} ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL `sdl-config --cflags --libs` ${CABBAGE} ${MIXLIB} `freetype-config --libs` -g -o $@
 
 ./irrxml-1.2/src/irrXML.o: ./irrxml-1.2/src/irrXML.cpp  
-	g++ -O1 -I../irrxml-1.2/src/ -o $@ -c ./irrxml-1.2/src/irrXML.cpp
+	$(CC) -I../irrxml-1.2/src/ -o $@ -c ./irrxml-1.2/src/irrXML.cpp
 
 main.o: main.cpp
-	g++ -O1 $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c main.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+	$(CC) $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c main.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CGameState.o: CGameState.cpp header.h draw.h
-	g++ -O1 $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c CGameState.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+	$(CC) $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c CGameState.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 #sound.o: sound.cpp sound.h
-#	g++ -O1 `sdl-config --cflags` -c sound.cpp -DGL_GLEXT_PROTOTYPES
+#	$(CC) `sdl-config --cflags` -c sound.cpp -DGL_GLEXT_PROTOTYPES
 CPlayerView.o: CPlayerView.cpp CPlayerView.h
-	g++ -O1 $(INCLUDE) -c CPlayerView.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+	$(CC) $(INCLUDE) -c CPlayerView.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CGameEventReceiver.o: CGameEventReceiver.cpp CGameEventReceiver.h
-	g++ -O1 $(INCLUDE) `sdl-config --cflags` -c CGameEventReceiver.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+	$(CC) $(INCLUDE) `sdl-config --cflags` -c CGameEventReceiver.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CGameplayManager.o: CGameplayManager.cpp CGameplayManager.h
-	g++ -O1 $(INCLUDE) `sdl-config --cflags` -c CGameplayManager.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+	$(CC) $(INCLUDE) `sdl-config --cflags` -c CGameplayManager.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CBadGuy.o: CBadGuy.cpp CBadGuy.h
-	g++ -O1 $(INCLUDE) `sdl-config --cflags` -c CBadGuy.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+	$(CC) $(INCLUDE) `sdl-config --cflags` -c CBadGuy.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 EApple.o: EApple.cpp EApple.h CBadGuy.h
-	g++ -O1 $(INCLUDE) `sdl-config --cflags` -c EApple.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+	$(CC) $(INCLUDE) `sdl-config --cflags` -c EApple.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 EOrange.o: EOrange.cpp EOrange.h CBadGuy.h
-	g++ -O1 $(INCLUDE) `sdl-config --cflags` -c EOrange.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+	$(CC) $(INCLUDE) `sdl-config --cflags` -c EOrange.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 EKiwi.o: EKiwi.cpp EKiwi.h CBadGuy.h
-	g++ -O1 $(INCLUDE) `sdl-config --cflags` -c EKiwi.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+	$(CC) $(INCLUDE) `sdl-config --cflags` -c EKiwi.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 EFlame.o: EFlame.cpp EFlame.h CBadGuy.h
-	g++ -O1 $(INCLUDE) `sdl-config --cflags` -c EFlame.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+	$(CC) $(INCLUDE) `sdl-config --cflags` -c EFlame.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 EBlade.o: EBlade.cpp EBlade.h CBadGuy.h
-	g++ -O1 $(INCLUDE) `sdl-config --cflags` -c EBlade.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+	$(CC) $(INCLUDE) `sdl-config --cflags` -c EBlade.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 PKiwi.o: PKiwi.cpp PKiwi.h CBadGuy.h
-	g++ -O1 $(INCLUDE) `sdl-config --cflags` -c PKiwi.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+	$(CC) $(INCLUDE) `sdl-config --cflags` -c PKiwi.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CIHealth.o: CIHealth.cpp CIHealth.h CItem.h
-	g++ -O1 $(INCLUDE) `sdl-config --cflags` -c CIHealth.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+	$(CC) $(INCLUDE) `sdl-config --cflags` -c CIHealth.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CIEnergy.o: CIEnergy.cpp CIEnergy.h CItem.h
-	g++ -O1 $(INCLUDE) `sdl-config --cflags` -c CIEnergy.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+	$(CC) $(INCLUDE) `sdl-config --cflags` -c CIEnergy.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CItem.o: CItem.cpp CItem.h
-	g++ -O1 $(INCLUDE) `sdl-config --cflags` -c CItem.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+	$(CC) $(INCLUDE) `sdl-config --cflags` -c CItem.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 
 
 
@@ -71,4 +72,4 @@ clean:
 mingw: cabbage.exe
 
 cabbage.exe: ${OBJECTS} ../lib/libCabbageSound.a ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCLWIB.a ../lib/libOverworldState.a ../lib/libCabbageParticles.a ../lib/libCabbageGUI.a
-	g++ -O1 ${COMPILER_VERSION} `sdl-config --cflags` ${OBJECTS} -DGL_GLEXT_PROTOTYPES ${CABBAGE} ./*.dll -lSDL_mixer -lopengl32 -lglu32 -lglut32 `sdl-config --libs` `freetype-config --libs` -g -L/lib/ -o $@ -lglew32
+	$(CC) ${COMPILER_VERSION} `sdl-config --cflags` ${OBJECTS} -DGL_GLEXT_PROTOTYPES ${CABBAGE} ./*.dll -lSDL_mixer -lopengl32 -lglu32 -lglut32 `sdl-config --libs` `freetype-config --libs` -g -L/lib/ -o $@ -lglew32

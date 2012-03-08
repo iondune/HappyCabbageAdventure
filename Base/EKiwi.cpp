@@ -18,6 +18,7 @@ EKiwi::EKiwi(float x, float y, float w, float h, CGameplayManager* manager, int 
    bombDropped = false;
 
    inZ = 0;
+   zTimer = 0.0f;
 }
 
 //Loads and moves the mesh
@@ -66,10 +67,24 @@ void EKiwi::loadActor() {
 
 float oldSineValue = 0.0f;
 
+#define Z_SPEED 0.2f
 //Updates AI's decision per frame
 void EKiwi::update(float const TickTime) {
    if (Manager->isPlayerAlive())
    {
+      if(zTimer < 0.0f)
+         zTimer = 0.0f;
+      if(inZ) {
+         if(zTimer >= Z_SPEED)
+            zTimer = Z_SPEED; 
+         else {
+            zTimer += TickTime;
+         }
+      }
+      else {
+         if(zTimer > 0.0f)
+            zTimer -= TickTime;
+      }
       float curX = Actor->getArea().Position.X;
       SineValue = 0.6f*sin(curX - OrigX);
 
@@ -90,19 +105,21 @@ void EKiwi::update(float const TickTime) {
          Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
       oldSineValue = SineValue;
 
-      float xDist = curX - Manager->getPlayerLocation().X;
+      if(!inZ) {
+         float xDist = curX - Manager->getPlayerLocation().X;
 
-      //Drop bomb projectile
-      if (xDist < .2f && !bombDropped && Direction == 0) {
-         printf("curX: %f, playerX: %f\n", curX, Manager->getPlayerLocation().X);
-         printf("Dropping bomb\n");
-         DropBomb();
-         bombDropped = true;
-         printf("Bomb dropped.\n");
-      }
-      else if (xDist > -.2f && !bombDropped && Direction == 1) {
-         DropBomb();
-         bombDropped = true;
+         //Drop bomb projectile
+         if (xDist < .2f && !bombDropped && Direction == 0) {
+            printf("curX: %f, playerX: %f\n", curX, Manager->getPlayerLocation().X);
+            printf("Dropping bomb\n");
+            DropBomb();
+            bombDropped = true;
+            printf("Bomb dropped.\n");
+         }
+         else if (xDist > -.2f && !bombDropped && Direction == 1) {
+            DropBomb();
+            bombDropped = true;
+         }
       }
    }
    else
@@ -119,8 +136,7 @@ void EKiwi::doRenderable() {
 
    Renderable->setRotation(SVector3(-90 + rotateBird, 0, -90));
 
-   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, inZ?0.9f:0));
-   //printf("Inz: %d\n", inZ);
+   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, zTimer*0.9*(1.0f/Z_SPEED)));
 
    if(Actor->getVelocity().X < -0.01f)
       Renderable->setScale(SVector3(-1,1,1));

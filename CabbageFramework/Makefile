@@ -1,4 +1,5 @@
 FILES = CApplication.cpp CEventManager.cpp CStateManager.cpp
+CC=g++ -g
 
 OFILES = $(FILES:%.cpp=%.o)
 
@@ -14,13 +15,13 @@ endif
 all: ../lib/libCabbageFramework.a
 
 CApplication.o: CApplication.cpp *.h
-	g++ -O1 -o $@ CApplication.cpp -c $(DIRECTORIES) $(OPENGL)
+	$(CC) -o $@ CApplication.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CEventManager.o: CEventManager.cpp *.h
-	g++ -O1 -o $@ CEventManager.cpp -c $(DIRECTORIES) $(OPENGL)
+	$(CC) -o $@ CEventManager.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CStateManager.o: CStateManager.cpp *.h
-	g++ -O1 -o $@ CStateManager.cpp -c $(DIRECTORIES) $(OPENGL)
+	$(CC) -o $@ CStateManager.cpp -c $(DIRECTORIES) $(OPENGL)
 
 ../lib/libCabbageFramework.a: $(OFILES)
 	rm -f $@
