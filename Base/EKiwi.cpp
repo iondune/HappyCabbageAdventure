@@ -85,8 +85,6 @@ void EKiwi::update(float const TickTime) {
          if(zTimer > 0.0f)
             zTimer -= TickTime;
          else {
-            Actor->CollideableLevel = INTERACTOR_ACTORS;
-            Actor->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_ACTORS;
          }
       }
       float curX = Actor->getArea().Position.X;

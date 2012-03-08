@@ -353,6 +353,9 @@ void CGameplayManager::run(float const TickTime)
                      (kPtr->Actor->getArea().getCenter().X - kPtr->lastX < -0.4f))
                      ) {
                kPtr->inZ = 0;
+               kPtr->Actor->CollideableLevel = INTERACTOR_ACTORS;
+               kPtr->Actor->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_ACTORS;
+
             }
          }
          Enemies[i]->update(TickTime);
