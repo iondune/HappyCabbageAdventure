@@ -64,7 +64,7 @@ void EKiwi::loadActor() {
    Actor->getAttributes().Reacts = 0;
    Actor->CollideableType = COLLIDEABLE_TYPE_KIWI;
    Actor->CollideableLevel = INTERACTOR_SUPERNONCOLLIDERS;
-   Actor->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_ACTORS;
+   Actor->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS;
 
 
    printf("Actor collideable type: %d\n", Actor->CollideableType);

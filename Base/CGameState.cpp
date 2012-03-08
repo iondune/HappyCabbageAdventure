@@ -150,8 +150,6 @@ void CGameState::EngineInit( void ) {
 
    Derp = Engine->addActor();
    Derp->setArea(SRect2(-22, 3, 1, 1));
-   Derp->CollideableLevel = INTERACTOR_SUPERACTORS;
-   Derp->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS;
 
    PrepSky();
 

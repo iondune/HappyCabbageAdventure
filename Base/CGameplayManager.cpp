@@ -356,7 +356,7 @@ void CGameplayManager::run(float const TickTime)
                      ) {
                kPtr->inZ = 0;
                kPtr->Actor->CollideableLevel = INTERACTOR_SUPERNONCOLLIDERS;
-               kPtr->Actor->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_ACTORS;
+               kPtr->Actor->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS;
             }
          }
          Enemies[i]->update(TickTime);
