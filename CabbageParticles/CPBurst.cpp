@@ -6,7 +6,8 @@ void CPBurst::setupRenderable() {
    zVelocity = (float)(rand() % 2 * 2 - 1)*((float)rand()/(float)RAND_MAX * 0.4f + 0.1f);
    zFactor = 0;
 
-   BlinkFreq = (float)rand()/(float)RAND_MAX*2.6f + 15.2f;
+   BlinkFreq = 0.0f; 
+   //BlinkFreq = (float)rand()/(float)RAND_MAX*2.6f + 15.2f;
    BlinkTime = (float)rand()/(float)RAND_MAX*0.6f + 2.2f;
    Counter = 0;
 }
@@ -30,12 +31,10 @@ void CPBurst::updateMatrices(float timeElapsed) {
    else {
       Duration += timeElapsed;
       zFactor += zVelocity * Actor->getVelocity().X * timeElapsed;
-      /*
-      if(Duration >= BlinkTime && (int)(Duration * BlinkFreq) % 2 == 0) {
-         translate = SVector3(-50.f); 
+      if(Duration >= BlinkTime && BlinkFreq >= -0.8f) {
+         BlinkFreq -= timeElapsed*1.0f;
       }
-      else
-      */
-         translate = SVector3(Actor->getArea().getCenter() + 0.1f, zFactor);
+      translate = SVector3(Actor->getArea().getCenter() + 0.1f, zFactor);
+      translate += SVector3(0.0f, BlinkFreq, 0.0f);
    }
 }
