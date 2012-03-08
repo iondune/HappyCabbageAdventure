@@ -161,7 +161,7 @@ namespace Cabbage
 
                for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
                {
-                  if (Actor->CollideableLevel >= (*it)->CollideableLevel && Actor->isAbove(* it, checkHeight))
+                  if (CanCollide(*it, Actor) && Actor->isAbove(* it, checkHeight))
                      if (checkHeight > height)
                         height = checkHeight;
                }
