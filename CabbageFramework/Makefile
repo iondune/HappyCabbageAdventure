@@ -1,5 +1,5 @@
 FILES = CApplication.cpp CEventManager.cpp CStateManager.cpp
-CC=g++ -O1
+CC=g++ -O1 -s
 
 OFILES = $(FILES:%.cpp=%.o)
 

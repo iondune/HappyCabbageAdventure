@@ -1,4 +1,4 @@
 #!/bin/bash
 
 
-find | grep "Makefile$" | xargs sed -i "s/g++ -O1/g++ -g/"
+find | grep "Makefile$" | xargs sed -i "s/g++ -O1 -s/g++ -g/"
