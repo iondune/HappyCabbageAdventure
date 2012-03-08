@@ -24,6 +24,7 @@ public:
    void DropBomb();
 
    float OrigX, SineValue, rotateBird;
+   int inZ;
    int Direction;
    bool bombDropped;
 };

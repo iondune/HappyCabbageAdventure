@@ -16,6 +16,8 @@ EKiwi::EKiwi(float x, float y, float w, float h, CGameplayManager* manager, int 
 
    rotateBird = 0.0f;
    bombDropped = false;
+
+   inZ = 0;
 }
 
 //Loads and moves the mesh
@@ -97,7 +99,6 @@ void EKiwi::update(float const TickTime) {
          bombDropped = true;
          printf("Bomb dropped.\n");
       }
-
       else if (xDist > -.2f && !bombDropped && Direction == 1) {
          DropBomb();
          bombDropped = true;
@@ -117,7 +118,8 @@ void EKiwi::doRenderable() {
 
    Renderable->setRotation(SVector3(-90 + rotateBird, 0, -90));
 
-   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, 0));
+   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, inZ?2:0));
+   //printf("Inz: %d\n", inZ);
 
    if(Actor->getVelocity().X < -0.01f)
       Renderable->setScale(SVector3(-1,1,1));

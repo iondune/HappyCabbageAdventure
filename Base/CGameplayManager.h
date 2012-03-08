@@ -16,6 +16,7 @@ class EApple;
 class CItem;
 class CIHealth;
 
+class EKiwi;
 
 class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 {
@@ -31,6 +32,8 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 
       typedef std::vector<CBadGuy*> EnemyList;
       EnemyList Enemies, KillList;
+
+      std::vector<EKiwi*> KiwiList;
 
       typedef std::vector<CItem*> ItemList;
       ItemList Items, KillItemList;

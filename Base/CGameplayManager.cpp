@@ -1,5 +1,6 @@
 #include "CGameplayManager.h"
 #include "CGameEventManager.h"
+#include "EKiwi.h"
 
 CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CEngine * engine)
 : PlayerActor(playerActor), PlayerRecovering(false), PlayerHealth(5), Engine(engine), PlayerEnergy(3)
@@ -94,6 +95,15 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
          ((Cabbage::Collider::CActor*)With)->setImpulse(SVector2(0.00f, -0.3f), 0.2f);
       }
       birdCollision = 1;
+
+      if(With != PlayerActor) {
+         //KiwiList.push_back((EKiwi*)Object);
+         /*
+         printf("Before: %d\n", ((EKiwi*)Object)->inZ);
+         ((EKiwi*)Object)->inZ = 1;
+         printf("After: %d\n", ((EKiwi*)Object)->inZ);
+         */
+      }
    }
 
    if(GodMode && birdCollision == 1 && PlayerCollideable) {
