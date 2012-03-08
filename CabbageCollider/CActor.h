@@ -46,6 +46,7 @@ namespace Collider
          float GroundStandingFriction;
 
          float Bounce;
+         int Reacts;
 
 			SAttributes();
 		};
@@ -83,7 +84,6 @@ namespace Collider
 		SVector2 Velocity;
 		CCollideable * Standing;
 
-		SVector2 LastPosition, Movement;
 
 		SAttributes Attributes;
 		EActionType Action;
@@ -96,7 +96,6 @@ namespace Collider
 		void updateVectors(float const TickTime);
 		
 		bool updateCollision(CCollideable * Object, float const TickTime, ICollisionResponder * CollisionResponder);
-		int checkCollision(CCollideable * Object, float const TickTime);
 		void onStanding(CCollideable * Object);
 
 		void pushIfCollided(CObject * Object, SVector2 const & Movement);
@@ -109,6 +108,8 @@ namespace Collider
 		
 		~CActor();
 
+		SVector2 LastPosition, Movement;
+		int checkCollision(CCollideable * Object, float const TickTime);
       float Gravity;
 		bool collidesWith(CObject * Object) const;
 		bool isAbove(CObject * Object, float & height) const;

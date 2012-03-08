@@ -59,6 +59,7 @@ void EKiwi::loadActor() {
 
    Actor->getAttributes().AirControl = 1.0f;
    Actor->getAttributes().AirSpeedFactor = 1.0f;
+   Actor->getAttributes().Reacts = 0;
    Actor->CollideableType = COLLIDEABLE_TYPE_KIWI;
    printf("Actor collideable type: %d\n", Actor->CollideableType);
 }
@@ -70,7 +71,7 @@ void EKiwi::update(float const TickTime) {
    if (Manager->isPlayerAlive())
    {
       float curX = Actor->getArea().Position.X;
-      SineValue = sin(curX - OrigX);
+      SineValue = 0.6f*sin(curX - OrigX);
 
       y = Actor->getArea().Position.Y;
       y -= oldSineValue;
@@ -118,7 +119,7 @@ void EKiwi::doRenderable() {
 
    Renderable->setRotation(SVector3(-90 + rotateBird, 0, -90));
 
-   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, inZ?2:0));
+   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, inZ?0.9f:0));
    //printf("Inz: %d\n", inZ);
 
    if(Actor->getVelocity().X < -0.01f)

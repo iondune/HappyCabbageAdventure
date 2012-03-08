@@ -17,6 +17,8 @@ class EKiwi : public CBadGuy
 public:
    EKiwi(float x, float y, float w, float h, CGameplayManager* manager, int direction);
 
+   float lastX;
+
    void update(const float TickTime);
    void loadMesh();
    void loadActor();
