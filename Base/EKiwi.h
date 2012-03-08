@@ -25,7 +25,7 @@ public:
    void doRenderable();
    void DropBomb();
 
-   float OrigX, SineValue, rotateBird;
+   float OrigX, SineValue, rotateBird, oldSineValue;
    int inZ;
    int Direction;
    bool bombDropped;

@@ -150,6 +150,7 @@ void CGameState::EngineInit( void ) {
 
    Derp = Engine->addActor();
    Derp->setArea(SRect2(-22, 3, 1, 1));
+   Derp->CollideableLevel = INTERACTOR_SUPERACTORS;
    Derp->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS;
 
    PrepSky();
@@ -742,6 +743,12 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_SPACE) {
          spaceDown = 1;
       }
+      if(Event.Key == SDLK_h) {
+         Player->CollideableLevel = 0;
+         Player->CanCollideWith &= ~INTERACTOR_SUPERACTORS;
+         Player->CanCollideWith &= ~INTERACTOR_ITEMS;
+         Player->CanCollideWith &= ~INTERACTOR_ACTORS;
+      }
       if(Event.Key == SDLK_ESCAPE) {
          //TODO: Replace with an event/signal to end the game world 
          Application.getStateManager().setState(& CMainMenuState::get());
@@ -749,6 +756,10 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
    }
    //Check if key let go, Not sure if this will work in here.
    else  {
+      if(Event.Key == SDLK_h) {
+         Player->CollideableLevel = INTERACTOR_SUPERACTORS;
+         Player->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS | INTERACTOR_ACTORS;
+      }
       if(Event.Key == SDLK_w){
          wDown = 0;
       }

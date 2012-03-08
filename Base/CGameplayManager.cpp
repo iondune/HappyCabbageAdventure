@@ -8,6 +8,8 @@ CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabb
    Engine->setCollisionResponder(this);
    NULL_BLOCK = Engine->addObject();
    NULL_BLOCK->setArea(SRect2(-50.f, -50.f, 0.01f, 0.01f));
+   NULL_BLOCK->CollideableLevel = INTERACTOR_ALL_ALL;
+   NULL_BLOCK->CanCollideWith = INTERACTOR_ALL_ALL;
    GameEventManager = new CGameEventManager();
    won = 0;
    GodMode = 0;
@@ -102,7 +104,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
       }
       else {
          Object->CollideableLevel = INTERACTOR_SUPERNONCOLLIDERS;
-         Object->CanCollideWith = INTERACTOR_SUPERACTORS;
+         Object->CanCollideWith = 0;//INTERACTOR_ACTORS; 
 
          for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
          {
@@ -353,9 +355,8 @@ void CGameplayManager::run(float const TickTime)
                      (kPtr->Actor->getArea().getCenter().X - kPtr->lastX < -0.4f))
                      ) {
                kPtr->inZ = 0;
-               kPtr->Actor->CollideableLevel = INTERACTOR_ACTORS;
+               kPtr->Actor->CollideableLevel = INTERACTOR_SUPERNONCOLLIDERS;
                kPtr->Actor->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_ACTORS;
-
             }
          }
          Enemies[i]->update(TickTime);

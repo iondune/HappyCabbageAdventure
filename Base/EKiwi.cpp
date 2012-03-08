@@ -19,6 +19,7 @@ EKiwi::EKiwi(float x, float y, float w, float h, CGameplayManager* manager, int 
 
    inZ = 0;
    zTimer = 0.0f;
+   oldSineValue = 0.0f;
 }
 
 //Loads and moves the mesh
@@ -62,10 +63,12 @@ void EKiwi::loadActor() {
    Actor->getAttributes().AirSpeedFactor = 1.0f;
    Actor->getAttributes().Reacts = 0;
    Actor->CollideableType = COLLIDEABLE_TYPE_KIWI;
+   Actor->CollideableLevel = INTERACTOR_SUPERNONCOLLIDERS;
+   Actor->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_ACTORS;
+
+
    printf("Actor collideable type: %d\n", Actor->CollideableType);
 }
-
-float oldSineValue = 0.0f;
 
 #define Z_SPEED 0.2f
 //Updates AI's decision per frame
@@ -88,7 +91,6 @@ void EKiwi::update(float const TickTime) {
          }
       }
       float curX = Actor->getArea().Position.X;
-      /*
       SineValue = 0.6f*sin(curX - OrigX);
 
       y = Actor->getArea().Position.Y;
@@ -97,7 +99,6 @@ void EKiwi::update(float const TickTime) {
 
       Actor->setArea(SRect2(curX, y, w, h));
 
-      */
 
       Actor->setAction(Cabbage::Collider::CActor::EActionType::None);
 
@@ -108,7 +109,7 @@ void EKiwi::update(float const TickTime) {
          Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveLeft);
       else
          Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
-      //oldSineValue = SineValue;
+      oldSineValue = SineValue;
 
       if(!inZ) {
          float xDist = curX - Manager->getPlayerLocation().X;
@@ -142,7 +143,7 @@ void EKiwi::doRenderable() {
    Renderable->setRotation(SVector3(-90 + rotateBird, 0, -90));
 
    Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, zTimer*0.9*(1.0f/Z_SPEED)));
-   printf("%d: %0.2f %0.2f\n", this, Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y);
+   //printf("%d: %0.2f %0.2f\n", this, Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y);
 
    if(Actor->getVelocity().X < -0.01f)
       Renderable->setScale(SVector3(-1,1,1));

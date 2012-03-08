@@ -44,8 +44,8 @@ namespace Cabbage
             ICollisionResponder * CollisionResponder;
 
             bool CanCollide(CCollideable *a, CCollideable *b) {
-               return a->CollideableLevel & b->CanCollideWith ||
-                  b->CollideableLevel & a->CanCollideWith;
+               return (a->CollideableLevel & b->CanCollideWith) ||
+                  (b->CollideableLevel & a->CanCollideWith);
             }
 
             void performTick(float const TickTime)
