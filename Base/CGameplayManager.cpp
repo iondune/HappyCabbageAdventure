@@ -136,8 +136,6 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
       return;
    }
 
-   EnemyList toKill;
-
    for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
    {
       //Remove projectile from scene
@@ -156,7 +154,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
             (* it)->KilledBy = 0;
             //fprintf(stderr, "Enemy detected as dead! %d\n", it->Renderable);
 
-            toKill.push_back(*it);
+            Enemies.erase(it);
 
             PlayerActor->setImpulse(SVector2(0.f, 1.0f), 0.05f);
          }
@@ -210,10 +208,6 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
          }
          return;
       }
-   }
-   for (EnemyList::iterator it = toKill.begin(); it != toKill.end(); ++ it)
-   {
-      Enemies.erase(std::remove(Enemies.begin(), Enemies.end(), *it), Enemies.end());
    }
 }
 
@@ -359,8 +353,6 @@ void CGameplayManager::run(float const TickTime)
                      (kPtr->Actor->getArea().getCenter().X - kPtr->lastX < -0.4f))
                      ) {
                kPtr->inZ = 0;
-               kPtr->Actor->CollideableLevel = INTERACTOR_ACTORS;
-               kPtr->Actor->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_ACTORS;
             }
          }
          Enemies[i]->update(TickTime);
