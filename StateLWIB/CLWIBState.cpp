@@ -50,12 +50,14 @@ qd blockMap[225][100];
 //Initalizer fxn
 void CLWIBState::begin()
 {
+   clickDown = 0;
    cabbageFlag = 0; // for cabbage
    xCabbage = 0; // for cabbage
    yCabbage = 0;// for cabbage
    textureType = 0;
    enemyType = 0;
    itemType = 0;
+   change = 0; //this determines
    aDown = dDown = spaceDown = wDown = sDown = gDown = fDown = tDown = eDown = mDown = oneDown = twoDown = threeDown = cDown = 0;
    cubeMesh = CMeshLoader::createCubeMesh();
    cubeMesh->calculateNormalsPerFace();
@@ -132,8 +134,14 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    PreviewCabbage->setTranslation(SVector3(x+0.5f,y+0.5f, 0));
    PreviewFlag->setTranslation(SVector3(x+0.5f,y+0.5f, 0));
    PreviewItem->setTranslation(SVector3(x+0.5f,y+0.5f, 0));
-
-   if(tDown) {
+   if(clickDown) {
+      PreviewItem->setVisible(false);
+      PreviewFlag->setVisible(false);
+      PreviewCabbage->setVisible(false); 
+      PreviewBlock->setVisible(false);
+      PreviewEnemy->setVisible(false);
+   }
+   else if(tDown) {
       PreviewItem->setVisible(false);
       PreviewFlag->setVisible(false);
       PreviewCabbage->setVisible(false); 
@@ -295,6 +303,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
        block1->setText("Remove mode");
    }
    //drawSubWindow();
+   pickInsert();
    Application.getSceneManager().drawAll();
 
    Application.getGUIEngine().drawAll(); 
@@ -324,7 +333,8 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
     if(Event.Pressed){
         if(Event.Key == SDLK_1){
-            if (oneDown == 1)
+            change = 1;
+            /*if (oneDown == 1)
                 oneDown = 0;
             else {
                 oneDown = 1;
@@ -336,10 +346,11 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 blockHeight = 1;
                 blockDepth = 1;
                 PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
-            }
+            }*/
         }
         if(Event.Key == SDLK_3){
-            if (threeDown == 1)
+            change = 3;
+            /*if (threeDown == 1)
                 threeDown = 0;
             else {
                 threeDown = 1;
@@ -351,10 +362,11 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 blockHeight = 1;
                 blockDepth = 1;
                 PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
-            }
+            }*/
         }
         if (Event.Key == SDLK_4) {
-            if (fourDown == 1)
+            change = 4;
+            /*if (fourDown == 1)
                 fourDown = 0;
             else {
                 fourDown = 1;
@@ -366,7 +378,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 blockHeight = 1;
                 blockDepth = 1;
                 PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
-            }
+            }*/
         }
         if(Event.Key == SDLK_w){
             wDown = 1;
@@ -384,7 +396,8 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
             dDown = 1;
         }
         if(Event.Key == SDLK_2){
-            if (twoDown == 1 ) {
+            change = 2;
+            /*if (twoDown == 1 ) {
                 twoDown = 0;
                 if(textureType == -5) {
                     blockWidth = 5;
@@ -403,7 +416,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 blockHeight = 1;
                 blockDepth = 1;
                 PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
-            }
+            }*/
         }
         if(Event.Key == SDLK_k){
             loadWorld();
@@ -1093,6 +1106,8 @@ int startx, starty;
 float pitchphi, yawtheta;
 int mouseDown;
 void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
+    if(clickDown)
+        return;
    if(Event.Button.Value == SMouseEvent::EButton::Left) {
       if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
          mouseDown = 1;
@@ -1207,27 +1222,153 @@ void CLWIBState::prepText() {
  
 }
 
-void CLWIBState::prepHud() {
-   CTexture *test = new CTexture(CImageLoader::loadTGAImage("wood.tga"));
+void CLWIBState::OnWidgetHover(CGUIWidget *widget) {
+    //std::cout << "Widget hovered! " << widget << std::endl;
+    if(widget) 
+      clickDown = 1;
+}
+void CLWIBState::OnWidgetUnHover(CGUIWidget *widget) {
+    //std::cout << "Widget unhovered! " << Widget << std::endl;
+    if (widget)
+        clickDown = 0;
+}
+
+
+void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
+    if (widget == leftArrow) {
+        if (change == -1)
+            change = 4;
+        else
+            change--;
+    }
+    if (widget == rightArrow){
+        if (change == 4)
+            change = 0;
+        else
+            change++;
+    }
+}
+
+
+void CLWIBState::pickInsert()
+{
+    if (change == 0) {
+        oneDown = 0;
+        threeDown = 0; 
+        tDown = 0;
+        twoDown = 0;
+        fourDown = 0;
+       /* blockWidth = 1;
+        blockHeight = 1;
+        blockDepth = 1;*/
+        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+    }
+    if (change == 1) {
+        oneDown = 1;
+        threeDown = 0; 
+        tDown = 0;
+        twoDown = 0;
+        fourDown = 0;
+        blockWidth = 1;
+        blockHeight = 1;
+        blockDepth = 1;
+        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+    }
+    if (change == 2) {
+      twoDown = 1; //enemy
+                threeDown = 0; 
+                tDown = 0;
+                oneDown = 0;
+                fourDown = 0;
+                blockWidth = 1;
+                blockHeight = 1;
+                blockDepth = 1;
+                PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+    }
+    if (change == 3) {
+        threeDown = 1;
+        oneDown = 0;
+        tDown = 0;
+        twoDown = 0;
+        fourDown = 0;
+        blockWidth = 1;
+        blockHeight = 1;
+        blockDepth = 1;
+        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+    }
+    if (change == 4) {
+        fourDown = 1;
+        threeDown = 0;
+        oneDown = 0;
+        tDown = 0;
+        twoDown = 0;
+        blockWidth = 1;
+        blockHeight = 1;
+        blockDepth = 1;
+        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+    }
     
-    /* leftArrow = new CGUIImageWidget() ;
-    rightArrow = new CGUIImageWidget();
-    cabbage = new CGUIImageWidget();
-    flag = new CGUIImageWidget();
-    grassBlock = new CGUIImageWidget(test,SVector2(.1f, .1f));
-    grassBlock->setPosition(SVector2(1.05f, .5f));
-    rockBlock = new CGUIImageWidget(test,SVector2(.1f, .1f));
-    grassBlock->setPosition(SVector2(1.15f, .5f));
-    groundBlock = new CGUIImageWidget(test,SVector2(.5f, .5f));
-    dirtBlock = new CGUIImageWidget(test,SVector2(.5f, .5f));
-    appleE =new CGUIImageWidget() ;
+}
+void CLWIBState::prepHud() {
+    // prepping hud wwidgest
+    SVector2 norm = SVector2(.1f, .1f);
+    CTexture *imgLeft = new CTexture(CImageLoader::loadImage("ModelImages/leftArrowPic.bmp"));
+    CTexture *imgright = new CTexture(CImageLoader::loadImage("ModelImages/rightArrowPic.bmp"));
+    CTexture *grass = new CTexture(CImageLoader::loadImage("Base/grass.bmp"));
+    CTexture *dirt = new CTexture(CImageLoader::loadImage("Base/dirt.bmp"));
+    CTexture *rock = new CTexture(CImageLoader::loadImage("Base/rock.bmp"));
+    //CTexture *imgright = new CTexture(CImageLoader::loadImage("ModelImages/rightArrowPic.bmp"));
+    //arrows to cycle though the blocks, enemies, cabbage, flag etc.
+    leftArrow = new CGUIImageWidget(imgLeft, norm);
+    leftArrow->setPosition(SVector2(1.05f, .85f));
+
+    rightArrow = new CGUIImageWidget(imgright, norm);
+    rightArrow->setPosition(SVector2(1.20f, .85f));
+    // cabbage button
+    //cabbage = new CGUIImageWidget();
+
+    //flag = new CGUIImageWidget();
+    //blocks buttons
+    grassBlock = new CGUIImageWidget(grass,norm);
+    grassBlock->setPosition(SVector2(1.05f, .70f));
+    dirtBlock = new CGUIImageWidget(dirt,norm);
+    dirtBlock->setPosition(SVector2(1.20f, .70f));
+    rockBlock = new CGUIImageWidget(rock,norm);
+    rockBlock->setPosition(SVector2(1.05f, .55f));
+    //groundBlock = new CGUIImageWidget(test2,norm);
+    //grassBlock = new CGUIImageWidget(test2,norm);
+
+   // grassBlock->setPosition(SVector2(1.15f, 1.0f));
+
+    //rockBlock = new CGUIImageWidget(test,SVector2(.1f, .1f));
+
+   // grassBlock->setPosition(SVector2(1.15f, .5f));
+
+    //groundBlock = new CGUIImageWidget(test,SVector2(.5f, .5f));
+
+    //dirtBlock = new CGUIImageWidget(test,SVector2(.5f, .5f));
+
+    /*appleE =new CGUIImageWidget() ;
+
     orangeE =new CGUIImageWidget() ;
+
     kiwiE = new CGUIImageWidget();
+
     fireE = new CGUIImageWidget();
+
     bladeE = new CGUIImageWidget();
+
     cycleLeft = new CGUIImageWidget();
+
     cycleRight = new CGUIImageWidget();*/
-   // Application.getGUIEngine().addWidget(grassBlock);
+    //adding widgets to game 
+    Application.getGUIEngine().addWidget(grassBlock);
+    Application.getGUIEngine().addWidget(dirtBlock);
+    Application.getGUIEngine().addWidget(rockBlock);
+    Application.getGUIEngine().addWidget(leftArrow);
+    Application.getGUIEngine().addWidget(rightArrow);
+    //Application.getGUIEngine().addWidget(grassBlock);
+    //Application.getGUIEngine().addWidget(rockBlock);
 }
 void CLWIBState::stepCamera(float delta) {
    float factor = 6;
