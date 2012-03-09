@@ -156,9 +156,7 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 {
     CurrentScene = this;
 
-	/*
-	 * Create a simple quad VBO to use for draw operations!
-	 */
+	// Create a simple quad VBO to use for draw operations!
 	GLfloat QuadVertices[] = 
 	{
 		-1.0, -1.0,
