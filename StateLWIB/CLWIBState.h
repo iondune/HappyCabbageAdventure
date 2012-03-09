@@ -13,23 +13,25 @@
 #include "CPItem.h"
 #include "../Base/irrxml-1.2/src/irrXML.h"
 #include "wmlwriter_src/xmlwriter.h"
+#include "../CabbageGUI/CabbageGUI.h"
 
 #define TREE_Y_OFFSET 2.1
 #define ANGLE(j,k) (j==2?3:(j?2:(k?1:0)))
 #define NEXT(j) (j==2?0:(j?2:1))
 
-class CLWIBState : public CState<CLWIBState>
+class CLWIBState : public CState<CLWIBState>, public CGUIEventReceiver
 {
    CApplication & Application;
    private:
 
    //Boolean integers for keypressing
    int aDown , dDown , spaceDown , wDown , sDown , gDown , fDown , tDown, eDown, mDown, cDown;
-   int oneDown, twoDown, threeDown, fourDown;
+   int oneDown, twoDown, threeDown, fourDown, clickDown;
    int cabbageFlag;
    int xCabbage;
    int yCabbage;
    int blockCycle;
+   int change;
    bool showHelp;
    int enemyType, textureType, itemType;
    int WindowWidth, WindowHeight;
@@ -47,7 +49,7 @@ class CLWIBState : public CState<CLWIBState>
    CMesh *health, *energy;
    float xp2w(int oldX);
    float yp2w(int oldY);
-
+   
 
    public:
    std::vector<CPlaceable*> placeables, redoPlaceables;
@@ -67,6 +69,7 @@ class CLWIBState : public CState<CLWIBState>
    void OnMouseEvent(SMouseEvent const & Event);
    void end();
 
+   void pickInsert();
    void PrepBlock(float x, float y, int w, int h, int d, int t, int moving); 
    void PrepEnemy(float x, float y, int type); 
    void PrepCabbage(float x, float y);
@@ -82,7 +85,10 @@ class CLWIBState : public CState<CLWIBState>
    void BlocksInit( void ); 
    void prepText();
    void prepHud();
-   void stepCamera(float delta);
+   void stepCamera(float delta);      
+   void OnWidgetClick(CGUIWidget * Widget);
+   void OnWidgetHover(CGUIWidget * Widget);
+   void OnWidgetUnHover(CGUIWidget * Widget);
 
 };
 #endif
