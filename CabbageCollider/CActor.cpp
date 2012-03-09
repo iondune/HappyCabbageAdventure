@@ -92,6 +92,10 @@ namespace Collider
 		return Out;
 	}
 
+   void CActor::setStanding(bool s) {
+      Standing = s?this:0;
+   }
+
 	void CActor::onStanding(CCollideable * Object)
 	{
 		Standing = Object;

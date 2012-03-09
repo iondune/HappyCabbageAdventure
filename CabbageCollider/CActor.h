@@ -129,6 +129,7 @@ namespace Collider
 		void setJumping(bool const jumping);
 		void setControlFall(bool const fall);
       bool getControlFall();
+      void setStanding(bool);
 		void setFallAcceleration(float speed);
 		float getFallAcceleration();
 

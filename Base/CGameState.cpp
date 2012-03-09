@@ -24,6 +24,7 @@ std::vector<CElevator*> elevators;
 int Charged = 0;
 int prevHealth = 0;
 int numLives = -3;
+int NoClipMode = 0;
 
 CGameplayManager *GameplayManager;
 
@@ -147,6 +148,7 @@ void CGameState::EngineInit( void ) {
    Player->CollideableType = COLLIDEABLE_TYPE_PLAYER;
    Player->CollideableLevel |= INTERACTOR_SUPERACTORS;
    Player->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
+   Player->CanCollideWith |= INTERACTOR_NULL_BLOCK; // Block for procing the physics engine
 
    Derp = Engine->addActor();
    Derp->setArea(SRect2(-22, 3, 1, 1));
@@ -665,7 +667,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
             particleDustEngine = new CParticleEngine(SVector3(0, 1, 0), 70, -1.0f, DUST_PARTICLE);
             particleDustEngine->UsePhysics(Engine);
 
-            Player->getAttributes().MaxWalk = 5.5f;
+            Player->getAttributes().MaxWalk = NoClipMode?34.5f:5.5f;
             moveDown = 0.0f;
          }
          else {
@@ -683,7 +685,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
             particleDustEngine = new CParticleEngine(SVector3(0, 1, 0), 70, -1.0f, DUST_PARTICLE);
             particleDustEngine->UsePhysics(Engine);
 
-            Player->getAttributes().MaxWalk = 5.5f;
+            Player->getAttributes().MaxWalk = NoClipMode?34.5f:5.5f;
             moveDown = 0.0f;
          }
          else {
@@ -740,12 +742,31 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_SPACE) {
          spaceDown = 1;
+         if(NoClipMode) {
+            Player->setVelocity(SVector2(Player->getVelocity().X, 10.0f));
+         }
       }
       if(Event.Key == SDLK_h) {
-         Player->CollideableLevel = 0;
-         Player->CanCollideWith &= ~INTERACTOR_SUPERACTORS;
-         Player->CanCollideWith &= ~INTERACTOR_ITEMS;
-         Player->CanCollideWith &= ~INTERACTOR_ACTORS;
+         NoClipMode = ~NoClipMode;
+         if(NoClipMode) {
+            Player->CollideableLevel = INTERACTOR_NULL_BLOCK;
+            Player->CanCollideWith &= ~INTERACTOR_SUPERACTORS;
+            Player->CanCollideWith &= ~INTERACTOR_ITEMS;
+            Player->CanCollideWith &= ~INTERACTOR_ACTORS;
+            Player->CanCollideWith &= ~INTERACTOR_BLOCKS;
+            Player->setControlFall(false);
+            Player->setFallAcceleration(0.0f);
+            Player->setJumping(false);
+            Player->setVelocity(SVector2(Player->getVelocity().X, 0.0f));
+            //Player->Gravity = 0.0f;
+         }
+         else {
+            Player->CollideableLevel = INTERACTOR_SUPERACTORS;
+            Player->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS;
+            Player->CanCollideWith &= ~INTERACTOR_SUPERNONCOLLIDERS;
+            Player->setControlFall(true);
+            //Player->Gravity = 100.0f;
+         }
       }
       if(Event.Key == SDLK_ESCAPE) {
          //TODO: Replace with an event/signal to end the game world 
@@ -755,8 +776,6 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
    //Check if key let go, Not sure if this will work in here.
    else  {
       if(Event.Key == SDLK_h) {
-         Player->CollideableLevel = INTERACTOR_SUPERACTORS;
-         Player->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS | INTERACTOR_ACTORS;
       }
       if(Event.Key == SDLK_w){
          wDown = 0;
@@ -815,6 +834,9 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_SPACE){
          spaceDown = 0;
+         if(NoClipMode) {
+            Player->setVelocity(SVector2(Player->getVelocity().X, 0.0f));
+         }
       }
    }
 }
