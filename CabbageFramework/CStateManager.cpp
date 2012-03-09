@@ -55,14 +55,18 @@ void CStateManager::doStateChange()
 	CApplication::get().getSceneManager().blurSceneOut(Fadetime, CApplication::get().getRunTime());
 
 	if (CurrentState) {
-      //CurrentState->disconnect();
+      CurrentState->disconnect();
+      CApplication::get().getGUIEngine().removeAllWidgets();
+      CApplication::get().getSceneManager().removeAllSceneObjects();
 		CurrentState->end();
    }
 
 	CurrentState = NextState;
 	NextState = NULL;
 
+   printf("asdf\n");
    CurrentState->connect();
+   printf("asdf2\n");
 	CurrentState->begin();
 
 	CApplication::get().getSceneManager().blurSceneIn(Fadetime, CApplication::get().getRunTime());
