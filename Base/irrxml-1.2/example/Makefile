@@ -1,7 +1,7 @@
 # Project: irrXML
 # Makefile created by Dev-C++ 4.9.8.0
 
-CPP  = g++ -g
+CPP  = g++ -O1 -s
 OBJ  = ../src/irrXML.o test.o 
 LINKOBJ  = ../src/irrXML.o test.o 
 LIBS =  --no-export-all-symbols --add-stdcall-alias

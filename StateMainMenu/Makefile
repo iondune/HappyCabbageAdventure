@@ -4,7 +4,7 @@ OBJECTS=$(SOURCES:%.cpp=%.o)
 CABBAGE=-L../lib/ -lCabbageCollider -lCabbageFramework -lCabbageScene
 COMPILER_VERSION=-std=c++0x
 INCLUDE = -I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI
-CC=g++ -g
+CC=g++ -O1 -s
 
 all: $(OBJECTS)
 
