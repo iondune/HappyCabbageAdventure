@@ -18,7 +18,7 @@
 #include "../Base/CGameState.h"
 #include "../StateOverworld/COverworldState.h"
 #include "../CabbageSound/sound.h"
-#include "CabbageGUI.h"
+#include "../CabbageGUI/CabbageGUI.h"
 
 
 
