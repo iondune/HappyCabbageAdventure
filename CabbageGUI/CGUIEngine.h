@@ -45,6 +45,9 @@ public:
 	virtual void OnWidgetUnHover(CGUIWidget * Widget);
 	virtual void OnWidgetClick(CGUIWidget * Widget);
 
+   void connect();
+   void disconnect();
+
 };
 
 class CGUIEngine : public CApplicationEventReceiver

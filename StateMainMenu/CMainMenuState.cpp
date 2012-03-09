@@ -100,6 +100,7 @@ void CMainMenuState::setupMeshes()
 
 void CMainMenuState::begin()
 {
+   CGUIEventReceiver::connect();
    SPosition2 size = Application.getWindowSize();
    float WindowWidth = (float) size.X;
    float WindowHeight = (float) size.Y;
@@ -132,6 +133,7 @@ void CMainMenuState::begin()
 
 void CMainMenuState::end()
 {
+    CGUIEventReceiver::disconnect();
     Application.getSceneManager().Lights.clear();
     Application.getSceneManager().removeAllSceneObjects();
     Application.getGUIEngine().removeAllWidgets();

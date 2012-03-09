@@ -17,16 +17,23 @@
 CGUIEventReceiver::CGUIEventReceiver()
 	: Engine(& CApplication::get().getGUIEngine())
 {
+}
+
+void CGUIEventReceiver::connect() {
 	Engine->getEventManager()->OnWidgetClick.connect(this, & CGUIEventReceiver::OnWidgetClick);
 	Engine->getEventManager()->OnWidgetHover.connect(this, & CGUIEventReceiver::OnWidgetHover);
 	Engine->getEventManager()->OnWidgetUnHover.connect(this, & CGUIEventReceiver::OnWidgetUnHover);
 }
 
-CGUIEventReceiver::~CGUIEventReceiver()
-{
+void CGUIEventReceiver::disconnect() {
 	Engine->getEventManager()->OnWidgetClick.disconnect(this);
 	Engine->getEventManager()->OnWidgetHover.disconnect(this);
 	Engine->getEventManager()->OnWidgetUnHover.disconnect(this);
+}
+
+CGUIEventReceiver::~CGUIEventReceiver()
+{
+   disconnect();
 }
 
 void CGUIEventReceiver::OnWidgetHover(CGUIWidget * Widget)

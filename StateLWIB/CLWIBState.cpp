@@ -50,6 +50,8 @@ qd blockMap[225][100];
 //Initalizer fxn
 void CLWIBState::begin()
 {
+   CGUIEventReceiver::connect();
+   //printf("asdf\n");
    clickDown = 0;
    cabbageFlag = 0; // for cabbage
    xCabbage = 0; // for cabbage
@@ -736,6 +738,7 @@ void CLWIBState::printXML() {
 //Runs at program close (currently not implemented)
 void CLWIBState::end()
 {
+   CGUIEventReceiver::disconnect();
    Application.getGUIEngine().removeAllWidgets(); 
    //our_font.clean();
    placeables.clear();
