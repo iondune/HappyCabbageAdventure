@@ -4,7 +4,6 @@ CStateManager::CStateManager()
     : CurrentState(0)
 {}
 
-
 void CStateManager::OnGameTickStart(float const Elapsed)
 {
     if (CurrentState)
@@ -55,12 +54,15 @@ void CStateManager::doStateChange()
 	static float const Fadetime = 0.3f;
 	CApplication::get().getSceneManager().blurSceneOut(Fadetime, CApplication::get().getRunTime());
 
-	if (CurrentState)
+	if (CurrentState) {
+      //CurrentState->disconnect();
 		CurrentState->end();
+   }
 
 	CurrentState = NextState;
 	NextState = NULL;
 
+   CurrentState->connect();
 	CurrentState->begin();
 
 	CApplication::get().getSceneManager().blurSceneIn(Fadetime, CApplication::get().getRunTime());

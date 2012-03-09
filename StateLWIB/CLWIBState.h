@@ -19,7 +19,7 @@
 #define ANGLE(j,k) (j==2?3:(j?2:(k?1:0)))
 #define NEXT(j) (j==2?0:(j?2:1))
 
-class CLWIBState : public CState<CLWIBState>, public CGUIEventReceiver
+class CLWIBState : public CState<CLWIBState>
 {
    CApplication & Application;
    private:

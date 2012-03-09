@@ -33,7 +33,8 @@ class CGUIEventReceiver : public sigslot::has_slots<>
 
 protected:
 
-	CGUIEngine * const Engine;
+	CGUIEngine * const GUIEngine;
+   int connected;
 
 public:
 

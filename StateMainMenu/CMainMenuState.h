@@ -22,7 +22,7 @@
 
 
 
-class CMainMenuState : public CState<CMainMenuState>, public CGUIEventReceiver
+class CMainMenuState : public CState<CMainMenuState>
 {
    CApplication &Application;
    public:

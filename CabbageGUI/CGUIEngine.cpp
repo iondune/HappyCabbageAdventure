@@ -15,20 +15,27 @@
 
 
 CGUIEventReceiver::CGUIEventReceiver()
-	: Engine(& CApplication::get().getGUIEngine())
+	: GUIEngine(& CApplication::get().getGUIEngine())
 {
+   connected = 0;
 }
 
 void CGUIEventReceiver::connect() {
-	Engine->getEventManager()->OnWidgetClick.connect(this, & CGUIEventReceiver::OnWidgetClick);
-	Engine->getEventManager()->OnWidgetHover.connect(this, & CGUIEventReceiver::OnWidgetHover);
-	Engine->getEventManager()->OnWidgetUnHover.connect(this, & CGUIEventReceiver::OnWidgetUnHover);
+   if(!connected) {
+      GUIEngine->getEventManager()->OnWidgetClick.connect(this, & CGUIEventReceiver::OnWidgetClick);
+      GUIEngine->getEventManager()->OnWidgetHover.connect(this, & CGUIEventReceiver::OnWidgetHover);
+      GUIEngine->getEventManager()->OnWidgetUnHover.connect(this, & CGUIEventReceiver::OnWidgetUnHover);
+      connected = 1;
+   }
 }
 
 void CGUIEventReceiver::disconnect() {
-	Engine->getEventManager()->OnWidgetClick.disconnect(this);
-	Engine->getEventManager()->OnWidgetHover.disconnect(this);
-	Engine->getEventManager()->OnWidgetUnHover.disconnect(this);
+   if(connected) {
+      GUIEngine->getEventManager()->OnWidgetClick.disconnect(this);
+      GUIEngine->getEventManager()->OnWidgetHover.disconnect(this);
+      GUIEngine->getEventManager()->OnWidgetUnHover.disconnect(this);
+      connected = 0;
+   }
 }
 
 CGUIEventReceiver::~CGUIEventReceiver()

@@ -4,9 +4,10 @@
 #include "sigslot/sigslot.h"
 
 #include "CEventManager.h"
+#include "CGUIEngine.h"
 
 
-class IState
+class IState : public CGUIEventReceiver
 {
 
 public:
@@ -22,7 +23,6 @@ public:
 
     virtual void OnMouseEvent(SMouseEvent const & Event) =0;
     virtual void OnKeyboardEvent(SKeyboardEvent const & Event) =0;
-
 };
 
 template <class TImplementation>

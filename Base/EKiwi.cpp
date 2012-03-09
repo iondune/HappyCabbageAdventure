@@ -146,9 +146,9 @@ void EKiwi::doRenderable() {
    //printf("%d: %0.2f %0.2f\n", this, Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y);
 
    if(Actor->getVelocity().X < -0.01f)
-      Renderable->setScale(SVector3(-1,1,1));
+      Renderable->setScale(SVector3(-1,1,1)*(zTimer + 1.0f));
    else if(Actor->getVelocity().X > 0.01f)
-      Renderable->setScale(SVector3(1,1,1));
+      Renderable->setScale(SVector3(1,1,1)*(zTimer + 1.0f));
 
 }
 
