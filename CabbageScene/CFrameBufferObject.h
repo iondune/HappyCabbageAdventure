@@ -27,6 +27,8 @@ public:
 
 	GLuint const getHandle();
 
+	void bind();
+
 };
 
 #endif

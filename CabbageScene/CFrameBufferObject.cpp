@@ -28,3 +28,8 @@ GLuint const CFrameBufferObject::getHandle()
 {
 	return Handle;
 }
+
+void CFrameBufferObject::bind()
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, Handle);
+}
