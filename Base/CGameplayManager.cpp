@@ -343,7 +343,7 @@ void CGameplayManager::run(float const TickTime)
    float cabbageCenterX = PlayerActor->getArea().getCenter().X;
    float cabbageCenterY = PlayerActor->getArea().getCenter().Y;
 
-   for (int i = 0; i < Enemies.size(); i++) {
+   for (unsigned int i = 0; i < Enemies.size(); i++) {
       float enemyCenterX = Enemies[i]->Actor->getArea().getCenter().X;
       float enemyCenterY = Enemies[i]->Actor->getArea().getCenter().Y;
 
