@@ -267,7 +267,7 @@ void CSceneManager::drawAll()
 		glBindFramebuffer(GL_FRAMEBUFFER, fboId[OnlyNormals ? EFBO_SCENE : EFBO_SSAO_NORMALS]);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		RootObject.drawNormals(CurrentScene);
+		RootObject.draw(CurrentScene, ERP_SS_NORMALS);
 	}
 #endif
 
@@ -277,7 +277,7 @@ void CSceneManager::drawAll()
 		glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCENE]);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		RootObject.draw(CurrentScene);
+		RootObject.draw(CurrentScene, ERP_DEFAULT);
 	}
 
 

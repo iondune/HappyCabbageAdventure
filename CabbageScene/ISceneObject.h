@@ -30,6 +30,12 @@ public:
 
 };
 
+enum ERenderPass
+{
+	ERP_DEFAULT,
+	ERP_SS_NORMALS
+};
+
 class CScene;
 
 class ISceneObject
@@ -67,8 +73,7 @@ public:
     void setScale(SVector3 const & scale);
 
 	virtual void update();
-    virtual void draw(CScene const * const scene);
-	virtual void drawNormals(CScene const * const scene);
+    virtual void draw(CScene const * const scene, ERenderPass const Pass);
 
     SBoundingBox3 const & getBoundingBox() const;
     SBoundingBox3 & getBoundingBox();

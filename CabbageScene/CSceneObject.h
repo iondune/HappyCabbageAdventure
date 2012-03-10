@@ -21,8 +21,7 @@ public:
 	void addSceneObject(CRenderable * Renderable);
 	void removeSceneObject(CRenderable * Renderable);
 
-    void draw(CScene const * const scene);
-	void drawNormals(CScene const * const scene);
+    void draw(CScene const * const scene, ERenderPass const Pass);
 
 	void setShader(CShader * shader);
 	void setShader(std::string const & shader);

@@ -17,26 +17,25 @@ void CSceneObject::removeSceneObject(CRenderable * Renderable)
 	Renderables.erase(std::remove(Renderables.begin(), Renderables.end(), Renderable), Renderables.end());
 }
 
-void CSceneObject::draw(CScene const * const scene)
+void CSceneObject::draw(CScene const * const scene, ERenderPass const Pass)
 {
 	if (! Visible)
 		return;
 
-	ISceneObject::draw(scene);
+	ISceneObject::draw(scene, Pass);
 
-	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
-		(* it)->draw(scene);
-}
+	switch (Pass)
+	{
+	case ERP_DEFAULT:
+		for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
+			(* it)->draw(scene);
+		break;
 
-void CSceneObject::drawNormals(CScene const * const scene)
-{
-	if (! Visible)
-		return;
-
-	ISceneObject::drawNormals(scene);
-
-	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
-		(* it)->drawNormals(scene);
+	case ERP_SS_NORMALS:
+		for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
+			(* it)->drawNormals(scene);
+		break;
+	}
 }
 
 void CSceneObject::setShader(CShader * shader)

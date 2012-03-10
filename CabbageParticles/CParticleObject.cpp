@@ -32,10 +32,11 @@ void CParticleObject::update() {
    }
 }
 
-void CParticleObject::draw(CScene const * const scene) {
-	ISceneObject::draw(scene);
+void CParticleObject::draw(CScene const * const scene, ERenderPass const Pass)
+{
+	ISceneObject::draw(scene, Pass);
 
-   particlesRenderable->draw(scene);
+	particlesRenderable->draw(scene);
 }
 
 void CParticleObject::setup(std::vector<SVector3*> vectorArr, std::vector<SVector3*> colorArr, std::vector<float> sizeArr, int num, const char* texturePath) {

@@ -19,7 +19,7 @@ public:
    void setup(std::vector<SVector3*> vectorArr, std::vector<SVector3*> colorArr, std::vector<float> sizeArr, int num, const char*);
    void setPositions(std::vector<SVector3*> vectorArr);
    void update();
-   void draw(CScene const * const scene);
+   void draw(CScene const * const scene, ERenderPass const Pass);
 };
 
 #endif

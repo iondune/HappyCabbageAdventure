@@ -62,23 +62,14 @@ void ISceneObject::update()
 		(* it)->update();
 }
 
-void ISceneObject::draw(CScene const * const scene)
+void ISceneObject::draw(CScene const * const scene, ERenderPass const Pass)
 {
-	if(!Visible)
-		return;
-	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
-		if (! (* it)->isCulled(scene))
-			(* it)->draw(scene);
-}
-
-void ISceneObject::drawNormals(CScene const * const scene)
-{
-	if(!Visible)
+	if (! Visible)
 		return;
 
 	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
 		if (! (* it)->isCulled(scene))
-			(* it)->drawNormals(scene);
+			(* it)->draw(scene, Pass);
 }
 
 
