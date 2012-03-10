@@ -2,6 +2,7 @@
 #define _CABBAGE_SCENE_CSHADERCONTEXT_H_INCLUDED_
 
 #include "CShader.h"
+#include "CTexture.h"
 
 #include "../CabbageCore/SVector3.h"
 #include "../CabbageCore/SColor.h"
@@ -15,6 +16,7 @@ class CShaderContext
 
     bool Valid;
     CShader const & Shader;
+	int TextureCounter;
 
     std::vector<GLuint> EnabledVertexAttribArrays;
 
@@ -66,6 +68,10 @@ public:
 		uniform(it->second.Handle, uniformVar);
 	}
 
+	void bindTexture(GLuint const uniformHandle, CTexture const * const Texture);
+	void bindTexture(std::string const & Label, CTexture const * const Texture);
+	void bindTexture(GLuint const uniformHandle, GLuint const TextureHandle);
+	void bindTexture(std::string const & Label, GLuint const TextureHandle);
 
 };
 

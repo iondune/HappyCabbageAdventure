@@ -254,13 +254,10 @@ void CSceneManager::removeAllSceneObjects()
    RootObject.removeChildren();
 }
 
-#define SSAO
-
 void CSceneManager::drawAll()
 {
     CurrentScene->update();
 
-#ifdef SSAO
 	if (DoSSAO || OnlyNormals)
 	{
 		// Draw normal colors
@@ -269,7 +266,6 @@ void CSceneManager::drawAll()
 
 		RootObject.draw(CurrentScene, ERP_SS_NORMALS);
 	}
-#endif
 
 	// Draw regular scene
 	if (! OnlyNormals)
@@ -282,12 +278,8 @@ void CSceneManager::drawAll()
 
 
 	// Setup for quad rendering
-	glEnable(GL_TEXTURE_2D);
-
 	glDisable(GL_DEPTH_TEST);
 
-
-#ifdef SSAO
 	if (DoSSAO)
 	{
 		// Draw SSAO effect
@@ -296,21 +288,16 @@ void CSceneManager::drawAll()
 		{
 			CShaderContext Context(* SSAOShader);
 			
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO_NORMALS]);
-			Context.uniform("normalMap", 0);
-
-			glActiveTexture(GL_TEXTURE1);
-			glBindTexture(GL_TEXTURE_2D, randNorm);
-			Context.uniform("rnm", 1);
+			Context.bindTexture("normalMap", textureId[EFBO_SSAO_NORMALS]);
+			Context.bindTexture("rnm", randNorm);
 
 			glViewport(0, 0, ScreenSize.X / SSAO_MULT, ScreenSize.Y / SSAO_MULT);
 
 			Context.bindBufferObject("aPosition", QuadHandle, 2);
 
-		glDrawArrays(GL_QUADS, 0, 4);
+			glDrawArrays(GL_QUADS, 0, 4);
 
-			::glViewport(0, 0, ScreenSize.X, ScreenSize.Y);
+			glViewport(0, 0, ScreenSize.X, ScreenSize.Y);
 		}
 
 		if (DoBlur)
@@ -321,17 +308,11 @@ void CSceneManager::drawAll()
 			{
 				CShaderContext Context(* BlurV);
 
-				glEnable(GL_TEXTURE_2D);
-				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO_RAW]);
-
-				//glGenerateMipmap(GL_TEXTURE_2D);
-
-				Context.uniform("uTexColor", 0);
+				Context.bindTexture("uTexColor", textureId[EFBO_SSAO_RAW]);
 
 				Context.bindBufferObject("aPosition", QuadHandle, 2);
 
-		glDrawArrays(GL_QUADS, 0, 4);
+				glDrawArrays(GL_QUADS, 0, 4);
 
 			}
 
@@ -341,112 +322,74 @@ void CSceneManager::drawAll()
 			{
 				CShaderContext Context(* BlurH);
 
-				glEnable(GL_TEXTURE_2D);
-				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SSAO_BLUR1]);
+				Context.uniform("BlurSize", 1.0f);
+				Context.uniform("DimAmount", 1.0f);
 
-            Context.uniform("BlurSize", 1.0f);
-            Context.uniform("DimAmount", 1.0f);
-
-				//glGenerateMipmap(GL_TEXTURE_2D);
-
-				Context.uniform("uTexColor", 0);
+				Context.bindTexture("uTexColor", textureId[EFBO_SSAO_BLUR1]);
 
 				Context.bindBufferObject("aPosition", QuadHandle, 2);
 
-		glDrawArrays(GL_QUADS, 0, 4);
+				glDrawArrays(GL_QUADS, 0, 4);
 			}
 		}
 	}
-#endif
 
-   if (DoBloom)
-   {
-      //BLURH
-      // Draw blurH effect
-      glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCRATCH1]);
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	if (DoBloom)
+	{
+		//BLURH
+		// Draw blurH effect
+		glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCRATCH1]);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-      // Draw blurV quad
-      {
-         glEnable(GL_TEXTURE_2D);
-         CShaderContext Context(* BlurH);
-         glActiveTexture(GL_TEXTURE0);
-         glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SCENE]);
-         //glGenerateMipmap(GL_TEXTURE_2D);
-         Context.uniform("BlurSize", 1.0f);
-         Context.uniform("DimAmount", 1.0f);
+		// Draw blurV quad
+		{
+			glEnable(GL_TEXTURE_2D);
+			CShaderContext Context(* BlurH);
+			Context.bindTexture("uTexColor", textureId[EFBO_SCENE]);
+			Context.uniform("BlurSize", 1.0f);
+			Context.uniform("DimAmount", 1.0f);
 
-         Context.bindBufferObject("aPosition", QuadHandle, 2);
+			Context.bindBufferObject("aPosition", QuadHandle, 2);
 
-		glDrawArrays(GL_QUADS, 0, 4);
-      }
+			glDrawArrays(GL_QUADS, 0, 4);
+		}
 
-      //BLURV
-      // Draw blurV effect
-      glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCRATCH2]);
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		//BLURV
+		// Draw blurV effect
+		glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCRATCH2]);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-      // Draw blurV quad
-      {
-		  CShaderContext Context(* BlurV);
-         glEnable(GL_TEXTURE_2D);
-         glActiveTexture(GL_TEXTURE0);
-         glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SCRATCH1]);
-         //glGenerateMipmap(GL_TEXTURE_2D);
+		// Draw blurV quad
+		{
+			CShaderContext Context(* BlurV);
+			Context.bindTexture("uTexColor", textureId[EFBO_SCRATCH1]);
 
-		Context.bindBufferObject("aPosition", QuadHandle, 2);
+			Context.bindBufferObject("aPosition", QuadHandle, 2);
 
-		glDrawArrays(GL_QUADS, 0, 4);
-      }
-   }
+			glDrawArrays(GL_QUADS, 0, 4);
+		}
+	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCRATCH1]);
 	// Draw Texture
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
-
-   // THE FINAL RENDER
-	// Draw SSAO quad
+	// Final Render
 	{
 		CShaderContext Context(* BlendShader);
-
-		glEnable(GL_TEXTURE_2D);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, OnlySSAO ? White->getTextureHandle() : textureId[EFBO_SCENE]);
-
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, DoSSAO ? textureId[DoBlur ? EFBO_SSAO_BLUR2 : EFBO_SSAO_RAW] : White->getTextureHandle());
-		//glGenerateMipmap(GL_TEXTURE_2D);
-
-		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, DoBloom ? textureId[EFBO_SCRATCH2] : Magenta->getTextureHandle());
-		//glGenerateMipmap(GL_TEXTURE_2D);
 		
-		Context.uniform("scene", 0);
-		Context.uniform("ssao", 1);
-		Context.uniform("bloom", 2);
+		Context.bindTexture("scene", OnlySSAO ? White->getTextureHandle() : textureId[EFBO_SCENE]);
+		Context.bindTexture("ssao", DoSSAO ? textureId[DoBlur ? EFBO_SSAO_BLUR2 : EFBO_SSAO_RAW] : White->getTextureHandle());
+		Context.bindTexture("bloom", DoBloom ? textureId[EFBO_SCRATCH2] : Magenta->getTextureHandle());
 
 		Context.bindBufferObject("aPosition", QuadHandle, 2);
 
 		glDrawArrays(GL_QUADS, 0, 4);
 	}
 
-	glEnable(GL_DEPTH_TEST);
-	glDisable(GL_TEXTURE_2D);
-
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-   SceneChanged = false;
+	SceneChanged = false;
 }
 
-#include "CApplication.h"
 void CSceneManager::blurSceneIn(float seconds, float const RunTime)
 {
 	std::cout << "Blurring in scene..." << std::endl;
@@ -455,6 +398,7 @@ void CSceneManager::blurSceneIn(float seconds, float const RunTime)
 	CurTime = RunTime;
 }
 
+#include "CApplication.h"
 void CSceneManager::blurSceneOut(float seconds, float const RunTime)
 {
 	BlurOutTime = seconds;

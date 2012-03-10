@@ -11,7 +11,7 @@
 
 
 CShaderContext::CShaderContext(CShader const & shader)
-    : Shader(shader), Valid(true)
+    : Shader(shader), Valid(true), TextureCounter(0)
 {
     glUseProgram(Shader.Handle);
 }
@@ -20,6 +20,15 @@ CShaderContext::~CShaderContext()
 {
     for (std::vector<GLuint>::const_iterator it = EnabledVertexAttribArrays.begin(); it != EnabledVertexAttribArrays.end(); ++ it)
         glDisableVertexAttribArray(* it);
+
+	for (int i = 0; i < TextureCounter; ++ i)
+	{
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
+	if (TextureCounter)
+		glDisable(GL_TEXTURE_2D);
 
     glUseProgram(0);
 }
@@ -84,4 +93,45 @@ void CShaderContext::uniform(GLuint const uniformHandle, SVector3 const & unifor
 void CShaderContext::uniform(GLuint const uniformHandle, SColor const & uniform)
 {
     glUniform3f(uniformHandle, uniform.Red, uniform.Green, uniform.Blue);
+}
+
+void CShaderContext::bindTexture(GLuint const uniformHandle, CTexture const * const Texture)
+{
+	bindTexture(uniformHandle, Texture->getTextureHandle());
+}
+
+void CShaderContext::bindTexture(std::string const & Label, CTexture const * const Texture)
+{
+	std::map<std::string, SShaderVariable>::const_iterator it = Shader.UniformHandles.find(Label);
+
+	if (it == Shader.UniformHandles.end())
+	{
+		std::cerr << "Uniform '" << Label << "' was not loaded for shader. Some objects will not draw." << std::endl;
+		Valid = false;
+		return;
+	}
+
+	bindTexture(it->second.Handle, Texture->getTextureHandle());
+}
+
+void CShaderContext::bindTexture(GLuint const uniformHandle, GLuint const TextureHandle)
+{
+	glEnable(GL_TEXTURE_2D);
+	glActiveTexture(GL_TEXTURE0 + TextureCounter);
+	glBindTexture(GL_TEXTURE_2D, TextureHandle);
+	glUniform1i(uniformHandle, TextureCounter ++);
+}
+
+void CShaderContext::bindTexture(std::string const & Label, GLuint const TextureHandle)
+{
+	std::map<std::string, SShaderVariable>::const_iterator it = Shader.UniformHandles.find(Label);
+
+	if (it == Shader.UniformHandles.end())
+	{
+		std::cerr << "Uniform '" << Label << "' was not loaded for shader. Some objects will not draw." << std::endl;
+		Valid = false;
+		return;
+	}
+
+	bindTexture(it->second.Handle, TextureHandle);
 }
