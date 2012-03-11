@@ -149,7 +149,12 @@ void CGameState::consolidateAndAddBlocks() {
    CBiggerBlock *curBlock = blocksY[0];
    for(int i = 1; i < blocksY.size(); i++) {
       CBiggerBlock * newBlock = consolidateY(curBlock, blocksY[i]);
-
+      /*
+      printf("Consolidation of [%0.0f,%0.0f,%0.0f,%0.0f] and [%0.0f,%0.0f,%0.0f,%0.0f]? %s\n", 
+            curBlock->x, curBlock->y, curBlock->w, curBlock->h,
+            blocksY[i]->x, blocksY[i]->y, blocksY[i]->w, blocksY[i]->h,
+            newBlock==NULL?"NO":"YES");
+      */
       // There was nothing to consolidate, which means this CBiggerBlock is done (in the Y direction)
       if(newBlock == NULL) {
          blocksX.push_back(curBlock);
@@ -162,13 +167,19 @@ void CGameState::consolidateAndAddBlocks() {
          curBlock = newBlock;
       }
    }
-   blocksY.clear();
+   blocksX.push_back(curBlock);
 
    sort(blocksX.begin(), blocksX.end(), sortYX);
    printf("Size of blocksX: %d\n", blocksX.size());
    curBlock = blocksX[0];
    for(int i = 1; i < blocksX.size(); i++) {
       CBiggerBlock * newBlock = consolidateX(curBlock, blocksX[i]);
+      /*
+      printf("Consolidation of [%0.0f,%0.0f,%0.0f,%0.0f] and [%0.0f,%0.0f,%0.0f,%0.0f]? %s\n", 
+            curBlock->x, curBlock->y, curBlock->w, curBlock->h,
+            blocksX[i]->x, blocksX[i]->y, blocksX[i]->w, blocksX[i]->h,
+            newBlock==NULL?"NO":"YES");
+      */
 
       // There was nothing to consolidate, which means this CBiggerBlock is done (in the X direction)
       if(newBlock == NULL) {
@@ -182,15 +193,22 @@ void CGameState::consolidateAndAddBlocks() {
          curBlock = newBlock;
       }
    }
-   blocksX.clear();
+   blocksFinal.push_back(curBlock);
 
    printf("Size of blocksFinal: %d\n", blocksFinal.size());
    for(int i = 0; i < blocksFinal.size(); i++) {
+      /*
+      printf("Block %d: [%0.0f,%0.0f,%0.0f,%0.0f]\n", i,
+            blocksFinal[i]->x, blocksFinal[i]->y, blocksFinal[i]->w, blocksFinal[i]->h);
+      */
       blocksFinal[i]->addToEngine(Engine);
       delete blocksFinal[i];
       blocksFinal[i] = NULL;
    }
+   printf("Total blocks saved: %d\n", blocksY.size() - blocksFinal.size());
    blocksFinal.clear();
+   blocksX.clear();
+   blocksY.clear();
 }
 
 void CGameState::EngineInit( void ) {
