@@ -1,4 +1,4 @@
-FILES = CMesh.cpp CMeshLoader.cpp CRenderable.cpp CShader.cpp CTexture.cpp CImageLoader.cpp CImage.cpp CShaderLoader.cpp CCamera.cpp CShaderContext.cpp CSceneManager.cpp CMeshSceneObject.cpp ISceneObject.cpp CSceneObject.cpp CMaterial.cpp CMeshSceneObject.cpp ImageLoaders/Texture.cpp
+FILES = CMesh.cpp CMeshLoader.cpp CRenderable.cpp CShader.cpp CTexture.cpp CImageLoader.cpp CImage.cpp CShaderLoader.cpp CCamera.cpp CShaderContext.cpp CSceneManager.cpp CMeshSceneObject.cpp ISceneObject.cpp CSceneObject.cpp CMaterial.cpp CMeshSceneObject.cpp ImageLoaders/Texture.cpp CSceneEffectManager.cpp CFrameBufferObject.cpp CRenderBufferObject.cpp
 CC=g++ -O1 -s
 
 OFILES = $(FILES:%.cpp=%.o)
@@ -57,6 +57,15 @@ CImageLoader.o: CImageLoader.cpp
 
 CSceneManager.o: CSceneManager.cpp
 	$(CC) -o $@ CSceneManager.cpp -c $(DIRECTORIES) $(OPENGL)
+
+CSceneEffectManager.o: CSceneEffectManager.cpp
+	$(CC) -o $@ CSceneEffectManager.cpp -c $(DIRECTORIES) $(OPENGL)
+
+CFrameBufferObject.o: CFrameBufferObject.cpp
+	$(CC) -o $@ CFrameBufferObject.cpp -c $(DIRECTORIES) $(OPENGL)
+
+CRenderBufferObject.o: CRenderBufferObject.cpp
+	$(CC) -o $@ CRenderBufferObject.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CMeshSceneObject.o: CMeshSceneObject.cpp
 	$(CC) -o $@ CMeshSceneObject.cpp -c $(DIRECTORIES) $(OPENGL)
