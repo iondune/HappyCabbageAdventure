@@ -1,4 +1,4 @@
-FILES = CApplication.cpp CEventManager.cpp CStateManager.cpp
+FILES = CApplication.cpp CEventManager.cpp CStateManager.cpp CFadeOutState.cpp
 CC=g++ -O1 -s
 
 OFILES = $(FILES:%.cpp=%.o)
@@ -16,6 +16,9 @@ all: ../lib/libCabbageFramework.a
 
 CApplication.o: CApplication.cpp *.h
 	$(CC) -o $@ CApplication.cpp -c $(DIRECTORIES) $(OPENGL)
+
+CFadeOutState.o: CFadeOutState.cpp *.h
+	$(CC) -o $@ CFadeOutState.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CEventManager.o: CEventManager.cpp *.h
 	$(CC) -o $@ CEventManager.cpp -c $(DIRECTORIES) $(OPENGL)
