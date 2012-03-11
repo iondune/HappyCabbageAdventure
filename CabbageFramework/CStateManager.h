@@ -1,5 +1,5 @@
-#ifndef _CABBAGECOLLIDER_CSTATEMANAGER_H_INCLUDED_
-#define _CABBAGECOLLIDER_CSTATEMANAGER_H_INCLUDED_
+#ifndef _CABBAGE_FRAMEKWORK_CSTATEMANAGER_H_INCLUDED_
+#define _CABBAGE_FRAMEKWORK_CSTATEMANAGER_H_INCLUDED_
 
 #include "sigslot/sigslot.h"
 
@@ -25,9 +25,18 @@ public:
     virtual void OnKeyboardEvent(SKeyboardEvent const & Event) =0;
 };
 
+class CSceneManager;
+class CGUIEngine;
+
 template <class TImplementation>
 class CState : public IState
 {
+
+protected:
+
+	CApplication & Application;
+	CSceneManager & SceneManager;
+	CGUIEngine & GUIEngine;
 
 public:
 
@@ -36,6 +45,11 @@ public:
         static TImplementation Instance;
         return Instance;
     }
+
+	CState()
+		: Application(CApplication::get()), SceneManager(CApplication::get().getSceneManager()), GUIEngine(CApplication::get().getGUIEngine())
+	{}
+
 
     virtual void begin()
     {}

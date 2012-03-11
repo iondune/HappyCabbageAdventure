@@ -6,6 +6,7 @@
 #include "CSceneObject.h"
 #include "CMeshSceneObject.h"
 #include "CFrameBufferObject.h"
+#include "CSceneEffectManager.h"
 
 #include <SLine3.h>
 #include <SColor.h>
@@ -89,11 +90,13 @@ class CSceneManager : public CScene
 
     CScene * CurrentScene;
 
-	GLuint QuadHandle;
+	static GLuint QuadHandle;
 
 	CFrameBufferObject * SceneFrameBuffer;
 	CTexture * SceneFrameTexture;
 	CRenderBufferObject * SceneDepthBuffer;
+
+	CSceneEffectManager * EffectManager;
 
 public:
 
@@ -112,7 +115,6 @@ public:
 	void drawAll();
 	void endDraw();
 	void blurSceneIn(float seconds, float const RunTime);
-	void blurSceneOut(float seconds, float const RunTime);
 
 	void load();
 
@@ -120,9 +122,14 @@ public:
 	CTexture * getSceneFrameTexture();
 	CRenderBufferObject * getSceneDepthBuffer();
 
-	bool DoSSAO, OnlySSAO, DoBloom, DoBlur, OnlyNormals;
+	CSceneEffectManager * getEffectManager();
+	void setEffectManager(CSceneEffectManager * effectManager);
+
 	float FinalBlurSize, Dim;
 	float BlurInTime, BlurOutTime, CurTime;
+
+	static GLuint const getQuadHandle();
+
 };
 
 #endif

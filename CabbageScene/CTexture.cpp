@@ -19,7 +19,7 @@ void STextureCreationFlags::apply() const
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, Wrap);
 	if (MipMaps)
 	{
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, 
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, 
 			Filter == GL_LINEAR ? GL_LINEAR_MIPMAP_LINEAR : GL_LINEAR_MIPMAP_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
 	}

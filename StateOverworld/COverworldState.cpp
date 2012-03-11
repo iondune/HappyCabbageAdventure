@@ -188,7 +188,7 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
          changeSoundtrack("SMW.wav");
       }
       if(Event.Key == SDLK_ESCAPE) {
-         Application.getStateManager().setState(& CMainMenuState::get());
+         Application.getStateManager().setState(new CFadeOutState(& CMainMenuState::get()));
          //TODO: Replace with an event/signal to end the game world 
          //Application.getStateManager().setState(& CMainMenuState::get());
       }

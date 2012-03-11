@@ -252,217 +252,31 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 		ExitFont->setRotation(0.f);
 	}
 
-   /*
-   SDL_GetMouseState(&mouse_x, &mouse_y);
-
-   glTranslatef(.04f, .11f, 0);
-
-   if(mouse_x < 540 && mouse_x > 280 && mouse_y >225 && mouse_y < 300)
-   {
-      if (curDirection == 'l' && curAngle <= 15) {
-         glPushMatrix();
-         glRotatef(curAngle+=.1f, 0, 0, 1);
-         drawButton();
-         glPopMatrix();
-      }
-
-      else {
-         curDirection = 'r';
-      }
-
-      if (curDirection == 'r' && curAngle >= -15) {
-         glPushMatrix();
-         glRotatef(curAngle-=.1f, 0, 0, 1);
-         drawButton();
-         glPopMatrix();
-      }
-
-      else {
-         curDirection = 'l';
-      }
-
-      glPushMatrix();
-      glLoadIdentity();
-      glTranslatef(92, 125, 0);
-      glRotatef(curAngle,0,0,1);
-      glScalef(1,.8f+.3f*cos(curAngle/5),1);
-      glTranslatef(-80,0,0);
-     freetype::print(our_font, 315, 150, "New Game", curAngle);
-     glPopMatrix();
-   }
-
-   else {
-      drawButton();
-      freetype::print(our_font, 332, 325, "New Game");
-   }
-
-   glTranslatef(0, -0.35f, 0);
-
-   if(mouse_x < 540 && mouse_x > 280 && mouse_y > 330 && mouse_y < 400)
-   {
-      if (curDirection == 'l' && curAngle <= 15) {
-         glPushMatrix();
-         glRotatef(curAngle+=.1f, 0, 0, 1);
-         drawButton();
-         glPopMatrix();
-      }
-
-      else {
-         curDirection = 'r';
-      }
-
-      if (curDirection == 'r' && curAngle >= -15) {
-         glPushMatrix();
-         glRotatef(curAngle-=.1f, 0, 0, 1);
-         //drawButton();
-         glPopMatrix();
-      }
-
-      else {
-         curDirection = 'l';
-      }
-
-     glPushMatrix();
-      glLoadIdentity();
-      glTranslatef(102, 125, 0);
-      glRotatef(curAngle,0,0,1);
-      glScalef(1,.8f+.3f*cos(curAngle/5),1);
-      glTranslatef(-90,0,0);
-     freetype::print(our_font, 300, 95, "Stage Editor", curAngle);
-     glPopMatrix();
-   }
-
-   else {
-      //drawButton();
-      //freetype::print(our_font, 310, 215.f, "Stage Editor");
-   }
-
-   glTranslatef(0, -0.35f, 0);
-
-
-   if(mouse_x < 540 && mouse_x > 280 && mouse_y > 435 && mouse_y < 510)
-   {
-      if (curDirection == 'l' && curAngle <= 15) {
-         glPushMatrix();
-         glRotatef(curAngle+=.1f, 0, 0, 1);
-         drawButton();
-         glPopMatrix();
-      }
-
-      else {
-         curDirection = 'r';
-      }
-
-      if (curDirection == 'r' && curAngle >= -15) {
-         glPushMatrix();
-         glRotatef(curAngle-=.1f, 0, 0, 1);
-         drawButton();
-         glPopMatrix();
-      }
-
-      else {
-         curDirection = 'l';
-      }
-
-     glPushMatrix();
-      glLoadIdentity();
-      glTranslatef(90, 125, 0);
-      glRotatef(curAngle,0,0,1);
-      glScalef(1,.8f+.3f*cos(curAngle/5),1);
-      glTranslatef(-90,0,0);
-     freetype::print(our_font, 325, -10, "Exit Game", curAngle);
-     glPopMatrix();
-
-   }
-
-   else {
-      drawButton();
-      freetype::print(our_font, 325, 115.f, "Exit Game");
-   }
-
-   //Check if should reset curAngle
-   if (mouse_x >= 540 || mouse_x <= 280 || mouse_y >= 510 || mouse_y <= 225
-      || (mouse_y <= 435 && mouse_y >= 400) || (mouse_y <= 330 && mouse_y >= 300))
-   {
-      curAngle = 0;
-      curDirection = 'l';
-   }
-
-
-
-
-   glPopMatrix();
-
-   glEnable(GL_LIGHTING);*/
-
 	Application.get().getSceneManager().endDraw();
    SDL_GL_SwapBuffers();
 }
 void CMainMenuState::OnRenderEnd(float const Elapsed)
-{
-}
+{}
 
 void CMainMenuState::OnKeyboardEvent(SKeyboardEvent const & Event)
-{
-   if(Event.Pressed && Event.Key == SDLK_a) {
-      /*
-      if(RenderBackground->getShader() == CShaderLoader::loadShader("BlurV")) {
-         RenderBackground->setShader("NotBlur");
-         printf("Set shader to NotBlur\n");
-      }
-      else if(RenderBackground->getShader() == CShaderLoader::loadShader("BlurH")) {
-         RenderBackground->setShader("BlurV");
-         printf("Set shader to BlurV\n");
-      }
-      else {
-         RenderBackground->setShader("BlurH");
-         printf("Set shader to BlurH\n");
-      }
-      */
-   }
-   if(Event.Pressed && Event.Key == SDLK_s) {
-      /*
-      if(RenderBackground->getShader() == CShaderLoader::loadShader("BlurH")) {
-         RenderBackground->setShader("NotBlur");
-         printf("Set shader to NotBlur\n");
-      }
-      else if(RenderBackground->getShader() == CShaderLoader::loadShader("BlurV")) {
-         RenderBackground->setShader("BlurH");
-         printf("Set shader to BlurH\n");
-      }
-      else {
-         RenderBackground->setShader("BlurV");
-         printf("Set shader to BlurV\n");
-      }
-      */
-   }
-}
+{}
 
 void CMainMenuState::OnWidgetHover(CGUIWidget * Widget)
-{
-	//std::cout << "Widget hovered! " << Widget << std::endl;
-}
+{}
 
 void CMainMenuState::OnWidgetUnHover(CGUIWidget * Widget)
-{
-	//std::cout << "Widget unhovered! " << Widget << std::endl;
-}
+{}
 
 void CMainMenuState::OnWidgetClick(CGUIWidget * Widget)
 {
    if(Widget == StartGame) {
-      CApplication::get().getStateManager().setState(& COverworldState::get());
+      CApplication::get().getStateManager().setState(new CFadeOutState(& COverworldState::get(), 0.3f));
    }
    else if(Widget == StartEditor) {
       stopSoundtrack();
-      CApplication::get().getStateManager().setState(& CLWIBState::get());
+      CApplication::get().getStateManager().setState(new CFadeOutState(& CLWIBState::get(), 0.3f));
    }
    else if(Widget == ExitGame) {
       CApplication::get().close();
-      //exit(1);
    }
-   /*
-     */
-
-   //std::cout << "Widget clicked! " << Widget << std::endl;
 }

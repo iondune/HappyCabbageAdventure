@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="SVertex.h" />
     <ClInclude Include="CabbageScene.h" />
     <ClInclude Include="CImage.h">
       <Filter>Textures</Filter>
@@ -27,7 +26,6 @@
     <ClInclude Include="CShaderContext.h">
       <Filter>Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="CSceneManager.h" />
     <ClInclude Include="CCamera.h">
       <Filter>Camera</Filter>
     </ClInclude>
@@ -67,6 +65,15 @@
     <ClInclude Include="CFrameBufferObject.h">
       <Filter>Advanced</Filter>
     </ClInclude>
+    <ClInclude Include="CSceneManager.h">
+      <Filter>Scene Management</Filter>
+    </ClInclude>
+    <ClInclude Include="SVertex.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneEffectManager.h">
+      <Filter>Scene Management</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CImage.cpp">
@@ -93,7 +100,6 @@
     <ClCompile Include="CShaderContext.cpp">
       <Filter>Shaders</Filter>
     </ClCompile>
-    <ClCompile Include="CSceneManager.cpp" />
     <ClCompile Include="CCamera.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
@@ -121,6 +127,12 @@
     <ClCompile Include="CFrameBufferObject.cpp">
       <Filter>Advanced</Filter>
     </ClCompile>
+    <ClCompile Include="CSceneManager.cpp">
+      <Filter>Scene Management</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneEffectManager.cpp">
+      <Filter>Scene Management</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Textures">
@@ -143,6 +155,12 @@
     </Filter>
     <Filter Include="Advanced">
       <UniqueIdentifier>{5567e89f-e7c8-44e0-a2f2-980bc96f2038}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene Management">
+      <UniqueIdentifier>{8f6a38fc-9b03-423b-9056-28beaf6fe182}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{3f98cf25-4926-4d0e-80e9-f6042c52c4a5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

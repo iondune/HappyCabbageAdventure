@@ -150,23 +150,29 @@ GLuint randNorm;
 #include "CTextureLoader.h"
 #define SSAO_MULT 1
 
+GLuint CSceneManager::QuadHandle = 0;
+
 CSceneManager::CSceneManager(SPosition2 const & screenSize)
-	: DoSSAO(false), OnlySSAO(false), DoBloom(true), DoBlur(false), OnlyNormals(false), FinalBlurSize(0.0f), SceneFrameBuffer(0)
+	: FinalBlurSize(0.0f), SceneFrameBuffer(0),
+	EffectManager(new CSceneEffectManager())
 {
     CurrentScene = this;
 
 	// Create a simple quad VBO to use for draw operations!
-	GLfloat QuadVertices[] = 
+	if (! QuadHandle)
 	{
-		-1.0, -1.0,
-		 1.0, -1.0,
-		 1.0,  1.0,
-		-1.0,  1.0
-	};
+		GLfloat QuadVertices[] = 
+		{
+			-1.0, -1.0,
+			 1.0, -1.0,
+			 1.0,  1.0,
+			-1.0,  1.0
+		};
 
-	glGenBuffers(1, & QuadHandle);
-	glBindBuffer(GL_ARRAY_BUFFER, QuadHandle);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(QuadVertices), QuadVertices, GL_STATIC_DRAW);
+		glGenBuffers(1, & QuadHandle);
+		glBindBuffer(GL_ARRAY_BUFFER, QuadHandle);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(QuadVertices), QuadVertices, GL_STATIC_DRAW);
+	}
 
 	ScreenSize = screenSize;
 
@@ -272,7 +278,7 @@ void CSceneManager::drawAll()
 {
     CurrentScene->update();
 
-	if (DoSSAO || OnlyNormals)
+	/*if (DoSSAO || OnlyNormals)
 	{
 		// Draw normal colors
 		if (OnlyNormals)
@@ -292,10 +298,15 @@ void CSceneManager::drawAll()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		RootObject.draw(CurrentScene, ERP_DEFAULT);
-	}
+	}*/
+
+	SceneFrameBuffer->bind();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	RootObject.draw(CurrentScene, ERP_DEFAULT);
 
 	// Setup for quad rendering
-	glDisable(GL_DEPTH_TEST);
+	/*glDisable(GL_DEPTH_TEST);
 
 	if (DoSSAO)
 	{
@@ -392,7 +403,7 @@ void CSceneManager::drawAll()
 		Context.bindBufferObject("aPosition", QuadHandle, 2);
 
 		glDrawArrays(GL_QUADS, 0, 4);
-	}
+	}*/
 
 	SceneChanged = false;
 }
@@ -405,43 +416,10 @@ void CSceneManager::blurSceneIn(float seconds, float const RunTime)
 	CurTime = RunTime;
 }
 
-#include "CApplication.h"
-void CSceneManager::blurSceneOut(float seconds, float const RunTime)
-{
-	BlurOutTime = seconds;
-	BlurInTime = 0;
-	CurTime = RunTime;
-
-
-	float now = RunTime;
-	float difference = RunTime - now;
-
-	float drawTimer = 10.0f;
-
-	while (difference < seconds)
-	{
-		CApplication::get().updateTime();
-
-		Dim = (seconds - difference) / seconds;
-		FinalBlurSize = difference / 0.1f;
-
-		if (drawTimer == 10.0f)
-		{
-			endDraw();
-			SDL_GL_SwapBuffers();
-		}
-
-		drawTimer -= CApplication::get().getRunTime() - difference;
-
-		if (drawTimer <= 0.0f)
-			drawTimer = 10.0f;
-
-		difference = CApplication::get().getRunTime() - now;
-	}
-}
-
+#include <CApplication.h>
 void CSceneManager::endDraw()
 {
+	// Do fade-in
 	if (CurTime == -1.0f)
 		Dim = 1.0f;
 
@@ -456,17 +434,17 @@ void CSceneManager::endDraw()
 		}
 	}
 
-	// Setup for quad rendering
-	glDisable(GL_DEPTH_TEST);
-
+	
+	// Draw to screen
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glDisable(GL_DEPTH_TEST);
 
 	// THE FINAL RENDER
 	{
 		CShaderContext Context(* BlurH);
 
-		Context.bindTexture("uTexColor", textureId[EFBO_SCRATCH1]);
+		Context.bindTexture("uTexColor", SceneFrameTexture);
 		Context.uniform("BlurSize", FinalBlurSize);
 		Context.uniform("DimAmount", Dim);
 		Context.bindBufferObject("aPosition", QuadHandle, 2);
@@ -530,4 +508,34 @@ void CScene::disableDebugData(EDebugData::Domain const type)
 void CSceneManager::load()
 {
 	RootObject.load(this);
+}
+
+CFrameBufferObject * CSceneManager::getSceneFrameBuffer()
+{
+	return SceneFrameBuffer;
+}
+
+CTexture * CSceneManager::getSceneFrameTexture()
+{
+	return SceneFrameTexture;
+}
+
+CRenderBufferObject * CSceneManager::getSceneDepthBuffer()
+{
+	return SceneDepthBuffer;
+}
+
+CSceneEffectManager * CSceneManager::getEffectManager()
+{
+	return EffectManager;
+}
+
+void CSceneManager::setEffectManager(CSceneEffectManager * effectManager)
+{
+	EffectManager = effectManager;
+}
+
+GLuint const CSceneManager::getQuadHandle()
+{
+	return QuadHandle;
 }

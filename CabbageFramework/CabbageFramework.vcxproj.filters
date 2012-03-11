@@ -3,12 +3,17 @@
   <ItemGroup>
     <ClCompile Include="CApplication.cpp" />
     <ClCompile Include="CEventManager.cpp" />
-    <ClCompile Include="CStateManager.cpp" />
     <ClCompile Include="CCameraControl.cpp">
       <Filter>Cameras</Filter>
     </ClCompile>
     <ClCompile Include="COrthoCamera.cpp">
       <Filter>Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="CStateManager.cpp">
+      <Filter>State Management</Filter>
+    </ClCompile>
+    <ClCompile Include="CFadeOutState.cpp">
+      <Filter>State Management</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -18,6 +23,9 @@
     <Filter Include="Cameras">
       <UniqueIdentifier>{28db67e1-a733-4fab-a6d0-7e9c1dfa0e4a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="State Management">
+      <UniqueIdentifier>{11862c19-eebf-4dfd-aa0f-d9b6a42527c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sigslot\sigslot.h">
@@ -25,13 +33,18 @@
     </ClInclude>
     <ClInclude Include="CApplication.h" />
     <ClInclude Include="CEventManager.h" />
-    <ClInclude Include="CStateManager.h" />
     <ClInclude Include="CabbageFramework.h" />
     <ClInclude Include="CCameraControl.h">
       <Filter>Cameras</Filter>
     </ClInclude>
     <ClInclude Include="COrthoCamera.h">
       <Filter>Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="CStateManager.h">
+      <Filter>State Management</Filter>
+    </ClInclude>
+    <ClInclude Include="CFadeOutState.h">
+      <Filter>State Management</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
