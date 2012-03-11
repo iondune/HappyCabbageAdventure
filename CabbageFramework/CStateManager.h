@@ -5,6 +5,7 @@
 
 #include "CEventManager.h"
 #include "CGUIEngine.h"
+#include "CApplication.h"
 
 
 class IState : public CGUIEventReceiver

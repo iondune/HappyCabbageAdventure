@@ -5,8 +5,8 @@
 #include <CabbageScene.h>
 #include <CabbageGUI.h>
 
-#include "CEventManager.h"
-#include "CStateManager.h"
+class CEventManager;
+class CStateManager;
 
 class CApplication
 {

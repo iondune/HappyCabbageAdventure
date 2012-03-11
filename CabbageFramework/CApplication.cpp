@@ -7,6 +7,9 @@
 #include <iostream>
 #include <iomanip>
 
+#include "CEventManager.h"
+#include "CStateManager.h"
+
 
 CApplication::CApplication()
 {}
