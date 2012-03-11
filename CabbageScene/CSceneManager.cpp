@@ -129,7 +129,6 @@ void CScene::update()
 
 enum EFBOID
 {
-	EFBO_SCENE,
 	EFBO_SCRATCH1,
 	EFBO_SCRATCH2,
 	EFBO_SSAO_RAW,
@@ -170,6 +169,21 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 	glBufferData(GL_ARRAY_BUFFER, sizeof(QuadVertices), QuadVertices, GL_STATIC_DRAW);
 
 	ScreenSize = screenSize;
+
+	
+
+	STextureCreationFlags Flags;
+	Flags.MipMaps = false;
+	SceneTexture = new CTexture(ScreenSize, true, Flags);
+	SceneDepthBuffer = new CRenderBufferObject(GL_DEPTH_COMPONENT, ScreenSize);
+
+	SceneBuffer = new CFrameBufferObject();
+	SceneBuffer->attach(SceneDepthBuffer, GL_DEPTH_ATTACHMENT);
+	SceneBuffer->attach(SceneTexture, GL_COLOR_ATTACHMENT0);	
+
+	if (! SceneBuffer->isValid())
+		std::cerr << "Failed to make FBO for scene drawing!!!!!!" << std::endl  << std::endl  << std::endl;
+
 
 	// create fbos!
 	for (int i = 0; i < FBO_COUNT; ++ i)
@@ -261,7 +275,10 @@ void CSceneManager::drawAll()
 	if (DoSSAO || OnlyNormals)
 	{
 		// Draw normal colors
-		glBindFramebuffer(GL_FRAMEBUFFER, fboId[OnlyNormals ? EFBO_SCENE : EFBO_SSAO_NORMALS]);
+		if (OnlyNormals)
+			SceneBuffer->bind();
+		else
+			glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO_NORMALS]);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		RootObject.draw(CurrentScene, ERP_SS_NORMALS);
@@ -270,7 +287,8 @@ void CSceneManager::drawAll()
 	// Draw regular scene
 	if (! OnlyNormals)
 	{
-		glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCENE]);
+		SceneBuffer->bind();
+		//glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCENE]);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		RootObject.draw(CurrentScene, ERP_DEFAULT);
@@ -336,7 +354,7 @@ void CSceneManager::drawAll()
 		{
 			CShaderContext Context(* BlurH);
 
-			Context.bindTexture("uTexColor", textureId[EFBO_SCENE]);
+			Context.bindTexture("uTexColor", SceneTexture);
 			Context.uniform("BlurSize", 1.0f);
 			Context.uniform("DimAmount", 1.0f);
 			Context.bindBufferObject("aPosition", QuadHandle, 2);
@@ -365,7 +383,10 @@ void CSceneManager::drawAll()
 	{
 		CShaderContext Context(* BlendShader);
 		
-		Context.bindTexture("scene", OnlySSAO ? White->getTextureHandle() : textureId[EFBO_SCENE]);
+		if (OnlySSAO)
+			Context.bindTexture("scene", White);
+		else
+			Context.bindTexture("scene", SceneTexture);
 		Context.bindTexture("ssao", DoSSAO ? textureId[EFBO_SSAO_RAW] : White->getTextureHandle());
 		Context.bindTexture("bloom", DoBloom ? textureId[EFBO_SCRATCH2] : Magenta->getTextureHandle());
 		Context.bindBufferObject("aPosition", QuadHandle, 2);
@@ -401,8 +422,8 @@ void CSceneManager::blurSceneOut(float seconds, float const RunTime)
 	{
 		CApplication::get().updateTime();
 
-		Dim = (seconds - difference)/seconds;
-		FinalBlurSize = difference/ 0.1f;
+		Dim = (seconds - difference) / seconds;
+		FinalBlurSize = difference / 0.1f;
 
 		if (drawTimer == 10.0f)
 		{
@@ -421,14 +442,14 @@ void CSceneManager::blurSceneOut(float seconds, float const RunTime)
 
 void CSceneManager::endDraw()
 {
-	if(CurTime == -1.0f)
+	if (CurTime == -1.0f)
 		Dim = 1.0f;
 
-	if(BlurInTime > 0.0f)
+	if (BlurInTime > 0.0f)
 	{
 		FinalBlurSize = 0.0f;
 		Dim = std::max(1.0f - (BlurInTime - (CApplication::get().getRunTime() - CurTime))/BlurInTime, 0.0f);
-		if((CApplication::get().getRunTime() - CurTime) > BlurInTime)
+		if ((CApplication::get().getRunTime() - CurTime) > BlurInTime)
 		{
 			BlurInTime = 0.0f;
 			CurTime = -1.0f;
@@ -436,36 +457,24 @@ void CSceneManager::endDraw()
 	}
 
 	// Setup for quad rendering
-	glEnable(GL_TEXTURE_2D);
-
 	glDisable(GL_DEPTH_TEST);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	// Draw Texture
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-   //glUseProgram(0); //Doesn't help
-
-   // THE FINAL RENDER
-	// Draw SSAO quad
+	// THE FINAL RENDER
 	{
-		glEnable(GL_TEXTURE_2D);
-      CShaderContext Context(* BlurH);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, textureId[EFBO_SCRATCH1]);
-      Context.uniform("BlurSize", FinalBlurSize);
-      Context.uniform("DimAmount", Dim);
-		
+		CShaderContext Context(* BlurH);
+
+		Context.bindTexture("uTexColor", textureId[EFBO_SCRATCH1]);
+		Context.uniform("BlurSize", FinalBlurSize);
+		Context.uniform("DimAmount", Dim);
 		Context.bindBufferObject("aPosition", QuadHandle, 2);
 
 		glDrawArrays(GL_QUADS, 0, 4);
 	}
 
 	glEnable(GL_DEPTH_TEST);
-	glDisable(GL_TEXTURE_2D);
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 CMeshSceneObject * CSceneManager::addMeshSceneObject(CMesh * Mesh)

@@ -92,6 +92,8 @@ class CSceneManager : public CScene
 	GLuint QuadHandle;
 
 	CFrameBufferObject * SceneBuffer;
+	CTexture * SceneTexture;
+	CRenderBufferObject * SceneDepthBuffer;
 
 public:
 

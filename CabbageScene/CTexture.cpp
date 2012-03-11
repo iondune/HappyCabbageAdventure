@@ -15,8 +15,8 @@ STextureCreationFlags::STextureCreationFlags()
 
 void STextureCreationFlags::apply() const
 {
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, Wrap);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, Wrap);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, Wrap);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, Wrap);
 	if (MipMaps)
 	{
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, 
@@ -25,10 +25,10 @@ void STextureCreationFlags::apply() const
 	}
 	else
 	{
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, Filter);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, Filter);
 	}
 	
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, Filter);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, Filter);
 }
 
 CTexture::CTexture(CImage * Image, STextureCreationFlags const Flags)
@@ -59,10 +59,10 @@ CTexture::CTexture(int const width, int const height, bool const Alpha, STexture
 	glGenTextures(1, & TextureHandle);
 	glBindTexture(GL_TEXTURE_2D, TextureHandle);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, Alpha ? GL_RGBA8 : GL_RGB8, Size.Width, Size.Height, 0, Alpha ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, 0);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
 	Flags.apply();
+	glTexImage2D(GL_TEXTURE_2D, 0, Alpha ? GL_RGBA8 : GL_RGB8, Size.Width, Size.Height, 0, Alpha ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, 0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 CTexture::CTexture(SPosition2 const & size, bool const Alpha, STextureCreationFlags const Flags)
@@ -71,10 +71,10 @@ CTexture::CTexture(SPosition2 const & size, bool const Alpha, STextureCreationFl
 	glGenTextures(1, & TextureHandle);
 	glBindTexture(GL_TEXTURE_2D, TextureHandle);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, Alpha ? GL_RGBA8 : GL_RGB8, Size.Width, Size.Height, 0, Alpha ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, 0);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
 	Flags.apply();
+	glTexImage2D(GL_TEXTURE_2D, 0, Alpha ? GL_RGBA8 : GL_RGB8, Size.Width, Size.Height, 0, Alpha ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, 0);
+	
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 CTexture::CTexture(GLuint const textureHandle)
