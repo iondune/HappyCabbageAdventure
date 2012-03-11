@@ -14,6 +14,7 @@
 #include "CGameplayManager.h"
 #include "CGameEventReceiver.h"
 #include "irrxml-1.2/src/irrXML.h"
+#include "CBiggerBlock.h"
 
 
 #define TREE_Y_OFFSET 2.1
@@ -37,7 +38,9 @@ class CGameState : public CState<CGameState>
    const char * levelName;
    bool oldFern;
    CGUIImageWidget *Health5, *Health4, *Health3, *Health2, *Health1, *CabbageFace, *CabbageEnergyBar, *CabbageMeter;
+   std::vector<CBiggerBlock*> blocksY, blocksX, blocksFinal;
 
+   void consolidateAndAddBlocks();
    void EngineInit( void );
    void begin();
    void LoadHUD();

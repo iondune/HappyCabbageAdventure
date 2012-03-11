@@ -53,6 +53,9 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
 {
    NumTreeTypes = 2;
    NumFlowerTypes = 2;
+   blocksY.clear();
+   blocksX.clear();
+   blocksFinal.clear();
 
     int x,y,w,d,h,t, moving;
     //float spd, rng;
@@ -85,8 +88,10 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
                ptr->Range = (int) xml->getAttributeValueAsFloat(7); //Range
                ptr->Speed = (int) xml->getAttributeValueAsFloat(8); //Speed
             }
-            else
+            else {
                ptr->isMovingPlatform = 0;
+               blocksY.push_back(new CBiggerBlock((float)x, (float)y, w, h));
+            }
          }
          if(!strcmp("CEnemy", xml->getNodeName()))
          {
@@ -136,6 +141,58 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
    }
 }
 
+void CGameState::consolidateAndAddBlocks() {
+   printf("Size of blocksY: %d\n", blocksY.size());
+
+   sort(blocksY.begin(), blocksY.end(), sortXY);
+
+   CBiggerBlock *curBlock = blocksY[0];
+   for(int i = 1; i < blocksY.size(); i++) {
+      CBiggerBlock * newBlock = consolidateY(curBlock, blocksY[i]);
+
+      // There was nothing to consolidate, which means this CBiggerBlock is done (in the Y direction)
+      if(newBlock == NULL) {
+         blocksX.push_back(curBlock);
+         curBlock = blocksY[i];
+      }
+      else {
+         delete curBlock;
+         delete blocksY[i];
+         blocksY[i] = NULL;
+         curBlock = newBlock;
+      }
+   }
+   blocksY.clear();
+
+   sort(blocksX.begin(), blocksX.end(), sortYX);
+   printf("Size of blocksX: %d\n", blocksX.size());
+   curBlock = blocksX[0];
+   for(int i = 1; i < blocksX.size(); i++) {
+      CBiggerBlock * newBlock = consolidateX(curBlock, blocksX[i]);
+
+      // There was nothing to consolidate, which means this CBiggerBlock is done (in the X direction)
+      if(newBlock == NULL) {
+         blocksFinal.push_back(curBlock);
+         curBlock = blocksX[i];
+      }
+      else {
+         delete curBlock;
+         delete blocksX[i];
+         blocksX[i] = NULL;
+         curBlock = newBlock;
+      }
+   }
+   blocksX.clear();
+
+   printf("Size of blocksFinal: %d\n", blocksFinal.size());
+   for(int i = 0; i < blocksFinal.size(); i++) {
+      blocksFinal[i]->addToEngine(Engine);
+      delete blocksFinal[i];
+      blocksFinal[i] = NULL;
+   }
+   blocksFinal.clear();
+}
+
 void CGameState::EngineInit( void ) {
    elevators.clear();
    if(Engine) {
@@ -167,9 +224,6 @@ void CGameState::EngineInit( void ) {
    GameEventManager->OnPlayerDamaged.connect(& GameEventReceiver, &CGameEventReceiver::OnPlayerDamaged);
    Application.getEventManager().OnGameTickStart.connect(& GameEventReceiver, & CGameEventReceiver::OnGameTickStart);
 
-   float i = 0;
-   float j = 0;
-
    std::vector<CPlaceable*> list;
    CObject *lastOne = NULL;
    loadWorld(&list);
@@ -183,6 +237,8 @@ void CGameState::EngineInit( void ) {
          lastOne = ((CBlock*)(*it))->elevator;
       }
    }
+
+   consolidateAndAddBlocks();
 }
 
 #define PARTICLE

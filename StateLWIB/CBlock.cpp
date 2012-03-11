@@ -52,8 +52,10 @@ CMeshSceneObject * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngin
       elevator = engBlock;
    }
    else {
+      /* Doing this in the consolidation phase in CGameState
       Cabbage::Collider::CObject *engBlock = Engine->addObject();
       engBlock->setArea(SRect2(x, y, (float) w, (float) h));
+      */
    }
 
    CMesh *mesh;
