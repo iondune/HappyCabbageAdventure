@@ -7,7 +7,6 @@ int numKilled;
 CGameEventReceiver::CGameEventReceiver()
 {
    numKilled = 0;
-   printf("Here!!!\n");
    DeadEnemies.clear();
    playerDamagedEngine = NULL;
    Player = NULL;
@@ -33,7 +32,7 @@ void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
    else {
       DeadEnemy.DeathTimer = 4.f;
       if(rand()%2 == 0) {
-    	  if (rand()%2 == 0)
+    	  if (Event.PlayerHealthLeft == 1 || rand()%2 == 0)
     		  CItem::makeItem(Event.Enemy.Actor->getArea().Position.X + Event.Enemy.Actor->getArea().Size.X / 2.0f - 0.3f
     				  , Event.Enemy.Actor->getArea().getCenter().Y, 1.0f, 1.0f, CItem::health, Event.Manager);
     	  else

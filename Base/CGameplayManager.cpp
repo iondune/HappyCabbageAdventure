@@ -205,7 +205,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
                float const KnockbackSpeed = 7.f;
                float const KnockbackDuration = 0.1f;
 
-               PlayerRecovering = KnockbackDuration*12;
+               PlayerRecovering = 1.0f;
                if((*it)->Actor->CollideableType != COLLIDEABLE_TYPE_FLAME) {
 
                   if (PlayerActor->getArea().getCenter().X > Other->getArea().getCenter().X)
@@ -341,7 +341,7 @@ void CGameplayManager::run(float const TickTime)
       enemy.Renderable = (*it)->Renderable;
       Event.Enemy = enemy;
       Event.Enemy.KillMethod = (*it)->KilledBy;
-      Event.Enemy.PlayerHealthLeft = PlayerHealth;
+      Event.PlayerHealthLeft = PlayerHealth;
       Event.Manager = this;
 
       GameEventManager->OnEnemyDeath(Event);
