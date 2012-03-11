@@ -41,10 +41,16 @@ void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
     				  , Event.Enemy.Actor->getArea().getCenter().Y, 1.0f, 1.0f, CItem::energy, Event.Manager);
       }
    }
-   DeadEnemy.Renderable = Event.Enemy.Renderable;
+      DeadEnemy.Renderable = Event.Enemy.Renderable;
 
-      DeadEnemy.Renderable->setScale(SVector3(1.f, 1.0f, 0.4f));
-      DeadEnemy.Renderable->setTranslation(DeadEnemy.Renderable->getTranslation() - SVector3(0.f, 0.5f, 0.f));
+      if(Event.Enemy.KillMethod == 0) {
+         DeadEnemy.Renderable->setScale(SVector3(1.f, 1.0f, 0.4f));
+         DeadEnemy.Renderable->setTranslation(DeadEnemy.Renderable->getTranslation() - SVector3(0.f, 0.5f, 0.f));
+      }
+      else {
+         DeadEnemy.Renderable->setScale(SVector3(0.01f, 0.01f, 0.01f));
+
+      }
 
       DeadEnemy.ParticleE = new CParticleEngine(DeadEnemy.Renderable->getTranslation(), 20, 4, BURST_PARTICLE);
       DeadEnemy.ParticleE->UsePhysics(Event.Manager->getEngine());

@@ -28,6 +28,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       {
          Cabbage::Collider::CActor * Actor;
          ISceneObject * Renderable;
+         int KillMethod;
       };
 
       typedef std::vector<CBadGuy*> EnemyList;
