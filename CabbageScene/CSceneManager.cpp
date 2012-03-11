@@ -151,7 +151,7 @@ GLuint randNorm;
 #define SSAO_MULT 1
 
 CSceneManager::CSceneManager(SPosition2 const & screenSize)
-	: DoSSAO(false), OnlySSAO(false), DoBloom(true), DoBlur(false), OnlyNormals(false), FinalBlurSize(0.0f), SceneBuffer(0)
+	: DoSSAO(false), OnlySSAO(false), DoBloom(true), DoBlur(false), OnlyNormals(false), FinalBlurSize(0.0f), SceneFrameBuffer(0)
 {
     CurrentScene = this;
 
@@ -174,14 +174,14 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 
 	STextureCreationFlags Flags;
 	Flags.MipMaps = false;
-	SceneTexture = new CTexture(ScreenSize, true, Flags);
+	SceneFrameTexture = new CTexture(ScreenSize, true, Flags);
 	SceneDepthBuffer = new CRenderBufferObject(GL_DEPTH_COMPONENT, ScreenSize);
 
-	SceneBuffer = new CFrameBufferObject();
-	SceneBuffer->attach(SceneDepthBuffer, GL_DEPTH_ATTACHMENT);
-	SceneBuffer->attach(SceneTexture, GL_COLOR_ATTACHMENT0);	
+	SceneFrameBuffer = new CFrameBufferObject();
+	SceneFrameBuffer->attach(SceneDepthBuffer, GL_DEPTH_ATTACHMENT);
+	SceneFrameBuffer->attach(SceneFrameTexture, GL_COLOR_ATTACHMENT0);	
 
-	if (! SceneBuffer->isValid())
+	if (! SceneFrameBuffer->isValid())
 		std::cerr << "Failed to make FBO for scene drawing!!!!!!" << std::endl  << std::endl  << std::endl;
 
 
@@ -276,7 +276,7 @@ void CSceneManager::drawAll()
 	{
 		// Draw normal colors
 		if (OnlyNormals)
-			SceneBuffer->bind();
+			SceneFrameBuffer->bind();
 		else
 			glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO_NORMALS]);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -287,7 +287,7 @@ void CSceneManager::drawAll()
 	// Draw regular scene
 	if (! OnlyNormals)
 	{
-		SceneBuffer->bind();
+		SceneFrameBuffer->bind();
 		//glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCENE]);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -354,7 +354,7 @@ void CSceneManager::drawAll()
 		{
 			CShaderContext Context(* BlurH);
 
-			Context.bindTexture("uTexColor", SceneTexture);
+			Context.bindTexture("uTexColor", SceneFrameTexture);
 			Context.uniform("BlurSize", 1.0f);
 			Context.uniform("DimAmount", 1.0f);
 			Context.bindBufferObject("aPosition", QuadHandle, 2);
@@ -386,7 +386,7 @@ void CSceneManager::drawAll()
 		if (OnlySSAO)
 			Context.bindTexture("scene", White);
 		else
-			Context.bindTexture("scene", SceneTexture);
+			Context.bindTexture("scene", SceneFrameTexture);
 		Context.bindTexture("ssao", DoSSAO ? textureId[EFBO_SSAO_RAW] : White->getTextureHandle());
 		Context.bindTexture("bloom", DoBloom ? textureId[EFBO_SCRATCH2] : Magenta->getTextureHandle());
 		Context.bindBufferObject("aPosition", QuadHandle, 2);

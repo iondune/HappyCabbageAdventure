@@ -91,8 +91,8 @@ class CSceneManager : public CScene
 
 	GLuint QuadHandle;
 
-	CFrameBufferObject * SceneBuffer;
-	CTexture * SceneTexture;
+	CFrameBufferObject * SceneFrameBuffer;
+	CTexture * SceneFrameTexture;
 	CRenderBufferObject * SceneDepthBuffer;
 
 public:
@@ -116,6 +116,9 @@ public:
 
 	void load();
 
+	CFrameBufferObject * getSceneFrameBuffer();
+	CTexture * getSceneFrameTexture();
+	CRenderBufferObject * getSceneDepthBuffer();
 
 	bool DoSSAO, OnlySSAO, DoBloom, DoBlur, OnlyNormals;
 	float FinalBlurSize, Dim;
