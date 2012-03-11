@@ -630,23 +630,23 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 	{
 		if (Event.Key == SDLK_n)
 		{
-			CApplication::get().getSceneManager().DoSSAO = ! CApplication::get().getSceneManager().DoSSAO;
+			//CApplication::get().getSceneManager().DoSSAO = ! CApplication::get().getSceneManager().DoSSAO;
 		}
 		if (Event.Key == SDLK_b)
 		{
-			CApplication::get().getSceneManager().DoBloom = ! CApplication::get().getSceneManager().DoBloom;
+			//CApplication::get().getSceneManager().DoBloom = ! CApplication::get().getSceneManager().DoBloom;
 		}
 		if (Event.Key == ::SDLK_COMMA)
 		{
-			CApplication::get().getSceneManager().OnlySSAO = ! CApplication::get().getSceneManager().OnlySSAO;
+			//CApplication::get().getSceneManager().OnlySSAO = ! CApplication::get().getSceneManager().OnlySSAO;
 		}
 		if (Event.Key == ::SDLK_SLASH)
 		{
-			CApplication::get().getSceneManager().DoBlur = ! CApplication::get().getSceneManager().DoBlur;
+			//CApplication::get().getSceneManager().DoBlur = ! CApplication::get().getSceneManager().DoBlur;
 		}
 		if (Event.Key == ::SDLK_PERIOD)
 		{
-			CApplication::get().getSceneManager().OnlyNormals = ! CApplication::get().getSceneManager().OnlyNormals;
+			//CApplication::get().getSceneManager().OnlyNormals = ! CApplication::get().getSceneManager().OnlyNormals;
 		}
 	}
 
@@ -770,7 +770,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_ESCAPE) {
          //TODO: Replace with an event/signal to end the game world 
-         Application.getStateManager().setState(& CMainMenuState::get());
+         Application.getStateManager().setState(new CFadeOutState(& CMainMenuState::get()));
       }
    }
    //Check if key let go, Not sure if this will work in here.
