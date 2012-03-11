@@ -12,6 +12,7 @@ struct SEnemyDeathEvent
 {
     CGameplayManager::SEnemy Enemy;
     CGameplayManager *Manager;
+    int PlayerHealthLeft;
 };
 
 struct SEnemyDamagedEvent

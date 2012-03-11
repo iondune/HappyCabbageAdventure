@@ -203,19 +203,20 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
                }
 
                float const KnockbackSpeed = 7.f;
-               float const KnockbackDuration = 0.2f;
+               float const KnockbackDuration = 0.1f;
 
-               PlayerRecovering = KnockbackDuration*3;
+               PlayerRecovering = KnockbackDuration*12;
+               if((*it)->Actor->CollideableType != COLLIDEABLE_TYPE_FLAME) {
 
-               if (PlayerActor->getArea().getCenter().X > Other->getArea().getCenter().X)
-                  PlayerActor->setImpulse(SVector2(1.f, 0.4f) * KnockbackSpeed, KnockbackDuration);
-               else
-                  PlayerActor->setImpulse(SVector2(-1.f, 0.4f) * KnockbackSpeed, KnockbackDuration);
-               if (PlayerActor->getArea().getCenter().Y <= Other->getArea().getCenter().Y)
-                  PlayerActor->addImpulse(SVector2(0.f, -0.75f) * KnockbackSpeed);
-               else
-                  PlayerActor->addImpulse(SVector2(0.f, -0.75f) * KnockbackSpeed);
-
+                  if (PlayerActor->getArea().getCenter().X > Other->getArea().getCenter().X)
+                     PlayerActor->setImpulse(SVector2(1.f, 0.4f) * KnockbackSpeed, KnockbackDuration);
+                  else
+                     PlayerActor->setImpulse(SVector2(-1.f, 0.4f) * KnockbackSpeed, KnockbackDuration);
+                  if (PlayerActor->getArea().getCenter().Y <= Other->getArea().getCenter().Y)
+                     PlayerActor->addImpulse(SVector2(0.f, -0.75f) * KnockbackSpeed);
+                  else
+                     PlayerActor->addImpulse(SVector2(0.f, -0.75f) * KnockbackSpeed);
+               }
 
             }
          }
@@ -340,6 +341,7 @@ void CGameplayManager::run(float const TickTime)
       enemy.Renderable = (*it)->Renderable;
       Event.Enemy = enemy;
       Event.Enemy.KillMethod = (*it)->KilledBy;
+      Event.Enemy.PlayerHealthLeft = PlayerHealth;
       Event.Manager = this;
 
       GameEventManager->OnEnemyDeath(Event);
