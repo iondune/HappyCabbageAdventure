@@ -154,7 +154,7 @@ GLuint CSceneManager::QuadHandle = 0;
 
 CSceneManager::CSceneManager(SPosition2 const & screenSize)
 	: FinalBlurSize(0.0f), SceneFrameBuffer(0),
-	EffectManager(new CSceneEffectManager())
+	EffectManager(/*new CSceneEffectManager()*/ 0)
 {
     CurrentScene = this;
 
@@ -300,110 +300,21 @@ void CSceneManager::drawAll()
 		RootObject.draw(CurrentScene, ERP_DEFAULT);
 	}*/
 
-	SceneFrameBuffer->bind();
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	RootObject.draw(CurrentScene, ERP_DEFAULT);
-
-	// Setup for quad rendering
-	/*glDisable(GL_DEPTH_TEST);
-
-	if (DoSSAO)
+	if (EffectManager)
 	{
-		// Draw SSAO effect
-		glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO_RAW]);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		for (std::vector<CSceneEffectManager::SRenderPass>::iterator it = EffectManager->RenderPasses.end(); it != EffectManager->RenderPasses.end(); ++ it)
 		{
-			CShaderContext Context(* SSAOShader);
-			
-			Context.bindTexture("normalMap", textureId[EFBO_SSAO_NORMALS]);
-			Context.bindTexture("rnm", randNorm);
-			Context.bindBufferObject("aPosition", QuadHandle, 2);
-
-			glDrawArrays(GL_QUADS, 0, 4);
-		}
-
-		if (DoBlur)
-		{
-			// Draw blur 1
-			glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO_BLUR1]);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			{
-				CShaderContext Context(* BlurV);
-
-				Context.bindTexture("uTexColor", textureId[EFBO_SSAO_RAW]);
-				Context.bindBufferObject("aPosition", QuadHandle, 2);
-
-				glDrawArrays(GL_QUADS, 0, 4);
-
-			}
-
-			// Draw blur 2
-			glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO_RAW]);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			{
-				CShaderContext Context(* BlurH);
-
-				Context.uniform("BlurSize", 1.0f);
-				Context.uniform("DimAmount", 1.0f);
-				Context.bindTexture("uTexColor", textureId[EFBO_SSAO_BLUR1]);
-				Context.bindBufferObject("aPosition", QuadHandle, 2);
-
-				glDrawArrays(GL_QUADS, 0, 4);
-			}
+			//if (it->
 		}
 	}
-
-	if (DoBloom)
+	else
 	{
-		//BLURH
-		// Draw blurH effect
-		glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCRATCH1]);
+		SceneFrameBuffer->bind();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// Draw blurV quad
-		{
-			CShaderContext Context(* BlurH);
-
-			Context.bindTexture("uTexColor", SceneFrameTexture);
-			Context.uniform("BlurSize", 1.0f);
-			Context.uniform("DimAmount", 1.0f);
-			Context.bindBufferObject("aPosition", QuadHandle, 2);
-
-			glDrawArrays(GL_QUADS, 0, 4);
-		}
-
-		//BLURV
-		// Draw blurV effect
-		glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCRATCH2]);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		{
-			CShaderContext Context(* BlurV);
-
-			Context.bindTexture("uTexColor", textureId[EFBO_SCRATCH1]);
-			Context.bindBufferObject("aPosition", QuadHandle, 2);
-
-			glDrawArrays(GL_QUADS, 0, 4);
-		}
+		RootObject.draw(CurrentScene, ERP_DEFAULT);
 	}
-
-	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCRATCH1]);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	// Final Render
-	{
-		CShaderContext Context(* BlendShader);
-		
-		if (OnlySSAO)
-			Context.bindTexture("scene", White);
-		else
-			Context.bindTexture("scene", SceneFrameTexture);
-		Context.bindTexture("ssao", DoSSAO ? textureId[EFBO_SSAO_RAW] : White->getTextureHandle());
-		Context.bindTexture("bloom", DoBloom ? textureId[EFBO_SCRATCH2] : Magenta->getTextureHandle());
-		Context.bindBufferObject("aPosition", QuadHandle, 2);
-
-		glDrawArrays(GL_QUADS, 0, 4);
-	}*/
+	
 
 	SceneChanged = false;
 }

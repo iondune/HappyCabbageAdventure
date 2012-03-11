@@ -7,8 +7,17 @@
 #include "CFrameBufferObject.h"
 #include "ISceneObject.h"
 
+enum ESceneEffect
+{
+	ESE_SSAO = 1,
+	ESE_SSAO_BLUR = 2,
+	ESE_BLOOM = 4
+};
+
 class CSceneEffectManager
 {
+
+	int EnabledEffects;
 
 public:
 
@@ -46,7 +55,8 @@ public:
 
 	virtual void apply();
 
-	bool DoSSAO, OnlySSAO, DoBloom, DoBlur, OnlyNormals;
+	void setEffectEnabled(ESceneEffect const Effect, bool const Enabled);
+	bool const isEffectEnabled(ESceneEffect const Effect);
 
 };
 
