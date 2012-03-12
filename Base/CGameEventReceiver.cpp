@@ -7,7 +7,6 @@ int numKilled;
 CGameEventReceiver::CGameEventReceiver()
 {
    numKilled = 0;
-   printf("Here!!!\n");
    DeadEnemies.clear();
    playerDamagedEngine = NULL;
    Player = NULL;
@@ -33,7 +32,7 @@ void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
    else {
       DeadEnemy.DeathTimer = 4.f;
       if(rand()%2 == 0) {
-    	  if (rand()%2 == 0)
+    	  if (Event.PlayerHealthLeft == 1 || rand()%2 == 0)
     		  CItem::makeItem(Event.Enemy.Actor->getArea().Position.X + Event.Enemy.Actor->getArea().Size.X / 2.0f - 0.3f
     				  , Event.Enemy.Actor->getArea().getCenter().Y, 1.0f, 1.0f, CItem::health, Event.Manager);
     	  else
@@ -41,10 +40,16 @@ void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
     				  , Event.Enemy.Actor->getArea().getCenter().Y, 1.0f, 1.0f, CItem::energy, Event.Manager);
       }
    }
-   DeadEnemy.Renderable = Event.Enemy.Renderable;
+      DeadEnemy.Renderable = Event.Enemy.Renderable;
 
-      DeadEnemy.Renderable->setScale(SVector3(1.f, 1.0f, 0.4f));
-      DeadEnemy.Renderable->setTranslation(DeadEnemy.Renderable->getTranslation() - SVector3(0.f, 0.5f, 0.f));
+      if(Event.Enemy.KillMethod == 0) {
+         DeadEnemy.Renderable->setScale(SVector3(1.f, 1.0f, 0.4f));
+         DeadEnemy.Renderable->setTranslation(DeadEnemy.Renderable->getTranslation() - SVector3(0.f, 0.5f, 0.f));
+      }
+      else {
+         DeadEnemy.Renderable->setScale(SVector3(0.01f, 0.01f, 0.01f));
+
+      }
 
       DeadEnemy.ParticleE = new CParticleEngine(DeadEnemy.Renderable->getTranslation(), 20, 4, BURST_PARTICLE);
       DeadEnemy.ParticleE->UsePhysics(Event.Manager->getEngine());

@@ -123,7 +123,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
       }
    }
 
-   if(GodMode && birdCollision == 1 && PlayerCollideable) {
+   if((GodMode) && birdCollision == 1 && PlayerCollideable) {
       PlayerActor->setImpulse(SVector2(0.f, -0.4f) * 7, 0.5f);
    }
 
@@ -163,8 +163,19 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
          //Need to rewrite so works without SEnemy
          else
          {
-            if (GodModeTime > 0)
+            if (GodModeTime > 0) {
+               if((*it)->Actor->CollideableType != COLLIDEABLE_TYPE_FLAME) {
+                  KillList.push_back(* it);
+                  if((*it)->Actor->CollideableType == COLLIDEABLE_TYPE_PKIWI)
+                     (* it)->KilledBy = 2;
+                  else {
+                     (* it)->KilledBy = 1;
+                     Mix_PlayChannel(-1, killEnemy, 0);
+                     Enemies.erase(it);
+                  }
+               }
                continue;
+            }
             if (isPlayerAlive() && PlayerRecovering <= 0.f)
             {
                SPlayerDamagedEvent Event;
@@ -192,19 +203,20 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
                }
 
                float const KnockbackSpeed = 7.f;
-               float const KnockbackDuration = 0.2f;
+               float const KnockbackDuration = 0.1f;
 
-               PlayerRecovering = KnockbackDuration*3;
+               PlayerRecovering = 1.0f;
+               if((*it)->Actor->CollideableType != COLLIDEABLE_TYPE_FLAME) {
 
-               if (PlayerActor->getArea().getCenter().X > Other->getArea().getCenter().X)
-                  PlayerActor->setImpulse(SVector2(1.f, 0.4f) * KnockbackSpeed, KnockbackDuration);
-               else
-                  PlayerActor->setImpulse(SVector2(-1.f, 0.4f) * KnockbackSpeed, KnockbackDuration);
-               if (PlayerActor->getArea().getCenter().Y <= Other->getArea().getCenter().Y)
-                  PlayerActor->addImpulse(SVector2(0.f, -0.75f) * KnockbackSpeed);
-               else
-                  PlayerActor->addImpulse(SVector2(0.f, -0.75f) * KnockbackSpeed);
-
+                  if (PlayerActor->getArea().getCenter().X > Other->getArea().getCenter().X)
+                     PlayerActor->setImpulse(SVector2(1.f, 0.4f) * KnockbackSpeed, KnockbackDuration);
+                  else
+                     PlayerActor->setImpulse(SVector2(-1.f, 0.4f) * KnockbackSpeed, KnockbackDuration);
+                  if (PlayerActor->getArea().getCenter().Y <= Other->getArea().getCenter().Y)
+                     PlayerActor->addImpulse(SVector2(0.f, -0.75f) * KnockbackSpeed);
+                  else
+                     PlayerActor->addImpulse(SVector2(0.f, -0.75f) * KnockbackSpeed);
+               }
 
             }
          }
@@ -328,6 +340,8 @@ void CGameplayManager::run(float const TickTime)
       enemy.Actor = (*it)->Actor;
       enemy.Renderable = (*it)->Renderable;
       Event.Enemy = enemy;
+      Event.Enemy.KillMethod = (*it)->KilledBy;
+      Event.PlayerHealthLeft = PlayerHealth;
       Event.Manager = this;
 
       GameEventManager->OnEnemyDeath(Event);
