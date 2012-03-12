@@ -704,10 +704,12 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 	{
 		if (Event.Key == SDLK_n)
 		{
+			SceneManager.getEffectManager()->setEffectEnabled(ESE_SSAO, ! SceneManager.getEffectManager()->isEffectEnabled(ESE_SSAO));
 			//CApplication::get().getSceneManager().DoSSAO = ! CApplication::get().getSceneManager().DoSSAO;
 		}
 		if (Event.Key == SDLK_b)
 		{
+			SceneManager.getEffectManager()->setEffectEnabled(ESE_BLOOM, ! SceneManager.getEffectManager()->isEffectEnabled(ESE_BLOOM));
 			//CApplication::get().getSceneManager().DoBloom = ! CApplication::get().getSceneManager().DoBloom;
 		}
 		if (Event.Key == ::SDLK_COMMA)
@@ -716,6 +718,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		}
 		if (Event.Key == ::SDLK_SLASH)
 		{
+			SceneManager.getEffectManager()->setEffectEnabled(ESE_SSAO_BLUR, ! SceneManager.getEffectManager()->isEffectEnabled(ESE_SSAO_BLUR));
 			//CApplication::get().getSceneManager().DoBlur = ! CApplication::get().getSceneManager().DoBlur;
 		}
 		if (Event.Key == ::SDLK_PERIOD)

@@ -1,6 +1,16 @@
 #include "CSceneEffectManager.h"
 
 #include "CSceneManager.h"
+#include "CTextureLoader.h"
+#include "CShaderLoader.h"
+
+#include <algorithm>
+
+
+bool const CSceneEffectManager::SRenderPass::operator == (SRenderPass const & rhs)
+{
+	return Target == rhs.Target && Pass == rhs.Pass;
+}
 
 
 CSceneEffectManager::SPostProcessPass::SPostProcessPass()
@@ -36,110 +46,111 @@ void CSceneEffectManager::SPostProcessPass::doPass()
 	glEnable(GL_DEPTH_TEST);
 }
 
-CSceneEffectManager::CSceneEffectManager()
-	: EnabledEffects(0)
-{}
+
+CSceneEffectManager::CSceneEffectManager(CSceneManager * sceneManager)
+	: EnabledEffects(0), SceneManager(sceneManager), NormalPassTarget(0), NormalPassTexture(0), RandomNormalsTexture(0),
+	BlurHorizontal(0), BlurVertical(0), BlendShader(0), White(0), Black(0), Magenta(0)
+{
+	SSAOShader = CShaderLoader::loadShader("FBO/QuadCopyUV.glsl", "SSAO.frag");
+	BlendShader = CShaderLoader::loadShader("FBO/QuadCopyUV.glsl", "Blend.frag");
+	BlurVertical = CShaderLoader::loadShader("FBO/QuadCopyUV.glsl", "BlurV.frag");
+	BlurHorizontal = CShaderLoader::loadShader("FBO/QuadCopyUV.glsl", "BlurH.frag");
+	QuadCopy = CShaderLoader::loadShader("FBO/QuadCopy");
+
+	White = CTextureLoader::loadTexture("Colors/White.bmp");
+	Black = CTextureLoader::loadTexture("Colors/Black.bmp");
+	Magenta = CTextureLoader::loadTexture("Colors/Magenta.bmp");
+
+	ScratchTarget1 = new CFrameBufferObject();
+	ScratchTexture1 = new CTexture(SceneManager->getScreenSize(), true);
+	ScratchTarget1->attach(ScratchTexture1, GL_COLOR_ATTACHMENT0);
+
+	BloomResultTarget = new CFrameBufferObject();
+	BloomResultTexture = new CTexture(SceneManager->getScreenSize(), true);
+	BloomResultTarget->attach(BloomResultTexture, GL_COLOR_ATTACHMENT0);
+
+	SRenderPass DefaultPass;
+	DefaultPass.Pass = ERP_DEFAULT;
+	DefaultPass.Target = SceneManager->getSceneFrameBuffer();
+
+	RenderPasses.push_back(DefaultPass);
+}
 
 void CSceneEffectManager::apply()
 {
-	/*glDisable(GL_DEPTH_TEST);
-
-	if (DoSSAO)
+	if (isEffectEnabled(ESE_SSAO))
 	{
 		// Draw SSAO effect
-		glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO_RAW]);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		SPostProcessPass SSAOPass;
+		SSAOPass.Textures["normalMap"] = NormalPassTexture;
+		SSAOPass.Textures["rnm"] = RandomNormalsTexture;
+		SSAOPass.Target = SSAOResultTarget;
+		SSAOPass.Shader = SSAOShader;
+
+		SSAOPass.doPass();
+
+		if (isEffectEnabled(ESE_SSAO_BLUR))
 		{
-			CShaderContext Context(* SSAOShader);
-			
-			Context.bindTexture("normalMap", textureId[EFBO_SSAO_NORMALS]);
-			Context.bindTexture("rnm", randNorm);
-			Context.bindBufferObject("aPosition", QuadHandle, 2);
+			SPostProcessPass SSAOBlurPass1;
+			SSAOBlurPass1.Textures["uTexColor"] = SSAOResultTexture;
+			SSAOBlurPass1.Target = ScratchTarget1;
+			SSAOBlurPass1.Shader = BlurVertical;
 
-			glDrawArrays(GL_QUADS, 0, 4);
-		}
+			SSAOBlurPass1.doPass();
 
-		if (DoBlur)
-		{
-			// Draw blur 1
-			glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO_BLUR1]);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			{
-				CShaderContext Context(* BlurV);
 
-				Context.bindTexture("uTexColor", textureId[EFBO_SSAO_RAW]);
-				Context.bindBufferObject("aPosition", QuadHandle, 2);
+			SPostProcessPass SSAOBlurPass2;
+			SSAOBlurPass2.Textures["uTexColor"] = ScratchTexture1;
+			SSAOBlurPass2.Target = SSAOResultTarget;
+			SSAOBlurPass2.Shader = BlurHorizontal;
+			SSAOBlurPass2.Floats["DimAmount"] = 1.f;
+			SSAOBlurPass2.Floats["BlurSize"] = 1.f;
 
-				glDrawArrays(GL_QUADS, 0, 4);
-
-			}
-
-			// Draw blur 2
-			glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SSAO_RAW]);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			{
-				CShaderContext Context(* BlurH);
-
-				Context.uniform("BlurSize", 1.0f);
-				Context.uniform("DimAmount", 1.0f);
-				Context.bindTexture("uTexColor", textureId[EFBO_SSAO_BLUR1]);
-				Context.bindBufferObject("aPosition", QuadHandle, 2);
-
-				glDrawArrays(GL_QUADS, 0, 4);
-			}
+			SSAOBlurPass2.doPass();
 		}
 	}
 
-	if (DoBloom)
+	if (isEffectEnabled(ESE_BLOOM))
 	{
-		//BLURH
-		// Draw blurH effect
-		glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCRATCH1]);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		// BLUR H
+		SPostProcessPass BloomBlurPass1;
+		BloomBlurPass1.Textures["uTexColor"] = SceneManager->getSceneFrameTexture();
+		BloomBlurPass1.Target = ScratchTarget1;
+		BloomBlurPass1.Shader = BlurHorizontal;
+		BloomBlurPass1.Floats["DimAmount"] = 1.f;
+		BloomBlurPass1.Floats["BlurSize"] = 1.f;
 
-		// Draw blurV quad
-		{
-			CShaderContext Context(* BlurH);
+		BloomBlurPass1.doPass();
 
-			Context.bindTexture("uTexColor", SceneFrameTexture);
-			Context.uniform("BlurSize", 1.0f);
-			Context.uniform("DimAmount", 1.0f);
-			Context.bindBufferObject("aPosition", QuadHandle, 2);
+		// BLUR V
+		SPostProcessPass BloomBlurPass2;
+		BloomBlurPass2.Textures["uTexColor"] = SceneManager->getSceneFrameTexture();
+		BloomBlurPass2.Target = BloomResultTarget;
+		BloomBlurPass2.Shader = BlurVertical;
 
-			glDrawArrays(GL_QUADS, 0, 4);
-		}
-
-		//BLURV
-		// Draw blurV effect
-		glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCRATCH2]);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		{
-			CShaderContext Context(* BlurV);
-
-			Context.bindTexture("uTexColor", textureId[EFBO_SCRATCH1]);
-			Context.bindBufferObject("aPosition", QuadHandle, 2);
-
-			glDrawArrays(GL_QUADS, 0, 4);
-		}
+		BloomBlurPass2.doPass();
 	}
 
-	glBindFramebuffer(GL_FRAMEBUFFER, fboId[EFBO_SCRATCH1]);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	// Final Render
+	if (EnabledEffects)
 	{
-		CShaderContext Context(* BlendShader);
-		
-		if (OnlySSAO)
-			Context.bindTexture("scene", White);
-		else
-			Context.bindTexture("scene", SceneFrameTexture);
-		Context.bindTexture("ssao", DoSSAO ? textureId[EFBO_SSAO_RAW] : White->getTextureHandle());
-		Context.bindTexture("bloom", DoBloom ? textureId[EFBO_SCRATCH2] : Magenta->getTextureHandle());
-		Context.bindBufferObject("aPosition", QuadHandle, 2);
+		// Final Blend
+		SPostProcessPass BlendPass;
+		BlendPass.Textures["scene"] = SceneManager->getSceneFrameTexture();
+		BlendPass.Textures["ssao"] = isEffectEnabled(ESE_SSAO) ? SSAOResultTexture : White;
+		BlendPass.Textures["bloom"] =  isEffectEnabled(ESE_BLOOM) ? BloomResultTexture : Magenta;
+		BlendPass.Target = ScratchTarget1;
+		BlendPass.Shader = BlendShader;
 
-		glDrawArrays(GL_QUADS, 0, 4);
-	}*/
+		BlendPass.doPass();
+
+		// Copy results back into scene
+		SPostProcessPass FinalPass;
+		FinalPass.Textures["uTexColor"] = ScratchTexture1;
+		FinalPass.Target = SceneManager->getSceneFrameBuffer();
+		FinalPass.Shader = QuadCopy;
+
+		FinalPass.doPass();
+	}
 }
 
 void CSceneEffectManager::setEffectEnabled(ESceneEffect const Effect, bool const Enabled)
@@ -152,16 +163,36 @@ void CSceneEffectManager::setEffectEnabled(ESceneEffect const Effect, bool const
 	switch (Effect)
 	{
 	case ESE_SSAO:
-		if (Enabled)
 		{
+			SRenderPass normalsPass;
+			normalsPass.Pass = ERP_SS_NORMALS;
+			normalsPass.Target = NormalPassTarget;
 
+			if (Enabled)
+			{
+				RenderPasses.push_back(normalsPass);
+
+				if (! NormalPassTarget)
+				{
+					NormalPassTarget = new CFrameBufferObject();
+					NormalPassTexture = new CTexture(SceneManager->getScreenSize(), true);
+					NormalPassTarget->attach(NormalPassTexture, GL_COLOR_ATTACHMENT0);
+					NormalPassTarget->attach(new CRenderBufferObject(GL_DEPTH_COMPONENT, SceneManager->getScreenSize()), GL_DEPTH_ATTACHMENT);
+
+					SSAOResultTarget = new CFrameBufferObject();
+					SSAOResultTexture = new CTexture(SceneManager->getScreenSize(), true);
+					SSAOResultTarget->attach(SSAOResultTexture, GL_COLOR_ATTACHMENT0);
+
+					RandomNormalsTexture = CTextureLoader::loadTexture("SSAO/RandNormals.bmp");
+				}
+			}
+			else
+			{
+				RenderPasses.erase(std::remove(RenderPasses.begin(), RenderPasses.end(), normalsPass), RenderPasses.end());
+			}
+
+			break;
 		}
-		else
-		{
-
-		}
-		break;
-
 	case ESE_SSAO_BLUR:
 		break;
 
@@ -173,5 +204,5 @@ void CSceneEffectManager::setEffectEnabled(ESceneEffect const Effect, bool const
 
 bool const CSceneEffectManager::isEffectEnabled(ESceneEffect const Effect)
 {
-	return EnabledEffects & Effect;
+	return (EnabledEffects & Effect) != 0;
 }

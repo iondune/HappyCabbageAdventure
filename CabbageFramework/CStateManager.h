@@ -43,8 +43,12 @@ public:
 
     static TImplementation & get()
     {
-        static TImplementation Instance;
-        return Instance;
+        static TImplementation * Instance;
+
+		if (! Instance)
+			Instance = new TImplementation();
+
+        return * Instance;
     }
 
 	CState()

@@ -14,14 +14,45 @@ enum ESceneEffect
 	ESE_BLOOM = 4
 };
 
+class CSceneManager;
+
 class CSceneEffectManager
 {
 
+	CSceneManager * SceneManager;
+
 	int EnabledEffects;
+
+	// SSAO Stuff
+	CFrameBufferObject * NormalPassTarget;
+	CTexture * NormalPassTexture;
+
+	CFrameBufferObject * SSAOResultTarget;
+	CTexture * SSAOResultTexture;
+
+	CTexture * RandomNormalsTexture;
+	CShader * SSAOShader;
+
+
+	// Blur Shaders
+	CShader * BlurVertical, * BlurHorizontal;
+
+	// Bloom Stuff
+	CFrameBufferObject * BloomResultTarget;
+	CTexture * BloomResultTexture;
+
+
+	// Blending
+	CShader * BlendShader;
+	CShader * QuadCopy;
+	CTexture * Magenta, * White, * Black;
+
+	CFrameBufferObject * ScratchTarget1;
+	CTexture * ScratchTexture1;
 
 public:
 
-	CSceneEffectManager();
+	CSceneEffectManager(CSceneManager * sceneManager);
 
 	class SRenderPass
 	{
@@ -30,6 +61,8 @@ public:
 
 		CFrameBufferObject * Target;
 		ERenderPass Pass;
+
+		bool const operator == (SRenderPass const & rhs);
 	
 	};
 
@@ -55,8 +88,8 @@ public:
 
 	virtual void apply();
 
-	void setEffectEnabled(ESceneEffect const Effect, bool const Enabled);
-	bool const isEffectEnabled(ESceneEffect const Effect);
+	virtual void setEffectEnabled(ESceneEffect const Effect, bool const Enabled);
+	virtual bool const isEffectEnabled(ESceneEffect const Effect);
 
 };
 

@@ -97,6 +97,9 @@ class CSceneManager : public CScene
 	CRenderBufferObject * SceneDepthBuffer;
 
 	CSceneEffectManager * EffectManager;
+	CShader * BlurHorizontal;
+
+	SSize2 ScreenSize;
 
 public:
 
@@ -124,6 +127,8 @@ public:
 
 	CSceneEffectManager * getEffectManager();
 	void setEffectManager(CSceneEffectManager * effectManager);
+
+	SSize2 const & getScreenSize() const;
 
 	float FinalBlurSize, Dim;
 	float BlurInTime, BlurOutTime, CurTime;
