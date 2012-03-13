@@ -1029,7 +1029,7 @@ void CGameState::UpdateLeaves() {
 		}
 	}
 
-   if (GameplayManager->getRecovering() > 0.f || curHealth == 0 && playerRenderable->getMesh() == cabbageMesh) {
+   if (GameplayManager->getRecovering() > 0.f || (curHealth == 0 && playerRenderable->getMesh() == cabbageMesh)) {
       printf("Changed face.\n");
       CabbageHurtFace->setVisible(true);
       CabbageFace->setVisible(false);
@@ -1037,10 +1037,9 @@ void CGameState::UpdateLeaves() {
       playerRenderable->setRotation(SVector3(0.f, 0.f, 180.f));
    }
 
-   else if (playerRenderable->getMesh() == cabbageDamage) {
+   else if (playerRenderable->getMesh() == cabbageDamage && curHealth > 0) {
       CabbageHurtFace->setVisible(false);
       CabbageFace->setVisible(true);
-      cabbageMesh = CMeshLoader::load3dsMesh("Base/crappycabbage2.3ds");
       playerRenderable->setMesh(cabbageMesh);
    }
 
