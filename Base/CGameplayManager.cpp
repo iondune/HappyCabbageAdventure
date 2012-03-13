@@ -188,6 +188,9 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
                if(PlayerHealth > 1)
                   GameEventManager->OnPlayerDamaged(Event);
 
+               //Set hurt face
+
+
                //Chris Code.  Damage Sound plays here
                if(playTakeDmg) {
                   Mix_PlayChannel(-1, takeDmg, 0);

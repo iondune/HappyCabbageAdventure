@@ -1029,6 +1029,17 @@ void CGameState::UpdateLeaves() {
 		}
 	}
 
+   if (GameplayManager->getRecovering() > 0.f || curHealth == 0) {
+      printf("Changed face.\n");
+      CabbageHurtFace->setVisible(true);
+      CabbageFace->setVisible(false);
+   }
+
+   else {
+      CabbageHurtFace->setVisible(false);
+      CabbageFace->setVisible(true);
+   }
+
 	prevHealth = curHealth;
 }
 

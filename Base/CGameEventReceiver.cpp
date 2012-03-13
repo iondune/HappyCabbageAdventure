@@ -19,6 +19,7 @@ void CGameEventReceiver::OnPlayerDamaged(SPlayerDamagedEvent const & Event) {
       playerDamagedEngine = NULL;
    }
    playerDamagedEngine = new CParticleEngine(SVector3(Event.Damagee->getArea().getCenter(), 0.0f), 6, 0.8f, HURT_PARTICLE);
+
    Player = Event.Damagee;
 }
 
