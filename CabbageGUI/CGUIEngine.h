@@ -67,6 +67,7 @@ public:
 	void addWidget(CGUIWidget * Widget);
 	void removeWidget(CGUIWidget * Widget);
 	void removeAllWidgets();
+    bool isWidgetIn(CGUIWidget * Widget);
 
 	void drawAll();
 

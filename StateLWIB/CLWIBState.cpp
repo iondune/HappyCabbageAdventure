@@ -305,6 +305,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    }
    //drawSubWindow();
    pickInsert();
+   changeTiles();
    Application.getSceneManager().drawAll();
 
    Application.getGUIEngine().drawAll(); 
@@ -1235,8 +1236,152 @@ void CLWIBState::OnWidgetUnHover(CGUIWidget *widget) {
         clickDown = 0;
 }
 
+void CLWIBState::changeTiles() {
 
+    if (change == 0) {
+       /* CTexture *grass = new CTexture(CImageLoader::loadImage("Base/grass.bmp"));
+        CTexture *dirt = new CTexture(CImageLoader::loadImage("Base/dirt.bmp"));
+        CTexture *rock = new CTexture(CImageLoader::loadImage("Base/rock.bmp"));
+        CTexture *ground = new CTexture(CImageLoader::loadImage("Base/GrassyGrass.bmp"));*/
+        tileOne->setImage(grass);
+        tileTwo->setImage(dirt);
+        tileThree->setImage(rock);
+        tileFour->setImage(ground);
+     
+
+        if (!Application.getGUIEngine().isWidgetIn(tileOne))
+            Application.getGUIEngine().addWidget(tileOne);
+        if (!Application.getGUIEngine().isWidgetIn(tileTwo))
+            Application.getGUIEngine().addWidget(tileTwo);
+        if (!Application.getGUIEngine().isWidgetIn(tileThree))
+            Application.getGUIEngine().addWidget(tileThree);
+        if (!Application.getGUIEngine().isWidgetIn(tileFour))
+            Application.getGUIEngine().addWidget(tileFour);
+
+        if (Application.getGUIEngine().isWidgetIn(tileFive))
+            Application.getGUIEngine().removeWidget(tileFive);
+        if (Application.getGUIEngine().isWidgetIn(tileSix))
+            Application.getGUIEngine().removeWidget(tileSix);
+        if (Application.getGUIEngine().isWidgetIn(tileSeven))
+            Application.getGUIEngine().removeWidget(tileSeven);
+        if (Application.getGUIEngine().isWidgetIn(tileEight))
+            Application.getGUIEngine().removeWidget(tileEight);
+        if (Application.getGUIEngine().isWidgetIn(tileNine))
+            Application.getGUIEngine().removeWidget(tileNine);
+    }
+    if (change == 1) {
+    
+        tileOne->setImage(cabbageImage);
+        if (!Application.getGUIEngine().isWidgetIn(tileOne))
+            Application.getGUIEngine().addWidget(tileOne);
+
+        if (Application.getGUIEngine().isWidgetIn(tileTwo))
+            Application.getGUIEngine().removeWidget(tileTwo);
+        if (Application.getGUIEngine().isWidgetIn(tileThree))
+            Application.getGUIEngine().removeWidget(tileThree);
+        if (Application.getGUIEngine().isWidgetIn(tileFour))
+            Application.getGUIEngine().removeWidget(tileFour);
+        if (Application.getGUIEngine().isWidgetIn(tileFive))
+            Application.getGUIEngine().removeWidget(tileFive);
+        if (Application.getGUIEngine().isWidgetIn(tileSix))
+            Application.getGUIEngine().removeWidget(tileSix);
+        if (Application.getGUIEngine().isWidgetIn(tileSeven))
+            Application.getGUIEngine().removeWidget(tileSeven);
+        if (Application.getGUIEngine().isWidgetIn(tileEight))
+            Application.getGUIEngine().removeWidget(tileEight);
+        if (Application.getGUIEngine().isWidgetIn(tileNine))
+            Application.getGUIEngine().removeWidget(tileNine);
+    }
+    if (change == 2) {
+    
+
+
+        tileOne->setImage(apple);
+        tileTwo->setImage(orange);
+        tileThree->setImage(kiwi);
+        tileFour->setImage(fire);
+        tileFive->setImage(blade);
+
+        if (!Application.getGUIEngine().isWidgetIn(tileOne))
+            Application.getGUIEngine().addWidget(tileOne);
+        if (!Application.getGUIEngine().isWidgetIn(tileTwo))
+            Application.getGUIEngine().addWidget(tileTwo);
+        if (!Application.getGUIEngine().isWidgetIn(tileThree))
+            Application.getGUIEngine().addWidget(tileThree);
+        if (!Application.getGUIEngine().isWidgetIn(tileFour))
+            Application.getGUIEngine().addWidget(tileFour);
+        if (!Application.getGUIEngine().isWidgetIn(tileFive))
+            Application.getGUIEngine().addWidget(tileFive);
+        
+        if (Application.getGUIEngine().isWidgetIn(tileSix))
+            Application.getGUIEngine().removeWidget(tileSix);
+        if (Application.getGUIEngine().isWidgetIn(tileSeven))
+            Application.getGUIEngine().removeWidget(tileSeven);
+        if (Application.getGUIEngine().isWidgetIn(tileEight))
+            Application.getGUIEngine().removeWidget(tileEight);
+        if (Application.getGUIEngine().isWidgetIn(tileNine))
+            Application.getGUIEngine().removeWidget(tileNine);
+    }
+    if (change == 3) {
+    
+        if (Application.getGUIEngine().isWidgetIn(tileTwo))
+            Application.getGUIEngine().removeWidget(tileTwo);
+        if (Application.getGUIEngine().isWidgetIn(tileThree))
+            Application.getGUIEngine().removeWidget(tileThree);
+        if (Application.getGUIEngine().isWidgetIn(tileFour))
+            Application.getGUIEngine().removeWidget(tileFour);
+        if (Application.getGUIEngine().isWidgetIn(tileFive))
+            Application.getGUIEngine().removeWidget(tileFive);
+        if (Application.getGUIEngine().isWidgetIn(tileSix))
+            Application.getGUIEngine().removeWidget(tileSix);
+        if (Application.getGUIEngine().isWidgetIn(tileSeven))
+            Application.getGUIEngine().removeWidget(tileSeven);
+        if (Application.getGUIEngine().isWidgetIn(tileEight))
+            Application.getGUIEngine().removeWidget(tileEight);
+        if (Application.getGUIEngine().isWidgetIn(tileNine))
+            Application.getGUIEngine().removeWidget(tileNine);
+    }
+    if (change == 4) {
+    
+        if (Application.getGUIEngine().isWidgetIn(tileTwo))
+            Application.getGUIEngine().removeWidget(tileTwo);
+        if (Application.getGUIEngine().isWidgetIn(tileThree))
+            Application.getGUIEngine().removeWidget(tileThree);
+        if (Application.getGUIEngine().isWidgetIn(tileFour))
+            Application.getGUIEngine().removeWidget(tileFour);
+        if (Application.getGUIEngine().isWidgetIn(tileFive))
+            Application.getGUIEngine().removeWidget(tileFive);
+        if (Application.getGUIEngine().isWidgetIn(tileSix))
+            Application.getGUIEngine().removeWidget(tileSix);
+        if (Application.getGUIEngine().isWidgetIn(tileSeven))
+            Application.getGUIEngine().removeWidget(tileSeven);
+        if (Application.getGUIEngine().isWidgetIn(tileEight))
+            Application.getGUIEngine().removeWidget(tileEight);
+        if (Application.getGUIEngine().isWidgetIn(tileNine))
+            Application.getGUIEngine().removeWidget(tileNine);
+    }
+    if (change == 5) {
+    
+        if (Application.getGUIEngine().isWidgetIn(tileTwo))
+            Application.getGUIEngine().removeWidget(tileTwo);
+        if (Application.getGUIEngine().isWidgetIn(tileThree))
+            Application.getGUIEngine().removeWidget(tileThree);
+        if (Application.getGUIEngine().isWidgetIn(tileFour))
+            Application.getGUIEngine().removeWidget(tileFour);
+        if (Application.getGUIEngine().isWidgetIn(tileFive))
+            Application.getGUIEngine().removeWidget(tileFive);
+        if (Application.getGUIEngine().isWidgetIn(tileSix))
+            Application.getGUIEngine().removeWidget(tileSix);
+        if (Application.getGUIEngine().isWidgetIn(tileSeven))
+            Application.getGUIEngine().removeWidget(tileSeven);
+        if (Application.getGUIEngine().isWidgetIn(tileEight))
+            Application.getGUIEngine().removeWidget(tileEight);
+        if (Application.getGUIEngine().isWidgetIn(tileNine))
+            Application.getGUIEngine().removeWidget(tileNine);
+    }
+}
 void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
+    
     if (widget == leftArrow) {
         if (change == -1)
             change = 5;
@@ -1251,6 +1396,12 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     }
     if (widget == tileOne) {
         if (change == 0) {
+            if (textureType == -5) {
+                blockWidth = 1;
+                blockHeight = 1;
+                blockDepth = 1;
+                PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
+            }
             textureType = 0;
         }
         if (change == 2) {
@@ -1259,6 +1410,12 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     }
     if (widget == tileTwo) {
         if (change == 0) {
+            if (textureType == -5) {
+                blockWidth = 1;
+                blockHeight = 1;
+                blockDepth = 1;
+                PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
+            }
             textureType = 1;
         }
         if (change == 2) {
@@ -1267,6 +1424,12 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     }
     if (widget == tileThree) {
         if (change == 0) {
+            if (textureType == -5) {
+                blockWidth = 1;
+                blockHeight = 1;
+                blockDepth = 1;
+                PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
+            }
             textureType = 2;
         }
         if (change == 2) {
@@ -1276,6 +1439,10 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     if (widget == tileFour) {
         if (change == 0) {
             textureType = -5;
+            blockWidth = 5;
+            blockHeight = 5;
+            blockDepth = 5;
+            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
         }
         if (change == 2) {
             enemyType = 3;
@@ -1314,6 +1481,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 1) {
         }
     }
+    //changeTiles();
 }
 
 
@@ -1392,10 +1560,16 @@ void CLWIBState::prepHud() {
     SVector2 norm = SVector2(.1f, .1f);
     CTexture *imgLeft = new CTexture(CImageLoader::loadImage("ModelImages/leftArrowPic.bmp"));
     CTexture *imgright = new CTexture(CImageLoader::loadImage("ModelImages/rightArrowPic.bmp"));
-    CTexture *grass = new CTexture(CImageLoader::loadImage("Base/grass.bmp"));
-    CTexture *dirt = new CTexture(CImageLoader::loadImage("Base/dirt.bmp"));
-    CTexture *rock = new CTexture(CImageLoader::loadImage("Base/rock.bmp"));
-    CTexture *ground = new CTexture(CImageLoader::loadImage("Base/GrassyGrass.bmp"));
+    grass = new CTexture(CImageLoader::loadImage("Base/grass.bmp"));
+    dirt = new CTexture(CImageLoader::loadImage("Base/dirt.bmp"));
+    rock = new CTexture(CImageLoader::loadImage("Base/rock.bmp"));
+    ground = new CTexture(CImageLoader::loadImage("Base/GrassyGrass.bmp"));
+    apple = new CTexture(CImageLoader::loadImage("ModelImages/apple_gray.bmp"));
+    orange = new CTexture(CImageLoader::loadImage("ModelImages/orange_gray.bmp"));
+    kiwi = new CTexture(CImageLoader::loadImage("ModelImages/kiwi_gray.bmp"));
+    fire = new CTexture(CImageLoader::loadImage("ModelImages/alien_gray.bmp"));
+    blade = new CTexture(CImageLoader::loadImage("ModelImages/trap1_gray.bmp"));
+    cabbageImage = new CTexture(CImageLoader::loadImage("ModelImages/cabbage_gray.bmp"));
     //arrows to cycle though the blocks, enemies, cabbage, flag etc.
     leftArrow = new CGUIImageWidget(imgLeft, norm);
     leftArrow->setPosition(SVector2(1.05f, .85f));
@@ -1440,15 +1614,13 @@ void CLWIBState::prepHud() {
     Application.getGUIEngine().addWidget(tileTwo);
     Application.getGUIEngine().addWidget(tileThree);
     Application.getGUIEngine().addWidget(tileFour);
-    Application.getGUIEngine().addWidget(tileFive);
-    Application.getGUIEngine().addWidget(tileSix);
-    Application.getGUIEngine().addWidget(tileSeven);
-    Application.getGUIEngine().addWidget(tileEight);
-    Application.getGUIEngine().addWidget(tileNine);
+    //Application.getGUIEngine().addWidget(tileFive);
+    //Application.getGUIEngine().addWidget(tileSix);
+    //Application.getGUIEngine().addWidget(tileSeven);
+    //Application.getGUIEngine().addWidget(tileEight);
+    //Application.getGUIEngine().addWidget(tileNine);
     Application.getGUIEngine().addWidget(leftArrow);
     Application.getGUIEngine().addWidget(rightArrow);
-    //Application.getGUIEngine().addWidget(grassBlock);
-    //Application.getGUIEngine().addWidget(rockBlock);
 }
 void CLWIBState::stepCamera(float delta) {
    float factor = 6;
