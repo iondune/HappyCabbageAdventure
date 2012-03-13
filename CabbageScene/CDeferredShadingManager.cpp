@@ -60,6 +60,12 @@ void CDeferredShadingManager::apply()
 	BlendPass.Target = SceneManager->getSceneFrameBuffer();
 	BlendPass.Shader = CShaderLoader::loadShader("FBO/QuadCopy");//FinalBlendShader;
 
+	/*SPostProcessPass BlendPass;
+	BlendPass.Textures["uSceneColor"] = DeferredColorOutput;
+	BlendPass.Textures["uLightPass"] = LightPassColorOutput;
+	BlendPass.Target = SceneManager->getSceneFrameBuffer();
+	BlendPass.Shader = FinalBlendShader;*/
+
 	BlendPass.doPass();
 }
 
