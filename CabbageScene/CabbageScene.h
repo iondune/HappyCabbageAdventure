@@ -15,4 +15,7 @@
 #include "CSceneManager.h"
 #include "CBufferObject.h"
 
+#include "CDeferredShadingManager.h"
+#include "CPointLightSceneObject.h"
+
 #endif

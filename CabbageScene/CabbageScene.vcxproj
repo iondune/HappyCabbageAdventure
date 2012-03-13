@@ -84,6 +84,7 @@
     <ClInclude Include="CMesh.h" />
     <ClInclude Include="CMeshLoader.h" />
     <ClInclude Include="CMeshSceneObject.h" />
+    <ClInclude Include="CPointLightSceneObject.h" />
     <ClInclude Include="CRenderBufferObject.h" />
     <ClInclude Include="CSceneEffectManager.h" />
     <ClInclude Include="CSceneManager.h" />
@@ -110,6 +111,7 @@
     <ClCompile Include="CMesh.cpp" />
     <ClCompile Include="CMeshLoader.cpp" />
     <ClCompile Include="CMeshSceneObject.cpp" />
+    <ClCompile Include="CPointLightSceneObject.cpp" />
     <ClCompile Include="CRenderBufferObject.cpp" />
     <ClCompile Include="CSceneEffectManager.cpp" />
     <ClCompile Include="CSceneManager.cpp" />
