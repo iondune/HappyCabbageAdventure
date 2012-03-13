@@ -1034,6 +1034,7 @@ void CGameState::UpdateLeaves() {
       CabbageHurtFace->setVisible(true);
       CabbageFace->setVisible(false);
       playerRenderable->setMesh(cabbageDamage);
+      playerRenderable->setRotation(SVector3(0.f, 0.f, 180.f));
    }
 
    else if (playerRenderable->getMesh() == cabbageDamage) {
@@ -1296,9 +1297,9 @@ void Load3DS()
 
    cabbageDamage = CMeshLoader::load3dsMesh("Base/cabbageouch2.3ds");
    if (cabbageDamage) {
-      cabbageMesh->resizeMesh(SVector3(0.5));
-      cabbageMesh->centerMeshByExtents(SVector3(0));
-      cabbageMesh->calculateNormalsPerVertex();
+      cabbageDamage->resizeMesh(SVector3(0.5));
+      cabbageDamage->centerMeshByExtents(SVector3(0));
+      cabbageDamage->calculateNormalsPerVertex();
    }
 
    blueFlwrMesh = CMeshLoader::load3dsMesh("Base/simpleflower1.3ds");
