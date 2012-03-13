@@ -1199,13 +1199,13 @@ void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
 
 
 void LoadShaders() {
-   Flat = CShaderLoader::loadShader("Diffuse");
-   Diffuse = CShaderLoader::loadShader("Diffuse");
-   ToonTexture = CShaderLoader::loadShader("ToonTexture");
-   DiffuseTexture = CShaderLoader::loadShader("DiffuseTextureBright");
-   normalColor = CShaderLoader::loadShader("Simple");
-   Toon = CShaderLoader::loadShader("Toon");
-   ToonBright = CShaderLoader::loadShader("ToonBright");
+   Flat = CShaderLoader::loadShader("Deferred/Diffuse");
+   Diffuse = CShaderLoader::loadShader("Deferred/Diffuse");
+   ToonTexture = CShaderLoader::loadShader("Deferred/Textured");
+   DiffuseTexture = CShaderLoader::loadShader("Deferred/Textured");
+   normalColor = CShaderLoader::loadShader("Deferred/Diffuse");
+   Toon = CShaderLoader::loadShader("Deferred/Diffuse");
+   ToonBright = CShaderLoader::loadShader("Deferred/Diffuse");
    BlackShader = CShaderLoader::loadShader("Border");
    //Toon = Diffuse;
 }
@@ -1388,6 +1388,7 @@ void PrepMeshes()
    //playerRenderable->enableDebugData(EDebugData::Normals);
    playerRenderable->setShader(Toon);
    playerRenderable->setScale(SVector3(2));
+   playerRenderable->addChild(new CPointLightSceneObject());
 
    renderBlueFlwr = new CMeshSceneObject();
    renderBlueFlwr->setMesh(blueFlwrMesh);

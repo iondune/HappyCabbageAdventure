@@ -8,8 +8,10 @@ uniform mat4 uModelMatrix;
 uniform mat4 uProjMatrix;
 uniform mat4 uViewMatrix;
 
+uniform vec3 uPosition;
+
 // Tex Coord
-varying vec2 vTexCoord;
+varying vec4 gPosition;
 
 // Deferred Values
 varying vec3 vLightPosition;
@@ -17,7 +19,7 @@ varying vec3 vLightPosition;
 void main()
 {
     vec4 Position = uModelMatrix * vec4(aPosition, 1);
-    vLightPosition = Position.xyz;
+    vLightPosition = (uModelMatrix * vec4(uPosition, 1)).xyz;
     gl_Position = uProjMatrix * uViewMatrix * Position;
-    vTexCoord = (gl_Position.xy + 1.0) / 2.0;
+    gPosition = gl_Position;
 }

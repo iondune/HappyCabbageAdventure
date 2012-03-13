@@ -7,6 +7,8 @@
 #include "CMeshLoader.h"
 #include "CTextureLoader.h"
 
+#include "CDeferredShadingManager.h"
+
 
 CLight const CScene::NullLight;
 
@@ -166,8 +168,8 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 	if (! SceneFrameBuffer->isValid())
 		std::cerr << "Failed to make FBO for scene drawing!!!!!!" << std::endl  << std::endl  << std::endl;
 	
-	EffectManager = new CSceneEffectManager(this);
-	EffectManager->setEffectEnabled(ESE_BLOOM, true);
+	EffectManager = new CDeferredShadingManager(this);
+	//EffectManager->setEffectEnabled(ESE_BLOOM, true);
 
 	BlurHorizontal = CShaderLoader::loadShader("FBO/QuadCopyUV.glsl", "BlurH.frag");
 }
