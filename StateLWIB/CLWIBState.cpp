@@ -473,7 +473,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
             }
         }
         if(Event.Key == SDLK_t){
-            if (tDown == 1)
+            /*if (tDown == 1)
                 tDown = 0;
             else {
                 tDown = 1; //remove
@@ -481,7 +481,8 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 oneDown = 0;
                 threeDown = 0; 
                 fourDown = 0;
-            }
+            }*/
+            change = 5;
         }
         if(Event.Key == SDLK_m){
             mDown = 1; //move
@@ -1238,15 +1239,80 @@ void CLWIBState::OnWidgetUnHover(CGUIWidget *widget) {
 void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     if (widget == leftArrow) {
         if (change == -1)
-            change = 4;
+            change = 5;
         else
             change--;
     }
     if (widget == rightArrow){
-        if (change == 4)
+        if (change == 5)
             change = 0;
         else
             change++;
+    }
+    if (widget == tileOne) {
+        if (change == 0) {
+            textureType = 0;
+        }
+        if (change == 2) {
+            enemyType = 0;
+        }
+    }
+    if (widget == tileTwo) {
+        if (change == 0) {
+            textureType = 1;
+        }
+        if (change == 2) {
+            enemyType = 1;
+        }
+    }
+    if (widget == tileThree) {
+        if (change == 0) {
+            textureType = 2;
+        }
+        if (change == 2) {
+            enemyType = 2;
+        }
+    }
+    if (widget == tileFour) {
+        if (change == 0) {
+            textureType = -5;
+        }
+        if (change == 2) {
+            enemyType = 3;
+        }
+    }
+    if (widget == tileFive) {
+        if (change == 0) {
+        }
+        if (change == 2) {
+            enemyType = 4;
+        }
+    }
+    if (widget == tileSix) {
+        if (change == 0) {
+        }
+        if (change == 2) {
+            enemyType = 5;
+        }
+    }
+    if (widget == tileSeven) {
+        if (change == 0) {
+        }
+        if (change == 2) {
+            enemyType = 6;
+        }
+    }
+    if (widget == tileEight) {
+        if (change == 0) {
+        }
+        if (change == 1) {
+        }
+    }
+    if (widget == tileNine) {
+        if (change == 0) {
+        }
+        if (change == 1) {
+        }
     }
 }
 
@@ -1308,6 +1374,17 @@ void CLWIBState::pickInsert()
         blockDepth = 1;
         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
+    if (change == 5) {
+        fourDown = 0;
+        threeDown = 0;
+        oneDown = 0;
+        tDown = 1;
+        twoDown = 0;
+        blockWidth = 1;
+        blockHeight = 1;
+        blockDepth = 1;
+        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+    }
     
 }
 void CLWIBState::prepHud() {
@@ -1318,7 +1395,7 @@ void CLWIBState::prepHud() {
     CTexture *grass = new CTexture(CImageLoader::loadImage("Base/grass.bmp"));
     CTexture *dirt = new CTexture(CImageLoader::loadImage("Base/dirt.bmp"));
     CTexture *rock = new CTexture(CImageLoader::loadImage("Base/rock.bmp"));
-    //CTexture *imgright = new CTexture(CImageLoader::loadImage("ModelImages/rightArrowPic.bmp"));
+    CTexture *ground = new CTexture(CImageLoader::loadImage("Base/GrassyGrass.bmp"));
     //arrows to cycle though the blocks, enemies, cabbage, flag etc.
     leftArrow = new CGUIImageWidget(imgLeft, norm);
     leftArrow->setPosition(SVector2(1.05f, .85f));
@@ -1330,42 +1407,44 @@ void CLWIBState::prepHud() {
 
     //flag = new CGUIImageWidget();
     //blocks buttons
-    grassBlock = new CGUIImageWidget(grass,norm);
-    grassBlock->setPosition(SVector2(1.05f, .70f));
-    dirtBlock = new CGUIImageWidget(dirt,norm);
-    dirtBlock->setPosition(SVector2(1.20f, .70f));
-    rockBlock = new CGUIImageWidget(rock,norm);
-    rockBlock->setPosition(SVector2(1.05f, .55f));
-    //groundBlock = new CGUIImageWidget(test2,norm);
-    //grassBlock = new CGUIImageWidget(test2,norm);
+    tileOne = new CGUIImageWidget(grass,norm);
+    tileOne->setPosition(SVector2(1.05f, .70f));
 
-   // grassBlock->setPosition(SVector2(1.15f, 1.0f));
-
-    //rockBlock = new CGUIImageWidget(test,SVector2(.1f, .1f));
-
-   // grassBlock->setPosition(SVector2(1.15f, .5f));
-
-    //groundBlock = new CGUIImageWidget(test,SVector2(.5f, .5f));
-
-    //dirtBlock = new CGUIImageWidget(test,SVector2(.5f, .5f));
-
-    /*appleE =new CGUIImageWidget() ;
-
-    orangeE =new CGUIImageWidget() ;
-
-    kiwiE = new CGUIImageWidget();
-
-    fireE = new CGUIImageWidget();
-
-    bladeE = new CGUIImageWidget();
-
-    cycleLeft = new CGUIImageWidget();
-
-    cycleRight = new CGUIImageWidget();*/
+    tileTwo = new CGUIImageWidget(dirt,norm);
+    tileTwo->setPosition(SVector2(1.20f, .70f));
+    
+    tileThree = new CGUIImageWidget(rock,norm);
+    tileThree->setPosition(SVector2(1.05f, .55f));
+    
+    tileFour = new CGUIImageWidget(ground,norm);
+    tileFour->setPosition(SVector2(1.20f, .55f));
+    
+    tileFive = new CGUIImageWidget(ground,norm);
+    tileFive->setPosition(SVector2(1.05f, .40f));
+   
+    tileSix = new CGUIImageWidget(ground,norm);
+    tileSix->setPosition(SVector2(1.20f, .40f));
+    
+    tileSeven = new CGUIImageWidget(ground,norm);
+    tileSeven->setPosition(SVector2(1.05f, .25f));
+    
+    tileEight = new CGUIImageWidget(ground,norm);
+    tileEight->setPosition(SVector2(1.20f, .25f));
+    
+    tileNine = new CGUIImageWidget(ground,norm);
+    tileNine->setPosition(SVector2(1.20f, .10f));
+    save = new CGUIImageWidget(ground,norm);
+    load = new CGUIImageWidget(ground,norm);
     //adding widgets to game 
-    Application.getGUIEngine().addWidget(grassBlock);
-    Application.getGUIEngine().addWidget(dirtBlock);
-    Application.getGUIEngine().addWidget(rockBlock);
+    Application.getGUIEngine().addWidget(tileOne);
+    Application.getGUIEngine().addWidget(tileTwo);
+    Application.getGUIEngine().addWidget(tileThree);
+    Application.getGUIEngine().addWidget(tileFour);
+    Application.getGUIEngine().addWidget(tileFive);
+    Application.getGUIEngine().addWidget(tileSix);
+    Application.getGUIEngine().addWidget(tileSeven);
+    Application.getGUIEngine().addWidget(tileEight);
+    Application.getGUIEngine().addWidget(tileNine);
     Application.getGUIEngine().addWidget(leftArrow);
     Application.getGUIEngine().addWidget(rightArrow);
     //Application.getGUIEngine().addWidget(grassBlock);

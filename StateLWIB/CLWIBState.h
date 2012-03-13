@@ -41,9 +41,9 @@ class CLWIBState : public CState<CLWIBState>
 
    // GUIImagewidgets
    CGUIImageWidget *leftArrow, *rightArrow, *cabbage, *flag;
-   CGUIImageWidget *grassBlock, *rockBlock, *groundBlock, *dirtBlock;
-   CGUIImageWidget *appleE, *orangeE, *kiwiE, *fireE, *bladeE;
-   CGUIImageWidget *cycleLeft, *cycleRight;
+   CGUIImageWidget *tileOne, *tileTwo, *tileThree, *tileFour;
+   CGUIImageWidget *tileFive, *tileSix, *tileSeven, *tileEight, *tileNine;
+   CGUIImageWidget *save, *load;
     //CMESH stuff
    CMesh *cubeMesh, *appleMesh, *orangeMesh, *kiwiMesh, *cabbageMesh, *groundMesh, *bladeMesh, *flagMesh;
    CMesh *health, *energy;
