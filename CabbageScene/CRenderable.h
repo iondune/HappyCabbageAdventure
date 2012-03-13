@@ -61,7 +61,7 @@ protected:
 
 public:
 
-   int Size;
+	int Size;
     CRenderable(ISceneObject * parent);
 
     CMaterial & getMaterial();

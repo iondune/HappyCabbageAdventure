@@ -27,13 +27,17 @@ void CSceneObject::draw(CScene const * const scene, ERenderPass const Pass)
 	switch (Pass)
 	{
 	case ERP_DEFAULT:
+	case ERP_DEFERRED_OBJECTS:
 		for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
 			(* it)->draw(scene);
 		break;
 
-	case ERP_SS_NORMALS:
+	case ERP_MODEL_NORMALS:
 		for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
 			(* it)->drawNormals(scene);
+		break;
+
+	case ERP_DEFERRED_LIGHTS:
 		break;
 	}
 }

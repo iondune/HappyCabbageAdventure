@@ -19,6 +19,8 @@ class CSceneManager;
 class CSceneEffectManager
 {
 
+protected:
+
 	CSceneManager * SceneManager;
 
 	int EnabledEffects;

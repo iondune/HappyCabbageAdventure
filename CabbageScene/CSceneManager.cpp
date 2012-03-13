@@ -200,8 +200,13 @@ void CSceneManager::drawAll()
 			else
 				glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			if (it->Pass == ERP_DEFERRED_LIGHTS)
+				glDisable(GL_DEPTH_TEST);
+
 			RootObject.draw(CurrentScene, it->Pass);
+
+			if (it->Pass == ERP_DEFERRED_LIGHTS)
+				glEnable(GL_DEPTH_TEST);
 		}
 
 		EffectManager->apply();

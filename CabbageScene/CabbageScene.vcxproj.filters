@@ -74,6 +74,9 @@
     <ClInclude Include="CSceneEffectManager.h">
       <Filter>Scene Management</Filter>
     </ClInclude>
+    <ClInclude Include="CDeferredShadingManager.h">
+      <Filter>Scene Management</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CImage.cpp">
@@ -131,6 +134,9 @@
       <Filter>Scene Management</Filter>
     </ClCompile>
     <ClCompile Include="CSceneEffectManager.cpp">
+      <Filter>Scene Management</Filter>
+    </ClCompile>
+    <ClCompile Include="CDeferredShadingManager.cpp">
       <Filter>Scene Management</Filter>
     </ClCompile>
   </ItemGroup>

@@ -13,16 +13,7 @@ CShader * CRenderable::NormalColorShader = 0;
 CRenderable::CRenderable(ISceneObject * parent)
     : DrawType(GL_TRIANGLES), NormalObject(0), IndexBufferObject(0), Parent(parent),
 	BindModelMatrix(ModelMatrix), BindNormalMatrix(NormalMatrix), Shader(0)
-{
-    /*uModelMatrix = boost::shared_ptr<CMat4Uniform>(new CMat4Uniform());
-    uNormalMatrix = boost::shared_ptr<CMat4Uniform>(new CMat4Uniform());
-
-    addUniform("uModelMatrix", uModelMatrix);
-    addUniform("uNormalMatrix", uNormalMatrix);
-    addUniform("uMaterial.AmbientColor", Material.AmbientColor);
-    addUniform("uMaterial.DiffuseColor", Material.DiffuseColor);
-    addUniform("uMaterial.Shininess", Material.Shininess);*/
-}
+{}
 
 CShader * CRenderable::getShader()
 {

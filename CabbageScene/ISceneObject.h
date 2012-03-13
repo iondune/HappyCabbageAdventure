@@ -33,7 +33,9 @@ public:
 enum ERenderPass
 {
 	ERP_DEFAULT,
-	ERP_SS_NORMALS
+	ERP_MODEL_NORMALS,
+	ERP_DEFERRED_OBJECTS,
+	ERP_DEFERRED_LIGHTS
 };
 
 class CScene;
