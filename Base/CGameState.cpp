@@ -270,26 +270,33 @@ CParticleEngine *particleDustEngine;
 
 void CGameState::LoadHUD() {
 	//Prepare GUI
+   CabbageFace =  new CGUIImageWidget(CImageLoader::loadTGAImage("Base/cabbage.tga"), SVector2(.3f, .15f));
+   CabbageFace->setPosition(SVector2(-.07f, .85f));
+
+   CabbageHurtFace =  new CGUIImageWidget(CImageLoader::loadTGAImage("Base/cabbageouch.tga"), SVector2(.3f, .15f));
+   CabbageHurtFace->setPosition(SVector2(-.081f, .861f));
+   CabbageHurtFace->setVisible(false);
+
 	Health5 = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage5.tga"), SVector2(.1f, .1f));
-	Health5->setPosition(SVector2(.21f, .9f));
+	Health5->setPosition(SVector2(.36f, .86f));
 
 	Health4 = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage4.tga"), SVector2(.1f, .1f));
-	Health4->setPosition(SVector2(.16f, .9f));
+	Health4->setPosition(SVector2(.31f, .86f));
 
 	Health3 = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage3.tga"), SVector2(.1f, .1f));
-	Health3->setPosition(SVector2(.11f, .9f));
+	Health3->setPosition(SVector2(.26f, .86f));
 
 	Health2 = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage2.tga"), SVector2(.1f, .1f));
-	Health2->setPosition(SVector2(.06f, .9f));
+	Health2->setPosition(SVector2(.21f, .86f));
 
 	Health1 = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage1.tga"), SVector2(.1f, .1f));
-	Health1->setPosition(SVector2(.01f, .9f));
+	Health1->setPosition(SVector2(.16f, .86f));
 
-	CabbageEnergyBar = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/EnergyBarTop.tga"), SVector2(.3f, .1f));
-	CabbageEnergyBar->setPosition(SVector2(.02f, .82f));
+	CabbageEnergyBar = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/EnergyBarTop.tga"), SVector2(.47f, .1f));
+	CabbageEnergyBar->setPosition(SVector2(.02f, .78f));
 
-	CabbageMeter = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/EnergyBarBottom.tga"), SVector2(.3f, .1f));
-	CabbageMeter->setPosition(SVector2(.02f, .82f));
+	CabbageMeter = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/EnergyBarBottom.tga"), SVector2(.47f, .1f));
+	CabbageMeter->setPosition(SVector2(.02f, .78f));
 
 	//CabbageFace = new CGUIImageWidget(CImageLoader::loadTGAImage("../Media/cabbage.tga"), SVector2(.15f, .15f));
 	//CabbageFace->setPosition(SVector2(.02f, .9f));
@@ -303,6 +310,8 @@ void CGameState::LoadHUD() {
 	Application.getGUIEngine().addWidget(Health5);
 	Application.getGUIEngine().addWidget(CabbageMeter);
 	Application.getGUIEngine().addWidget(CabbageEnergyBar);
+	Application.getGUIEngine().addWidget(CabbageFace);
+	Application.getGUIEngine().addWidget(CabbageHurtFace);
 
 }
 
@@ -354,13 +363,13 @@ void CGameState::Initialize() {
    LivesText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
    LivesText->setText("Lives: ");
    LivesText->setVisible(true);
-   LivesText->setPosition(SVector2(0.02f, 0.80f));
-   LivesText->setColor(SColor(0.0f, 1.0f, 0.0f));
+   LivesText->setPosition(SVector2(0.14f, 0.87f));
+   LivesText->setColor(SColor(0.0f, 0.80f, 0.0f));
 
    LivesText2 = new CGUIFontWidget("WIFFLES_.TTF", 31.f);
    LivesText2->setText("Lives: ");
    LivesText2->setVisible(true);
-   LivesText2->setPosition(SVector2(0.019f, 0.795f));
+   LivesText2->setPosition(SVector2(0.1385f, 0.872f));
    LivesText2->setColor(SColor(0.0f, 0.0f, 0.0f));
 
    Application.getGUIEngine().addWidget(GameWinText);
@@ -408,7 +417,10 @@ void CGameState::Initialize() {
    LoadHUD();
    fps = timeTotal = 0;
    numFrames = 0;
-   moveDown = 0.0f;
+
+   //Start Level Music
+   changeSoundtrack("SMW.wav");
+   startSoundtrack();
 
    printf("CGameState:  Begin Function Complete\n");
 }
@@ -505,7 +517,7 @@ void CGameState::oldDisplay() {
          else {
          }
       }
-      if(!GameplayManager->isPlayerAlive()) {
+      if(!GameplayManager->isPlayerAlive() && !playDead) {
          if(GameplayManager->getPlayerLives() <= 0) {
             GameOverText->setVisible(true);
          }
@@ -523,7 +535,7 @@ void CGameState::oldDisplay() {
 
    char buf[30];
    numLives = GameplayManager->getPlayerLives();
-   sprintf(buf, "Lives: %d", numLives);
+   sprintf(buf, "%d", numLives);
    LivesText2->setText(buf);
    LivesText->setText(buf);
 
@@ -649,7 +661,7 @@ void CGameState::OnRenderStart(float const Elapsed)
       if(GameplayManager->isWon()) {
          if (playVictory) {
             Mix_HaltMusic();
-            Mix_PlayChannel(-1, victory,0);
+            Mix_PlayChannel(-1, victory,0);  //Only play once
             playVictory = false;
          }
          Engine->removeObject(victoryBlock);

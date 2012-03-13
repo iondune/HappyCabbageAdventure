@@ -37,7 +37,7 @@ class CGameState : public CState<CGameState>
    int numFrames, NumTreeTypes, NumFlowerTypes, lowDef, prevHealth;
    const char * levelName;
    bool oldFern;
-   CGUIImageWidget *Health5, *Health4, *Health3, *Health2, *Health1, *CabbageFace, *CabbageEnergyBar, *CabbageMeter;
+   CGUIImageWidget *Health5, *Health4, *Health3, *Health2, *Health1, *CabbageFace, *CabbageEnergyBar, *CabbageMeter, *CabbageHurtFace;
    std::vector<CBiggerBlock*> blocksY, blocksX, blocksFinal;
 
    void consolidateAndAddBlocks();

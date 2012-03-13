@@ -185,7 +185,6 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
         CGameState::get().levelName = levels[curNode].name;
          Application.getStateManager().setState(new CFadeOutState(& CGameState::get()));
          spaceDown = 1;
-         changeSoundtrack("SMW.wav");
       }
       if(Event.Key == SDLK_ESCAPE) {
          Application.getStateManager().setState(new CFadeOutState(& CMainMenuState::get()));

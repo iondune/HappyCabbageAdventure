@@ -21,6 +21,7 @@ EApple::EApple(float x, float y, float w, float h, CGameplayManager* manager) {
 void EApple::loadMesh() {
    Renderable = new CMeshSceneObject();
    CMesh *mesh = CMeshLoader::load3dsMesh("Base/appleEnemy.3ds");
+   //CMesh *mesh = CMeshLoader::loadAsciiMesh("Base/Tyra.obj");
    if(mesh) {
       mesh->resizeMesh(SVector3(1));
       mesh->centerMeshByExtents(SVector3(0));
