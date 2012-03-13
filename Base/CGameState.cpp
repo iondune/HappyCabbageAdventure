@@ -512,6 +512,7 @@ void CGameState::oldDisplay() {
             numLives = GameplayManager->getPlayerLives();
             end();
             Initialize();
+            playDead = true;
             return;
          }
          else {
@@ -657,28 +658,28 @@ void CGameState::OnRenderStart(float const Elapsed)
    Application.getSceneManager().drawAll();
    Application.getGUIEngine().drawAll();
 
+   //Check if we have beat the level.  If we have, play the victory theme, perform the win animation, and halt the game.
    if (! GameplayManager->isPlayerAlive() || GameplayManager->isWon()) {
       if(GameplayManager->isWon()) {
          if (playVictory) {
             Mix_HaltMusic();
-            Mix_PlayChannel(-1, victory,0);  //Only play once
+            Mix_PlayChannel(-1, victory,0);
             playVictory = false;
          }
          Engine->removeObject(victoryBlock);
 		   GameWinText->setVisible(true);
       }
 
+      //Check if we have died.  If we have, play the death theme, perform the death animation, and halt the game.
       else {
          //Chris Code.  Play Death Sound
          if (playDead) {
             Mix_HaltMusic();
-            Mix_PlayChannel(-1, die, 0); //Only play once
+            Mix_PlayChannel(-1, die, 0);
             playDead = false;
             spaceDown = 0;
          }
          Charged = 0;
-
-		 //GameOverText->setVisible(true);
       }
    }
 
@@ -691,6 +692,7 @@ void CGameState::OnRenderStart(float const Elapsed)
       numFrames = 0;
    }
 
+   //Update the HUD
    UpdateLeaves();
    UpdateEnergy(Elapsed);
 
@@ -746,69 +748,79 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_s){
          sDown = 1;
       }
-      if(Event.Key == SDLK_a){
-         if(moveDown > 0.0f) {
-            if(particleDustEngine) {
-               particleDustEngine->deconstruct();
-               delete particleDustEngine;
-               particleDustEngine = NULL;
-            }
-            particleDustEngine = new CParticleEngine(SVector3(0, 1, 0), 70, -1.0f, DUST_PARTICLE);
-            particleDustEngine->UsePhysics(Engine);
 
-            Player->getAttributes().MaxWalk = NoClipMode?34.5f:5.5f;
-            moveDown = 0.0f;
-         }
-         else {
-            moveDown = 0.3f;
-         }
-         aDown = 1;
-      }
-      if(Event.Key == SDLK_d){
-         if(moveDown > 0.0f) {
-            if(particleDustEngine) {
-               particleDustEngine->deconstruct();
-               delete particleDustEngine;
-               particleDustEngine = NULL;
-            }
-            particleDustEngine = new CParticleEngine(SVector3(0, 1, 0), 70, -1.0f, DUST_PARTICLE);
-            particleDustEngine->UsePhysics(Engine);
+      //Check if we have not won the level
+      if (!GameplayManager->isWon()) {
+         if(Event.Key == SDLK_a){
+            if(moveDown > 0.0f) {
+               if(particleDustEngine) {
+                  particleDustEngine->deconstruct();
+                  delete particleDustEngine;
+                  particleDustEngine = NULL;
+               }
+               particleDustEngine = new CParticleEngine(SVector3(0, 1, 0), 70, -1.0f, DUST_PARTICLE);
+               particleDustEngine->UsePhysics(Engine);
 
-            Player->getAttributes().MaxWalk = NoClipMode?34.5f:5.5f;
-            moveDown = 0.0f;
-         }
-         else {
-            moveDown = 0.3f;
-         }
-         dDown = 1;
-      }
-#ifdef PARTICLE
-      if(Event.Key == SDLK_l){
-         //GameplayManager->setChargingLaser
-         if(GameplayManager->getPlayerEnergy() > 0) {
-            if(!particleLaserFireEngine && (!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead))) {
-               particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 2.3f, LASER_CHARGING_PARTICLE);
+               Player->getAttributes().MaxWalk = NoClipMode?34.5f:5.5f;
+               moveDown = 0.0f;
             }
-            PlayerView->setShader(ToonBright);
-            lDown = 1;
+            else {
+               moveDown = 0.3f;
+            }
+            aDown = 1;
+         }
+         if(Event.Key == SDLK_d && !GameplayManager->isWon()){
+            if(moveDown > 0.0f) {
+               if(particleDustEngine) {
+                  particleDustEngine->deconstruct();
+                  delete particleDustEngine;
+                  particleDustEngine = NULL;
+               }
+               particleDustEngine = new CParticleEngine(SVector3(0, 1, 0), 70, -1.0f, DUST_PARTICLE);
+               particleDustEngine->UsePhysics(Engine);
+
+               Player->getAttributes().MaxWalk = NoClipMode?34.5f:5.5f;
+               moveDown = 0.0f;
+            }
+            else {
+               moveDown = 0.3f;
+            }
+            dDown = 1;
+         }
+   #ifdef PARTICLE
+         if(Event.Key == SDLK_l){
+            //GameplayManager->setChargingLaser
+            if(GameplayManager->getPlayerEnergy() > 0) {
+               if(!particleLaserFireEngine && (!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead))) {
+                  particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 2.3f, LASER_CHARGING_PARTICLE);
+               }
+               PlayerView->setShader(ToonBright);
+               lDown = 1;
+            }
+         }
+         if(Event.Key == SDLK_e) {
+            if(!particleCubeEngine || (particleCubeEngine && particleCubeEngine->dead))
+               particleCubeEngine = new CParticleEngine(SVector3(0, 1, 0), 100, 10, CUBE_PARTICLE);
+         }
+         if(Event.Key == SDLK_r) {
+            if(GameplayManager->getPlayerEnergy() > 0) {
+               if(!particleLeafEngine || (particleLeafEngine && particleLeafEngine->dead))
+                  particleLeafEngine = new CParticleEngine(SVector3(0, 1, 0), 150, 6, LEAF_PARTICLE);
+               PlayerView->setGodMode(6.0f);
+               //GameplayManager->setRecovering(6.0);
+               GameplayManager->UseAbility(1);
+               GameplayManager->setGodMode(6.0f);
+            }
          }
       }
-      if(Event.Key == SDLK_e) {
-         if(!particleCubeEngine || (particleCubeEngine && particleCubeEngine->dead))
-            particleCubeEngine = new CParticleEngine(SVector3(0, 1, 0), 100, 10, CUBE_PARTICLE);
-      }
-      if(Event.Key == SDLK_r) {
-         if(GameplayManager->getPlayerEnergy() > 0) {
-            if(!particleLeafEngine || (particleLeafEngine && particleLeafEngine->dead))
-               particleLeafEngine = new CParticleEngine(SVector3(0, 1, 0), 150, 6, LEAF_PARTICLE);
-            PlayerView->setGodMode(6.0f);
-            //GameplayManager->setRecovering(6.0);
-            GameplayManager->UseAbility(1);
-            GameplayManager->setGodMode(6.0f);
-         }
+
+      else {
+         aDown = 0.f;
+         dDown = 0.f;
+         moveDown = 0.f;
       }
 #endif
-      if(Event.Key == SDLK_k){
+      if(Event.Key == SDLK_k) {
          backwardsView = !backwardsView;
       }
       if(Event.Key == SDLK_j){
@@ -829,7 +841,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
             Mix_PlayMusic(music, -1);
          }
       }
-      if(Event.Key == SDLK_SPACE) {
+      if(Event.Key == SDLK_SPACE  && !GameplayManager->isWon()) {
          spaceDown = 1;
          if(NoClipMode) {
             Player->setVelocity(SVector2(Player->getVelocity().X, 10.0f));
@@ -1052,25 +1064,28 @@ void CGameState::UpdateEnergy(float const Elapsed) {
 	float curEnergy = (float)GameplayManager->getPlayerEnergy();
 
 	//printf("curEnergy is %f, energyStatus is %f\n", curEnergy, energyStatus);
-	if (energyStatus < 0.17f) {
-		CabbageMeter->setSize(SVector2(0.f, .1f));
-		energyStatus = 0.f;
-	}
 
-	if (energyStatus > 3.f) {
-		energyStatus = 3.f;
+	//Check if we're at the bottom of the energy bar.  If we are, make it invisible
+	//to counteract the bar glitch
+	if (energyStatus < 0.1f) {
+	   CabbageMeter->setVisible(false);
 	}
+	else
+	   CabbageMeter->setVisible(true);
+
+	if (energyStatus >= curEnergy - .01f && energyStatus <= curEnergy + .01f)
+	   energyStatus = curEnergy;
 
 	if (energyStatus > curEnergy) {
 		//printf("Enter\n");
 		energyStatus -= .7f*Elapsed;
-		CabbageMeter->setSize(SVector2(.3f*energyStatus/3.f, .1f));
+		CabbageMeter->setSize(SVector2(.47f*energyStatus/3.f, .1f));
 
 	}
 
 	else if (energyStatus < curEnergy) {
 		energyStatus +=.7f*Elapsed;
-		CabbageMeter->setSize(SVector2(.3f*energyStatus/3.f, .1f));
+		CabbageMeter->setSize(SVector2(.47f*energyStatus/3.f, .1f));
 	}
 }
 
