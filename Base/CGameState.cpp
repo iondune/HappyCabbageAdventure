@@ -1029,18 +1029,20 @@ void CGameState::UpdateLeaves() {
 		}
 	}
 
-   if (GameplayManager->getRecovering() > 0.f || (curHealth == 0 && playerRenderable->getMesh() == cabbageMesh)) {
-      printf("Changed face.\n");
+   if (GameplayManager->getRecovering() > 0.f) {
       CabbageHurtFace->setVisible(true);
+      damageCabbage->setVisible(true);
+
       CabbageFace->setVisible(false);
-      playerRenderable->setMesh(cabbageDamage);
-      playerRenderable->setRotation(SVector3(0.f, 0.f, 180.f));
+      normalCabbage->setVisible(false);
    }
 
-   else if (playerRenderable->getMesh() == cabbageDamage && curHealth > 0) {
+   else if (!normalCabbage->isVisible() && curHealth > 0) {
       CabbageHurtFace->setVisible(false);
+      damageCabbage->setVisible(false);
+
       CabbageFace->setVisible(true);
-      playerRenderable->setMesh(cabbageMesh);
+      normalCabbage->setVisible(true);
    }
 
 	prevHealth = curHealth;
@@ -1112,7 +1114,7 @@ void CGameState::PrepSky() {
    tempBlock->setShader(DiffuseTexture);
    tempBlock->setTranslation(SVector3(75, 17, -5.0));
    tempBlock->setScale(SVector3(250, -50, 1));
-   tempBlock->setCullingEnabled(false);
+   tempBlock->setCullingEnabled(true);
    Application.getSceneManager().addSceneObject(tempBlock);
 
 }
@@ -1291,7 +1293,7 @@ void Load3DS()
       cabbageMesh->calculateNormalsPerVertex();
    }
    else {
-      fprintf(stderr, "Failed to load the cababge mesh\n");
+      fprintf(stderr, "Failed to load the cabbage mesh\n");
    }
 
    cabbageDamage = CMeshLoader::load3dsMesh("Base/cabbageouch2.3ds");
@@ -1406,76 +1408,24 @@ void PrepMeshes()
    renderDerp->setMesh(derpMesh);
    renderDerp->setShader(Toon);
 
-   renderBasicTree = new CMeshSceneObject();
-   renderBasicTree->setMesh(basicTreeMesh);
-   renderBasicTree->setShader(Toon);
+   normalCabbage = new CMeshSceneObject();
+   normalCabbage->setMesh(cabbageMesh);
+   normalCabbage->setShader(Toon);
+   normalCabbage->setCullingEnabled(false);
 
-   renderChristmasTree = new CMeshSceneObject();
-   renderChristmasTree->setMesh(cabbageMesh);
-   renderChristmasTree->setShader(Toon);
+   damageCabbage = new CMeshSceneObject();
+   damageCabbage->setMesh(cabbageDamage);
+   damageCabbage->setShader(Toon);
+   damageCabbage->setVisible(false);
+   damageCabbage->setScale(SVector3(1.5f));
+   damageCabbage->setRotation(SVector3(0.f, 0.f, 45.f));
+   damageCabbage->setTranslation(SVector3(0.f, 0.f, .15f));
+   damageCabbage->setCullingEnabled(false);
 
    playerRenderable = new CMeshSceneObject();
-   playerRenderable->setMesh(cabbageMesh);
-   //playerRenderable->enableDebugData(EDebugData::Normals);
-   playerRenderable->setShader(Toon);
-   playerRenderable->setScale(SVector3(2));
-
-   renderBlueFlwr = new CMeshSceneObject();
-   renderBlueFlwr->setMesh(blueFlwrMesh);
-   renderBlueFlwr->setShader(Toon);
-   renderBlueFlwr->setTranslation(SVector3(-23.f, .18f, 2));
-   renderBlueFlwr->setScale(SVector3(.36f));
-   renderBlueFlwr->setRotation(SVector3(-90, 0, 0));
-
-   renderWhiteFlwr = new CMeshSceneObject();
-   renderWhiteFlwr->setMesh(whiteFlwrMesh);
-   renderWhiteFlwr->setTranslation(SVector3(-20, .2f, 2));
-   renderWhiteFlwr->setScale(SVector3(.36f));
-   renderWhiteFlwr->setRotation(SVector3(0, 90, 0));
-   renderWhiteFlwr->setShader(Toon);
-
-   renderWhiteSunflwr = new CMeshSceneObject();
-   renderWhiteSunflwr->setMesh(whiteFlwrMesh);
-   renderWhiteSunflwr->setTranslation(SVector3(-20, .2f, 2));
-   renderWhiteSunflwr->setScale(SVector3(.36f));
-   renderWhiteSunflwr->setRotation(SVector3(0, 90, 0));
-   renderWhiteSunflwr->setShader(Toon);
-
-   renderPurpleFlwr = new CMeshSceneObject();
-   renderPurpleFlwr->setMesh(whiteFlwrMesh);
-   renderPurpleFlwr->setTranslation(SVector3(-20, .2f, 2));
-   renderPurpleFlwr->setScale(SVector3(.36f));
-   renderPurpleFlwr->setRotation(SVector3(0, 90, 0));
-   renderPurpleFlwr->setShader(Toon);
-
-   renderYellowFlwr = new CMeshSceneObject();
-   renderYellowFlwr->setMesh(whiteFlwrMesh);
-   renderYellowFlwr->setTranslation(SVector3(-20, .2f, 2));
-   renderYellowFlwr->setScale(SVector3(.36f));
-   renderYellowFlwr->setRotation(SVector3(0, 90, 0));
-   renderYellowFlwr->setShader(Toon);
-
-   renderTealFlwr = new CMeshSceneObject();
-   renderTealFlwr->setMesh(whiteFlwrMesh);
-   renderTealFlwr->setTranslation(SVector3(-20, .2f, 2));
-   renderTealFlwr->setScale(SVector3(.36f));
-   renderTealFlwr->setRotation(SVector3(0, 90, 0));
-   renderTealFlwr->setShader(Toon);
-
-   renderFicus = new CMeshSceneObject();
-   renderFicus->setMesh(ficusMesh);
-   renderFicus->setTranslation(SVector3(-21, .5f, 2));
-   renderFicus->setScale(SVector3(1.0));
-   renderFicus->setRotation(SVector3(-90, 0, 0));
-   renderFicus->setTexture(blueFlwrTxt);
-   renderFicus->setShader(ToonTexture);
-
-   renderFern = new CMeshSceneObject();
-   renderFern->setMesh(fernMesh);
-   renderFern->setTranslation(SVector3(-19, .5f, 2));
-   renderFern->setScale(SVector3(.75));
-   renderFern->setRotation(SVector3(-90, 0, 0));
-   renderFern->setShader(Toon);
+   playerRenderable->addChild(normalCabbage);
+   playerRenderable->addChild(damageCabbage);
+   playerRenderable->setVisible(false);
 
    renderFlag = new CMeshSceneObject();
    renderFlag->setMesh(flagMesh);
