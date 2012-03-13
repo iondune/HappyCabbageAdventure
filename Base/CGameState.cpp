@@ -1033,11 +1033,13 @@ void CGameState::UpdateLeaves() {
       printf("Changed face.\n");
       CabbageHurtFace->setVisible(true);
       CabbageFace->setVisible(false);
+      cabbageMesh = CMeshLoader::load3dsMesh("Base/cabbageouch2.3ds");
    }
 
    else {
       CabbageHurtFace->setVisible(false);
       CabbageFace->setVisible(true);
+      cabbageMesh = CMeshLoader::load3dsMesh("Base/crappycabbage2.3ds");
    }
 
 	prevHealth = curHealth;
