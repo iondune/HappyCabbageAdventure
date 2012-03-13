@@ -1029,17 +1029,18 @@ void CGameState::UpdateLeaves() {
 		}
 	}
 
-   if (GameplayManager->getRecovering() > 0.f || curHealth == 0) {
+   if (GameplayManager->getRecovering() > 0.f || curHealth == 0 && playerRenderable->getMesh() == cabbageMesh) {
       printf("Changed face.\n");
       CabbageHurtFace->setVisible(true);
       CabbageFace->setVisible(false);
-      cabbageMesh = CMeshLoader::load3dsMesh("Base/cabbageouch2.3ds");
+      playerRenderable->setMesh(cabbageDamage);
    }
 
-   else {
+   else if (playerRenderable->getMesh() == cabbageDamage) {
       CabbageHurtFace->setVisible(false);
       CabbageFace->setVisible(true);
       cabbageMesh = CMeshLoader::load3dsMesh("Base/crappycabbage2.3ds");
+      playerRenderable->setMesh(cabbageMesh);
    }
 
 	prevHealth = curHealth;
@@ -1293,7 +1294,12 @@ void Load3DS()
       fprintf(stderr, "Failed to load the cababge mesh\n");
    }
 
-
+   cabbageDamage = CMeshLoader::load3dsMesh("Base/cabbageouch2.3ds");
+   if (cabbageDamage) {
+      cabbageMesh->resizeMesh(SVector3(0.5));
+      cabbageMesh->centerMeshByExtents(SVector3(0));
+      cabbageMesh->calculateNormalsPerVertex();
+   }
 
    blueFlwrMesh = CMeshLoader::load3dsMesh("Base/simpleflower1.3ds");
    if (blueFlwrMesh) {
