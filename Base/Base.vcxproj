@@ -40,28 +40,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>
-      ;$(VisualStudioDir)\Projects\glew-1.7.0\include;
-      ;$(VisualStudioDir)\Projects\SDL-1.2.15\include;
-      ;$(VisualStudioDir)\Projects\freetype-2.4.2\include;
-      ;$(SolutionDir)\CabbageCore;
-      ;$(SolutionDir)\CabbageFramework;
-      ;$(SolutionDir)\CabbageScene;
-      ;$(SolutionDir)\CabbageGUI;
-      ;$(SolutionDir)\CabbageParticle;
-      ;$(SolutionDir)\CabbageCollider;
-      ;$(IncludePath);
-    </IncludePath>
+    <IncludePath>$(VisualStudioDir)\Projects\glew-1.7.0\include;$(VisualStudioDir)\Projects\freetype-2.4.2\include;$(SolutionDir)\CabbageCore;$(SolutionDir)\CabbageFramework;$(SolutionDir)\CabbageScene;$(SolutionDir)\CabbageGUI;$(SolutionDir)\CabbageParticle;$(SolutionDir)\CabbageCollider;$(IncludePath)</IncludePath>
     <LibraryPath>
       ;$(VisualStudioDir)\Projects\glew-1.7.0\lib;
       ;$(VisualStudioDir)\Projects\SDL-1.2.15\lib\x86;
       ;$(VisualStudioDir)\Projects\freetype-2.4.2\lib;
       ;$(LibraryPath);
     </LibraryPath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      ;$(SolutionDir)\Debug;
-      ;$(LibraryPath);
-    </LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Program Files\Microsoft Visual Studio 10.0\SDL-1.2.15\lib\x86;$(SolutionDir)\Debug;$(LibraryPath)</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       ;$(SolutionDir)\Release;
       ;$(LibraryPath);
@@ -76,10 +62,11 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>glew32.lib;SDL.lib;SDLmain.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -93,7 +80,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>glew32.lib;SDL.lib;SDLmain.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

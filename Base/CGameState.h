@@ -33,12 +33,14 @@ class CGameState : public CState<CGameState>
    CGameState();
    //Initalizer fxn
    ICamera *Camera;
-   float fps, timeTotal, prevEnergy, energyStatus, moveDown;
+   float fps, timeTotal, prevEnergy, energyStatus, moveDown, StartWin, curScaleX, curScaleY;
    int numFrames, NumTreeTypes, NumFlowerTypes, lowDef, prevHealth;
    const char * levelName;
-   bool oldFern;
+   bool oldFern, launch;
    CGUIImageWidget *Health5, *Health4, *Health3, *Health2, *Health1, *CabbageFace, *CabbageEnergyBar, *CabbageMeter, *CabbageHurtFace;
    std::vector<CBiggerBlock*> blocksY, blocksX, blocksFinal;
+
+   CParticleEngine *f1, *f2, *f3, *glow;
 
    void consolidateAndAddBlocks();
    void EngineInit( void );
@@ -61,5 +63,6 @@ class CGameState : public CState<CGameState>
    void PrepSky();
    void GeneratePlants(float x, float y, float w, float h, float d);
    CMeshSceneObject* PrepEnemy(float x, float y);
+   void RunVictorySequence(float Elapsed);
 };
 #endif

@@ -262,7 +262,6 @@ void CGameplayManager::setVictoryFlag(Cabbage::Collider::CObject * f) {
    VictoryFlag = f;
 }
 
-
 bool const CGameplayManager::isWon() const
 {
    return won != 0; 
@@ -364,7 +363,7 @@ void CGameplayManager::run(float const TickTime)
       float enemyCenterX = Enemies[i]->Actor->getArea().getCenter().X;
       float enemyCenterY = Enemies[i]->Actor->getArea().getCenter().Y;
 
-      if ((enemyCenterX < cabbageCenterX + 9 && enemyCenterX > cabbageCenterX - 9)) {// && (enemyCenterY < cabbageCenterY + 9 && enemyCenterY > cabbageCenterY - 9))
+      if ((enemyCenterX < cabbageCenterX + 9 && enemyCenterX > cabbageCenterX - 9) && !isWon()) {
          if(Enemies[i]->Actor->CollideableType == COLLIDEABLE_TYPE_KIWI) {
             EKiwi *kPtr = (EKiwi*)Enemies[i];
             if(kPtr->inZ && (
@@ -378,7 +377,17 @@ void CGameplayManager::run(float const TickTime)
          }
          Enemies[i]->update(TickTime);
       }
+
+      //Kill only the visible enemies to ensure we don't cause massive lag.
+      else if (isWon() && (enemyCenterX < cabbageCenterX + 12 && enemyCenterX > cabbageCenterX - 12)) {
+         KillList.push_back(Enemies[i]);
+      }
    }
+
+   if (isWon()) {
+      Enemies.clear();
+   }
+
    for (ItemList::iterator it = Items.begin(); it != Items.end(); ++ it) {
       float itemCenterX = (*it)->Actor->getArea().getCenter().X;
       float itemCenterY = (*it)->Actor->getArea().getCenter().Y;
