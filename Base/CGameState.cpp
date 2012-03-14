@@ -1100,6 +1100,9 @@ void CGameState::RunVictorySequence(float Elapsed) {
    SVector3 curRotation = normalCabbage->getRotation();
    SVector2 curLocation = SVector2 (Player->getArea().getCenter().X - .5f, Player->getArea().getCenter().Y - .5f);
 
+   if (StartWin > .00f && StartWin < .07f) {
+      dDown = 0;
+   }
    if (StartWin > .05f && StartWin < .07f) {
       spaceDown = 1;
       dDown = 1;
