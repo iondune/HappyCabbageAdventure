@@ -36,7 +36,8 @@ class CLWIBState : public CState<CLWIBState>
    int enemyType, textureType, itemType;
    int WindowWidth, WindowHeight;
    //stuff for textures
-   CTexture *grass,*dirt,*rock,*ground,*cabbageImage,*apple,*orange,*kiwi,*fire,*blade;
+   CTexture *grass,*dirt,*rock,*ground,*cabbageImage,*apple,*orange,*kiwi,*fire,*blade, *alien;
+   CTexture *leaf, *heart;
    // GUIImageWidget
    CGUIFontWidget *block1, *block2, *block3;
    CGUIFontWidget *help;
@@ -45,10 +46,11 @@ class CLWIBState : public CState<CLWIBState>
    CGUIImageWidget *leftArrow, *rightArrow, *cabbage, *flag;
    CGUIImageWidget *tileOne, *tileTwo, *tileThree, *tileFour;
    CGUIImageWidget *tileFive, *tileSix, *tileSeven, *tileEight, *tileNine;
-   CGUIImageWidget *save, *load;
+   CGUIImageWidget *save, *load, *undoTile, *redoTile;
     //CMESH stuff
    CMesh *cubeMesh, *appleMesh, *orangeMesh, *kiwiMesh, *cabbageMesh, *groundMesh, *bladeMesh, *flagMesh;
    CMesh *health, *energy;
+   CMesh *flameMesh;
    float xp2w(int oldX);
    float yp2w(int oldY);
    
