@@ -19,7 +19,7 @@ varying vec3 vLightPosition;
 
 void main()
 {
-    vLightPosition = uLightPosition;
+    vLightPosition = (uModelMatrix * vec4(0, 0, 0, 1)).xyz;//uLightPosition;
     gl_Position = uProjMatrix * uViewMatrix * uModelMatrix * vec4(aPosition, 1);
     gPosition = gl_Position;
 }

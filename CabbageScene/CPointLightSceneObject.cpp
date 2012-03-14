@@ -14,7 +14,7 @@ CPointLightSceneObject::CPointLightSceneObject()
 	SphereMesh->resizeMesh(SVector3(2.f));
 	SphereMesh->updateBuffers();
 
-	setScale(SVector3(30.f));
+	setRadius(3.f);
 
 	MeshBuffer = SphereMesh->MeshBuffers[0];
 
@@ -51,8 +51,7 @@ void CPointLightSceneObject::draw(CScene const * const scene, ERenderPass const 
 			Context.uniform("uModelMatrix", AbsoluteTransformation);
 			Context.uniform("uViewMatrix", scene->getActiveCamera()->getViewMatrix());
 			Context.uniform("uProjMatrix", scene->getActiveCamera()->getProjectionMatrix());
-			//Context.uniform("uInvProjMatrix", glm::inverse(scene->getActiveCamera()->getViewMatrix()) * glm::inverse(scene->getActiveCamera()->getProjectionMatrix()));
-			Context.uniform("uLightPosition", Translation);
+			Context.uniform("uRadius", Scale.X);
 
 			Context.bindTexture("uNormal", ((CDeferredShadingManager *) ((CSceneManager *)scene)->getEffectManager())->DeferredNormalOutput);
 			Context.bindTexture("uPosition", ((CDeferredShadingManager *) ((CSceneManager *)scene)->getEffectManager())->DeferredPositionOutput);
@@ -64,5 +63,29 @@ void CPointLightSceneObject::draw(CScene const * const scene, ERenderPass const 
 }
 
 void CPointLightSceneObject::load(CScene const * const Scene)
+{
+}
+
+CPointLightSceneObject::CPointLightSceneObject(float const Radius)
+{
+	SphereMesh = CMeshLoader::load3dsMesh("Sphere.3ds");
+	SphereMesh->resizeMesh(SVector3(2.f));
+	SphereMesh->updateBuffers();
+	
+	setRadius(Radius);
+
+	MeshBuffer = SphereMesh->MeshBuffers[0];
+
+	Shader = CShaderLoader::loadShader("Deferred/PointLight");
+
+	setCullingEnabled(false);
+}
+
+void CPointLightSceneObject::setRadius(float const Radius)
+{
+	ISceneObject::setScale(SVector3(Radius));
+}
+
+void CPointLightSceneObject::setScale(SVector3 const & scale)
 {
 }

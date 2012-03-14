@@ -1389,8 +1389,17 @@ void PrepMeshes()
    //playerRenderable->enableDebugData(EDebugData::Normals);
    playerRenderable->setShader(Toon);
    playerRenderable->setScale(SVector3(2));
-   playerLight2 = new CPointLightSceneObject();
+   playerLight2 = new CPointLightSceneObject(10.f);
    CApplication::get().getSceneManager().addSceneObject(playerLight2);
+
+   for (int x = -5; x < 5; ++ x)
+	   for (int y = -5; y < 5; ++ y)
+	   {
+		   CPointLightSceneObject * point = new CPointLightSceneObject();
+		   point->setRadius(1.5f);
+		   point->setTranslation(SVector3(x * 3.f, y * 3.f, 0.f));
+		   CApplication::get().getSceneManager().addSceneObject(point);
+	   }
 
    renderBlueFlwr = new CMeshSceneObject();
    renderBlueFlwr->setMesh(blueFlwrMesh);

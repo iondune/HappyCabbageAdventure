@@ -19,10 +19,15 @@ protected:
 public:
 
 	CPointLightSceneObject();
+	CPointLightSceneObject(float const Radius);
 
     void draw(CScene const * const scene, ERenderPass const Pass);
 
 	virtual void load(CScene const * const Scene);
+
+	void setRadius(float const Radius);
+
+	void setScale(SVector3 const & scale);
 
 };
 

@@ -59,7 +59,7 @@ CDeferredShadingManager::CDeferredShadingManager(CSceneManager * sceneManager)
 
 void CDeferredShadingManager::apply()
 {
-#if 1
+#if 0
 	SPostProcessPass BlendPass;
 	BlendPass.Textures["uTexColor"] = LightPassColorOutput;
 	//BlendPass.Textures["uLightPass"] = LightPassColorOutput;
