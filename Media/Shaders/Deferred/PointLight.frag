@@ -20,13 +20,20 @@ void main()
     
     vec2 vTexCoord = (gPosition.xy / gPosition.w + 1.0) / 2.0;
     
-    vec4 Position;
-    Position.xy = gPosition.xy;
+    vec4 Position;/*
+    Position.xy = gl_FragCoord.xy;
     Position.z = texture2D(uDepth, vTexCoord).r;
-    Position.w = 1.0;
+    Position.w = 1.0;*/
     
-    Position = Position * uInvProjMatrix;
-    Position /= Position.w;
+    Position = uInvProjMatrix *  vec4( 
+               2.0 * (gl_FragCoord.x) / 1000.0 - 1.0, 
+               2.0 * (gl_FragCoord.y) / 1000.0 - 1.0,
+               2.0 * texture2D(uDepth, vTexCoord).r*100.0 - 1.0,
+               1.0);
+    //Position /= Position.w;
+    
+    //gl_FragColor = Position*10;
+    //return;
     
     vec3 LightVector = vLightPosition - Position.xyz;
     
