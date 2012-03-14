@@ -206,6 +206,9 @@ void CSceneManager::drawAll()
 			{
 				glClearColor(0.f,0.f,0.f,0.f);
 				glDisable(GL_DEPTH_TEST);
+
+				glEnable(GL_BLEND);
+				glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_COLOR);
 			}
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -213,7 +216,10 @@ void CSceneManager::drawAll()
 			RootObject.draw(CurrentScene, it->Pass);
 
 			if (it->Pass == ERP_DEFERRED_LIGHTS)
+			{
+				glDisable(GL_BLEND);
 				glEnable(GL_DEPTH_TEST);
+			}
 		}
 
 		EffectManager->apply();
