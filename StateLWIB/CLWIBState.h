@@ -28,6 +28,7 @@ class CLWIBState : public CState<CLWIBState>
    int aDown , dDown , spaceDown , wDown , sDown , gDown , fDown , tDown, eDown, mDown, cDown;
    int oneDown, twoDown, threeDown, fourDown, clickDown;
    int cabbageFlag;
+   int flagFlag;
    int xCabbage;
    int yCabbage;
    int blockCycle;

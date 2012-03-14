@@ -52,6 +52,8 @@ void CLWIBState::begin()
 {
    //printf("asdf\n");
    clickDown = 0;
+   
+   flagFlag = 0;
    cabbageFlag = 0; // for cabbage
    xCabbage = 0; // for cabbage
    yCabbage = 0;// for cabbage
@@ -830,7 +832,7 @@ void CLWIBState::PrepFlag(float x, float y) {
    CMeshSceneObject *tempFlag;
    CFlag *tempPlaceable;
    blocks.push_back(tempFlag = new CMeshSceneObject());
-   placeables.push_back(tempPlaceable = new CFlag(x, y, 1, 1));
+   placeables.push_back(tempPlaceable = new CFlag(x, y, 1, 1,0));//add flag
    tempFlag->setMesh(flagMesh);
    tempFlag->setShader(Diffuse);
    tempFlag->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
@@ -1117,7 +1119,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
                 lastMouseOveredBlock.r->setShader(tempShader);
             }
          }
-         if(!threeDown && !tDown && !twoDown && mouseDown) {
+         if(!threeDown && !tDown && !twoDown && !oneDown && !fourDown && mouseDown) {
             PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth, textureType,mDown);
          }
          lastMouseOveredBlock = m_qd;
@@ -1515,7 +1517,6 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             redoPlaceables.pop_back();
         }
     }
-    //changeTiles();
 }
 
 
@@ -1527,9 +1528,7 @@ void CLWIBState::pickInsert()
         tDown = 0;
         twoDown = 0;
         fourDown = 0;
-       /* blockWidth = 1;
-        blockHeight = 1;
-        blockDepth = 1;*/
+
         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     if (change == 1) {
@@ -1703,7 +1702,7 @@ void CLWIBState::stepCamera(float delta) {
       eye.Y -= delta*factor;
       look.Y -= delta*factor;
    }
-   if(!tDown && !twoDown && mouseDown) {
+   if(!tDown && !twoDown && !oneDown && !twoDown && !threeDown && !fourDown && mouseDown) {
       PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,textureType,mDown);
    }
 }
