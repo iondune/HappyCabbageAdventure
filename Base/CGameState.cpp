@@ -330,6 +330,8 @@ void CGameState::Initialize() {
    oldFern = false;
 
    CApplication::get().getSceneManager().setCullingEnabled(true);
+
+   f1 = f2 = f3 = glow = 0;
 #ifdef PARTICLE
    particleLeafEngine = particleCubeEngine = particleLaserEngine = particleLaserFireEngine = particleDustEngine = 0;
 #endif
@@ -1092,9 +1094,8 @@ void CGameState::RunVictorySequence(float Elapsed) {
       f3->step(Elapsed);
    }
 
-   if (glow) {
+   if (glow)
       glow->step(Elapsed);
-   }
 
 //perform cabbage sequence
    SVector3 curRotation = normalCabbage->getRotation();
@@ -1147,7 +1148,7 @@ void CGameState::RunVictorySequence(float Elapsed) {
    }
    else if (StartWin > 4.9f && StartWin < 6.4f) {
       if (!glow) {
-         //glow = new CParticleEngine(SVector3(curLocation.X, curLocation.Y, 0), 400, 2.f, LASER_CHARGING_PARTICLE); //Using this improperly.  Get Alden's help
+         glow = new CParticleEngine(SVector3(curLocation.X, curLocation.Y, 0), 400, 2.f, LASER_CHARGING_PARTICLE); //Using this improperly.  Get Alden's help
       }
       spaceDown = 0;
       curScaleY -= .4*Elapsed;
