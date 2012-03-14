@@ -254,10 +254,6 @@ void CGameplayManager::runDeathSequence(float elapsedTime) {
    }
 }
 
-void CGameplayManager::runVictorySequence(float elapsedTime) {
-
-}
-
 SVector2 CGameplayManager::getPlayerLocation() {
    return SVector2(PlayerActor->getArea().getCenter().X, PlayerActor->getArea().getCenter().Y);
 }
@@ -265,7 +261,6 @@ SVector2 CGameplayManager::getPlayerLocation() {
 void CGameplayManager::setVictoryFlag(Cabbage::Collider::CObject * f) {
    VictoryFlag = f;
 }
-
 
 bool const CGameplayManager::isWon() const
 {
@@ -401,7 +396,6 @@ void CGameplayManager::run(float const TickTime)
          (*it)->update(TickTime);
    }
    runDeathSequence(TickTime);
-   runVictorySequence(TickTime);
 }
 
 Cabbage::Collider::CEngine* CGameplayManager::getEngine() {

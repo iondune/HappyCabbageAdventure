@@ -59,6 +59,8 @@
         ;$(SolutionDir)\CabbageCore;
         ;$(IncludePath);
     </IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\MinGW\msys\1.0\home\Klonoa\happycabbageadventure3\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\MinGW\msys\1.0\home\Klonoa\happycabbageadventure3\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

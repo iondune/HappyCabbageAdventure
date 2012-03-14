@@ -319,6 +319,7 @@ void CGameState::Initialize() {
    Charged = 0; aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0; lDown = 0;
    backwardsView = 0; overView = 0; energyStatus = 3.f; prevEnergy = 3.f;
    prevHealth = 0;
+   StartWin = 0.0f;
 
    GameEventReceiver = CGameEventReceiver();
    oldFern = false;
@@ -465,8 +466,6 @@ void CGameState::oldDisplay() {
             Player->setAction(CActor::EActionType::None);
 
             PlayerView->setState(CPlayerView::State::Standing);
-
-            Player->setJumping(true);
 
          }
 
@@ -638,11 +637,6 @@ void CGameState::oldDisplay() {
       ptr->getRenderable()->setTranslation(SVector3(pos.X + (float)size.X/2, pos.Y + (float)size.Y/2, 0));
    }
 
-   // ...and by spinning it around
-   static float const RotationSpeed = 50.f;
-   //Rotation.X += RotationSpeed*Delta;
-   //Rotation.Y += RotationSpeed*Delta*2;
-
    glLoadIdentity();
 }
 
@@ -658,7 +652,7 @@ void CGameState::OnRenderStart(float const Elapsed)
    Application.getSceneManager().drawAll();
    Application.getGUIEngine().drawAll();
 
-   //Check if we have beat the level.  If we have, play the victory theme, perform the win animation, and halt the game.
+   //Check if we have beat the level.  If we have, play the victory theme, perform the win animation
    if (! GameplayManager->isPlayerAlive() || GameplayManager->isWon()) {
       if(GameplayManager->isWon()) {
          if (playVictory) {
@@ -666,6 +660,8 @@ void CGameState::OnRenderStart(float const Elapsed)
             Mix_PlayChannel(-1, victory,0);
             playVictory = false;
          }
+
+         RunVictorySequence(Elapsed);
          Engine->removeObject(victoryBlock);
 		   GameWinText->setVisible(true);
       }
@@ -711,46 +707,46 @@ void CGameState::OnRenderStart(float const Elapsed)
 //Sends event every time key pressed (also when held)
 void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
-	if (Event.Key == SDLK_c)
+	if (Event.Key == SDLK_c && !GameplayManager->isWon())
 		CApplication::get().getSceneManager().setCullingEnabled(! Event.Pressed);
 
 	if (! Event.Pressed)
 	{
-		if (Event.Key == SDLK_n)
+		if (Event.Key == SDLK_n && !GameplayManager->isWon())
 		{
 			SceneManager.getEffectManager()->setEffectEnabled(ESE_SSAO, ! SceneManager.getEffectManager()->isEffectEnabled(ESE_SSAO));
 			//CApplication::get().getSceneManager().DoSSAO = ! CApplication::get().getSceneManager().DoSSAO;
 		}
-		if (Event.Key == SDLK_b)
+		if (Event.Key == SDLK_b && !GameplayManager->isWon())
 		{
 			SceneManager.getEffectManager()->setEffectEnabled(ESE_BLOOM, ! SceneManager.getEffectManager()->isEffectEnabled(ESE_BLOOM));
 			//CApplication::get().getSceneManager().DoBloom = ! CApplication::get().getSceneManager().DoBloom;
 		}
-		if (Event.Key == ::SDLK_COMMA)
+		if (Event.Key == ::SDLK_COMMA && !GameplayManager->isWon())
 		{
 			//CApplication::get().getSceneManager().OnlySSAO = ! CApplication::get().getSceneManager().OnlySSAO;
 		}
-		if (Event.Key == ::SDLK_SLASH)
+		if (Event.Key == ::SDLK_SLASH && !GameplayManager->isWon())
 		{
 			SceneManager.getEffectManager()->setEffectEnabled(ESE_SSAO_BLUR, ! SceneManager.getEffectManager()->isEffectEnabled(ESE_SSAO_BLUR));
 			//CApplication::get().getSceneManager().DoBlur = ! CApplication::get().getSceneManager().DoBlur;
 		}
-		if (Event.Key == ::SDLK_PERIOD)
+		if (Event.Key == ::SDLK_PERIOD && !GameplayManager->isWon())
 		{
 			//CApplication::get().getSceneManager().OnlyNormals = ! CApplication::get().getSceneManager().OnlyNormals;
 		}
 	}
 
    if(Event.Pressed){
-      if(Event.Key == SDLK_w){
+      if(Event.Key == SDLK_w && !GameplayManager->isWon()){
          wDown = 1;
       }
-      if(Event.Key == SDLK_s){
+      if(Event.Key == SDLK_s && !GameplayManager->isWon()){
          sDown = 1;
       }
 
 
-      if(Event.Key == SDLK_a){
+      if(Event.Key == SDLK_a && !GameplayManager->isWon()){
          if(moveDown > 0.0f) {
             if(particleDustEngine) {
                particleDustEngine->deconstruct();
@@ -768,7 +764,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          }
          aDown = 1;
       }
-      if(Event.Key == SDLK_d){
+      if(Event.Key == SDLK_d && !GameplayManager->isWon()){
          if(moveDown > 0.0f) {
             if(particleDustEngine) {
                particleDustEngine->deconstruct();
@@ -787,7 +783,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          dDown = 1;
       }
 #ifdef PARTICLE
-      if(Event.Key == SDLK_l){
+      if(Event.Key == SDLK_l && !GameplayManager->isWon()){
          //GameplayManager->setChargingLaser
          if(GameplayManager->getPlayerEnergy() > 0) {
    if(!particleLaserFireEngine && (!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead))) {
@@ -797,11 +793,11 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
    lDown = 1;
          }
       }
-      if(Event.Key == SDLK_e) {
+      if(Event.Key == SDLK_e && !GameplayManager->isWon()) {
          if(!particleCubeEngine || (particleCubeEngine && particleCubeEngine->dead))
             particleCubeEngine = new CParticleEngine(SVector3(0, 1, 0), 100, 10, CUBE_PARTICLE);
       }
-      if(Event.Key == SDLK_r) {
+      if(Event.Key == SDLK_r && !GameplayManager->isWon()) {
          if(GameplayManager->getPlayerEnergy() > 0) {
             if(!particleLeafEngine || (particleLeafEngine && particleLeafEngine->dead))
                particleLeafEngine = new CParticleEngine(SVector3(0, 1, 0), 150, 6, LEAF_PARTICLE);
@@ -812,18 +808,18 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          }
       }
 #endif
-      if(Event.Key == SDLK_k) {
+      if(Event.Key == SDLK_k && !GameplayManager->isWon()) {
          backwardsView = !backwardsView;
       }
-      if(Event.Key == SDLK_j){
+      if(Event.Key == SDLK_j && !GameplayManager->isWon()){
          overView = NEXT(overView);
          //printf("Angle: %d\n", ANGLE(overView, backwardsView));
       }
-      if(Event.Key == SDLK_g){
+      if(Event.Key == SDLK_g && !GameplayManager->isWon()){
          GameplayManager->GodMode = !GameplayManager->GodMode;
          printf("Godmode: %d\n", GameplayManager->GodMode);
       }
-      if(Event.Key == SDLK_m){
+      if(Event.Key == SDLK_m && !GameplayManager->isWon()){
          if(musicOn) {
             musicOn = false;
             Mix_HaltMusic();
@@ -833,13 +829,13 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
             Mix_PlayMusic(music, -1);
          }
       }
-      if(Event.Key == SDLK_SPACE) {
+      if(Event.Key == SDLK_SPACE && !GameplayManager->isWon()) {
          spaceDown = 1;
          if(NoClipMode) {
             Player->setVelocity(SVector2(Player->getVelocity().X, 10.0f));
          }
       }
-      if(Event.Key == SDLK_h) {
+      if(Event.Key == SDLK_h && !GameplayManager->isWon()) {
          NoClipMode = ~NoClipMode;
          if(NoClipMode) {
             Player->CollideableLevel = INTERACTOR_NULL_BLOCK;
@@ -868,15 +864,15 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
    }
    //Check if key let go, Not sure if this will work in here.
    else  {
-      if(Event.Key == SDLK_h) {
+      if(Event.Key == SDLK_h && !GameplayManager->isWon()) {
       }
-      if(Event.Key == SDLK_w){
+      if(Event.Key == SDLK_w && !GameplayManager->isWon()){
          wDown = 0;
       }
-      if(Event.Key == SDLK_s){
+      if(Event.Key == SDLK_s && !GameplayManager->isWon()){
          sDown = 0;
       }
-      if(Event.Key == SDLK_a){
+      if(Event.Key == SDLK_a && !GameplayManager->isWon()){
          if(particleDustEngine) {
             particleDustEngine->deconstruct();
             delete particleDustEngine;
@@ -886,7 +882,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          Player->getAttributes().MaxWalk = 3.5f;
          aDown = 0;
       }
-      if(Event.Key == SDLK_d){
+      if(Event.Key == SDLK_d && !GameplayManager->isWon()){
          if(particleDustEngine) {
             particleDustEngine->deconstruct();
             delete particleDustEngine;
@@ -896,7 +892,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          Player->getAttributes().MaxWalk = 3.5f;
          dDown = 0;
       }
-      if(Event.Key == SDLK_l){
+      if(Event.Key == SDLK_l && !GameplayManager->isWon()){
          if(particleLaserEngine) {
             particleLaserEngine->deconstruct();
             delete particleLaserEngine;
@@ -1081,6 +1077,46 @@ void CGameState::UpdateEnergy(float const Elapsed) {
 	}
 }
 
+void CGameState::RunVictorySequence(float Elapsed) {
+   StartWin += Elapsed;
+//set off fireworks
+  /* if (!f1) {
+      SVector3 flagPosition = renderFlag->getTranslation();
+
+      f1 = new CParticleEngine(SVector3(flagPosition.X - 4.f, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);  //Would like to change these later so not leaves. Fine for now
+      f2 = new CParticleEngine(SVector3(flagPosition.X, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);
+      f3 = new CParticleEngine(SVector3(flagPosition.X + 4.f, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);
+   }
+   f1->step(Elapsed);
+   f2->step(Elapsed);
+   f3->step(Elapsed);
+*/
+//perform cabbage sequence
+   SVector3 curRotation = normalCabbage->getRotation();
+   SVector2 curLocation = SVector2 (Player->getArea().getCenter().X - .5f, Player->getArea().getCenter().Y - .5f);
+
+   if (StartWin > .05f && StartWin < .06f) {
+      spaceDown = 1;
+      dDown = 1;
+   }
+   else if (StartWin > .06f && StartWin < .11f)
+      spaceDown = 0;
+
+
+//      Player->setArea(SRect2(curLocation.X + 6.f*Elapsed, curLocation.Y, 1.f, 1.f));
+/*   else if (StartWin > .9f) {
+      spaceDown = 0.f;
+
+      if (curRotation.Z > -20.f) {
+         normalCabbage->setRotation(SVector3(0.f, 0.f, curRotation.Z - 40.f*Elapsed));
+         Player->setArea(SRect2(curLocation.X + 6.f*Elapsed, curLocation.Y, 1.f, 1.f));
+      }
+   }*/
+
+
+//Launch the cabbage
+}
+
 void CGameState::PrepShadow() {
    renderShadow = new CMeshSceneObject();
    renderShadow->setMesh(discMesh);
@@ -1196,7 +1232,6 @@ void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
     	  oldFern = false;
    }
 
-
    //Draw flower-type plants in foreground
       for (int n = 0; n < w; n++) {
          random = rand()%6;
@@ -1291,8 +1326,6 @@ void Load3DS()
       fprintf(stderr, "Failed to load the christmas tree mesh\n");
    }
 
-
-
    cabbageMesh = CMeshLoader::load3dsMesh("Base/crappycabbage2.3ds");
    if (cabbageMesh) {
       cabbageMesh->resizeMesh(SVector3(0.5));
@@ -1318,8 +1351,6 @@ void Load3DS()
    else {
       fprintf(stderr, "Failed to load blue flower mesh.\n");
    }
-
-
 
    whiteFlwrMesh = CMeshLoader::load3dsMesh("Base/simpleflower2.3ds");
    if (whiteFlwrMesh) {
@@ -1388,8 +1419,6 @@ void Load3DS()
    else {
       fprintf(stderr, "Failed to load flag mesh.\n");
    }
-
-   /* Load enemy mesh */
 }
 
 void LoadTextures()
@@ -1447,5 +1476,5 @@ void PrepMeshes()
    flagLogo->setTranslation(SVector3(170, 100.f, 1.0f));
    flagLogo->setRotation(SVector3(-90,0,0));
    flagLogo->setScale(SVector3(.75f));
-   flagLogo->setShader(Flat);
+   flagLogo->setShader(Toon);
 }
