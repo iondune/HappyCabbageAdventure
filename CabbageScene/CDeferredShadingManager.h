@@ -10,7 +10,7 @@ public:
 
 	CFrameBufferObject * DeferredOutputTarget;
 	CTexture * DeferredColorOutput;
-	CTexture * DeferredDepthOutput;
+	CTexture * DeferredPositionOutput;
 	CTexture * DeferredNormalOutput;
 
 	CFrameBufferObject * LightPassOutputTarget;

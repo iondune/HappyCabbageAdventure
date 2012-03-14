@@ -24,6 +24,7 @@ public:
 	bool MipMaps;
 	GLenum Wrap;
 	GLenum Filter;
+	GLenum PixelInternalFormat;
 	GLenum PixelFormat;
 	GLenum PixelType;
 

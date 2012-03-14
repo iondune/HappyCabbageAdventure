@@ -51,11 +51,11 @@ void CPointLightSceneObject::draw(CScene const * const scene, ERenderPass const 
 			Context.uniform("uModelMatrix", AbsoluteTransformation);
 			Context.uniform("uViewMatrix", scene->getActiveCamera()->getViewMatrix());
 			Context.uniform("uProjMatrix", scene->getActiveCamera()->getProjectionMatrix());
-			Context.uniform("uInvProjMatrix", glm::inverse(scene->getActiveCamera()->getViewMatrix()) * glm::inverse(scene->getActiveCamera()->getProjectionMatrix()));
-			Context.uniform("uPosition", Translation);
+			//Context.uniform("uInvProjMatrix", glm::inverse(scene->getActiveCamera()->getViewMatrix()) * glm::inverse(scene->getActiveCamera()->getProjectionMatrix()));
+			Context.uniform("uLightPosition", Translation);
 
 			Context.bindTexture("uNormal", ((CDeferredShadingManager *) ((CSceneManager *)scene)->getEffectManager())->DeferredNormalOutput);
-			Context.bindTexture("uDepth", ((CDeferredShadingManager *) ((CSceneManager *)scene)->getEffectManager())->DeferredDepthOutput);
+			Context.bindTexture("uPosition", ((CDeferredShadingManager *) ((CSceneManager *)scene)->getEffectManager())->DeferredPositionOutput);
 
 			glDrawElements(GL_TRIANGLES, MeshBuffer->IndexBuffer.getElements().size(), GL_UNSIGNED_SHORT, 0);
 			break;

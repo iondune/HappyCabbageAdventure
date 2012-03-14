@@ -12,7 +12,7 @@ STextureCreationFlags::STextureCreationFlags()
 	Wrap = GL_REPEAT;
 	Filter = GL_LINEAR;
 	PixelType = GL_UNSIGNED_BYTE;
-	PixelFormat = 0;
+	PixelInternalFormat = PixelFormat = 0;
 }
 
 void STextureCreationFlags::apply() const
@@ -47,7 +47,7 @@ CTexture::CTexture(CImage * Image, STextureCreationFlags const Flags)
 		Flags.apply();
 
 		glTexImage2D(GL_TEXTURE_2D, 0, Image->hasAlpha() ? GL_RGBA8 : GL_RGB8, Size.Width, Size.Height, 0, 
-			Flags.PixelFormat ? Flags.PixelFormat : (Image->hasAlpha() ? GL_RGBA : GL_RGB), Flags.PixelType, Image->getImageData());
+			Image->hasAlpha() ? GL_RGBA : GL_RGB, Flags.PixelType, Image->getImageData());
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 	else
@@ -63,7 +63,8 @@ CTexture::CTexture(int const width, int const height, bool const Alpha, STexture
 	glBindTexture(GL_TEXTURE_2D, TextureHandle);
 
 	Flags.apply();
-	glTexImage2D(GL_TEXTURE_2D, 0, Alpha ? GL_RGBA8 : GL_RGB8, Size.Width, Size.Height, 0, 
+	glTexImage2D(GL_TEXTURE_2D, 0, Flags.PixelInternalFormat ? Flags.PixelInternalFormat : (Alpha ? GL_RGBA : GL_RGB), 
+		Size.Width, Size.Height, 0, 
 		Flags.PixelFormat ? Flags.PixelFormat : (Alpha ? GL_RGBA : GL_RGB), Flags.PixelType, 0);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -76,7 +77,8 @@ CTexture::CTexture(SPosition2 const & size, bool const Alpha, STextureCreationFl
 	glBindTexture(GL_TEXTURE_2D, TextureHandle);
 
 	Flags.apply();
-	glTexImage2D(GL_TEXTURE_2D, 0, Alpha ? GL_RGBA8 : GL_RGB8, Size.Width, Size.Height, 0, 
+	glTexImage2D(GL_TEXTURE_2D, 0, Flags.PixelInternalFormat ? Flags.PixelInternalFormat : (Alpha ? GL_RGBA : GL_RGB),
+		Size.Width, Size.Height, 0, 
 		Flags.PixelFormat ? Flags.PixelFormat : (Alpha ? GL_RGBA : GL_RGB), Flags.PixelType, 0);
 	
 	glBindTexture(GL_TEXTURE_2D, 0);

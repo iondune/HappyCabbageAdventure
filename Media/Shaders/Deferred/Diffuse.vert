@@ -12,14 +12,19 @@ uniform mat4 uViewMatrix;
 uniform mat4 uNormalMatrix;
 
 // Deferred Values
-varying vec4 vPosition;
+varying vec3 vPosition;
 varying vec3 vNormal;
 
 void main()
 {
+    // Calculate world coordinate
+    vec4 Position = uModelMatrix * vec4(aPosition, 1.0);
+    
+    // Save for deferred output
+    vPosition = Position.xyz;
+    
     // Calculate screenspace coordinate
-    vPosition = uProjMatrix * uViewMatrix * uModelMatrix * vec4(aPosition, 1.0);
-    gl_Position = vPosition;
+    gl_Position = uProjMatrix * uViewMatrix * Position;
     
     
     // Pass down the normal (world space)

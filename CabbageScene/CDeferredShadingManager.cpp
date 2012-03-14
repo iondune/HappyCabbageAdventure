@@ -11,13 +11,14 @@ CDeferredShadingManager::CDeferredShadingManager(CSceneManager * sceneManager)
 	DeferredColorOutput = new CTexture(SceneManager->getScreenSize(), false);
 	STextureCreationFlags Flags;
 	Flags.MipMaps = false;
-	Flags.PixelFormat = GL_RED;
+	//Flags.PixelFormat = GL_RED;
+	Flags.PixelInternalFormat = GL_RGB32F;
 	Flags.PixelType = GL_FLOAT;
-	DeferredDepthOutput = new CTexture(SceneManager->getScreenSize(), false, Flags);
+	DeferredPositionOutput = new CTexture(SceneManager->getScreenSize(), false, Flags);
 	DeferredNormalOutput = new CTexture(SceneManager->getScreenSize(), false);
 
 	DeferredOutputTarget->attach(DeferredColorOutput, GL_COLOR_ATTACHMENT0);
-	DeferredOutputTarget->attach(DeferredDepthOutput, GL_COLOR_ATTACHMENT1);
+	DeferredOutputTarget->attach(DeferredPositionOutput, GL_COLOR_ATTACHMENT1);
 	DeferredOutputTarget->attach(DeferredNormalOutput, GL_COLOR_ATTACHMENT2);
 	DeferredOutputTarget->attach(new CRenderBufferObject(GL_DEPTH_COMPONENT, SceneManager->getScreenSize()), GL_DEPTH_ATTACHMENT);
 

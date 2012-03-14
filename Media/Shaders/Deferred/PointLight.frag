@@ -2,7 +2,7 @@
 
 // Textures
 uniform sampler2D uNormal;
-uniform sampler2D uDepth;
+uniform sampler2D uPosition;
 
 // Tex Coord
 varying vec4 gPosition;
@@ -20,19 +20,15 @@ void main()
     
     vec2 vTexCoord = (gPosition.xy / gPosition.w + 1.0) / 2.0;
     
-    vec4 Position;/*
+    vec4 Position = texture2D(uPosition, vTexCoord);/*
     Position.xy = gl_FragCoord.xy;
     Position.z = texture2D(uDepth, vTexCoord).r;
     Position.w = 1.0;*/
     
-    Position = uInvProjMatrix *  vec4( 
-               2.0 * (gl_FragCoord.x) / 1000.0 - 1.0, 
-               2.0 * (gl_FragCoord.y) / 1000.0 - 1.0,
-               2.0 * texture2D(uDepth, vTexCoord).r*100.0 - 1.0,
-               1.0);
+    //Position = uInvProjMatrix * Position;
     //Position /= Position.w;
     
-    //gl_FragColor = Position*10;
+    //gl_FragColor = vec4(vLightPosition, 1.0)/100.0;
     //return;
     
     vec3 LightVector = vLightPosition - Position.xyz;
