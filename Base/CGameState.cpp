@@ -749,75 +749,67 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          sDown = 1;
       }
 
-      //Check if we have not won the level
-      if (!GameplayManager->isWon()) {
-         if(Event.Key == SDLK_a){
-            if(moveDown > 0.0f) {
-               if(particleDustEngine) {
-                  particleDustEngine->deconstruct();
-                  delete particleDustEngine;
-                  particleDustEngine = NULL;
-               }
-               particleDustEngine = new CParticleEngine(SVector3(0, 1, 0), 70, -1.0f, DUST_PARTICLE);
-               particleDustEngine->UsePhysics(Engine);
 
-               Player->getAttributes().MaxWalk = NoClipMode?34.5f:5.5f;
-               moveDown = 0.0f;
+      if(Event.Key == SDLK_a){
+         if(moveDown > 0.0f) {
+            if(particleDustEngine) {
+               particleDustEngine->deconstruct();
+               delete particleDustEngine;
+               particleDustEngine = NULL;
             }
-            else {
-               moveDown = 0.3f;
-            }
-            aDown = 1;
-         }
-         if(Event.Key == SDLK_d && !GameplayManager->isWon()){
-            if(moveDown > 0.0f) {
-               if(particleDustEngine) {
-                  particleDustEngine->deconstruct();
-                  delete particleDustEngine;
-                  particleDustEngine = NULL;
-               }
-               particleDustEngine = new CParticleEngine(SVector3(0, 1, 0), 70, -1.0f, DUST_PARTICLE);
-               particleDustEngine->UsePhysics(Engine);
+            particleDustEngine = new CParticleEngine(SVector3(0, 1, 0), 70, -1.0f, DUST_PARTICLE);
+            particleDustEngine->UsePhysics(Engine);
 
-               Player->getAttributes().MaxWalk = NoClipMode?34.5f:5.5f;
-               moveDown = 0.0f;
-            }
-            else {
-               moveDown = 0.3f;
-            }
-            dDown = 1;
+            Player->getAttributes().MaxWalk = NoClipMode?34.5f:5.5f;
+            moveDown = 0.0f;
          }
-   #ifdef PARTICLE
-         if(Event.Key == SDLK_l){
-            //GameplayManager->setChargingLaser
-            if(GameplayManager->getPlayerEnergy() > 0) {
-               if(!particleLaserFireEngine && (!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead))) {
-                  particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 2.3f, LASER_CHARGING_PARTICLE);
-               }
-               PlayerView->setShader(ToonBright);
-               lDown = 1;
-            }
+         else {
+            moveDown = 0.3f;
          }
-         if(Event.Key == SDLK_e) {
-            if(!particleCubeEngine || (particleCubeEngine && particleCubeEngine->dead))
-               particleCubeEngine = new CParticleEngine(SVector3(0, 1, 0), 100, 10, CUBE_PARTICLE);
-         }
-         if(Event.Key == SDLK_r) {
-            if(GameplayManager->getPlayerEnergy() > 0) {
-               if(!particleLeafEngine || (particleLeafEngine && particleLeafEngine->dead))
-                  particleLeafEngine = new CParticleEngine(SVector3(0, 1, 0), 150, 6, LEAF_PARTICLE);
-               PlayerView->setGodMode(6.0f);
-               //GameplayManager->setRecovering(6.0);
-               GameplayManager->UseAbility(1);
-               GameplayManager->setGodMode(6.0f);
+         aDown = 1;
+      }
+      if(Event.Key == SDLK_d){
+         if(moveDown > 0.0f) {
+            if(particleDustEngine) {
+               particleDustEngine->deconstruct();
+               delete particleDustEngine;
+               particleDustEngine = NULL;
             }
+            particleDustEngine = new CParticleEngine(SVector3(0, 1, 0), 70, -1.0f, DUST_PARTICLE);
+            particleDustEngine->UsePhysics(Engine);
+
+            Player->getAttributes().MaxWalk = NoClipMode?34.5f:5.5f;
+            moveDown = 0.0f;
+         }
+         else {
+            moveDown = 0.3f;
+         }
+         dDown = 1;
+      }
+#ifdef PARTICLE
+      if(Event.Key == SDLK_l){
+         //GameplayManager->setChargingLaser
+         if(GameplayManager->getPlayerEnergy() > 0) {
+   if(!particleLaserFireEngine && (!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead))) {
+      particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 2.3f, LASER_CHARGING_PARTICLE);
+   }
+   PlayerView->setShader(ToonBright);
+   lDown = 1;
          }
       }
-
-      else {
-         aDown = 0.f;
-         dDown = 0.f;
-         moveDown = 0.f;
+      if(Event.Key == SDLK_e) {
+         if(!particleCubeEngine || (particleCubeEngine && particleCubeEngine->dead))
+            particleCubeEngine = new CParticleEngine(SVector3(0, 1, 0), 100, 10, CUBE_PARTICLE);
+      }
+      if(Event.Key == SDLK_r) {
+         if(GameplayManager->getPlayerEnergy() > 0) {
+            if(!particleLeafEngine || (particleLeafEngine && particleLeafEngine->dead))
+               particleLeafEngine = new CParticleEngine(SVector3(0, 1, 0), 150, 6, LEAF_PARTICLE);
+            PlayerView->setGodMode(6.0f);
+            //GameplayManager->setRecovering(6.0);
+            GameplayManager->UseAbility(1);
+               GameplayManager->setGodMode(6.0f);
+         }
       }
 #endif
       if(Event.Key == SDLK_k) {
@@ -841,7 +833,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
             Mix_PlayMusic(music, -1);
          }
       }
-      if(Event.Key == SDLK_SPACE  && !GameplayManager->isWon()) {
+      if(Event.Key == SDLK_SPACE) {
          spaceDown = 1;
          if(NoClipMode) {
             Player->setVelocity(SVector2(Player->getVelocity().X, 10.0f));

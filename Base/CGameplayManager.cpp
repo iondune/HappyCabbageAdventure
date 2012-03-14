@@ -254,6 +254,12 @@ void CGameplayManager::runDeathSequence(float elapsedTime) {
    }
 }
 
+void CGameplayManager::runVictorySequence(float elapsedTime) {
+   if (won) {
+      PlayerActor->setJumping(true);
+   }
+}
+
 SVector2 CGameplayManager::getPlayerLocation() {
    return SVector2(PlayerActor->getArea().getCenter().X, PlayerActor->getArea().getCenter().Y);
 }
@@ -387,6 +393,7 @@ void CGameplayManager::run(float const TickTime)
          (*it)->update(TickTime);
    }
    runDeathSequence(TickTime);
+   runVictorySequence(TickTime);
 }
 
 Cabbage::Collider::CEngine* CGameplayManager::getEngine() {
