@@ -305,6 +305,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    if (tDown && !showHelp ){
        block1->setText("Remove mode");
        block2->setText("");
+       block3->setText("");
    }
    //drawSubWindow();
    pickInsert();
@@ -1024,8 +1025,8 @@ void CLWIBState::PrepSky() {
    tempBlock->setMesh(cubeMesh);
    tempBlock->setTexture("Base/sky.bmp");
    tempBlock->setShader(DiffuseTexture);
-   tempBlock->setTranslation(SVector3(0, 24, -2.5));
-   tempBlock->setScale(SVector3(400, 50, 1));
+   tempBlock->setTranslation(SVector3(85, 24, -5));
+   tempBlock->setScale(SVector3(250, 50, 1));
    tempBlock->setCullingEnabled(false);
    Application.getSceneManager().addSceneObject(tempBlock);
 }
@@ -1340,12 +1341,16 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             change = 5;
         else
             change--;
+        if (change == 0)
+            cDown = 0;
     }
     if (widget == rightArrow){
         if (change == 5)
             change = 0;
         else
             change++;
+        if (change == 0)
+            cDown = 0;
     }
     if (widget == tileOne) {
         if (change == 0) {
@@ -1356,6 +1361,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
                 PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
             }
             textureType = 0;
+            cDown = 0;
         }
         if (change == 2) {
             enemyType = 0;
@@ -1373,6 +1379,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
                 PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
             }
             textureType = 1;
+            cDown = 0;
         }
         if (change == 2) {
             enemyType = 1;
@@ -1390,6 +1397,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
                 PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
             }
             textureType = 2;
+            cDown = 0;
         }
         if (change == 2) {
             enemyType = 2;
@@ -1402,6 +1410,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             blockHeight = 5;
             blockDepth = 5;
             PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
+            cDown = 0;
         }
         if (change == 2) {
             enemyType = 3;
@@ -1412,6 +1421,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             if (blockWidth > 1 && textureType != -5)
                 blockWidth--;
             PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+            cDown = 1;
         }
         if (change == 2) {
             enemyType = 4;
@@ -1422,6 +1432,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             if (blockWidth < 10 && textureType != -5)
                 blockWidth++;
             PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+            cDown = 1;
 
         }
         if (change == 2) {
@@ -1433,6 +1444,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             if (blockHeight > 1 && textureType != -5)
                 blockHeight--;
             PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+            cDown = 2;
         }
         if (change == 2) {
             enemyType = 6;
@@ -1443,6 +1455,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             if (blockHeight < 10 && textureType != -5)
                 blockHeight++;
             PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+            cDown = 2;
         }
         if (change == 1) {
         }
@@ -1452,6 +1465,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             if (blockDepth > 1 && textureType != -5)
                 blockDepth--;
             PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+            cDown = 3;
         }
         if (change == 1) {
         }
@@ -1461,6 +1475,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             if (blockDepth < 5 && textureType != -5)
                 blockDepth++;
             PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+            cDown = 3;
         }
         if (change == 1) {
         }

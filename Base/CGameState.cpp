@@ -1115,9 +1115,9 @@ void CGameState::PrepSky() {
    tempBlock->setMesh(cubeMesh);
    tempBlock->setTexture(skyTxt);
    tempBlock->setShader(DiffuseTexture);
-   tempBlock->setTranslation(SVector3(75, 17, -5.0));
+   tempBlock->setTranslation(SVector3(85/*75*/, 17, -5.0));
    tempBlock->setScale(SVector3(250, -50, 1));
-   tempBlock->setCullingEnabled(true);
+   tempBlock->setCullingEnabled(false);
    Application.getSceneManager().addSceneObject(tempBlock);
 
 }
