@@ -16,7 +16,8 @@ class CFlag : public CPlaceable
    CShader* shader;
    public:
    int num;
-   CFlag(float nx, float ny, int width, int height);
+   int isSecret;
+   CFlag(float nx, float ny, int width, int height, int secret);
    void writeXML(xmlwriter *);
    void moveTo(float,float);
    void setShader(CShader*);

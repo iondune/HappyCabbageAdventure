@@ -125,6 +125,9 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             flagLogo->setTranslation(SVector3((float)x, (float) y+.9f, 1.0f));
             renderFlag->setTranslation(SVector3((float)x,(float) y+.5f, 1.0f));
             GameplayManager->setVictoryFlag(victoryBlock);
+            if (t == 1){
+                //add victory flag
+            }
          }
          if(!strcmp("CPItem",xml->getNodeName())) {
             CPItem * stuff;
