@@ -1192,16 +1192,18 @@ void CLWIBState::changeTiles() {
         if (!Application.getGUIEngine().isWidgetIn(tileFour))
             Application.getGUIEngine().addWidget(tileFour);
 
-        if (Application.getGUIEngine().isWidgetIn(tileFive))
-            Application.getGUIEngine().removeWidget(tileFive);
-        if (Application.getGUIEngine().isWidgetIn(tileSix))
-            Application.getGUIEngine().removeWidget(tileSix);
-        if (Application.getGUIEngine().isWidgetIn(tileSeven))
-            Application.getGUIEngine().removeWidget(tileSeven);
-        if (Application.getGUIEngine().isWidgetIn(tileEight))
-            Application.getGUIEngine().removeWidget(tileEight);
-        if (Application.getGUIEngine().isWidgetIn(tileNine))
-            Application.getGUIEngine().removeWidget(tileNine);
+        if (!Application.getGUIEngine().isWidgetIn(tileFive))
+            Application.getGUIEngine().addWidget(tileFive);
+        if (!Application.getGUIEngine().isWidgetIn(tileSix))
+            Application.getGUIEngine().addWidget(tileSix);
+        if (!Application.getGUIEngine().isWidgetIn(tileSeven))
+            Application.getGUIEngine().addWidget(tileSeven);
+        if (!Application.getGUIEngine().isWidgetIn(tileEight))
+            Application.getGUIEngine().addWidget(tileEight);
+        if (!Application.getGUIEngine().isWidgetIn(tileNine))
+            Application.getGUIEngine().addWidget(tileNine);
+        if (!Application.getGUIEngine().isWidgetIn(tileTen))
+            Application.getGUIEngine().addWidget(tileTen);
     }
     if (change == 1) {
     
@@ -1225,6 +1227,8 @@ void CLWIBState::changeTiles() {
             Application.getGUIEngine().removeWidget(tileEight);
         if (Application.getGUIEngine().isWidgetIn(tileNine))
             Application.getGUIEngine().removeWidget(tileNine);
+        if (Application.getGUIEngine().isWidgetIn(tileTen))
+            Application.getGUIEngine().removeWidget(tileTen);
     }
     if (change == 2) {
 
@@ -1254,6 +1258,8 @@ void CLWIBState::changeTiles() {
             Application.getGUIEngine().removeWidget(tileEight);
         if (Application.getGUIEngine().isWidgetIn(tileNine))
             Application.getGUIEngine().removeWidget(tileNine);
+        if (Application.getGUIEngine().isWidgetIn(tileTen))
+            Application.getGUIEngine().removeWidget(tileTen);
     }
     if (change == 3) {
     
@@ -1273,6 +1279,8 @@ void CLWIBState::changeTiles() {
             Application.getGUIEngine().removeWidget(tileEight);
         if (Application.getGUIEngine().isWidgetIn(tileNine))
             Application.getGUIEngine().removeWidget(tileNine);
+        if (Application.getGUIEngine().isWidgetIn(tileTen))
+            Application.getGUIEngine().removeWidget(tileTen);
     }
     if (change == 4) {
         tileOne->setImage(leaf);
@@ -1296,6 +1304,8 @@ void CLWIBState::changeTiles() {
             Application.getGUIEngine().removeWidget(tileEight);
         if (Application.getGUIEngine().isWidgetIn(tileNine))
             Application.getGUIEngine().removeWidget(tileNine);
+        if (Application.getGUIEngine().isWidgetIn(tileTen))
+            Application.getGUIEngine().removeWidget(tileTen);
     }
     if (change == 5) {
 
@@ -1317,6 +1327,8 @@ void CLWIBState::changeTiles() {
             Application.getGUIEngine().removeWidget(tileEight);
         if (Application.getGUIEngine().isWidgetIn(tileNine))
             Application.getGUIEngine().removeWidget(tileNine);
+        if (Application.getGUIEngine().isWidgetIn(tileTen))
+            Application.getGUIEngine().removeWidget(tileTen);
     }
 }
 void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
@@ -1395,6 +1407,9 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     }
     if (widget == tileFive) {
         if (change == 0) {
+            if (blockWidth > 1 && textureType != -5)
+                blockWidth--;
+            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
         }
         if (change == 2) {
             enemyType = 4;
@@ -1402,6 +1417,10 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     }
     if (widget == tileSix) {
         if (change == 0) {
+            if (blockWidth < 10 && textureType != -5)
+                blockWidth++;
+            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+
         }
         if (change == 2) {
             enemyType = 5;
@@ -1409,6 +1428,9 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     }
     if (widget == tileSeven) {
         if (change == 0) {
+            if (blockHeight > 1 && textureType != -5)
+                blockHeight--;
+            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
         }
         if (change == 2) {
             enemyType = 6;
@@ -1416,12 +1438,27 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     }
     if (widget == tileEight) {
         if (change == 0) {
+            if (blockHeight < 10 && textureType != -5)
+                blockHeight++;
+            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
         }
         if (change == 1) {
         }
     }
     if (widget == tileNine) {
         if (change == 0) {
+            if (blockDepth > 1 && textureType != -5)
+                blockDepth--;
+            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+        }
+        if (change == 1) {
+        }
+    }
+    if (widget == tileTen) {
+        if (change == 0) {
+            if (blockDepth < 5 && textureType != -5)
+                blockDepth++;
+            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
         }
         if (change == 1) {
         }
@@ -1598,31 +1635,34 @@ void CLWIBState::prepHud() {
 
 
     tileOne = new CGUIImageWidget(grass,norm);
-    tileOne->setPosition(SVector2(1.05f, .70f));
+    tileOne->setPosition(SVector2(1.05f, .73f));
 
     tileTwo = new CGUIImageWidget(dirt,norm);
-    tileTwo->setPosition(SVector2(1.20f, .70f));
+    tileTwo->setPosition(SVector2(1.20f, .73f));
     
     tileThree = new CGUIImageWidget(rock,norm);
-    tileThree->setPosition(SVector2(1.05f, .55f));
+    tileThree->setPosition(SVector2(1.05f, .58f));
     
     tileFour = new CGUIImageWidget(ground,norm);
-    tileFour->setPosition(SVector2(1.20f, .55f));
+    tileFour->setPosition(SVector2(1.20f, .58f));
     
     tileFive = new CGUIImageWidget(ground,norm);
-    tileFive->setPosition(SVector2(1.05f, .40f));
+    tileFive->setPosition(SVector2(1.05f, .43f));
    
     tileSix = new CGUIImageWidget(ground,norm);
-    tileSix->setPosition(SVector2(1.20f, .40f));
+    tileSix->setPosition(SVector2(1.20f, .43f));
     
     tileSeven = new CGUIImageWidget(ground,norm);
-    tileSeven->setPosition(SVector2(1.05f, .25f));
+    tileSeven->setPosition(SVector2(1.05f, .28f));
     
     tileEight = new CGUIImageWidget(ground,norm);
-    tileEight->setPosition(SVector2(1.20f, .25f));
+    tileEight->setPosition(SVector2(1.20f, .28f));
     
     tileNine = new CGUIImageWidget(ground,norm);
-    tileNine->setPosition(SVector2(1.20f, .10f));
+    tileNine->setPosition(SVector2(1.05f, .13f));
+    
+    tileTen = new CGUIImageWidget(ground,norm);
+    tileTen->setPosition(SVector2(1.20f, .13f));
     //adding widgets to game 
 
     Application.getGUIEngine().addWidget(undoTile);
