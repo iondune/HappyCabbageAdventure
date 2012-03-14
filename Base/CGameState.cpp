@@ -329,6 +329,8 @@ void CGameState::Initialize() {
    GameEventReceiver = CGameEventReceiver();
    oldFern = false;
 
+   CParticleEngine *f1, *f2, *f3, *glow = NULL;
+
    CApplication::get().getSceneManager().setCullingEnabled(true);
 #ifdef PARTICLE
    particleLeafEngine = particleCubeEngine = particleLaserEngine = particleLaserFireEngine = particleDustEngine = 0;
