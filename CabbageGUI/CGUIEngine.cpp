@@ -81,6 +81,13 @@ void CGUIEngine::drawAll()
 	for (std::vector<CGUIWidget *>::iterator it = Widgets.begin(); it != Widgets.end(); ++ it)
 		(* it)->draw();
 }
+bool CGUIEngine::isWidgetIn(CGUIWidget * Widget) {
+    for (std::vector<CGUIWidget *>::iterator it = Widgets.begin(); it !=Widgets.end(); it++) {
+        if ((* it) == Widget)
+            return true;
+    }
+    return false;
+}
 
 CGUIEventManager * const CGUIEngine::getEventManager()
 {

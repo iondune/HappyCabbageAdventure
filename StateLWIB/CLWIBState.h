@@ -35,15 +35,17 @@ class CLWIBState : public CState<CLWIBState>
    bool showHelp;
    int enemyType, textureType, itemType;
    int WindowWidth, WindowHeight;
+   //stuff for textures
+   CTexture *grass,*dirt,*rock,*ground,*cabbageImage,*apple,*orange,*kiwi,*fire,*blade;
    // GUIImageWidget
    CGUIFontWidget *block1, *block2, *block3;
    CGUIFontWidget *help;
 
    // GUIImagewidgets
    CGUIImageWidget *leftArrow, *rightArrow, *cabbage, *flag;
-   CGUIImageWidget *grassBlock, *rockBlock, *groundBlock, *dirtBlock;
-   CGUIImageWidget *appleE, *orangeE, *kiwiE, *fireE, *bladeE;
-   CGUIImageWidget *cycleLeft, *cycleRight;
+   CGUIImageWidget *tileOne, *tileTwo, *tileThree, *tileFour;
+   CGUIImageWidget *tileFive, *tileSix, *tileSeven, *tileEight, *tileNine;
+   CGUIImageWidget *save, *load;
     //CMESH stuff
    CMesh *cubeMesh, *appleMesh, *orangeMesh, *kiwiMesh, *cabbageMesh, *groundMesh, *bladeMesh, *flagMesh;
    CMesh *health, *energy;
@@ -85,7 +87,8 @@ class CLWIBState : public CState<CLWIBState>
    void BlocksInit( void ); 
    void prepText();
    void prepHud();
-   void stepCamera(float delta);      
+   void stepCamera(float delta);
+   void changeTiles();
    void OnWidgetClick(CGUIWidget * Widget);
    void OnWidgetHover(CGUIWidget * Widget);
    void OnWidgetUnHover(CGUIWidget * Widget);
