@@ -24,6 +24,8 @@ public:
 	bool MipMaps;
 	GLenum Wrap;
 	GLenum Filter;
+	GLenum PixelFormat;
+	GLenum PixelType;
 
 	void apply() const;
 

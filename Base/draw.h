@@ -21,7 +21,7 @@ CMeshSceneObject *renderShadow, *playerRenderable, *renderChristmasTree,
 std::vector<CMeshSceneObject*> blocks, enemies, blueFlwrs, whiteFlwrs, ficuses,
   basicTrees, xmasTrees, ferns, tealFlwrs, purpleFlwrs, yellowFlwrs, whiteSunflwrs;
 
-
+CPointLightSceneObject * playerLight2;
 
 void drawYellowFlwr(float x, float y, float z, float scale, CApplication app) {
 

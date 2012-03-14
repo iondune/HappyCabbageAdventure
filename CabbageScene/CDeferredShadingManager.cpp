@@ -9,11 +9,15 @@ CDeferredShadingManager::CDeferredShadingManager(CSceneManager * sceneManager)
 
 	DeferredOutputTarget = new CFrameBufferObject();
 	DeferredColorOutput = new CTexture(SceneManager->getScreenSize(), false);
-	DeferredPositionOutput = new CTexture(SceneManager->getScreenSize(), false);
+	STextureCreationFlags Flags;
+	Flags.MipMaps = false;
+	Flags.PixelFormat = GL_RED;
+	Flags.PixelType = GL_FLOAT;
+	DeferredDepthOutput = new CTexture(SceneManager->getScreenSize(), false, Flags);
 	DeferredNormalOutput = new CTexture(SceneManager->getScreenSize(), false);
 
 	DeferredOutputTarget->attach(DeferredColorOutput, GL_COLOR_ATTACHMENT0);
-	DeferredOutputTarget->attach(DeferredPositionOutput, GL_COLOR_ATTACHMENT1);
+	DeferredOutputTarget->attach(DeferredDepthOutput, GL_COLOR_ATTACHMENT1);
 	DeferredOutputTarget->attach(DeferredNormalOutput, GL_COLOR_ATTACHMENT2);
 	DeferredOutputTarget->attach(new CRenderBufferObject(GL_DEPTH_COMPONENT, SceneManager->getScreenSize()), GL_DEPTH_ATTACHMENT);
 
@@ -54,18 +58,19 @@ CDeferredShadingManager::CDeferredShadingManager(CSceneManager * sceneManager)
 
 void CDeferredShadingManager::apply()
 {
+#if 0
 	SPostProcessPass BlendPass;
-	BlendPass.Textures["uTexColor"] = LightPassColorOutput;
+	BlendPass.Textures["uTexColor"] = DeferredDepthOutput;
 	//BlendPass.Textures["uLightPass"] = LightPassColorOutput;
 	BlendPass.Target = SceneManager->getSceneFrameBuffer();
 	BlendPass.Shader = CShaderLoader::loadShader("FBO/QuadCopy");//FinalBlendShader;
-
-	/*SPostProcessPass BlendPass;
+#else
+	SPostProcessPass BlendPass;
 	BlendPass.Textures["uSceneColor"] = DeferredColorOutput;
 	BlendPass.Textures["uLightPass"] = LightPassColorOutput;
 	BlendPass.Target = SceneManager->getSceneFrameBuffer();
-	BlendPass.Shader = FinalBlendShader;*/
-
+	BlendPass.Shader = FinalBlendShader;
+#endif
 	BlendPass.doPass();
 }
 

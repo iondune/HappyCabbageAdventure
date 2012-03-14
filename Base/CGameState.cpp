@@ -321,7 +321,7 @@ void CGameState::Initialize() {
    SPosition2 size = Application.getWindowSize();
    WindowWidth = size.X;
    WindowHeight = size.Y; 
-   glClearColor(0.4f,0.8f,1.f,0);
+   
 
    glEnable(GL_DEPTH_TEST);
    glDepthFunc(GL_LEQUAL);
@@ -636,6 +636,7 @@ void CGameState::oldDisplay() {
 //Runs at very start of display
 void CGameState::OnRenderStart(float const Elapsed)
 {
+	glClearColor(0.4f,0.8f,1.f,0);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
@@ -1388,7 +1389,8 @@ void PrepMeshes()
    //playerRenderable->enableDebugData(EDebugData::Normals);
    playerRenderable->setShader(Toon);
    playerRenderable->setScale(SVector3(2));
-   playerRenderable->addChild(new CPointLightSceneObject());
+   playerLight2 = new CPointLightSceneObject();
+   CApplication::get().getSceneManager().addSceneObject(playerLight2);
 
    renderBlueFlwr = new CMeshSceneObject();
    renderBlueFlwr->setMesh(blueFlwrMesh);

@@ -16,6 +16,7 @@ varying vec4 gPosition;
 // Deferred Values
 varying vec3 vLightPosition;
 
+
 void main()
 {
     vec4 Position = uModelMatrix * vec4(aPosition, 1);

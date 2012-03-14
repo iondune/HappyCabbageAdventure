@@ -11,10 +11,10 @@
 CPointLightSceneObject::CPointLightSceneObject()
 {
 	SphereMesh = CMeshLoader::load3dsMesh("Sphere.3ds");
-	SphereMesh->resizeMesh(SVector3(1.f));
+	SphereMesh->resizeMesh(SVector3(2.f));
 	SphereMesh->updateBuffers();
 
-	setScale(SVector3(3.f));
+	setScale(SVector3(30.f));
 
 	MeshBuffer = SphereMesh->MeshBuffers[0];
 
@@ -51,10 +51,11 @@ void CPointLightSceneObject::draw(CScene const * const scene, ERenderPass const 
 			Context.uniform("uModelMatrix", AbsoluteTransformation);
 			Context.uniform("uViewMatrix", scene->getActiveCamera()->getViewMatrix());
 			Context.uniform("uProjMatrix", scene->getActiveCamera()->getProjectionMatrix());
+			Context.uniform("uInvProjMatrix", glm::inverse(scene->getActiveCamera()->getViewMatrix()) * glm::inverse(scene->getActiveCamera()->getProjectionMatrix()));
 			Context.uniform("uPosition", Translation);
 
-			Context.bindTexture("uPosition", ((CDeferredShadingManager *) ((CSceneManager *)scene)->getEffectManager())->DeferredPositionOutput);
 			Context.bindTexture("uNormal", ((CDeferredShadingManager *) ((CSceneManager *)scene)->getEffectManager())->DeferredNormalOutput);
+			Context.bindTexture("uDepth", ((CDeferredShadingManager *) ((CSceneManager *)scene)->getEffectManager())->DeferredDepthOutput);
 
 			glDrawElements(GL_TRIANGLES, MeshBuffer->IndexBuffer.getElements().size(), GL_UNSIGNED_SHORT, 0);
 			break;

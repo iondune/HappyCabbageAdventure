@@ -86,9 +86,12 @@ void CPlayerView::addToScene() {
    }
 }
 
+extern CPointLightSceneObject * playerLight2;
+
 void CPlayerView::draw() {
    int negFactor = 0;
    PlayerRenderable->setTranslation(SVector3(CenterPosition.X, CenterPosition.Y + 0.065f*sin(ySineValue), 0));
+   playerLight2->setTranslation(PlayerRenderable->getTranslation());
    renderShadow->setTranslation(SVector3(CenterPosition.X, yShadow + 0.01f, 0));
    if(Charging) {
       xScale = yScale = 2.0f;

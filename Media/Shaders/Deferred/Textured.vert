@@ -15,19 +15,14 @@ uniform mat4 uNormalMatrix;
 varying vec2 vTexCoord;
 
 // Deferred Values
-varying vec3 vPosition;
+varying vec4 vPosition;
 varying vec3 vNormal;
 
 void main()
 {
-    // Calculate world coordinate
-    vec4 Position = uModelMatrix * vec4(aPosition, 1.0);
-    
-    // Save for deferred output
-    vPosition = Position.xyz;
-    
     // Calculate screenspace coordinate
-    gl_Position = uProjMatrix * uViewMatrix * Position;
+    vPosition = uProjMatrix * uViewMatrix * uModelMatrix * vec4(aPosition, 1.0);
+    gl_Position = vPosition;
     
     // Pass down the tex coord
     vTexCoord = aTexCoord;
