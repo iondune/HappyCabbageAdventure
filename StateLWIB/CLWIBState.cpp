@@ -44,7 +44,7 @@ void initBlockMap();
 
 //Minblockvalue = -25
 //Heightoffset = 0.5
-qd blockMap[225][100];
+qd blockMap[500][100]; //225, 100
 
 
 //Initalizer fxn
@@ -789,7 +789,7 @@ void initBlockMap() {
 
 void CLWIBState::PrepItem(float x, float y, int item) {
 
-   if(x < -25 || y < -25 || x >= 200 || y >= 75)
+   if(x < -25 || y < -25 || x >= 500 || y >= 75)
       return;
    if(blockMap[(int)x+25][(int)(y-0.5+25)].o) {
       printf("Blockmap space occupied. Did not place Cabbage\n");
@@ -822,7 +822,7 @@ void CLWIBState::PrepItem(float x, float y, int item) {
 
 void CLWIBState::PrepFlag(float x, float y) {
 
-   if(x < -25 || y < -25 || x >= 200 || y >= 75)
+   if(x < -25 || y < -25 || x >= 500 || y >= 75)
       return;
    if(blockMap[(int)x+25][(int)(y-0.5+25)].o) {
       printf("Blockmap space occupied. Did not place Cabbage\n");
@@ -851,7 +851,7 @@ void CLWIBState::PrepFlag(float x, float y) {
 }
 
 void CLWIBState::PrepEnemy(float x, float y, int type) {
-   if(x < -25 || y < -25 || x >= 200 || y >= 75)
+   if(x < -25 || y < -25 || x >= 500 || y >= 75)
       return;
    if(blockMap[(int)x+25][(int)(y-0.5+25)].o) {
       printf("Blockmap space occupied. Did not place enemy\n");
@@ -894,7 +894,7 @@ qd lastCabbage = blockMap[0][0];
 
 void CLWIBState::PrepCabbage(float x, float y) {
 
-    if(x < -25 || y < -25 || x >= 200 || y >= 75)
+    if(x < -25 || y < -25 || x >= 500 || y >= 75)
         return;
     if(blockMap[(int)x+25][(int)(y-0.5+25)].o) {
         printf("Blockmap space occupied. Did not place Cabbage\n");
@@ -938,7 +938,7 @@ void CLWIBState::PrepCabbage(float x, float y) {
 }
 
 void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int moving) {
-   if(x < -25 || y < -25 || x >= 200 || y >= 75)
+   if(x < -25 || y < -25 || x >= 500 || y >= 75)
       return;
    if(t == -5 && (int)y != -5)
        return;
@@ -1699,21 +1699,37 @@ void CLWIBState::stepCamera(float delta) {
    float factor = 6;
    //D
    if(dDown) {
-      eye.X += delta*factor;
-      look.X += delta*factor;
+       if (spaceDown == 1){
+           eye.X += delta*factor*6;
+           look.X += delta*factor*6;
+       }
+       eye.X += delta*factor;
+       look.X += delta*factor;
    }
    //A
    if(aDown) {
+       if (spaceDown == 1){
+           eye.X -= delta*factor*6;
+           look.X -= delta*factor*6;
+       }
       eye.X -= delta*factor;
       look.X -= delta*factor;
    }
    //W
    if(wDown) {
+       if (spaceDown == 1){
+           eye.Y += delta*factor*6;
+           look.Y += delta*factor*6;
+       }
       eye.Y += delta*factor;
       look.Y += delta*factor;
    }
    //S
    if(sDown) {
+       if (spaceDown == 1){
+           eye.Y -= delta*factor*6;
+           look.Y -= delta*factor*6;
+       }
       eye.Y -= delta*factor;
       look.Y -= delta*factor;
    }
