@@ -329,7 +329,7 @@ void CGameState::Initialize() {
    GameEventReceiver = CGameEventReceiver();
    oldFern = false;
 
-   CParticleEngine *f1, *f2, *f3, *glow = NULL;
+   CParticleEngine *f1 = *f2 = *f3 = *glow = NULL;
 
    CApplication::get().getSceneManager().setCullingEnabled(true);
 #ifdef PARTICLE
