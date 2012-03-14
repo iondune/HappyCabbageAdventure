@@ -320,6 +320,8 @@ void CGameState::Initialize() {
    backwardsView = 0; overView = 0; energyStatus = 3.f; prevEnergy = 3.f;
    prevHealth = 0;
    StartWin = 0.0f;
+   curScaleX = curScaleY = 1.f;
+   launch = false;
 
    GameEventReceiver = CGameEventReceiver();
    oldFern = false;
@@ -1079,28 +1081,83 @@ void CGameState::UpdateEnergy(float const Elapsed) {
 
 void CGameState::RunVictorySequence(float Elapsed) {
    StartWin += Elapsed;
-//set off fireworks
-  /* if (!f1) {
-      SVector3 flagPosition = renderFlag->getTranslation();
 
-      f1 = new CParticleEngine(SVector3(flagPosition.X - 4.f, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);  //Would like to change these later so not leaves. Fine for now
-      f2 = new CParticleEngine(SVector3(flagPosition.X, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);
-      f3 = new CParticleEngine(SVector3(flagPosition.X + 4.f, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);
+//Fireworks
+   if (f1) {
+      f1->step(Elapsed);
+      f2->step(Elapsed);
+      f3->step(Elapsed);
    }
-   f1->step(Elapsed);
-   f2->step(Elapsed);
-   f3->step(Elapsed);
-*/
+
+   if (glow) {
+      glow->step(Elapsed);
+   }
+
 //perform cabbage sequence
    SVector3 curRotation = normalCabbage->getRotation();
    SVector2 curLocation = SVector2 (Player->getArea().getCenter().X - .5f, Player->getArea().getCenter().Y - .5f);
 
-   if (StartWin > .05f && StartWin < .06f) {
+   if (StartWin > .05f && StartWin < .07f) {
       spaceDown = 1;
       dDown = 1;
    }
-   else if (StartWin > .06f && StartWin < .11f)
+   else if (StartWin > .07f && StartWin < .12f)
       spaceDown = 0;
+   else if (StartWin > .72f && StartWin < .76f)
+      spaceDown = 1;
+   else if (StartWin > .76f && StartWin < 1.f) {
+      if (!f1) {
+         SVector3 flagPosition = renderFlag->getTranslation();
+
+         f1 = new CParticleEngine(SVector3(flagPosition.X, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);  //Would like to change these later so not leaves. Fine for now
+         f2 = new CParticleEngine(SVector3(flagPosition.X + 4.f, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);
+         f3 = new CParticleEngine(SVector3(flagPosition.X + 8.f, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);
+      }
+   }
+   else if (StartWin > 1.f && StartWin < 1.2f) {
+      spaceDown = 0;
+   }
+   else if (StartWin > 1.5f && StartWin < 2.5f) {
+      spaceDown = 1;
+      normalCabbage->setRotation(SVector3(curRotation.X + 720.f*Elapsed, 0.f, 0.f));
+   }
+   else if (StartWin > 2.5f && StartWin < 2.9f) {
+      spaceDown = 0;
+      dDown = 0;
+   }
+
+   else if (StartWin > 2.9f && StartWin < 3.9f) {
+      spaceDown = 1;
+      normalCabbage->setRotation(SVector3(curRotation.X - 360.f*Elapsed, 0.f, 0.f));
+      Player->setArea(SRect2(curLocation.X - 3.f*Elapsed, curLocation.Y, 1.f, 1.f));
+   }
+
+   else if (StartWin > 3.8f && StartWin < 3.9f)
+      spaceDown = 0;
+   else if (StartWin > 3.9f && StartWin < 4.9f) {
+      normalCabbage->setRotation(SVector3(curRotation.X, 0.f, curRotation.Z - 765.f*Elapsed));
+      Player->setArea(SRect2(curLocation.X - 3.f*Elapsed, curLocation.Y, 1.f, 1.f));
+   }
+   else if (StartWin > 4.9f && StartWin < 6.4f) {
+      if (!glow) {
+         //glow = new CParticleEngine(SVector3(curLocation.X, curLocation.Y, 0), 400, 2.f, LASER_CHARGING_PARTICLE); //Using this improperly.  Get Alden's help
+      }
+      spaceDown = 0;
+      curScaleY -= .4*Elapsed;
+      normalCabbage->setScale(SVector3(1.f, 1.f, curScaleY));
+   }
+
+   else if (StartWin > 6.9 && StartWin < 7.3f) {
+      curScaleY += 1.2*Elapsed;
+      curScaleX -= 1.8*Elapsed;
+      normalCabbage->setScale(SVector3(1.f, curScaleX, curScaleY));
+      launch = true;
+   }
+
+   if (launch) {
+      Player->setImpulse(SVector2(0.f, 15.f), 10.f);
+      /*Move player model up without moving screen...*/
+   }
 
 
 //      Player->setArea(SRect2(curLocation.X + 6.f*Elapsed, curLocation.Y, 1.f, 1.f));
