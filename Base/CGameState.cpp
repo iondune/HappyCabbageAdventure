@@ -329,8 +329,6 @@ void CGameState::Initialize() {
    GameEventReceiver = CGameEventReceiver();
    oldFern = false;
 
-   CParticleEngine *f1 = *f2 = *f3 = *glow = NULL;
-
    CApplication::get().getSceneManager().setCullingEnabled(true);
 #ifdef PARTICLE
    particleLeafEngine = particleCubeEngine = particleLaserEngine = particleLaserFireEngine = particleDustEngine = 0;
@@ -1104,6 +1102,7 @@ void CGameState::RunVictorySequence(float Elapsed) {
 
    if (StartWin > .00f && StartWin < .07f) {
       dDown = 0;
+      aDown = 0;
    }
    if (StartWin > .05f && StartWin < .07f) {
       spaceDown = 1;
