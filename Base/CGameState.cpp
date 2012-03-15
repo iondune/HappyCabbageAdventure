@@ -53,6 +53,7 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
 {
    NumTreeTypes = 2;
    NumFlowerTypes = 2;
+   numBlocks = 0;
    blocksY.clear();
    blocksX.clear();
    blocksFinal.clear();
@@ -90,7 +91,10 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             }
             else {
                ptr->isMovingPlatform = 0;
-               blocksY.push_back(new CBiggerBlock((float)x, (float)y, w, h));
+               numBlocks++;
+               int curW = w;
+               for(; curW > 0; curW--)
+                  blocksY.push_back(new CBiggerBlock((float)x + (w - curW), (float)y, 1.0f, (float)h));
             }
          }
          if(!strcmp("CEnemy", xml->getNodeName()))
@@ -208,7 +212,8 @@ void CGameState::consolidateAndAddBlocks() {
       delete blocksFinal[i];
       blocksFinal[i] = NULL;
    }
-   printf("Total blocks saved: %d\n", blocksY.size() - blocksFinal.size());
+   printf("Total blocks saved: %d\n", numBlocks - blocksFinal.size());
+   numBlocks = blocksFinal.size();
    blocksFinal.clear();
    blocksX.clear();
    blocksY.clear();
@@ -890,9 +895,8 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          }
          else {
             Player->CollideableLevel = INTERACTOR_SUPERACTORS;
-            Player->CanCollideWith = INTERACTOR_BLOCKS;
-            //Player->CanCollideWith = INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS;
-            //Player->CanCollideWith &= ~INTERACTOR_SUPERNONCOLLIDERS;
+            Player->CanCollideWith = INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS;
+            Player->CanCollideWith &= ~INTERACTOR_SUPERNONCOLLIDERS;
             Player->setControlFall(true);
             //Player->Gravity = 100.0f;
          }

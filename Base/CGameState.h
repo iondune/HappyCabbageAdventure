@@ -34,7 +34,7 @@ class CGameState : public CState<CGameState>
    //Initalizer fxn
    ICamera *Camera;
    float fps, timeTotal, prevEnergy, energyStatus, moveDown, StartWin, curScaleX, curScaleY;
-   int numFrames, NumTreeTypes, NumFlowerTypes, lowDef, prevHealth;
+   int numFrames, NumTreeTypes, NumFlowerTypes, lowDef, prevHealth, numBlocks;
    const char * levelName;
    bool oldFern, launch;
    CGUIImageWidget *Health5, *Health4, *Health3, *Health2, *Health1, *CabbageFace, *CabbageEnergyBar, *CabbageMeter, *CabbageHurtFace;
