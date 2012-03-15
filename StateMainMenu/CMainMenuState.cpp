@@ -115,7 +115,7 @@ void CMainMenuState::begin()
 
    //Sound Setup
    soundInit();
-   setupSoundtrack("BeginningAnew.mp3");
+   //setupSoundtrack("BeginningAnew.mp3");
    //DOES NOT WORK ON LINUX BECAUSE CAN'T RUN MP3
    startSoundtrack();
 
@@ -130,6 +130,8 @@ void CMainMenuState::begin()
 
    RenderLogo->setCullingEnabled(false);
    RenderBackground->setCullingEnabled(false);
+
+   printf("Are we here?\n");
 }
 
 void CMainMenuState::end()
