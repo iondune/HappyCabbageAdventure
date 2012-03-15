@@ -26,12 +26,14 @@ void COverworldState::begin()
      newGame = false;
      curNode = 0;
      curCamera = 0;
+     levelsUnlocked = true; //NOTE: this should be switched to false upon release
      loadLevels();
      setCameraTrans();
    }
    else if(levelCompleted)
    {
      printf("Completed level %d\n", curNode);
+     levels[curNode].completed = true;
 
    }
    else if(!levelCompleted)
@@ -210,6 +212,9 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_d){
          dDown = 0;
       }
+      if(Event.Key == SDLK_v){
+         levelsUnlocked = !levelsUnlocked;
+      }
       if(Event.Key == SDLK_i){
         changey += 0.01f;
         arrowChanger = true;
@@ -361,7 +366,15 @@ void COverworldState::PrepMeshes()
 
    for(int i = 0; i < NUM_LEVELS; i++)
    {
-     levelIcons(levels[i].loc, discMesh, 1);
+     if(levels[i].completed)
+     {
+      levelIcons(levels[i].loc, discMesh, 1);
+     }
+     else
+     {
+      levelIcons(levels[i].loc, discMesh, 2);
+     }
+
    }
 
    //levelIcons(SVector3(0.6f, 0.06f, 0.6f), discMesh, 1);
@@ -385,7 +398,7 @@ void COverworldState::levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor)
        break;
 
      case 2:
-       mat.Texture = CImageLoader::loadTexture("../Models/disc_orange.bmp");
+       mat.Texture = CImageLoader::loadTexture("Base/dirt.bmp");
        break;
        
      default:
@@ -410,12 +423,12 @@ void COverworldState::movePlayer() {
   if(transitionTimer != 0.0f)
     return;
 
-  if(aDown && curNode > 0)
+  if(aDown && curNode > 0 )
   {
     curNode--;
     moved = true;
   }
-  else if(dDown && curNode < NUM_LEVELS - 1)
+  else if(dDown && curNode < NUM_LEVELS - 1 && (levels[curNode].completed || levelsUnlocked))
   {
     curNode++;
     moved = true;
