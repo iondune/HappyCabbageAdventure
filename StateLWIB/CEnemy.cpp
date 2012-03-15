@@ -35,7 +35,7 @@ void CEnemy::moveTo(float x,float y) {
 void CEnemy::setShader(CShader * chad) {
    shader = chad;
 }
-CMeshSceneObject * CEnemy::setupItem(CShader * chad, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
+CMeshSceneObject * CEnemy::setupItem(CShader * chad, CShader * dShader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
     if (num == 0)
        CBadGuy::makeBadGuy(x, y, (float) w, (float) h, CBadGuy::apple, GameplayManager);
     else if (num == 1)

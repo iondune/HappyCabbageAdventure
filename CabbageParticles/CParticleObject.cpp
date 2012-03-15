@@ -36,7 +36,19 @@ void CParticleObject::draw(CScene const * const scene, ERenderPass const Pass)
 {
 	ISceneObject::draw(scene, Pass);
 
-	particlesRenderable->draw(scene);
+	switch (Pass)
+	{
+	case ERP_DEFAULT:
+	case ERP_DEFERRED_OBJECTS:
+		particlesRenderable->draw(scene, Pass);
+		break;
+
+	case ERP_MODEL_NORMALS:
+		break;
+
+	case ERP_DEFERRED_LIGHTS:
+		break;
+	}
 }
 
 void CParticleObject::setup(std::vector<SVector3*> vectorArr, std::vector<SVector3*> colorArr, std::vector<float> sizeArr, int num, const char* texturePath) {
@@ -64,7 +76,8 @@ void CParticleObject::setup(std::vector<SVector3*> vectorArr, std::vector<SVecto
    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
    particlesRenderable->getMaterial().Texture = CImageLoader::loadTexture(texturePath);
 
-   particlesRenderable->setShader(CShaderLoader::loadShader("Particle"));
+   particlesRenderable->setShader(ERP_DEFAULT, CShaderLoader::loadShader("Particle"));
+   particlesRenderable->setShader(ERP_DEFERRED_OBJECTS, CShaderLoader::loadShader("Deferred/Particle"));
 
    // Add mesh index buffer
    particlesRenderable->setIndexBufferObject(& IndexBuffer);

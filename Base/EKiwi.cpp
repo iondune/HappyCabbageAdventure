@@ -37,7 +37,8 @@ void EKiwi::loadMesh() {
 
    Renderable->setMesh(mesh);
    //Renderable->getMaterial().Texture = new CTexture(CImageLoader::loadImage("Textures/kiwi.bmp"));
-   Renderable->setShader("Toon");
+   Renderable->setShader(ERP_DEFAULT, "Toon");
+   Renderable->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
    //Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
    Renderable->setScale(SVector3(1, 1, 1));
    Renderable->setRotation(SVector3(-90, 0, -90));

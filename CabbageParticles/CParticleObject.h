@@ -14,6 +14,9 @@ protected:
    bool updated;
    int numParticles;
 
+   CShader * DefaultShader;
+   CShader * DeferredShader;
+
 public:
    CRenderable * getParticlesRenderable();
    void setup(std::vector<SVector3*> vectorArr, std::vector<SVector3*> colorArr, std::vector<float> sizeArr, int num, const char*);

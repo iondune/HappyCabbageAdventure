@@ -5,6 +5,7 @@
 //Variables need to create VBOs of meshes, textures, and shaders
 CShader *Shader, *Flat, *Diffuse, *BlackShader, *DiffuseTexture, *normalColor, *Toon, *ToonTexture, *ToonBright;  //Use Diffuse for trees (doesn't need texture)
 
+CShader * DeferredToon, * DeferredTexture, * DeferredDiffuse, * DeferredToonBright, * DeferredToonTexture , *DeferredFlat;
 CImage *grassImg, *skyImg, *dirtImg, *blueFlwrImg, *whiteFlwrImg, *ficusImg, *flagImg;
 
 CTexture *grassTxt, *skyTxt, *dirtTxt, *blueFlwrTxt, *whiteFlwrTxt, *ficusTxt, *flagTxt;
@@ -33,7 +34,8 @@ void drawYellowFlwr(float x, float y, float z, float scale, CApplication app) {
 
    renderYellowFlwr = new CMeshSceneObject();
    renderYellowFlwr->setMesh(yellowFlwrMesh);
-   renderYellowFlwr->setShader(Toon);
+   renderYellowFlwr->setShader(ERP_DEFAULT, Toon);
+   renderYellowFlwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    renderYellowFlwr->setTranslation(SVector3(x, y, z));
    renderYellowFlwr->setScale(SVector3(scale));
    renderYellowFlwr->setRotation(SVector3(-90, 0, 0));
@@ -51,7 +53,8 @@ void drawTealFlwr(float x, float y, float z, float scale, CApplication app) {
 
    renderTealFlwr = new CMeshSceneObject();
    renderTealFlwr->setMesh(tealFlwrMesh);
-   renderTealFlwr->setShader(Toon);
+   renderTealFlwr->setShader(ERP_DEFAULT, Toon);
+   renderTealFlwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    renderTealFlwr->setTranslation(SVector3(x, y, z));
    renderTealFlwr->setScale(SVector3(scale));
    renderTealFlwr->setRotation(SVector3(-90, 0, 0));
@@ -69,7 +72,8 @@ void drawPurpleFlwr(float x, float y, float z, float scale, CApplication app) {
 
    renderPurpleFlwr = new CMeshSceneObject();
    renderPurpleFlwr->setMesh(purpleFlwrMesh);
-   renderPurpleFlwr->setShader(Toon);
+   renderPurpleFlwr->setShader(ERP_DEFAULT, Toon);
+   renderPurpleFlwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    renderPurpleFlwr->setTranslation(SVector3(x, y, z));
    renderPurpleFlwr->setScale(SVector3(scale));
    renderPurpleFlwr->setRotation(SVector3(-90, 0, 0));
@@ -87,7 +91,8 @@ void drawWhiteSunflwr(float x, float y, float z, float scale, CApplication app) 
 
    renderWhiteSunflwr = new CMeshSceneObject();
    renderWhiteSunflwr->setMesh(whiteSunflwrMesh);
-   renderWhiteSunflwr->setShader(Toon);
+   renderWhiteSunflwr->setShader(ERP_DEFAULT, Toon);
+   renderWhiteSunflwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    renderWhiteSunflwr->setTranslation(SVector3(x, y, z));
    renderWhiteSunflwr->setScale(SVector3(scale));
    renderWhiteSunflwr->setRotation(SVector3(-90, 0, 0));
@@ -105,7 +110,8 @@ void drawBlueFlwr(float x, float y, float z, float scale, CApplication app) {
 
    renderBlueFlwr = new CMeshSceneObject();
    renderBlueFlwr->setMesh(blueFlwrMesh);
-   renderBlueFlwr->setShader(Toon);
+   renderBlueFlwr->setShader(ERP_DEFAULT, Toon);
+   renderBlueFlwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    renderBlueFlwr->setTranslation(SVector3(x, y, z));
    renderBlueFlwr->setScale(SVector3(scale));
    renderBlueFlwr->setRotation(SVector3(-90, 0, 0));
@@ -123,7 +129,8 @@ void drawWhiteFlwr(float x, float y, float z, float scale, CApplication app) {
 
    renderWhiteFlwr = new CMeshSceneObject();
    renderWhiteFlwr->setMesh(whiteFlwrMesh);
-   renderWhiteFlwr->setShader(ToonBright);
+   renderWhiteFlwr->setShader(ERP_DEFAULT, ToonBright);
+   renderWhiteFlwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToonBright);
    renderWhiteFlwr->setTranslation(SVector3(x, y, z));
    renderWhiteFlwr->setScale(SVector3(scale));
    renderWhiteFlwr->setRotation(SVector3(-90, 0, -80));
@@ -141,7 +148,8 @@ void drawFern(float x, float y, float z, float scale, CApplication app) {
 
    renderFern = new CMeshSceneObject();
    renderFern->setMesh(fernMesh);
-   renderFern->setShader(Toon);
+   renderFern->setShader(ERP_DEFAULT, Toon);
+   renderFern->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    renderFern->setTranslation(SVector3(x, y, z));
    renderFern->setScale(SVector3(scale));
    renderFern->setRotation(SVector3(-90, 0, -115));
@@ -159,7 +167,8 @@ void drawFicus(float x, float y, float z, float scale, CApplication app) {
 
    renderFicus = new CMeshSceneObject();
    renderFicus->setMesh(ficusMesh);
-   renderFicus->setShader(Toon);
+   renderFicus->setShader(ERP_DEFAULT, Toon);
+   renderFicus->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    renderFicus->setTranslation(SVector3(x, y, z));
    renderFicus->setScale(SVector3(scale));
    renderFicus->setRotation(SVector3(-90, 0, 0));
@@ -178,7 +187,8 @@ void drawBasicTree(float x, float y, float z, float scale, CApplication app) {
    renderBasicTree = new CMeshSceneObject();
    renderBasicTree->setMesh(basicTreeMesh);
    //renderBasicTree->getMaterial().Texture = (basicTreeTxt);
-   renderBasicTree->setShader(Toon);
+   renderBasicTree->setShader(ERP_DEFAULT, Toon);
+   renderBasicTree->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    renderBasicTree->setScale(SVector3(scale));
    renderBasicTree->setRotation(SVector3(-90, 0, 0));
    renderBasicTree->setTranslation(SVector3(x, y + scale/4.0f, z));
@@ -196,7 +206,8 @@ void drawChristmasTree(float x, float y, float z, float scale, CApplication app)
 
    renderChristmasTree = new CMeshSceneObject();
    renderChristmasTree->setMesh(christmasTreeMesh);
-   renderChristmasTree->setShader(Toon);
+   renderChristmasTree->setShader(ERP_DEFAULT, Toon);
+   renderChristmasTree->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    renderChristmasTree->setTranslation(SVector3(x, y, z));
    renderChristmasTree->setScale(SVector3(scale));
    renderChristmasTree->setRotation(SVector3(-90, 0, 0));

@@ -58,9 +58,11 @@ void CMainMenuState::setupButtons() {
 
 void CMainMenuState::setupMeshes()
 {
-  CShader *Toon, *Texture;
+  CShader *Toon, *DeferredToon, *Texture, * DeferredTexture;
   Toon = CShaderLoader::loadShader("Toon");
   Texture = CShaderLoader::loadShader("ToonTexture");
+  DeferredToon = CShaderLoader::loadShader("Deferred/Diffuse");
+  DeferredTexture = CShaderLoader::loadShader("Deferred/Textured");
 
   LogoMesh = CMeshLoader::load3dsMesh("Base/HappyLogo3.3ds");
   if (LogoMesh)
@@ -84,14 +86,14 @@ void CMainMenuState::setupMeshes()
 	  fprintf(stderr, "Failed to load the cube mesh\n");
 
 
-  RenderLogo = CApplication::get().getSceneManager().addMeshSceneObject(LogoMesh, Toon);
+  RenderLogo = CApplication::get().getSceneManager().addMeshSceneObject(LogoMesh, Toon, DeferredToon);
   RenderLogo->setTranslation(SVector3(0.00, 0.07f, .2f));
   RenderLogo->setScale(SVector3(.3f));
   RenderLogo->setRotation(SVector3(75, 180, 0));
 
 
 
-  RenderBackground = CApplication::get().getSceneManager().addMeshSceneObject(CubeMesh, Texture);
+  RenderBackground = CApplication::get().getSceneManager().addMeshSceneObject(CubeMesh, Texture, DeferredTexture);
   RenderBackground->setTranslation(SVector3(.0f, .0f, .3f));
   RenderBackground->setRotation(SVector3(0.f, 0.f, 180.f));
   RenderBackground->setScale(SVector3(1.23f, .92f, .1f));

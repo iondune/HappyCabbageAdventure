@@ -178,6 +178,7 @@ void CPlayerView::establishCamera(ICamera *Camera, int angle, int shaking) {
    Camera->recalculateViewMatrix();
 }
 
-void CPlayerView::setShader(CShader *shad) {
-   PlayerRenderable->setShader(shad);
+void CPlayerView::setShader(CShader *shad, CShader * dShad) {
+   PlayerRenderable->setShader(ERP_DEFAULT, shad);
+   PlayerRenderable->setShader(ERP_DEFERRED_OBJECTS, dShad);
 }

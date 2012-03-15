@@ -90,7 +90,7 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             }
             else {
                ptr->isMovingPlatform = 0;
-               blocksY.push_back(new CBiggerBlock((float)x, (float)y, w, h));
+               blocksY.push_back(new CBiggerBlock((float)x, (float)y, (float) w, (float) h));
             }
          }
          if(!strcmp("CEnemy", xml->getNodeName()))
@@ -147,7 +147,7 @@ void CGameState::consolidateAndAddBlocks() {
    sort(blocksY.begin(), blocksY.end(), sortXY);
 
    CBiggerBlock *curBlock = blocksY[0];
-   for(int i = 1; i < blocksY.size(); i++) {
+   for(unsigned int i = 1; i < blocksY.size(); i++) {
       CBiggerBlock * newBlock = consolidateY(curBlock, blocksY[i]);
       /*
       printf("Consolidation of [%0.0f,%0.0f,%0.0f,%0.0f] and [%0.0f,%0.0f,%0.0f,%0.0f]? %s\n", 
@@ -172,7 +172,7 @@ void CGameState::consolidateAndAddBlocks() {
    sort(blocksX.begin(), blocksX.end(), sortYX);
    printf("Size of blocksX: %d\n", blocksX.size());
    curBlock = blocksX[0];
-   for(int i = 1; i < blocksX.size(); i++) {
+   for(unsigned int i = 1; i < blocksX.size(); i++) {
       CBiggerBlock * newBlock = consolidateX(curBlock, blocksX[i]);
       /*
       printf("Consolidation of [%0.0f,%0.0f,%0.0f,%0.0f] and [%0.0f,%0.0f,%0.0f,%0.0f]? %s\n", 
@@ -196,7 +196,7 @@ void CGameState::consolidateAndAddBlocks() {
    blocksFinal.push_back(curBlock);
 
    printf("Size of blocksFinal: %d\n", blocksFinal.size());
-   for(int i = 0; i < blocksFinal.size(); i++) {
+   for(unsigned int i = 0; i < blocksFinal.size(); i++) {
       /*
       printf("Block %d: [%0.0f,%0.0f,%0.0f,%0.0f]\n", i,
             blocksFinal[i]->x, blocksFinal[i]->y, blocksFinal[i]->w, blocksFinal[i]->h);
@@ -248,7 +248,7 @@ void CGameState::EngineInit( void ) {
 
    std::vector<CPlaceable*>::iterator it;
    for(it=list.begin();it<list.end();it++) {
-      (*it)->setupItem(ToonTexture, Engine, GameplayManager);
+      (*it)->setupItem(ToonTexture, DeferredToonTexture, Engine, GameplayManager);
 
       if((*it)->isMovingPlatform) {
          elevators.push_back(((CBlock*)(*it))->elevator);
@@ -559,7 +559,7 @@ void CGameState::oldDisplay() {
       particleLaserEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
       if(GameplayManager->getRecovering() > 0) {
          lDown = 0;
-         PlayerView->setShader(Toon);
+         PlayerView->setShader(Toon, DeferredToon);
          particleLaserEngine->deconstruct();
          delete particleLaserEngine;
          particleLaserEngine = NULL;
@@ -582,11 +582,11 @@ void CGameState::oldDisplay() {
       Player->setFallAcceleration(0.0f); //for the screen shaking effect
       particleLaserFireEngine->step(Application.getElapsedTime());
       lDown = 1;
-      PlayerView->setShader(ToonBright);
+      PlayerView->setShader(ToonBright, DeferredToonBright);
    }
    if(particleLaserFireEngine && particleLaserFireEngine->dead) {
       Player->setFallAcceleration(0.0f);
-      PlayerView->setShader(Toon);
+	  PlayerView->setShader(Toon, DeferredToon);
       lDown = 0;
       Charged = 0;
       GameplayManager->ShootingLaser = 0;
@@ -778,7 +778,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
             if(!particleLaserFireEngine && (!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead))) {
                particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 2.3f, LASER_CHARGING_PARTICLE);
             }
-            PlayerView->setShader(ToonBright);
+            PlayerView->setShader(ToonBright, DeferredToonBright);
             lDown = 1;
          }
       }
@@ -904,7 +904,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
             particleLaserFireEngine->setLookRight(PlayerView->getLookRight());
          }
          lDown = 0;
-         PlayerView->setShader(Toon);
+         PlayerView->setShader(Toon, DeferredToon);
       }
       if(Event.Key == SDLK_k){
       }
@@ -1050,7 +1050,8 @@ void CGameState::UpdateEnergy(float const Elapsed) {
 void CGameState::PrepShadow() {
    renderShadow = new CMeshSceneObject();
    renderShadow->setMesh(discMesh);
-   renderShadow->setShader(BlackShader);
+   renderShadow->setShader(ERP_DEFAULT, BlackShader);
+   renderShadow->setShader(ERP_DEFERRED_OBJECTS, BlackShader);
 
    Application.getSceneManager().addSceneObject(renderShadow);
 }
@@ -1060,7 +1061,8 @@ void CGameState::PrepBlock(float x, float y, float w, float h) {
    blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
    tempBlock->setTexture(dirtTxt);
-   tempBlock->setShader(ToonTexture);
+   tempBlock->setShader(ERP_DEFAULT, ToonTexture);
+   tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredToonTexture);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    tempBlock->setScale(SVector3(w, h, 1));
    tempBlock->setRotation(SVector3(0, 0, 0));
@@ -1072,7 +1074,8 @@ void CGameState::PrepGrass(float x, float y, float w, float h) {
    blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
    tempBlock->setTexture(grassTxt);
-   tempBlock->setShader(ToonTexture);
+   tempBlock->setShader(ERP_DEFAULT, ToonTexture);
+   tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredToonTexture);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    tempBlock->setScale(SVector3(0, 0, 0));
    Application.getSceneManager().addSceneObject(tempBlock);
@@ -1084,7 +1087,8 @@ void CGameState::PrepSky() {
    blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
    tempBlock->setTexture(skyTxt);
-   tempBlock->setShader(DiffuseTexture);
+   tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
+   tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
    tempBlock->setTranslation(SVector3(75, 17, -5.0));
    tempBlock->setScale(SVector3(250, -50, 1));
    tempBlock->setCullingEnabled(false);
@@ -1097,7 +1101,8 @@ CMeshSceneObject* CGameState::PrepEnemy(float x, float y) {
    enemies.push_back(tempEnemy = new CMeshSceneObject());
    tempEnemy->setMesh(enemyMesh);
    //tempEnemy->setTexture(dirtTxt);
-   tempEnemy->setShader(Flat);
+   tempEnemy->setShader(ERP_DEFERRED_OBJECTS, DeferredFlat);
+   tempEnemy->setShader(ERP_DEFAULT, Flat);
    tempEnemy->setRotation(SVector3(-90, 0, 0));
    Application.getSceneManager().addSceneObject(tempEnemy);
    return tempEnemy;
@@ -1200,13 +1205,20 @@ void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
 
 
 void LoadShaders() {
-   Flat = CShaderLoader::loadShader("Deferred/Diffuse");
-   Diffuse = CShaderLoader::loadShader("Deferred/Diffuse");
-   ToonTexture = CShaderLoader::loadShader("Deferred/Textured");
-   DiffuseTexture = CShaderLoader::loadShader("Deferred/Textured");
-   normalColor = CShaderLoader::loadShader("Deferred/Diffuse");
-   Toon = CShaderLoader::loadShader("Deferred/Diffuse");
-   ToonBright = CShaderLoader::loadShader("Deferred/Diffuse");
+   DeferredFlat = CShaderLoader::loadShader("Deferred/Diffuse");
+   DeferredDiffuse = CShaderLoader::loadShader("Deferred/Diffuse");
+   DeferredToonTexture = CShaderLoader::loadShader("Deferred/Textured");
+   DeferredTexture = CShaderLoader::loadShader("Deferred/Textured");
+   DeferredToon = CShaderLoader::loadShader("Deferred/Diffuse");
+   DeferredToonBright = CShaderLoader::loadShader("Deferred/Diffuse");
+
+   Flat = CShaderLoader::loadShader("Diffuse");
+   Diffuse = CShaderLoader::loadShader("Diffuse");
+   ToonTexture = CShaderLoader::loadShader("ToonTexture");
+   DiffuseTexture = CShaderLoader::loadShader("DiffuseTextureBright");
+   normalColor = CShaderLoader::loadShader("Simple");
+   Toon = CShaderLoader::loadShader("Toon");
+   ToonBright = CShaderLoader::loadShader("ToonBright");
    BlackShader = CShaderLoader::loadShader("Border");
    //Toon = Diffuse;
 }
@@ -1374,20 +1386,24 @@ void PrepMeshes()
 {
    renderDerp = new CMeshSceneObject();
    renderDerp->setMesh(derpMesh);
-   renderDerp->setShader(Toon);
+   renderDerp->setShader(ERP_DEFAULT, Toon);
+   renderDerp->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
    renderBasicTree = new CMeshSceneObject();
    renderBasicTree->setMesh(basicTreeMesh);
-   renderBasicTree->setShader(Toon);
+   renderBasicTree->setShader(ERP_DEFAULT, Toon);
+   renderBasicTree->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
    renderChristmasTree = new CMeshSceneObject();
    renderChristmasTree->setMesh(cabbageMesh);
-   renderChristmasTree->setShader(Toon);
+   renderChristmasTree->setShader(ERP_DEFAULT, Toon);
+   renderChristmasTree->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
    playerRenderable = new CMeshSceneObject();
    playerRenderable->setMesh(cabbageMesh);
    //playerRenderable->enableDebugData(EDebugData::Normals);
-   playerRenderable->setShader(Toon);
+   playerRenderable->setShader(ERP_DEFAULT, Toon);
+   playerRenderable->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    playerRenderable->setScale(SVector3(2));
    playerLight2 = new CPointLightSceneObject(10.f);
    CApplication::get().getSceneManager().addSceneObject(playerLight2);
@@ -1403,7 +1419,8 @@ void PrepMeshes()
 
    renderBlueFlwr = new CMeshSceneObject();
    renderBlueFlwr->setMesh(blueFlwrMesh);
-   renderBlueFlwr->setShader(Toon);
+   renderBlueFlwr->setShader(ERP_DEFAULT, Toon);
+   renderBlueFlwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    renderBlueFlwr->setTranslation(SVector3(-23.f, .18f, 2));
    renderBlueFlwr->setScale(SVector3(.36f));
    renderBlueFlwr->setRotation(SVector3(-90, 0, 0));
@@ -1413,35 +1430,40 @@ void PrepMeshes()
    renderWhiteFlwr->setTranslation(SVector3(-20, .2f, 2));
    renderWhiteFlwr->setScale(SVector3(.36f));
    renderWhiteFlwr->setRotation(SVector3(0, 90, 0));
-   renderWhiteFlwr->setShader(Toon);
+   renderWhiteFlwr->setShader(ERP_DEFAULT, Toon);
+   renderWhiteFlwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
    renderWhiteSunflwr = new CMeshSceneObject();
    renderWhiteSunflwr->setMesh(whiteFlwrMesh);
    renderWhiteSunflwr->setTranslation(SVector3(-20, .2f, 2));
    renderWhiteSunflwr->setScale(SVector3(.36f));
    renderWhiteSunflwr->setRotation(SVector3(0, 90, 0));
-   renderWhiteSunflwr->setShader(Toon);
+   renderWhiteSunflwr->setShader(ERP_DEFAULT, Toon);
+   renderWhiteSunflwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
    renderPurpleFlwr = new CMeshSceneObject();
    renderPurpleFlwr->setMesh(whiteFlwrMesh);
    renderPurpleFlwr->setTranslation(SVector3(-20, .2f, 2));
    renderPurpleFlwr->setScale(SVector3(.36f));
    renderPurpleFlwr->setRotation(SVector3(0, 90, 0));
-   renderPurpleFlwr->setShader(Toon);
+   renderPurpleFlwr->setShader(ERP_DEFAULT, Toon);
+   renderPurpleFlwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
    renderYellowFlwr = new CMeshSceneObject();
    renderYellowFlwr->setMesh(whiteFlwrMesh);
    renderYellowFlwr->setTranslation(SVector3(-20, .2f, 2));
    renderYellowFlwr->setScale(SVector3(.36f));
    renderYellowFlwr->setRotation(SVector3(0, 90, 0));
-   renderYellowFlwr->setShader(Toon);
+   renderYellowFlwr->setShader(ERP_DEFAULT, Toon);
+   renderYellowFlwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
    renderTealFlwr = new CMeshSceneObject();
    renderTealFlwr->setMesh(whiteFlwrMesh);
    renderTealFlwr->setTranslation(SVector3(-20, .2f, 2));
    renderTealFlwr->setScale(SVector3(.36f));
    renderTealFlwr->setRotation(SVector3(0, 90, 0));
-   renderTealFlwr->setShader(Toon);
+   renderTealFlwr->setShader(ERP_DEFAULT, Toon);
+   renderTealFlwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
    renderFicus = new CMeshSceneObject();
    renderFicus->setMesh(ficusMesh);
@@ -1449,14 +1471,16 @@ void PrepMeshes()
    renderFicus->setScale(SVector3(1.0));
    renderFicus->setRotation(SVector3(-90, 0, 0));
    renderFicus->setTexture(blueFlwrTxt);
-   renderFicus->setShader(ToonTexture);
+   renderFicus->setShader(ERP_DEFAULT, ToonTexture);
+   renderFicus->setShader(ERP_DEFERRED_OBJECTS, DeferredToonTexture);
 
    renderFern = new CMeshSceneObject();
    renderFern->setMesh(fernMesh);
    renderFern->setTranslation(SVector3(-19, .5f, 2));
    renderFern->setScale(SVector3(.75));
    renderFern->setRotation(SVector3(-90, 0, 0));
-   renderFern->setShader(Toon);
+   renderFern->setShader(ERP_DEFAULT, Toon);
+   renderFern->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
    renderFlag = new CMeshSceneObject();
    renderFlag->setMesh(flagMesh);
@@ -1464,12 +1488,14 @@ void PrepMeshes()
    renderFlag->setRotation(SVector3(-90,0,0));
    renderFlag->setScale(SVector3(.0150f, .00025f,.0016f));
    renderFlag->setTexture(flagTxt);
-   renderFlag->setShader(ToonTexture);
+   renderFlag->setShader(ERP_DEFAULT, ToonTexture);
+   renderFlag->setShader(ERP_DEFERRED_OBJECTS, DeferredToonTexture);
 
    flagLogo = new CMeshSceneObject();
    flagLogo->setMesh(cabbageMesh);
    flagLogo->setTranslation(SVector3(170, 100.f, 1.0f));
    flagLogo->setRotation(SVector3(-90,0,0));
    flagLogo->setScale(SVector3(.75f));
-   flagLogo->setShader(Flat);
+   flagLogo->setShader(ERP_DEFAULT, Flat);
+   flagLogo->setShader(ERP_DEFERRED_OBJECTS, DeferredFlat);
 }

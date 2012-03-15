@@ -750,7 +750,8 @@ void CLWIBState::PrepPreviews() {
    blocks.push_back(PreviewBlock = new CMeshSceneObject());
    PreviewBlock->setMesh(cubeMesh);
    PreviewBlock->setTexture("Colors/white.bmp");
-   PreviewBlock->setShader(DiffuseTexture);
+   PreviewBlock->setShader(ERP_DEFAULT, DiffuseTexture);
+   PreviewBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
 
    blocks.push_back(PreviewFlag = new CMeshSceneObject());
@@ -810,21 +811,26 @@ void CLWIBState::PrepPreviews() {
       energy->calculateNormalsPerFace();
    }
    PreviewFlag->setMesh(flagMesh);
-   PreviewFlag->setShader(Diffuse);
+   PreviewFlag->setShader(ERP_DEFAULT, Diffuse);
+   PreviewFlag->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
    PreviewFlag->setRotation(SVector3(-90, 0, 0));
    PreviewFlag->setScale(SVector3(0.5,0.5, 0.5));
    //
    PreviewCabbage->setMesh(cabbageMesh);
-   PreviewCabbage->setShader(Diffuse);
+   PreviewCabbage->setShader(ERP_DEFAULT, Diffuse);
+   PreviewCabbage->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
    PreviewCabbage->setRotation(SVector3(90, 0, 0));
    PreviewCabbage->setScale(SVector3(.0150f, .00025f,.0016f));
    //
-   PreviewEnemy->setShader(Diffuse);
+   
+   PreviewEnemy->setShader(ERP_DEFAULT, Diffuse);
+   PreviewEnemy->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
    PreviewEnemy->setRotation(SVector3(-90, 0, 0));
    PreviewBlock->setScale(SVector3(1, 1, 1));
    //
    PreviewItem->setMesh(health);
-   PreviewItem->setShader(Diffuse);
+   PreviewItem->setShader(ERP_DEFAULT, Diffuse);
+   PreviewItem->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
    PreviewItem->setRotation(SVector3(-90, 0, 0));
    PreviewItem->setScale(SVector3(1, 1, 1));
 
@@ -866,7 +872,8 @@ void CLWIBState::PrepItem(float x, float y, int item) {
        tempItem->setMesh(health);
    if (item == 1)
        tempItem->setMesh(energy);
-   tempItem->setShader(Diffuse);
+   tempItem->setShader(ERP_DEFAULT, Diffuse);
+   tempItem->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
    tempItem->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
    tempItem->setRotation(SVector3(-90, 0, 0));
    tempItem->setScale(SVector3(0.5, 0.5, 0.5));
@@ -896,7 +903,8 @@ void CLWIBState::PrepFlag(float x, float y) {
    blocks.push_back(tempFlag = new CMeshSceneObject());
    placeables.push_back(tempPlaceable = new CFlag(x, y, 1, 1));
    tempFlag->setMesh(flagMesh);
-   tempFlag->setShader(Diffuse);
+   tempFlag->setShader(ERP_DEFAULT, Diffuse);
+   tempFlag->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
    tempFlag->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
    tempFlag->setRotation(SVector3(-90, 0, 0));
    tempFlag->setScale(SVector3(0.5, 0.5, 0.5));
@@ -937,7 +945,8 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
         tempEnemy->setMesh(appleMesh);
    if (type == 5)
         tempEnemy->setMesh(bladeMesh);
-   tempEnemy->setShader(Diffuse);
+   tempEnemy->setShader(ERP_DEFAULT, Diffuse);
+   tempEnemy->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
    tempEnemy->setTranslation(SVector3((x+(x+1))/2, (y+(y+1))/2, 0));
    tempEnemy->setRotation(SVector3(-90, 0, 0));
    tempEnemy->setScale(SVector3(1, 1, 1));
@@ -980,7 +989,8 @@ void CLWIBState::PrepCabbage(float x, float y) {
     blocks.push_back(tempCabbage = new CMeshSceneObject());
     placeables.push_back(tempPlaceable = new CCabbage(x, y, 1, 1));
     tempCabbage->setMesh(cabbageMesh);
-    tempCabbage->setShader(Diffuse);
+    tempCabbage->setShader(ERP_DEFAULT, Diffuse);
+    tempCabbage->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
     tempCabbage->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
     tempCabbage->setRotation(SVector3(-90, 0, 0));
     tempCabbage->setScale(SVector3(0.5, 0.5, 0.5));
@@ -1033,7 +1043,8 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
         tempBlock->setTexture("Base/GrassyGrass.bmp");
    else
        printf("texture doesn't exist\n");
-   tempBlock->setShader(DiffuseTexture);
+   tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
+   tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    tempBlock->setScale(SVector3((float) w, (float) h, (float) d));
    for(i = 0; i < w; i++) {
@@ -1063,7 +1074,8 @@ void CLWIBState::PrepGrass(float x, float y, float w, float h) {
    tempBlock->setMesh(cubeMesh);
 
    tempBlock->setTexture("Base/sky.bmp");
-   tempBlock->setShader(DiffuseTexture);
+   tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
+   tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
    tempBlock->setScale(SVector3(w, h, .5));
    Application.getSceneManager().addSceneObject(tempBlock);
@@ -1072,7 +1084,8 @@ void CLWIBState::PrepGrass(float x, float y, float w, float h) {
    tempyBlock->setMesh(cubeMesh);
 
    tempyBlock->setTexture("Base/sky.bmp");
-   tempyBlock->setShader(DiffuseTexture);
+   tempyBlock->setShader(ERP_DEFAULT, DiffuseTexture);
+   tempyBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
    tempyBlock->setTranslation(SVector3(172, (y+(y+h))/2, 0));
    tempyBlock->setScale(SVector3(w, h, .5));
    Application.getSceneManager().addSceneObject(tempyBlock);
@@ -1085,7 +1098,8 @@ void CLWIBState::PrepSky() {
    blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
    tempBlock->setTexture("Base/sky.bmp");
-   tempBlock->setShader(DiffuseTexture);
+   tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
+   tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
    tempBlock->setTranslation(SVector3(0, 24, -2.5));
    tempBlock->setScale(SVector3(400, 50, 1));
    tempBlock->setCullingEnabled(false);
@@ -1175,10 +1189,10 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
             if(m_qd.o && m_qd.r != lastMouseOveredBlock.r) {
 
                 tempShader = m_qd.r->getShader(); 
-                m_qd.r->setShader(DiffuseTextureBright);
+                m_qd.r->setShader(ERP_DEFAULT, DiffuseTextureBright);
             }
             if(lastMouseOveredBlock.o && m_qd.r != lastMouseOveredBlock.r) {
-                lastMouseOveredBlock.r->setShader(tempShader);
+                lastMouseOveredBlock.r->setShader(ERP_DEFAULT, tempShader);
             }
          }
          if(!threeDown && !tDown && !twoDown && mouseDown) {

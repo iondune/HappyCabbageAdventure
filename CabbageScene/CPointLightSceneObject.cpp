@@ -19,8 +19,6 @@ CPointLightSceneObject::CPointLightSceneObject()
 	MeshBuffer = SphereMesh->MeshBuffers[0];
 
 	Shader = CShaderLoader::loadShader("Deferred/PointLight");
-
-	setCullingEnabled(false);
 }
 
 void CPointLightSceneObject::draw(CScene const * const scene, ERenderPass const Pass)

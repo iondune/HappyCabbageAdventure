@@ -59,7 +59,8 @@ class CLWIBState : public CState<CLWIBState>
    CPerspectiveCamera *Camera;
    SVector3 eye, look;
 
-   CShader *DiffuseTexture, *DiffuseTextureBright, *Diffuse;
+   CShader *DiffuseTexture, *DiffuseTextureBright, *Diffuse,
+	   * DeferredDiffuse, *DeferredTexture;
 
 
 

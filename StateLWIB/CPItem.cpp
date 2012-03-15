@@ -27,7 +27,7 @@ void CPItem::moveTo(float x,float y) {
    //For usage in LWIB
 }
 
-CMeshSceneObject * CPItem::setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager) {
+CMeshSceneObject * CPItem::setupItem(CShader * shader, CShader * dShader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager) {
     if (t == 0) // health
         CItem::makeItem(x, y, 1, 1, CItem::health, GameplayManager);
     else if (t == 1) // energy

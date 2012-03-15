@@ -286,6 +286,9 @@ void COverworldState::LoadShaders() {
    Flat = CShaderLoader::loadShader("Toon");
    Diffuse = CShaderLoader::loadShader("Toon");
    DiffuseTexture = CShaderLoader::loadShader("ToonTexture");
+   Flat = CShaderLoader::loadShader("Deferred/Diffuse");
+   Diffuse = CShaderLoader::loadShader("Deferred/Diffuse");
+   DiffuseTexture = CShaderLoader::loadShader("Deferred/Textured");
    //normalColor = CShaderLoader::loadShader("NormalColor");
 }
 
@@ -301,7 +304,7 @@ void COverworldState::PrepMeshes()
    CMaterial mat;
 
    mat.Texture = CImageLoader::loadTexture("../Models/Base/world.bmp");
-   renderMap = CApplication::get().getSceneManager().addMeshSceneObject(mapMesh, DiffuseTexture);
+   renderMap = CApplication::get().getSceneManager().addMeshSceneObject(mapMesh, DiffuseTexture, DeferredTexture);
    renderMap->setMaterial(mat);
    renderMap->setCullingEnabled(false);
 
@@ -316,7 +319,7 @@ void COverworldState::PrepMeshes()
       fprintf(stderr, "Failed to load the cababge mesh\n");
    }
 
-   playerRender = CApplication::get().getSceneManager().addMeshSceneObject(playerMesh, Flat);
+   playerRender = CApplication::get().getSceneManager().addMeshSceneObject(playerMesh, Flat, DeferredFlat);
    playerVector = levels[0].loc;
    playerVector.Y += 0.05f;
    playerRender->setTranslation(playerVector);
@@ -334,12 +337,12 @@ void COverworldState::PrepMeshes()
    else {
      fprintf(stderr, "Failed to load the cababge mesh\n");
    }
-   arrowRender1 = CApplication::get().getSceneManager().addMeshSceneObject(arrowMesh, Flat);
+   arrowRender1 = CApplication::get().getSceneManager().addMeshSceneObject(arrowMesh, Flat, DeferredFlat);
    arrowRender1->setTranslation(SVector3(0, -0.2f, 0.0) + playerVector);
    arrowRender1->setRotation(SVector3(-90.0f, 0.0f, 45.0f));
    arrowRender1->setScale(SVector3(0.18f));
                   
-   arrowRender2 = CApplication::get().getSceneManager().addMeshSceneObject(arrowMesh, Flat);
+   arrowRender2 = CApplication::get().getSceneManager().addMeshSceneObject(arrowMesh, Flat, DeferredFlat);
    arrowRender2->setTranslation(SVector3(0,-0.2f,0) + playerVector);
    arrowRender2->setRotation(SVector3(90.0f, 0.0f, angleMaker(playerVector, levels[curNode + 1].loc) + 90.0f ));
    arrowRender2->setScale(SVector3(0.18f));
@@ -366,7 +369,7 @@ void COverworldState::PrepMeshes()
 void COverworldState::levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor)
 {
 
-   discRender = CApplication::get().getSceneManager().addMeshSceneObject(levelIcon, DiffuseTexture);
+   discRender = CApplication::get().getSceneManager().addMeshSceneObject(levelIcon, DiffuseTexture, DeferredTexture);
 
    CMaterial mat;
    switch(iconColor)

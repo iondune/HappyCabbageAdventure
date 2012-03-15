@@ -292,30 +292,33 @@ CMeshSceneObject * CSceneManager::addMeshSceneObject(CMesh * Mesh)
    return Object;
 }
 
-CMeshSceneObject * CSceneManager::addMeshSceneObject(CMesh * Mesh, CShader * Shader)
+CMeshSceneObject * CSceneManager::addMeshSceneObject(CMesh * Mesh, CShader * Shader, CShader * DeferredShader)
 {
    CMeshSceneObject * Object = new CMeshSceneObject();
    Object->setMesh(Mesh);
-   Object->setShader(Shader);
+   Object->setShader(ERP_DEFAULT, Shader);
+   Object->setShader(ERP_DEFERRED_OBJECTS, DeferredShader);
    addSceneObject(Object);
    return Object;
 }
 
-CMeshSceneObject * CSceneManager::addMeshSceneObject(CMesh * Mesh, CShader * Shader, CMaterial const & Material)
+CMeshSceneObject * CSceneManager::addMeshSceneObject(CMesh * Mesh, CShader * Shader, CShader * DeferredShader, CMaterial const & Material)
 {
    CMeshSceneObject * Object = new CMeshSceneObject();
    Object->setMesh(Mesh);
-   Object->setShader(Shader);
+   Object->setShader(ERP_DEFAULT, Shader);
+   Object->setShader(ERP_DEFERRED_OBJECTS, DeferredShader);
    Object->setMaterial(Material);
    addSceneObject(Object);
    return Object;
 }
 
-CMeshSceneObject * CSceneManager::addMeshSceneObject(std::string const & Mesh, std::string const & Shader, CMaterial const & Material)
+CMeshSceneObject * CSceneManager::addMeshSceneObject(std::string const & Mesh, std::string const & Shader, std::string const & DeferredShader, CMaterial const & Material)
 {
    CMeshSceneObject * Object = new CMeshSceneObject();
    Object->setMesh(CMeshLoader::load3dsMesh(Mesh));
-   Object->setShader(CShaderLoader::loadShader(Shader));
+   Object->setShader(ERP_DEFAULT, CShaderLoader::loadShader(Shader));
+   Object->setShader(ERP_DEFERRED_OBJECTS, CShaderLoader::loadShader(DeferredShader));
    Object->setMaterial(Material);
    addSceneObject(Object);
    return Object;
@@ -336,7 +339,7 @@ void CScene::disableDebugData(EDebugData::Domain const type)
 
 void CSceneManager::load()
 {
-	RootObject.load(this);
+	RootObject.load(this, ERP_DEFAULT);
 }
 
 CFrameBufferObject * CSceneManager::getSceneFrameBuffer()

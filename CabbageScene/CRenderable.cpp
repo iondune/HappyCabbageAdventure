@@ -12,17 +12,20 @@ CShader * CRenderable::NormalColorShader = 0;
 
 CRenderable::CRenderable(ISceneObject * parent)
     : DrawType(GL_TRIANGLES), NormalObject(0), IndexBufferObject(0), Parent(parent),
-	BindModelMatrix(ModelMatrix), BindNormalMatrix(NormalMatrix), Shader(0)
-{}
-
-CShader * CRenderable::getShader()
+	BindModelMatrix(ModelMatrix), BindNormalMatrix(NormalMatrix)
 {
-	return Shader;
+	for (int i = 0; i < ERP_COUNT; ++ i)
+		Shader[i] = 0;
 }
 
-void CRenderable::setShader(CShader * shader)
+CShader * CRenderable::getShader(ERenderPass const Pass)
 {
-	Shader = shader;
+	return Shader[Pass];
+}
+
+void CRenderable::setShader(ERenderPass const Pass, CShader * shader)
+{
+	Shader[Pass] = shader;
 }
 
 CMaterial & CRenderable::getMaterial()
@@ -96,9 +99,12 @@ void CRenderable::setIndexBufferObject(CBufferObject<GLushort> * indexBufferObje
     IndexBufferObject = indexBufferObject;
 }
 
-CShader * CRenderable::updateShaderVariables(CScene const * const Scene)
+CShader * CRenderable::updateShaderVariables(CScene const * const Scene, ERenderPass const Pass)
 {
-	CShader * ShaderToUse = Shader;
+	CShader * ShaderToUse = Shader[Pass];
+
+	if (! ShaderToUse)
+		ShaderToUse = Shader[ERP_DEFAULT];
 
     if (! ShaderToUse)
         ShaderToUse = CShaderLoader::loadShader("Simple");
@@ -116,7 +122,7 @@ CShader * CRenderable::updateShaderVariables(CScene const * const Scene)
 	return ShaderToUse;
 }
 
-void CRenderable::draw(CScene const * const Scene)
+void CRenderable::draw(CScene const * const Scene, ERenderPass const Pass)
 {
     // If no ibo loaded, we can't draw anything
     // If the ibo loaded hasn't been synced as an index buffer object, 
@@ -132,7 +138,7 @@ void CRenderable::draw(CScene const * const Scene)
         return;
     }
 
-    CShader * ShaderToUse = updateShaderVariables(Scene);
+    CShader * ShaderToUse = updateShaderVariables(Scene, Pass);
 
     // Create shader context and link all variables required by the shader
     CShaderContext ShaderContext(* ShaderToUse);
@@ -188,7 +194,7 @@ void CRenderable::draw(CScene const * const Scene)
     if (Parent->isDebugDataEnabled(EDebugData::Normals) && NormalObject)
     {
         NormalObject->Transformation = Transformation;
-        NormalObject->draw(Scene);
+        NormalObject->draw(Scene, Pass);
     }
 
     // Cleanup the texture if it was used
@@ -198,9 +204,9 @@ void CRenderable::draw(CScene const * const Scene)
     }
 }
 
-void CRenderable::load(CScene const * const Scene)
+void CRenderable::load(CScene const * const Scene, ERenderPass const Pass)
 {
-	updateShaderVariables(Scene);
+	updateShaderVariables(Scene, Pass);
 
 	if (IndexBufferObject && IndexBufferObject->isDirty())
         IndexBufferObject->syncData();

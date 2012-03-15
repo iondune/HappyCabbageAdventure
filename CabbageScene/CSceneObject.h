@@ -23,8 +23,8 @@ public:
 
     void draw(CScene const * const scene, ERenderPass const Pass);
 
-	void setShader(CShader * shader);
-	void setShader(std::string const & shader);
+	void setShader(ERenderPass const Pass, CShader * shader);
+	void setShader(ERenderPass const Pass, std::string const & shader);
 	void setMaterial(CMaterial const & material);
 	void setTexture(CTexture * texture);
 	void setTexture(CTexture * texture, int const renderable);
@@ -34,7 +34,10 @@ public:
 	CShader const * const getShader() const;
 	CShader * getShader();
 
-	virtual void load(CScene const * const Scene);
+	CShader const * const getShader(ERenderPass const Pass) const;
+	CShader * getShader(ERenderPass const Pass);
+
+	virtual void load(CScene const * const Scene, ERenderPass const Pass);
 
 };
 

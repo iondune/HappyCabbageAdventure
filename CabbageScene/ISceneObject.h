@@ -35,7 +35,8 @@ enum ERenderPass
 	ERP_DEFAULT,
 	ERP_MODEL_NORMALS,
 	ERP_DEFERRED_OBJECTS,
-	ERP_DEFERRED_LIGHTS
+	ERP_DEFERRED_LIGHTS,
+	ERP_COUNT
 };
 
 class CScene;
@@ -108,7 +109,7 @@ public:
 	bool const isCullingEnabled() const;
 	void setCullingEnabled(bool const culling);
 
-	virtual void load(CScene const * const Scene);
+	virtual void load(CScene const * const Scene, ERenderPass const Pass);
 
 };
 

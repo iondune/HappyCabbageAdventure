@@ -41,7 +41,7 @@ void CBlock::moveTo(float x,float y) {
    //For usage in LWIB
 }
 
-CMeshSceneObject * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
+CMeshSceneObject * CBlock::setupItem(CShader * shader, CShader * dShader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
    CMeshSceneObject *tempBlock = new CMeshSceneObject();
    if(isMovingPlatform) {
       Cabbage::Collider::CElevator *engBlock = Engine->addElevator();
@@ -90,7 +90,8 @@ CMeshSceneObject * CBlock::setupItem(CShader * shader, Cabbage::Collider::CEngin
    else {
         printf("texture not found\n" );   
    }
-   tempBlock->setShader(shader);
+   tempBlock->setShader(ERP_DEFAULT, shader);
+   tempBlock->setShader(ERP_DEFERRED_OBJECTS, dShader);
    if(t != -5) {
       tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
       tempBlock->setScale(SVector3((float) w, (float) h, (float) z));

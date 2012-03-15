@@ -75,7 +75,7 @@ void CMeshSceneObject::setMesh(CMesh * mesh)
             Child->getDebuggingNormalObject()->addAttribute("aPosition", new SAttribute<float>(& Mesh->MeshBuffers[i]->NormalLineBuffer, 3));
             Child->getDebuggingNormalObject()->addAttribute("aColor", new SAttribute<float>(& Mesh->MeshBuffers[i]->NormalColorBuffer, 3));
             Child->getDebuggingNormalObject()->setIndexBufferObject(& Mesh->MeshBuffers[i]->NormalIndexBuffer);
-            Child->getDebuggingNormalObject()->setShader(CShaderLoader::loadShader("Simple"));
+            Child->getDebuggingNormalObject()->setShader(ERP_DEFAULT, CShaderLoader::loadShader("Simple"));
             Child->getDebuggingNormalObject()->setDrawType(GL_LINES);
 
             // Reset the shader to load attributes again

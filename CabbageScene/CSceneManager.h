@@ -111,9 +111,9 @@ public:
     void removeAllSceneObjects();
 
 	CMeshSceneObject * addMeshSceneObject(CMesh * Mesh);
-	CMeshSceneObject * addMeshSceneObject(CMesh * Mesh, CShader * Shader);
-	CMeshSceneObject * addMeshSceneObject(CMesh * Mesh, CShader * Shader, CMaterial const & Material);
-	CMeshSceneObject * addMeshSceneObject(std::string const & Mesh, std::string const & Shader, CMaterial const & Material);
+	CMeshSceneObject * addMeshSceneObject(CMesh * Mesh, CShader * Shader, CShader * DeferredShader);
+	CMeshSceneObject * addMeshSceneObject(CMesh * Mesh, CShader * Shader, CShader * DeferredShader, CMaterial const & Material);
+	CMeshSceneObject * addMeshSceneObject(std::string const & Mesh, std::string const & Shader, std::string const & DeferredShader, CMaterial const & Material);
 
 	void drawAll();
 	void endDraw();

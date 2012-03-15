@@ -25,7 +25,8 @@ void PKiwi::loadMesh() {
       printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
 
    Renderable->setMesh(mesh);
-   Renderable->setShader("Toon");
+   Renderable->setShader(ERP_DEFAULT, "Toon");
+   Renderable->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
    Renderable->setScale(SVector3(.5f, .5f, .5f));
    Renderable->setRotation(SVector3(-90, 0, 0));
 

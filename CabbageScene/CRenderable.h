@@ -41,7 +41,7 @@ protected:
     std::map<GLint, IUniform const *> LoadedUniforms;
 
 	// Required data for drawing
-	CShader * Shader;
+	CShader * Shader[ERP_COUNT];
     CBufferObject<GLushort> * IndexBufferObject;
 
 	// Material attribute used by phong light, etc.
@@ -70,13 +70,13 @@ public:
     CBufferObject<GLushort> * getIndexBufferObject();
     void setIndexBufferObject(CBufferObject<GLushort> * indexBufferObject);
 
-	CShader * getShader();
-	void setShader(CShader * shader);
+	CShader * getShader(ERenderPass const Pass);
+	void setShader(ERenderPass const Pass, CShader * shader);
 
     GLenum const getDrawType() const;
     void setDrawType(GLenum const drawType);
 
-    virtual void draw(CScene const * const scene);
+    virtual void draw(CScene const * const scene, ERenderPass const Pass);
 	virtual void drawNormals(CScene const * const scene);
 
     void addAttribute(std::string const & label, IAttribute const * const attribute);
@@ -84,8 +84,8 @@ public:
     void removeAttribute(std::string const & label);
     void removeUniform(std::string const & label);
 
-	void load(CScene const * const Scene);
-	CShader * updateShaderVariables(CScene const * const Scene);
+	void load(CScene const * const Scene, ERenderPass const Pass);
+	CShader * updateShaderVariables(CScene const * const Scene, ERenderPass const Pass);
 
 	IAttribute const * const getAttribute(std::string const & label);
 	IUniform const * const getUniform(std::string const & label);

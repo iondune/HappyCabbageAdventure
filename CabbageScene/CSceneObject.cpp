@@ -29,7 +29,7 @@ void CSceneObject::draw(CScene const * const scene, ERenderPass const Pass)
 	case ERP_DEFAULT:
 	case ERP_DEFERRED_OBJECTS:
 		for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
-			(* it)->draw(scene);
+			(* it)->draw(scene, Pass);
 		break;
 
 	case ERP_MODEL_NORMALS:
@@ -42,15 +42,15 @@ void CSceneObject::draw(CScene const * const scene, ERenderPass const Pass)
 	}
 }
 
-void CSceneObject::setShader(CShader * shader)
+void CSceneObject::setShader(ERenderPass const Pass, CShader * shader)
 {
 	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
-		(* it)->setShader(shader);
+		(* it)->setShader(Pass, shader);
 }
 
-void CSceneObject::setShader(std::string const & shader)
+void CSceneObject::setShader(ERenderPass const Pass, std::string const & shader)
 {
-	setShader(CShaderLoader::loadShader(shader));
+	setShader(Pass, CShaderLoader::loadShader(shader));
 }
 
 void CSceneObject::setMaterial(CMaterial const & material)
@@ -90,8 +90,8 @@ CShader const * const CSceneObject::getShader() const
 	for (std::vector<CRenderable *>::const_iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
 	{
 		if (! Shader)
-			Shader = (* it)->getShader();
-		else if (Shader != (* it)->getShader())
+			Shader = (* it)->getShader(ERP_DEFAULT);
+		else if (Shader != (* it)->getShader(ERP_DEFAULT))
 			return 0;
 	}
 	return Shader;
@@ -103,19 +103,45 @@ CShader * CSceneObject::getShader()
 	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
 	{
 		if (! Shader)
-			Shader = (* it)->getShader();
-		else if (Shader != (* it)->getShader())
+			Shader = (* it)->getShader(ERP_DEFAULT);
+		else if (Shader != (* it)->getShader(ERP_DEFAULT))
 			return 0;
 	}
 	return Shader;
 }
 
-void CSceneObject::load(CScene const * const Scene)
+CShader const * const CSceneObject::getShader(ERenderPass const Pass) const
 {
-	ISceneObject::load(Scene);
+	CShader const * Shader = 0;
+	for (std::vector<CRenderable *>::const_iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
+	{
+		if (! Shader)
+			Shader = (* it)->getShader(Pass);
+		else if (Shader != (* it)->getShader(Pass))
+			return 0;
+	}
+	return Shader;
+}
+
+CShader * CSceneObject::getShader(ERenderPass const Pass)
+{
+	CShader * Shader = 0;
+	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
+	{
+		if (! Shader)
+			Shader = (* it)->getShader(Pass);
+		else if (Shader != (* it)->getShader(Pass))
+			return 0;
+	}
+	return Shader;
+}
+
+void CSceneObject::load(CScene const * const Scene, ERenderPass const Pass)
+{
+	ISceneObject::load(Scene, Pass);
 
 	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
 	{
-		(* it)->load(Scene);
+		(* it)->load(Scene, Pass);
 	}
 }
