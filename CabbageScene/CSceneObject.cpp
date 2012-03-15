@@ -84,6 +84,30 @@ void CSceneObject::setTexture(std::string const & texture, int const renderable)
 	setTexture(CImageLoader::loadTexture(texture), renderable);
 }
 
+void CSceneObject::addAttribute(std::string const & label, IAttribute const * const attribute)
+{
+	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
+		(* it)->addAttribute(label, attribute);
+}
+
+void CSceneObject::addUniform(std::string const & label, IUniform const * const uniform)
+{
+	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
+		(* it)->addUniform(label, uniform);
+}
+
+void CSceneObject::removeAttribute(std::string const & label)
+{
+	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
+		(* it)->removeAttribute(label);
+}
+
+void CSceneObject::removeUniform(std::string const & label)
+{
+	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
+		(* it)->removeUniform(label);
+}
+
 CShader const * const CSceneObject::getShader() const
 {
 	CShader const * Shader = 0;

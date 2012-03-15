@@ -98,10 +98,15 @@ void CPlayerView::draw() {
    int negFactor = 0;
    PlayerRenderable->setTranslation(SVector3(CenterPosition.X, CenterPosition.Y + 0.065f*sin(ySineValue), 0));
    playerLight2->setTranslation(PlayerRenderable->getTranslation());
+
    renderLeftShadow->setTranslation(SVector3(CenterPosition.X, yLeftShadow + 0.01f, 0));
-   //renderLeftShadow->setCutoff(0, CutoffPoint);
+   LeftShadowStartValue = 0.f;
+   LeftShadowCutoffValue = cutOffPoint;
+
    renderRightShadow->setTranslation(SVector3(CenterPosition.X, yRightShadow + 0.01f, 0));
-   //renderRightShadow->setCutoff(0, CutoffPoint);
+   RightShadowStartValue = cutOffPoint;
+   RightShadowCutoffValue = 1.f;
+
    if(Charging) {
       xScale = yScale = 2.0f;
       PlayerRenderable->setTranslation(SVector3(CenterPosition.X + 0.02f*sin(100.0f*ySineValue), CenterPosition.Y, 0));

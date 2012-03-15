@@ -31,6 +31,11 @@ public:
 	void setTexture(std::string const & texture);
 	void setTexture(std::string const & texture, int const renderable);
 
+	void addAttribute(std::string const & label, IAttribute const * const attribute);
+    void addUniform(std::string const & label, IUniform const * const uniform);
+    void removeAttribute(std::string const & label);
+    void removeUniform(std::string const & label);
+
 	CShader const * const getShader() const;
 	CShader * getShader();
 
