@@ -31,7 +31,7 @@ void CIEnergy::loadMesh() {
    Renderable->setShader("Toon");
    //Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2 + 10.6f, 0));
    //Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
-   Renderable->setScale(SVector3(0.4f));
+   Renderable->setScale(SVector3(0.5f));
 
    CApplication::get().getSceneManager().addSceneObject(Renderable);
 }

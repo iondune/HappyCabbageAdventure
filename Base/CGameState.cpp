@@ -267,7 +267,7 @@ void CGameState::EngineInit( void ) {
       }
    }
 
-  // consolidateAndAddBlocks();
+   consolidateAndAddBlocks();
 }
 
 #define PARTICLE
