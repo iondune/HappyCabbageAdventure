@@ -286,9 +286,10 @@ void COverworldState::LoadShaders() {
    Flat = CShaderLoader::loadShader("Toon");
    Diffuse = CShaderLoader::loadShader("Toon");
    DiffuseTexture = CShaderLoader::loadShader("ToonTexture");
-   Flat = CShaderLoader::loadShader("Deferred/Diffuse");
-   Diffuse = CShaderLoader::loadShader("Deferred/Diffuse");
-   DiffuseTexture = CShaderLoader::loadShader("Deferred/Textured");
+
+   DeferredFlat = CShaderLoader::loadShader("Deferred/Diffuse");
+   DeferredDiffuse = CShaderLoader::loadShader("Deferred/Diffuse");
+   DeferredTexture = CShaderLoader::loadShader("Deferred/Textured");
    //normalColor = CShaderLoader::loadShader("NormalColor");
 }
 
