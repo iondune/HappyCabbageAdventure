@@ -1561,6 +1561,37 @@ void PrepMeshes()
   renderWinCabbage->setCullingEnabled(true);
 
 
+   cabbage5 = new CMeshSceneObject();
+   cabbage5->setMesh(cabbageMesh);
+   cabbage5->setShader(Toon);
+   cabbage5->setCullingEnabled(false);
+
+   cabbage4 = new CMeshSceneObject();
+   cabbage4->setMesh(cabbageMesh);
+   cabbage4->setShader(Toon);
+   cabbage4->setCullingEnabled(false);
+
+   normalCabbage = new CMeshSceneObject();
+   normalCabbage->setMesh(cabbageMesh);
+   normalCabbage->setShader(Toon);
+   normalCabbage->setCullingEnabled(false);
+
+   normalCabbage = new CMeshSceneObject();
+   normalCabbage->setMesh(cabbageMesh);
+   normalCabbage->setShader(Toon);
+   normalCabbage->setCullingEnabled(false);
+
+   normalCabbage = new CMeshSceneObject();
+   normalCabbage->setMesh(cabbageMesh);
+   normalCabbage->setShader(Toon);
+   normalCabbage->setCullingEnabled(false);
+
+   normalCabbage = new CMeshSceneObject();
+   normalCabbage->setMesh(cabbageMesh);
+   normalCabbage->setShader(Toon);
+   normalCabbage->setCullingEnabled(false);
+
+
    normalCabbage = new CMeshSceneObject();
    normalCabbage->setMesh(cabbageMesh);
    normalCabbage->setShader(Toon);
