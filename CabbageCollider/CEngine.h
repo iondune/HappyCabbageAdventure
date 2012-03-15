@@ -157,7 +157,6 @@ namespace Cabbage
             CObject* const getObjectBelow(SVector2 pos)
             {
                float height = - std::numeric_limits<float>::infinity();
-               float checkHeight;
                CObject *Object, *objBelow = NULL;
 
                for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
@@ -180,7 +179,6 @@ namespace Cabbage
 
             float const getHeightBelow(SVector2 pos) {
                float height = - std::numeric_limits<float>::infinity();
-               float checkHeight;
                CObject* Object;
 
                for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
