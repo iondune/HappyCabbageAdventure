@@ -25,14 +25,14 @@ void main()
     
     vec3 LightVector = vLightPosition - Position.xyz;
     
-    const float Distance = length(LightVector);
+    float Distance = length(LightVector);
     
     if (Distance > uRadius)
         discard;
         
     LightVector = normalize(LightVector);
     
-    const float Attenuation = 1.0 - Distance / uRadius;
+    float Attenuation = 1.0 - Distance / uRadius;
     
     vec3 Normal = texture2D(uNormal, vTexCoord).rgb * 2.0 - 1.0;
     
