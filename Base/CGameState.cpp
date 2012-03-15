@@ -1189,7 +1189,9 @@ void CGameState::UpdateLeaves() {
       //normalCabbage->setVisible(false);
    }
 
-   else if (!normalCabbage->isVisible() && curHealth > 0) {
+   else if ((!cabbage5->isVisible() || !cabbage4->isVisible() ||
+	         !cabbage3->isVisible() || !cabbage2->isVisible() ||
+			 !cabbage1->isVisible() || !cabbage0->isVisible()) && curHealth > 0) {
       CabbageHurtFace->setVisible(false);
       if (curHealth == 5) {
          cabbageHurt5->setVisible(false);
