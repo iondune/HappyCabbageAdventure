@@ -759,27 +759,26 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 			SceneManager.getEffectManager()->setEffectEnabled(ESE_SSAO, ! SceneManager.getEffectManager()->isEffectEnabled(ESE_SSAO));
 			//CApplication::get().getSceneManager().DoSSAO = ! CApplication::get().getSceneManager().DoSSAO;
 		}
-		if (Event.Key == SDLK_v)
-		if (Event.Key == SDLK_b && !GameplayManager->isWon())
+		if (Event.Key == SDLK_v && !GameplayManager->isWon())
 		{
 			static bool Deferred = false;
 			SceneManager.setDeferred(Deferred = ! Deferred);
 		}
-		if (Event.Key == SDLK_b)
+		if (Event.Key == SDLK_b && !GameplayManager->isWon())
 		{
 			SceneManager.getEffectManager()->setEffectEnabled(ESE_BLOOM, ! SceneManager.getEffectManager()->isEffectEnabled(ESE_BLOOM));
 			//CApplication::get().getSceneManager().DoBloom = ! CApplication::get().getSceneManager().DoBloom;
 		}
-		if (Event.Key == ::SDLK_COMMA && !GameplayManager->isWon())
+		if (Event.Key == SDLK_COMMA && !GameplayManager->isWon())
 		{
 			//CApplication::get().getSceneManager().OnlySSAO = ! CApplication::get().getSceneManager().OnlySSAO;
 		}
-		if (Event.Key == ::SDLK_SLASH && !GameplayManager->isWon())
+		if (Event.Key == SDLK_SLASH && !GameplayManager->isWon())
 		{
 			SceneManager.getEffectManager()->setEffectEnabled(ESE_SSAO_BLUR, ! SceneManager.getEffectManager()->isEffectEnabled(ESE_SSAO_BLUR));
 			//CApplication::get().getSceneManager().DoBlur = ! CApplication::get().getSceneManager().DoBlur;
 		}
-		if (Event.Key == ::SDLK_PERIOD && !GameplayManager->isWon())
+		if (Event.Key == SDLK_PERIOD && !GameplayManager->isWon())
 		{
 			//CApplication::get().getSceneManager().OnlyNormals = ! CApplication::get().getSceneManager().OnlyNormals;
 		}
@@ -1299,17 +1298,17 @@ void CGameState::RunVictorySequence(float Elapsed) {
    }
    else if (StartWin > 4.9f && StartWin < 6.4f) {
       if (!glow) {
-         glow = new CParticleEngine(SVector3(curLocation.X + .5, curLocation.Y - .25, 0), 400, 2.f, LASER_CHARGING_PARTICLE);
+         glow = new CParticleEngine(SVector3(curLocation.X + 0.5f, curLocation.Y - 0.25f, 0), 400, 2.f, LASER_CHARGING_PARTICLE);
       }
       spaceDown = 0;
-      curScaleY -= .4*Elapsed;
+      curScaleY -= 0.4f*Elapsed;
       cabbage5->setScale(SVector3(1.f, 1.f, curScaleY));
       //renderWinCabbage->setScale(SVector3(1.f, 1.f, curScaleY));
    }
 
-   else if (StartWin > 6.9 && StartWin < 7.3f) {
-      curScaleY += 1.2*Elapsed;
-      curScaleX -= 1.8*Elapsed;
+   else if (StartWin > 6.9f && StartWin < 7.3f) {
+      curScaleY += 1.2f*Elapsed;
+      curScaleX -= 1.8f*Elapsed;
 
 
       renderWinCabbage->setTranslation(SVector3(WinPlayer->getArea().getCenter().X,WinPlayer->getArea().getCenter().Y, 0));
@@ -1764,17 +1763,18 @@ void PrepMeshes()
 
   renderWinCabbage = new CMeshSceneObject();
   renderWinCabbage->setMesh(cabbageMesh);
-  renderWinCabbage->setShader(Toon);
+  renderWinCabbage->setShader(ERP_DEFAULT, Toon);
+  renderWinCabbage->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
   renderWinCabbage->setVisible(false);
   renderWinCabbage->setCullingEnabled(true);
 
-   renderChristmasTree->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
    cabbage5 = new CMeshSceneObject();
    cabbage5->setMesh(mCab5);
-   cabbage5->setShader(Toon);
+  cabbage5->setShader(ERP_DEFAULT, Toon);
+  cabbage5->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    cabbage5->setCullingEnabled(false);
-   playerRenderable->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+
    playerLight2 = new CPointLightSceneObject(10.f);
    CApplication::get().getSceneManager().addSceneObject(playerLight2);
 
@@ -1789,91 +1789,98 @@ void PrepMeshes()
 
    cabbage4 = new CMeshSceneObject();
    cabbage4->setMesh(mCab4);
-   cabbage4->setShader(Toon);
+  cabbage4->setShader(ERP_DEFAULT, Toon);
+  cabbage4->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    cabbage4->setCullingEnabled(false);
    cabbage4->setVisible(false);
 
    cabbage3 = new CMeshSceneObject();
    cabbage3->setMesh(mCab3);
-   cabbage3->setShader(Toon);
+  cabbage3->setShader(ERP_DEFAULT, Toon);
+  cabbage3->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    cabbage3->setCullingEnabled(false);
    cabbage3->setVisible(false);
-   renderWhiteFlwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
    cabbage2 = new CMeshSceneObject();
    cabbage2->setMesh(mCab2);
-   cabbage2->setShader(Toon);
+  cabbage2->setShader(ERP_DEFAULT, Toon);
+  cabbage2->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    cabbage2->setCullingEnabled(false);
    cabbage2->setVisible(false);
-   renderWhiteSunflwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
    cabbage1 = new CMeshSceneObject();
    cabbage1->setMesh(mCab1);
-   cabbage1->setShader(Toon);
+  cabbage1->setShader(ERP_DEFAULT, Toon);
+  cabbage1->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    cabbage1->setCullingEnabled(false);
    cabbage1->setVisible(false);
-   renderPurpleFlwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
    cabbage0 = new CMeshSceneObject();
    cabbage0->setMesh(mCab0);
-   cabbage0->setShader(Toon);
+  cabbage0->setShader(ERP_DEFAULT, Toon);
+  cabbage0->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    cabbage0->setCullingEnabled(false);
    cabbage0->setVisible(false);
-   renderYellowFlwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
    cabbageHurt5 = new CMeshSceneObject();
    cabbageHurt5->setMesh(mCabOw5);
-   cabbageHurt5->setShader(Toon);
+  cabbageHurt5->setShader(ERP_DEFAULT, Toon);
+  cabbageHurt5->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    cabbageHurt5->setCullingEnabled(false);
    cabbageHurt5->setTranslation(SVector3(0.f, 0.f, .2f));
-   renderTealFlwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
    cabbageHurt4 = new CMeshSceneObject();
    cabbageHurt4->setMesh(mCabOw4);
-   cabbageHurt4->setShader(Toon);
+  cabbageHurt4->setShader(ERP_DEFAULT, Toon);
+  cabbageHurt4->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    cabbageHurt4->setCullingEnabled(false);
    cabbageHurt4->setVisible(false);
    cabbageHurt4->setTranslation(SVector3(0.f, 0.f, .2f));
-   renderFicus->setShader(ERP_DEFERRED_OBJECTS, DeferredToonTexture);
 
    cabbageHurt3 = new CMeshSceneObject();
    cabbageHurt3->setMesh(mCabOw3);
-   cabbageHurt3->setShader(Toon);
+  cabbageHurt3->setShader(ERP_DEFAULT, Toon);
+  cabbageHurt3->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    cabbageHurt3->setCullingEnabled(false);
    cabbageHurt3->setVisible(false);
    cabbageHurt3->setTranslation(SVector3(0.f, 0.f, .2f));
 
    cabbageHurt2 = new CMeshSceneObject();
    cabbageHurt2->setMesh(mCabOw2);
-   cabbageHurt2->setShader(Toon);
+  cabbageHurt2->setShader(ERP_DEFAULT, Toon);
+  cabbageHurt2->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    cabbageHurt2->setCullingEnabled(false);
    cabbageHurt2->setVisible(false);
    cabbageHurt2->setTranslation(SVector3(0.f, 0.f, .2f));
 
    cabbageHurt1 = new CMeshSceneObject();
    cabbageHurt1->setMesh(mCabOw1);
-   cabbageHurt1->setShader(Toon);
+  cabbageHurt1->setShader(ERP_DEFAULT, Toon);
+  cabbageHurt1->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    cabbageHurt1->setCullingEnabled(false);
    cabbageHurt1->setVisible(false);
    cabbageHurt1->setTranslation(SVector3(0.f, 0.f, .2f));
 
    cabbageHurt0 = new CMeshSceneObject();
    cabbageHurt0->setMesh(mCabOw0);
-   cabbageHurt0->setShader(Toon);
+  cabbageHurt0->setShader(ERP_DEFAULT, Toon);
+  cabbageHurt0->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    cabbageHurt0->setCullingEnabled(false);
    cabbageHurt0->setVisible(false);
    cabbageHurt0->setTranslation(SVector3(0.f, 0.f, .2f));
 
    normalCabbage = new CMeshSceneObject();
    normalCabbage->setMesh(mCab5);
-   normalCabbage->setShader(Toon);
+  normalCabbage->setShader(ERP_DEFAULT, Toon);
+  normalCabbage->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    normalCabbage->setCullingEnabled(false);
    normalCabbage->setVisible(false);
    
 
    damageCabbage = new CMeshSceneObject();
    damageCabbage->setMesh(cabbageDamage);
-   damageCabbage->setShader(Toon);
+  damageCabbage->setShader(ERP_DEFAULT, Toon);
+  damageCabbage->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    damageCabbage->setVisible(false);
    damageCabbage->setScale(SVector3(1.5f));
    damageCabbage->setRotation(SVector3(0.f, 0.f, 45.f));
@@ -1913,6 +1920,7 @@ void PrepMeshes()
    flagLogo->setTranslation(SVector3(170, 100.f, 1.0f));
    flagLogo->setRotation(SVector3(-90,0,0));
    flagLogo->setScale(SVector3(.75f));
-   flagLogo->setShader(Toon);
+  flagLogo->setShader(ERP_DEFAULT, Toon);
+  flagLogo->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    flagLogo->setShader(ERP_DEFERRED_OBJECTS, DeferredFlat);
 }

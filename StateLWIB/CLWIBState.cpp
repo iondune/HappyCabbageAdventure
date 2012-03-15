@@ -97,8 +97,8 @@ void CLWIBState::begin()
    DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture");
    DiffuseTextureBright = CShaderLoader::loadShader("DiffuseTextureBright");
 
-   DeferredDiffuse = CShaderLoader::loadShader("Deferred\Diffuse");
-   DeferredTexture = CShaderLoader::loadShader("Deferred\Textured");
+   DeferredDiffuse = CShaderLoader::loadShader("Deferred/Diffuse");
+   DeferredTexture = CShaderLoader::loadShader("Deferred/Textured");
    
    float const LightBrightness = 1.0f;
    Application.getSceneManager().Lights.push_back(new CLight()); 

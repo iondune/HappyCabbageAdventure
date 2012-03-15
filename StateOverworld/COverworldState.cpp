@@ -320,7 +320,7 @@ void COverworldState::PrepMeshes()
    CMaterial mat;
 
    mat.Texture = CImageLoader::loadTexture("../Models/Base/world.bmp");
-   renderMap = CApplication::get().getSceneManager().addMeshSceneObject(mapMesh, ToonTexture);
+   renderMap = CApplication::get().getSceneManager().addMeshSceneObject(mapMesh, ToonTexture, DeferredTexture);
    renderMap->setMaterial(mat);
    renderMap->setCullingEnabled(false);
 
@@ -409,7 +409,7 @@ void COverworldState::PrepMeshes()
 void COverworldState::levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor)
 {
 
-   discRender = CApplication::get().getSceneManager().addMeshSceneObject(levelIcon, ToonTexture);
+	discRender = CApplication::get().getSceneManager().addMeshSceneObject(levelIcon, ToonTexture, DeferredTexture);
 
    CMaterial mat;
    switch(iconColor)
@@ -440,7 +440,8 @@ void COverworldState::addMeshes(SVector3 loc, CMesh *newMesh, CTexture *texture)
   renderFlag->setRotation(SVector3(-90,0,0));
   renderFlag->setScale(SVector3(.00150f, .000025f,.00016f));
   renderFlag->setTexture(texture);
-  renderFlag->setShader(ToonTexture);
+  renderFlag->setShader(ERP_DEFAULT, ToonTexture);
+  renderFlag->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
 
   Application.getSceneManager().addSceneObject(renderFlag);
 

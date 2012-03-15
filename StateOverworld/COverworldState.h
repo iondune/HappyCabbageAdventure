@@ -34,6 +34,7 @@ class COverworldState : public CState<COverworldState>
    SVector3 playerVector, playerVecShift, playerVecTarget;
 
    CShader *Flat, *Diffuse, *ToonTexture;
+   CShader *DeferredFlat, * DeferredDiffuse, * DeferredTexture;
    CMeshSceneObject *renderMap, *discRender, *playerRender,
                     *arrowRender1, *arrowRender2;
 
