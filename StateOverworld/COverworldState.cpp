@@ -265,6 +265,7 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
 void COverworldState::end()
 {
    Application.getSceneManager().removeAllSceneObjects();
+   Application.getSceneManager().Lights.clear();
 }
 
 void COverworldState::loadLevels()
