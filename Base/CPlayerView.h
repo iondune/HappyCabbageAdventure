@@ -19,9 +19,10 @@
 #define CAM_TIMER 0.2f
 
 class CPlayerView {
+   SVector2 Size;
    SVector2 CenterPosition;
    SVector2 Velocity;
-   CMeshSceneObject *PlayerRenderable, *renderShadow;
+   CMeshSceneObject *PlayerRenderable, *renderLeftShadow, *renderRightShadow;
    float recovering;
    private:
     float zCam,zCamShift,zCamTimer;
@@ -44,7 +45,7 @@ class CPlayerView {
       };
       State curState;
       float ySineValue;
-      float yShadow;
+      float yLeftShadow, yRightShadow;
       float xScale;
       float yScale;
       float time,timeChange;
@@ -52,7 +53,7 @@ class CPlayerView {
       int Charging;
       CPlayerView() {
          ySineValue = 0;
-         yShadow = 0;
+         yRightShadow = yLeftShadow = 0;
          lookRight = 1;
          yScale = xScale = 2.0f;
          time = 0;
@@ -63,9 +64,10 @@ class CPlayerView {
       int lookRight;
 
       int getLookRight();
-      void setRenderable(CMeshSceneObject *render, CMeshSceneObject *shadowRender) {
+      void setRenderable(CMeshSceneObject *render, CMeshSceneObject *shadowLeftRender, CMeshSceneObject *shadowRightRender) {
          PlayerRenderable = render;
-         renderShadow = shadowRender;
+         renderLeftShadow = shadowLeftRender;
+         renderRightShadow = shadowRightRender;
       }
       float godMode;
       void setGodMode(float i) {godMode = i;}
@@ -82,8 +84,34 @@ class CPlayerView {
       void setMiddle(SVector2 middle) {
          CenterPosition = middle;
       }
-      void setGround(float groundYValue) {
-         yShadow = groundYValue;
+      void setSize(SVector2 size) {
+         Size = size;
+      }
+      float cutOffPoint;
+      void setCutoffPoint(SRect2 left, SRect2 right) {
+         renderLeftShadow->setVisible(left.Size.X != 0.0f);
+         renderRightShadow->setVisible(right.Size.X != 0.0f);
+
+         if(left.otherCorner().Y > right.otherCorner().Y) {
+            cutOffPoint = left.Position.X + left.Size.X;
+         }
+         else if(left.otherCorner().Y < right.otherCorner().Y) {
+            cutOffPoint = right.Position.X;
+         }
+         else {
+            cutOffPoint = 0.0f;
+         }
+         float oldCutOff = cutOffPoint;
+         if(cutOffPoint > 0.0f) {
+            cutOffPoint = ((Size.X/2.f - CenterPosition.X) - cutOffPoint)/Size.X;
+         }
+         printf("CutoffPoint = %0.2f, %0.2f\n", cutOffPoint, oldCutOff);
+      }
+      void setLeftGround(float groundYValue) {
+         yLeftShadow = groundYValue;
+      }
+      void setRightGround(float groundYValue) {
+         yRightShadow = groundYValue;
       }
       void setShader(CShader * shader, CShader * dShader);
       void draw();
