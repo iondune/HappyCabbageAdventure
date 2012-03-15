@@ -270,6 +270,7 @@ void CMainMenuState::OnWidgetUnHover(CGUIWidget * Widget)
 void CMainMenuState::OnWidgetClick(CGUIWidget * Widget)
 {
    if(Widget == StartGame) {
+      COverworldState::get().newGame = true;
       CApplication::get().getStateManager().setState(new CFadeOutState(& COverworldState::get(), 0.3f));
    }
    else if(Widget == StartEditor) {
