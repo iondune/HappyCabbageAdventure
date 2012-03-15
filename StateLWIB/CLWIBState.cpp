@@ -1191,6 +1191,12 @@ void CLWIBState::changeTiles() {
         tileTwo->setImage(dirt);
         tileThree->setImage(rock);
         tileFour->setImage(ground);
+        tileFive->setImage(blockLeft);
+        tileSix->setImage(blockRight);
+        tileSeven->setImage(blockDown);
+        tileEight->setImage(blockUp);
+        tileNine->setImage(blockIn);
+        tileTen->setImage(blockOut);
      
 
         if (!Application.getGUIEngine().isWidgetIn(tileOne))
@@ -1619,6 +1625,15 @@ void CLWIBState::prepHud() {
     CTexture *loadImg = new CTexture(CImageLoader::loadImage("ModelImages/folder.bmp"));
     CTexture *undoImg = new CTexture(CImageLoader::loadImage("ModelImages/undo.bmp"));
     CTexture *redoImg = new CTexture(CImageLoader::loadImage("ModelImages/redo.bmp"));
+
+    //prep more tiles
+
+    blockRight = new CTexture(CImageLoader::loadImage("ModelImages/blockLength2.bmp"));
+    blockLeft = new CTexture(CImageLoader::loadImage("ModelImages/blockLength.bmp"));
+    blockUp = new CTexture(CImageLoader::loadImage("ModelImages/blockHeight.bmp"));
+    blockDown = new CTexture(CImageLoader::loadImage("ModelImages/blockHeight2.bmp"));
+    blockIn = new CTexture(CImageLoader::loadImage("ModelImages/blockDepth.bmp"));
+    blockOut = new CTexture(CImageLoader::loadImage("ModelImages/blockDepth2.bmp"));
 
     grass = new CTexture(CImageLoader::loadImage("Base/grass.bmp"));
     dirt = new CTexture(CImageLoader::loadImage("Base/dirt.bmp"));
