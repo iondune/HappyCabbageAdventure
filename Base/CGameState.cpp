@@ -365,7 +365,7 @@ void CGameState::Initialize() {
    GameWinText->setColor(FontColor);
 
    GameOverText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
-   GameOverText->setText("GAME OVER! YOU ARE DEAD.");
+   GameOverText->setText("GAME OVER! YOU ARE DEAD. PRESS SPACE");
    GameOverText->setVisible(false);
    GameOverText->setPosition(SVector2(0.35f, 0.75f));
    GameOverText->setColor(FontColor);
@@ -536,6 +536,8 @@ void CGameState::oldDisplay() {
             return;
          }
          else {
+           COverworldState::get().levelCompleted = false;
+           Application.getStateManager().setState(new CFadeOutState(& COverworldState::get()));
          }
       }
       if(!GameplayManager->isPlayerAlive() && !playDead) {
@@ -899,7 +901,9 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_ESCAPE) {
          //TODO: Replace with an event/signal to end the game world 
-         Application.getStateManager().setState(new CFadeOutState(& CMainMenuState::get()));
+        COverworldState::get().levelCompleted = false;
+         Application.getStateManager().setState(new CFadeOutState(& COverworldState::get()));
+         //Application.getStateManager().setState(new CFadeOutState(& CMainMenuState::get()));
       }
    }
    //Check if key let go, Not sure if this will work in here.
@@ -1214,7 +1218,12 @@ void CGameState::RunVictorySequence(float Elapsed) {
          normalCabbage->setCullingEnabled(true);
 
          launch = false;
-      }
+      }//Damien mark 1
+   }
+   else if(StartWin >= 7.3f)
+   {
+      COverworldState::get().levelCompleted = true;
+      Application.getStateManager().setState(new CFadeOutState(& COverworldState::get()));
    }
 }
 

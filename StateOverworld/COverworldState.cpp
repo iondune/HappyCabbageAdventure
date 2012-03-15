@@ -8,8 +8,6 @@ COverworldState::COverworldState()
 //Initalizer fxn
 void COverworldState::begin()
 {
-   curNode = 0;
-   curCamera = 0;
    aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0;
    transitionTimer = 0.0;
 
@@ -22,10 +20,27 @@ void COverworldState::begin()
 
    mouseDown = 0;
 
-   loadLevels();
-   setCameraTrans();
+   if(newGame)
+   {
+     printf("Starting new game\n");
+     newGame = false;
+     curNode = 0;
+     curCamera = 0;
+     loadLevels();
+     setCameraTrans();
+   }
+   else if(levelCompleted)
+   {
+     printf("Completed level %d\n", curNode);
 
-   testFun();
+   }
+   else if(!levelCompleted)
+   {
+     printf("Level failed\n");
+
+   }
+
+   //testFun();
 
    glEnable(GL_DEPTH_TEST);
    glDepthFunc(GL_LEQUAL);
@@ -38,8 +53,8 @@ void COverworldState::begin()
 
    //eye = SVector3(1.47f, 0.33f, 0);
    //look = SVector3(0.57f, -0.08f, 0.19f);
-   eye = cameraPos[0];
-   look = levels[0].loc;
+   eye = cameraPos[curCamera];
+   look = levels[curNode].loc;
    Camera = new CPerspectiveCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
    Application.getSceneManager().setActiveCamera(Camera);
    float const LightBrightness = 0.6f;
@@ -107,21 +122,11 @@ arrowRender2->setTranslation(SVector3(0,0.2,0) + playerVector);
 
 
    stepValue += 0.5f*delta;
-   /*
-
-   if(!(look == lookTarget))
-   {
-     printf("That's a paddlin: %0.2f %0.2f %0.2f %0.2f %0.2f %0.2f\n",
-         look.X, look.Y, look.Z, lookTarget.X, lookTarget.Y, lookTarget.Z);
-   }
-   */
 }
 
 //Runs at very start of display
 void COverworldState::OnRenderStart(float const Elapsed)
 {
-  //printf("Elapsed %f",Elapsed);
-  //printf("Elapsed %f",Application.getElapsedTime());
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
@@ -181,7 +186,7 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
          printf("Eye coords: %0.2f %0.2f %0.2f\n", eye.X, eye.Y, eye.Z);
          printf("Look coords: %0.2f %0.2f %0.2f\n", look.X, look.Y, look.Z);
       }
-      if(Event.Key == SDLK_SPACE) {
+      if(Event.Key == SDLK_SPACE && transitionTimer == 0.0f) {
         CGameState::get().levelName = levels[curNode].name;
          Application.getStateManager().setState(new CFadeOutState(& CGameState::get()));
          spaceDown = 1;
@@ -272,6 +277,11 @@ void COverworldState::loadLevels()
   levels[4].loc = SVector3(0.98f, -0.27f, -0.19f); //Green beach
   levels[5].name = "test.xml";
   levels[5].loc = SVector3(0.94f, -0.25f, -0.38f); //Yellow beach
+
+  for(int i = 0; i < NUM_LEVELS; i++)
+  {
+    levels[i].completed = false;
+  }
 }
 
 void COverworldState::setCameraTrans()
@@ -316,7 +326,7 @@ void COverworldState::PrepMeshes()
    }
 
    playerRender = CApplication::get().getSceneManager().addMeshSceneObject(playerMesh, Flat);
-   playerVector = levels[0].loc;
+   playerVector = levels[curNode].loc;
    playerVector.Y += 0.05f;
    playerRender->setTranslation(playerVector);
    playerRender->setRotation(SVector3(-90.0f, 0.0f, 45.0f));
@@ -397,7 +407,7 @@ void COverworldState::bouncePlayer() {
 
 void COverworldState::movePlayer() {
   bool moved = false;
-  if(transitionTimer > 0)
+  if(transitionTimer != 0.0f)
     return;
 
   if(aDown && curNode > 0)
@@ -442,7 +452,7 @@ void COverworldState::superInterpolator(SVector3 & curr, SVector3 & change,
 {
   SVector3 zeroV = SVector3(0.0f, 0.0f, 0.0f);
 
-  if(transitionTimer <= 0)
+  if(transitionTimer <= 0.0f)
   {
     change = zeroV;
     return;

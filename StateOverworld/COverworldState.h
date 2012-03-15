@@ -21,6 +21,7 @@ class COverworldState : public CState<COverworldState>
   {
     SVector3 loc;
     const char * name;
+    bool completed;
   };
 
    CApplication & Application;
@@ -60,6 +61,8 @@ class COverworldState : public CState<COverworldState>
    CLight * PlayerLight;
 
    public:
+
+   bool newGame,levelCompleted;
 
    ICamera *Camera;
    float camRotValue, fps, timeTotal, stepValue;
