@@ -1012,6 +1012,7 @@ void CGameState::end()
    GameEventManager->OnPlayerDamaged.disconnect(& GameEventReceiver);
    Application.getEventManager().OnGameTickStart.disconnect(& GameEventReceiver);
 
+   Application.getSceneManager().Lights.clear();
    Application.getSceneManager().removeAllSceneObjects();
    Application.getGUIEngine().removeAllWidgets();
 }
