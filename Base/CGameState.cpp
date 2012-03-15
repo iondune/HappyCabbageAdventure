@@ -574,7 +574,8 @@ void CGameState::oldDisplay() {
 
    SVector2 middleOfPlayer = Player->getArea().getCenter();
    PlayerView->setMiddle(middleOfPlayer);
-   PlayerView->setGround(Engine->getHeightBelow(Player));
+   //PlayerView->setGround(Engine->getHeightBelow(Player));
+   PlayerView->setGround(Engine->getHeightBelow(Player->getArea().getCenter()));
 
    PlayerView->establishCamera(Camera, ANGLE(overView, backwardsView), 
          (!!particleLaserFireEngine ? 1 : 0) + ((GameplayManager->getRecovering() > 0 || GameplayManager->JustKilled) ? 2 : 0));
