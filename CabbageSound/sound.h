@@ -13,6 +13,10 @@ extern Mix_Chunk *victory;
 extern Mix_Chunk *jump;
 extern Mix_Chunk *takeDmg;
 extern Mix_Chunk *killEnemy;
+extern Mix_Chunk *chargeLaser;
+extern Mix_Chunk *chargeLaser2;
+extern Mix_Chunk *fireLaser;
+extern Mix_Chunk *dropKiwi;
 
 //Misc Sound Variables
 extern bool playDead;
@@ -20,6 +24,11 @@ extern bool playTakeDmg;
 extern bool playJump;
 extern bool musicOn;
 extern bool playVictory;
+extern bool playChargeLaser;
+extern bool playFireLaser;
+
+extern int aChannel;
+extern float channelTime;
 
 //Sound Effect fxns
 void soundInit();

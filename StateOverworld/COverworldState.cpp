@@ -8,8 +8,6 @@ COverworldState::COverworldState()
 //Initalizer fxn
 void COverworldState::begin()
 {
-   curNode = 0;
-   curCamera = 0;
    aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0;
    transitionTimer = 0.0;
 
@@ -22,10 +20,29 @@ void COverworldState::begin()
 
    mouseDown = 0;
 
-   loadLevels();
-   setCameraTrans();
+   if(newGame)
+   {
+     printf("Starting new game\n");
+     newGame = false;
+     curNode = 0;
+     curCamera = 0;
+     levelsUnlocked = true; //NOTE: this should be switched to false upon release
+     loadLevels();
+     setCameraTrans();
+   }
+   else if(levelCompleted)
+   {
+     printf("Completed level %d\n", curNode);
+     levels[curNode].completed = true;
 
-   testFun();
+   }
+   else if(!levelCompleted)
+   {
+     printf("Level failed\n");
+
+   }
+
+   //testFun();
 
    glEnable(GL_DEPTH_TEST);
    glDepthFunc(GL_LEQUAL);
@@ -38,11 +55,11 @@ void COverworldState::begin()
 
    //eye = SVector3(1.47f, 0.33f, 0);
    //look = SVector3(0.57f, -0.08f, 0.19f);
-   eye = cameraPos[0];
-   look = levels[0].loc;
+   eye = cameraPos[curCamera];
+   look = levels[curNode].loc;
    Camera = new CPerspectiveCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
    Application.getSceneManager().setActiveCamera(Camera);
-   float const LightBrightness = 0.6f;
+   float const LightBrightness = 0.0f;
    Camera->setPosition(eye);
    Camera->setLookDirection(look - eye);
 
@@ -107,21 +124,11 @@ arrowRender2->setTranslation(SVector3(0,0.2,0) + playerVector);
 
 
    stepValue += 0.5f*delta;
-   /*
-
-   if(!(look == lookTarget))
-   {
-     printf("That's a paddlin: %0.2f %0.2f %0.2f %0.2f %0.2f %0.2f\n",
-         look.X, look.Y, look.Z, lookTarget.X, lookTarget.Y, lookTarget.Z);
-   }
-   */
 }
 
 //Runs at very start of display
 void COverworldState::OnRenderStart(float const Elapsed)
 {
-  //printf("Elapsed %f",Elapsed);
-  //printf("Elapsed %f",Application.getElapsedTime());
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
@@ -181,11 +188,10 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
          printf("Eye coords: %0.2f %0.2f %0.2f\n", eye.X, eye.Y, eye.Z);
          printf("Look coords: %0.2f %0.2f %0.2f\n", look.X, look.Y, look.Z);
       }
-      if(Event.Key == SDLK_SPACE) {
+      if(Event.Key == SDLK_SPACE && transitionTimer == 0.0f) {
         CGameState::get().levelName = levels[curNode].name;
          Application.getStateManager().setState(new CFadeOutState(& CGameState::get()));
          spaceDown = 1;
-         changeSoundtrack("SMW.wav");
       }
       if(Event.Key == SDLK_ESCAPE) {
          Application.getStateManager().setState(new CFadeOutState(& CMainMenuState::get()));
@@ -205,6 +211,9 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_d){
          dDown = 0;
+      }
+      if(Event.Key == SDLK_v){
+         levelsUnlocked = !levelsUnlocked;
       }
       if(Event.Key == SDLK_i){
         changey += 0.01f;
@@ -256,6 +265,7 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
 void COverworldState::end()
 {
    Application.getSceneManager().removeAllSceneObjects();
+   Application.getSceneManager().Lights.clear();
 }
 
 void COverworldState::loadLevels()
@@ -265,14 +275,19 @@ void COverworldState::loadLevels()
   levels[0].loc = SVector3(0.33f, -0.17f, 1.05f); //bit of green near sole orange hill
   levels[1].name = "jorge2.xml";
   levels[1].loc = SVector3(0.83f, 0.00f, 0.65f); //Green hill
-  levels[2].name = "chris.xml";
+  levels[2].name = "jorge3.xml";
   levels[2].loc = SVector3(0.9f, -0.12999999f, 0.3f);
-  levels[3].name = "test2.xml";
+  levels[3].name = "chris.xml";
   levels[3].loc = SVector3(0.5f, -0.13f, 0.1f);
-  levels[4].name = "test.xml";
+  levels[4].name = "test2.xml";
   levels[4].loc = SVector3(0.98f, -0.27f, -0.19f); //Green beach
   levels[5].name = "test.xml";
   levels[5].loc = SVector3(0.94f, -0.25f, -0.38f); //Yellow beach
+
+  for(int i = 0; i < NUM_LEVELS; i++)
+  {
+    levels[i].completed = false;
+  }
 }
 
 void COverworldState::setCameraTrans()
@@ -285,7 +300,7 @@ void COverworldState::setCameraTrans()
 void COverworldState::LoadShaders() {
    Flat = CShaderLoader::loadShader("Toon");
    Diffuse = CShaderLoader::loadShader("Toon");
-   DiffuseTexture = CShaderLoader::loadShader("ToonTexture");
+   ToonTexture = CShaderLoader::loadShader("ToonTexture");
 
    DeferredFlat = CShaderLoader::loadShader("Deferred/Diffuse");
    DeferredDiffuse = CShaderLoader::loadShader("Deferred/Diffuse");
@@ -305,14 +320,15 @@ void COverworldState::PrepMeshes()
    CMaterial mat;
 
    mat.Texture = CImageLoader::loadTexture("../Models/Base/world.bmp");
-   renderMap = CApplication::get().getSceneManager().addMeshSceneObject(mapMesh, DiffuseTexture, DeferredTexture);
+   renderMap = CApplication::get().getSceneManager().addMeshSceneObject(mapMesh, ToonTexture);
    renderMap->setMaterial(mat);
    renderMap->setCullingEnabled(false);
 
    //Set up player renderable
-   CMesh *playerMesh = CMeshLoader::load3dsMesh("Base/crappycabbage2.3ds");
+   CMesh *playerMesh = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_5.3ds");
+
    if (playerMesh) {
-      playerMesh->resizeMesh(SVector3(0.5f));
+      playerMesh->resizeMesh(SVector3(0.45f));
       playerMesh->centerMeshByExtents(SVector3(0));
       playerMesh->calculateNormalsPerFace();
    }
@@ -321,7 +337,7 @@ void COverworldState::PrepMeshes()
    }
 
    playerRender = CApplication::get().getSceneManager().addMeshSceneObject(playerMesh, Flat, DeferredFlat);
-   playerVector = levels[0].loc;
+   playerVector = levels[curNode].loc;
    playerVector.Y += 0.05f;
    playerRender->setTranslation(playerVector);
    playerRender->setRotation(SVector3(-90.0f, 0.0f, 45.0f));
@@ -354,9 +370,32 @@ void COverworldState::PrepMeshes()
    discMesh->linearizeIndices();
    discMesh->calculateNormalsPerFace();
 
+   CMesh *flagMesh = CMeshLoader::load3dsMesh("Base/flag2.3ds");
+   
+   if (flagMesh) {
+     flagMesh->centerMeshByExtents(SVector3(0));
+     flagMesh->calculateNormalsPerFace();
+   }
+
+   else {
+     fprintf(stderr, "Failed to load flag mesh.\n");
+   }
+
+   CTexture *flagTxt = new CTexture(CImageLoader::loadImage("Base/white.bmp"));
+
+
    for(int i = 0; i < NUM_LEVELS; i++)
    {
-     levelIcons(levels[i].loc, discMesh, 1);
+     if(levels[i].completed)
+     {
+      levelIcons(levels[i].loc, discMesh, 1);
+      addMeshes(levels[i].loc, flagMesh, flagTxt);
+     }
+     else
+     {
+      levelIcons(levels[i].loc, discMesh, 2);
+     }
+
    }
 
    //levelIcons(SVector3(0.6f, 0.06f, 0.6f), discMesh, 1);
@@ -370,7 +409,7 @@ void COverworldState::PrepMeshes()
 void COverworldState::levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor)
 {
 
-   discRender = CApplication::get().getSceneManager().addMeshSceneObject(levelIcon, DiffuseTexture, DeferredTexture);
+   discRender = CApplication::get().getSceneManager().addMeshSceneObject(levelIcon, ToonTexture);
 
    CMaterial mat;
    switch(iconColor)
@@ -380,7 +419,7 @@ void COverworldState::levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor)
        break;
 
      case 2:
-       mat.Texture = CImageLoader::loadTexture("../Models/disc_orange.bmp");
+       mat.Texture = CImageLoader::loadTexture("Base/dirt.bmp");
        break;
        
      default:
@@ -393,6 +432,22 @@ void COverworldState::levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor)
    discRender->setScale(SVector3(0.1f));
 }
 
+void COverworldState::addMeshes(SVector3 loc, CMesh *newMesh, CTexture *texture)
+{
+  CMeshSceneObject *renderFlag = new CMeshSceneObject();
+  renderFlag->setMesh(newMesh);
+  renderFlag->setTranslation(loc + SVector3(-0.05f, 0.05f, 0.05f));
+  renderFlag->setRotation(SVector3(-90,0,0));
+  renderFlag->setScale(SVector3(.00150f, .000025f,.00016f));
+  renderFlag->setTexture(texture);
+  renderFlag->setShader(ToonTexture);
+
+  Application.getSceneManager().addSceneObject(renderFlag);
+
+
+
+}
+
 void COverworldState::bouncePlayer() {
    SVector3 m_base = playerVector;
    m_base.Y += 0.03f*(sin(stepValue*15)+1);
@@ -402,15 +457,15 @@ void COverworldState::bouncePlayer() {
 
 void COverworldState::movePlayer() {
   bool moved = false;
-  if(transitionTimer > 0)
+  if(transitionTimer != 0.0f)
     return;
 
-  if(aDown && curNode > 0)
+  if(aDown && curNode > 0 )
   {
     curNode--;
     moved = true;
   }
-  else if(dDown && curNode < NUM_LEVELS - 1)
+  else if(dDown && curNode < NUM_LEVELS - 1 && (levels[curNode].completed || levelsUnlocked))
   {
     curNode++;
     moved = true;
@@ -447,7 +502,7 @@ void COverworldState::superInterpolator(SVector3 & curr, SVector3 & change,
 {
   SVector3 zeroV = SVector3(0.0f, 0.0f, 0.0f);
 
-  if(transitionTimer <= 0)
+  if(transitionTimer <= 0.0f)
   {
     change = zeroV;
     return;

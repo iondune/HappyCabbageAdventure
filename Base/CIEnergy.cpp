@@ -18,7 +18,7 @@ CIEnergy::CIEnergy(float x, float y, float w, float h, CGameplayManager* manager
 //Loads and moves the mesh
 void CIEnergy::loadMesh() {
    Renderable = new CMeshSceneObject();
-   CMesh *mesh = CMeshLoader::load3dsMesh("Base/energyboost.3ds");
+   CMesh *mesh = CMeshLoader::load3dsMesh("Base/water_energy.3ds");
    if(mesh) {
       mesh->resizeMesh(SVector3(1));
       mesh->centerMeshByExtents(SVector3(0));
@@ -32,7 +32,7 @@ void CIEnergy::loadMesh() {
    Renderable->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
    //Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2 + 10.6f, 0));
    //Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
-   Renderable->setScale(SVector3(0.4f));
+   Renderable->setScale(SVector3(0.5f));
 
    CApplication::get().getSceneManager().addSceneObject(Renderable);
 }

@@ -50,6 +50,8 @@ void PKiwi::loadActor() {
    Actor->getAttributes().AirControl = 1.0f;
    Actor->getAttributes().AirSpeedFactor = 1.0f;
    Actor->CollideableType = COLLIDEABLE_TYPE_PKIWI;
+
+   Mix_PlayChannel(-1, dropKiwi, 0);
 }
 
 //Updates AI's decision per frame

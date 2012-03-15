@@ -235,8 +235,6 @@
 </CEnemy>
 <CEnemy X ="158" Y ="0" height ="1" width ="1" type ="0">
 </CEnemy>
-<CCabbage X ="-21" Y ="3" height ="1" width ="1" isMoving ="0">
-</CCabbage>
 <CBlock X ="1" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
 <CBlock X ="6" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
@@ -273,5 +271,11 @@
 </CBlock>
 <CBlock X ="62" Y ="3" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CFlag X ="173" Y ="0" height ="1" width ="1" isMoving ="0">
+<CFlag X ="173" Y ="0" height ="1" width ="1" secret ="0" isMoving ="0">
 </CFlag>
+<CBlock X ="176" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="181" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CCabbage X ="-24" Y ="0" height ="1" width ="1" isMoving ="0">
+</CCabbage>

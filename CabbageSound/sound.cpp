@@ -9,12 +9,21 @@ Mix_Chunk *victory;
 Mix_Chunk *jump;
 Mix_Chunk *takeDmg;
 Mix_Chunk *killEnemy;
+Mix_Chunk *chargeLaser;
+Mix_Chunk *chargeLaser2;
+Mix_Chunk *fireLaser;
+Mix_Chunk *dropKiwi;
 
 bool playDead;
 bool playVictory;
 bool playTakeDmg;
 bool playJump;
 bool musicOn;
+bool playChargeLaser;
+bool playFireLaser;
+
+int aChannel;
+float channelTime;
 
 //Directory variables
 std::string MusicDirectory = "../Media/Music/";
@@ -26,16 +35,27 @@ void soundInit() {
 
    //Sound Effects
    die = NULL;
+   victory = NULL;
    jump = NULL;
    takeDmg = NULL;
    killEnemy = NULL;
+   chargeLaser = NULL;
+   chargeLaser2 = NULL;
+   fireLaser = NULL;
+   dropKiwi = NULL;
+
 
    //Misc Sound Variables
    playDead = true;
    playVictory = true;
    playTakeDmg = true;
    playJump = false;
+   playChargeLaser = true;
+   playFireLaser = true;
    musicOn = true;
+
+   aChannel = -1;
+   channelTime = 0.0f;
 }
 
 void setupSoundtrack(char *startMusic) {
@@ -67,8 +87,23 @@ void setupSoundtrack(char *startMusic) {
    temp = MusicDirectory + "hitEnemy.wav";
    killEnemy = Mix_LoadWAV(temp.c_str());
 
+   temp = MusicDirectory + "chargeLaser1.wav";
+   chargeLaser = Mix_LoadWAV(temp.c_str());
+
+   temp = MusicDirectory + "chargeLaser2.wav";
+   chargeLaser2 = Mix_LoadWAV(temp.c_str());
+
+   temp = MusicDirectory + "fireLaser3.wav";
+   fireLaser = Mix_LoadWAV(temp.c_str());
+
+   temp = MusicDirectory + "kiwiDrop.wav";
+   dropKiwi = Mix_LoadWAV(temp.c_str());
+
    //Decrease volume of jump
-   Mix_VolumeChunk(jump, 32);
+   Mix_VolumeChunk(jump, 20);
+   Mix_VolumeMusic(100);
+   Mix_VolumeChunk(die, 200);
+   Mix_VolumeChunk(dropKiwi, 255);
 }
 
 void startSoundtrack() {

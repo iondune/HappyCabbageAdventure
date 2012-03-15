@@ -16,7 +16,7 @@ void EngineInit();
 
 using namespace Cabbage::Collider;
 CEngine *Engine;
-CActor *Player, *Derp;
+CActor *Player, *Derp, *WinPlayer;
 CLight * PlayerLight;
 CObject *Floor, *Block, *victoryBlock;
 CPlayerView *PlayerView;
@@ -53,6 +53,7 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
 {
    NumTreeTypes = 2;
    NumFlowerTypes = 2;
+   numBlocks = 0;
    blocksY.clear();
    blocksX.clear();
    blocksFinal.clear();
@@ -90,7 +91,10 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             }
             else {
                ptr->isMovingPlatform = 0;
-               blocksY.push_back(new CBiggerBlock((float)x, (float)y, (float) w, (float) h));
+               numBlocks++;
+               int curW = w;
+               for(; curW > 0; curW--)
+                  blocksY.push_back(new CBiggerBlock((float)x + (w - curW), (float)y, 1.0f, (float)h));
             }
          }
          if(!strcmp("CEnemy", xml->getNodeName()))
@@ -125,6 +129,9 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             flagLogo->setTranslation(SVector3((float)x, (float) y+.9f, 1.0f));
             renderFlag->setTranslation(SVector3((float)x,(float) y+.5f, 1.0f));
             GameplayManager->setVictoryFlag(victoryBlock);
+            if (t == 1){
+                //add victory flag
+            }
          }
          if(!strcmp("CPItem",xml->getNodeName())) {
             CPItem * stuff;
@@ -205,7 +212,8 @@ void CGameState::consolidateAndAddBlocks() {
       delete blocksFinal[i];
       blocksFinal[i] = NULL;
    }
-   printf("Total blocks saved: %d\n", blocksY.size() - blocksFinal.size());
+   printf("Total blocks saved: %d\n", numBlocks - blocksFinal.size());
+   numBlocks = blocksFinal.size();
    blocksFinal.clear();
    blocksX.clear();
    blocksY.clear();
@@ -223,10 +231,18 @@ void CGameState::EngineInit( void ) {
    Player->CollideableType = COLLIDEABLE_TYPE_PLAYER;
    Player->CollideableLevel |= INTERACTOR_SUPERACTORS;
    Player->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
-   Player->CanCollideWith |= INTERACTOR_NULL_BLOCK; // Block for procing the physics engine
+   //Player->CanCollideWith |= INTERACTOR_NULL_BLOCK; // Block for procing the physics engine
+
+   WinPlayer = Engine->addActor();
+   WinPlayer->setArea(SRect2(-0.f, 10., 1, 1));
+   WinPlayer->getAttributes().MaxWalk = 3.5f;
+   WinPlayer->CollideableLevel = 0;
+   WinPlayer->CanCollideWith = 0;
+   WinPlayer->CollideableType = COLLIDEABLE_TYPE_PLAYER;
+   //WinPlayer->CanCollideWith |= INTERACTOR_NULL_BLOCK; // Block for procing the physics engine
 
    Derp = Engine->addActor();
-   Derp->setArea(SRect2(-22, 3, 1, 1));
+   Derp->setArea(SRect2(-20, 3, 1, 1));
 
    PrepSky();
 
@@ -270,26 +286,33 @@ CParticleEngine *particleDustEngine;
 
 void CGameState::LoadHUD() {
 	//Prepare GUI
+   CabbageFace =  new CGUIImageWidget(CImageLoader::loadTGAImage("Base/cabbage.tga"), SVector2(.3f, .15f));
+   CabbageFace->setPosition(SVector2(-.07f, .85f));
+
+   CabbageHurtFace =  new CGUIImageWidget(CImageLoader::loadTGAImage("Base/cabbageouch.tga"), SVector2(.3f, .15f));
+   CabbageHurtFace->setPosition(SVector2(-.081f, .861f));
+   CabbageHurtFace->setVisible(false);
+
 	Health5 = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage5.tga"), SVector2(.1f, .1f));
-	Health5->setPosition(SVector2(.21f, .9f));
+	Health5->setPosition(SVector2(.36f, .86f));
 
 	Health4 = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage4.tga"), SVector2(.1f, .1f));
-	Health4->setPosition(SVector2(.16f, .9f));
+	Health4->setPosition(SVector2(.31f, .86f));
 
 	Health3 = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage3.tga"), SVector2(.1f, .1f));
-	Health3->setPosition(SVector2(.11f, .9f));
+	Health3->setPosition(SVector2(.26f, .86f));
 
 	Health2 = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage2.tga"), SVector2(.1f, .1f));
-	Health2->setPosition(SVector2(.06f, .9f));
+	Health2->setPosition(SVector2(.21f, .86f));
 
 	Health1 = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage1.tga"), SVector2(.1f, .1f));
-	Health1->setPosition(SVector2(.01f, .9f));
+	Health1->setPosition(SVector2(.16f, .86f));
 
-	CabbageEnergyBar = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/EnergyBarTop.tga"), SVector2(.3f, .1f));
-	CabbageEnergyBar->setPosition(SVector2(.02f, .82f));
+	CabbageEnergyBar = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/EnergyBarTop.tga"), SVector2(.47f, .1f));
+	CabbageEnergyBar->setPosition(SVector2(.02f, .78f));
 
-	CabbageMeter = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/EnergyBarBottom.tga"), SVector2(.3f, .1f));
-	CabbageMeter->setPosition(SVector2(.02f, .82f));
+	CabbageMeter = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/EnergyBarBottom.tga"), SVector2(.47f, .1f));
+	CabbageMeter->setPosition(SVector2(.02f, .78f));
 
 	//CabbageFace = new CGUIImageWidget(CImageLoader::loadTGAImage("../Media/cabbage.tga"), SVector2(.15f, .15f));
 	//CabbageFace->setPosition(SVector2(.02f, .9f));
@@ -303,6 +326,8 @@ void CGameState::LoadHUD() {
 	Application.getGUIEngine().addWidget(Health5);
 	Application.getGUIEngine().addWidget(CabbageMeter);
 	Application.getGUIEngine().addWidget(CabbageEnergyBar);
+	Application.getGUIEngine().addWidget(CabbageFace);
+	Application.getGUIEngine().addWidget(CabbageHurtFace);
 
 }
 
@@ -310,11 +335,16 @@ void CGameState::Initialize() {
    Charged = 0; aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0; lDown = 0;
    backwardsView = 0; overView = 0; energyStatus = 3.f; prevEnergy = 3.f;
    prevHealth = 0;
+   StartWin = 0.0f;
+   curScaleX = curScaleY = 1.f;
+   launch = true;
 
    GameEventReceiver = CGameEventReceiver();
    oldFern = false;
 
    CApplication::get().getSceneManager().setCullingEnabled(true);
+
+   f1 = f2 = f3 = glow = 0;
 #ifdef PARTICLE
    particleLeafEngine = particleCubeEngine = particleLaserEngine = particleLaserFireEngine = particleDustEngine = 0;
 #endif
@@ -340,7 +370,7 @@ void CGameState::Initialize() {
    GameWinText->setColor(FontColor);
 
    GameOverText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
-   GameOverText->setText("GAME OVER! YOU ARE DEAD.");
+   GameOverText->setText("GAME OVER! YOU ARE DEAD. PRESS SPACE");
    GameOverText->setVisible(false);
    GameOverText->setPosition(SVector2(0.35f, 0.75f));
    GameOverText->setColor(FontColor);
@@ -354,13 +384,13 @@ void CGameState::Initialize() {
    LivesText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
    LivesText->setText("Lives: ");
    LivesText->setVisible(true);
-   LivesText->setPosition(SVector2(0.02f, 0.80f));
-   LivesText->setColor(SColor(0.0f, 1.0f, 0.0f));
+   LivesText->setPosition(SVector2(0.14f, 0.87f));
+   LivesText->setColor(SColor(0.0f, 0.80f, 0.0f));
 
    LivesText2 = new CGUIFontWidget("WIFFLES_.TTF", 31.f);
    LivesText2->setText("Lives: ");
    LivesText2->setVisible(true);
-   LivesText2->setPosition(SVector2(0.019f, 0.795f));
+   LivesText2->setPosition(SVector2(0.1385f, 0.872f));
    LivesText2->setColor(SColor(0.0f, 0.0f, 0.0f));
 
    Application.getGUIEngine().addWidget(GameWinText);
@@ -398,6 +428,7 @@ void CGameState::Initialize() {
    Application.getSceneManager().addSceneObject(playerRenderable);
    Application.getSceneManager().addSceneObject(renderFlag);
    Application.getSceneManager().addSceneObject(flagLogo);
+   Application.getSceneManager().addSceneObject(renderWinCabbage);
 
    srand((unsigned int) time(NULL));
 
@@ -408,7 +439,10 @@ void CGameState::Initialize() {
    LoadHUD();
    fps = timeTotal = 0;
    numFrames = 0;
-   moveDown = 0.0f;
+
+   //Start Level Music
+   changeSoundtrack("SMW.wav");
+   startSoundtrack();
 
    printf("CGameState:  Begin Function Complete\n");
 }
@@ -454,8 +488,6 @@ void CGameState::oldDisplay() {
 
             PlayerView->setState(CPlayerView::State::Standing);
 
-            Player->setJumping(true);
-
          }
 
          else {
@@ -492,6 +524,11 @@ void CGameState::oldDisplay() {
          Mix_PlayChannel(-1, jump, 0);
          playJump = false;
       }
+
+      if (!playChargeLaser) {
+         Mix_HaltChannel(aChannel);
+         playChargeLaser = true;
+      }
    }
    else
    {
@@ -500,12 +537,15 @@ void CGameState::oldDisplay() {
             numLives = GameplayManager->getPlayerLives();
             end();
             Initialize();
+            playDead = true;
             return;
          }
          else {
+           COverworldState::get().levelCompleted = false;
+           Application.getStateManager().setState(new CFadeOutState(& COverworldState::get()));
          }
       }
-      if(!GameplayManager->isPlayerAlive()) {
+      if(!GameplayManager->isPlayerAlive() && !playDead) {
          if(GameplayManager->getPlayerLives() <= 0) {
             GameOverText->setVisible(true);
          }
@@ -523,7 +563,7 @@ void CGameState::oldDisplay() {
 
    char buf[30];
    numLives = GameplayManager->getPlayerLives();
-   sprintf(buf, "Lives: %d", numLives);
+   sprintf(buf, "%d", numLives);
    LivesText2->setText(buf);
    LivesText->setText(buf);
 
@@ -557,18 +597,30 @@ void CGameState::oldDisplay() {
    if(particleLaserEngine && !particleLaserEngine->dead) {
       particleLaserEngine->setLookRight(PlayerView->getLookRight());
       particleLaserEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
-      if(GameplayManager->getRecovering() > 0) {
+      if(GameplayManager->getRecovering() > 0) {  //If hit while using the laser, stop?
          lDown = 0;
          PlayerView->setShader(Toon, DeferredToon);
          particleLaserEngine->deconstruct();
          delete particleLaserEngine;
          particleLaserEngine = NULL;
+
+         Mix_HaltChannel(aChannel);
       }
-      else {
+      else {  //Keep char
          particleLaserEngine->step(Application.getElapsedTime());
+
+         /*else if (channelTime >= 1500) {
+            aChannel = Mix_PlayChannel(-1, chargeLaser2, 0);
+            Mix_ExpireChannel(aChannel, 1500);
+            channelTime += Application.getElapsedTime();
+         }*/
       }
    }
    if(particleLaserEngine && particleLaserEngine->dead) {
+      if (!playChargeLaser) {
+         playChargeLaser = true;
+         Mix_HaltChannel(aChannel);
+      }
       particleLaserEngine->deconstruct();
       delete particleLaserEngine;
       particleLaserEngine = NULL;
@@ -577,7 +629,7 @@ void CGameState::oldDisplay() {
       GameplayManager->UseAbility(1);
       lDown = 0;
    }
-   if(particleLaserFireEngine && !particleLaserFireEngine->dead) {
+   if(particleLaserFireEngine && !particleLaserFireEngine->dead) {  //Fire ze laser
       Player->setArea(oldMiddle);
       Player->setFallAcceleration(0.0f); //for the screen shaking effect
       particleLaserFireEngine->step(Application.getElapsedTime());
@@ -594,6 +646,7 @@ void CGameState::oldDisplay() {
       delete particleLaserFireEngine;
       particleLaserFireEngine = NULL;
       Player->setImpulse(SVector2((PlayerView->getLookRight()?-1:1)*15.0f, 0.0f), 0.1f);
+      playFireLaser = true;
    }
    PlayerView->Charging = lDown;
 #endif
@@ -625,11 +678,6 @@ void CGameState::oldDisplay() {
       ptr->getRenderable()->setTranslation(SVector3(pos.X + (float)size.X/2, pos.Y + (float)size.Y/2, 0));
    }
 
-   // ...and by spinning it around
-   static float const RotationSpeed = 50.f;
-   //Rotation.X += RotationSpeed*Delta;
-   //Rotation.Y += RotationSpeed*Delta*2;
-
    glLoadIdentity();
 }
 
@@ -646,6 +694,7 @@ void CGameState::OnRenderStart(float const Elapsed)
    Application.getSceneManager().drawAll();
    Application.getGUIEngine().drawAll();
 
+   //Check if we have beat the level.  If we have, play the victory theme, perform the win animation
    if (! GameplayManager->isPlayerAlive() || GameplayManager->isWon()) {
       if(GameplayManager->isWon()) {
          if (playVictory) {
@@ -653,21 +702,22 @@ void CGameState::OnRenderStart(float const Elapsed)
             Mix_PlayChannel(-1, victory,0);
             playVictory = false;
          }
+
+         RunVictorySequence(Elapsed);
          Engine->removeObject(victoryBlock);
 		   GameWinText->setVisible(true);
       }
 
+      //Check if we have died.  If we have, play the death theme, perform the death animation, and halt the game.
       else {
          //Chris Code.  Play Death Sound
          if (playDead) {
             Mix_HaltMusic();
-            Mix_PlayChannel(-1, die, 0); //Only play once
+            Mix_PlayChannel(-1, die, 0);
             playDead = false;
             spaceDown = 0;
          }
          Charged = 0;
-
-		 //GameOverText->setVisible(true);
       }
    }
 
@@ -680,6 +730,7 @@ void CGameState::OnRenderStart(float const Elapsed)
       numFrames = 0;
    }
 
+   //Update the HUD
    UpdateLeaves();
    UpdateEnergy(Elapsed);
 
@@ -698,17 +749,18 @@ void CGameState::OnRenderStart(float const Elapsed)
 //Sends event every time key pressed (also when held)
 void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
-	if (Event.Key == SDLK_c)
+	if (Event.Key == SDLK_c && !GameplayManager->isWon())
 		CApplication::get().getSceneManager().setCullingEnabled(! Event.Pressed);
 
 	if (! Event.Pressed)
 	{
-		if (Event.Key == SDLK_n)
+		if (Event.Key == SDLK_n && !GameplayManager->isWon())
 		{
 			SceneManager.getEffectManager()->setEffectEnabled(ESE_SSAO, ! SceneManager.getEffectManager()->isEffectEnabled(ESE_SSAO));
 			//CApplication::get().getSceneManager().DoSSAO = ! CApplication::get().getSceneManager().DoSSAO;
 		}
 		if (Event.Key == SDLK_v)
+		if (Event.Key == SDLK_b && !GameplayManager->isWon())
 		{
 			static bool Deferred = false;
 			SceneManager.setDeferred(Deferred = ! Deferred);
@@ -718,29 +770,31 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 			SceneManager.getEffectManager()->setEffectEnabled(ESE_BLOOM, ! SceneManager.getEffectManager()->isEffectEnabled(ESE_BLOOM));
 			//CApplication::get().getSceneManager().DoBloom = ! CApplication::get().getSceneManager().DoBloom;
 		}
-		if (Event.Key == ::SDLK_COMMA)
+		if (Event.Key == ::SDLK_COMMA && !GameplayManager->isWon())
 		{
 			//CApplication::get().getSceneManager().OnlySSAO = ! CApplication::get().getSceneManager().OnlySSAO;
 		}
-		if (Event.Key == ::SDLK_SLASH)
+		if (Event.Key == ::SDLK_SLASH && !GameplayManager->isWon())
 		{
 			SceneManager.getEffectManager()->setEffectEnabled(ESE_SSAO_BLUR, ! SceneManager.getEffectManager()->isEffectEnabled(ESE_SSAO_BLUR));
 			//CApplication::get().getSceneManager().DoBlur = ! CApplication::get().getSceneManager().DoBlur;
 		}
-		if (Event.Key == ::SDLK_PERIOD)
+		if (Event.Key == ::SDLK_PERIOD && !GameplayManager->isWon())
 		{
 			//CApplication::get().getSceneManager().OnlyNormals = ! CApplication::get().getSceneManager().OnlyNormals;
 		}
 	}
 
    if(Event.Pressed){
-      if(Event.Key == SDLK_w){
+      if(Event.Key == SDLK_w && !GameplayManager->isWon()){
          wDown = 1;
       }
-      if(Event.Key == SDLK_s){
+      if(Event.Key == SDLK_s && !GameplayManager->isWon()){
          sDown = 1;
       }
-      if(Event.Key == SDLK_a){
+
+
+      if(Event.Key == SDLK_a && !GameplayManager->isWon()){
          if(moveDown > 0.0f) {
             if(particleDustEngine) {
                particleDustEngine->deconstruct();
@@ -758,7 +812,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          }
          aDown = 1;
       }
-      if(Event.Key == SDLK_d){
+      if(Event.Key == SDLK_d && !GameplayManager->isWon()){
          if(moveDown > 0.0f) {
             if(particleDustEngine) {
                particleDustEngine->deconstruct();
@@ -777,43 +831,49 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          dDown = 1;
       }
 #ifdef PARTICLE
-      if(Event.Key == SDLK_l){
+      if(Event.Key == SDLK_l && !GameplayManager->isWon()){
          //GameplayManager->setChargingLaser
          if(GameplayManager->getPlayerEnergy() > 0) {
             if(!particleLaserFireEngine && (!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead))) {
                particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 2.3f, LASER_CHARGING_PARTICLE);
+               if (playChargeLaser) { //If making multiple sounds, do here
+                  playChargeLaser = false;
+                  aChannel = Mix_PlayChannel(-1, chargeLaser2, 0);
+                  //Mix_ExpireChannel(aChannel, 1500); //Halt the channel in 1.5 seconds
+                  channelTime += Application.getElapsedTime();
+               }
             }
             PlayerView->setShader(ToonBright, DeferredToonBright);
             lDown = 1;
          }
       }
-      if(Event.Key == SDLK_e) {
+      if(Event.Key == SDLK_e && !GameplayManager->isWon()) {
          if(!particleCubeEngine || (particleCubeEngine && particleCubeEngine->dead))
             particleCubeEngine = new CParticleEngine(SVector3(0, 1, 0), 100, 10, CUBE_PARTICLE);
       }
-      if(Event.Key == SDLK_r) {
+      if(Event.Key == SDLK_r && !GameplayManager->isWon()) {
          if(GameplayManager->getPlayerEnergy() > 0) {
             if(!particleLeafEngine || (particleLeafEngine && particleLeafEngine->dead))
                particleLeafEngine = new CParticleEngine(SVector3(0, 1, 0), 150, 6, LEAF_PARTICLE);
             PlayerView->setGodMode(6.0f);
             //GameplayManager->setRecovering(6.0);
             GameplayManager->UseAbility(1);
-            GameplayManager->setGodMode(6.0f);
+               GameplayManager->setGodMode(6.0f);
          }
       }
 #endif
-      if(Event.Key == SDLK_k){
+      if(Event.Key == SDLK_k && !GameplayManager->isWon()) {
          backwardsView = !backwardsView;
       }
-      if(Event.Key == SDLK_j){
+      if(Event.Key == SDLK_j && !GameplayManager->isWon()){
          overView = NEXT(overView);
          //printf("Angle: %d\n", ANGLE(overView, backwardsView));
       }
-      if(Event.Key == SDLK_g){
+      if(Event.Key == SDLK_g && !GameplayManager->isWon()){
          GameplayManager->GodMode = !GameplayManager->GodMode;
          printf("Godmode: %d\n", GameplayManager->GodMode);
       }
-      if(Event.Key == SDLK_m){
+      if(Event.Key == SDLK_m && !GameplayManager->isWon()){
          if(musicOn) {
             musicOn = false;
             Mix_HaltMusic();
@@ -823,20 +883,17 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
             Mix_PlayMusic(music, -1);
          }
       }
-      if(Event.Key == SDLK_SPACE) {
+      if(Event.Key == SDLK_SPACE && !GameplayManager->isWon()) {
          spaceDown = 1;
          if(NoClipMode) {
             Player->setVelocity(SVector2(Player->getVelocity().X, 10.0f));
          }
       }
-      if(Event.Key == SDLK_h) {
+      if(Event.Key == SDLK_h && !GameplayManager->isWon()) {
          NoClipMode = ~NoClipMode;
          if(NoClipMode) {
             Player->CollideableLevel = INTERACTOR_NULL_BLOCK;
-            Player->CanCollideWith &= ~INTERACTOR_SUPERACTORS;
-            Player->CanCollideWith &= ~INTERACTOR_ITEMS;
-            Player->CanCollideWith &= ~INTERACTOR_ACTORS;
-            Player->CanCollideWith &= ~INTERACTOR_BLOCKS;
+            Player->CanCollideWith = INTERACTOR_NULL_BLOCK;
             Player->setControlFall(false);
             Player->setFallAcceleration(0.0f);
             Player->setJumping(false);
@@ -845,7 +902,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          }
          else {
             Player->CollideableLevel = INTERACTOR_SUPERACTORS;
-            Player->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS;
+            Player->CanCollideWith = INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS;
             Player->CanCollideWith &= ~INTERACTOR_SUPERNONCOLLIDERS;
             Player->setControlFall(true);
             //Player->Gravity = 100.0f;
@@ -853,20 +910,22 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_ESCAPE) {
          //TODO: Replace with an event/signal to end the game world 
-         Application.getStateManager().setState(new CFadeOutState(& CMainMenuState::get()));
+        COverworldState::get().levelCompleted = false;
+         Application.getStateManager().setState(new CFadeOutState(& COverworldState::get()));
+         //Application.getStateManager().setState(new CFadeOutState(& CMainMenuState::get()));
       }
    }
    //Check if key let go, Not sure if this will work in here.
    else  {
-      if(Event.Key == SDLK_h) {
+      if(Event.Key == SDLK_h && !GameplayManager->isWon()) {
       }
-      if(Event.Key == SDLK_w){
+      if(Event.Key == SDLK_w && !GameplayManager->isWon()){
          wDown = 0;
       }
-      if(Event.Key == SDLK_s){
+      if(Event.Key == SDLK_s && !GameplayManager->isWon()){
          sDown = 0;
       }
-      if(Event.Key == SDLK_a){
+      if(Event.Key == SDLK_a && !GameplayManager->isWon()){
          if(particleDustEngine) {
             particleDustEngine->deconstruct();
             delete particleDustEngine;
@@ -876,7 +935,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          Player->getAttributes().MaxWalk = 3.5f;
          aDown = 0;
       }
-      if(Event.Key == SDLK_d){
+      if(Event.Key == SDLK_d && !GameplayManager->isWon()){
          if(particleDustEngine) {
             particleDustEngine->deconstruct();
             delete particleDustEngine;
@@ -886,13 +945,17 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          Player->getAttributes().MaxWalk = 3.5f;
          dDown = 0;
       }
-      if(Event.Key == SDLK_l){
+      if(Event.Key == SDLK_l && !GameplayManager->isWon()){
          if(particleLaserEngine) {
             particleLaserEngine->deconstruct();
             delete particleLaserEngine;
             particleLaserEngine = NULL;
          }
          if(Charged) {
+            if (playFireLaser) {
+               playFireLaser = false;
+               Mix_PlayChannel(-1, fireLaser, 0);
+            }
             Charged = 0;
             oldMiddle = Player->getArea();
             Player->setVelocity(SVector2(0.0f));
@@ -925,13 +988,13 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 }
 
 void CGameState::end()
-{   
+{
 	
 			SceneManager.setDeferred(false);
+   Application.getSceneManager().Lights.clear();
+
 
    stopSoundtrack();
-   //Mix_CloseAudio();
-   //our_font.clean();
 
    if(particleLeafEngine) {
       particleLeafEngine->deconstruct();
@@ -959,63 +1022,101 @@ void CGameState::end()
    GameEventManager->OnPlayerDamaged.disconnect(& GameEventReceiver);
    Application.getEventManager().OnGameTickStart.disconnect(& GameEventReceiver);
 
+   Application.getSceneManager().Lights.clear();
    Application.getSceneManager().removeAllSceneObjects();
    Application.getGUIEngine().removeAllWidgets();
+
+   playVictory = true;
 }
 
 void CGameState::UpdateLeaves() {
 	int curHealth = GameplayManager->getPlayerHealth();
 
 	if (curHealth == 5) {
-		if (prevHealth == 4)
+		if (prevHealth == 4) {
 			Health5->setVisible(true);
+         cabbage5->setVisible(true);
+         cabbage4->setVisible(false);
+      }
 	}
 	else if (curHealth == 4) {
-		if (prevHealth == 5)
+		if (prevHealth == 5) {
 			Health5->setVisible(false);
+         cabbage5->setVisible(false);
+         cabbage4->setVisible(true);
+      }
 		else if (prevHealth == 3) {
 			Health4->setVisible(true);
+         cabbage4->setVisible(true);
+         cabbage3->setVisible(false);
 		}
 	}
 
 	else if (curHealth == 3) {
-		if (prevHealth == 4)
+		if (prevHealth == 4) {
 			Health4->setVisible(false);
-		else if (prevHealth == 2)
+         cabbage4->setVisible(false);
+         cabbage3->setVisible(true);
+      }
+		else if (prevHealth == 2) {
 			Health3->setVisible(true);
+         cabbage3->setVisible(true);
+         cabbage2->setVisible(false);
+      }
 	}
 
 	else if (curHealth == 2) {
-		if (prevHealth == 3)
+		if (prevHealth == 3) {
 			Health3->setVisible(false);
-		else if (prevHealth == 1)
+         cabbage3->setVisible(false);
+         cabbage2->setVisible(true);
+      }
+		else if (prevHealth == 1) {
 			Health2->setVisible(true);
+         cabbage2->setVisible(true);
+         cabbage1->setVisible(false);
+      }
 	}
 
 	else if (curHealth == 1) {
-		if (prevHealth == 2)
+		if (prevHealth == 2) {
 			Health2->setVisible(false);
-		else if (prevHealth == 1)
+         cabbage2->setVisible(false);
+         cabbage1->setVisible(true);
+      }
+		else if (prevHealth == 0) {
 			Health1->setVisible(true);
+         cabbage1->setVisible(false);
+         cabbage0->setVisible(true);
+      }
 	}
 
 	else if (curHealth == 0) {
-		if (prevHealth == 1)
+		if (prevHealth == 1) {
 			Health1->setVisible(false);
+         cabbage1->setVisible(false);
+         cabbage0->setVisible(true);
+      }
 		else if (prevHealth == 2) {
 			Health1->setVisible(false);
 			Health2->setVisible(false);
+         cabbage1->setVisible(false);
+         cabbage0->setVisible(true);
 		}
 		else if (prevHealth == 3) {
 			Health1->setVisible(false);
 			Health2->setVisible(false);
 			Health3->setVisible(false);
+         cabbage3->setVisible(false);
+         cabbage0->setVisible(true);
 		}
 		else if (prevHealth == 4) {
 			Health1->setVisible(false);
 			Health2->setVisible(false);
 			Health3->setVisible(false);
 			Health4->setVisible(false);
+         cabbage4->setVisible(false);
+         cabbage0->setVisible(true);
 		}
 		else if (prevHealth == 5 || prevHealth == 0) {
 			Health1->setVisible(false);
@@ -1023,8 +1124,74 @@ void CGameState::UpdateLeaves() {
 			Health3->setVisible(false);
 			Health4->setVisible(false);
 			Health5->setVisible(false);
+         cabbage5->setVisible(false);
+         cabbage0->setVisible(true);
 		}
 	}
+
+   if (GameplayManager->getRecovering() > 0.f) {
+      CabbageHurtFace->setVisible(true);
+      if (curHealth == 5) {
+         cabbageHurt5->setVisible(true);
+         cabbage5->setVisible(false);
+      }
+      else if (curHealth == 4) {
+         cabbageHurt4->setVisible(true);
+         cabbage4->setVisible(false);
+      }
+      else if (curHealth == 3) {
+         cabbageHurt3->setVisible(true);
+         cabbage3->setVisible(false);
+      }
+      else if (curHealth == 2) {
+         cabbageHurt2->setVisible(true);
+         cabbage2->setVisible(false);
+      }
+      else if (curHealth == 1) {
+         cabbageHurt1->setVisible(true);
+         cabbage1->setVisible(false);
+      }
+      else if (curHealth == 0) {
+         cabbageHurt0->setVisible(true);
+         cabbage0->setVisible(false);
+      }
+      //damageCabbage->setVisible(true);
+
+      CabbageFace->setVisible(false);
+      //normalCabbage->setVisible(false);
+   }
+
+   else if (!normalCabbage->isVisible() && curHealth > 0) {
+      CabbageHurtFace->setVisible(false);
+      if (curHealth == 5) {
+         cabbageHurt5->setVisible(false);
+         cabbage5->setVisible(true);
+      }
+      else if (curHealth == 4) {
+         cabbageHurt4->setVisible(false);
+         cabbage4->setVisible(true);
+      }
+      else if (curHealth == 3) {
+         cabbageHurt3->setVisible(false);
+         cabbage3->setVisible(true);
+      }
+      else if (curHealth == 2) {
+         cabbageHurt2->setVisible(false);
+         cabbage2->setVisible(true);
+      }
+      else if (curHealth == 1) {
+         cabbageHurt1->setVisible(false);
+         cabbage1->setVisible(true);
+      }
+      else if (curHealth == 0) {
+         cabbageHurt0->setVisible(false);
+         cabbage0->setVisible(true);
+      }
+      //damageCabbage->setVisible(false);
+
+      CabbageFace->setVisible(true);
+      //normalCabbage->setVisible(true);
+   }
 
 	prevHealth = curHealth;
 }
@@ -1033,26 +1200,142 @@ void CGameState::UpdateEnergy(float const Elapsed) {
 	float curEnergy = (float)GameplayManager->getPlayerEnergy();
 
 	//printf("curEnergy is %f, energyStatus is %f\n", curEnergy, energyStatus);
-	if (energyStatus < 0.17f) {
-		CabbageMeter->setSize(SVector2(0.f, .1f));
-		energyStatus = 0.f;
-	}
 
-	if (energyStatus > 3.f) {
-		energyStatus = 3.f;
+	//Check if we're at the bottom of the energy bar.  If we are, make it invisible
+	//to counteract the bar glitch
+	if (energyStatus < 0.1f) {
+	   CabbageMeter->setVisible(false);
 	}
+	else
+	   CabbageMeter->setVisible(true);
+
+	if (energyStatus >= curEnergy - .01f && energyStatus <= curEnergy + .01f)
+	   energyStatus = curEnergy;
 
 	if (energyStatus > curEnergy) {
 		//printf("Enter\n");
 		energyStatus -= .7f*Elapsed;
-		CabbageMeter->setSize(SVector2(.3f*energyStatus/3.f, .1f));
+		CabbageMeter->setSize(SVector2(.47f*energyStatus/3.f, .1f));
 
 	}
 
 	else if (energyStatus < curEnergy) {
 		energyStatus +=.7f*Elapsed;
-		CabbageMeter->setSize(SVector2(.3f*energyStatus/3.f, .1f));
+		CabbageMeter->setSize(SVector2(.47f*energyStatus/3.f, .1f));
 	}
+}
+
+void CGameState::RunVictorySequence(float Elapsed) {
+   cabbage5->setVisible(true);
+   cabbage4->setVisible(false);
+   cabbage3->setVisible(false);
+   cabbage2->setVisible(false);
+   cabbage1->setVisible(false);
+   cabbage0->setVisible(false);
+
+   StartWin += Elapsed;
+
+//Fireworks
+   if (f1) {
+      f1->step(Elapsed);
+      f2->step(Elapsed);
+      f3->step(Elapsed);
+   }
+
+   if (glow)
+      glow->step(Elapsed);
+
+//perform cabbage sequence
+   SVector3 curRotation = cabbage5->getRotation();
+   SVector2 curLocation = SVector2 (Player->getArea().getCenter().X - .5f, Player->getArea().getCenter().Y - .5f);
+
+   if (StartWin > .00f && StartWin < .07f) {
+   WinPlayer->CollideableLevel |= INTERACTOR_SUPERACTORS;
+   WinPlayer->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
+
+      dDown = 0;
+      aDown = 0;
+   }
+   if (StartWin > .05f && StartWin < .07f) {
+      spaceDown = 1;
+      dDown = 1;
+   }
+   else if (StartWin > .07f && StartWin < .12f)
+      spaceDown = 0;
+   else if (StartWin > .72f && StartWin < .76f)
+      spaceDown = 1;
+   else if (StartWin > .76f && StartWin < 1.f) {
+      if (!f1) {
+         SVector3 flagPosition = renderFlag->getTranslation();
+
+         f1 = new CParticleEngine(SVector3(flagPosition.X, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);  //Would like to change these later so not leaves. Fine for now
+         f2 = new CParticleEngine(SVector3(flagPosition.X + 4.f, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);
+         f3 = new CParticleEngine(SVector3(flagPosition.X + 8.f, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);
+      }
+   }
+   else if (StartWin > 1.f && StartWin < 1.2f) {
+      spaceDown = 0;
+   }
+   else if (StartWin > 1.5f && StartWin < 2.5f) {
+      spaceDown = 1;
+      cabbage5->setRotation(SVector3(curRotation.X + 720.f*Elapsed, 0.f, 0.f));
+   }
+   else if (StartWin > 2.5f && StartWin < 2.9f) {
+      spaceDown = 0;
+      dDown = 0;
+   }
+
+   else if (StartWin > 2.9f && StartWin < 3.9f) {
+      spaceDown = 1;
+      cabbage5->setRotation(SVector3(curRotation.X - 360.f*Elapsed, 0.f, 0.f));
+      Player->setArea(SRect2(curLocation.X - 3.f*Elapsed, curLocation.Y, 1.f, 1.f));
+   }
+
+   else if (StartWin > 3.8f && StartWin < 3.9f)
+      spaceDown = 0;
+   else if (StartWin > 3.9f && StartWin < 4.9f) {
+      cabbage5->setRotation(SVector3(curRotation.X, 0.f, curRotation.Z - 765.f*Elapsed));
+      Player->setArea(SRect2(curLocation.X - 3.f*Elapsed, curLocation.Y, 1.f, 1.f));
+   }
+   else if (StartWin > 4.9f && StartWin < 6.4f) {
+      if (!glow) {
+         glow = new CParticleEngine(SVector3(curLocation.X + .5, curLocation.Y - .25, 0), 400, 2.f, LASER_CHARGING_PARTICLE);
+      }
+      spaceDown = 0;
+      curScaleY -= .4*Elapsed;
+      cabbage5->setScale(SVector3(1.f, 1.f, curScaleY));
+      //renderWinCabbage->setScale(SVector3(1.f, 1.f, curScaleY));
+   }
+
+   else if (StartWin > 6.9 && StartWin < 7.3f) {
+      curScaleY += 1.2*Elapsed;
+      curScaleX -= 1.8*Elapsed;
+
+
+      renderWinCabbage->setTranslation(SVector3(WinPlayer->getArea().getCenter().X,WinPlayer->getArea().getCenter().Y, 0));
+      WinPlayer->setImpulse(SVector2(0.f, 22.f), 100.f);
+
+      if (launch) {
+         Engine->removeActor(Player);
+         PlayerView->removeFromScene();
+
+         renderWinCabbage->setVisible(true);
+         renderWinCabbage->setCullingEnabled(false);
+         renderWinCabbage->setScale(SVector3(1.75f, 1.75f, 1.75f));
+         renderWinCabbage->setRotation(SVector3(-90.f, 0.f, 45.f));
+         WinPlayer->setArea(SRect2(curLocation.X, curLocation.Y, 1, 1));
+
+         cabbage5->setVisible(false);
+         cabbage5->setCullingEnabled(true);
+
+         launch = false;
+      }//Damien mark 1
+   }
+   else if(StartWin >= 7.3f)
+   {
+      COverworldState::get().levelCompleted = true;
+      Application.getStateManager().setState(new CFadeOutState(& COverworldState::get()));
+   }
 }
 
 void CGameState::PrepShadow() {
@@ -1097,7 +1380,7 @@ void CGameState::PrepSky() {
    tempBlock->setTexture(skyTxt);
    tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
-   tempBlock->setTranslation(SVector3(75, 17, -5.0));
+   tempBlock->setTranslation(SVector3(85/*75*/, 13, -5.0));
    tempBlock->setScale(SVector3(250, -50, 1));
    tempBlock->setCullingEnabled(false);
    Application.getSceneManager().addSceneObject(tempBlock);
@@ -1175,7 +1458,6 @@ void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
     	  oldFern = false;
    }
 
-
    //Draw flower-type plants in foreground
       for (int n = 0; n < w; n++) {
          random = rand()%6;
@@ -1234,6 +1516,90 @@ void LoadShaders() {
 
 void Load3DS()
 {
+   mCab5 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_5.3ds");
+   if (mCab5) {
+      mCab5->centerMeshByExtents(SVector3(0));
+      mCab5->calculateNormalsPerFace();
+      mCab5->resizeMesh(SVector3(0.45f));
+   }
+
+   mCab4 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_4.3ds");
+   if (mCab4) {
+      mCab4->centerMeshByExtents(SVector3(0));
+      mCab4->calculateNormalsPerFace();
+      mCab4->resizeMesh(SVector3(0.45f));
+   }
+
+   mCab3 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_3.3ds");
+   if (mCab3) {
+      mCab3->centerMeshByExtents(SVector3(0));
+      mCab3->calculateNormalsPerFace();
+      mCab3->resizeMesh(SVector3(0.45f));
+   }
+
+   mCab2 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_2.3ds");
+   if (mCab2) {
+      mCab2->centerMeshByExtents(SVector3(0));
+      mCab2->calculateNormalsPerFace();
+      mCab2->resizeMesh(SVector3(0.45f));
+   }
+
+   mCab1 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_1.3ds");
+   if (mCab1) {
+      mCab1->centerMeshByExtents(SVector3(0));
+      mCab1->calculateNormalsPerFace();
+      mCab1->resizeMesh(SVector3(0.45f));
+   }
+
+   mCab0 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_0.3ds");
+   if (mCab0) {
+      mCab0->centerMeshByExtents(SVector3(0));
+      mCab0->calculateNormalsPerFace();
+      mCab0->resizeMesh(SVector3(0.45f));
+   }
+
+   mCabOw5 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_ouch_5.3ds");
+   if (mCabOw5) {
+      mCabOw5->centerMeshByExtents(SVector3(0));
+      mCabOw5->calculateNormalsPerFace();
+      mCabOw5->resizeMesh(SVector3(0.45f));
+   }
+
+   mCabOw4 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_ouch_4.3ds");
+   if (mCabOw4) {
+      mCabOw4->centerMeshByExtents(SVector3(0));
+      mCabOw4->calculateNormalsPerFace();
+      mCabOw4->resizeMesh(SVector3(0.85f));
+   }
+
+   mCabOw3 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_ouch_3.3ds");
+   if (mCabOw3) {
+      mCabOw3->centerMeshByExtents(SVector3(0));
+      mCabOw3->calculateNormalsPerFace();
+      mCabOw3->resizeMesh(SVector3(0.85f));
+   }
+
+   mCabOw2 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_ouch_2.3ds");
+   if (mCabOw2) {
+      mCabOw2->centerMeshByExtents(SVector3(0));
+      mCabOw2->calculateNormalsPerFace();
+      mCabOw2->resizeMesh(SVector3(0.85f));
+   }
+
+   mCabOw1 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_ouch_1.3ds");
+   if (mCabOw1) {
+      mCabOw1->centerMeshByExtents(SVector3(0));
+      mCabOw1->calculateNormalsPerFace();
+      mCabOw1->resizeMesh(SVector3(0.85f));
+   }
+
+   mCabOw0 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_ouch_0.3ds");
+   if (mCabOw0) {
+      mCabOw0->centerMeshByExtents(SVector3(0));
+      mCabOw0->calculateNormalsPerFace();
+      mCabOw0->resizeMesh(SVector3(0.45f));
+   }
+
    enemyMesh = CMeshLoader::load3dsMesh("Base/appleEnemy.3ds");
    if(enemyMesh) {
       enemyMesh->resizeMesh(SVector3(1));
@@ -1277,8 +1643,6 @@ void Load3DS()
       fprintf(stderr, "Failed to load the christmas tree mesh\n");
    }
 
-
-
    cabbageMesh = CMeshLoader::load3dsMesh("Base/crappycabbage2.3ds");
    if (cabbageMesh) {
       cabbageMesh->resizeMesh(SVector3(0.5));
@@ -1286,10 +1650,15 @@ void Load3DS()
       cabbageMesh->calculateNormalsPerVertex();
    }
    else {
-      fprintf(stderr, "Failed to load the cababge mesh\n");
+      fprintf(stderr, "Failed to load the cabbage mesh\n");
    }
 
-
+   cabbageDamage = CMeshLoader::load3dsMesh("Base/cabbageouch2.3ds");
+   if (cabbageDamage) {
+      cabbageDamage->resizeMesh(SVector3(0.5));
+      cabbageDamage->centerMeshByExtents(SVector3(0));
+      cabbageDamage->calculateNormalsPerVertex();
+   }
 
    blueFlwrMesh = CMeshLoader::load3dsMesh("Base/simpleflower1.3ds");
    if (blueFlwrMesh) {
@@ -1299,8 +1668,6 @@ void Load3DS()
    else {
       fprintf(stderr, "Failed to load blue flower mesh.\n");
    }
-
-
 
    whiteFlwrMesh = CMeshLoader::load3dsMesh("Base/simpleflower2.3ds");
    if (whiteFlwrMesh) {
@@ -1369,8 +1736,6 @@ void Load3DS()
    else {
       fprintf(stderr, "Failed to load flag mesh.\n");
    }
-
-   /* Load enemy mesh */
 }
 
 void LoadTextures()
@@ -1397,22 +1762,19 @@ void PrepMeshes()
    renderDerp->setShader(ERP_DEFAULT, Toon);
    renderDerp->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
-   renderBasicTree = new CMeshSceneObject();
-   renderBasicTree->setMesh(basicTreeMesh);
-   renderBasicTree->setShader(ERP_DEFAULT, Toon);
-   renderBasicTree->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+  renderWinCabbage = new CMeshSceneObject();
+  renderWinCabbage->setMesh(cabbageMesh);
+  renderWinCabbage->setShader(Toon);
+  renderWinCabbage->setVisible(false);
+  renderWinCabbage->setCullingEnabled(true);
 
-   renderChristmasTree = new CMeshSceneObject();
-   renderChristmasTree->setMesh(cabbageMesh);
-   renderChristmasTree->setShader(ERP_DEFAULT, Toon);
    renderChristmasTree->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
-   playerRenderable = new CMeshSceneObject();
-   playerRenderable->setMesh(cabbageMesh);
-   //playerRenderable->enableDebugData(EDebugData::Normals);
-   playerRenderable->setShader(ERP_DEFAULT, Toon);
+   cabbage5 = new CMeshSceneObject();
+   cabbage5->setMesh(mCab5);
+   cabbage5->setShader(Toon);
+   cabbage5->setCullingEnabled(false);
    playerRenderable->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
-   playerRenderable->setScale(SVector3(2));
    playerLight2 = new CPointLightSceneObject(10.f);
    CApplication::get().getSceneManager().addSceneObject(playerLight2);
 
@@ -1425,70 +1787,117 @@ void PrepMeshes()
 		   CApplication::get().getSceneManager().addSceneObject(point);
 	   }
 
-   renderBlueFlwr = new CMeshSceneObject();
-   renderBlueFlwr->setMesh(blueFlwrMesh);
-   renderBlueFlwr->setShader(ERP_DEFAULT, Toon);
-   renderBlueFlwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
-   renderBlueFlwr->setTranslation(SVector3(-23.f, .18f, 2));
-   renderBlueFlwr->setScale(SVector3(.36f));
-   renderBlueFlwr->setRotation(SVector3(-90, 0, 0));
+   cabbage4 = new CMeshSceneObject();
+   cabbage4->setMesh(mCab4);
+   cabbage4->setShader(Toon);
+   cabbage4->setCullingEnabled(false);
+   cabbage4->setVisible(false);
 
-   renderWhiteFlwr = new CMeshSceneObject();
-   renderWhiteFlwr->setMesh(whiteFlwrMesh);
-   renderWhiteFlwr->setTranslation(SVector3(-20, .2f, 2));
-   renderWhiteFlwr->setScale(SVector3(.36f));
-   renderWhiteFlwr->setRotation(SVector3(0, 90, 0));
-   renderWhiteFlwr->setShader(ERP_DEFAULT, Toon);
+   cabbage3 = new CMeshSceneObject();
+   cabbage3->setMesh(mCab3);
+   cabbage3->setShader(Toon);
+   cabbage3->setCullingEnabled(false);
+   cabbage3->setVisible(false);
    renderWhiteFlwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
-   renderWhiteSunflwr = new CMeshSceneObject();
-   renderWhiteSunflwr->setMesh(whiteFlwrMesh);
-   renderWhiteSunflwr->setTranslation(SVector3(-20, .2f, 2));
-   renderWhiteSunflwr->setScale(SVector3(.36f));
-   renderWhiteSunflwr->setRotation(SVector3(0, 90, 0));
-   renderWhiteSunflwr->setShader(ERP_DEFAULT, Toon);
+   cabbage2 = new CMeshSceneObject();
+   cabbage2->setMesh(mCab2);
+   cabbage2->setShader(Toon);
+   cabbage2->setCullingEnabled(false);
+   cabbage2->setVisible(false);
    renderWhiteSunflwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
-   renderPurpleFlwr = new CMeshSceneObject();
-   renderPurpleFlwr->setMesh(whiteFlwrMesh);
-   renderPurpleFlwr->setTranslation(SVector3(-20, .2f, 2));
-   renderPurpleFlwr->setScale(SVector3(.36f));
-   renderPurpleFlwr->setRotation(SVector3(0, 90, 0));
-   renderPurpleFlwr->setShader(ERP_DEFAULT, Toon);
+   cabbage1 = new CMeshSceneObject();
+   cabbage1->setMesh(mCab1);
+   cabbage1->setShader(Toon);
+   cabbage1->setCullingEnabled(false);
+   cabbage1->setVisible(false);
    renderPurpleFlwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
-   renderYellowFlwr = new CMeshSceneObject();
-   renderYellowFlwr->setMesh(whiteFlwrMesh);
-   renderYellowFlwr->setTranslation(SVector3(-20, .2f, 2));
-   renderYellowFlwr->setScale(SVector3(.36f));
-   renderYellowFlwr->setRotation(SVector3(0, 90, 0));
-   renderYellowFlwr->setShader(ERP_DEFAULT, Toon);
+   cabbage0 = new CMeshSceneObject();
+   cabbage0->setMesh(mCab0);
+   cabbage0->setShader(Toon);
+   cabbage0->setCullingEnabled(false);
+   cabbage0->setVisible(false);
    renderYellowFlwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
-   renderTealFlwr = new CMeshSceneObject();
-   renderTealFlwr->setMesh(whiteFlwrMesh);
-   renderTealFlwr->setTranslation(SVector3(-20, .2f, 2));
-   renderTealFlwr->setScale(SVector3(.36f));
-   renderTealFlwr->setRotation(SVector3(0, 90, 0));
-   renderTealFlwr->setShader(ERP_DEFAULT, Toon);
+   cabbageHurt5 = new CMeshSceneObject();
+   cabbageHurt5->setMesh(mCabOw5);
+   cabbageHurt5->setShader(Toon);
+   cabbageHurt5->setCullingEnabled(false);
+   cabbageHurt5->setTranslation(SVector3(0.f, 0.f, .2f));
    renderTealFlwr->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
 
-   renderFicus = new CMeshSceneObject();
-   renderFicus->setMesh(ficusMesh);
-   renderFicus->setTranslation(SVector3(-21, .5f, 2));
-   renderFicus->setScale(SVector3(1.0));
-   renderFicus->setRotation(SVector3(-90, 0, 0));
-   renderFicus->setTexture(blueFlwrTxt);
-   renderFicus->setShader(ERP_DEFAULT, ToonTexture);
+   cabbageHurt4 = new CMeshSceneObject();
+   cabbageHurt4->setMesh(mCabOw4);
+   cabbageHurt4->setShader(Toon);
+   cabbageHurt4->setCullingEnabled(false);
+   cabbageHurt4->setVisible(false);
+   cabbageHurt4->setTranslation(SVector3(0.f, 0.f, .2f));
    renderFicus->setShader(ERP_DEFERRED_OBJECTS, DeferredToonTexture);
 
-   renderFern = new CMeshSceneObject();
-   renderFern->setMesh(fernMesh);
-   renderFern->setTranslation(SVector3(-19, .5f, 2));
-   renderFern->setScale(SVector3(.75));
-   renderFern->setRotation(SVector3(-90, 0, 0));
-   renderFern->setShader(ERP_DEFAULT, Toon);
-   renderFern->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+   cabbageHurt3 = new CMeshSceneObject();
+   cabbageHurt3->setMesh(mCabOw3);
+   cabbageHurt3->setShader(Toon);
+   cabbageHurt3->setCullingEnabled(false);
+   cabbageHurt3->setVisible(false);
+   cabbageHurt3->setTranslation(SVector3(0.f, 0.f, .2f));
+
+   cabbageHurt2 = new CMeshSceneObject();
+   cabbageHurt2->setMesh(mCabOw2);
+   cabbageHurt2->setShader(Toon);
+   cabbageHurt2->setCullingEnabled(false);
+   cabbageHurt2->setVisible(false);
+   cabbageHurt2->setTranslation(SVector3(0.f, 0.f, .2f));
+
+   cabbageHurt1 = new CMeshSceneObject();
+   cabbageHurt1->setMesh(mCabOw1);
+   cabbageHurt1->setShader(Toon);
+   cabbageHurt1->setCullingEnabled(false);
+   cabbageHurt1->setVisible(false);
+   cabbageHurt1->setTranslation(SVector3(0.f, 0.f, .2f));
+
+   cabbageHurt0 = new CMeshSceneObject();
+   cabbageHurt0->setMesh(mCabOw0);
+   cabbageHurt0->setShader(Toon);
+   cabbageHurt0->setCullingEnabled(false);
+   cabbageHurt0->setVisible(false);
+   cabbageHurt0->setTranslation(SVector3(0.f, 0.f, .2f));
+
+   normalCabbage = new CMeshSceneObject();
+   normalCabbage->setMesh(mCab5);
+   normalCabbage->setShader(Toon);
+   normalCabbage->setCullingEnabled(false);
+   normalCabbage->setVisible(false);
+   
+
+   damageCabbage = new CMeshSceneObject();
+   damageCabbage->setMesh(cabbageDamage);
+   damageCabbage->setShader(Toon);
+   damageCabbage->setVisible(false);
+   damageCabbage->setScale(SVector3(1.5f));
+   damageCabbage->setRotation(SVector3(0.f, 0.f, 45.f));
+   damageCabbage->setTranslation(SVector3(0.f, 0.f, .15f));
+   damageCabbage->setCullingEnabled(false);
+
+
+
+   playerRenderable = new CMeshSceneObject();
+   playerRenderable->addChild(normalCabbage);
+   playerRenderable->addChild(damageCabbage);
+   playerRenderable->setVisible(false);
+   playerRenderable->addChild(cabbage5);
+   playerRenderable->addChild(cabbage4);
+   playerRenderable->addChild(cabbage3);
+   playerRenderable->addChild(cabbage2);
+   playerRenderable->addChild(cabbage1);
+   playerRenderable->addChild(cabbage0);
+   playerRenderable->addChild(cabbageHurt5);
+   playerRenderable->addChild(cabbageHurt4);
+   playerRenderable->addChild(cabbageHurt3);
+   playerRenderable->addChild(cabbageHurt2);
+   playerRenderable->addChild(cabbageHurt1);
+   playerRenderable->addChild(cabbageHurt0);
 
    renderFlag = new CMeshSceneObject();
    renderFlag->setMesh(flagMesh);
@@ -1504,6 +1913,6 @@ void PrepMeshes()
    flagLogo->setTranslation(SVector3(170, 100.f, 1.0f));
    flagLogo->setRotation(SVector3(-90,0,0));
    flagLogo->setScale(SVector3(.75f));
-   flagLogo->setShader(ERP_DEFAULT, Flat);
+   flagLogo->setShader(Toon);
    flagLogo->setShader(ERP_DEFERRED_OBJECTS, DeferredFlat);
 }

@@ -60,6 +60,7 @@ void CStateManager::doStateChange()
 	{
 		CurrentState->disconnect();
 		CApplication::get().getGUIEngine().removeAllWidgets();
+      CApplication::get().getSceneManager().Lights.clear();
 		CApplication::get().getSceneManager().removeAllSceneObjects();
 		CurrentState->end();
 	}

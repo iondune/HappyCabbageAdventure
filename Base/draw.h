@@ -10,14 +10,19 @@ CImage *grassImg, *skyImg, *dirtImg, *blueFlwrImg, *whiteFlwrImg, *ficusImg, *fl
 
 CTexture *grassTxt, *skyTxt, *dirtTxt, *blueFlwrTxt, *whiteFlwrTxt, *ficusTxt, *flagTxt;
 
-CMesh *basicTreeMesh, *cabbageMesh, *christmasTreeMesh, *cubeMesh, *discMesh,
+CMesh *basicTreeMesh, *cabbageMesh, *cabbageDamage, *christmasTreeMesh, *cubeMesh, *discMesh,
       *blueFlwrMesh, *whiteFlwrMesh, *ficusMesh, *fernMesh, *enemyMesh,
       *flagMesh, *derpMesh, *purpleFlwrMesh, *yellowFlwrMesh, *tealFlwrMesh, *whiteSunflwrMesh;
 
-CMeshSceneObject *renderShadow, *playerRenderable, *renderChristmasTree,
+CMesh *mCab0, *mCab1, *mCab2, *mCab3, *mCab4, *mCab5,
+      *mCabOw0, *mCabOw1, *mCabOw2, *mCabOw3, *mCabOw4, *mCabOw5;
+
+CMeshSceneObject *renderWinCabbage, *renderShadow, *playerRenderable, *normalCabbage, *damageCabbage, *renderChristmasTree,
   *renderBasicTree, *renderBlueFlwr, *renderWhiteFlwr, *renderFicus, *renderFern,
   *tempRender, *renderFlag, *flagLogo, *renderDerp, *renderPurpleFlwr, *renderYellowFlwr,
-  *renderTealFlwr, *renderWhiteSunflwr;
+  *renderTealFlwr, *renderWhiteSunflwr, *cabbage5, *cabbage4, *cabbage3, *cabbage2, 
+  *cabbage1, *cabbage0, *cabbageHurt5, *cabbageHurt4, *cabbageHurt3, *cabbageHurt2,
+  *cabbageHurt1, *cabbageHurt0;
 
 std::vector<CMeshSceneObject*> blocks, enemies, blueFlwrs, whiteFlwrs, ficuses,
   basicTrees, xmasTrees, ferns, tealFlwrs, purpleFlwrs, yellowFlwrs, whiteSunflwrs;

@@ -8,8 +8,8 @@ CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabb
    Engine->setCollisionResponder(this);
    NULL_BLOCK = Engine->addObject();
    NULL_BLOCK->setArea(SRect2(-50.f, -50.f, 0.01f, 0.01f));
-   NULL_BLOCK->CollideableLevel = INTERACTOR_ALL_ALL;
-   NULL_BLOCK->CanCollideWith = INTERACTOR_ALL_ALL;
+   NULL_BLOCK->CollideableLevel = INTERACTOR_NULL_BLOCK;
+   NULL_BLOCK->CanCollideWith = 0;
    GameEventManager = new CGameEventManager();
    won = 0;
    GodMode = 0;
@@ -188,6 +188,9 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
                if(PlayerHealth > 1)
                   GameEventManager->OnPlayerDamaged(Event);
 
+               //Set hurt face
+
+
                //Chris Code.  Damage Sound plays here
                if(playTakeDmg) {
                   Mix_PlayChannel(-1, takeDmg, 0);
@@ -258,7 +261,6 @@ SVector2 CGameplayManager::getPlayerLocation() {
 void CGameplayManager::setVictoryFlag(Cabbage::Collider::CObject * f) {
    VictoryFlag = f;
 }
-
 
 bool const CGameplayManager::isWon() const
 {
@@ -361,7 +363,7 @@ void CGameplayManager::run(float const TickTime)
       float enemyCenterX = Enemies[i]->Actor->getArea().getCenter().X;
       float enemyCenterY = Enemies[i]->Actor->getArea().getCenter().Y;
 
-      if ((enemyCenterX < cabbageCenterX + 9 && enemyCenterX > cabbageCenterX - 9)) {// && (enemyCenterY < cabbageCenterY + 9 && enemyCenterY > cabbageCenterY - 9))
+      if ((enemyCenterX < cabbageCenterX + 9 && enemyCenterX > cabbageCenterX - 9) && !isWon()) {
          if(Enemies[i]->Actor->CollideableType == COLLIDEABLE_TYPE_KIWI) {
             EKiwi *kPtr = (EKiwi*)Enemies[i];
             if(kPtr->inZ && (
@@ -375,7 +377,17 @@ void CGameplayManager::run(float const TickTime)
          }
          Enemies[i]->update(TickTime);
       }
+
+      //Kill only the visible enemies to ensure we don't cause massive lag.
+      else if (isWon() && (Enemies[i]->Actor->CollideableType != COLLIDEABLE_TYPE_FLAME) && (enemyCenterX < cabbageCenterX + 12 && enemyCenterX > cabbageCenterX - 12)) {
+         KillList.push_back(Enemies[i]);
+      }
    }
+
+   if (isWon()) {
+      Enemies.clear();
+   }
+
    for (ItemList::iterator it = Items.begin(); it != Items.end(); ++ it) {
       float itemCenterX = (*it)->Actor->getArea().getCenter().X;
       float itemCenterY = (*it)->Actor->getArea().getCenter().Y;

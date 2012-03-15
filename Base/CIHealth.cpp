@@ -32,7 +32,7 @@ void CIHealth::loadMesh() {
    Renderable->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
    //Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2 + 10.6f, 0));
    //Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
-   Renderable->setScale(SVector3(0.4f));
+   Renderable->setScale(SVector3(.8f));
 
    CApplication::get().getSceneManager().addSceneObject(Renderable);
 }

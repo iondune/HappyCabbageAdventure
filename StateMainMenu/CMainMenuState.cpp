@@ -118,8 +118,10 @@ void CMainMenuState::begin()
    //Sound Setup
    soundInit();
    setupSoundtrack("BeginningAnew.mp3");
+   //DOES NOT WORK ON LINUX BECAUSE CAN'T RUN MP3
    startSoundtrack();
 
+   printf("Got here?\n");
    setupTextures();
    setupMeshes();
    setupButtons();
@@ -272,6 +274,7 @@ void CMainMenuState::OnWidgetUnHover(CGUIWidget * Widget)
 void CMainMenuState::OnWidgetClick(CGUIWidget * Widget)
 {
    if(Widget == StartGame) {
+      COverworldState::get().newGame = true;
       CApplication::get().getStateManager().setState(new CFadeOutState(& COverworldState::get(), 0.3f));
    }
    else if(Widget == StartEditor) {

@@ -19,6 +19,7 @@ void CGameEventReceiver::OnPlayerDamaged(SPlayerDamagedEvent const & Event) {
       playerDamagedEngine = NULL;
    }
    playerDamagedEngine = new CParticleEngine(SVector3(Event.Damagee->getArea().getCenter(), 0.0f), 6, 0.8f, HURT_PARTICLE);
+
    Player = Event.Damagee;
 }
 
@@ -42,7 +43,7 @@ void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
    }
       DeadEnemy.Renderable = Event.Enemy.Renderable;
 
-      if(Event.Enemy.KillMethod == 0) {
+      if(Event.Enemy.KillMethod == 0 && DeadEnemy.Renderable != 0) {
          DeadEnemy.Renderable->setScale(SVector3(1.f, 1.0f, 0.4f));
          DeadEnemy.Renderable->setTranslation(DeadEnemy.Renderable->getTranslation() - SVector3(0.f, 0.5f, 0.f));
       }
