@@ -981,10 +981,10 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 }
 
 void CGameState::end()
-{   
+{
+   Application.getSceneManager().Lights.clear();
+
    stopSoundtrack();
-   //Mix_CloseAudio();
-   //our_font.clean();
 
    if(particleLeafEngine) {
       particleLeafEngine->deconstruct();
@@ -1015,6 +1015,8 @@ void CGameState::end()
    Application.getSceneManager().Lights.clear();
    Application.getSceneManager().removeAllSceneObjects();
    Application.getGUIEngine().removeAllWidgets();
+
+   playVictory = true;
 }
 
 void CGameState::UpdateLeaves() {

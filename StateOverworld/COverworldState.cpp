@@ -59,7 +59,7 @@ void COverworldState::begin()
    look = levels[curNode].loc;
    Camera = new CPerspectiveCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
    Application.getSceneManager().setActiveCamera(Camera);
-   float const LightBrightness = 0.6f;
+   float const LightBrightness = 0.0f;
    Camera->setPosition(eye);
    Camera->setLookDirection(look - eye);
 
@@ -322,7 +322,6 @@ void COverworldState::PrepMeshes()
 
    //Set up player renderable
    CMesh *playerMesh = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_5.3ds");
-// CMesh *playerMesh = CMeshLoader::load3dsMesh("Base/crappycabbage2.3ds");
 
    if (playerMesh) {
       playerMesh->resizeMesh(SVector3(0.45f));
