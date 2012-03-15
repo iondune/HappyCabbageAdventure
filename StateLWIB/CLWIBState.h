@@ -39,7 +39,7 @@ class CLWIBState : public CState<CLWIBState>
    //stuff for textures
    CTexture *grass,*dirt,*rock,*ground,*cabbageImage,*apple,*orange,*kiwi,*fire,*blade, *alien;
    CTexture *leaf, *heart;
-   CTexture *blockRight, *blockLeft, *blockUp, *blockDown, *blockIn, *blockOut;
+   CTexture *blockRight, *blockLeft, *blockUp, *blockDown, *blockIn, *blockOut, *flagImg;
    // GUIImageWidget
    CGUIFontWidget *block1, *block2, *block3;
    CGUIFontWidget *help;

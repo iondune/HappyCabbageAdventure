@@ -708,7 +708,8 @@ void CLWIBState::PrepPreviews() {
    bladeMesh = CMeshLoader::load3dsMesh("Base/trap1.3ds");
    flagMesh = CMeshLoader::load3dsMesh("Base/flag.3ds");
    health = CMeshLoader::load3dsMesh("Base/healthboost.3ds");
-   energy = CMeshLoader::load3dsMesh("Base/energyboost.3ds");
+   energy = CMeshLoader::load3dsMesh("Base/water_energy.3ds");
+
    //PreviewCabbage->setMesh(appleMesh);
    
    if(appleMesh) {
@@ -1278,7 +1279,10 @@ void CLWIBState::changeTiles() {
             Application.getGUIEngine().removeWidget(tileTen);
     }
     if (change == 3) {
-    
+   
+        tileOne->setImage(flagImg);
+        if (!Application.getGUIEngine().isWidgetIn(tileOne))
+            Application.getGUIEngine().addWidget(tileOne);
         if (Application.getGUIEngine().isWidgetIn(tileTwo))
             Application.getGUIEngine().removeWidget(tileTwo);
         if (Application.getGUIEngine().isWidgetIn(tileThree))
@@ -1646,8 +1650,9 @@ void CLWIBState::prepHud() {
     blade = new CTexture(CImageLoader::loadImage("ModelImages/trap1_gray.bmp"));
     cabbageImage = new CTexture(CImageLoader::loadImage("ModelImages/cabbage_gray.bmp"));
     fire = new CTexture(CImageLoader::loadImage("ModelImages/flame.bmp"));
-    leaf = new CTexture(CImageLoader::loadImage("ModelImages/tempLeaf.bmp"));
-    heart = new CTexture(CImageLoader::loadImage("ModelImages/heart.bmp"));
+    leaf = new CTexture(CImageLoader::loadImage("ModelImages/leaf_gray.bmp"));
+    heart = new CTexture(CImageLoader::loadImage("ModelImages/water_energy_gray.bmp"));
+    flagImg = new CTexture(CImageLoader::loadImage("ModelImages/flag_gray.bmp"));
     //arrows to cycle though the blocks, enemies, cabbage, flag etc.
     leftArrow = new CGUIImageWidget(imgLeft, norm);
     leftArrow->setPosition(SVector2(1.05f, .85f));
