@@ -91,6 +91,7 @@ class CPlayerView {
       void setCutoffPoint(SRect2 left, SRect2 right) {
          renderLeftShadow->setVisible(left.Size.X != 0.0f);
          renderRightShadow->setVisible(right.Size.X != 0.0f);
+         bool equal = false;
 
          if(left.otherCorner().Y > right.otherCorner().Y) {
             cutOffPoint = left.Position.X + left.Size.X;
@@ -99,13 +100,13 @@ class CPlayerView {
             cutOffPoint = right.Position.X;
          }
          else {
+            equal = true;
             cutOffPoint = 0.0f;
          }
          float oldCutOff = cutOffPoint;
-         if(cutOffPoint > 0.0f) {
-            cutOffPoint = ((Size.X/2.f - CenterPosition.X) - cutOffPoint)/Size.X;
+         if(!equal) {
+            cutOffPoint = (cutOffPoint - (CenterPosition.X - Size.X/2.f))/Size.X;
          }
-         printf("CutoffPoint = %0.2f, %0.2f\n", cutOffPoint, oldCutOff);
       }
       void setLeftGround(float groundYValue) {
          yLeftShadow = groundYValue;
