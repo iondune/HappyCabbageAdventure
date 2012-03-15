@@ -1254,6 +1254,13 @@ void CGameState::UpdateEnergy(float const Elapsed) {
 }
 
 void CGameState::RunVictorySequence(float Elapsed) {
+   cabbageHurt5->setVisible(false);
+   cabbageHurt4->setVisible(false);
+   cabbageHurt3->setVisible(false);
+   cabbageHurt2->setVisible(false);
+   cabbageHurt1->setVisible(false);
+   cabbageHurt0->setVisible(false);
+
    cabbage5->setVisible(true);
    cabbage4->setVisible(false);
    cabbage3->setVisible(false);
@@ -1341,7 +1348,7 @@ void CGameState::RunVictorySequence(float Elapsed) {
 
 
       renderWinCabbage->setTranslation(SVector3(WinPlayer->getArea().getCenter().X,WinPlayer->getArea().getCenter().Y, 0));
-      WinPlayer->setImpulse(SVector2(0.f, 22.f), 100.f);
+      WinPlayer->setImpulse(SVector2(0.f, 30.f), 0.01f);
 
       if (launch) {
          Engine->removeActor(Player);
