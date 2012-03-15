@@ -1,4 +1,4 @@
-FILES = CMesh.cpp CMeshLoader.cpp CRenderable.cpp CShader.cpp CTexture.cpp CImageLoader.cpp CImage.cpp CShaderLoader.cpp CCamera.cpp CShaderContext.cpp CSceneManager.cpp CMeshSceneObject.cpp ISceneObject.cpp CSceneObject.cpp CMaterial.cpp CMeshSceneObject.cpp ImageLoaders/Texture.cpp CSceneEffectManager.cpp CFrameBufferObject.cpp CRenderBufferObject.cpp
+FILES = CMesh.cpp CMeshLoader.cpp CRenderable.cpp CShader.cpp CTexture.cpp CImageLoader.cpp CImage.cpp CShaderLoader.cpp CCamera.cpp CShaderContext.cpp CSceneManager.cpp CMeshSceneObject.cpp ISceneObject.cpp CSceneObject.cpp CMaterial.cpp CMeshSceneObject.cpp ImageLoaders/Texture.cpp CSceneEffectManager.cpp CFrameBufferObject.cpp CRenderBufferObject.cpp CPointLightSceneObject.cpp CDeferredShadingManager.cpp
 CC=g++ -O1 -s
 
 OFILES = $(FILES:%.cpp=%.o)
@@ -54,6 +54,12 @@ CTexture.o: CTexture.cpp
 
 CImageLoader.o: CImageLoader.cpp
 	$(CC) -o CImageLoader.o CImageLoader.cpp -c $(DIRECTORIES) $(OPENGL)
+
+CDeferredShadingManager.o: CDeferredShadingManager.cpp
+	$(CC) -o CDeferredShadingManager.o CDeferredShadingManager.cpp -c $(DIRECTORIES) $(OPENGL)
+
+CPointLightSceneObject.o: CPointLightSceneObject.cpp
+	$(CC) -o CPointLightSceneObject.o CPointLightSceneObject.cpp -c $(DIRECTORIES) $(OPENGL)
 
 CSceneManager.o: CSceneManager.cpp
 	$(CC) -o $@ CSceneManager.cpp -c $(DIRECTORIES) $(OPENGL)

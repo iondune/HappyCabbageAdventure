@@ -759,7 +759,8 @@ void CGameState::OnRenderStart(float const Elapsed)
    }
 
    //Update the HUD
-   UpdateLeaves();
+   if(StartWin == 0.0f)
+      UpdateLeaves();
    UpdateEnergy(Elapsed);
 
    //Draw Text
@@ -1277,8 +1278,8 @@ void CGameState::RunVictorySequence(float Elapsed) {
    SVector2 curLocation = SVector2 (Player->getArea().getCenter().X - .5f, Player->getArea().getCenter().Y - .5f);
 
    if (StartWin > .00f && StartWin < .07f) {
-   WinPlayer->CollideableLevel |= INTERACTOR_SUPERACTORS;
-   WinPlayer->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
+      WinPlayer->CollideableLevel |= INTERACTOR_SUPERACTORS;
+      WinPlayer->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
 
       dDown = 0;
       aDown = 0;

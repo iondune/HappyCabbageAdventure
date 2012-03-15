@@ -104,7 +104,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
       }
       else {
          Object->CollideableLevel = INTERACTOR_SUPERNONCOLLIDERS;
-         Object->CanCollideWith = 0;//INTERACTOR_ACTORS; 
+         Object->CanCollideWith = INTERACTOR_NULL_BLOCK;//INTERACTOR_ACTORS; 
 
          for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
          {
