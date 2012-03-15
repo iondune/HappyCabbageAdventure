@@ -186,7 +186,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
       */
       break;
    case FLAME_PARTICLE:
-      textureToUse = "Base/particle2.bmp";
+      textureToUse = "Base/particleTriangle2.bmp";
       break;
    case DEATH_PARTICLE:
       textureToUse = "Base/particleStar.bmp";
