@@ -12,6 +12,7 @@ Mix_Chunk *killEnemy;
 Mix_Chunk *chargeLaser;
 Mix_Chunk *chargeLaser2;
 Mix_Chunk *fireLaser;
+Mix_Chunk *dropKiwi;
 
 bool playDead;
 bool playVictory;
@@ -41,6 +42,7 @@ void soundInit() {
    chargeLaser = NULL;
    chargeLaser2 = NULL;
    fireLaser = NULL;
+   dropKiwi = NULL;
 
 
    //Misc Sound Variables
@@ -94,8 +96,14 @@ void setupSoundtrack(char *startMusic) {
    temp = MusicDirectory + "fireLaser3.wav";
    fireLaser = Mix_LoadWAV(temp.c_str());
 
+   temp = MusicDirectory + "kiwiDrop.wav";
+   dropKiwi = Mix_LoadWAV(temp.c_str());
+
    //Decrease volume of jump
-   Mix_VolumeChunk(jump, 32);
+   Mix_VolumeChunk(jump, 20);
+   Mix_VolumeMusic(100);
+   Mix_VolumeChunk(die, 200);
+   Mix_VolumeChunk(dropKiwi, 255);
 }
 
 void startSoundtrack() {
