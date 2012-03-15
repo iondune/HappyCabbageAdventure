@@ -43,7 +43,7 @@ void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
    }
       DeadEnemy.Renderable = Event.Enemy.Renderable;
 
-      if(Event.Enemy.KillMethod == 0) {
+      if(Event.Enemy.KillMethod == 0 && DeadEnemy.Renderable != 0) {
          DeadEnemy.Renderable->setScale(SVector3(1.f, 1.0f, 0.4f));
          DeadEnemy.Renderable->setTranslation(DeadEnemy.Renderable->getTranslation() - SVector3(0.f, 0.5f, 0.f));
       }

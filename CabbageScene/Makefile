@@ -1,5 +1,5 @@
 FILES = CMesh.cpp CMeshLoader.cpp CRenderable.cpp CShader.cpp CTexture.cpp CImageLoader.cpp CImage.cpp CShaderLoader.cpp CCamera.cpp CShaderContext.cpp CSceneManager.cpp CMeshSceneObject.cpp ISceneObject.cpp CSceneObject.cpp CMaterial.cpp CMeshSceneObject.cpp ImageLoaders/Texture.cpp CSceneEffectManager.cpp CFrameBufferObject.cpp CRenderBufferObject.cpp
-CC=g++ -O1 -s
+CC=g++ -g
 
 OFILES = $(FILES:%.cpp=%.o)
 

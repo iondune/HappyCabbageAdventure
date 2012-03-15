@@ -379,7 +379,7 @@ void CGameplayManager::run(float const TickTime)
       }
 
       //Kill only the visible enemies to ensure we don't cause massive lag.
-      else if (isWon() && (enemyCenterX < cabbageCenterX + 12 && enemyCenterX > cabbageCenterX - 12)) {
+      else if (isWon() && (Enemies[i]->Actor->CollideableType != COLLIDEABLE_TYPE_FLAME) && (enemyCenterX < cabbageCenterX + 12 && enemyCenterX > cabbageCenterX - 12)) {
          KillList.push_back(Enemies[i]);
       }
    }
