@@ -33,7 +33,7 @@ class COverworldState : public CState<COverworldState>
    float changex, changey, changez;
    SVector3 playerVector, playerVecShift, playerVecTarget;
 
-   CShader *Flat, *Diffuse, *DiffuseTexture;
+   CShader *Flat, *Diffuse, *ToonTexture;
    CMeshSceneObject *renderMap, *discRender, *playerRender,
                     *arrowRender1, *arrowRender2;
 
@@ -53,6 +53,7 @@ class COverworldState : public CState<COverworldState>
    bool levelsUnlocked;
 
    void LoadShaders();
+   void addMeshes(SVector3 loc, CMesh *newMesh, CTexture *texture);
    void PrepMeshes();
    void loadLevels();
    void setCameraTrans();

@@ -300,7 +300,7 @@ void COverworldState::setCameraTrans()
 void COverworldState::LoadShaders() {
    Flat = CShaderLoader::loadShader("Toon");
    Diffuse = CShaderLoader::loadShader("Toon");
-   DiffuseTexture = CShaderLoader::loadShader("ToonTexture");
+   ToonTexture = CShaderLoader::loadShader("ToonTexture");
    //normalColor = CShaderLoader::loadShader("NormalColor");
 }
 
@@ -316,7 +316,7 @@ void COverworldState::PrepMeshes()
    CMaterial mat;
 
    mat.Texture = CImageLoader::loadTexture("../Models/Base/world.bmp");
-   renderMap = CApplication::get().getSceneManager().addMeshSceneObject(mapMesh, DiffuseTexture);
+   renderMap = CApplication::get().getSceneManager().addMeshSceneObject(mapMesh, ToonTexture);
    renderMap->setMaterial(mat);
    renderMap->setCullingEnabled(false);
 
@@ -367,11 +367,26 @@ void COverworldState::PrepMeshes()
    discMesh->linearizeIndices();
    discMesh->calculateNormalsPerFace();
 
+   CMesh *flagMesh = CMeshLoader::load3dsMesh("Base/flag2.3ds");
+   
+   if (flagMesh) {
+     flagMesh->centerMeshByExtents(SVector3(0));
+     flagMesh->calculateNormalsPerFace();
+   }
+
+   else {
+     fprintf(stderr, "Failed to load flag mesh.\n");
+   }
+
+   CTexture *flagTxt = new CTexture(CImageLoader::loadImage("Base/white.bmp"));
+
+
    for(int i = 0; i < NUM_LEVELS; i++)
    {
      if(levels[i].completed)
      {
       levelIcons(levels[i].loc, discMesh, 1);
+      addMeshes(levels[i].loc, flagMesh, flagTxt);
      }
      else
      {
@@ -391,7 +406,7 @@ void COverworldState::PrepMeshes()
 void COverworldState::levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor)
 {
 
-   discRender = CApplication::get().getSceneManager().addMeshSceneObject(levelIcon, DiffuseTexture);
+   discRender = CApplication::get().getSceneManager().addMeshSceneObject(levelIcon, ToonTexture);
 
    CMaterial mat;
    switch(iconColor)
@@ -412,6 +427,22 @@ void COverworldState::levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor)
 
    discRender->setTranslation(loc);
    discRender->setScale(SVector3(0.1f));
+}
+
+void COverworldState::addMeshes(SVector3 loc, CMesh *newMesh, CTexture *texture)
+{
+  CMeshSceneObject *renderFlag = new CMeshSceneObject();
+  renderFlag->setMesh(newMesh);
+  renderFlag->setTranslation(loc + SVector3(-0.05f, 0.05f, 0.05f));
+  renderFlag->setRotation(SVector3(-90,0,0));
+  renderFlag->setScale(SVector3(.00150f, .000025f,.00016f));
+  renderFlag->setTexture(texture);
+  renderFlag->setShader(ToonTexture);
+
+  Application.getSceneManager().addSceneObject(renderFlag);
+
+
+
 }
 
 void COverworldState::bouncePlayer() {
