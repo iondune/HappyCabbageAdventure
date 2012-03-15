@@ -154,22 +154,28 @@ namespace Cabbage
                }
             }
 
-            CObject* const getObjectBelow(CActor * Actor)
+            CObject* const getObjectBelow(SVector2 pos)
             {
                float height = - std::numeric_limits<float>::infinity();
                float checkHeight;
-               CObject * obj;
+               CObject *Object, *objBelow = NULL;
 
                for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
                {
-                  if (CanCollide(*it, Actor) && Actor->isAbove(* it, checkHeight))
-                     if (checkHeight > height) {
-                        height = checkHeight;
-                        obj = *it;
-                     }
+                  Object = *it;
+                  if (pos.Y < Object->getArea().otherCorner().Y)
+                     continue;
+
+                  if (pos.X < Object->getArea().Position.X || pos.X > Object->getArea().otherCorner().X)
+                     continue;
+
+                  if(Object->getArea().otherCorner().Y > height) {
+                     height = Object->getArea().otherCorner().Y;
+                     objBelow = Object;
+                  }
                }
 
-               return obj;
+               return objBelow;
             }
 
             float const getHeightBelow(SVector2 pos) {
