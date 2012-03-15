@@ -34,11 +34,13 @@ void ViewInit( void ) {
 
    renderLeftShadow = new CMeshSceneObject();
    renderLeftShadow->setMesh(discMesh);
-   renderLeftShadow->setShader(BlackShader);
+   renderLeftShadow->setShader(ERP_DEFAULT, BlackShader);
+   renderLeftShadow->setShader(ERP_DEFERRED_OBJECTS, BlackShader);
 
    renderRightShadow = new CMeshSceneObject();
    renderRightShadow->setMesh(discMesh);
-   renderRightShadow->setShader(BlackShader);
+   renderRightShadow->setShader(ERP_DEFAULT, BlackShader);
+   renderRightShadow->setShader(ERP_DEFERRED_OBJECTS, BlackShader);
 
    CApplication::get().getSceneManager().addSceneObject(renderLeftShadow);
    CApplication::get().getSceneManager().addSceneObject(renderRightShadow);
