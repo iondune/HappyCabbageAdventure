@@ -154,6 +154,7 @@ void EKiwi::doRenderable() {
 
 void EKiwi::DropBomb() {
    SVector2 pos = Actor->getArea().Position;
+
    if (Direction == 0)
       CBadGuy::makeBadGuy(pos.X + w/2.f - .05f, pos.Y - .5f, w, h, pKiwi, Manager);
    else

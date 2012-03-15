@@ -16,6 +16,7 @@ extern Mix_Chunk *killEnemy;
 extern Mix_Chunk *chargeLaser;
 extern Mix_Chunk *chargeLaser2;
 extern Mix_Chunk *fireLaser;
+extern Mix_Chunk *dropKiwi;
 
 //Misc Sound Variables
 extern bool playDead;
