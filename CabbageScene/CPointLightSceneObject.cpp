@@ -15,6 +15,7 @@ CPointLightSceneObject::CPointLightSceneObject()
 	SphereMesh->updateBuffers();
 
 	setRadius(3.f);
+	setBoundingBox(SphereMesh->getBoundingBox());
 
 	MeshBuffer = SphereMesh->MeshBuffers[0];
 
@@ -71,6 +72,7 @@ CPointLightSceneObject::CPointLightSceneObject(float const Radius)
 	SphereMesh->updateBuffers();
 	
 	setRadius(Radius);
+	setBoundingBox(SphereMesh->getBoundingBox());
 
 	MeshBuffer = SphereMesh->MeshBuffers[0];
 

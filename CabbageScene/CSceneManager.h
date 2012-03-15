@@ -96,7 +96,7 @@ class CSceneManager : public CScene
 	CTexture * SceneFrameTexture;
 	CRenderBufferObject * SceneDepthBuffer;
 
-	CSceneEffectManager * EffectManager;
+	CSceneEffectManager * EffectManager, * DeferredManager, * DefaultManager;
 	CShader * BlurHorizontal;
 
 	SSize2 ScreenSize;
@@ -134,6 +134,8 @@ public:
 	float BlurInTime, BlurOutTime, CurTime;
 
 	static GLuint const getQuadHandle();
+
+	void setDeferred(bool const isDeferred);
 
 };
 

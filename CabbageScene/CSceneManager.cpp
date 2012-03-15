@@ -168,8 +168,10 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 	if (! SceneFrameBuffer->isValid())
 		std::cerr << "Failed to make FBO for scene drawing!!!!!!" << std::endl  << std::endl  << std::endl;
 	
-	EffectManager = new CDeferredShadingManager(this);
-	//EffectManager->setEffectEnabled(ESE_BLOOM, true);
+	EffectManager = DefaultManager = new CSceneEffectManager(this);
+	EffectManager->setEffectEnabled(ESE_BLOOM, true);
+
+	DeferredManager = new CDeferredShadingManager(this);
 
 	BlurHorizontal = CShaderLoader::loadShader("FBO/QuadCopyUV.glsl", "BlurH.frag");
 }
@@ -375,4 +377,12 @@ GLuint const CSceneManager::getQuadHandle()
 SSize2 const & CSceneManager::getScreenSize() const
 {
 	return ScreenSize;
+}
+
+void CSceneManager::setDeferred(bool const isDeferred)
+{
+	if (isDeferred)
+		EffectManager = DeferredManager;
+	else
+		EffectManager = DefaultManager;
 }

@@ -708,6 +708,11 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 			SceneManager.getEffectManager()->setEffectEnabled(ESE_SSAO, ! SceneManager.getEffectManager()->isEffectEnabled(ESE_SSAO));
 			//CApplication::get().getSceneManager().DoSSAO = ! CApplication::get().getSceneManager().DoSSAO;
 		}
+		if (Event.Key == SDLK_v)
+		{
+			static bool Deferred = false;
+			SceneManager.setDeferred(Deferred = ! Deferred);
+		}
 		if (Event.Key == SDLK_b)
 		{
 			SceneManager.getEffectManager()->setEffectEnabled(ESE_BLOOM, ! SceneManager.getEffectManager()->isEffectEnabled(ESE_BLOOM));
@@ -921,6 +926,9 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 void CGameState::end()
 {   
+	
+			SceneManager.setDeferred(false);
+
    stopSoundtrack();
    //Mix_CloseAudio();
    //our_font.clean();
