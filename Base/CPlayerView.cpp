@@ -71,8 +71,11 @@ void CPlayerView::removeFromScene() {
    if(PlayerRenderable) {
       CApplication::get().getSceneManager().removeSceneObject(PlayerRenderable);
    }
-   if(renderShadow) {
-      CApplication::get().getSceneManager().removeSceneObject(renderShadow);
+   if(renderLeftShadow) {
+      CApplication::get().getSceneManager().removeSceneObject(renderLeftShadow);
+   }
+   if(renderRightShadow) {
+      CApplication::get().getSceneManager().removeSceneObject(renderRightShadow);
    }
 }
 
@@ -81,15 +84,21 @@ void CPlayerView::addToScene() {
    if(PlayerRenderable) {
       CApplication::get().getSceneManager().addSceneObject(PlayerRenderable);
    }
-   if(renderShadow) {
-      CApplication::get().getSceneManager().addSceneObject(renderShadow);
+   if(renderLeftShadow) {
+      CApplication::get().getSceneManager().addSceneObject(renderLeftShadow);
+   }
+   if(renderRightShadow) {
+      CApplication::get().getSceneManager().addSceneObject(renderRightShadow);
    }
 }
 
 void CPlayerView::draw() {
    int negFactor = 0;
    PlayerRenderable->setTranslation(SVector3(CenterPosition.X, CenterPosition.Y + 0.065f*sin(ySineValue), 0));
-   renderShadow->setTranslation(SVector3(CenterPosition.X, yShadow + 0.01f, 0));
+   renderLeftShadow->setTranslation(SVector3(CenterPosition.X, yLeftShadow + 0.01f, 0));
+   //renderLeftShadow->setCutoff(0, CutoffPoint);
+   renderRightShadow->setTranslation(SVector3(CenterPosition.X, yRightShadow + 0.01f, 0));
+   //renderRightShadow->setCutoff(0, CutoffPoint);
    if(Charging) {
       xScale = yScale = 2.0f;
       PlayerRenderable->setTranslation(SVector3(CenterPosition.X + 0.02f*sin(100.0f*ySineValue), CenterPosition.Y, 0));
@@ -137,8 +146,8 @@ void CPlayerView::draw() {
       PlayerRenderable->setVisible(false);
 
    //Set player's shadow
-   renderShadow->setScale(SVector3((-.05f*sin(ySineValue)+1), 1,
-     -0.05f*sin(ySineValue)+1));
+   renderLeftShadow->setScale(SVector3((-.05f*sin(ySineValue)+1), 1, -0.05f*sin(ySineValue)+1));
+   renderRightShadow->setScale(SVector3((-.05f*sin(ySineValue)+1), 1, -0.05f*sin(ySineValue)+1));
 }
 
 void CPlayerView::establishCamera(ICamera *Camera, int angle, int shaking) {

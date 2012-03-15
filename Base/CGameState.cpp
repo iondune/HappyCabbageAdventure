@@ -30,7 +30,21 @@ CGameplayManager *GameplayManager;
 
 void ViewInit( void ) {
    PlayerView = new CPlayerView();
-   PlayerView->setRenderable(playerRenderable, renderShadow);
+   CMeshSceneObject *renderLeftShadow, *renderRightShadow;
+
+   renderLeftShadow = new CMeshSceneObject();
+   renderLeftShadow->setMesh(discMesh);
+   renderLeftShadow->setShader(BlackShader);
+
+   renderRightShadow = new CMeshSceneObject();
+   renderRightShadow->setMesh(discMesh);
+   renderRightShadow->setShader(BlackShader);
+
+   CApplication::get().getSceneManager().addSceneObject(renderLeftShadow);
+   CApplication::get().getSceneManager().addSceneObject(renderRightShadow);
+
+   PlayerView->setRenderable(playerRenderable, renderLeftShadow, renderRightShadow);
+   PlayerView->setSize(SVector2(1.0f, 1.0f));
 }
 
 void BlockMesh() {
@@ -422,8 +436,6 @@ void CGameState::Initialize() {
    //Load the meshes into VBOs
    PrepMeshes();
 
-   PrepShadow();
-
    Application.getSceneManager().addSceneObject(renderDerp);
    Application.getSceneManager().addSceneObject(playerRenderable);
    Application.getSceneManager().addSceneObject(renderFlag);
@@ -574,7 +586,17 @@ void CGameState::oldDisplay() {
 
    SVector2 middleOfPlayer = Player->getArea().getCenter();
    PlayerView->setMiddle(middleOfPlayer);
-   PlayerView->setGround(Engine->getHeightBelow(Player));
+   SVector2 leftOfPlayer = SVector2(Player->getArea().Position.X, Player->getArea().getCenter().Y);
+   SVector2 rightOfPlayer = SVector2(Player->getArea().Position.X + Player->getArea().Size.X, Player->getArea().getCenter().Y);
+   PlayerView->setLeftGround(Engine->getHeightBelow(leftOfPlayer));
+   PlayerView->setRightGround(Engine->getHeightBelow(rightOfPlayer));
+
+   // Split the shadow into two
+   CObject *l, *r;
+   l = Engine->getObjectBelow(leftOfPlayer);
+   r = Engine->getObjectBelow(rightOfPlayer);
+   // If the cabbage is hanging over an edge, there might not be an object below it, so this check is necessary
+   PlayerView->setCutoffPoint(l?l->getArea():SRect2(-50.0f, -50.0f, 0.0f, 0.0f),r?r->getArea():SRect2(-50.0f, -50.0f, 0.0f, 0.0f));
 
    PlayerView->establishCamera(Camera, ANGLE(overView, backwardsView), 
          (!!particleLaserFireEngine ? 1 : 0) + ((GameplayManager->getRecovering() > 0 || GameplayManager->JustKilled) ? 2 : 0));
@@ -1329,11 +1351,6 @@ void CGameState::RunVictorySequence(float Elapsed) {
 }
 
 void CGameState::PrepShadow() {
-   renderShadow = new CMeshSceneObject();
-   renderShadow->setMesh(discMesh);
-   renderShadow->setShader(BlackShader);
-
-   Application.getSceneManager().addSceneObject(renderShadow);
 }
 
 void CGameState::PrepBlock(float x, float y, float w, float h) {
