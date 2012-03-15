@@ -519,6 +519,11 @@ void CGameState::oldDisplay() {
          Mix_PlayChannel(-1, jump, 0);
          playJump = false;
       }
+
+      if (!playChargeLaser) {
+         Mix_HaltChannel(aChannel);
+         playChargeLaser = true;
+      }
    }
    else
    {
@@ -585,18 +590,30 @@ void CGameState::oldDisplay() {
    if(particleLaserEngine && !particleLaserEngine->dead) {
       particleLaserEngine->setLookRight(PlayerView->getLookRight());
       particleLaserEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
-      if(GameplayManager->getRecovering() > 0) {
+      if(GameplayManager->getRecovering() > 0) {  //If hit while using the laser, stop?
          lDown = 0;
          PlayerView->setShader(Toon);
          particleLaserEngine->deconstruct();
          delete particleLaserEngine;
          particleLaserEngine = NULL;
+
+         Mix_HaltChannel(aChannel);
       }
-      else {
+      else {  //Keep char
          particleLaserEngine->step(Application.getElapsedTime());
+
+         /*else if (channelTime >= 1500) {
+            aChannel = Mix_PlayChannel(-1, chargeLaser2, 0);
+            Mix_ExpireChannel(aChannel, 1500);
+            channelTime += Application.getElapsedTime();
+         }*/
       }
    }
    if(particleLaserEngine && particleLaserEngine->dead) {
+      if (!playChargeLaser) {
+         playChargeLaser = true;
+         Mix_HaltChannel(aChannel);
+      }
       particleLaserEngine->deconstruct();
       delete particleLaserEngine;
       particleLaserEngine = NULL;
@@ -605,7 +622,7 @@ void CGameState::oldDisplay() {
       GameplayManager->UseAbility(1);
       lDown = 0;
    }
-   if(particleLaserFireEngine && !particleLaserFireEngine->dead) {
+   if(particleLaserFireEngine && !particleLaserFireEngine->dead) {  //Fire ze laser
       Player->setArea(oldMiddle);
       Player->setFallAcceleration(0.0f); //for the screen shaking effect
       particleLaserFireEngine->step(Application.getElapsedTime());
@@ -622,6 +639,7 @@ void CGameState::oldDisplay() {
       delete particleLaserFireEngine;
       particleLaserFireEngine = NULL;
       Player->setImpulse(SVector2((PlayerView->getLookRight()?-1:1)*15.0f, 0.0f), 0.1f);
+      playFireLaser = true;
    }
    PlayerView->Charging = lDown;
 #endif
@@ -802,11 +820,17 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_l && !GameplayManager->isWon()){
          //GameplayManager->setChargingLaser
          if(GameplayManager->getPlayerEnergy() > 0) {
-   if(!particleLaserFireEngine && (!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead))) {
-      particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 2.3f, LASER_CHARGING_PARTICLE);
-   }
-   PlayerView->setShader(ToonBright);
-   lDown = 1;
+            if(!particleLaserFireEngine && (!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead))) {
+               particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 2.3f, LASER_CHARGING_PARTICLE);
+               if (playChargeLaser) { //If making multiple sounds, do here
+                  playChargeLaser = false;
+                  aChannel = Mix_PlayChannel(-1, chargeLaser2, 0);
+                  //Mix_ExpireChannel(aChannel, 1500); //Halt the channel in 1.5 seconds
+                  channelTime += Application.getElapsedTime();
+               }
+            }
+            PlayerView->setShader(ToonBright);
+            lDown = 1;
          }
       }
       if(Event.Key == SDLK_e && !GameplayManager->isWon()) {
@@ -915,6 +939,10 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
             particleLaserEngine = NULL;
          }
          if(Charged) {
+            if (playFireLaser) {
+               playFireLaser = false;
+               Mix_PlayChannel(-1, fireLaser, 0);
+            }
             Charged = 0;
             oldMiddle = Player->getArea();
             Player->setVelocity(SVector2(0.0f));
