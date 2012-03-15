@@ -1018,55 +1018,90 @@ void CGameState::UpdateLeaves() {
 	int curHealth = GameplayManager->getPlayerHealth();
 
 	if (curHealth == 5) {
-		if (prevHealth == 4)
+		if (prevHealth == 4) {
 			Health5->setVisible(true);
+         cabbage5->setVisible(true);
+         cabbage4->setVisible(false);
+      }
 	}
 	else if (curHealth == 4) {
-		if (prevHealth == 5)
+		if (prevHealth == 5) {
 			Health5->setVisible(false);
+         cabbage5->setVisible(false);
+         cabbage4->setVisible(true);
+      }
 		else if (prevHealth == 3) {
 			Health4->setVisible(true);
+         cabbage4->setVisible(true);
+         cabbage3->setVisible(false);
 		}
 	}
 
 	else if (curHealth == 3) {
-		if (prevHealth == 4)
+		if (prevHealth == 4) {
 			Health4->setVisible(false);
-		else if (prevHealth == 2)
+         cabbage4->setVisible(false);
+         cabbage3->setVisible(true);
+      }
+		else if (prevHealth == 2) {
 			Health3->setVisible(true);
+         cabbage3->setVisible(true);
+         cabbage2->setVisible(false);
+      }
 	}
 
 	else if (curHealth == 2) {
-		if (prevHealth == 3)
+		if (prevHealth == 3) {
 			Health3->setVisible(false);
-		else if (prevHealth == 1)
+         cabbage3->setVisible(false);
+         cabbage2->setVisible(true);
+      }
+		else if (prevHealth == 1) {
 			Health2->setVisible(true);
+         cabbage2->setVisible(true);
+         cabbage1->setVisible(false);
+      }
 	}
 
 	else if (curHealth == 1) {
-		if (prevHealth == 2)
+		if (prevHealth == 2) {
 			Health2->setVisible(false);
-		else if (prevHealth == 1)
+         cabbage2->setVisible(false);
+         cabbage1->setVisible(true);
+      }
+		else if (prevHealth == 0) {
 			Health1->setVisible(true);
+         cabbage1->setVisible(false);
+         cabbage0->setVisible(true);
+      }
 	}
 
 	else if (curHealth == 0) {
-		if (prevHealth == 1)
+		if (prevHealth == 1) {
 			Health1->setVisible(false);
+         cabbage1->setVisible(false);
+         cabbage0->setVisible(true);
+      }
 		else if (prevHealth == 2) {
 			Health1->setVisible(false);
 			Health2->setVisible(false);
+         cabbage1->setVisible(false);
+         cabbage0->setVisible(true);
 		}
 		else if (prevHealth == 3) {
 			Health1->setVisible(false);
 			Health2->setVisible(false);
 			Health3->setVisible(false);
+         cabbage3->setVisible(false);
+         cabbage0->setVisible(true);
 		}
 		else if (prevHealth == 4) {
 			Health1->setVisible(false);
 			Health2->setVisible(false);
 			Health3->setVisible(false);
 			Health4->setVisible(false);
+         cabbage4->setVisible(false);
+         cabbage0->setVisible(true);
 		}
 		else if (prevHealth == 5 || prevHealth == 0) {
 			Health1->setVisible(false);
@@ -1074,23 +1109,73 @@ void CGameState::UpdateLeaves() {
 			Health3->setVisible(false);
 			Health4->setVisible(false);
 			Health5->setVisible(false);
+         cabbage5->setVisible(false);
+         cabbage0->setVisible(true);
 		}
 	}
 
    if (GameplayManager->getRecovering() > 0.f) {
       CabbageHurtFace->setVisible(true);
-      damageCabbage->setVisible(true);
+      if (curHealth == 5) {
+         cabbageHurt5->setVisible(true);
+         cabbage5->setVisible(false);
+      }
+      else if (curHealth == 4) {
+         cabbageHurt4->setVisible(true);
+         cabbage4->setVisible(false);
+      }
+      else if (curHealth == 3) {
+         cabbageHurt3->setVisible(true);
+         cabbage3->setVisible(false);
+      }
+      else if (curHealth == 2) {
+         cabbageHurt2->setVisible(true);
+         cabbage2->setVisible(false);
+      }
+      else if (curHealth == 1) {
+         cabbageHurt1->setVisible(true);
+         cabbage1->setVisible(false);
+      }
+      else if (curHealth == 0) {
+         cabbageHurt0->setVisible(true);
+         cabbage0->setVisible(false);
+      }
+      //damageCabbage->setVisible(true);
 
       CabbageFace->setVisible(false);
-      normalCabbage->setVisible(false);
+      //normalCabbage->setVisible(false);
    }
 
    else if (!normalCabbage->isVisible() && curHealth > 0) {
       CabbageHurtFace->setVisible(false);
-      damageCabbage->setVisible(false);
+      if (curHealth == 5) {
+         cabbageHurt5->setVisible(false);
+         cabbage5->setVisible(true);
+      }
+      else if (curHealth == 4) {
+         cabbageHurt4->setVisible(false);
+         cabbage4->setVisible(true);
+      }
+      else if (curHealth == 3) {
+         cabbageHurt3->setVisible(false);
+         cabbage3->setVisible(true);
+      }
+      else if (curHealth == 2) {
+         cabbageHurt2->setVisible(false);
+         cabbage2->setVisible(true);
+      }
+      else if (curHealth == 1) {
+         cabbageHurt1->setVisible(false);
+         cabbage1->setVisible(true);
+      }
+      else if (curHealth == 0) {
+         cabbageHurt0->setVisible(false);
+         cabbage0->setVisible(true);
+      }
+      //damageCabbage->setVisible(false);
 
       CabbageFace->setVisible(true);
-      normalCabbage->setVisible(true);
+      //normalCabbage->setVisible(true);
    }
 
 	prevHealth = curHealth;
@@ -1126,6 +1211,13 @@ void CGameState::UpdateEnergy(float const Elapsed) {
 }
 
 void CGameState::RunVictorySequence(float Elapsed) {
+   cabbage5->setVisible(true);
+   cabbage4->setVisible(false);
+   cabbage3->setVisible(false);
+   cabbage2->setVisible(false);
+   cabbage1->setVisible(false);
+   cabbage0->setVisible(false);
+
    StartWin += Elapsed;
 
 //Fireworks
@@ -1139,7 +1231,7 @@ void CGameState::RunVictorySequence(float Elapsed) {
       glow->step(Elapsed);
 
 //perform cabbage sequence
-   SVector3 curRotation = normalCabbage->getRotation();
+   SVector3 curRotation = cabbage5->getRotation();
    SVector2 curLocation = SVector2 (Player->getArea().getCenter().X - .5f, Player->getArea().getCenter().Y - .5f);
 
    if (StartWin > .00f && StartWin < .07f) {
@@ -1168,7 +1260,7 @@ void CGameState::RunVictorySequence(float Elapsed) {
    }
    else if (StartWin > 1.5f && StartWin < 2.5f) {
       spaceDown = 1;
-      normalCabbage->setRotation(SVector3(curRotation.X + 720.f*Elapsed, 0.f, 0.f));
+      cabbage5->setRotation(SVector3(curRotation.X + 720.f*Elapsed, 0.f, 0.f));
    }
    else if (StartWin > 2.5f && StartWin < 2.9f) {
       spaceDown = 0;
@@ -1177,14 +1269,14 @@ void CGameState::RunVictorySequence(float Elapsed) {
 
    else if (StartWin > 2.9f && StartWin < 3.9f) {
       spaceDown = 1;
-      normalCabbage->setRotation(SVector3(curRotation.X - 360.f*Elapsed, 0.f, 0.f));
+      cabbage5->setRotation(SVector3(curRotation.X - 360.f*Elapsed, 0.f, 0.f));
       Player->setArea(SRect2(curLocation.X - 3.f*Elapsed, curLocation.Y, 1.f, 1.f));
    }
 
    else if (StartWin > 3.8f && StartWin < 3.9f)
       spaceDown = 0;
    else if (StartWin > 3.9f && StartWin < 4.9f) {
-      normalCabbage->setRotation(SVector3(curRotation.X, 0.f, curRotation.Z - 765.f*Elapsed));
+      cabbage5->setRotation(SVector3(curRotation.X, 0.f, curRotation.Z - 765.f*Elapsed));
       Player->setArea(SRect2(curLocation.X - 3.f*Elapsed, curLocation.Y, 1.f, 1.f));
    }
    else if (StartWin > 4.9f && StartWin < 6.4f) {
@@ -1193,7 +1285,7 @@ void CGameState::RunVictorySequence(float Elapsed) {
       }
       spaceDown = 0;
       curScaleY -= .4*Elapsed;
-      normalCabbage->setScale(SVector3(1.f, 1.f, curScaleY));
+      cabbage5->setScale(SVector3(1.f, 1.f, curScaleY));
       //renderWinCabbage->setScale(SVector3(1.f, 1.f, curScaleY));
    }
 
@@ -1214,8 +1306,8 @@ void CGameState::RunVictorySequence(float Elapsed) {
          renderWinCabbage->setRotation(SVector3(-90.f, 0.f, 45.f));
          WinPlayer->setArea(SRect2(curLocation.X, curLocation.Y, 1, 1));
 
-         normalCabbage->setVisible(false);
-         normalCabbage->setCullingEnabled(true);
+         cabbage5->setVisible(false);
+         cabbage5->setCullingEnabled(true);
 
          launch = false;
       }//Damien mark 1
@@ -1393,6 +1485,90 @@ void LoadShaders() {
 
 void Load3DS()
 {
+   mCab5 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_5.3ds");
+   if (mCab5) {
+      mCab5->centerMeshByExtents(SVector3(0));
+      mCab5->calculateNormalsPerFace();
+      mCab5->resizeMesh(SVector3(0.45f));
+   }
+
+   mCab4 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_4.3ds");
+   if (mCab4) {
+      mCab4->centerMeshByExtents(SVector3(0));
+      mCab4->calculateNormalsPerFace();
+      mCab4->resizeMesh(SVector3(0.45f));
+   }
+
+   mCab3 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_3.3ds");
+   if (mCab3) {
+      mCab3->centerMeshByExtents(SVector3(0));
+      mCab3->calculateNormalsPerFace();
+      mCab3->resizeMesh(SVector3(0.45f));
+   }
+
+   mCab2 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_2.3ds");
+   if (mCab2) {
+      mCab2->centerMeshByExtents(SVector3(0));
+      mCab2->calculateNormalsPerFace();
+      mCab2->resizeMesh(SVector3(0.45f));
+   }
+
+   mCab1 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_1.3ds");
+   if (mCab1) {
+      mCab1->centerMeshByExtents(SVector3(0));
+      mCab1->calculateNormalsPerFace();
+      mCab1->resizeMesh(SVector3(0.45f));
+   }
+
+   mCab0 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_0.3ds");
+   if (mCab0) {
+      mCab0->centerMeshByExtents(SVector3(0));
+      mCab0->calculateNormalsPerFace();
+      mCab0->resizeMesh(SVector3(0.45f));
+   }
+
+   mCabOw5 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_ouch_5.3ds");
+   if (mCabOw5) {
+      mCabOw5->centerMeshByExtents(SVector3(0));
+      mCabOw5->calculateNormalsPerFace();
+      mCabOw5->resizeMesh(SVector3(0.45f));
+   }
+
+   mCabOw4 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_ouch_4.3ds");
+   if (mCabOw4) {
+      mCabOw4->centerMeshByExtents(SVector3(0));
+      mCabOw4->calculateNormalsPerFace();
+      mCabOw4->resizeMesh(SVector3(0.85f));
+   }
+
+   mCabOw3 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_ouch_3.3ds");
+   if (mCabOw3) {
+      mCabOw3->centerMeshByExtents(SVector3(0));
+      mCabOw3->calculateNormalsPerFace();
+      mCabOw3->resizeMesh(SVector3(0.85f));
+   }
+
+   mCabOw2 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_ouch_2.3ds");
+   if (mCabOw2) {
+      mCabOw2->centerMeshByExtents(SVector3(0));
+      mCabOw2->calculateNormalsPerFace();
+      mCabOw2->resizeMesh(SVector3(0.85f));
+   }
+
+   mCabOw1 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_ouch_1.3ds");
+   if (mCabOw1) {
+      mCabOw1->centerMeshByExtents(SVector3(0));
+      mCabOw1->calculateNormalsPerFace();
+      mCabOw1->resizeMesh(SVector3(0.85f));
+   }
+
+   mCabOw0 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_ouch_0.3ds");
+   if (mCabOw0) {
+      mCabOw0->centerMeshByExtents(SVector3(0));
+      mCabOw0->calculateNormalsPerFace();
+      mCabOw0->resizeMesh(SVector3(0.45f));
+   }
+
    enemyMesh = CMeshLoader::load3dsMesh("Base/appleEnemy.3ds");
    if(enemyMesh) {
       enemyMesh->resizeMesh(SVector3(1));
@@ -1562,40 +1738,87 @@ void PrepMeshes()
 
 
    cabbage5 = new CMeshSceneObject();
-   cabbage5->setMesh(cabbageMesh);
+   cabbage5->setMesh(mCab5);
    cabbage5->setShader(Toon);
    cabbage5->setCullingEnabled(false);
 
    cabbage4 = new CMeshSceneObject();
-   cabbage4->setMesh(cabbageMesh);
+   cabbage4->setMesh(mCab4);
    cabbage4->setShader(Toon);
    cabbage4->setCullingEnabled(false);
+   cabbage4->setVisible(false);
+
+   cabbage3 = new CMeshSceneObject();
+   cabbage3->setMesh(mCab3);
+   cabbage3->setShader(Toon);
+   cabbage3->setCullingEnabled(false);
+   cabbage3->setVisible(false);
+
+   cabbage2 = new CMeshSceneObject();
+   cabbage2->setMesh(mCab2);
+   cabbage2->setShader(Toon);
+   cabbage2->setCullingEnabled(false);
+   cabbage2->setVisible(false);
+
+   cabbage1 = new CMeshSceneObject();
+   cabbage1->setMesh(mCab1);
+   cabbage1->setShader(Toon);
+   cabbage1->setCullingEnabled(false);
+   cabbage1->setVisible(false);
+
+   cabbage0 = new CMeshSceneObject();
+   cabbage0->setMesh(mCab0);
+   cabbage0->setShader(Toon);
+   cabbage0->setCullingEnabled(false);
+   cabbage0->setVisible(false);
+
+   cabbageHurt5 = new CMeshSceneObject();
+   cabbageHurt5->setMesh(mCabOw5);
+   cabbageHurt5->setShader(Toon);
+   cabbageHurt5->setCullingEnabled(false);
+   cabbageHurt5->setTranslation(SVector3(0.f, 0.f, .2f));
+
+   cabbageHurt4 = new CMeshSceneObject();
+   cabbageHurt4->setMesh(mCabOw4);
+   cabbageHurt4->setShader(Toon);
+   cabbageHurt4->setCullingEnabled(false);
+   cabbageHurt4->setVisible(false);
+   cabbageHurt4->setTranslation(SVector3(0.f, 0.f, .2f));
+
+   cabbageHurt3 = new CMeshSceneObject();
+   cabbageHurt3->setMesh(mCabOw3);
+   cabbageHurt3->setShader(Toon);
+   cabbageHurt3->setCullingEnabled(false);
+   cabbageHurt3->setVisible(false);
+   cabbageHurt3->setTranslation(SVector3(0.f, 0.f, .2f));
+
+   cabbageHurt2 = new CMeshSceneObject();
+   cabbageHurt2->setMesh(mCabOw2);
+   cabbageHurt2->setShader(Toon);
+   cabbageHurt2->setCullingEnabled(false);
+   cabbageHurt2->setVisible(false);
+   cabbageHurt2->setTranslation(SVector3(0.f, 0.f, .2f));
+
+   cabbageHurt1 = new CMeshSceneObject();
+   cabbageHurt1->setMesh(mCabOw1);
+   cabbageHurt1->setShader(Toon);
+   cabbageHurt1->setCullingEnabled(false);
+   cabbageHurt1->setVisible(false);
+   cabbageHurt1->setTranslation(SVector3(0.f, 0.f, .2f));
+
+   cabbageHurt0 = new CMeshSceneObject();
+   cabbageHurt0->setMesh(mCabOw0);
+   cabbageHurt0->setShader(Toon);
+   cabbageHurt0->setCullingEnabled(false);
+   cabbageHurt0->setVisible(false);
+   cabbageHurt0->setTranslation(SVector3(0.f, 0.f, .2f));
 
    normalCabbage = new CMeshSceneObject();
-   normalCabbage->setMesh(cabbageMesh);
+   normalCabbage->setMesh(mCab5);
    normalCabbage->setShader(Toon);
    normalCabbage->setCullingEnabled(false);
-
-   normalCabbage = new CMeshSceneObject();
-   normalCabbage->setMesh(cabbageMesh);
-   normalCabbage->setShader(Toon);
-   normalCabbage->setCullingEnabled(false);
-
-   normalCabbage = new CMeshSceneObject();
-   normalCabbage->setMesh(cabbageMesh);
-   normalCabbage->setShader(Toon);
-   normalCabbage->setCullingEnabled(false);
-
-   normalCabbage = new CMeshSceneObject();
-   normalCabbage->setMesh(cabbageMesh);
-   normalCabbage->setShader(Toon);
-   normalCabbage->setCullingEnabled(false);
-
-
-   normalCabbage = new CMeshSceneObject();
-   normalCabbage->setMesh(cabbageMesh);
-   normalCabbage->setShader(Toon);
-   normalCabbage->setCullingEnabled(false);
+   normalCabbage->setVisible(false);
+   
 
    damageCabbage = new CMeshSceneObject();
    damageCabbage->setMesh(cabbageDamage);
@@ -1612,6 +1835,18 @@ void PrepMeshes()
    playerRenderable->addChild(normalCabbage);
    playerRenderable->addChild(damageCabbage);
    playerRenderable->setVisible(false);
+   playerRenderable->addChild(cabbage5);
+   playerRenderable->addChild(cabbage4);
+   playerRenderable->addChild(cabbage3);
+   playerRenderable->addChild(cabbage2);
+   playerRenderable->addChild(cabbage1);
+   playerRenderable->addChild(cabbage0);
+   playerRenderable->addChild(cabbageHurt5);
+   playerRenderable->addChild(cabbageHurt4);
+   playerRenderable->addChild(cabbageHurt3);
+   playerRenderable->addChild(cabbageHurt2);
+   playerRenderable->addChild(cabbageHurt1);
+   playerRenderable->addChild(cabbageHurt0);
 
    renderFlag = new CMeshSceneObject();
    renderFlag->setMesh(flagMesh);
