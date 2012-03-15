@@ -251,25 +251,30 @@ void CLWIBState::OnRenderStart(float const Elapsed)
        if (enemyType == 1) {
            block2->setText("Placing Orange\n");
            PreviewEnemy->setMesh(orangeMesh);
+           PreviewEnemy->setScale(SVector3(1,1,1));
        }
        if (enemyType == 2) {
            block2->setText("Placing Kiwi\n");
            PreviewEnemy->setMesh(kiwiMesh);
+           PreviewEnemy->setScale(SVector3(1,1,1));
        }
 
        if (enemyType == 3) {
            block2->setText("Placing Grape\n");
            PreviewEnemy->setMesh(cubeMesh);
+           PreviewEnemy->setScale(SVector3(1,1,1));
        }
 
        if (enemyType == 4) {
            block2->setText("Placing Flame\n");
            PreviewEnemy->setMesh(cubeMesh);
+           PreviewEnemy->setScale(SVector3(1,1,1));
        }
 
        if (enemyType == 5) {
            block2->setText("Placing Blade\n");
            PreviewEnemy->setMesh(bladeMesh);
+           PreviewEnemy->setScale(SVector3(2,2,2));
        }
    }
    if (oneDown && !showHelp && !tDown && !twoDown && !threeDown&& !fourDown) {
@@ -874,8 +879,10 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
         tempEnemy->setMesh(cubeMesh);
    if (type == 4)
         tempEnemy->setMesh(cubeMesh);
-   if (type == 5)
+   if (type == 5) {
         tempEnemy->setMesh(bladeMesh);
+        tempEnemy->setScale(SVector3(2,2,2));
+   }
    tempEnemy->setShader(Diffuse);
    tempEnemy->setTranslation(SVector3((x+(x+1))/2, (y+(y+1))/2, 0));
    tempEnemy->setRotation(SVector3(-90, 0, 0));

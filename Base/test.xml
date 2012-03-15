@@ -1,72 +1,407 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
-<CBlock X ="-16" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
-
+<CBlock X ="-25" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-
-<CBlock X ="-15" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
-
+<CBlock X ="-20" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-
-<CBlock X ="-14" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
-
+<CBlock X ="10" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-
-<CBlock X ="-13" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
-
+<CBlock X ="15" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-
-<CBlock X ="-12" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
-
+<CBlock X ="20" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-
-<CBlock X ="-11" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
-
+<CBlock X ="25" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-
-<CBlock X ="-10" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
-
+<CBlock X ="30" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-
-<CBlock X ="-9" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
-
+<CBlock X ="35" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-
-<CBlock X ="-8" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
-
+<CBlock X ="40" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-
-<CBlock X ="-7" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
-
+<CBlock X ="45" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-
-<CBlock X ="-6" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
-
+<CBlock X ="50" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-
-<CBlock X ="-5" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
-
+<CBlock X ="55" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-
-<CBlock X ="-4" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
-
+<CBlock X ="60" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-
-<CBlock X ="-3" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
-
+<CBlock X ="65" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-
-<CCabbage X ="-16" Y ="3" height ="1" width ="1" isMoving ="0">
-
-</CCabbage>
-
-<CFlag X ="-12" Y ="3" height ="1" width ="1" isMoving ="0">
-
+<CBlock X ="70" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="75" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="80" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="85" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="90" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="95" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="100" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="105" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="110" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="115" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="120" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="125" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="130" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="135" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="140" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="145" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="150" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="155" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="160" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="165" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="170" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="175" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="180" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="185" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="190" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="195" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-15" Y ="-4" height ="1" width ="6" depth ="5" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-6" Y ="-4" height ="1" width ="6" depth ="5" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="3" Y ="-4" height ="1" width ="6" depth ="5" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-13" Y ="1" height ="1" width ="2" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-4" Y ="1" height ="1" width ="2" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="5" Y ="1" height ="1" width ="2" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CEnemy X ="-11" Y ="2" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="-10" Y ="2" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="-9" Y ="2" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="-8" Y ="2" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="-7" Y ="2" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="-6" Y ="2" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="0" Y ="2" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="3" Y ="2" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="4" Y ="2" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="8" Y ="2" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="10" Y ="2" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="9" Y ="2" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="11" Y ="2" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="12" Y ="2" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="13" Y ="2" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="20" Y ="0" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="26" Y ="0" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="23" Y ="0" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="30" Y ="0" height ="1" width ="1" type ="0">
+</CEnemy>
+<CBlock X ="35" Y ="0" height ="1" width ="3" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="37" Y ="1" height ="1" width ="3" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="40" Y ="2" height ="1" width ="3" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="43" Y ="3" height ="1" width ="3" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="31" Y ="3" height ="1" width ="3" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="28" Y ="4" height ="1" width ="3" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="34" Y ="6" height ="1" width ="3" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CEnemy X ="30" Y ="5" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="36" Y ="7" height ="1" width ="1" type ="1">
+</CEnemy>
+<CPItem X ="38" Y ="0" texture ="0" isMoving ="0">
+</CPItem>
+<CPItem X ="39" Y ="0" texture ="0" isMoving ="0">
+</CPItem>
+<CPItem X ="40" Y ="0" texture ="0" isMoving ="0">
+</CPItem>
+<CPItem X ="42" Y ="0" texture ="1" isMoving ="0">
+</CPItem>
+<CPItem X ="43" Y ="0" texture ="1" isMoving ="0">
+</CPItem>
+<CPItem X ="44" Y ="0" texture ="1" isMoving ="0">
+</CPItem>
+<CEnemy X ="55" Y ="0" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="56" Y ="0" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="57" Y ="0" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="58" Y ="0" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="59" Y ="0" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="60" Y ="0" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="59" Y ="1" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="58" Y ="1" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="57" Y ="1" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="56" Y ="1" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="57" Y ="2" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="58" Y ="2" height ="1" width ="1" type ="4">
+</CEnemy>
+<CBlock X ="53" Y ="2" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="58" Y ="4" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CEnemy X ="72" Y ="0" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="80" Y ="0" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="76" Y ="4" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="87" Y ="0" height ="1" width ="1" type ="0">
+</CEnemy>
+<CBlock X ="91" Y ="2" height ="1" width ="4" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="98" Y ="0" height ="1" width ="4" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="98" Y ="5" height ="1" width ="4" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="105" Y ="2" height ="1" width ="4" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CEnemy X ="99" Y ="6" height ="1" width ="1" type ="0">
+</CEnemy>
+<CBlock X ="98" Y ="6" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="101" Y ="6" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CPItem X ="100" Y ="6" texture ="0" isMoving ="0">
+</CPItem>
+<CPItem X ="99" Y ="7" texture ="1" isMoving ="0">
+</CPItem>
+<CEnemy X ="100" Y ="4" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="93" Y ="3" height ="1" width ="1" type ="1">
+</CEnemy>
+<CEnemy X ="107" Y ="3" height ="1" width ="1" type ="1">
+</CEnemy>
+<CBlock X ="91" Y ="3" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="105" Y ="3" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="117" Y ="2" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="117" Y ="1" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="117" Y ="0" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="121" Y ="1" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="121" Y ="0" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="125" Y ="0" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="129" Y ="0" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="129" Y ="1" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="133" Y ="0" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="133" Y ="1" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="133" Y ="2" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CEnemy X ="118" Y ="0" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="119" Y ="0" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="120" Y ="0" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="122" Y ="0" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="123" Y ="0" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="124" Y ="0" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="126" Y ="0" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="128" Y ="0" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="127" Y ="0" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="130" Y ="0" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="132" Y ="0" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="131" Y ="0" height ="1" width ="1" type ="4">
+</CEnemy>
+<CBlock X ="142" Y ="2" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="154" Y ="2" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="156" Y ="2" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="158" Y ="2" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="160" Y ="2" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="162" Y ="2" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CPItem X ="169" Y ="0" texture ="0" isMoving ="0">
+</CPItem>
+<CPItem X ="170" Y ="0" texture ="0" isMoving ="0">
+</CPItem>
+<CPItem X ="171" Y ="0" texture ="0" isMoving ="0">
+</CPItem>
+<CEnemy X ="177" Y ="0" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="185" Y ="0" height ="1" width ="1" type ="1">
+</CEnemy>
+<CEnemy X ="181" Y ="3" height ="1" width ="1" type ="2">
+</CEnemy>
+<CBlock X ="181" Y ="0" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CFlag X ="189" Y ="0" height ="1" width ="1" secret ="0" isMoving ="0">
 </CFlag>
-
-<CEnemy X ="-5" Y ="6" height ="1" width ="1" type ="0">
+<CEnemy X ="142" Y ="4" height ="1" width ="1" type ="2">
 </CEnemy>
-<CEnemy X ="-5" Y ="5" height ="1" width ="1" type ="0">
+<CEnemy X ="143" Y ="4" height ="1" width ="1" type ="2">
 </CEnemy>
-<CEnemy X ="-5" Y ="4" height ="1" width ="1" type ="0">
+<CEnemy X ="144" Y ="4" height ="1" width ="1" type ="2">
 </CEnemy>
+<CEnemy X ="145" Y ="4" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="146" Y ="4" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="147" Y ="4" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="148" Y ="4" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="149" Y ="4" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="150" Y ="4" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="151" Y ="4" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="152" Y ="4" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="153" Y ="4" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="154" Y ="4" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="155" Y ="4" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="156" Y ="4" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="157" Y ="4" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="158" Y ="4" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="159" Y ="4" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="160" Y ="4" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="161" Y ="4" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="162" Y ="4" height ="1" width ="1" type ="2">
+</CEnemy>
+<CBlock X ="144" Y ="2" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="146" Y ="2" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="148" Y ="2" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="150" Y ="2" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="152" Y ="2" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CFlag X ="2" Y ="-0" height ="1" width ="1" secret ="0" isMoving ="0">
+</CFlag>
+<CEnemy X ="-4" Y ="-3" height ="1" width ="1" type ="1">
+</CEnemy>
+<CEnemy X ="-5" Y ="-3" height ="1" width ="1" type ="1">
+</CEnemy>
+<CEnemy X ="-6" Y ="-2" height ="1" width ="1" type ="1">
+</CEnemy>
+<CEnemy X ="-3" Y ="-3" height ="1" width ="1" type ="1">
+</CEnemy>
+<CEnemy X ="-2" Y ="-3" height ="1" width ="1" type ="1">
+</CEnemy>
+<CEnemy X ="-1" Y ="-3" height ="1" width ="1" type ="1">
+</CEnemy>
+<CEnemy X ="-1" Y ="-2" height ="1" width ="1" type ="1">
+</CEnemy>
+<CEnemy X ="-2" Y ="-2" height ="1" width ="1" type ="1">
+</CEnemy>
+<CEnemy X ="-3" Y ="-2" height ="1" width ="1" type ="1">
+</CEnemy>
+<CEnemy X ="3" Y ="-3" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="5" Y ="-3" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="4" Y ="-3" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="4" Y ="-2" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="3" Y ="-2" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="4" Y ="-1" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="3" Y ="-1" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="5" Y ="-2" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="6" Y ="-1" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="5" Y ="-1" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="1" Y ="-0" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="-1" Y ="-0" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="-3" Y ="-1" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="0" Y ="1" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="2" Y ="1" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="1" Y ="2" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="1" Y ="1" height ="1" width ="1" type ="0">
+</CEnemy>
+<CCabbage X ="185" Y ="2" height ="1" width ="1" isMoving ="0">
+</CCabbage>
