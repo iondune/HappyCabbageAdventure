@@ -50,6 +50,7 @@ class COverworldState : public CState<COverworldState>
 
    SomeLevel levels [NUM_LEVELS];
    SVector3 cameraPos [NUM_CAMERAS];
+   bool levelsUnlocked;
 
    void LoadShaders();
    void PrepMeshes();
