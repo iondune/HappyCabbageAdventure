@@ -16,7 +16,9 @@ CMesh *basicTreeMesh, *cabbageMesh, *cabbageDamage, *christmasTreeMesh, *cubeMes
 CMeshSceneObject *renderWinCabbage, *renderShadow, *playerRenderable, *normalCabbage, *damageCabbage, *renderChristmasTree,
   *renderBasicTree, *renderBlueFlwr, *renderWhiteFlwr, *renderFicus, *renderFern,
   *tempRender, *renderFlag, *flagLogo, *renderDerp, *renderPurpleFlwr, *renderYellowFlwr,
-  *renderTealFlwr, *renderWhiteSunflwr;
+  *renderTealFlwr, *renderWhiteSunflwr, *cabbage5, *cabbage4, *cabbage3, *cabbage2, 
+  *cabbage1, *cabbage0, *cabbageHurt5, *cabbageHurt4, *cabbageHurt3, *cabbageHurt2,
+  *cabbageHurt1, *cabbageHurt0;
 
 std::vector<CMeshSceneObject*> blocks, enemies, blueFlwrs, whiteFlwrs, ficuses,
   basicTrees, xmasTrees, ferns, tealFlwrs, purpleFlwrs, yellowFlwrs, whiteSunflwrs;

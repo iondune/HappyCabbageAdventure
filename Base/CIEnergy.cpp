@@ -18,7 +18,7 @@ CIEnergy::CIEnergy(float x, float y, float w, float h, CGameplayManager* manager
 //Loads and moves the mesh
 void CIEnergy::loadMesh() {
    Renderable = new CMeshSceneObject();
-   CMesh *mesh = CMeshLoader::load3dsMesh("Base/energyboost.3ds");
+   CMesh *mesh = CMeshLoader::load3dsMesh("Base/water_energy.3ds");
    if(mesh) {
       mesh->resizeMesh(SVector3(1));
       mesh->centerMeshByExtents(SVector3(0));
