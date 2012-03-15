@@ -13,7 +13,7 @@ CMesh *basicTreeMesh, *cabbageMesh, *cabbageDamage, *christmasTreeMesh, *cubeMes
       *blueFlwrMesh, *whiteFlwrMesh, *ficusMesh, *fernMesh, *enemyMesh,
       *flagMesh, *derpMesh, *purpleFlwrMesh, *yellowFlwrMesh, *tealFlwrMesh, *whiteSunflwrMesh;
 
-CMeshSceneObject *renderShadow, *playerRenderable, *normalCabbage, *damageCabbage, *renderChristmasTree,
+CMeshSceneObject *renderWinCabbage, *renderShadow, *playerRenderable, *normalCabbage, *damageCabbage, *renderChristmasTree,
   *renderBasicTree, *renderBlueFlwr, *renderWhiteFlwr, *renderFicus, *renderFern,
   *tempRender, *renderFlag, *flagLogo, *renderDerp, *renderPurpleFlwr, *renderYellowFlwr,
   *renderTealFlwr, *renderWhiteSunflwr;

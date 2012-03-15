@@ -16,7 +16,7 @@ void EngineInit();
 
 using namespace Cabbage::Collider;
 CEngine *Engine;
-CActor *Player, *Derp;
+CActor *Player, *Derp, *WinPlayer;
 CLight * PlayerLight;
 CObject *Floor, *Block, *victoryBlock;
 CPlayerView *PlayerView;
@@ -228,6 +228,14 @@ void CGameState::EngineInit( void ) {
    Player->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
    Player->CanCollideWith |= INTERACTOR_NULL_BLOCK; // Block for procing the physics engine
 
+   WinPlayer = Engine->addActor();
+   WinPlayer->setArea(SRect2(-0.f, 10., 1, 1));
+   WinPlayer->getAttributes().MaxWalk = 3.5f;
+   WinPlayer->CollideableType = COLLIDEABLE_TYPE_PLAYER;
+   WinPlayer->CollideableLevel |= INTERACTOR_SUPERACTORS;
+   WinPlayer->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
+   WinPlayer->CanCollideWith |= INTERACTOR_NULL_BLOCK; // Block for procing the physics engine
+
    Derp = Engine->addActor();
    Derp->setArea(SRect2(-20, 3, 1, 1));
 
@@ -324,7 +332,7 @@ void CGameState::Initialize() {
    prevHealth = 0;
    StartWin = 0.0f;
    curScaleX = curScaleY = 1.f;
-   launch = false;
+   launch = true;
 
    GameEventReceiver = CGameEventReceiver();
    oldFern = false;
@@ -415,6 +423,7 @@ void CGameState::Initialize() {
    Application.getSceneManager().addSceneObject(playerRenderable);
    Application.getSceneManager().addSceneObject(renderFlag);
    Application.getSceneManager().addSceneObject(flagLogo);
+   Application.getSceneManager().addSceneObject(renderWinCabbage);
 
    srand((unsigned int) time(NULL));
 
@@ -1148,38 +1157,37 @@ void CGameState::RunVictorySequence(float Elapsed) {
    }
    else if (StartWin > 4.9f && StartWin < 6.4f) {
       if (!glow) {
-         glow = new CParticleEngine(SVector3(curLocation.X, curLocation.Y, 0), 400, 2.f, LASER_CHARGING_PARTICLE); //Using this improperly.  Get Alden's help
+         glow = new CParticleEngine(SVector3(curLocation.X + .5, curLocation.Y - .25, 0), 400, 2.f, LASER_CHARGING_PARTICLE);
       }
       spaceDown = 0;
       curScaleY -= .4*Elapsed;
       normalCabbage->setScale(SVector3(1.f, 1.f, curScaleY));
+      //renderWinCabbage->setScale(SVector3(1.f, 1.f, curScaleY));
    }
 
    else if (StartWin > 6.9 && StartWin < 7.3f) {
       curScaleY += 1.2*Elapsed;
       curScaleX -= 1.8*Elapsed;
-      normalCabbage->setScale(SVector3(1.f, curScaleX, curScaleY));
-      launch = true;
-   }
 
-   if (launch) {
-      Player->setImpulse(SVector2(0.f, 15.f), 10.f);
-      /*Move player model up without moving screen...*/
-   }
+      renderWinCabbage->setTranslation(SVector3(WinPlayer->getArea().getCenter().X,WinPlayer->getArea().getCenter().Y, 0));
+      WinPlayer->setImpulse(SVector2(0.f, 22.f), 100.f);
 
+      if (launch) {
+         Engine->removeActor(Player);
+         PlayerView->removeFromScene();
 
-//      Player->setArea(SRect2(curLocation.X + 6.f*Elapsed, curLocation.Y, 1.f, 1.f));
-/*   else if (StartWin > .9f) {
-      spaceDown = 0.f;
+         renderWinCabbage->setVisible(true);
+         renderWinCabbage->setCullingEnabled(false);
+         renderWinCabbage->setScale(SVector3(1.75f, 1.75f, 1.75f));
+         renderWinCabbage->setRotation(SVector3(-90.f, 0.f, 45.f));
+         WinPlayer->setArea(SRect2(curLocation.X, curLocation.Y, 1, 1));
 
-      if (curRotation.Z > -20.f) {
-         normalCabbage->setRotation(SVector3(0.f, 0.f, curRotation.Z - 40.f*Elapsed));
-         Player->setArea(SRect2(curLocation.X + 6.f*Elapsed, curLocation.Y, 1.f, 1.f));
+         normalCabbage->setVisible(false);
+         normalCabbage->setCullingEnabled(true);
+
+         launch = false;
       }
-   }*/
-
-
-//Launch the cabbage
+   }
 }
 
 void CGameState::PrepShadow() {
@@ -1509,6 +1517,13 @@ void PrepMeshes()
    renderDerp->setMesh(derpMesh);
    renderDerp->setShader(Toon);
 
+  renderWinCabbage = new CMeshSceneObject();
+  renderWinCabbage->setMesh(cabbageMesh);
+  renderWinCabbage->setShader(Toon);
+  renderWinCabbage->setVisible(false);
+  renderWinCabbage->setCullingEnabled(true);
+
+
    normalCabbage = new CMeshSceneObject();
    normalCabbage->setMesh(cabbageMesh);
    normalCabbage->setShader(Toon);
@@ -1522,6 +1537,8 @@ void PrepMeshes()
    damageCabbage->setRotation(SVector3(0.f, 0.f, 45.f));
    damageCabbage->setTranslation(SVector3(0.f, 0.f, .15f));
    damageCabbage->setCullingEnabled(false);
+
+
 
    playerRenderable = new CMeshSceneObject();
    playerRenderable->addChild(normalCabbage);
