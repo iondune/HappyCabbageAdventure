@@ -117,7 +117,7 @@ void CMainMenuState::begin()
 
    //Sound Setup
    soundInit();
-   setupSoundtrack("BeginningAnew.mp3");
+   setupSoundtrack("BeginningAnew.wav");
    //DOES NOT WORK ON LINUX BECAUSE CAN'T RUN MP3
    startSoundtrack();
 
