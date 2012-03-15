@@ -226,15 +226,15 @@ void CGameState::EngineInit( void ) {
    Player->CollideableType = COLLIDEABLE_TYPE_PLAYER;
    Player->CollideableLevel |= INTERACTOR_SUPERACTORS;
    Player->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
-   Player->CanCollideWith |= INTERACTOR_NULL_BLOCK; // Block for procing the physics engine
+   //Player->CanCollideWith |= INTERACTOR_NULL_BLOCK; // Block for procing the physics engine
 
    WinPlayer = Engine->addActor();
    WinPlayer->setArea(SRect2(-0.f, 10., 1, 1));
    WinPlayer->getAttributes().MaxWalk = 3.5f;
+   WinPlayer->CollideableLevel = 0;
+   WinPlayer->CanCollideWith = 0;
    WinPlayer->CollideableType = COLLIDEABLE_TYPE_PLAYER;
-   WinPlayer->CollideableLevel |= INTERACTOR_SUPERACTORS;
-   WinPlayer->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
-   WinPlayer->CanCollideWith |= INTERACTOR_NULL_BLOCK; // Block for procing the physics engine
+   //WinPlayer->CanCollideWith |= INTERACTOR_NULL_BLOCK; // Block for procing the physics engine
 
    Derp = Engine->addActor();
    Derp->setArea(SRect2(-20, 3, 1, 1));
@@ -881,10 +881,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          NoClipMode = ~NoClipMode;
          if(NoClipMode) {
             Player->CollideableLevel = INTERACTOR_NULL_BLOCK;
-            Player->CanCollideWith &= ~INTERACTOR_SUPERACTORS;
-            Player->CanCollideWith &= ~INTERACTOR_ITEMS;
-            Player->CanCollideWith &= ~INTERACTOR_ACTORS;
-            Player->CanCollideWith &= ~INTERACTOR_BLOCKS;
+            Player->CanCollideWith = INTERACTOR_NULL_BLOCK;
             Player->setControlFall(false);
             Player->setFallAcceleration(0.0f);
             Player->setJumping(false);
@@ -893,8 +890,9 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          }
          else {
             Player->CollideableLevel = INTERACTOR_SUPERACTORS;
-            Player->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS;
-            Player->CanCollideWith &= ~INTERACTOR_SUPERNONCOLLIDERS;
+            Player->CanCollideWith = INTERACTOR_BLOCKS;
+            //Player->CanCollideWith = INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS;
+            //Player->CanCollideWith &= ~INTERACTOR_SUPERNONCOLLIDERS;
             Player->setControlFall(true);
             //Player->Gravity = 100.0f;
          }
@@ -1235,6 +1233,9 @@ void CGameState::RunVictorySequence(float Elapsed) {
    SVector2 curLocation = SVector2 (Player->getArea().getCenter().X - .5f, Player->getArea().getCenter().Y - .5f);
 
    if (StartWin > .00f && StartWin < .07f) {
+   WinPlayer->CollideableLevel |= INTERACTOR_SUPERACTORS;
+   WinPlayer->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
+
       dDown = 0;
       aDown = 0;
    }
@@ -1292,6 +1293,7 @@ void CGameState::RunVictorySequence(float Elapsed) {
    else if (StartWin > 6.9 && StartWin < 7.3f) {
       curScaleY += 1.2*Elapsed;
       curScaleX -= 1.8*Elapsed;
+
 
       renderWinCabbage->setTranslation(SVector3(WinPlayer->getArea().getCenter().X,WinPlayer->getArea().getCenter().Y, 0));
       WinPlayer->setImpulse(SVector2(0.f, 22.f), 100.f);

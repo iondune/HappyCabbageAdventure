@@ -8,8 +8,8 @@ CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabb
    Engine->setCollisionResponder(this);
    NULL_BLOCK = Engine->addObject();
    NULL_BLOCK->setArea(SRect2(-50.f, -50.f, 0.01f, 0.01f));
-   NULL_BLOCK->CollideableLevel = INTERACTOR_ALL_ALL;
-   NULL_BLOCK->CanCollideWith = INTERACTOR_ALL_ALL;
+   NULL_BLOCK->CollideableLevel = INTERACTOR_NULL_BLOCK;
+   NULL_BLOCK->CanCollideWith = 0;
    GameEventManager = new CGameEventManager();
    won = 0;
    GodMode = 0;
