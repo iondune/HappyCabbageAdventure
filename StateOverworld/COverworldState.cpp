@@ -49,9 +49,9 @@ void COverworldState::begin()
 
    SDL_WM_SetCaption("Happy Cabbage Adventure", NULL);
 
-   changex = 0.87f;
-   changey = 0.58f;
-   changez = 1.27f;
+   changex = 0.94f;
+   changey = -0.25f;
+   changez = -0.38f;
 
    //eye = SVector3(1.47f, 0.33f, 0);
    //look = SVector3(0.57f, -0.08f, 0.19f);
@@ -59,11 +59,12 @@ void COverworldState::begin()
    look = levels[curNode].loc;
    Camera = new CPerspectiveCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
    Application.getSceneManager().setActiveCamera(Camera);
-   float const LightBrightness = 0.0f;
+   float const LightBrightness = 2.1f;
    Camera->setPosition(eye);
    Camera->setLookDirection(look - eye);
 
     CSceneManager & SceneManager = Application.getSceneManager();
+
     SceneManager.Lights.push_back(new CLight());
     SceneManager.Lights.back()->Color = SVector3(LightBrightness);
     SceneManager.Lights.back()->Position = SVector3(30.f, 2.f, 3.f);
@@ -102,7 +103,7 @@ void COverworldState::step(float delta) {
 
    if(transitionTimer == 0.0f)
    {
-     camRotValue += 0.5f*delta;
+     //camRotValue += 0.5f*delta;
    }
    else if(transitionTimer < 0.0f )
    { 
@@ -217,27 +218,27 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_i){
         changey += 0.01f;
-        arrowChanger = true;
+        diskChanger = true;
       }
       if(Event.Key == SDLK_k){
         changey -= 0.01f;
-        arrowChanger = true;
+        diskChanger = true;
       }
       if(Event.Key == SDLK_u){
         changex += 0.01f;
-        arrowChanger = true;
+        diskChanger = true;
       }
       if(Event.Key == SDLK_j){
         changex -= 0.01f;
-        arrowChanger = true;
+        diskChanger = true;
       }
       if(Event.Key == SDLK_o){
-        changez += 5.00f;
-        arrowChanger = true;
+        changez += 0.01f;
+        diskChanger = true;
       }
       if(Event.Key == SDLK_l){
-        changez -= 5.00f;
-        arrowChanger = true;
+        changez -= 0.01f;
+        diskChanger = true;
       }
       if(Event.Key == SDLK_p){
          printf("disk coords: %0.2f %0.2f %0.2f\n", changex,changey, changez);
@@ -283,6 +284,8 @@ void COverworldState::loadLevels()
   levels[4].loc = SVector3(0.98f, -0.27f, -0.19f); //Green beach
   levels[5].name = "test.xml";
   levels[5].loc = SVector3(0.94f, -0.25f, -0.38f); //Yellow beach
+  levels[6].name = "test.xml";
+  levels[6].loc = SVector3(0.77f, -0.20f, -0.66f); //Yellow hills
 
   for(int i = 0; i < NUM_LEVELS; i++)
   {
@@ -294,6 +297,7 @@ void COverworldState::setCameraTrans()
 {
   cameraPos[0] = SVector3(0.21f, 0.36f, 1.76f);
   cameraPos[1] = SVector3(1.47f, 0.33f, 0.0f);
+  cameraPos[2] = SVector3(1.11f, 0.45f, -2.16f);
 
 }
 
@@ -326,6 +330,7 @@ void COverworldState::PrepMeshes()
 
    //Set up player renderable
    CMesh *playerMesh = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_5.3ds");
+// CMesh *playerMesh = CMeshLoader::load3dsMesh("Base/crappycabbage2.3ds");
 
    if (playerMesh) {
       playerMesh->resizeMesh(SVector3(0.45f));
@@ -398,12 +403,6 @@ void COverworldState::PrepMeshes()
 
    }
 
-   //levelIcons(SVector3(0.6f, 0.06f, 0.6f), discMesh, 1);
-/*
-   changex = 0.6f;
-   changey = 0.06f;
-   changez = 0.6f;
-   */
 }
 
 void COverworldState::levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor)
@@ -493,6 +492,18 @@ void COverworldState::movePlayer() {
     {
       eyeTarget = cameraPos[1];
       curCamera = 1;
+      shiftSetter(eye, eyeShift, eyeTarget);
+    }
+    else if(curNode == 5 && aDown)
+    {
+      eyeTarget = cameraPos[1];
+      curCamera = 1;
+      shiftSetter(eye, eyeShift, eyeTarget);
+    }
+    else if(curNode == 6 && dDown)
+    {
+      eyeTarget = cameraPos[2];
+      curCamera = 2;
       shiftSetter(eye, eyeShift, eyeTarget);
     }
   }
