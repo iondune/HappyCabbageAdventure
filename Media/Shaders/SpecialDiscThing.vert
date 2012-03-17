@@ -17,7 +17,7 @@ void main()
     const float left = -0.5;
     const float right = 0.5;
     
-    vStart = uProjMatrix * uViewMatrix * uModelMatrix * vec4(left + start * (right - left), aPosition.y, aPosition.z, 1);
-    vCutoff = uProjMatrix * uViewMatrix * uModelMatrix * vec4(left + cutoff * (right - left), aPosition.y, aPosition.z, 1);
+    vStart = (uProjMatrix * uViewMatrix * uModelMatrix * vec4(left + start * (right - left), aPosition.y, aPosition.z, 1)).x;
+    vCutoff = (uProjMatrix * uViewMatrix * uModelMatrix * vec4(left + cutoff * (right - left), aPosition.y, aPosition.z, 1)).x;
     gl_Position = gPosition = uProjMatrix * uViewMatrix * uModelMatrix * vec4(aPosition.x, aPosition.y, aPosition.z, 1);
 }
