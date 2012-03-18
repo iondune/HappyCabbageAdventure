@@ -7,8 +7,8 @@ uniform mat4 uViewMatrix;
 uniform float cutoff;
 uniform float start;
 
-varying float vCutoff;
-varying float vStart;
+varying vec4 vCutoff;
+varying vec4 vStart;
 
 varying vec4 gPosition;
 
