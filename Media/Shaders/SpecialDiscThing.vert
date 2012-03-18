@@ -4,11 +4,8 @@ uniform mat4 uModelMatrix;
 uniform mat4 uProjMatrix;
 uniform mat4 uViewMatrix;
 
-uniform float cutoff;
-uniform float start;
-
-varying vec4 vCutoff;
-varying vec4 vStart;
+uniform float vCutoff;
+uniform float vStart;
 
 varying vec4 gPosition;
 
