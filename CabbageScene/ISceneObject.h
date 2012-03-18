@@ -62,6 +62,7 @@ protected:
 	ISceneObject * Parent;
 
 	bool UseCulling;
+   bool Immobile; // Its transforms will never change after the algorithm has ran
 
 public:
 
@@ -70,6 +71,7 @@ public:
 	void updateAbsoluteTransformation();
 	glm::mat4 const & getAbsoluteTransformation() const;
 
+    void setTreeImmobile(bool value);
     void setTranslation(SVector3 const & translation);
     void setRotation(SVector3 const & rotation);
     void setRotation(glm::mat4 const & matrix);
@@ -110,6 +112,8 @@ public:
 	void setCullingEnabled(bool const culling);
 
 	virtual void load(CScene const * const Scene, ERenderPass const Pass);
+   SVector3 getWorldBoundingBoxMinPoint();
+   SBoundingBox3 getWorldBoundingBox();
 
 };
 

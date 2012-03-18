@@ -11,6 +11,7 @@
 #include <SLine3.h>
 #include <SColor.h>
 #include <SPosition2.h>
+#define THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT 3945210
 
 
 class CLight
@@ -101,11 +102,17 @@ class CSceneManager : public CScene
 
 	SSize2 ScreenSize;
 
+   // Immobile scene objects: to be combined in a hierarchy and culled based on X location 
+	std::vector<ISceneObject *> ImmobileSceneObjects;
+private:
+   ISceneObject* runImmobileObjectsThroughHierarchyAlgorithm();
+
 public:
 
     CSceneManager(SPosition2 const & screenSize);
 
     void addSceneObject(ISceneObject * sceneObject);
+    void addImmobileSceneObject(ISceneObject * sceneObject, unsigned int agreement);
     void removeSceneObject(ISceneObject * sceneObject);
 
     void removeAllSceneObjects();

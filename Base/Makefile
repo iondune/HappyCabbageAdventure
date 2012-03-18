@@ -21,6 +21,12 @@ else
 TARGET=cabbage
 endif
 
+ifeq (${__CYGWIN__},1)
+TARGET=cygwin
+else
+endif
+
+
 all: ${TARGET} 
 
 cabbage: ${OBJECTS} ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCLWIB.a ../lib/libOverworldState.a ../lib/libCabbageParticles.a ../lib/libCabbageGUI.a
@@ -74,3 +80,14 @@ mingw: cabbage.exe
 
 cabbage.exe: ${OBJECTS} ../lib/libCabbageSound.a ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCLWIB.a ../lib/libOverworldState.a ../lib/libCabbageParticles.a ../lib/libCabbageGUI.a
 	$(CC) ${COMPILER_VERSION} `sdl-config --cflags` ${OBJECTS} -DGL_GLEXT_PROTOTYPES ${CABBAGE} ./*.dll -lSDL_mixer -lopengl32 -lglu32 -lglut32 `sdl-config --libs` `freetype-config --libs` -L/lib/ -o $@ -lglew32
+
+
+
+cygwin: cabbage2.exe
+cabbage2.exe: ${OBJECTS} ../lib/libCabbageSound.a ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCLWIB.a ../lib/libOverworldState.a ../lib/libCabbageParticles.a ../lib/libCabbageGUI.a
+	$(CC) ${COMPILER_VERSION} ${OBJECTS} ${CABBAGE} -lSDL_mixer -lGL -lGLU `sdl-config --libs` `freetype-config --libs` -L/lib/ -o $@ -lglew32
+#	$(CC) ${COMPILER_VERSION} `sdl-config --cflags` ${OBJECTS} -DGL_GLEXT_PROTOTYPES ${CABBAGE} ./*.dll -lSDL_mixer -lGL -lGLU `sdl-config --libs` -L/lib/ -o $@ -lglew32
+
+
+
+#LIBS=-lGL -lGLU -L/lib/ -lglew32 `sdl-config --libs`

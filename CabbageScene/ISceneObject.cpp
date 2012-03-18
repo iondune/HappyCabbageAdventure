@@ -9,12 +9,14 @@
 
 
 ISceneObject::ISceneObject()
-    : DebugDataFlags(0), Visible(true), Parent(0), UseCulling(true)
+    : DebugDataFlags(0), Visible(true), Parent(0), UseCulling(true), Immobile(false)
 {}
 
 
 void ISceneObject::updateAbsoluteTransformation()
 {
+   if(Immobile)
+      return;
 	AbsoluteTransformation = Transformation;
 	if (Parent)
 	{
@@ -55,7 +57,6 @@ void ISceneObject::setScale(SVector3 const & scale)
 	Transformation.setScale(scale);
 }
 
-
 void ISceneObject::update()
 {
 	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
@@ -71,7 +72,6 @@ void ISceneObject::draw(CScene const * const scene, ERenderPass const Pass)
 		if (! (* it)->isCulled(scene))
 			(* it)->draw(scene, Pass);
 }
-
 
 SBoundingBox3 const & ISceneObject::getBoundingBox() const
 {
@@ -199,7 +199,7 @@ bool const ISceneObject::isCulled(CScene const * const Scene) const
         glm::vec4 prime = PVM * Center4;
 
         float length = glm::length(glm::vec3(prime.x, prime.y, prime.z));
-        SVector3 v = SVector3(prime.x, prime.y, prime.z) / length;
+        //SVector3 v = SVector3(prime.x, prime.y, prime.z) / length;
         float w = prime.w / length;
         if ((-prime.w < prime.x) && (prime.w > prime.x) &&
             (-prime.w < prime.y) && (prime.w > prime.y) && 
@@ -209,6 +209,27 @@ bool const ISceneObject::isCulled(CScene const * const Scene) const
 
     return true;
 }
+
+SVector3 ISceneObject::getWorldBoundingBoxMinPoint() {
+   SVector3 p = getBoundingBox().MinCorner; 
+   glm::vec4 p4(p.X, p.Y, p.Z, 1.f);
+   glm::vec4 temp = Transformation() * p4; 
+
+   return SVector3(temp.x, temp.y, temp.z);
+}
+
+SBoundingBox3 ISceneObject::getWorldBoundingBox() {
+   SVector3 min = getBoundingBox().MinCorner; 
+   glm::vec4 min4(min.X, min.Y, min.Z, 1.f);
+   glm::vec4 temp = Transformation() * min4; 
+
+   SVector3 max = getBoundingBox().MinCorner; 
+   glm::vec4 max4(max.X, max.Y, max.Z, 1.f);
+   glm::vec4 temp2 = Transformation() * max4; 
+
+   return SBoundingBox3(SVector3(min4.x, min4.y, min4.z), SVector3(max4.x, max4.y, max4.z));
+}
+
 
 bool const ISceneObject::isCullingEnabled() const
 {
@@ -224,4 +245,10 @@ void ISceneObject::load(CScene const * const Scene, ERenderPass const Pass)
 {
 	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
 		(* it)->load(Scene, Pass);
+}
+
+void ISceneObject::setTreeImmobile(bool value) {
+   Immobile = value;
+	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
+		(* it)->setTreeImmobile(value);
 }

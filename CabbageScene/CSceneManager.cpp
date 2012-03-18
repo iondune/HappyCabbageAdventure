@@ -14,41 +14,41 @@ CLight const CScene::NullLight;
 
 
 CScene::CScene()
-   : BindProjMatrix(ProjMatrix), BindViewMatrix(ViewMatrix), BindLightCount(LightCount), UseCulling(true)
+: BindProjMatrix(ProjMatrix), BindViewMatrix(ViewMatrix), BindLightCount(LightCount), UseCulling(true)
 {
-    ActiveCamera = & DefaultCamera;
+   ActiveCamera = & DefaultCamera;
 
-    addUniform("uProjMatrix", & BindProjMatrix);
-    addUniform("uViewMatrix", & BindViewMatrix);
-    addUniform("uLightCount", & BindLightCount);
+   addUniform("uProjMatrix", & BindProjMatrix);
+   addUniform("uViewMatrix", & BindViewMatrix);
+   addUniform("uLightCount", & BindLightCount);
 }
 
 void CScene::addUniform(std::string const & label, IUniform const * uniform)
 {
-    Uniforms[label] = uniform;
+   Uniforms[label] = uniform;
 }
 
 void CScene::removeUniform(std::string const & label)
 {
-    std::map<std::string, IUniform const *>::iterator it = Uniforms.find(label);
+   std::map<std::string, IUniform const *>::iterator it = Uniforms.find(label);
 
-    if (it != Uniforms.end())
-        Uniforms.erase(it);
+   if (it != Uniforms.end())
+      Uniforms.erase(it);
 }
 
 ICamera * const CScene::getActiveCamera()
 {
-    return ActiveCamera;
+   return ActiveCamera;
 }
 
 ICamera const * const CScene::getActiveCamera() const
 {
-    return ActiveCamera;
+   return ActiveCamera;
 }
 
 void CScene::setActiveCamera(ICamera * const activeCamera)
 {
-    ActiveCamera = activeCamera;
+   ActiveCamera = activeCamera;
 }
 
 bool const CScene::isCullingEnabled() const
@@ -64,121 +64,130 @@ void CScene::setCullingEnabled(bool const culling)
 
 unsigned int const digitCount(int n)
 {
-    int count = 1;
-    if (n < 0)
-    {
-        n *= -1;
-        ++ count;
-    }
+   int count = 1;
+   if (n < 0)
+   {
+      n *= -1;
+      ++ count;
+   }
 
-    while (n > 10)
-    {
-        ++ count;
-        n /= 10;
-    }
+   while (n > 10)
+   {
+      ++ count;
+      n /= 10;
+   }
 
-    return count;
+   return count;
 }
 
 IUniform const * CScene::getUniform(std::string const & label) const
 {
-    if (label.substr(0, 8) == "uLights[")
-    {
-        std::stringstream ss(label.substr(8));
-        unsigned int index;
-        ss >> index;
-        std::string remaining = ss.str();
-        remaining = remaining.substr(2 + digitCount(index));
+   if (label.substr(0, 8) == "uLights[")
+   {
+      std::stringstream ss(label.substr(8));
+      unsigned int index;
+      ss >> index;
+      std::string remaining = ss.str();
+      remaining = remaining.substr(2 + digitCount(index));
 
-        if (remaining == "Color")
-        {
-            if (index >= Lights.size())
+      if (remaining == "Color")
+      {
+         if (index >= Lights.size())
             return & NullLight.BindColor;
-            else
-                return & Lights[index]->BindColor;
-        }
-        else if (remaining == "Position")
-        {
-            if (index >= Lights.size())
-                return & NullLight.BindPosition;
-            else
-                return & Lights[index]->BindPosition;
-        }
-    }
+         else
+            return & Lights[index]->BindColor;
+      }
+      else if (remaining == "Position")
+      {
+         if (index >= Lights.size())
+            return & NullLight.BindPosition;
+         else
+            return & Lights[index]->BindPosition;
+      }
+   }
 
-    std::map<std::string, IUniform const *>::const_iterator it = Uniforms.find(label);
+   std::map<std::string, IUniform const *>::const_iterator it = Uniforms.find(label);
 
-    if (it != Uniforms.end())
-        return it->second;
+   if (it != Uniforms.end())
+      return it->second;
 
-    return 0;
+   return 0;
 }
 
 void CScene::update()
 {
-	ActiveCamera->recalculateViewMatrix();
-	ViewMatrix = ActiveCamera->getViewMatrix();
-	ProjMatrix = ActiveCamera->getProjectionMatrix();
+   ActiveCamera->recalculateViewMatrix();
+   ViewMatrix = ActiveCamera->getViewMatrix();
+   ProjMatrix = ActiveCamera->getProjectionMatrix();
 
-	if (LightCount != Lights.size())
-	{
-		SceneChanged = true;
-		LightCount = Lights.size();
-	}
+   if (LightCount != Lights.size())
+   {
+      SceneChanged = true;
+      LightCount = Lights.size();
+   }
 
-	RootObject.updateAbsoluteTransformation();
-	RootObject.update();
+   RootObject.updateAbsoluteTransformation();
+   RootObject.update();
 }
 
 
 GLuint CSceneManager::QuadHandle = 0;
 
 CSceneManager::CSceneManager(SPosition2 const & screenSize)
-	: FinalBlurSize(0.0f), SceneFrameBuffer(0),
-	EffectManager(0), ScreenSize(screenSize)
+: FinalBlurSize(0.0f), SceneFrameBuffer(0),
+   EffectManager(0), ScreenSize(screenSize)
 {
-    CurrentScene = this;
+   CurrentScene = this;
 
-	// Create a simple quad VBO to use for draw operations!
-	if (! QuadHandle)
-	{
-		GLfloat QuadVertices[] = 
-		{
-			-1.0, -1.0,
-			 1.0, -1.0,
-			 1.0,  1.0,
-			-1.0,  1.0
-		};
+   // Create a simple quad VBO to use for draw operations!
+   if (! QuadHandle)
+   {
+      GLfloat QuadVertices[] = 
+      {
+         -1.0, -1.0,
+         1.0, -1.0,
+         1.0,  1.0,
+         -1.0,  1.0
+      };
 
-		glGenBuffers(1, & QuadHandle);
-		glBindBuffer(GL_ARRAY_BUFFER, QuadHandle);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(QuadVertices), QuadVertices, GL_STATIC_DRAW);
-	}
+      glGenBuffers(1, & QuadHandle);
+      glBindBuffer(GL_ARRAY_BUFFER, QuadHandle);
+      glBufferData(GL_ARRAY_BUFFER, sizeof(QuadVertices), QuadVertices, GL_STATIC_DRAW);
+   }
 
 
-	STextureCreationFlags Flags;
-	Flags.MipMaps = false;
-	SceneFrameTexture = new CTexture(ScreenSize, true, Flags);
-	SceneDepthBuffer = new CRenderBufferObject(GL_DEPTH_COMPONENT, ScreenSize);
+   STextureCreationFlags Flags;
+   Flags.MipMaps = false;
+   SceneFrameTexture = new CTexture(ScreenSize, true, Flags);
+   SceneDepthBuffer = new CRenderBufferObject(GL_DEPTH_COMPONENT, ScreenSize);
 
-	SceneFrameBuffer = new CFrameBufferObject();
-	SceneFrameBuffer->attach(SceneDepthBuffer, GL_DEPTH_ATTACHMENT);
-	SceneFrameBuffer->attach(SceneFrameTexture, GL_COLOR_ATTACHMENT0);	
+   SceneFrameBuffer = new CFrameBufferObject();
+   SceneFrameBuffer->attach(SceneDepthBuffer, GL_DEPTH_ATTACHMENT);
+   SceneFrameBuffer->attach(SceneFrameTexture, GL_COLOR_ATTACHMENT0);
 
-	if (! SceneFrameBuffer->isValid())
-		std::cerr << "Failed to make FBO for scene drawing!!!!!!" << std::endl  << std::endl  << std::endl;
-	
-	EffectManager = DefaultManager = new CSceneEffectManager(this);
-	EffectManager->setEffectEnabled(ESE_BLOOM, true);
+   if (! SceneFrameBuffer->isValid())
+      std::cerr << "Failed to make FBO for scene drawing!!!!!!" << std::endl  << std::endl  << std::endl;
 
-	DeferredManager = new CDeferredShadingManager(this);
+   EffectManager = DefaultManager = new CSceneEffectManager(this);
+   EffectManager->setEffectEnabled(ESE_BLOOM, true);
 
-	BlurHorizontal = CShaderLoader::loadShader("FBO/QuadCopyUV.glsl", "BlurH.frag");
+   DeferredManager = new CDeferredShadingManager(this);
+
+   BlurHorizontal = CShaderLoader::loadShader("FBO/QuadCopyUV.glsl", "BlurH.frag");
 }
 
 void CSceneManager::addSceneObject(ISceneObject * sceneObject)
 {
    RootObject.addChild(sceneObject);
+}
+
+void CSceneManager::addImmobileSceneObject(ISceneObject * sceneObject, unsigned int agreement)
+{
+   if(agreement != THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT) {
+      fprintf(stderr, "addImmobileSceneObject failure! The agreement argument was not accepted.\nEntered: %d. Expected: THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT\n", agreement);
+      exit(1);
+   }
+   ImmobileSceneObjects.push_back(sceneObject);   
 }
 
 void CSceneManager::removeSceneObject(ISceneObject * sceneObject)
@@ -191,99 +200,159 @@ void CSceneManager::removeAllSceneObjects()
    RootObject.removeChildren();
 }
 
+bool sortISOXY (ISceneObject* a, ISceneObject* b) {
+   SVector3 av = a->getWorldBoundingBoxMinPoint();
+   SVector3 bv = b->getWorldBoundingBoxMinPoint();
+   if(av.X == bv.X) {
+      return av.Y < bv.Y;
+   }
+   else return av.X < bv.X;
+}
+
+ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
+   float ARBITRARILY_INCREASING_VALUE = 3.0f;
+   float const INF = std::numeric_limits<float>::infinity();
+	std::vector<ISceneObject *> dontUseMyName;
+   // aList is a list of children to be assigned to a parent
+   // bList is a list of parents that were just created
+	std::vector<ISceneObject *> *aList = &ImmobileSceneObjects, *bList = &dontUseMyName;
+
+   // Sort ImmobileSceneObjects by bounding box min X point
+   sort(aList->begin(), aList->end(), sortISOXY);
+   (*aList)[0] = NULL;
+
+   // TODO: Fix the argument for this while loop
+   while(aList->size() != 1) {
+      int j = 0;
+      // From the smallest X to the largest X in aList, do:
+      for(float i = (*aList)[0]->getWorldBoundingBoxMinPoint().X; i <= (*aList)[aList->size()-1]->getWorldBoundingBoxMinPoint().X + ARBITRARILY_INCREASING_VALUE;) {
+         ISceneObject * parentNode = new ISceneObject();
+         parentNode->setBoundingBox(SBoundingBox3(SVector3(i, -INF, -INF), SVector3(i + ARBITRARILY_INCREASING_VALUE, INF, INF)));
+         bList->push_back(parentNode);
+         // TODO: See if I can get away with not setting any transforms for the nodes in the algorithm. Reasoning: if each object has its own transforms, they'll draw correctly, and if the parent has the correct bounding box, it will cull correctly (since its transforms will be 0).
+
+         while(j < aList->size()) {
+            if((*aList)[j]->getWorldBoundingBox().intersects(parentNode->getBoundingBox())) {
+               parentNode->addChild((*aList)[j]);
+               parentNode->getBoundingBox().addInternalPoint((*aList)[j]->getWorldBoundingBox().MinCorner);
+               parentNode->getBoundingBox().addInternalPoint((*aList)[j]->getWorldBoundingBox().MaxCorner);
+               j++;
+               (*aList)[j] = NULL;
+            }
+            else
+               break;
+         }
+         parentNode->getBoundingBox().shrink();
+         i += ARBITRARILY_INCREASING_VALUE;
+      }
+
+      for(int k = 0; k < aList->size(); k++) {
+         assert((*aList)[k] == NULL);
+      }
+
+      ARBITRARILY_INCREASING_VALUE *= 2;
+      aList = bList;
+      bList->clear();
+   }
+   return (*aList)[0];
+}
+
 void CSceneManager::drawAll()
 {
-    CurrentScene->update();
+   if(ImmobileSceneObjects.size() > 0) {
+      RootObject.addChild(runImmobileObjectsThroughHierarchyAlgorithm());
+   }
+   CurrentScene->update();
 
-	if (EffectManager)
-	{
-		for (std::vector<CSceneEffectManager::SRenderPass>::iterator it = EffectManager->RenderPasses.begin(); it != EffectManager->RenderPasses.end(); ++ it)
-		{
-			if (it->Target)
-				it->Target->bind();
-			else
-				glBindFramebuffer(GL_FRAMEBUFFER, 0);
+   if (EffectManager)
+   {
+      for (std::vector<CSceneEffectManager::SRenderPass>::iterator it = EffectManager->RenderPasses.begin(); it != EffectManager->RenderPasses.end(); ++ it)
+      {
+         if (it->Target)
+            it->Target->bind();
+         else
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-			if (it->Pass == ERP_DEFERRED_LIGHTS)
-			{
-				glClearColor(0.f,0.f,0.f,0.f);
-				glDisable(GL_DEPTH_TEST);
+         if (it->Pass == ERP_DEFERRED_LIGHTS)
+         {
+            glClearColor(0.f,0.f,0.f,0.f);
+            glDisable(GL_DEPTH_TEST);
 
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_COLOR);
-			}
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_COLOR);
+         }
 
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-			RootObject.draw(CurrentScene, it->Pass);
+         RootObject.draw(CurrentScene, it->Pass);
 
-			if (it->Pass == ERP_DEFERRED_LIGHTS)
-			{
-				glDisable(GL_BLEND);
-				glEnable(GL_DEPTH_TEST);
-			}
-		}
+         if (it->Pass == ERP_DEFERRED_LIGHTS)
+         {
+            glDisable(GL_BLEND);
+            glEnable(GL_DEPTH_TEST);
+         }
+      }
 
-		EffectManager->apply();
-	}
-	else
-	{
-		SceneFrameBuffer->bind();
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      EffectManager->apply();
+   }
+   else
+   {
+      SceneFrameBuffer->bind();
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		RootObject.draw(CurrentScene, ERP_DEFAULT);
-	}
-	
-	SceneChanged = false;
+      RootObject.draw(CurrentScene, ERP_DEFAULT);
+   }
 
-	SceneFrameBuffer->bind();
+   SceneChanged = false;
+
+   SceneFrameBuffer->bind();
 }
 
 void CSceneManager::blurSceneIn(float seconds, float const RunTime)
 {
-	std::cout << "Blurring in scene..." << std::endl;
-	BlurOutTime = 0;
-	BlurInTime = seconds;
-	CurTime = RunTime;
+   std::cout << "Blurring in scene..." << std::endl;
+   BlurOutTime = 0;
+   BlurInTime = seconds;
+   CurTime = RunTime;
 }
 
 #include <CApplication.h>
 void CSceneManager::endDraw()
 {
-	// Do fade-in
-	if (CurTime == -1.0f)
-		Dim = 1.0f;
+   // Do fade-in
+   if (CurTime == -1.0f)
+      Dim = 1.0f;
 
-	if (BlurInTime > 0.0f)
-	{
-		FinalBlurSize = 0.0f;
-		Dim = std::max(1.0f - (BlurInTime - (CApplication::get().getRunTime() - CurTime))/BlurInTime, 0.0f);
-		if ((CApplication::get().getRunTime() - CurTime) > BlurInTime)
-		{
-			BlurInTime = 0.0f;
-			CurTime = -1.0f;
-		}
-	}
+   if (BlurInTime > 0.0f)
+   {
+      FinalBlurSize = 0.0f;
+      Dim = std::max(1.0f - (BlurInTime - (CApplication::get().getRunTime() - CurTime))/BlurInTime, 0.0f);
+      if ((CApplication::get().getRunTime() - CurTime) > BlurInTime)
+      {
+         BlurInTime = 0.0f;
+         CurTime = -1.0f;
+      }
+   }
 
-	
-	// Draw to screen
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glDisable(GL_DEPTH_TEST);
 
-	// THE FINAL RENDER
-	{
-		CShaderContext Context(* BlurHorizontal);
+   // Draw to screen
+   glBindFramebuffer(GL_FRAMEBUFFER, 0);
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   glDisable(GL_DEPTH_TEST);
 
-		Context.bindTexture("uTexColor", SceneFrameTexture);
-		Context.uniform("BlurSize", FinalBlurSize);
-		Context.uniform("DimAmount", Dim);
-		Context.bindBufferObject("aPosition", QuadHandle, 2);
+   // THE FINAL RENDER
+   {
+      CShaderContext Context(* BlurHorizontal);
 
-		glDrawArrays(GL_QUADS, 0, 4);
-	}
+      Context.bindTexture("uTexColor", SceneFrameTexture);
+      Context.uniform("BlurSize", FinalBlurSize);
+      Context.uniform("DimAmount", Dim);
+      Context.bindBufferObject("aPosition", QuadHandle, 2);
 
-	glEnable(GL_DEPTH_TEST);
+      glDrawArrays(GL_QUADS, 0, 4);
+   }
+
+   glEnable(GL_DEPTH_TEST);
 }
 
 CMeshSceneObject * CSceneManager::addMeshSceneObject(CMesh * Mesh)
@@ -327,62 +396,62 @@ CMeshSceneObject * CSceneManager::addMeshSceneObject(std::string const & Mesh, s
 }
 
 
-	
+
 void CScene::enableDebugData(EDebugData::Domain const type)
 {
-	RootObject.enableDebugData(type);
+   RootObject.enableDebugData(type);
 }
 
 void CScene::disableDebugData(EDebugData::Domain const type)
 {
-	RootObject.disableDebugData(type);
+   RootObject.disableDebugData(type);
 }
 
 
 void CSceneManager::load()
 {
-	RootObject.load(this, ERP_DEFAULT);
+   RootObject.load(this, ERP_DEFAULT);
 }
 
 CFrameBufferObject * CSceneManager::getSceneFrameBuffer()
 {
-	return SceneFrameBuffer;
+   return SceneFrameBuffer;
 }
 
 CTexture * CSceneManager::getSceneFrameTexture()
 {
-	return SceneFrameTexture;
+   return SceneFrameTexture;
 }
 
 CRenderBufferObject * CSceneManager::getSceneDepthBuffer()
 {
-	return SceneDepthBuffer;
+   return SceneDepthBuffer;
 }
 
 CSceneEffectManager * CSceneManager::getEffectManager()
 {
-	return EffectManager;
+   return EffectManager;
 }
 
 void CSceneManager::setEffectManager(CSceneEffectManager * effectManager)
 {
-	EffectManager = effectManager;
+   EffectManager = effectManager;
 }
 
 GLuint const CSceneManager::getQuadHandle()
 {
-	return QuadHandle;
+   return QuadHandle;
 }
 
 SSize2 const & CSceneManager::getScreenSize() const
 {
-	return ScreenSize;
+   return ScreenSize;
 }
 
 void CSceneManager::setDeferred(bool const isDeferred)
 {
-	if (isDeferred)
-		EffectManager = DeferredManager;
-	else
-		EffectManager = DefaultManager;
+   if (isDeferred)
+      EffectManager = DeferredManager;
+   else
+      EffectManager = DefaultManager;
 }

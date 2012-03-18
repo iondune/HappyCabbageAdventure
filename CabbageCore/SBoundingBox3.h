@@ -6,21 +6,30 @@
 
 class SBoundingBox3
 {
+private:
+    // A skeleton point is one that doesn't represent the box, but represents the innermose bounding box this box can be. Used for the spatial data structure
+    SVector3 MinSkeletonPoint, MaxSkeletonPoint;
 
 public:
 
     SVector3 MinCorner, MaxCorner;
 
-    SBoundingBox3()
-    {}
+    SBoundingBox3() :
+       MinSkeletonPoint(std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity()),
+       MaxSkeletonPoint(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity())
+   {}
 
     SBoundingBox3(SVector3 const & min, SVector3 const & max)
-        : MinCorner(min), MaxCorner(max)
-    {}
+       : MinCorner(min), MaxCorner(max),
+       MinSkeletonPoint(std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity()),
+       MaxSkeletonPoint(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity())
+   {}
 
     SBoundingBox3(SVector3 const & v)
-        : MinCorner(v), MaxCorner(v)
-    {}
+       : MinCorner(v), MaxCorner(v), 
+       MinSkeletonPoint(std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity()),
+       MaxSkeletonPoint(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity())
+   {}
 
     SVector3 const getExtent() const
     {
@@ -57,6 +66,35 @@ public:
             MinCorner.Y = v.Y;
         if (v.Z < MinCorner.Z)
             MinCorner.Z = v.Z;
+
+        // Skeleton points just keep track of the smallest/biggest points
+        if (v.X > MaxSkeletonPoint.X)
+            MaxSkeletonPoint.X = v.X;
+        if (v.Y > MaxSkeletonPoint.Y)
+            MaxSkeletonPoint.Y = v.Y;
+        if (v.Z > MaxSkeletonPoint.Z)
+            MaxSkeletonPoint.Z = v.Z;
+
+        if (v.X < MinSkeletonPoint.X)
+            MinSkeletonPoint.X = v.X;
+        if (v.Y < MinSkeletonPoint.Y)
+            MinSkeletonPoint.Y = v.Y;
+        if (v.Z < MinSkeletonPoint.Z)
+            MinSkeletonPoint.Z = v.Z;
+    }
+
+    void shrink() {
+       float const INF = std::numeric_limits<float>::infinity();
+
+       // Make sure at least two points have been placed as internal points before allowing the bounding box to be shrunk
+       assert((MinSkeletonPoint.X != INF && MinSkeletonPoint.Y != INF && MinSkeletonPoint.Z != INF) &&
+             (MaxSkeletonPoint.X != -INF && MaxSkeletonPoint.Y != -INF && MaxSkeletonPoint.Z != -INF));
+       assert(MinSkeletonPoint.X != MaxSkeletonPoint.X &&
+              MinSkeletonPoint.Y != MaxSkeletonPoint.Y && 
+              MinSkeletonPoint.Z != MaxSkeletonPoint.Z);
+       
+       MinCorner = MinSkeletonPoint;
+       MaxCorner = MaxSkeletonPoint;
     }
 
 	void addInternalBox(SBoundingBox3 const & bb)
