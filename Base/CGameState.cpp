@@ -822,7 +822,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
 
 
-      if(Event.Key == SDLK_a && !GameplayManager->isWon()){
+      if((Event.Key == SDLK_a || Event.Key == SDLK_LEFT) && !GameplayManager->isWon()){
          if(moveDown > 0.0f) {
             if(particleDustEngine) {
                particleDustEngine->deconstruct();
@@ -840,7 +840,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          }
          aDown = 1;
       }
-      if(Event.Key == SDLK_d && !GameplayManager->isWon()){
+      if((Event.Key == SDLK_d || Event.Key == SDLK_RIGHT) && !GameplayManager->isWon()){
          if(moveDown > 0.0f) {
             if(particleDustEngine) {
                particleDustEngine->deconstruct();
@@ -953,7 +953,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_s && !GameplayManager->isWon()){
          sDown = 0;
       }
-      if(Event.Key == SDLK_a && !GameplayManager->isWon()){
+      if((Event.Key == SDLK_a || Event.Key == SDLK_LEFT) && !GameplayManager->isWon()){
          if(particleDustEngine) {
             particleDustEngine->deconstruct();
             delete particleDustEngine;
@@ -963,7 +963,7 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          Player->getAttributes().MaxWalk = 3.5f;
          aDown = 0;
       }
-      if(Event.Key == SDLK_d && !GameplayManager->isWon()){
+      if((Event.Key == SDLK_d || Event.Key == SDLK_RIGHT) && !GameplayManager->isWon()){
          if(particleDustEngine) {
             particleDustEngine->deconstruct();
             delete particleDustEngine;

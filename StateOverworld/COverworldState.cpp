@@ -177,11 +177,11 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_s){
          sDown = 1;
       }
-      if(Event.Key == SDLK_a){
+      if(Event.Key == SDLK_a || Event.Key == SDLK_LEFT){
          aDown = 1;
          movePlayer();
       }
-      if(Event.Key == SDLK_d){
+      if(Event.Key == SDLK_d || Event.Key == SDLK_RIGHT){
          dDown = 1;
          movePlayer();
       }
