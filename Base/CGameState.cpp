@@ -799,6 +799,17 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 	if (Event.Key == SDLK_c && !GameplayManager->isWon())
 		CApplication::get().getSceneManager().setCullingEnabled(! Event.Pressed);
 
+	if (Event.Key == SDLK_f && Event.Pressed) {
+      if(fpsText->isVisible()) {
+         fpsText->setVisible(false);
+         fpsText2->setVisible(false);
+      }
+      else {
+         fpsText->setVisible(true);
+         fpsText2->setVisible(true);
+      }
+   }
+
 	if (! Event.Pressed)
 	{
 		if (Event.Key == SDLK_n && !GameplayManager->isWon())
