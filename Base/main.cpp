@@ -21,7 +21,7 @@ int main(int argc, char * argv[])
 {
     CApplication & Application = CApplication::get();
     //Application.init(SPosition2(800, 600));
-    Application.init(SPosition2(1080, 780));
+    Application.init(SPosition2(1200, 900));
 
 	printf("Argc: %d %s\n", argc, argv[1]);
 	if(argc > 1 && strcmp(argv[1], "-l") == 0) {
