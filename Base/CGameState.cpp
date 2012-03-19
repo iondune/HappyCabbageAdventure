@@ -1413,7 +1413,7 @@ void CGameState::PrepSky() {
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
    tempBlock->setTranslation(SVector3(85/*75*/, 13, -5.0));
    tempBlock->setScale(SVector3(250, -50, 1));
-   tempBlock->setCullingEnabled(false);
+   //tempBlock->setCullingEnabled(false);
    Application.getSceneManager().addSceneObject(tempBlock);
 
 }

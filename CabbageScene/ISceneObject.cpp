@@ -187,11 +187,23 @@ SVector3 const & ISceneObject::getScale() const
 
 bool const ISceneObject::isCulled(CScene const * const Scene) const
 {
+	static bool const Inside = false;
+	static bool const Outside = true;
+
     if (! UseCulling || ! Scene->isCullingEnabled())
         return false;
 
     int i = 0;
-    for (int i = 0; i < 8; ++ i) {
+	int in[6], out[6];
+
+	for (int i = 0; i < 6; ++ i) 
+	{
+		in[i] = 0;
+		out[i] = 0;
+	}
+
+    for (int i = 0; i < 8; ++ i) 
+	{
         SVector3 const Center = getBoundingBox().getCorner(i);
         glm::vec4 Center4(Center.X, Center.Y, Center.Z, 1.f);
 
@@ -199,15 +211,47 @@ bool const ISceneObject::isCulled(CScene const * const Scene) const
         glm::vec4 prime = PVM * Center4;
 
         float length = glm::length(glm::vec3(prime.x, prime.y, prime.z));
-        //SVector3 v = SVector3(prime.x, prime.y, prime.z) / length;
-        float w = prime.w / length;
-        if ((-prime.w < prime.x) && (prime.w > prime.x) &&
-            (-prime.w < prime.y) && (prime.w > prime.y) && 
-            (-prime.w < prime.z) && (prime.w > prime.z))
-            return false;
+
+        if (-prime.w < prime.x)
+			in[0] ++;
+		else
+			out[0] ++;
+
+		if (prime.w > prime.x)
+			in[1] ++;
+		else
+			out[1] ++;
+
+        if (-prime.w < prime.y)
+			in[2] ++;
+		else
+			out[2] ++;
+ 
+		if (prime.w > prime.y)
+			in[3] ++;
+		else
+			out[3] ++;
+
+        if (-prime.w < prime.z)
+			in[4] ++;
+		else
+			out[4] ++;
+
+		if (prime.w > prime.z)
+			in[5] ++;
+		else
+			out[5] ++;
     }
 
-    return true;
+	for (int i = 0; i < 6; ++ i) 
+	{
+		if (! in[i])
+			return Outside;
+		else if (out[i])
+			return Inside;
+	}
+
+    return Inside;
 }
 
 SVector3 ISceneObject::getWorldBoundingBoxMinPoint() {
