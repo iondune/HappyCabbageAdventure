@@ -20,7 +20,7 @@ else
 TARGET=cabbage
 endif
 
-all: ${TARGET} 
+all: lib 
 lib: ../lib/libCLWIB.a $(OBJECTS)
 
 ../lib/libCLWIB.a: $(OBJECTS)

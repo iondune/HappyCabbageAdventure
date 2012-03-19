@@ -15,6 +15,7 @@
 #include "CTexture.h"
 #include "CShaderContext.h"
 
+extern int timesCalled, numObjects, numCulled;
 
 class EDebugData
 {
@@ -59,13 +60,17 @@ protected:
     bool Visible;
 
 	std::list<ISceneObject *> Children;
-	ISceneObject * Parent;
+   ISceneObject * Parent;
+
+
 
 	bool UseCulling;
    bool Immobile; // Its transforms will never change after the algorithm has ran
 
 public:
 
+   bool isImmobile();
+   void setImmobile(bool val);
     ISceneObject();
 
 	void updateAbsoluteTransformation();
@@ -79,6 +84,7 @@ public:
 
 	virtual void update();
     virtual void draw(CScene const * const scene, ERenderPass const Pass);
+   int getNumLeaves();
 
     SBoundingBox3 const & getBoundingBox() const;
     SBoundingBox3 & getBoundingBox();

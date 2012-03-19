@@ -17,6 +17,8 @@ void CSceneObject::removeSceneObject(CRenderable * Renderable)
 	Renderables.erase(std::remove(Renderables.begin(), Renderables.end(), Renderable), Renderables.end());
 }
 
+extern int numCulled, numObjects, timesCalled;
+
 void CSceneObject::draw(CScene const * const scene, ERenderPass const Pass)
 {
 	if (! Visible)

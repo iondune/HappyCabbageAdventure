@@ -45,7 +45,8 @@ void drawYellowFlwr(float x, float y, float z, float scale, CApplication app) {
    renderYellowFlwr->setScale(SVector3(scale));
    renderYellowFlwr->setRotation(SVector3(-90, 0, 0));
 
-   app.getSceneManager().addSceneObject(renderYellowFlwr);
+   //app.getSceneManager().addSceneObject(renderYellowFlwr);
+   app.getSceneManager().addImmobileSceneObject(renderYellowFlwr, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
 }
 
 void drawTealFlwr(float x, float y, float z, float scale, CApplication app) {
@@ -64,7 +65,8 @@ void drawTealFlwr(float x, float y, float z, float scale, CApplication app) {
    renderTealFlwr->setScale(SVector3(scale));
    renderTealFlwr->setRotation(SVector3(-90, 0, 0));
 
-   app.getSceneManager().addSceneObject(renderTealFlwr);
+   //app.getSceneManager().addSceneObject(renderTealFlwr);
+   app.getSceneManager().addImmobileSceneObject(renderTealFlwr, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
 }
 
 void drawPurpleFlwr(float x, float y, float z, float scale, CApplication app) {
@@ -83,7 +85,8 @@ void drawPurpleFlwr(float x, float y, float z, float scale, CApplication app) {
    renderPurpleFlwr->setScale(SVector3(scale));
    renderPurpleFlwr->setRotation(SVector3(-90, 0, 0));
 
-   app.getSceneManager().addSceneObject(renderPurpleFlwr);
+   //app.getSceneManager().addSceneObject(renderPurpleFlwr);
+   app.getSceneManager().addImmobileSceneObject(renderPurpleFlwr, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
 }
 
 void drawWhiteSunflwr(float x, float y, float z, float scale, CApplication app) {
@@ -102,7 +105,8 @@ void drawWhiteSunflwr(float x, float y, float z, float scale, CApplication app) 
    renderWhiteSunflwr->setScale(SVector3(scale));
    renderWhiteSunflwr->setRotation(SVector3(-90, 0, 0));
 
-   app.getSceneManager().addSceneObject(renderWhiteSunflwr);
+   //app.getSceneManager().addSceneObject(renderWhiteSunflwr);
+   app.getSceneManager().addImmobileSceneObject(renderWhiteSunflwr, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
 }
 
 void drawBlueFlwr(float x, float y, float z, float scale, CApplication app) {
@@ -121,7 +125,8 @@ void drawBlueFlwr(float x, float y, float z, float scale, CApplication app) {
    renderBlueFlwr->setScale(SVector3(scale));
    renderBlueFlwr->setRotation(SVector3(-90, 0, 0));
 
-   app.getSceneManager().addSceneObject(renderBlueFlwr);
+   //app.getSceneManager().addSceneObject(renderBlueFlwr);
+   app.getSceneManager().addImmobileSceneObject(renderBlueFlwr, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
 }
 
 void drawWhiteFlwr(float x, float y, float z, float scale, CApplication app) {
@@ -140,7 +145,8 @@ void drawWhiteFlwr(float x, float y, float z, float scale, CApplication app) {
    renderWhiteFlwr->setScale(SVector3(scale));
    renderWhiteFlwr->setRotation(SVector3(-90, 0, -80));
 
-   app.getSceneManager().addSceneObject(renderWhiteFlwr);
+   //app.getSceneManager().addSceneObject(renderWhiteFlwr);
+   app.getSceneManager().addImmobileSceneObject(renderWhiteFlwr, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
 }
 
 void drawFern(float x, float y, float z, float scale, CApplication app) {
@@ -159,7 +165,8 @@ void drawFern(float x, float y, float z, float scale, CApplication app) {
    renderFern->setScale(SVector3(scale));
    renderFern->setRotation(SVector3(-90, 0, -115));
 
-   app.getSceneManager().addSceneObject(renderFern);
+   //app.getSceneManager().addSceneObject(renderFern);
+   app.getSceneManager().addImmobileSceneObject(renderFern, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
 }
 
 void drawFicus(float x, float y, float z, float scale, CApplication app) {
@@ -178,7 +185,8 @@ void drawFicus(float x, float y, float z, float scale, CApplication app) {
    renderFicus->setScale(SVector3(scale));
    renderFicus->setRotation(SVector3(-90, 0, 0));
 
-   app.getSceneManager().addSceneObject(renderFicus);
+   //app.getSceneManager().addSceneObject(renderFicus);
+   app.getSceneManager().addImmobileSceneObject(renderFicus, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
 }
 
 void drawBasicTree(float x, float y, float z, float scale, CApplication app) {
@@ -198,7 +206,8 @@ void drawBasicTree(float x, float y, float z, float scale, CApplication app) {
    renderBasicTree->setRotation(SVector3(-90, 0, 0));
    renderBasicTree->setTranslation(SVector3(x, y + scale/4.0f, z));
 
-   app.getSceneManager().addSceneObject(renderBasicTree);
+   //app.getSceneManager().addSceneObject(renderBasicTree);
+   app.getSceneManager().addImmobileSceneObject(renderBasicTree, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
 }
 
 void drawChristmasTree(float x, float y, float z, float scale, CApplication app) {
@@ -217,6 +226,7 @@ void drawChristmasTree(float x, float y, float z, float scale, CApplication app)
    renderChristmasTree->setScale(SVector3(scale));
    renderChristmasTree->setRotation(SVector3(-90, 0, 0));
 
-   app.getSceneManager().addSceneObject(renderChristmasTree);
+   //app.getSceneManager().addSceneObject(renderChristmasTree);
+   app.getSceneManager().addImmobileSceneObject(renderChristmasTree, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
 }
 #endif

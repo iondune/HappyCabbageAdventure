@@ -102,7 +102,14 @@ CMeshSceneObject * CBlock::setupItem(CShader * shader, CShader * dShader, Cabbag
    }
 
    tempBlock->setRotation(SVector3(t==-5?-90.f:0, 0, 0));
-   CApplication::get().getSceneManager().addSceneObject(tempBlock);
+
+   if(isMovingPlatform) {
+      CApplication::get().getSceneManager().addSceneObject(tempBlock);
+   }
+   else {
+      //CApplication::get().getSceneManager().addSceneObject(tempBlock);
+      CApplication::get().getSceneManager().addImmobileSceneObject(tempBlock, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
+   }
 
    return tempBlock;
 }
