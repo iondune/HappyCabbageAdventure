@@ -34,7 +34,7 @@ void EBlade::loadMesh() {
    //Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
    Renderable->setScale(SVector3(2, 2, 2));
 
-   CApplication::get().getSceneManager().addSceneObject(Renderable);
+   CApplication::get().getSceneManager().addImmobileSceneObject(Renderable, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
 }
 
 //Adds actor to engine and preps engine
