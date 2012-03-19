@@ -77,8 +77,10 @@ void ISceneObject::draw(CScene const * const scene, ERenderPass const Pass)
 			(* it)->draw(scene, Pass);
       }
       else {
+         /*
          if((* it)->isImmobile())
             printf("Culled an immobile ISO\n");
+         */
          numCulled++;
       }
    }
@@ -251,12 +253,12 @@ SBoundingBox3 ISceneObject::getWorldBoundingBox() {
       SVector3 min = getBoundingBox().MinCorner; 
       glm::vec4 min4(min.X, min.Y, min.Z, 1.f);
       glm::vec4 temp = Transformation() * min4; 
-      printf("Min: %0.2f %0.2f %0.2f\n", temp.x, temp.y, temp.z);
+      //printf("Min: %0.2f %0.2f %0.2f\n", temp.x, temp.y, temp.z);
 
       SVector3 max = getBoundingBox().MaxCorner; 
       glm::vec4 max4(max.X, max.Y, max.Z, 1.f);
       glm::vec4 temp2 = Transformation() * max4; 
-      printf("Max: %0.2f %0.2f %0.2f\n", temp2.x, temp2.y, temp2.z);
+      //printf("Max: %0.2f %0.2f %0.2f\n", temp2.x, temp2.y, temp2.z);
 
       return SBoundingBox3(SVector3(temp.x, temp.y, temp.z), SVector3(temp2.x, temp2.y, temp2.z));
    }

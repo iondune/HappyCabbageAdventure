@@ -238,7 +238,7 @@ ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
    // TODO: Fix the argument for this while loop
    while(aList->size() != 1) {
       iterations++;
-      printf("~~~~~~~~~~~~ NEW ITERATION (%d) ~~~~~~~~~~~~\n", iterations);
+      //printf("~~~~~~~~~~~~ NEW ITERATION (%d) ~~~~~~~~~~~~\n", iterations);
       int j = 0;
       // From the smallest X to the largest X in aList, do:
       for(float i = (*aList)[0]->getWorldBoundingBoxMinPoint().X; j < aList->size() && i <= (*aList)[aList->size()-1]->getWorldBoundingBoxMinPoint().X + ARBITRARILY_INCREASING_VALUE;) {
@@ -264,7 +264,7 @@ ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
                break;
          }
          if(j == oldJ) {
-            printf("Didn't add. Bounding box: (%0.2f,%0.2f,%0.2f),(%0.2f,%0.2f,%0.2f)\n",
+            /*printf("Didn't add. Bounding box: (%0.2f,%0.2f,%0.2f),(%0.2f,%0.2f,%0.2f)\n",
                   parentNode->getBoundingBox().MinCorner.X,
                   parentNode->getBoundingBox().MinCorner.Y,
                   parentNode->getBoundingBox().MinCorner.Z,
@@ -272,14 +272,15 @@ ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
                   parentNode->getBoundingBox().MaxCorner.Y,
                   parentNode->getBoundingBox().MaxCorner.Z
             );
+            */
          }
          else if(j == oldJ + 1) {
-            printf("Size of children list (should be 1): %d\n", parentNode->getChildren().size());
+            //printf("Size of children list (should be 1): %d\n", parentNode->getChildren().size());
             bList->push_back(parentNode->getChildren().front());
             //bList->push_back(parentNode);
          }
          else {
-            printf("Added a node that contains %d children\n", parentNode->getChildren().size());
+            //printf("Added a node that contains %d children\n", parentNode->getChildren().size());
             parentNode->getBoundingBox().shrink();
             bList->push_back(parentNode);
          }
@@ -293,7 +294,7 @@ ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
       for(int k = 0; k < bList->size(); k++) {
          numChildren += (*bList)[k]->getChildren().size();
       }
-      printf("Num children in bList: %d\n", numChildren);
+      //printf("Num children in bList: %d\n", numChildren);
 
       ARBITRARILY_INCREASING_VALUE = ARBITRARILY_INCREASING_VALUE*ARBITRARILY_INCREASING_VALUE;
       std::vector<ISceneObject *> *cList = aList; 
@@ -303,7 +304,7 @@ ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
    }
    ISceneObject *toReturn = (*aList)[0];
    ImmobileSceneObjects.clear();
-   printf("There are a total of %d leaves.\n", tNumObjects);
+   //printf("There are a total of %d leaves.\n", tNumObjects);
    return toReturn;
 }
 
@@ -317,9 +318,10 @@ void CSceneManager::drawAll()
 
       ISceneObject *toAdd = runImmobileObjectsThroughHierarchyAlgorithm();
       //std::list<ISceneObject *> & toAdd = toAddObj->getChildren();
-      for (std::list<ISceneObject *>::const_iterator it = toAdd->getChildren().begin(); it != toAdd->getChildren().end(); ++ it)
-         RootObject.addChild((*it));
-      printf("There are a total of %d leaves.\n", RootObject.getNumLeaves());
+      RootObject.addChild(toAdd);
+      //for (std::list<ISceneObject *>::const_iterator it = toAdd->getChildren().begin(); it != toAdd->getChildren().end(); ++ it)
+      //   RootObject.addChild((*it));
+      //printf("There are a total of %d leaves.\n", RootObject.getNumLeaves());
    }
    timesCalled = numObjects = numCulled = 0;
    CurrentScene->update();
