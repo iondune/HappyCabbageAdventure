@@ -36,6 +36,7 @@ glm::mat4 const & ISceneObject::getAbsoluteTransformation() const
 
 void ISceneObject::setTranslation(SVector3 const & translation)
 {
+   assert(!Immobile);
 	Translation = translation;
 	Transformation.setTranslation(translation);
 }
@@ -53,6 +54,7 @@ void ISceneObject::setRotation(glm::mat4 const & matrix)
 
 void ISceneObject::setScale(SVector3 const & scale)
 {
+   //assert(!Immobile);
 	Scale = scale;
 	Transformation.setScale(scale);
 }
