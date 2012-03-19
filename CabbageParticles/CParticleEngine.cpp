@@ -211,6 +211,9 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
 
    myObj->setup(positionArr, colorArr, sizeArr, max, textureToUse);
 
+   CApplication::get().getSceneManager().addSceneObject(myObj);
+   /*
+    * Doesn't work when I turn off updating for immobile objects.
    // This makes flame particles fixed in place. If you're going to add a new flame particle after the first frame has been drawn, there might be problems. Talk to Alden.
    if(particleType != FLAME_PARTICLE) {
       CApplication::get().getSceneManager().addSceneObject(myObj);
@@ -218,6 +221,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
    else {
       CApplication::get().getSceneManager().addImmobileSceneObject(myObj, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
    }
+   */
 }
 
 void CParticleEngine::setCenterPos(SVector3 cP) {

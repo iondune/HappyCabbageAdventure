@@ -166,6 +166,7 @@ void CScene::update()
    }
 
    RootObject.updateAbsoluteTransformation();
+   RootObject.thisScene = this;
    RootObject.update();
 }
 
