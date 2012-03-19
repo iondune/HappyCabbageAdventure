@@ -734,6 +734,7 @@ void CGameState::OnRenderStart(float const Elapsed)
    oldDisplay();
 
    Application.getSceneManager().drawAll();
+   printf("Objs culled: %d/%d (called %d times)\n", Application.getSceneManager().getNumCulled(), Application.getSceneManager().getNumObjects(), Application.getSceneManager().getTimesCalled());
    Application.getGUIEngine().drawAll();
 
    //Check if we have beat the level.  If we have, play the victory theme, perform the win animation

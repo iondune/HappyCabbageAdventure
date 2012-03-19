@@ -114,6 +114,21 @@ IUniform const * CScene::getUniform(std::string const & label) const
    return 0;
 }
 
+
+extern int timesCalled;
+int CSceneManager::getTimesCalled() {
+   return timesCalled;
+}
+
+int CSceneManager::getNumObjects() {
+   return RootObject.numObjects;
+}
+
+int CSceneManager::getNumCulled() {
+   return RootObject.numCulled;
+}
+
+
 void CScene::update()
 {
    ActiveCamera->recalculateViewMatrix();
@@ -129,7 +144,6 @@ void CScene::update()
    RootObject.updateAbsoluteTransformation();
    RootObject.update();
 }
-
 
 GLuint CSceneManager::QuadHandle = 0;
 
@@ -262,6 +276,7 @@ void CSceneManager::drawAll()
    if(ImmobileSceneObjects.size() > 0) {
       RootObject.addChild(runImmobileObjectsThroughHierarchyAlgorithm());
    }
+   timesCalled = 0;
    CurrentScene->update();
 
    if (EffectManager)

@@ -142,8 +142,10 @@ public:
 
 	static GLuint const getQuadHandle();
 
-	void setDeferred(bool const isDeferred);
+   void setDeferred(bool const isDeferred);
 
+   int getNumObjects();
+   int getNumCulled();
+   int getTimesCalled();
 };
-
 #endif

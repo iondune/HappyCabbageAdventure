@@ -15,6 +15,8 @@ ISceneObject::ISceneObject()
 
 void ISceneObject::updateAbsoluteTransformation()
 {
+   numCulled = 0;
+   numObjects = 0;
    if(Immobile)
       return;
 	AbsoluteTransformation = Transformation;
@@ -65,14 +67,21 @@ void ISceneObject::update()
 		(* it)->update();
 }
 
+
 void ISceneObject::draw(CScene const * const scene, ERenderPass const Pass)
 {
 	if (! Visible)
 		return;
 
-	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
-		if (! (* it)->isCulled(scene))
+	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it) {
+      numObjects++;
+		if (! (* it)->isCulled(scene)) {
 			(* it)->draw(scene, Pass);
+      }
+      else {
+         numCulled++;
+      }
+   }
 }
 
 SBoundingBox3 const & ISceneObject::getBoundingBox() const
@@ -186,9 +195,11 @@ SVector3 const & ISceneObject::getScale() const
 }
 
 #include "CCamera.h"
+int timesCalled = 0;
 
 bool const ISceneObject::isCulled(CScene const * const Scene) const
 {
+    timesCalled++;
     if (! UseCulling || ! Scene->isCullingEnabled())
         return false;
 

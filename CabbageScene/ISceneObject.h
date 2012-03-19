@@ -15,6 +15,7 @@
 #include "CTexture.h"
 #include "CShaderContext.h"
 
+extern int timesCalled;
 
 class EDebugData
 {
@@ -59,13 +60,16 @@ protected:
     bool Visible;
 
 	std::list<ISceneObject *> Children;
-	ISceneObject * Parent;
+   ISceneObject * Parent;
+
+
 
 	bool UseCulling;
    bool Immobile; // Its transforms will never change after the algorithm has ran
 
 public:
 
+   int numObjects, numCulled;
     ISceneObject();
 
 	void updateAbsoluteTransformation();
