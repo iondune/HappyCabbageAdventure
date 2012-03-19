@@ -55,8 +55,9 @@ protected:
     std::map<std::string, IUniform const *> Uniforms;
 
 	ISceneObject RootObject;
+   ISceneObject *HierarchyObject, *NonHierarchyObject;
 
-	bool UseCulling;
+	bool UseCulling, UseHierarchy;
 
 public:
 
@@ -75,10 +76,14 @@ public:
 
     std::vector<CLight *> Lights;
     bool SceneChanged;
-	
-	bool const isCullingEnabled() const;
-	void setCullingEnabled(bool const culling);
-	
+
+    bool const isCullingEnabled() const;
+    void setCullingEnabled(bool const culling);
+
+    void setUseHierarchy(bool h);
+    bool getUseHierarchy();
+    void toggleUseHierarchy();
+
     void enableDebugData(EDebugData::Domain const type);
     void disableDebugData(EDebugData::Domain const type);
 

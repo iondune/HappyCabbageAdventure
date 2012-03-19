@@ -800,6 +800,11 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 	if (Event.Key == SDLK_c && !GameplayManager->isWon())
 		CApplication::get().getSceneManager().setCullingEnabled(! Event.Pressed);
 
+	if (Event.Key == SDLK_x && Event.Pressed) {
+      CApplication::get().getSceneManager().toggleUseHierarchy();
+      printf("UseHierarchy: %d\n", CApplication::get().getSceneManager().getUseHierarchy());
+   }
+
 	if (Event.Key == SDLK_f && Event.Pressed) {
       if(fpsText->isVisible()) {
          fpsText->setVisible(false);

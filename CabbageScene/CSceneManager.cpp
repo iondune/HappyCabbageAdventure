@@ -14,7 +14,7 @@ CLight const CScene::NullLight;
 
 
 CScene::CScene()
-: BindProjMatrix(ProjMatrix), BindViewMatrix(ViewMatrix), BindLightCount(LightCount), UseCulling(true)
+: BindProjMatrix(ProjMatrix), BindViewMatrix(ViewMatrix), BindLightCount(LightCount), UseCulling(true), HierarchyObject(0), NonHierarchyObject(0), UseHierarchy(true)
 {
    ActiveCamera = & DefaultCamera;
 
@@ -61,6 +61,30 @@ void CScene::setCullingEnabled(bool const culling)
    UseCulling = culling;
 }
 
+void CScene::toggleUseHierarchy() {
+   setUseHierarchy(!UseHierarchy);
+}
+
+bool CScene::getUseHierarchy() {
+   return UseHierarchy;
+}
+
+void CScene::setUseHierarchy(bool h) {
+   if(h != UseHierarchy) {
+      UseHierarchy = h;
+      if(HierarchyObject && NonHierarchyObject) {
+         if(h) {
+            RootObject.removeChild(NonHierarchyObject);
+            RootObject.addChild(HierarchyObject);
+         }
+         else {
+            RootObject.removeChild(HierarchyObject);
+            RootObject.addChild(NonHierarchyObject);
+         }
+         //printf("RootObject #: %d\n", RootObject.getChildren().size());
+      }
+   }
+}
 
 unsigned int const digitCount(int n)
 {
@@ -231,6 +255,12 @@ ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
    // bList is a list of parents that were just created
 	std::vector<ISceneObject *> *aList = &ImmobileSceneObjects, *bList = &dontUseMyName;
 
+   NonHierarchyObject = new ISceneObject();
+   NonHierarchyObject->setCullingEnabled(false);
+   for(int i = 0; i < ImmobileSceneObjects.size(); i++) {
+      NonHierarchyObject->addChild(ImmobileSceneObjects[i]);
+   }
+
    // Sort ImmobileSceneObjects by bounding box min X point
    sort(aList->begin(), aList->end(), sortISOXY);
 
@@ -316,9 +346,9 @@ void CSceneManager::drawAll()
          ImmobileSceneObjects[i]->update();
       }
 
-      ISceneObject *toAdd = runImmobileObjectsThroughHierarchyAlgorithm();
+      HierarchyObject = runImmobileObjectsThroughHierarchyAlgorithm();
       //std::list<ISceneObject *> & toAdd = toAddObj->getChildren();
-      RootObject.addChild(toAdd);
+      RootObject.addChild(HierarchyObject);
       //for (std::list<ISceneObject *>::const_iterator it = toAdd->getChildren().begin(); it != toAdd->getChildren().end(); ++ it)
       //   RootObject.addChild((*it));
       //printf("There are a total of %d leaves.\n", RootObject.getNumLeaves());
