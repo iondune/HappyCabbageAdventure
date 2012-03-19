@@ -12,11 +12,8 @@ ISceneObject::ISceneObject()
     : DebugDataFlags(0), Visible(true), Parent(0), UseCulling(true), Immobile(false)
 {}
 
-
 void ISceneObject::updateAbsoluteTransformation()
 {
-   numCulled = 0;
-   numObjects = 0;
    if(Immobile)
       return;
 	AbsoluteTransformation = Transformation;
@@ -67,6 +64,7 @@ void ISceneObject::update()
 		(* it)->update();
 }
 
+int timesCalled = 0, numObjects = 0, numCulled = 0;
 
 void ISceneObject::draw(CScene const * const scene, ERenderPass const Pass)
 {
@@ -79,6 +77,8 @@ void ISceneObject::draw(CScene const * const scene, ERenderPass const Pass)
 			(* it)->draw(scene, Pass);
       }
       else {
+         if((* it)->isImmobile())
+            printf("Culled an immobile ISO\n");
          numCulled++;
       }
    }
@@ -195,7 +195,6 @@ SVector3 const & ISceneObject::getScale() const
 }
 
 #include "CCamera.h"
-int timesCalled = 0;
 
 bool const ISceneObject::isCulled(CScene const * const Scene) const
 {
@@ -208,7 +207,11 @@ bool const ISceneObject::isCulled(CScene const * const Scene) const
         SVector3 const Center = getBoundingBox().getCorner(i);
         glm::vec4 Center4(Center.X, Center.Y, Center.Z, 1.f);
 
-        glm::mat4 PVM(Scene->getActiveCamera()->getProjectionMatrix()*Scene->getActiveCamera()->getViewMatrix()*Transformation());
+        glm::mat4 PVM;
+        if(!Immobile)
+           PVM = (Scene->getActiveCamera()->getProjectionMatrix()*Scene->getActiveCamera()->getViewMatrix()*Transformation());
+        else
+           PVM = Scene->getActiveCamera()->getProjectionMatrix()*Scene->getActiveCamera()->getViewMatrix()*glm::mat4(1.);
         glm::vec4 prime = PVM * Center4;
 
         float length = glm::length(glm::vec3(prime.x, prime.y, prime.z));
@@ -223,24 +226,42 @@ bool const ISceneObject::isCulled(CScene const * const Scene) const
     return true;
 }
 
-SVector3 ISceneObject::getWorldBoundingBoxMinPoint() {
-   SVector3 p = getBoundingBox().MinCorner; 
-   glm::vec4 p4(p.X, p.Y, p.Z, 1.f);
-   glm::vec4 temp = Transformation() * p4; 
+bool ISceneObject::isImmobile() {
+   return Immobile;
+}
+void ISceneObject::setImmobile(bool val) {
+   Immobile = val;
+}
 
-   return SVector3(temp.x, temp.y, temp.z);
+SVector3 ISceneObject::getWorldBoundingBoxMinPoint() {
+   if(!Immobile) {
+      SVector3 p = getBoundingBox().MinCorner; 
+      glm::vec4 p4(p.X, p.Y, p.Z, 1.f);
+      glm::vec4 temp = Transformation() * p4; 
+
+      //printf("Min: %0.2f %0.2f %0.2f\n", temp.x, temp.y, temp.z);
+      return SVector3(temp.x, temp.y, temp.z);
+   }
+   else
+      return getBoundingBox().MinCorner;
 }
 
 SBoundingBox3 ISceneObject::getWorldBoundingBox() {
-   SVector3 min = getBoundingBox().MinCorner; 
-   glm::vec4 min4(min.X, min.Y, min.Z, 1.f);
-   glm::vec4 temp = Transformation() * min4; 
+   if(!Immobile) {
+      SVector3 min = getBoundingBox().MinCorner; 
+      glm::vec4 min4(min.X, min.Y, min.Z, 1.f);
+      glm::vec4 temp = Transformation() * min4; 
+      printf("Min: %0.2f %0.2f %0.2f\n", temp.x, temp.y, temp.z);
 
-   SVector3 max = getBoundingBox().MinCorner; 
-   glm::vec4 max4(max.X, max.Y, max.Z, 1.f);
-   glm::vec4 temp2 = Transformation() * max4; 
+      SVector3 max = getBoundingBox().MaxCorner; 
+      glm::vec4 max4(max.X, max.Y, max.Z, 1.f);
+      glm::vec4 temp2 = Transformation() * max4; 
+      printf("Max: %0.2f %0.2f %0.2f\n", temp2.x, temp2.y, temp2.z);
 
-   return SBoundingBox3(SVector3(min4.x, min4.y, min4.z), SVector3(max4.x, max4.y, max4.z));
+      return SBoundingBox3(SVector3(temp.x, temp.y, temp.z), SVector3(temp2.x, temp2.y, temp2.z));
+   }
+   else
+      return getBoundingBox();
 }
 
 
@@ -264,4 +285,14 @@ void ISceneObject::setTreeImmobile(bool value) {
    Immobile = value;
 	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
 		(* it)->setTreeImmobile(value);
+}
+
+int ISceneObject::getNumLeaves() {
+   if(Children.size() == 0)
+      return 1;
+   int toRet = 0;
+	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it) {
+      toRet += (* it)->getNumLeaves();
+   }
+   return toRet;
 }

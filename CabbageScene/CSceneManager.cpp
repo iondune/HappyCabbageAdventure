@@ -115,17 +115,17 @@ IUniform const * CScene::getUniform(std::string const & label) const
 }
 
 
-extern int timesCalled;
+extern int timesCalled, numObjects, numCulled;
 int CSceneManager::getTimesCalled() {
    return timesCalled;
 }
 
 int CSceneManager::getNumObjects() {
-   return RootObject.numObjects;
+   return numObjects;
 }
 
 int CSceneManager::getNumCulled() {
-   return RootObject.numCulled;
+   return numCulled;
 }
 
 
@@ -233,50 +233,95 @@ ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
 
    // Sort ImmobileSceneObjects by bounding box min X point
    sort(aList->begin(), aList->end(), sortISOXY);
-   (*aList)[0] = NULL;
 
+   int iterations = 0, tNumObjects = 0;
    // TODO: Fix the argument for this while loop
    while(aList->size() != 1) {
+      iterations++;
+      printf("~~~~~~~~~~~~ NEW ITERATION (%d) ~~~~~~~~~~~~\n", iterations);
       int j = 0;
       // From the smallest X to the largest X in aList, do:
-      for(float i = (*aList)[0]->getWorldBoundingBoxMinPoint().X; i <= (*aList)[aList->size()-1]->getWorldBoundingBoxMinPoint().X + ARBITRARILY_INCREASING_VALUE;) {
+      for(float i = (*aList)[0]->getWorldBoundingBoxMinPoint().X; j < aList->size() && i <= (*aList)[aList->size()-1]->getWorldBoundingBoxMinPoint().X + ARBITRARILY_INCREASING_VALUE;) {
          ISceneObject * parentNode = new ISceneObject();
+         parentNode->setImmobile(true);
          parentNode->setBoundingBox(SBoundingBox3(SVector3(i, -INF, -INF), SVector3(i + ARBITRARILY_INCREASING_VALUE, INF, INF)));
-         bList->push_back(parentNode);
          // TODO: See if I can get away with not setting any transforms for the nodes in the algorithm. Reasoning: if each object has its own transforms, they'll draw correctly, and if the parent has the correct bounding box, it will cull correctly (since its transforms will be 0).
 
+         int oldJ = j;
          while(j < aList->size()) {
             if((*aList)[j]->getWorldBoundingBox().intersects(parentNode->getBoundingBox())) {
+               if(iterations == 1) {
+                  tNumObjects += (*aList)[j]->getNumLeaves();
+               }
+               //(*aList)[j]->setImmobile(true);
                parentNode->addChild((*aList)[j]);
                parentNode->getBoundingBox().addInternalPoint((*aList)[j]->getWorldBoundingBox().MinCorner);
                parentNode->getBoundingBox().addInternalPoint((*aList)[j]->getWorldBoundingBox().MaxCorner);
-               j++;
                (*aList)[j] = NULL;
+               j++;
             }
             else
                break;
          }
-         parentNode->getBoundingBox().shrink();
+         if(j == oldJ) {
+            printf("Didn't add. Bounding box: (%0.2f,%0.2f,%0.2f),(%0.2f,%0.2f,%0.2f)\n",
+                  parentNode->getBoundingBox().MinCorner.X,
+                  parentNode->getBoundingBox().MinCorner.Y,
+                  parentNode->getBoundingBox().MinCorner.Z,
+                  parentNode->getBoundingBox().MaxCorner.X,
+                  parentNode->getBoundingBox().MaxCorner.Y,
+                  parentNode->getBoundingBox().MaxCorner.Z
+            );
+         }
+         else if(j == oldJ + 1) {
+            printf("Size of children list (should be 1): %d\n", parentNode->getChildren().size());
+            bList->push_back(parentNode->getChildren().front());
+            //bList->push_back(parentNode);
+         }
+         else {
+            printf("Added a node that contains %d children\n", parentNode->getChildren().size());
+            parentNode->getBoundingBox().shrink();
+            bList->push_back(parentNode);
+         }
          i += ARBITRARILY_INCREASING_VALUE;
       }
 
       for(int k = 0; k < aList->size(); k++) {
          assert((*aList)[k] == NULL);
       }
+      int numChildren = 0;
+      for(int k = 0; k < bList->size(); k++) {
+         numChildren += (*bList)[k]->getChildren().size();
+      }
+      printf("Num children in bList: %d\n", numChildren);
 
-      ARBITRARILY_INCREASING_VALUE *= 2;
+      ARBITRARILY_INCREASING_VALUE = ARBITRARILY_INCREASING_VALUE*ARBITRARILY_INCREASING_VALUE;
+      std::vector<ISceneObject *> *cList = aList; 
       aList = bList;
+      bList = cList;
       bList->clear();
    }
-   return (*aList)[0];
+   ISceneObject *toReturn = (*aList)[0];
+   ImmobileSceneObjects.clear();
+   printf("There are a total of %d leaves.\n", tNumObjects);
+   return toReturn;
 }
 
 void CSceneManager::drawAll()
 {
    if(ImmobileSceneObjects.size() > 0) {
-      RootObject.addChild(runImmobileObjectsThroughHierarchyAlgorithm());
+      for(int i = 0; i < ImmobileSceneObjects.size(); i++) {
+         ImmobileSceneObjects[i]->updateAbsoluteTransformation();
+         ImmobileSceneObjects[i]->update();
+      }
+
+      ISceneObject *toAdd = runImmobileObjectsThroughHierarchyAlgorithm();
+      //std::list<ISceneObject *> & toAdd = toAddObj->getChildren();
+      for (std::list<ISceneObject *>::const_iterator it = toAdd->getChildren().begin(); it != toAdd->getChildren().end(); ++ it)
+         RootObject.addChild((*it));
+      printf("There are a total of %d leaves.\n", RootObject.getNumLeaves());
    }
-   timesCalled = 0;
+   timesCalled = numObjects = numCulled = 0;
    CurrentScene->update();
 
    if (EffectManager)

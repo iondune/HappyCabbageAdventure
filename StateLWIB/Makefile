@@ -4,7 +4,7 @@ OBJECTS=$(SOURCES:%.cpp=%.o)
 CABBAGE=-L../lib/ -lCabbageCollider -lCabbageFramework -lCabbageScene
 COMPILER_VERSION=-std=c++0x
 INCLUDE = -I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI
-CC=g++ -O1 -s 
+CC=g++ -g 
 
 #Chris Code.  Adding check for 32 or 64 bit
 LBITS:=$(shell getconf LONG_BIT)
@@ -20,7 +20,7 @@ else
 TARGET=cabbage
 endif
 
-all: ${TARGET} 
+all: lib 
 lib: ../lib/libCLWIB.a $(OBJECTS)
 
 ../lib/libCLWIB.a: $(OBJECTS)

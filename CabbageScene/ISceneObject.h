@@ -15,7 +15,7 @@
 #include "CTexture.h"
 #include "CShaderContext.h"
 
-extern int timesCalled;
+extern int timesCalled, numObjects, numCulled;
 
 class EDebugData
 {
@@ -69,7 +69,8 @@ protected:
 
 public:
 
-   int numObjects, numCulled;
+   bool isImmobile();
+   void setImmobile(bool val);
     ISceneObject();
 
 	void updateAbsoluteTransformation();
@@ -83,6 +84,7 @@ public:
 
 	virtual void update();
     virtual void draw(CScene const * const scene, ERenderPass const Pass);
+   int getNumLeaves();
 
     SBoundingBox3 const & getBoundingBox() const;
     SBoundingBox3 & getBoundingBox();
