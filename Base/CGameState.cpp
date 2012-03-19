@@ -334,10 +334,6 @@ void CGameState::LoadHUD() {
 	CabbageMeter = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/EnergyBarBottom.tga"), SVector2(.47f, .1f));
 	CabbageMeter->setPosition(SVector2(.02f, .78f));
 
-	//CabbageFace = new CGUIImageWidget(CImageLoader::loadTGAImage("../Media/cabbage.tga"), SVector2(.15f, .15f));
-	//CabbageFace->setPosition(SVector2(.02f, .9f));
-
-
 	//Application.getGUIEngine().addWidget(CabbageFace);
 	Application.getGUIEngine().addWidget(Health1);
 	Application.getGUIEngine().addWidget(Health2);
@@ -1194,6 +1190,8 @@ void CGameState::UpdateLeaves() {
 
    if (GameplayManager->getRecovering() > 0.f) {
       CabbageHurtFace->setVisible(true);
+      CabbageFace->setVisible(false);
+
       if (curHealth == 5) {
          cabbageHurt5->setVisible(true);
          cabbage5->setVisible(false);
@@ -1218,44 +1216,34 @@ void CGameState::UpdateLeaves() {
          cabbageHurt0->setVisible(true);
          cabbage0->setVisible(false);
       }
-      //damageCabbage->setVisible(true);
-
-      CabbageFace->setVisible(false);
-      //normalCabbage->setVisible(false);
    }
 
-   else if ((!cabbage5->isVisible() || !cabbage4->isVisible() ||
-	         !cabbage3->isVisible() || !cabbage2->isVisible() ||
-			 !cabbage1->isVisible() || !cabbage0->isVisible()) && curHealth > 0) {
-      CabbageHurtFace->setVisible(false);
-      if (curHealth == 5) {
-         cabbageHurt5->setVisible(false);
-         cabbage5->setVisible(true);
-      }
-      else if (curHealth == 4) {
-         cabbageHurt4->setVisible(false);
-         cabbage4->setVisible(true);
-      }
-      else if (curHealth == 3) {
-         cabbageHurt3->setVisible(false);
-         cabbage3->setVisible(true);
-      }
-      else if (curHealth == 2) {
-         cabbageHurt2->setVisible(false);
-         cabbage2->setVisible(true);
-      }
-      else if (curHealth == 1) {
-         cabbageHurt1->setVisible(false);
-         cabbage1->setVisible(true);
-      }
-      else if (curHealth == 0) {
-         cabbageHurt0->setVisible(false);
-         cabbage0->setVisible(true);
-      }
-      //damageCabbage->setVisible(false);
+   else if ((cabbageHurt5->isVisible() || cabbageHurt4->isVisible() ||
+	         cabbageHurt3->isVisible() || cabbageHurt2->isVisible() ||
+	         cabbageHurt1->isVisible() || cabbageHurt0->isVisible()) && curHealth > 0) {
 
+      CabbageHurtFace->setVisible(false);
       CabbageFace->setVisible(true);
-      //normalCabbage->setVisible(true);
+
+      if (curHealth == 5)
+         cabbage5->setVisible(true);
+      else if (curHealth == 4)
+         cabbage4->setVisible(true);
+      else if (curHealth == 3)
+         cabbage3->setVisible(true);
+      else if (curHealth == 2)
+         cabbage2->setVisible(true);
+      else if (curHealth == 1)
+         cabbage1->setVisible(true);
+      else if (curHealth == 0)
+         cabbage0->setVisible(true);
+
+      cabbageHurt5->setVisible(false);
+      cabbageHurt4->setVisible(false);
+      cabbageHurt3->setVisible(false);
+      cabbageHurt2->setVisible(false);
+      cabbageHurt1->setVisible(false);
+      cabbageHurt0->setVisible(false);
    }
 
 	prevHealth = curHealth;
