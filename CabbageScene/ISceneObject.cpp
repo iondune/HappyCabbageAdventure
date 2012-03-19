@@ -60,6 +60,8 @@ void ISceneObject::setScale(SVector3 const & scale)
 
 void ISceneObject::update()
 {
+   if(Immobile)
+      return;
 	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
 		(* it)->update();
 }
