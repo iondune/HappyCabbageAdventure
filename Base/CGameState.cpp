@@ -413,11 +413,25 @@ void CGameState::Initialize() {
    LivesText2->setPosition(SVector2(0.1385f, 0.872f));
    LivesText2->setColor(SColor(0.0f, 0.0f, 0.0f));
 
+   fpsText = new CGUIFontWidget("WIFFLES_.TTF", 15.f);
+   fpsText->setText("FPS: ");
+   fpsText->setVisible(true);
+   fpsText->setPosition(SVector2((float)WindowWidth/(float)WindowHeight - 0.1f, 0.98f));
+   fpsText->setColor(SColor(1.0f, 1.0f, 1.0f));
+
+   fpsText2 = new CGUIFontWidget("WIFFLES_.TTF", 15.f);
+   fpsText2->setText("FPS: ");
+   fpsText2->setVisible(true);
+   fpsText2->setPosition(SVector2((float)WindowWidth/(float)WindowHeight - 0.1f, 0.978f));
+   fpsText2->setColor(SColor(0.0f, 0.0f, 0.0f));
+
    Application.getGUIEngine().addWidget(GameWinText);
    Application.getGUIEngine().addWidget(GameOverText);
    Application.getGUIEngine().addWidget(RestartGameText);
    Application.getGUIEngine().addWidget(LivesText2);
    Application.getGUIEngine().addWidget(LivesText);
+   Application.getGUIEngine().addWidget(fpsText2);
+   Application.getGUIEngine().addWidget(fpsText);
 
    Camera = new CPerspectiveCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
    Application.getSceneManager().setActiveCamera(Camera);
@@ -754,6 +768,10 @@ void CGameState::OnRenderStart(float const Elapsed)
    numFrames++;
    if(timeTotal >= 0.1) {
       fps = numFrames / timeTotal;
+      char buf[15];
+      sprintf(buf, "FPS: %0.0f\n", fps);
+      fpsText->setText(buf);
+      fpsText2->setText(buf);
       timeTotal = 0;
       numFrames = 0;
    }
