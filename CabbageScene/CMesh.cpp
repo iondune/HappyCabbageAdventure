@@ -200,6 +200,39 @@ void CMesh::calculateNormalsPerVertex(bool CombineNear, float const NearToleranc
 			it->Normal.normalize();
 }
 
+
+void CMesh::calculateTextureCoordinates(SVector3 const uVec, SVector3 const vVec)
+{
+	SVector3 Min(std::numeric_limits<float>::max()), Max(-std::numeric_limits<float>::max());
+    {
+        for (std::vector<SMeshBuffer *>::const_iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
+        for (std::vector<SVertex>::const_iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
+        {
+            if (Min.X > it->Position.X)
+                Min.X = it->Position.X;
+            if (Min.Y > it->Position.Y)
+                Min.Y = it->Position.Y;
+            if (Min.Z > it->Position.Z)
+                Min.Z = it->Position.Z;
+
+            if (Max.X < it->Position.X)
+                Max.X = it->Position.X;
+            if (Max.Y < it->Position.Y)
+                Max.Y = it->Position.Y;
+            if (Max.Z < it->Position.Z)
+                Max.Z = it->Position.Z;
+        }
+    }
+
+    for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
+    for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
+    {
+		SVector3 const RelativePosition = (it->Position - Min) / (Max - Min);
+		it->TextureCoordinates = SVector2((RelativePosition * uVec.getNormalized()).length(),
+			(RelativePosition * vVec.getNormalized()).length());
+	}
+}
+
 void CMesh::updateBuffers()
 {
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)

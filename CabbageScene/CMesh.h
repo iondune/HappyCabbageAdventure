@@ -52,6 +52,7 @@ public:
 
     void calculateNormalsPerFace();
     void calculateNormalsPerVertex(bool CombineNear = true, float const NearTolerance = 0.01f);
+	void calculateTextureCoordinates(SVector3 const uVec, SVector3 const vVec);
 
     void updateBuffers();
 
