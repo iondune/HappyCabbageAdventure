@@ -64,5 +64,7 @@ class CGameState : public CState<CGameState>
    void GeneratePlants(float x, float y, float w, float h, float d);
    CMeshSceneObject* PrepEnemy(float x, float y);
    void RunVictorySequence(float Elapsed);
+
+   void setLodLevel(int const level);
 };
 #endif

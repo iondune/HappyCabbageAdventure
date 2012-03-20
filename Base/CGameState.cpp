@@ -1427,6 +1427,15 @@ void CGameState::PrepGrass(float x, float y, float w, float h) {
 
 }
 
+void CGameState::setLodLevel(int const level)
+{
+	for (int i = 0; i < 2; ++ i)
+	{
+		for (int t = 0; t < LODObjects[i].size(); ++ t)
+			LODObjects[i][t]->setVisible(i == level);
+	}
+}
+
 void CGameState::PrepSky() {
    CMeshSceneObject *tempBlock;
    blocks.push_back(tempBlock = new CMeshSceneObject());
@@ -1570,97 +1579,100 @@ void LoadShaders() {
 
 void Load3DS()
 {
-   mCab5 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_5.3ds");
-   if (mCab5) {
-      mCab5->centerMeshByExtents(SVector3(0));
-      mCab5->calculateNormalsPerFace();
-      mCab5->resizeMesh(SVector3(0.45f));
-   }
+	for (int i = 0; i < 2; ++ i)
+	{
+		std::string const extension = (i ? "_simple.3ds" : ".3ds");
+		mCab5[i] = CMeshLoader::load3dsMesh(std::string("Base/cabbage/cabbage_5") + extension);
+		if (mCab5[i]) {
+			mCab5[i]->centerMeshByExtents(SVector3(0));
+			mCab5[i]->calculateNormalsPerFace();
+			mCab5[i]->resizeMesh(SVector3(0.45f));
+		}
 
-   mCab4 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_4.3ds");
-   if (mCab4) {
-      mCab4->centerMeshByExtents(SVector3(0));
-      mCab4->calculateNormalsPerFace();
-      mCab4->resizeMesh(SVector3(0.45f));
-   }
+		mCab4[i] = CMeshLoader::load3dsMesh(std::string("Base/cabbage/cabbage_4") + extension);
+		if (mCab4[i]) {
+			mCab4[i]->centerMeshByExtents(SVector3(0));
+			mCab4[i]->calculateNormalsPerFace();
+			mCab4[i]->resizeMesh(SVector3(0.45f));
+		}
 
-   mCab3 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_3.3ds");
-   if (mCab3) {
-      mCab3->centerMeshByExtents(SVector3(0));
-      mCab3->calculateNormalsPerFace();
-      mCab3->resizeMesh(SVector3(0.45f));
-   }
+		mCab3[i] = CMeshLoader::load3dsMesh(std::string("Base/cabbage/cabbage_3") + extension);
+		if (mCab3[i]) {
+			mCab3[i]->centerMeshByExtents(SVector3(0));
+			mCab3[i]->calculateNormalsPerFace();
+			mCab3[i]->resizeMesh(SVector3(0.45f));
+		}
 
-   mCab2 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_2.3ds");
-   if (mCab2) {
-      mCab2->centerMeshByExtents(SVector3(0));
-      mCab2->calculateNormalsPerFace();
-      mCab2->resizeMesh(SVector3(0.45f));
-   }
+		mCab2[i] = CMeshLoader::load3dsMesh(std::string("Base/cabbage/cabbage_2") + extension);
+		if (mCab2[i]) {
+			mCab2[i]->centerMeshByExtents(SVector3(0));
+			mCab2[i]->calculateNormalsPerFace();
+			mCab2[i]->resizeMesh(SVector3(0.45f));
+		}
 
-   mCab1 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_1.3ds");
-   if (mCab1) {
-      mCab1->centerMeshByExtents(SVector3(0));
-      mCab1->calculateNormalsPerFace();
-      mCab1->resizeMesh(SVector3(0.45f));
-   }
+		mCab1[i] = CMeshLoader::load3dsMesh(std::string("Base/cabbage/cabbage_1") + extension);
+		if (mCab1[i]) {
+			mCab1[i]->centerMeshByExtents(SVector3(0));
+			mCab1[i]->calculateNormalsPerFace();
+			mCab1[i]->resizeMesh(SVector3(0.45f));
+		}
 
-   mCab0 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_0.3ds");
-   if (mCab0) {
-      mCab0->centerMeshByExtents(SVector3(0));
-      mCab0->calculateNormalsPerFace();
-      mCab0->resizeMesh(SVector3(0.45f));
-   }
+		mCab0[i] = CMeshLoader::load3dsMesh(std::string("Base/cabbage/cabbage_0") + extension);
+		if (mCab0[i]) {
+			mCab0[i]->centerMeshByExtents(SVector3(0));
+			mCab0[i]->calculateNormalsPerFace();
+			mCab0[i]->resizeMesh(SVector3(0.45f));
+		}
 
-   mCabOw5 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_ouch_5.3ds");
-   if (mCabOw5) {
-      mCabOw5->centerMeshByExtents(SVector3(0));
-      mCabOw5->calculateNormalsPerFace();
-      mCabOw5->resizeMesh(SVector3(0.45f));
-   }
+		mCabOw5[i] = CMeshLoader::load3dsMesh(std::string("Base/cabbage/cabbage_ouch_5") + extension);
+		if (mCabOw5[i]) {
+			mCabOw5[i]->centerMeshByExtents(SVector3(0));
+			mCabOw5[i]->calculateNormalsPerFace();
+			mCabOw5[i]->resizeMesh(SVector3(0.45f));
+		}
 
-   mCabOw4 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_ouch_4.3ds");
-   if (mCabOw4) {
-      mCabOw4->centerMeshByExtents(SVector3(0));
-      mCabOw4->calculateNormalsPerFace();
-      mCabOw4->resizeMesh(SVector3(0.85f));
-   }
+		mCabOw4[i] = CMeshLoader::load3dsMesh(std::string("Base/cabbage/cabbage_ouch_4") + extension);
+		if (mCabOw4[i]) {
+			mCabOw4[i]->centerMeshByExtents(SVector3(0));
+			mCabOw4[i]->calculateNormalsPerFace();
+			mCabOw4[i]->resizeMesh(SVector3(0.85f));
+		}
 
-   mCabOw3 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_ouch_3.3ds");
-   if (mCabOw3) {
-      mCabOw3->centerMeshByExtents(SVector3(0));
-      mCabOw3->calculateNormalsPerFace();
-      mCabOw3->resizeMesh(SVector3(0.85f));
-   }
+		mCabOw3[i] = CMeshLoader::load3dsMesh(std::string("Base/cabbage/cabbage_ouch_3") + extension);
+		if (mCabOw3[i]) {
+			mCabOw3[i]->centerMeshByExtents(SVector3(0));
+			mCabOw3[i]->calculateNormalsPerFace();
+			mCabOw3[i]->resizeMesh(SVector3(0.85f));
+		}
 
-   mCabOw2 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_ouch_2.3ds");
-   if (mCabOw2) {
-      mCabOw2->centerMeshByExtents(SVector3(0));
-      mCabOw2->calculateNormalsPerFace();
-      mCabOw2->resizeMesh(SVector3(0.85f));
-   }
+		mCabOw2[i] = CMeshLoader::load3dsMesh(std::string("Base/cabbage/cabbage_ouch_2") + extension);
+		if (mCabOw2[i]) {
+			mCabOw2[i]->centerMeshByExtents(SVector3(0));
+			mCabOw2[i]->calculateNormalsPerFace();
+			mCabOw2[i]->resizeMesh(SVector3(0.85f));
+		}
 
-   mCabOw1 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_ouch_1.3ds");
-   if (mCabOw1) {
-      mCabOw1->centerMeshByExtents(SVector3(0));
-      mCabOw1->calculateNormalsPerFace();
-      mCabOw1->resizeMesh(SVector3(0.85f));
-   }
+		mCabOw1[i] = CMeshLoader::load3dsMesh(std::string("Base/cabbage/cabbage_ouch_1") + extension);
+		if (mCabOw1[i]) {
+			mCabOw1[i]->centerMeshByExtents(SVector3(0));
+			mCabOw1[i]->calculateNormalsPerFace();
+			mCabOw1[i]->resizeMesh(SVector3(0.85f));
+		}
 
-   mCabOw0 = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_ouch_0.3ds");
-   if (mCabOw0) {
-      mCabOw0->centerMeshByExtents(SVector3(0));
-      mCabOw0->calculateNormalsPerFace();
-      mCabOw0->resizeMesh(SVector3(0.45f));
-   }
+		mCabOw0[i] = CMeshLoader::load3dsMesh(std::string("Base/cabbage/cabbage_ouch_0") + extension);
+		if (mCabOw0[i]) {
+			mCabOw0[i]->centerMeshByExtents(SVector3(0));
+			mCabOw0[i]->calculateNormalsPerFace();
+			mCabOw0[i]->resizeMesh(SVector3(0.45f));
+		}
+	}
 
    enemyMesh = CMeshLoader::load3dsMesh("Base/appleEnemy.3ds");
    if(enemyMesh) {
-      enemyMesh->resizeMesh(SVector3(1));
-      enemyMesh->centerMeshByExtents(SVector3(0));
+       enemyMesh->resizeMesh(SVector3(1));
+       enemyMesh->centerMeshByExtents(SVector3(0));
       enemyMesh->calculateNormalsPerFace();
    }
-
    else {
       fprintf(stderr, "Failed to load the enemy mesh\n");
    }
@@ -1823,14 +1835,7 @@ void PrepMeshes()
   renderWinCabbage->setVisible(false);
   renderWinCabbage->setCullingEnabled(true);
 
-
-   cabbage5 = new CMeshSceneObject();
-   cabbage5->setMesh(mCab5);
-  cabbage5->setShader(ERP_DEFAULT, Toon);
-  cabbage5->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
-   cabbage5->setCullingEnabled(false);
-
-   playerLight2 = new CPointLightSceneObject(10.f);
+  playerLight2 = new CPointLightSceneObject(10.f);
    CApplication::get().getSceneManager().addSceneObject(playerLight2);
 
    for (int x = -5; x < 5; ++ x)
@@ -1842,111 +1847,193 @@ void PrepMeshes()
 		   CApplication::get().getSceneManager().addSceneObject(point);
 	   }
 
-   cabbage4 = new CMeshSceneObject();
-   cabbage4->setMesh(mCab4);
-  cabbage4->setShader(ERP_DEFAULT, Toon);
-  cabbage4->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+
+   cabbage5 = new ISceneObject();
+   for (int i = 0; i < 2; ++ i)
+   {
+      CMeshSceneObject * child = new CMeshSceneObject();
+      child->setMesh(mCab5[i]);
+      child->setShader(ERP_DEFAULT, Toon);
+      child->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+      child->setCullingEnabled(false);
+	  child->setVisible(i == 0);
+	  cabbage5->addChild(child);
+	  LODObjects[i].push_back(child);
+   }
+   cabbage5->setCullingEnabled(false);
+   
+   cabbage4 = new ISceneObject();
+   for (int i = 0; i < 2; ++ i)
+   {
+      CMeshSceneObject * child = new CMeshSceneObject();
+      child->setMesh(mCab4[i]);
+      child->setShader(ERP_DEFAULT, Toon);
+      child->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+      child->setCullingEnabled(false);
+	  child->setVisible(i == 0);
+	  cabbage4->addChild(child);
+	  LODObjects[i].push_back(child);
+   }
    cabbage4->setCullingEnabled(false);
    cabbage4->setVisible(false);
 
-   cabbage3 = new CMeshSceneObject();
-   cabbage3->setMesh(mCab3);
-  cabbage3->setShader(ERP_DEFAULT, Toon);
-  cabbage3->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+   cabbage3 = new ISceneObject();
+   for (int i = 0; i < 2; ++ i)
+   {
+      CMeshSceneObject * child = new CMeshSceneObject();
+      child->setMesh(mCab3[i]);
+      child->setShader(ERP_DEFAULT, Toon);
+      child->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+      child->setCullingEnabled(false);
+	  child->setVisible(i == 0);
+	  cabbage3->addChild(child);
+	  LODObjects[i].push_back(child);
+   }
    cabbage3->setCullingEnabled(false);
    cabbage3->setVisible(false);
 
-   cabbage2 = new CMeshSceneObject();
-   cabbage2->setMesh(mCab2);
-  cabbage2->setShader(ERP_DEFAULT, Toon);
-  cabbage2->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+   cabbage2 = new ISceneObject();
+   for (int i = 0; i < 2; ++ i)
+   {
+      CMeshSceneObject * child = new CMeshSceneObject();
+      child->setMesh(mCab2[i]);
+      child->setShader(ERP_DEFAULT, Toon);
+      child->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+      child->setCullingEnabled(false);
+	  child->setVisible(i == 0);
+	  cabbage2->addChild(child);
+	  LODObjects[i].push_back(child);
+   }
    cabbage2->setCullingEnabled(false);
    cabbage2->setVisible(false);
 
-   cabbage1 = new CMeshSceneObject();
-   cabbage1->setMesh(mCab1);
-  cabbage1->setShader(ERP_DEFAULT, Toon);
-  cabbage1->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+   cabbage1 = new ISceneObject();
+   for (int i = 0; i < 2; ++ i)
+   {
+      CMeshSceneObject * child = new CMeshSceneObject();
+      child->setMesh(mCab1[i]);
+      child->setShader(ERP_DEFAULT, Toon);
+      child->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+      child->setCullingEnabled(false);
+	  child->setVisible(i == 0);
+	  cabbage1->addChild(child);
+	  LODObjects[i].push_back(child);
+   }
    cabbage1->setCullingEnabled(false);
    cabbage1->setVisible(false);
 
-   cabbage0 = new CMeshSceneObject();
-   cabbage0->setMesh(mCab0);
-  cabbage0->setShader(ERP_DEFAULT, Toon);
-  cabbage0->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+   cabbage0 = new ISceneObject();
+   for (int i = 0; i < 2; ++ i)
+   {
+      CMeshSceneObject * child = new CMeshSceneObject();
+      child->setMesh(mCab0[i]);
+      child->setShader(ERP_DEFAULT, Toon);
+      child->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+      child->setCullingEnabled(false);
+	  child->setVisible(i == 0);
+	  cabbage0->addChild(child);
+	  LODObjects[i].push_back(child);
+   }
    cabbage0->setCullingEnabled(false);
    cabbage0->setVisible(false);
 
-   cabbageHurt5 = new CMeshSceneObject();
-   cabbageHurt5->setMesh(mCabOw5);
-  cabbageHurt5->setShader(ERP_DEFAULT, Toon);
-  cabbageHurt5->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+   cabbageHurt5 = new ISceneObject();
+   for (int i = 0; i < 2; ++ i)
+   {
+      CMeshSceneObject * child = new CMeshSceneObject();
+      child->setMesh(mCabOw5[i]);
+      child->setShader(ERP_DEFAULT, Toon);
+      child->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+      child->setCullingEnabled(false);
+	  child->setVisible(i == 0);
+      child->setTranslation(SVector3(0.f, 0.f, .2f));
+	  cabbageHurt5->addChild(child);
+	  LODObjects[i].push_back(child);
+   }
    cabbageHurt5->setCullingEnabled(false);
-   cabbageHurt5->setTranslation(SVector3(0.f, 0.f, .2f));
+   cabbageHurt5->setVisible(false);
 
-   cabbageHurt4 = new CMeshSceneObject();
-   cabbageHurt4->setMesh(mCabOw4);
-  cabbageHurt4->setShader(ERP_DEFAULT, Toon);
-  cabbageHurt4->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+   cabbageHurt4 = new ISceneObject();
+   for (int i = 0; i < 2; ++ i)
+   {
+      CMeshSceneObject * child = new CMeshSceneObject();
+      child->setMesh(mCabOw4[i]);
+      child->setShader(ERP_DEFAULT, Toon);
+      child->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+      child->setCullingEnabled(false);
+	  child->setVisible(i == 0);
+      child->setTranslation(SVector3(0.f, 0.f, .2f));
+	  cabbageHurt4->addChild(child);
+	  LODObjects[i].push_back(child);
+   }
    cabbageHurt4->setCullingEnabled(false);
    cabbageHurt4->setVisible(false);
-   cabbageHurt4->setTranslation(SVector3(0.f, 0.f, .2f));
 
-   cabbageHurt3 = new CMeshSceneObject();
-   cabbageHurt3->setMesh(mCabOw3);
-  cabbageHurt3->setShader(ERP_DEFAULT, Toon);
-  cabbageHurt3->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+   cabbageHurt3 = new ISceneObject();
+   for (int i = 0; i < 2; ++ i)
+   {
+      CMeshSceneObject * child = new CMeshSceneObject();
+      child->setMesh(mCabOw3[i]);
+      child->setShader(ERP_DEFAULT, Toon);
+      child->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+      child->setCullingEnabled(false);
+	  child->setVisible(i == 0);
+      child->setTranslation(SVector3(0.f, 0.f, .2f));
+	  cabbageHurt3->addChild(child);
+	  LODObjects[i].push_back(child);
+   }
    cabbageHurt3->setCullingEnabled(false);
    cabbageHurt3->setVisible(false);
-   cabbageHurt3->setTranslation(SVector3(0.f, 0.f, .2f));
 
-   cabbageHurt2 = new CMeshSceneObject();
-   cabbageHurt2->setMesh(mCabOw2);
-  cabbageHurt2->setShader(ERP_DEFAULT, Toon);
-  cabbageHurt2->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+   cabbageHurt2 = new ISceneObject();
+   for (int i = 0; i < 2; ++ i)
+   {
+      CMeshSceneObject * child = new CMeshSceneObject();
+      child->setMesh(mCabOw2[i]);
+      child->setShader(ERP_DEFAULT, Toon);
+      child->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+      child->setCullingEnabled(false);
+	  child->setVisible(i == 0);
+      child->setTranslation(SVector3(0.f, 0.f, .2f));
+	  cabbageHurt2->addChild(child);
+	  LODObjects[i].push_back(child);
+   }
    cabbageHurt2->setCullingEnabled(false);
    cabbageHurt2->setVisible(false);
-   cabbageHurt2->setTranslation(SVector3(0.f, 0.f, .2f));
 
-   cabbageHurt1 = new CMeshSceneObject();
-   cabbageHurt1->setMesh(mCabOw1);
-  cabbageHurt1->setShader(ERP_DEFAULT, Toon);
-  cabbageHurt1->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+   cabbageHurt1 = new ISceneObject();
+   for (int i = 0; i < 2; ++ i)
+   {
+      CMeshSceneObject * child = new CMeshSceneObject();
+      child->setMesh(mCabOw1[i]);
+      child->setShader(ERP_DEFAULT, Toon);
+      child->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+      child->setCullingEnabled(false);
+	  child->setVisible(i == 0);
+      child->setTranslation(SVector3(0.f, 0.f, .2f));
+	  cabbageHurt1->addChild(child);
+	  LODObjects[i].push_back(child);
+   }
    cabbageHurt1->setCullingEnabled(false);
    cabbageHurt1->setVisible(false);
-   cabbageHurt1->setTranslation(SVector3(0.f, 0.f, .2f));
 
-   cabbageHurt0 = new CMeshSceneObject();
-   cabbageHurt0->setMesh(mCabOw0);
-  cabbageHurt0->setShader(ERP_DEFAULT, Toon);
-  cabbageHurt0->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+   cabbageHurt0 = new ISceneObject();
+   for (int i = 0; i < 2; ++ i)
+   {
+      CMeshSceneObject * child = new CMeshSceneObject();
+      child->setMesh(mCabOw0[i]);
+      child->setShader(ERP_DEFAULT, Toon);
+      child->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+      child->setCullingEnabled(false);
+	  child->setVisible(i == 0);
+      child->setTranslation(SVector3(0.f, 0.f, .2f));
+	  cabbageHurt0->addChild(child);
+	  LODObjects[i].push_back(child);
+   }
    cabbageHurt0->setCullingEnabled(false);
    cabbageHurt0->setVisible(false);
-   cabbageHurt0->setTranslation(SVector3(0.f, 0.f, .2f));
-
-   normalCabbage = new CMeshSceneObject();
-   normalCabbage->setMesh(mCab5);
-  normalCabbage->setShader(ERP_DEFAULT, Toon);
-  normalCabbage->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
-   normalCabbage->setCullingEnabled(false);
-   normalCabbage->setVisible(false);
-   
-
-   damageCabbage = new CMeshSceneObject();
-   damageCabbage->setMesh(cabbageDamage);
-  damageCabbage->setShader(ERP_DEFAULT, Toon);
-  damageCabbage->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
-   damageCabbage->setVisible(false);
-   damageCabbage->setScale(SVector3(1.5f));
-   damageCabbage->setRotation(SVector3(0.f, 0.f, 45.f));
-   damageCabbage->setTranslation(SVector3(0.f, 0.f, .15f));
-   damageCabbage->setCullingEnabled(false);
-
-
 
    playerRenderable = new CMeshSceneObject();
-   playerRenderable->addChild(normalCabbage);
-   playerRenderable->addChild(damageCabbage);
    playerRenderable->setVisible(false);
    playerRenderable->addChild(cabbage5);
    playerRenderable->addChild(cabbage4);
