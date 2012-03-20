@@ -379,7 +379,7 @@ void CGameState::Initialize() {
    //Initialize Font
    //our_font.init("WIFFLES_.TTF", 30);
    SColor FontColor(1.0f, 1.0f, 1.0f);
-   SColor DarkFontColor(1.0f, 1.0f, 1.0f);
+   SColor DarkFontColor(0.0f, 0.0f, 0.0f);
    GameWinText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
    GameWinText->setText("CONGRATULATIONS! YOU HAVE WON!");
    GameWinText->setVisible(false);
