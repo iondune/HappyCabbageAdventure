@@ -1852,11 +1852,11 @@ void PrepMeshes()
   renderWinCabbage->setVisible(false);
   renderWinCabbage->setCullingEnabled(true);
 
-  playerLight2 = new CPointLightSceneObject(10.f);
+  playerLight2 = new CPointLightSceneObject(4.f);
    CApplication::get().getSceneManager().addSceneObject(playerLight2);
 
-   for (int x = -5; x < 5; ++ x)
-	   for (int y = -5; y < 5; ++ y)
+   for (int x = -5; x < 20; ++ x)
+	   for (int y = -0; y < 2; ++ y)
 	   {
 		   CPointLightSceneObject * point = new CPointLightSceneObject();
 		   point->setRadius(1.5f);
