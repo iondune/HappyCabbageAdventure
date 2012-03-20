@@ -2,7 +2,6 @@
 #define __CPLAYER_VIEW_H_ 1
 
 #include "../CabbageCore/SVector2.h"
-#include "Materials.h"
 #include <math.h>
 
 #ifdef _WIN32

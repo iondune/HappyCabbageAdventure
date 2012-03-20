@@ -42,7 +42,7 @@ CGameState.o: CGameState.cpp header.h draw.h CPlayerView.h
 #sound.o: sound.cpp sound.h
 #	$(CC) `sdl-config --cflags` -c sound.cpp -DGL_GLEXT_PROTOTYPES
 CPlayerView.o: CPlayerView.cpp CPlayerView.h
-	$(CC) $(INCLUDE) -c CPlayerView.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+	$(CC) $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c CPlayerView.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CGameEventReceiver.o: CGameEventReceiver.cpp CGameEventReceiver.h
 	$(CC) $(INCLUDE) `sdl-config --cflags` -c CGameEventReceiver.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CGameplayManager.o: CGameplayManager.cpp CGameplayManager.h
