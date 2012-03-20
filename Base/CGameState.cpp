@@ -379,6 +379,7 @@ void CGameState::Initialize() {
    //Initialize Font
    //our_font.init("WIFFLES_.TTF", 30);
    SColor FontColor(1.0f, 1.0f, 1.0f);
+   SColor DarkFontColor(1.0f, 1.0f, 1.0f);
    GameWinText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
    GameWinText->setText("CONGRATULATIONS! YOU HAVE WON!");
    GameWinText->setVisible(false);
@@ -391,11 +392,23 @@ void CGameState::Initialize() {
    GameOverText->setPosition(SVector2(0.35f, 0.75f));
    GameOverText->setColor(FontColor);
 
+   GameOverText2 = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
+   GameOverText2->setText("GAME OVER! YOU ARE DEAD. PRESS SPACE");
+   GameOverText2->setVisible(false);
+   GameOverText2->setPosition(SVector2(0.35f, 0.748f));
+   GameOverText2->setColor(DarkFontColor);
+
    RestartGameText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
    RestartGameText->setText("YOU'VE DIED. PRESS SPACE TO CONTINUE!");
    RestartGameText->setVisible(false);
    RestartGameText->setPosition(SVector2(0.25f, 0.75f));
    RestartGameText->setColor(FontColor);
+
+   RestartGameText2 = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
+   RestartGameText2->setText("YOU'VE DIED. PRESS SPACE TO CONTINUE!");
+   RestartGameText2->setVisible(false);
+   RestartGameText2->setPosition(SVector2(0.25f, 0.748f));
+   RestartGameText2->setColor(DarkFontColor);
 
    LivesText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
    LivesText->setText("Lives: ");
@@ -407,22 +420,24 @@ void CGameState::Initialize() {
    LivesText2->setText("Lives: ");
    LivesText2->setVisible(true);
    LivesText2->setPosition(SVector2(0.1385f, 0.872f));
-   LivesText2->setColor(SColor(0.0f, 0.0f, 0.0f));
+   LivesText2->setColor(DarkFontColor);
 
    fpsText = new CGUIFontWidget("WIFFLES_.TTF", 15.f);
    fpsText->setText("FPS: ");
    fpsText->setVisible(true);
    fpsText->setPosition(SVector2((float)WindowWidth/(float)WindowHeight - 0.1f, 0.98f));
-   fpsText->setColor(SColor(1.0f, 1.0f, 1.0f));
+   fpsText->setColor(FontColor);
 
    fpsText2 = new CGUIFontWidget("WIFFLES_.TTF", 15.f);
    fpsText2->setText("FPS: ");
    fpsText2->setVisible(true);
    fpsText2->setPosition(SVector2((float)WindowWidth/(float)WindowHeight - 0.1f, 0.978f));
-   fpsText2->setColor(SColor(0.0f, 0.0f, 0.0f));
+   fpsText2->setColor(DarkFontColor);
 
    Application.getGUIEngine().addWidget(GameWinText);
+   Application.getGUIEngine().addWidget(GameOverText2);
    Application.getGUIEngine().addWidget(GameOverText);
+   Application.getGUIEngine().addWidget(RestartGameText2);
    Application.getGUIEngine().addWidget(RestartGameText);
    Application.getGUIEngine().addWidget(LivesText2);
    Application.getGUIEngine().addWidget(LivesText);
@@ -576,9 +591,11 @@ void CGameState::oldDisplay() {
       if(!GameplayManager->isPlayerAlive() && !playDead) {
          if(GameplayManager->getPlayerLives() <= 0) {
             GameOverText->setVisible(true);
+            GameOverText2->setVisible(true);
          }
          else {
             RestartGameText->setVisible(true);
+            RestartGameText2->setVisible(true);
          }
       }
       Player->setAction(CActor::EActionType::None);
