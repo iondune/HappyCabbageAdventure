@@ -1,5 +1,7 @@
 #include "CPlayerView.h"
 
+#include "CGameState.h"
+
 
 #ifdef _WIN32
 #include <GL/glew.h>
@@ -11,10 +13,29 @@
 
 
 #define PI 3.1415
+
+int CurrentLOD = 0;
+
+
+
+// Anything 3 or less for this value will make the low level LOD show up 
+// whenever the camera pans back at all. something like 10.f makes it so you 
+// have to be considerly high.
+float const LODActiviation = 10.f;
+
 void CPlayerView::setState(CPlayerView::State const value) {
    curState = value;
 
-
+   if (CenterPosition.Y > LODActiviation)
+	{
+	    if (! CurrentLOD)
+		    CGameState::get().setLodLevel(CurrentLOD = 1);
+	}
+   else
+   {
+	   if (CurrentLOD)
+		   CGameState::get().setLodLevel(CurrentLOD = 0);
+   }
 //printf("vel %f, center %f, timer %f\n", Velocity.Y, CenterPosition.Y, zCamTimer);
    if(Velocity.Y == 0.00f  && zCamTimer <= 0.0f)
    {
@@ -23,10 +44,12 @@ void CPlayerView::setState(CPlayerView::State const value) {
        float zfactor = (CenterPosition.Y - 3.0f) * 1.5f;
        //float zfactor = ((CenterPosition.Y > 10.0f ? 6.0f : CenterPosition.Y) - 3.0f) * 1.5f;
        zCamShift = (zfactor > 8.0f ? 8.0f :  zfactor) - zCam;
-     }
+	   
+	 }
      else
      {
        zCamShift = -zCam;
+	   
      }
 
      zCamTimer = CAM_TIMER;
