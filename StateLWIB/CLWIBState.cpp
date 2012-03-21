@@ -1101,7 +1101,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          else if (!tDown && !oneDown && !threeDown &&!twoDown && fourDown) {
             PrepItem(round(eye.X + previewBlockMouseX),round(eye.Y + previewBlockMouseY),itemType);
          }
-         else {
+         else { //Delete item
             if(lastMouseOveredBlock.o) {
                Application.getSceneManager().removeSceneObject(lastMouseOveredBlock.r);
                placeables.erase(std::remove(placeables.begin(), placeables.end(), lastMouseOveredBlock.p), placeables.end());
@@ -1381,7 +1381,7 @@ void CLWIBState::changeTiles() {
 void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     
     if (widget == leftArrow) {
-        if (change == -1)
+        if (change == 0)
             change = 5;
         else
             change--;
