@@ -607,8 +607,9 @@ void CLWIBState::loadWorld() {
             }
         }
     }
-    cout << "Enter the name of the file you want to load: ";
-    cin >> name;
+    //cout << "Enter the name of the file you want to load: ";
+    //cin >> name;
+    name = "chris2.xml";
     irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader(name.c_str());
 	while (xml && xml->read())
 	{
@@ -665,10 +666,12 @@ void CLWIBState::loadWorld() {
 
 void CLWIBState::printXML() {
     std::string name;
-    cout << "Enter the name of the file you want to save: ";
-    cin >> name;
 
-    cout << name;
+    name = "chris2.xml";
+    //cout << "Enter the name of the file you want to save: ";
+    //cin >> name;
+
+    //cout << name;
 
     xmlwriter *worldlist = new xmlwriter(name);
     
@@ -704,7 +707,7 @@ void CLWIBState::PrepPreviews() {
    blocks.push_back(PreviewCabbage = new CMeshSceneObject());
    blocks.push_back(PreviewItem = new CMeshSceneObject());
    blocks.push_back(PreviewEnemy = new CMeshSceneObject());
-   flameMesh = CMeshLoader::load3dsMesh("ModelImages/flame.3ds");
+   flameMesh = CMeshLoader::load3dsMesh("Base/rabbit.3DS");
    appleMesh = CMeshLoader::load3dsMesh("Base/appleEnemy.3ds");
    orangeMesh = CMeshLoader::load3dsMesh("Base/orange.3ds");
    kiwiMesh = CMeshLoader::load3dsMesh("Base/killerkiwi.3ds");
@@ -738,6 +741,13 @@ void CLWIBState::PrepPreviews() {
       bladeMesh->centerMeshByExtents(SVector3(0));
       bladeMesh->calculateNormalsPerFace();
    }
+
+   if (flameMesh) {
+      flameMesh->resizeMesh(SVector3(1));
+      flameMesh->centerMeshByExtents(SVector3(0));
+      flameMesh->calculateNormalsPerFace();
+   }
+
    if (cabbageMesh) {
       cabbageMesh->resizeMesh(SVector3(1));
       cabbageMesh->centerMeshByExtents(SVector3(0));
@@ -890,7 +900,7 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
    if (type == 3) 
         tempEnemy->setMesh(cubeMesh);
    if (type == 4)
-        tempEnemy->setMesh(cubeMesh);
+        tempEnemy->setMesh(flameMesh); //flameMesh doesn't work.  Why?
    if (type == 5) {
         tempEnemy->setMesh(bladeMesh);
         tempEnemy->setScale(SVector3(2,2,2));
