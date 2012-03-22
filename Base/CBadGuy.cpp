@@ -5,6 +5,8 @@
 #include "EFlame.h"
 #include "EBlade.h"
 #include "PKiwi.h"
+#include "EGrape.h"
+#include "PGrape.h"
 
 void CBadGuy::setShader(CShader* shade) {
    CBadGuy::Shader = shade;
@@ -36,6 +38,14 @@ void CBadGuy::makeBadGuy(float x, float y, float w, float h, EnemyType enemy, CG
 
    else if (enemy == pKiwi) {
       temp = new PKiwi(x, y, w, h, manager);
+   }
+
+   else if (enemy == grape) {
+      temp = new EGrape(x, y, w, h, manager);
+   }
+
+   else if (enemy == pGrape) {
+      temp = new PGrape(x, y, w, h, manager);
    }
 
    else {

@@ -1,5 +1,5 @@
 ROOT_CABBAGE_DIR=../
-SOURCES=main.cpp CGameState.cpp CPlayerView.cpp CGameplayManager.cpp CGameEventReceiver.cpp ./irrxml-1.2/src/irrXML.cpp CBadGuy.cpp EApple.cpp EOrange.cpp EKiwi.cpp EFlame.cpp EBlade.cpp PKiwi.cpp CItem.cpp CIHealth.cpp CIEnergy.cpp CBiggerBlock.cpp
+SOURCES=main.cpp CGameState.cpp CPlayerView.cpp CGameplayManager.cpp CGameEventReceiver.cpp ./irrxml-1.2/src/irrXML.cpp CBadGuy.cpp EApple.cpp EOrange.cpp EKiwi.cpp EFlame.cpp EBlade.cpp PKiwi.cpp CItem.cpp CIHealth.cpp CIEnergy.cpp CBiggerBlock.cpp EGrape.cpp PGrape.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o) ../StateMainMenu/CMainMenuState.o ../StateOverworld/COverworldState.o
 CABBAGE= -L../lib/ -lCabbageSound -lCabbageCollider -lCabbageFramework -lCabbageScene -lCLWIB -lOverworldState -lCabbageParticles -lCabbageGUI
 CC=g++ -O1 -s
@@ -61,6 +61,10 @@ EBlade.o: EBlade.cpp EBlade.h CBadGuy.h
 	$(CC) $(INCLUDE) `sdl-config --cflags` -c EBlade.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 PKiwi.o: PKiwi.cpp PKiwi.h CBadGuy.h
 	$(CC) $(INCLUDE) `sdl-config --cflags` -c PKiwi.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+PGrape.o: PGrape.cpp PGrape.h CBadGuy.h
+	$(CC) $(INCLUDE) `sdl-config --cflags` -c PGrape.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
+EGrape.o: EGrape.cpp EGrape.h CBadGuy.h
+	$(CC) $(INCLUDE) `sdl-config --cflags` -c EGrape.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CIHealth.o: CIHealth.cpp CIHealth.h CItem.h
 	$(CC) $(INCLUDE) `sdl-config --cflags` -c CIHealth.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 CIEnergy.o: CIEnergy.cpp CIEnergy.h CItem.h

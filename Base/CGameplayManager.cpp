@@ -149,7 +149,8 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
       if (Other == (*it)->Actor)
       {
 
-         if (PlayerActor->getArea().Position.Y > Other->getArea().otherCorner().Y - HitThreshold && (*it)->Actor->CollideableType != COLLIDEABLE_TYPE_FLAME && (*it)->Actor->CollideableType != COLLIDEABLE_TYPE_PKIWI)
+         if (PlayerActor->getArea().Position.Y > Other->getArea().otherCorner().Y - HitThreshold &&
+            (*it)->Actor->CollideableType != COLLIDEABLE_TYPE_FLAME && (*it)->Actor->CollideableType != COLLIDEABLE_TYPE_PKIWI)
          {
             Mix_PlayChannel(-1, killEnemy, 0);
             KillList.push_back(* it);
