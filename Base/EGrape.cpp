@@ -16,7 +16,7 @@ EGrape::EGrape(float x, float y, float w, float h, CGameplayManager* manager) {
 //Loads and moves the mesh
 void EGrape::loadMesh() {
    Renderable = new CMeshSceneObject();
-   CMesh *mesh = CMeshLoader::load3dsMesh("Base/AppleEnemy.3ds");
+   CMesh *mesh = CMeshLoader::load3dsMesh("Base/alien.3ds");
    if(mesh) {
       mesh->resizeMesh(SVector3(1));
       mesh->centerMeshByExtents(SVector3(0));
@@ -31,7 +31,7 @@ void EGrape::loadMesh() {
    Renderable->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
    Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y+1))/2, 0));
    Renderable->setScale(SVector3(1, 1, 1));
-   Renderable->setRotation(SVector3(-90, 0, 0));
+   Renderable->setRotation(SVector3(0, 0, 0));
 
    CApplication::get().getSceneManager().addSceneObject(Renderable);
 }
@@ -50,7 +50,7 @@ void EGrape::loadActor() {
 void EGrape::update(float const TickTime) {
    Time += TickTime;
 
-   printf("Time is: %f\n", Time);
+   //printf("Time is: %f\n", Time);
 
    if (Time - 2.f > 0.f && Manager->isPlayerAlive()) {
       Time = 0.f;
@@ -63,9 +63,9 @@ void EGrape::update(float const TickTime) {
 void EGrape::doRenderable() {
    //Face the proper direction
    if (Manager->getPlayerLocation().X < Actor->getArea().getCenter().X)
-            Renderable->setRotation(SVector3(-90, 0, 180));
+            Renderable->setRotation(SVector3(-90, 0, 90));
          else
-            Renderable->setRotation(SVector3(-90, 0, 0));
+            Renderable->setRotation(SVector3(-90, 0, -90));
 }
 
 void EGrape::ThrowGrape() {

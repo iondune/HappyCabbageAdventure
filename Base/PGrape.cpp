@@ -21,7 +21,7 @@ void PGrape::loadMesh() {
    Renderable = new CMeshSceneObject();
    CMesh *mesh = CMeshLoader::load3dsMesh("Base/kiwi_seed.3ds");
    if(mesh) {
-      mesh->resizeMesh(SVector3(1));
+      mesh->resizeMesh(SVector3(.5));
       mesh->centerMeshByExtents(SVector3(0));
       mesh->calculateNormalsPerFace();
    }
@@ -32,8 +32,8 @@ void PGrape::loadMesh() {
    Renderable->setMesh(mesh);
    Renderable->setShader(ERP_DEFAULT, "Toon");
    Renderable->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   Renderable->setScale(SVector3(.5f, .5f, .5f));
-   Renderable->setRotation(SVector3(-90, 90, 90));
+   Renderable->setScale(SVector3(1.0f, 1.0f, 1.0f));
+   Renderable->setRotation(SVector3(-90, 0, 90));
 
    CApplication::get().getSceneManager().addSceneObject(Renderable);
 }
