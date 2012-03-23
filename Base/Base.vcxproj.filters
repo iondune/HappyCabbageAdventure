@@ -65,6 +65,12 @@
     <ClCompile Include="CBiggerBlock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PGrape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EGrape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGameEventManager.h">
@@ -128,6 +134,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CBiggerBlock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PGrape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EGrape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -114,11 +114,13 @@
     <ClInclude Include="EApple.h" />
     <ClInclude Include="EBlade.h" />
     <ClInclude Include="EFlame.h" />
+    <ClInclude Include="EGrape.h" />
     <ClInclude Include="EKiwi.h" />
     <ClInclude Include="EOrange.h" />
     <ClInclude Include="header.h" />
     <ClInclude Include="irrxml-1.2\src\irrXML.h" />
     <ClInclude Include="Materials.h" />
+    <ClInclude Include="PGrape.h" />
     <ClInclude Include="PKiwi.h" />
     <ClInclude Include="SDL_mixer.h" />
   </ItemGroup>
@@ -135,11 +137,13 @@
     <ClCompile Include="EApple.cpp" />
     <ClCompile Include="EBlade.cpp" />
     <ClCompile Include="EFlame.cpp" />
+    <ClCompile Include="EGrape.cpp" />
     <ClCompile Include="EKiwi.cpp" />
     <ClCompile Include="EOrange.cpp" />
     <ClCompile Include="irrxml-1.2\src\irrXML.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Materials.cpp" />
+    <ClCompile Include="PGrape.cpp" />
     <ClCompile Include="PKiwi.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
