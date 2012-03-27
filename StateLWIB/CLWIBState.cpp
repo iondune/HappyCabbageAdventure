@@ -85,8 +85,8 @@ void CLWIBState::begin()
 
    //Initialize Font
 
-   eye = SVector3(0,0,10);
-   look = SVector3(0,0,-1);
+   eye = SVector3(-19.f,0.f,10.f);
+   look = SVector3(-19.f,0.f,-1.f);
    Camera = new CPerspectiveCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
    Camera->setPosition(eye);
    Camera->setLookDirection(look - eye);
