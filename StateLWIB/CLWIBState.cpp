@@ -1058,8 +1058,8 @@ void CLWIBState::PrepSky() {
    tempBlock->setTexture("Base/sky.bmp");
    tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
-   tempBlock->setTranslation(SVector3(85, 24, -5));
-   tempBlock->setScale(SVector3(250, 50, 1));
+   tempBlock->setTranslation(SVector3(85, 13, -5));
+   tempBlock->setScale(SVector3(250, -50, 1));
    tempBlock->setCullingEnabled(false);
    Application.getSceneManager().addSceneObject(tempBlock);
 }
