@@ -1188,6 +1188,11 @@ void CLWIBState::prepText() {
     block3->setColor(FontColor);
     block3->setVisible(true);
 
+    block1->addDropShadow();
+    block2->addDropShadow();
+    block3->addDropShadow();
+    help->addDropShadow();
+
     Application.getGUIEngine().addWidget(block1);
     Application.getGUIEngine().addWidget(block2);
     Application.getGUIEngine().addWidget(block3);
