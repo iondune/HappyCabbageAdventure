@@ -150,7 +150,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
       {
 
          if (PlayerActor->getArea().Position.Y > Other->getArea().otherCorner().Y - HitThreshold &&
-            (*it)->Actor->CollideableType != COLLIDEABLE_TYPE_FLAME && (*it)->Actor->CollideableType != COLLIDEABLE_TYPE_PKIWI)
+               (*it)->Actor->CollideableType != COLLIDEABLE_TYPE_FLAME && (*it)->Actor->CollideableType != COLLIDEABLE_TYPE_PKIWI)
          {
             Mix_PlayChannel(-1, killEnemy, 0);
             KillList.push_back(* it);
@@ -370,7 +370,7 @@ void CGameplayManager::run(float const TickTime)
             if(kPtr->inZ && (
                      (kPtr->Actor->getArea().getCenter().X - kPtr->lastX > 0.4f) ||
                      (kPtr->Actor->getArea().getCenter().X - kPtr->lastX < -0.4f))
-                     ) {
+              ) {
                kPtr->inZ = 0;
                kPtr->Actor->CollideableLevel = INTERACTOR_SUPERNONCOLLIDERS;
                kPtr->Actor->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS;
