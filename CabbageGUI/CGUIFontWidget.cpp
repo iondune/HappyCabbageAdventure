@@ -45,7 +45,6 @@ CGUIFontWidget::CGUIFontWidget(std::string const & FileName, float const Size)
    FileNameString = FileName;
    FontSize = Size;
 
-   std::cout << "File name: " << FileNameString << std::endl << "Font size: " << FontSize << std::endl;
 	makeRenderer(FileName, Size);
 	setColor(SColor(0, 0, 0));
 }
