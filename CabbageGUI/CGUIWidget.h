@@ -30,7 +30,7 @@ public:
 	virtual void draw();
 
 	bool const isVisible() const;
-	void setVisible(bool const visible);
+	virtual void setVisible(bool const visible);
 	bool const isHovered() const;
 
 	SRect2 const & getBoundingBox() const;

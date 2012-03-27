@@ -18,11 +18,11 @@ liboglft/OGLFT.o: liboglft/OGLFT.cpp
 	$(CC) -o $@ liboglft/OGLFT.cpp -c $(DIRECTORIES) $(OPENGL)
 CGUIEngine.o: CGUIEngine.cpp
 	$(CC) -o $@ CGUIEngine.cpp -c $(DIRECTORIES) $(OPENGL)
-CGUIImageWidget.o: CGUIEngine.cpp
+CGUIImageWidget.o: CGUIImageWidget.cpp
 	$(CC) -o $@ CGUIImageWidget.cpp -c $(DIRECTORIES) $(OPENGL)
-CGUIFontWidget.o: CGUIEngine.cpp
+CGUIFontWidget.o: CGUIFontWidget.cpp
 	$(CC) -o $@ CGUIFontWidget.cpp -c $(DIRECTORIES) $(OPENGL)
-CGUIWidget.o: CGUIEngine.cpp
+CGUIWidget.o: CGUIWidget.cpp
 	$(CC) -o $@ CGUIWidget.cpp -c $(DIRECTORIES) $(OPENGL)
 
 

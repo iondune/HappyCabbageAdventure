@@ -392,23 +392,11 @@ void CGameState::Initialize() {
    GameOverText->setPosition(SVector2(0.35f, 0.75f));
    GameOverText->setColor(FontColor);
 
-   GameOverText2 = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
-   GameOverText2->setText("GAME OVER! YOU ARE DEAD. PRESS SPACE");
-   GameOverText2->setVisible(false);
-   GameOverText2->setPosition(SVector2(0.35f, 0.748f));
-   GameOverText2->setColor(DarkFontColor);
-
    RestartGameText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
    RestartGameText->setText("YOU'VE DIED. PRESS SPACE TO CONTINUE!");
    RestartGameText->setVisible(false);
    RestartGameText->setPosition(SVector2(0.25f, 0.75f));
    RestartGameText->setColor(FontColor);
-
-   RestartGameText2 = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
-   RestartGameText2->setText("YOU'VE DIED. PRESS SPACE TO CONTINUE!");
-   RestartGameText2->setVisible(false);
-   RestartGameText2->setPosition(SVector2(0.25f, 0.748f));
-   RestartGameText2->setColor(DarkFontColor);
 
    LivesText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
    LivesText->setText("Lives: ");
@@ -416,32 +404,22 @@ void CGameState::Initialize() {
    LivesText->setPosition(SVector2(0.14f, 0.87f));
    LivesText->setColor(SColor(0.0f, 0.80f, 0.0f));
 
-   LivesText2 = new CGUIFontWidget("WIFFLES_.TTF", 31.f);
-   LivesText2->setText("Lives: ");
-   LivesText2->setVisible(true);
-   LivesText2->setPosition(SVector2(0.1385f, 0.872f));
-   LivesText2->setColor(DarkFontColor);
-
    fpsText = new CGUIFontWidget("WIFFLES_.TTF", 15.f);
    fpsText->setText("FPS: ");
    fpsText->setVisible(true);
    fpsText->setPosition(SVector2((float)WindowWidth/(float)WindowHeight - 0.1f, 0.98f));
    fpsText->setColor(FontColor);
 
-   fpsText2 = new CGUIFontWidget("WIFFLES_.TTF", 15.f);
-   fpsText2->setText("FPS: ");
-   fpsText2->setVisible(true);
-   fpsText2->setPosition(SVector2((float)WindowWidth/(float)WindowHeight - 0.1f, 0.978f));
-   fpsText2->setColor(DarkFontColor);
+   GameWinText->addDropShadow();
+   GameOverText->addDropShadow();
+   RestartGameText->addDropShadow();
+   LivesText->addDropShadow();
+   fpsText->addDropShadow();
 
    Application.getGUIEngine().addWidget(GameWinText);
-   Application.getGUIEngine().addWidget(GameOverText2);
    Application.getGUIEngine().addWidget(GameOverText);
-   Application.getGUIEngine().addWidget(RestartGameText2);
    Application.getGUIEngine().addWidget(RestartGameText);
-   Application.getGUIEngine().addWidget(LivesText2);
    Application.getGUIEngine().addWidget(LivesText);
-   Application.getGUIEngine().addWidget(fpsText2);
    Application.getGUIEngine().addWidget(fpsText);
 
    Camera = new CPerspectiveCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
@@ -591,11 +569,9 @@ void CGameState::oldDisplay() {
             if(!GameplayManager->isPlayerAlive() && !playDead) {
                if(GameplayManager->getPlayerLives() <= 0) {
                   GameOverText->setVisible(true);
-                  GameOverText2->setVisible(true);
                }
                else {
                   RestartGameText->setVisible(true);
-                  RestartGameText2->setVisible(true);
                }
             }
             Player->setAction(CActor::EActionType::None);
@@ -609,7 +585,6 @@ void CGameState::oldDisplay() {
          char buf[30];
          numLives = GameplayManager->getPlayerLives();
          sprintf(buf, "%d", numLives);
-         LivesText2->setText(buf);
          LivesText->setText(buf);
 
          Engine->updateAll(Application.getElapsedTime());
@@ -785,7 +760,6 @@ void CGameState::oldDisplay() {
             char buf[15];
             sprintf(buf, "FPS: %0.0f\n", fps);
             fpsText->setText(buf);
-            fpsText2->setText(buf);
             timeTotal = 0;
             numFrames = 0;
          }
@@ -821,11 +795,9 @@ void CGameState::oldDisplay() {
          if (Event.Key == SDLK_f && Event.Pressed) {
             if(fpsText->isVisible()) {
                fpsText->setVisible(false);
-               fpsText2->setVisible(false);
             }
             else {
                fpsText->setVisible(true);
-               fpsText2->setVisible(true);
             }
          }
 

@@ -6,6 +6,9 @@
 //#define OGLFT_NO_QT
 #include "liboglft/OGLFT.h"
 
+#include "CGUIEngine.h"
+#include "CApplication.h"
+
 std::string CGUIFontWidget::FontDirectory = "../Media/Fonts/";
 
 void CGUIFontWidget::makeRenderer(std::string const & FileName, float const Size)
@@ -37,8 +40,12 @@ void CGUIFontWidget::makeRenderer(std::string const & FileName, float const Size
 }
 
 CGUIFontWidget::CGUIFontWidget(std::string const & FileName, float const Size)
-	: Renderer(0)
+	: Renderer(0), DropShadow(0)
 {
+   FileNameString = FileName;
+   FontSize = Size;
+
+   std::cout << "File name: " << FileNameString << std::endl << "Font size: " << FontSize << std::endl;
 	makeRenderer(FileName, Size);
 	setColor(SColor(0, 0, 0));
 }
@@ -66,6 +73,50 @@ void CGUIFontWidget::draw()
 	glDisable(GL_BLEND);
 }
 
+SColor const CGUIFontWidget::getDropShadowColor() {
+   if(!DropShadow)
+      return SColor(0.0f);
+   else
+      return DropShadow->getColor();
+}
+
+void CGUIFontWidget::addDropShadow() {
+   addDropShadow(SColor(0.0f));   
+}
+
+void CGUIFontWidget::addDropShadow(SColor const & Color) {
+   if(DropShadow) {
+      removeDropShadow();
+   }
+   DropShadow = new CGUIFontWidget(FileNameString, FontSize);
+   DropShadow->setText(Text);
+   DropShadow->setVisible(true);
+
+   DropShadow->setPosition(this->getPosition() + SVector2(0.0f, -0.002f));
+   DropShadow->setColor(Color);
+   DropShadow->setVisible(Visible);
+   CApplication::get().getGUIEngine().addWidget(DropShadow);
+}
+
+void CGUIFontWidget::removeDropShadow() {
+   if(DropShadow) {
+      CApplication::get().getGUIEngine().removeWidget(DropShadow);
+      delete DropShadow;
+      DropShadow = NULL;
+   }
+}
+
+bool const CGUIFontWidget::hasDropShadow() {
+   return !!DropShadow;
+}
+
+void CGUIFontWidget::setVisible(bool const visible)
+{
+	Visible = visible;
+   if(DropShadow)
+      DropShadow->setVisible(visible);
+}
+
 void CGUIFontWidget::setColor(SColor const & Color)
 {
 	if (Renderer)
@@ -85,6 +136,9 @@ void CGUIFontWidget::setText(std::string const & text)
 		OGLFT::BBox BBox = Renderer->measure_nominal(text.c_str());
 		Box.Size = SVector2(BBox.x_max_ - BBox.x_min_, BBox.y_max_ - BBox.y_min_);
 	}
+
+   if(DropShadow)
+      DropShadow->setText(Text);
 }
 
 std::string const & CGUIFontWidget::getText() const
