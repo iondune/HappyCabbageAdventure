@@ -22,7 +22,7 @@ void CItem::makeItem(float x, float y, float w, float h, ItemType item, CGamepla
    }
 
    else if (item == seed) {
-      temp = new CISeed(x, y, w*.2f, h * .2f, manager);
+      temp = new CISeed(x, y, w, h, manager);
       temp->Type = item;
    }
    else {

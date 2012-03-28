@@ -25,7 +25,7 @@ void CGameEventReceiver::OnPlayerDamaged(SPlayerDamagedEvent const & Event) {
 
 void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
    //fprintf(stderr, "Removing enemy %d\n", Event.Enemy);
-   int randSeeds = rand()%7;
+   int randSeeds = rand()%7 + 3;
 
    SDeadEnemy DeadEnemy;
    if (Event.Enemy.Actor->CollideableType == COLLIDEABLE_TYPE_PKIWI) {
@@ -42,10 +42,10 @@ void CGameEventReceiver::OnEnemyDeath(SEnemyDeathEvent const & Event) {
     				  , Event.Enemy.Actor->getArea().getCenter().Y, 1.0f, 1.0f, CItem::energy, Event.Manager);
       }
 
-      if (randSeeds > 0 && randSeeds < 6) {
+      if (randSeeds > 0 && randSeeds < 50) {
          for (int n = 1; n <= randSeeds; n++) {
-            CItem::makeItem(Event.Enemy.Actor->getArea().Position.X + Event.Enemy.Actor->getArea().Size.X / 2.0f - 0.3f + (float)n,
-               Event.Enemy.Actor->getArea().getCenter().Y, 1.0f, 1.0f, CItem::seed, Event.Manager);
+            CItem::makeItem(Event.Enemy.Actor->getArea().Position.X + 0.3f,
+               Event.Enemy.Actor->getArea().getCenter().Y, 0.1f, 0.1f, CItem::seed, Event.Manager);
          }
       }
    }
