@@ -1,4 +1,4 @@
-FILES = CGUIEngine.cpp CGUIImageWidget.cpp CGUIFontWidget.cpp CGUIWidget.cpp liboglft/OGLFT.cpp
+FILES = CGUIEngine.cpp CGUIImageWidget.cpp CGUIFontWidget.cpp CGUIDialogWidget.cpp CGUIWidget.cpp liboglft/OGLFT.cpp
 CC=g++ -O1 -s
 
 OFILES = $(FILES:%.cpp=%.o)
@@ -18,6 +18,8 @@ liboglft/OGLFT.o: liboglft/OGLFT.cpp
 	$(CC) -o $@ liboglft/OGLFT.cpp -c $(DIRECTORIES) $(OPENGL)
 CGUIEngine.o: CGUIEngine.cpp
 	$(CC) -o $@ CGUIEngine.cpp -c $(DIRECTORIES) $(OPENGL)
+CGUIDialogWidget.o: CGUIDialogWidget.cpp
+	$(CC) -o $@ CGUIDialogWidget.cpp -c $(DIRECTORIES) $(OPENGL)
 CGUIImageWidget.o: CGUIImageWidget.cpp
 	$(CC) -o $@ CGUIImageWidget.cpp -c $(DIRECTORIES) $(OPENGL)
 CGUIFontWidget.o: CGUIFontWidget.cpp

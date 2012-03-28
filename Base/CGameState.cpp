@@ -346,7 +346,7 @@ void CGameState::LoadHUD() {
    Application.getGUIEngine().addWidget(CabbageHurtFace);
 
 }
-
+CGUIDialogWidget *test;
 void CGameState::Initialize() {
    Charged = 0; aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0; lDown = 0;
    backwardsView = 0; overView = 0; energyStatus = 3.f; prevEnergy = 3.f;
@@ -385,6 +385,9 @@ void CGameState::Initialize() {
    GameWinText->setVisible(false);
    GameWinText->setPosition(SVector2(0.3f, 0.75f));
    GameWinText->setColor(FontColor);
+
+   test = new CGUIDialogWidget("welcome1.dlg");
+   test->start();
 
    GameOverText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
    GameOverText->setText("GAME OVER! YOU ARE DEAD. PRESS SPACE");
@@ -931,10 +934,21 @@ void CGameState::oldDisplay() {
                   Mix_PlayMusic(music, -1);
                }
             }
-            if(Event.Key == SDLK_SPACE && !GameplayManager->isWon()) {
-               spaceDown = 1;
-               if(NoClipMode) {
-                  Player->setVelocity(SVector2(Player->getVelocity().X, 10.0f));
+            if(Event.Key == SDLK_SPACE) {
+               if(!GameplayManager->isWon()) {
+                  if(test && test->isLive()) {
+                     test->next();
+                  }
+                  else if(test && !test->isLive()) {
+                     delete test;
+                     test = NULL;
+                  }
+                  if(!test) {
+                     spaceDown = 1;
+                     if(NoClipMode) {
+                        Player->setVelocity(SVector2(Player->getVelocity().X, 10.0f));
+                     }
+                  }
                }
             }
             if(Event.Key == SDLK_h && !GameplayManager->isWon()) {
