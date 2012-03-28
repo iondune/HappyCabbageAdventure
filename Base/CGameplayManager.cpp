@@ -86,6 +86,10 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
 
             else if ((*it)->Type == CItem::seed) {
                SeedCount++;
+               if (SeedCount == 100) {
+                  PlayerLives++;
+                  SeedCount = 0;
+               }
                KillItemList.push_back(*it);
             }
             ToKill.push_back(*it);
@@ -297,6 +301,11 @@ int const CGameplayManager::getPlayerEnergy() const
 int const CGameplayManager::getPlayerLives() const
 {
    return PlayerLives;
+}
+
+int const CGameplayManager::getSeedCount() const
+{
+   return SeedCount;
 }
 
 bool const CGameplayManager::isJumping() const {

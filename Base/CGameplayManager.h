@@ -76,6 +76,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       int const getPlayerHealth() const;
       int const getPlayerEnergy() const;
       int const getPlayerLives() const;
+      int const getSeedCount() const;
       void subPlayerLife() {PlayerLives--;}
 
       void UseAbility(int energyCost);

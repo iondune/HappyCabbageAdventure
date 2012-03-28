@@ -27,7 +27,7 @@ class CGameState : public CState<CGameState>
    CGameEventManager * GameEventManager;
    CGameEventReceiver GameEventReceiver;
 
-   CGUIFontWidget *GameOverText, *GameWinText, *RestartGameText, *LivesText, *fpsText;
+   CGUIFontWidget *GameOverText, *GameWinText, *RestartGameText, *LivesText, *fpsText, *seedText;
 
    public:
    CGameState();
@@ -37,7 +37,7 @@ class CGameState : public CState<CGameState>
    int numFrames, NumTreeTypes, NumFlowerTypes, lowDef, prevHealth, numBlocks;
    const char * levelName;
    bool oldFern, launch;
-   CGUIImageWidget *Health5, *Health4, *Health3, *Health2, *Health1, *CabbageFace, *CabbageEnergyBar, *CabbageMeter, *CabbageHurtFace;
+   CGUIImageWidget *Health5, *Health4, *Health3, *Health2, *Health1, *CabbageFace, *CabbageEnergyBar, *CabbageMeter, *CabbageHurtFace, *Seed;
    std::vector<CBiggerBlock*> blocksY, blocksX, blocksFinal;
 
    CParticleEngine *f1, *f2, *f3, *glow;

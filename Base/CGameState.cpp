@@ -334,6 +334,9 @@ void CGameState::LoadHUD() {
    CabbageMeter = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/EnergyBarBottom.tga"), SVector2(.47f, .1f));
    CabbageMeter->setPosition(SVector2(.02f, .78f));
 
+   Seed = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage5.tga"), SVector2(.075f, .075f));
+   Seed->setPosition(SVector2((float)WindowWidth/(float)WindowHeight - 0.15f, 0.90f));
+
    //Application.getGUIEngine().addWidget(CabbageFace);
    Application.getGUIEngine().addWidget(Health1);
    Application.getGUIEngine().addWidget(Health2);
@@ -344,6 +347,7 @@ void CGameState::LoadHUD() {
    Application.getGUIEngine().addWidget(CabbageEnergyBar);
    Application.getGUIEngine().addWidget(CabbageFace);
    Application.getGUIEngine().addWidget(CabbageHurtFace);
+   Application.getGUIEngine().addWidget(Seed);
 
 }
 CGUIDialogWidget *test;
@@ -413,17 +417,25 @@ void CGameState::Initialize() {
    fpsText->setPosition(SVector2((float)WindowWidth/(float)WindowHeight - 0.1f, 0.98f));
    fpsText->setColor(FontColor);
 
+   seedText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
+   seedText->setText("x ");
+   seedText->setVisible(true);
+   seedText->setPosition(SVector2((float)WindowWidth/(float)WindowHeight - 0.08f, 0.92f));
+   seedText->setColor(FontColor);
+
    GameWinText->addDropShadow();
    GameOverText->addDropShadow();
    RestartGameText->addDropShadow();
    LivesText->addDropShadow();
    fpsText->addDropShadow();
+   seedText->addDropShadow();
 
    Application.getGUIEngine().addWidget(GameWinText);
    Application.getGUIEngine().addWidget(GameOverText);
    Application.getGUIEngine().addWidget(RestartGameText);
    Application.getGUIEngine().addWidget(LivesText);
    Application.getGUIEngine().addWidget(fpsText);
+   Application.getGUIEngine().addWidget(seedText);
 
    Camera = new CPerspectiveCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
    Application.getSceneManager().setActiveCamera(Camera);
@@ -589,6 +601,10 @@ void CGameState::oldDisplay() {
          numLives = GameplayManager->getPlayerLives();
          sprintf(buf, "%d", numLives);
          LivesText->setText(buf);
+
+         char buff[30];
+         sprintf(buff, "x%d", GameplayManager->getSeedCount());
+         seedText->setText(buff);
 
          Engine->updateAll(Application.getElapsedTime());
          GameplayManager->run(Application.getElapsedTime());
