@@ -16,6 +16,7 @@ public:
       health,
       energy,
       life,
+      seed,
       powerup
    };
 

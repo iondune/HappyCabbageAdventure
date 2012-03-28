@@ -20,6 +20,7 @@ CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabb
    PlayerHealth = 5; PlayerRecovering = false; PlayerActor = playerActor; Engine = engine; PlayerEnergy = 3;
    ShootingLaser = 0;
    JustKilled = 0;
+   SeedCount = 0;
 }
 
 void CGameplayManager::setLives(int num) {
@@ -80,6 +81,11 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
             else if ((*it)->Type == CItem::energy) {
                if (getPlayerEnergy() < 3)
                   PlayerEnergy++;
+               KillItemList.push_back(*it);
+            }
+
+            else if ((*it)->Type == CItem::seed) {
+               SeedCount++;
                KillItemList.push_back(*it);
             }
             ToKill.push_back(*it);

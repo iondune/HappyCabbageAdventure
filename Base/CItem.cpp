@@ -2,6 +2,7 @@
 
 #include "CIHealth.h"
 #include "CIEnergy.h"
+#include "CISeed.h"
 
 void CItem::setShader(CShader* shade) {
    CItem::Shader = shade;
@@ -18,6 +19,11 @@ void CItem::makeItem(float x, float y, float w, float h, ItemType item, CGamepla
    else if (item == energy) {
 	   temp = new CIEnergy(x, y, w*.4f, h * .4f, manager);
 	   temp->Type = item;
+   }
+
+   else if (item == seed) {
+      temp = new CISeed(x, y, w*.2f, h * .2f, manager);
+      temp->Type = item;
    }
    else {
       printf("Invalid item type requested or not implemented.\n");

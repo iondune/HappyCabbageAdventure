@@ -23,6 +23,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 
    public:
       CPlayerView *playerView;
+      int SeedCount;
 
       struct SEnemy
       {
