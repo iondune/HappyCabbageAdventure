@@ -75,6 +75,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CabbageGUI.h" />
+    <ClInclude Include="CGUIDialogWidget.h" />
     <ClInclude Include="CGUIFontWidget.h" />
     <ClInclude Include="CGUIEngine.h" />
     <ClInclude Include="CGUIImageWidget.h" />
@@ -82,6 +83,7 @@
     <ClInclude Include="liboglft\OGLFT.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CGUIDialogWidget.cpp" />
     <ClCompile Include="CGUIEngine.cpp" />
     <ClCompile Include="CGUIFontWidget.cpp" />
     <ClCompile Include="CGUIImageWidget.cpp" />

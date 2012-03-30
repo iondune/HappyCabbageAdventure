@@ -3,6 +3,7 @@
 #include "CIHealth.h"
 #include "CIEnergy.h"
 #include "CISeed.h"
+#include "CILife.h"
 
 void CItem::setShader(CShader* shade) {
    CItem::Shader = shade;
@@ -23,6 +24,10 @@ void CItem::makeItem(float x, float y, float w, float h, ItemType item, CGamepla
 
    else if (item == seed) {
       temp = new CISeed(x, y, w, h, manager);
+      temp->Type = item;
+   }
+   else if (item == life) {
+      temp = new CILife(x, y, w, h, manager);
       temp->Type = item;
    }
    else {

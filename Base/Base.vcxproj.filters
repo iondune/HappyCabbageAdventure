@@ -71,6 +71,12 @@
     <ClCompile Include="EGrape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CISeed.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CILife.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGameEventManager.h">
@@ -140,6 +146,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EGrape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CISeed.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CILife.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -250,6 +250,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
        if (enemyType == 0) {
            block2->setText("Placing Apple\n");
            PreviewEnemy->setMesh(appleMesh);
+           PreviewEnemy->setScale(SVector3(1,1,1));
        }
        if (enemyType == 1) {
            block2->setText("Placing Orange\n");
@@ -277,7 +278,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
        if (enemyType == 5) {
            block2->setText("Placing Blade\n");
            PreviewEnemy->setMesh(bladeMesh);
-           PreviewEnemy->setScale(SVector3(2,2,2));
+           PreviewEnemy->setScale(SVector3(1,1,1));
        }
    }
    if (oneDown && !showHelp && !tDown && !twoDown && !threeDown&& !fourDown) {
@@ -308,7 +309,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
             block2->setText("Adding life");
         }
         else if (itemType == 3) // powerup
-            block2->setText("Adding powerup");
+            block2->setText("Adding Seeds");
    }
    if (tDown && !showHelp ){
        block1->setText("Remove mode");
@@ -735,7 +736,7 @@ void CLWIBState::PrepPreviews() {
          kiwiMesh->calculateNormalsPerFace();
     }
    if(bladeMesh) {
-      bladeMesh->resizeMesh(SVector3(1));
+      bladeMesh->resizeMesh(SVector3(2));
       bladeMesh->centerMeshByExtents(SVector3(0));
       bladeMesh->calculateNormalsPerFace();
    }
@@ -828,6 +829,10 @@ void CLWIBState::PrepItem(float x, float y, int item) {
        tempItem->setMesh(health);
    if (item == 1)
        tempItem->setMesh(energy);
+   if (item == 2)
+       tempItem->setMesh(energy);
+   if (item == 3)
+       tempItem->setMesh(energy);
    tempItem->setShader(ERP_DEFAULT, Diffuse);
    tempItem->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
    tempItem->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
@@ -901,7 +906,6 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
         tempEnemy->setMesh(flameMesh); //flameMesh doesn't work.  Why?
    if (type == 5) {
         tempEnemy->setMesh(bladeMesh);
-        tempEnemy->setScale(SVector3(2,2,2));
    }
    tempEnemy->setShader(ERP_DEFAULT, Diffuse);
    tempEnemy->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
@@ -1099,29 +1103,31 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          else if (!tDown && !oneDown && !threeDown &&!twoDown && fourDown) {
             PrepItem(round(eye.X + previewBlockMouseX),round(eye.Y + previewBlockMouseY),itemType);
          }
-         else { //Delete item
-            if(lastMouseOveredBlock.o) {
-               Application.getSceneManager().removeSceneObject(lastMouseOveredBlock.r);
-               placeables.erase(std::remove(placeables.begin(), placeables.end(), lastMouseOveredBlock.p), placeables.end());
-               blocks.erase(std::remove(blocks.begin(), blocks.end(), lastMouseOveredBlock.r), blocks.end());
-               //redoPlaceables.push_back(lastMouseOveredBlock.p);
-               //redo.push_back(lastMouseOveredBlock.r);
-               int x = lastMouseOveredBlock.mapX;
-               int y = lastMouseOveredBlock.mapY;
+         //else { //Delete item
+         if (tDown && !oneDown && !threeDown && !twoDown && !fourDown) {
+             if(lastMouseOveredBlock.o) {
+                 Application.getSceneManager().removeSceneObject(lastMouseOveredBlock.r);
+                 placeables.erase(std::remove(placeables.begin(), placeables.end(), lastMouseOveredBlock.p), placeables.end());
+                 blocks.erase(std::remove(blocks.begin(), blocks.end(), lastMouseOveredBlock.r), blocks.end());
+                 //redoPlaceables.push_back(lastMouseOveredBlock.p);
+                 //redo.push_back(lastMouseOveredBlock.r);
+                 int x = lastMouseOveredBlock.mapX;
+                 int y = lastMouseOveredBlock.mapY;
 
-               int i,j;
-               for(i = 0; i < lastMouseOveredBlock.p->w; i++) {
-                  for(j = 0; j < lastMouseOveredBlock.p->h; j++) {
-                     blockMap[x+i][y+j].o = false;
-                     blockMap[x+i][y+j].r = NULL;
-                     blockMap[x+i][y+j].p = NULL;
-                     blockMap[x+i][y+j].mapX = -1;
-                     blockMap[x+i][y+j].mapY = -1;
-                  }
-               }
-               lastMouseOveredBlock = blockMap[x][y];
-            }
+                 int i,j;
+                 for(i = 0; i < lastMouseOveredBlock.p->w; i++) {
+                     for(j = 0; j < lastMouseOveredBlock.p->h; j++) {
+                         blockMap[x+i][y+j].o = false;
+                         blockMap[x+i][y+j].r = NULL;
+                         blockMap[x+i][y+j].p = NULL;
+                         blockMap[x+i][y+j].mapX = -1;
+                         blockMap[x+i][y+j].mapY = -1;
+                     }
+                 }
+                 lastMouseOveredBlock = blockMap[x][y];
+             }
          }
+         //}
 
       }
       else if(!Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
