@@ -34,8 +34,8 @@ CMeshSceneObject * CPItem::setupItem(CShader * shader, CShader * dShader, Cabbag
         CItem::makeItem(x, y, 1, 1, CItem::energy, GameplayManager);
     else if (t == 2) // life
         CItem::makeItem(x, y, 1, 1, CItem::life, GameplayManager);
-    else if (t == 3) // powerup
-        CItem::makeItem(x, y, 1, 1, CItem::life, GameplayManager);
+    else if (t == 3) // seeds
+        CItem::makeItem(x, y, 1, 1, CItem::seed, GameplayManager);
     else 
         printf("item not found");
     return new CMeshSceneObject();

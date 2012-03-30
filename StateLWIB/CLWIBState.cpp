@@ -307,9 +307,12 @@ void CLWIBState::OnRenderStart(float const Elapsed)
         }
         else if (itemType == 2) {// life
             block2->setText("Adding life");
+            PreviewItem->setMesh(energy);
         }
-        else if (itemType == 3) // powerup
+        else if (itemType == 3) { // powerup 
             block2->setText("Adding Seeds");
+            PreviewItem->setMesh(energy);
+        }
    }
    if (tDown && !showHelp ){
        block1->setText("Remove mode");
@@ -460,7 +463,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 else
                     enemyType = 0;
             } else if (fourDown) {
-                if (itemType < 2) 
+                if (itemType < 3) 
                     itemType++;
                 else
                     itemType = 0;
@@ -511,7 +514,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 if (itemType != 0)
                     itemType--;
                 else
-                    itemType = 1;
+                    itemType = 3;
             } else if (!oneDown && !threeDown && !tDown){
                 if (cDown == 0) {
                     if (textureType != 0 && textureType > 0)   
@@ -748,7 +751,7 @@ void CLWIBState::PrepPreviews() {
    }
 
    if (cabbageMesh) {
-      cabbageMesh->resizeMesh(SVector3(1));
+      cabbageMesh->resizeMesh(SVector3(2));
       cabbageMesh->centerMeshByExtents(SVector3(0));
       cabbageMesh->calculateNormalsPerVertex();
    }
@@ -776,7 +779,7 @@ void CLWIBState::PrepPreviews() {
    PreviewCabbage->setMesh(cabbageMesh);
    PreviewCabbage->setShader(ERP_DEFAULT, Diffuse);
    PreviewCabbage->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
-   PreviewCabbage->setRotation(SVector3(90, 0, 0));
+   PreviewCabbage->setRotation(SVector3(0, 0, 0));
    PreviewCabbage->setScale(SVector3(.0150f, .00025f,.0016f));
    //
    
@@ -954,7 +957,7 @@ void CLWIBState::PrepCabbage(float x, float y) {
     tempCabbage->setShader(ERP_DEFAULT, Diffuse);
     tempCabbage->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
     tempCabbage->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
-    tempCabbage->setRotation(SVector3(-90, 0, 0));
+    tempCabbage->setRotation(SVector3(-90, 0, 90));
     tempCabbage->setScale(SVector3(0.5, 0.5, 0.5));
     blockMap[(int)x+25][(int)(y-0.5f+25)].o = true;
     blockMap[(int)x+25][(int)(y-0.5f+25)].r = tempCabbage;
@@ -1219,7 +1222,7 @@ void CLWIBState::OnWidgetUnHover(CGUIWidget *widget) {
 
 void CLWIBState::changeTiles() {
 
-    if (change == 0) {
+    if (change == 0) { // blocks
        /* CTexture *grass = new CTexture(CImageLoader::loadImage("Base/grass.bmp"));
         CTexture *dirt = new CTexture(CImageLoader::loadImage("Base/dirt.bmp"));
         CTexture *rock = new CTexture(CImageLoader::loadImage("Base/rock.bmp"));
@@ -1258,7 +1261,7 @@ void CLWIBState::changeTiles() {
         if (!Application.getGUIEngine().isWidgetIn(tileTen))
             Application.getGUIEngine().addWidget(tileTen);
     }
-    if (change == 1) {
+    if (change == 1) { // cabbage
     
         tileOne->setImage(cabbageImage);
         if (!Application.getGUIEngine().isWidgetIn(tileOne))
@@ -1282,8 +1285,8 @@ void CLWIBState::changeTiles() {
             Application.getGUIEngine().removeWidget(tileNine);
         if (Application.getGUIEngine().isWidgetIn(tileTen))
             Application.getGUIEngine().removeWidget(tileTen);
-    }
-    if (change == 2) {
+    } 
+    if (change == 2) { // enemies
 
         tileOne->setImage(apple);
         tileTwo->setImage(orange);
@@ -1314,7 +1317,7 @@ void CLWIBState::changeTiles() {
         if (Application.getGUIEngine().isWidgetIn(tileTen))
             Application.getGUIEngine().removeWidget(tileTen);
     }
-    if (change == 3) {
+    if (change == 3) { // flag
    
         tileOne->setImage(flagImg);
         if (!Application.getGUIEngine().isWidgetIn(tileOne))
@@ -1338,18 +1341,20 @@ void CLWIBState::changeTiles() {
         if (Application.getGUIEngine().isWidgetIn(tileTen))
             Application.getGUIEngine().removeWidget(tileTen);
     }
-    if (change == 4) {
+    if (change == 4) { //items
         tileOne->setImage(leaf);
         tileTwo->setImage(heart);
+        tileThree->setImage(heart);
+        tileFour->setImage(heart);
         if (!Application.getGUIEngine().isWidgetIn(tileOne))
             Application.getGUIEngine().addWidget(tileOne);
         if (!Application.getGUIEngine().isWidgetIn(tileTwo))
             Application.getGUIEngine().addWidget(tileTwo);
-    
-        if (Application.getGUIEngine().isWidgetIn(tileThree))
-            Application.getGUIEngine().removeWidget(tileThree);
-        if (Application.getGUIEngine().isWidgetIn(tileFour))
-            Application.getGUIEngine().removeWidget(tileFour);
+        if (!Application.getGUIEngine().isWidgetIn(tileThree))
+            Application.getGUIEngine().addWidget(tileThree);
+        if (!Application.getGUIEngine().isWidgetIn(tileFour))
+            Application.getGUIEngine().addWidget(tileFour);
+
         if (Application.getGUIEngine().isWidgetIn(tileFive))
             Application.getGUIEngine().removeWidget(tileFive);
         if (Application.getGUIEngine().isWidgetIn(tileSix))
@@ -1455,6 +1460,8 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 2) {
             enemyType = 2;
         }
+        if (change == 4)
+            itemType = 2;
     }
     if (widget == tileFour) {
         if (change == 0) {
@@ -1468,6 +1475,8 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 2) {
             enemyType = 3;
         }
+        if (change == 4)
+            itemType = 3;
     }
     if (widget == tileFive) {
         if (change == 0) {
