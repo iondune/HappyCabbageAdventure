@@ -83,13 +83,21 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
                   PlayerEnergy++;
                KillItemList.push_back(*it);
             }
-
+            else if ((*it)->Type == CItem::energy) {
+               if (getPlayerEnergy() < 3)
+                  PlayerEnergy++;
+               KillItemList.push_back(*it);
+            }
             else if ((*it)->Type == CItem::seed) {
                SeedCount++;
                if (SeedCount == 100) {
                   PlayerLives++;
                   SeedCount = 0;
                }
+               KillItemList.push_back(*it);
+            }
+            else if ((*it)->Type == CItem::life) {
+               PlayerLives++; 
                KillItemList.push_back(*it);
             }
             ToKill.push_back(*it);
