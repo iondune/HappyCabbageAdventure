@@ -34,21 +34,31 @@ void CParticleObject::update() {
 
 void CParticleObject::draw(CScene const * const scene, ERenderPass const Pass)
 {
-	ISceneObject::draw(scene, Pass);
+   //glDisable(GL_DEPTH_TEST);
+   glEnable(GL_POINT_SPRITE);
+   glDepthMask(GL_FALSE);
+   //glDepthFunc(GL_ALWAYS);
+   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+   ISceneObject::draw(scene, Pass);
 
-	switch (Pass)
-	{
-	case ERP_DEFAULT:
-	case ERP_DEFERRED_OBJECTS:
-		particlesRenderable->draw(scene, Pass);
-		break;
+   switch (Pass)
+   {
+   case ERP_DEFAULT:
+   case ERP_DEFERRED_OBJECTS:
+      particlesRenderable->draw(scene, Pass);
+      break;
 
-	case ERP_MODEL_NORMALS:
-		break;
+   case ERP_MODEL_NORMALS:
+      break;
 
-	case ERP_DEFERRED_LIGHTS:
-		break;
-	}
+   case ERP_DEFERRED_LIGHTS:
+      break;
+   }
+   glBlendFunc(GL_ONE, GL_MAX);
+   glDepthMask(GL_TRUE);
+   glDisable(GL_POINT_SPRITE);
+   glDepthFunc(GL_LESS);
+   //glEnable(GL_DEPTH_TEST);
 }
 
 void CParticleObject::setup(std::vector<SVector3*> vectorArr, std::vector<SVector3*> colorArr, std::vector<float> sizeArr, int num, const char* texturePath) {
@@ -74,6 +84,7 @@ void CParticleObject::setup(std::vector<SVector3*> vectorArr, std::vector<SVecto
    particlesRenderable->addUniform("uTexColor", new SUniform<int>(0));
 
    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+
    particlesRenderable->getMaterial().Texture = CImageLoader::loadTexture(texturePath);
 
    particlesRenderable->setShader(ERP_DEFAULT, CShaderLoader::loadShader("Particle"));

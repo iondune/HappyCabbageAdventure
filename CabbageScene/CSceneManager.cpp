@@ -166,7 +166,9 @@ void CScene::update()
    }
 
    RootObject.updateAbsoluteTransformation();
+   PostOpaqueRootObject.updateAbsoluteTransformation();
    RootObject.update();
+   PostOpaqueRootObject.update();
 }
 
 GLuint CSceneManager::QuadHandle = 0;
@@ -219,6 +221,10 @@ void CSceneManager::addSceneObject(ISceneObject * sceneObject)
    RootObject.addChild(sceneObject);
 }
 
+void CSceneManager::addPostOpaqueSceneObject(ISceneObject *sceneObject) {
+   PostOpaqueRootObject.addChild(sceneObject);
+}
+
 void CSceneManager::addImmobileSceneObject(ISceneObject * sceneObject, unsigned int agreement)
 {
    if(agreement != THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT) {
@@ -231,11 +237,18 @@ void CSceneManager::addImmobileSceneObject(ISceneObject * sceneObject, unsigned 
 void CSceneManager::removeSceneObject(ISceneObject * sceneObject)
 {
    RootObject.removeChild(sceneObject);
+   PostOpaqueRootObject.removeChild(sceneObject);
+   //Because you're always gonna want it removed, even if you don't specify the correct location
+}
+
+void CSceneManager::removePostOpaqueSceneObject(ISceneObject * sceneObject) {
+   PostOpaqueRootObject.removeChild(sceneObject);
 }
 
 void CSceneManager::removeAllSceneObjects()
 {
    RootObject.removeChildren();
+   PostOpaqueRootObject.removeChildren();
 }
 
 bool sortISOXY (ISceneObject* a, ISceneObject* b) {
@@ -369,7 +382,6 @@ void CSceneManager::drawAll()
          {
             glClearColor(0.f,0.f,0.f,0.f);
             glDisable(GL_DEPTH_TEST);
-
             glEnable(GL_BLEND);
             glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_COLOR);
          }
@@ -377,6 +389,18 @@ void CSceneManager::drawAll()
          glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
          RootObject.draw(CurrentScene, it->Pass);
+
+         if (it->Pass == ERP_DEFAULT) {
+            glEnable(GL_ALPHA);
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_ONE, GL_MAX);
+         }
+         PostOpaqueRootObject.draw(CurrentScene, it->Pass);
+         if (it->Pass == ERP_DEFAULT) {
+            glBlendFunc(GL_ONE, GL_MAX);
+            glDisable(GL_BLEND);
+            glDisable(GL_ALPHA);
+         }
 
          if (it->Pass == ERP_DEFERRED_LIGHTS)
          {
@@ -392,7 +416,14 @@ void CSceneManager::drawAll()
       SceneFrameBuffer->bind();
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+      glEnable(GL_ALPHA);
+      glEnable(GL_BLEND);
+      glBlendFunc(GL_SRC_ALPHA, GL_ONE);
       RootObject.draw(CurrentScene, ERP_DEFAULT);
+      PostOpaqueRootObject.draw(CurrentScene, ERP_DEFAULT);
+      glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+      glDisable(GL_BLEND);
+      glDisable(GL_ALPHA);
    }
 
    SceneChanged = false;
@@ -492,17 +523,20 @@ CMeshSceneObject * CSceneManager::addMeshSceneObject(std::string const & Mesh, s
 void CScene::enableDebugData(EDebugData::Domain const type)
 {
    RootObject.enableDebugData(type);
+   PostOpaqueRootObject.enableDebugData(type);
 }
 
 void CScene::disableDebugData(EDebugData::Domain const type)
 {
    RootObject.disableDebugData(type);
+   PostOpaqueRootObject.disableDebugData(type);
 }
 
 
 void CSceneManager::load()
 {
    RootObject.load(this, ERP_DEFAULT);
+   PostOpaqueRootObject.load(this, ERP_DEFAULT);
 }
 
 CFrameBufferObject * CSceneManager::getSceneFrameBuffer()

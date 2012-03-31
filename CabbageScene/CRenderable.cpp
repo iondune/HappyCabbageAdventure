@@ -175,15 +175,8 @@ void CRenderable::draw(CScene const * const Scene, ERenderPass const Pass)
     ShaderContext.bindIndexBufferObject(IndexBufferObject->getHandle());
 
 	// Finally draw!
-    if(DrawType == GL_POINTS)
-	{
-		glEnable(GL_POINT_SPRITE);
-		glEnable(GL_ALPHA);
-		glEnable(GL_BLEND);
-		glDrawArrays(DrawType, 0, Size);
-		glDisable(GL_BLEND);
-		glDisable(GL_ALPHA);
-		glDisable(GL_POINT_SPRITE);
+    if(DrawType == GL_POINTS) {
+       glDrawArrays(DrawType, 0, Size);
     }
     else
 	{
@@ -272,13 +265,7 @@ void CRenderable::drawNormals(CScene const * const scene)
     ShaderContext.bindIndexBufferObject(IndexBufferObject->getHandle());
 
     if(DrawType == GL_POINTS) {
-       glEnable(GL_POINT_SPRITE);
-       glEnable(GL_ALPHA);
-       glEnable(GL_BLEND);
        glDrawArrays(DrawType, 0, Size);
-       glDisable(GL_BLEND);
-       glDisable(GL_ALPHA);
-       glDisable(GL_POINT_SPRITE);
     }
     else {
        // Finally draw!

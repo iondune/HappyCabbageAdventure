@@ -55,6 +55,7 @@ protected:
     std::map<std::string, IUniform const *> Uniforms;
 
 	ISceneObject RootObject;
+	ISceneObject PostOpaqueRootObject;
    ISceneObject *HierarchyObject, *NonHierarchyObject;
 
 	bool UseCulling, UseHierarchy;
@@ -116,6 +117,8 @@ public:
 
     CSceneManager(SPosition2 const & screenSize);
 
+    void removePostOpaqueSceneObject(ISceneObject * sceneObject);
+    void addPostOpaqueSceneObject(ISceneObject *sceneObject);
     void addSceneObject(ISceneObject * sceneObject);
     void addImmobileSceneObject(ISceneObject * sceneObject, unsigned int agreement);
     void removeSceneObject(ISceneObject * sceneObject);

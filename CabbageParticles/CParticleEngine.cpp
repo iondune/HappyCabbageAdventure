@@ -211,7 +211,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
 
    myObj->setup(positionArr, colorArr, sizeArr, max, textureToUse);
 
-   CApplication::get().getSceneManager().addSceneObject(myObj);
+   CApplication::get().getSceneManager().addPostOpaqueSceneObject(myObj);
    /*
     * Doesn't work when I turn off updating for immobile objects.
    // This makes flame particles fixed in place. If you're going to add a new flame particle after the first frame has been drawn, there might be problems. Talk to Alden.
