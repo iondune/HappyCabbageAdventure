@@ -917,8 +917,10 @@ void CGameState::oldDisplay() {
                }
             }
             if(Event.Key == SDLK_e && !GameplayManager->isWon()) {
+               /*
                if(!particleCubeEngine || (particleCubeEngine && particleCubeEngine->dead))
                   particleCubeEngine = new CParticleEngine(SVector3(0, 1, 0), 100, 10, CUBE_PARTICLE);
+                  */
             }
             if(Event.Key == SDLK_r && !GameplayManager->isWon()) {
                if((!particleLeafEngine || (particleLeafEngine && particleLeafEngine->dead)) && GameplayManager->getPlayerEnergy() > 0) {
