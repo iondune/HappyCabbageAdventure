@@ -46,7 +46,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       Cabbage::Collider::CActor * PlayerActor;
       Cabbage::Collider::CObject * VictoryFlag;
       Cabbage::Collider::CObject *NULL_BLOCK;
-      int PlayerHealth, PlayerEnergy, PlayerLives;
+      int PlayerHealth, PlayerEnergy;
       float PlayerRecovering;
 
       Cabbage::Collider::CEngine * Engine;
@@ -56,7 +56,12 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
    public:
       CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CEngine * engine);
 
-      void setLives(int num);
+      static int PlayerLives;
+      static void setLives(int num);
+      static int const getPlayerLives();
+      static int const getNumLives();
+      static void subPlayerLife() {PlayerLives--;}
+
       void OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With);
       void runDeathSequence(float);
       void runVictorySequence(float);
@@ -75,9 +80,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 
       int const getPlayerHealth() const;
       int const getPlayerEnergy() const;
-      int const getPlayerLives() const;
       int const getSeedCount() const;
-      void subPlayerLife() {PlayerLives--;}
 
       void UseAbility(int energyCost);
       int const DamagePlayer(int damageTaken, CBadGuy* attacker, Cabbage::Collider::CCollideable* Other);
@@ -95,7 +98,6 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       CGameEventManager & getGameEventManager();
 
       void setVictoryFlag(Cabbage::Collider::CObject * f);
-
 };
 
 #endif

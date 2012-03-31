@@ -269,8 +269,10 @@ void CGameState::EngineInit( void ) {
    SRect2 area;
 
    GameplayManager = new CGameplayManager(Player, Engine);
+   /*
    if(numLives != -3)
       GameplayManager->setLives(numLives);
+   */
    numLives = GameplayManager->getPlayerLives();
 
    GameEventManager = & GameplayManager->getGameEventManager();

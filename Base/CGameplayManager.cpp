@@ -2,6 +2,8 @@
 #include "CGameEventManager.h"
 #include "EKiwi.h"
 
+int CGameplayManager::PlayerLives;
+
 CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CEngine * engine)
 : PlayerActor(playerActor), PlayerRecovering(false), PlayerHealth(5), Engine(engine), PlayerEnergy(3)
 {
@@ -16,7 +18,6 @@ CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabb
    GodModeTime = 0;
    dead = 0;
    gameOver = 0;
-   PlayerLives = 3;
    PlayerHealth = 5; PlayerRecovering = false; PlayerActor = playerActor; Engine = engine; PlayerEnergy = 3;
    ShootingLaser = 0;
    JustKilled = 0;
@@ -306,7 +307,12 @@ int const CGameplayManager::getPlayerEnergy() const
    return PlayerEnergy;
 }
 
-int const CGameplayManager::getPlayerLives() const
+int const CGameplayManager::getPlayerLives()
+{
+   return PlayerLives;
+}
+
+int const CGameplayManager::getNumLives()
 {
    return PlayerLives;
 }

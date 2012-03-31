@@ -276,6 +276,8 @@ void CMainMenuState::OnWidgetClick(CGUIWidget * Widget)
    if(Widget == StartGame) {
       COverworldState::get().newGame = true;
       CApplication::get().getStateManager().setState(new CFadeOutState(& COverworldState::get(), 0.3f));
+      CGameplayManager::setLives(3);
+      printf("NumLives: %d\n", CGameplayManager::getNumLives());
    }
    else if(Widget == StartEditor) {
       stopSoundtrack();

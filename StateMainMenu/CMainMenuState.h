@@ -19,6 +19,7 @@
 #include "../StateOverworld/COverworldState.h"
 #include "../CabbageSound/sound.h"
 #include "../CabbageGUI/CabbageGUI.h"
+#include "../Base/CGameplayManager.h"
 
 
 
