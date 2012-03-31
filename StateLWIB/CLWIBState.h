@@ -29,6 +29,7 @@ class CLWIBState : public CState<CLWIBState>
    int oneDown, twoDown, threeDown, fourDown, clickDown;
    int cabbageFlag;
    int flagFlag;
+   int secretFlag;
    int xCabbage;
    int yCabbage;
    int blockCycle;
@@ -80,7 +81,7 @@ class CLWIBState : public CState<CLWIBState>
    void PrepBlock(float x, float y, int w, int h, int d, int t, int moving); 
    void PrepEnemy(float x, float y, int type); 
    void PrepCabbage(float x, float y);
-   void PrepFlag(float X ,float y);
+   void PrepFlag(float X ,float y, int t);
    void PrepItem(float x, float y, int type);
    void PrepGrass(float x, float y, float w, float h);
    void PrepPreviews();

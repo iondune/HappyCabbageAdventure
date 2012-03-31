@@ -45,6 +45,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       int won, dead, gameOver;
       Cabbage::Collider::CActor * PlayerActor;
       Cabbage::Collider::CObject * VictoryFlag;
+      Cabbage::Collider::CObject * SecretVictoryFlag;
       Cabbage::Collider::CObject *NULL_BLOCK;
       int PlayerHealth, PlayerEnergy;
       float PlayerRecovering;
@@ -98,6 +99,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       CGameEventManager & getGameEventManager();
 
       void setVictoryFlag(Cabbage::Collider::CObject * f);
+      void setSecretVictoryFlag(Cabbage::Collider::CObject * f);
 };
 
 #endif

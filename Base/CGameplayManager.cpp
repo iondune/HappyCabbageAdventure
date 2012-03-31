@@ -62,8 +62,12 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
    }
    if (Object == VictoryFlag)
       Flag = Object;
+   if (Object == SecretVictoryFlag)
+       Flag = Object;
    if (With == VictoryFlag)
       Flag = With;
+   if (With == SecretVictoryFlag)
+       Flag = With;
    if(Flag)
       printf("Flag collision\n");
 
@@ -280,6 +284,10 @@ SVector2 CGameplayManager::getPlayerLocation() {
 
 void CGameplayManager::setVictoryFlag(Cabbage::Collider::CObject * f) {
    VictoryFlag = f;
+}
+
+void CGameplayManager::setSecretVictoryFlag(Cabbage::Collider::CObject * f) {
+   SecretVictoryFlag = f;
 }
 
 bool const CGameplayManager::isWon() const

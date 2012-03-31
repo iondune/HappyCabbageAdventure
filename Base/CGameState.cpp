@@ -18,7 +18,7 @@ using namespace Cabbage::Collider;
 CEngine *Engine;
 CActor *Player, *Derp, *WinPlayer;
 CLight * PlayerLight;
-CObject *Floor, *Block, *victoryBlock;
+CObject *Floor, *Block, *victoryBlock, *secretVictoryBlock;
 CPlayerView *PlayerView;
 std::vector<CElevator*> elevators;
 int Charged = 0;
@@ -143,13 +143,21 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             h = xml->getAttributeValueAsInt(2);
             w = xml->getAttributeValueAsInt(3);
             t = xml->getAttributeValueAsInt(4);
-            victoryBlock = Engine->addObject();
-            victoryBlock->setArea(SRect2((float)x,(float)y, 1, 5));
-            //PrepBlock(x,y+1,1,1);
-            flagLogo->setTranslation(SVector3((float)x, (float) y+.9f, 1.0f));
-            renderFlag->setTranslation(SVector3((float)x,(float) y+.5f, 1.0f));
-            GameplayManager->setVictoryFlag(victoryBlock);
+            if (t == 0) {
+                victoryBlock = Engine->addObject();
+                victoryBlock->setArea(SRect2((float)x,(float)y, 1, 5));
+                //PrepBlock(x,y+1,1,1);
+                flagLogo->setTranslation(SVector3((float)x, (float) y+.9f, 1.0f));
+                renderFlag->setTranslation(SVector3((float)x,(float) y+.5f, 1.0f));
+                GameplayManager->setVictoryFlag(victoryBlock);
+            }
             if (t == 1){
+                secretVictoryBlock = Engine->addObject();
+                secretVictoryBlock->setArea(SRect2((float)x,(float)y, 1, 5));
+
+                flagLogo2->setTranslation(SVector3((float)x, (float) y+.9f, 1.0f));
+                renderSecretFlag->setTranslation(SVector3((float)x,(float) y+.5f, 1.0f));
+                GameplayManager->setSecretVictoryFlag(secretVictoryBlock);
                //add victory flag
             }
          }
@@ -466,6 +474,8 @@ void CGameState::Initialize() {
    Application.getSceneManager().addSceneObject(playerRenderable);
    Application.getSceneManager().addSceneObject(renderFlag);
    Application.getSceneManager().addSceneObject(flagLogo);
+   Application.getSceneManager().addSceneObject(renderSecretFlag);
+   Application.getSceneManager().addSceneObject(flagLogo2);
    Application.getSceneManager().addSceneObject(renderWinCabbage);
 
    srand((unsigned int) time(NULL));
@@ -757,6 +767,7 @@ void CGameState::oldDisplay() {
 
                RunVictorySequence(Elapsed);
                Engine->removeObject(victoryBlock);
+               Engine->removeObject(secretVictoryBlock);
                GameWinText->setVisible(true);
             }
 
@@ -2088,4 +2099,23 @@ void CGameState::oldDisplay() {
          flagLogo->setShader(ERP_DEFAULT, Toon);
          flagLogo->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
          flagLogo->setShader(ERP_DEFERRED_OBJECTS, DeferredFlat);
+
+
+         renderSecretFlag = new CMeshSceneObject();
+         renderSecretFlag->setMesh(flagMesh);
+         renderSecretFlag->setTranslation(SVector3(170, 100.f, 1.0f));
+         renderSecretFlag->setRotation(SVector3(-90,0,0));
+         renderSecretFlag->setScale(SVector3(.0150f, .00025f,.0016f));
+         renderSecretFlag->setTexture(flagTxt);
+         renderSecretFlag->setShader(ERP_DEFAULT, ToonTexture);
+         renderSecretFlag->setShader(ERP_DEFERRED_OBJECTS, DeferredToonTexture);
+
+         flagLogo2 = new CMeshSceneObject();
+         flagLogo2->setMesh(cabbageMesh);
+         flagLogo2->setTranslation(SVector3(170, 100.f, 1.0f));
+         flagLogo2->setRotation(SVector3(-90,0,0));
+         flagLogo2->setScale(SVector3(.75f));
+         flagLogo2->setShader(ERP_DEFAULT, Toon);
+         flagLogo2->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+         flagLogo2->setShader(ERP_DEFERRED_OBJECTS, DeferredFlat);
       }

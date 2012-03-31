@@ -60,6 +60,7 @@ void CLWIBState::begin()
    textureType = 0;
    enemyType = 0;
    itemType = 0;
+   secretFlag = 0;
    change = 0; //this determines
    aDown = dDown = spaceDown = wDown = sDown = gDown = fDown = tDown = eDown = mDown = oneDown = twoDown = threeDown = cDown = 0;
    cubeMesh = CMeshLoader::createCubeMesh();
@@ -289,8 +290,12 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    }
    if (threeDown && !showHelp && !tDown && !twoDown && !oneDown&& !fourDown) {
        block3->setVisible(false);
-       block2->setVisible(false);
+       block2->setVisible(true);
        block1->setText("Insert flag");
+       if (secretFlag == 0)
+           block2->setText("regular flag");
+       if (secretFlag == 1)
+           block2->setText("secret flag");
        PreviewCabbage->setMesh(flagMesh);
    }
    if (!threeDown && !showHelp && !tDown && !twoDown && !oneDown && fourDown) {
@@ -462,6 +467,11 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                     enemyType++;
                 else
                     enemyType = 0;
+            } else if (threeDown){ 
+                if (secretFlag < 1)
+                    secretFlag++;
+                else
+                    secretFlag = 0;
             } else if (fourDown) {
                 if (itemType < 3) 
                     itemType++;
@@ -510,6 +520,11 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                     enemyType--;
                 else
                     enemyType = 5;
+            } else if (threeDown) {
+                if (secretFlag == 1)
+                    secretFlag--;
+                else
+                    secretFlag = 1;
             } else if (fourDown) {
                 if (itemType != 0)
                     itemType--;
@@ -653,7 +668,8 @@ void CLWIBState::loadWorld() {
            {
               x = xml->getAttributeValueAsInt(0);
               y = xml->getAttributeValueAsInt(1);
-              PrepFlag((float)x,(float)y);
+              t = xml->getAttributeValueAsInt(4);
+              PrepFlag((float)x,(float)y,t);
            }
            if (!strcmp("CPItem", xml->getNodeName()))
            {
@@ -852,7 +868,7 @@ void CLWIBState::PrepItem(float x, float y, int item) {
 
 }
 
-void CLWIBState::PrepFlag(float x, float y) {
+void CLWIBState::PrepFlag(float x, float y, int t) {
 
    if(x < -25 || y < -25 || x >= 500 || y >= 75)
       return;
@@ -865,7 +881,7 @@ void CLWIBState::PrepFlag(float x, float y) {
    CMeshSceneObject *tempFlag;
    CFlag *tempPlaceable;
    blocks.push_back(tempFlag = new CMeshSceneObject());
-   placeables.push_back(tempPlaceable = new CFlag(x, y, 1, 1,0));//add flag
+   placeables.push_back(tempPlaceable = new CFlag(x, y, 1, 1,t));//add flag
    tempFlag->setMesh(flagMesh);
    tempFlag->setShader(ERP_DEFAULT, Diffuse);
    tempFlag->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
@@ -1095,7 +1111,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
             PrepEnemy(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY),enemyType);
          }
          if(!tDown && !twoDown && !oneDown && threeDown&& !fourDown) {
-            PrepFlag(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
+            PrepFlag(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), secretFlag);
          }
          if(!tDown && oneDown && !threeDown && !twoDown&& !fourDown) {
              PrepCabbage(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
@@ -1424,6 +1440,9 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 2) {
             enemyType = 0;
         }
+        if (change == 3) {
+            secretFlag = 0;
+        }
         if (change == 4) {
             itemType = 0;
         }
@@ -1441,6 +1460,9 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         }
         if (change == 2) {
             enemyType = 1;
+        }
+        if (change == 3) {
+            secretFlag = 1;
         }
         if (change == 4) {
             itemType =1; 
