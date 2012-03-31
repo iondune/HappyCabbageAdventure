@@ -1336,10 +1336,12 @@ void CLWIBState::changeTiles() {
     if (change == 3) { // flag
    
         tileOne->setImage(flagImg);
+        tileTwo->setImage(flagImg);
         if (!Application.getGUIEngine().isWidgetIn(tileOne))
             Application.getGUIEngine().addWidget(tileOne);
-        if (Application.getGUIEngine().isWidgetIn(tileTwo))
-            Application.getGUIEngine().removeWidget(tileTwo);
+        if (!Application.getGUIEngine().isWidgetIn(tileTwo))
+            Application.getGUIEngine().addWidget(tileTwo);
+
         if (Application.getGUIEngine().isWidgetIn(tileThree))
             Application.getGUIEngine().removeWidget(tileThree);
         if (Application.getGUIEngine().isWidgetIn(tileFour))
