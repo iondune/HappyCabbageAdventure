@@ -102,7 +102,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
                colorArr.push_back(new SVector3(temp*3, temp, temp));
             }
 
-            sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 10);
+            sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 15);
             break;
          case DEATH_PARTICLE:
             if(rand() % 3 == 0) {

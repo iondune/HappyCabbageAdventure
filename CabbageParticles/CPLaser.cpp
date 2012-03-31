@@ -24,7 +24,7 @@ void CPLaser::updateMatrices(float timeElapsed) {
    else if(Duration == -1) {}
    else {
       sineValue += 4*timeElapsed;
-      Amplitude = Amplitude + (Amplitude < 0 ? 1 : -1)*1.5f*timeElapsed; 
+      Amplitude = Amplitude + (Amplitude < 0 ? 1 : -1)*1.8f*timeElapsed; 
       if(Amplitude <= 0.01 && Amplitude >= -0.01)
          Amplitude = 0;
       Duration += timeElapsed;

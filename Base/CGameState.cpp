@@ -904,7 +904,7 @@ void CGameState::oldDisplay() {
                //GameplayManager->setChargingLaser
                if(GameplayManager->getPlayerEnergy() > 0) {
                   if(!particleLaserFireEngine && (!particleLaserEngine || (particleLaserEngine && particleLaserEngine->dead))) {
-                     particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 400, 2.3f, LASER_CHARGING_PARTICLE);
+                     particleLaserEngine = new CParticleEngine(SVector3(0, 1, 0), 700, 2.3f, LASER_CHARGING_PARTICLE);
                      if (playChargeLaser) { //If making multiple sounds, do here
                         playChargeLaser = false;
                         aChannel = Mix_PlayChannel(-1, chargeLaser2, 0);
@@ -1049,7 +1049,7 @@ void CGameState::oldDisplay() {
                      GameplayManager->LaserBox = SRect2(Player->getArea().getCenter() - SVector2(5.5f, 0.0f), Player->getArea().Size + SVector2(5.0f, 0.0f));
                   }
 
-                  particleLaserFireEngine = new CParticleEngine(SVector3(0, 1, 0), 1500, 1.2f, LASER_FIRING_PARTICLE);
+                  particleLaserFireEngine = new CParticleEngine(SVector3(0, 1, 0), 5000, 1.2f, LASER_FIRING_PARTICLE);
                   particleLaserFireEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
                   particleLaserFireEngine->setLookRight(PlayerView->getLookRight());
                }
