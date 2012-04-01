@@ -418,7 +418,7 @@ void CGameState::Initialize() {
    LivesText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
    LivesText->setText("Lives: ");
    LivesText->setVisible(true);
-   LivesText->setPosition(SVector2(0.14f, 0.87f));
+   LivesText->setPosition(SVector2(0.13f, 0.87f));
    LivesText->setColor(SColor(0.0f, 0.80f, 0.0f));
 
    fpsText = new CGUIFontWidget("WIFFLES_.TTF", 15.f);

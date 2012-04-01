@@ -3,6 +3,7 @@
 #include "EKiwi.h"
 
 int CGameplayManager::PlayerLives;
+int CGameplayManager::SeedCount;
 
 CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CEngine * engine)
 : PlayerActor(playerActor), PlayerRecovering(false), PlayerHealth(5), Engine(engine), PlayerEnergy(3)
@@ -21,7 +22,7 @@ CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabb
    PlayerHealth = 5; PlayerRecovering = false; PlayerActor = playerActor; Engine = engine; PlayerEnergy = 3;
    ShootingLaser = 0;
    JustKilled = 0;
-   SeedCount = 0;
+
 }
 
 void CGameplayManager::setLives(int num) {
@@ -325,7 +326,7 @@ int const CGameplayManager::getNumLives()
    return PlayerLives;
 }
 
-int const CGameplayManager::getSeedCount() const
+int const CGameplayManager::getSeedCount()
 {
    return SeedCount;
 }

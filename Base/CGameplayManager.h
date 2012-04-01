@@ -23,7 +23,6 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 
    public:
       CPlayerView *playerView;
-      int SeedCount;
 
       struct SEnemy
       {
@@ -58,6 +57,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CEngine * engine);
 
       static int PlayerLives;
+      static int SeedCount;
       static void setLives(int num);
       static int const getPlayerLives();
       static int const getNumLives();
@@ -81,7 +81,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 
       int const getPlayerHealth() const;
       int const getPlayerEnergy() const;
-      int const getSeedCount() const;
+      static int const getSeedCount();
 
       void UseAbility(int energyCost);
       int const DamagePlayer(int damageTaken, CBadGuy* attacker, Cabbage::Collider::CCollideable* Other);
