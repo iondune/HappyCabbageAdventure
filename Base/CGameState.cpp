@@ -360,7 +360,6 @@ void CGameState::LoadHUD() {
    Application.getGUIEngine().addWidget(Seed);
 
 }
-CGUIDialogWidget *test;
 void CGameState::Initialize() {
    Charged = 0; aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0; lDown = 0;
    backwardsView = 0; overView = 0; energyStatus = 3.f; prevEnergy = 3.f;
@@ -400,8 +399,7 @@ void CGameState::Initialize() {
    GameWinText->setPosition(SVector2(0.3f, 0.75f));
    GameWinText->setColor(FontColor);
 
-   test = new CGUIDialogWidget("welcome1.dlg");
-   test->start();
+   DialogWidget = NULL;
 
    GameOverText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
    GameOverText->setText("GAME OVER! YOU ARE DEAD. PRESS SPACE");
@@ -868,9 +866,15 @@ void CGameState::oldDisplay() {
          if(Event.Pressed){
             if(Event.Key == SDLK_w && !GameplayManager->isWon()){
                wDown = 1;
+               if(NoClipMode) {
+                  Player->setVelocity(SVector2(Player->getVelocity().X, 10.0f));
+               }
             }
             if(Event.Key == SDLK_s && !GameplayManager->isWon()){
                sDown = 1;
+               if(NoClipMode) {
+                  Player->setVelocity(SVector2(Player->getVelocity().X, -10.0f));
+               }
             }
 
 
@@ -965,20 +969,24 @@ void CGameState::oldDisplay() {
                   Mix_PlayMusic(music, -1);
                }
             }
+            if(Event.Key == SDLK_z) {
+               if(DialogWidget && DialogWidget->isLive()) {
+                  DialogWidget->next();
+                  if(!DialogWidget->isLive()) {
+                     delete DialogWidget;
+                     DialogWidget = NULL;
+                  }
+               }
+               else {
+                  DialogWidget = new CGUIDialogWidget("welcome1.dlg");
+                  DialogWidget->start();
+               }
+            }
             if(Event.Key == SDLK_SPACE) {
                if(!GameplayManager->isWon()) {
-                  if(test && test->isLive()) {
-                     test->next();
-                  }
-                  else if(test && !test->isLive()) {
-                     delete test;
-                     test = NULL;
-                  }
-                  if(!test) {
-                     spaceDown = 1;
-                     if(NoClipMode) {
-                        Player->setVelocity(SVector2(Player->getVelocity().X, 10.0f));
-                     }
+                  spaceDown = 1;
+                  if(NoClipMode) {
+                     Player->setVelocity(SVector2(Player->getVelocity().X, 10.0f));
                   }
                }
             }

@@ -28,6 +28,7 @@ class CGameState : public CState<CGameState>
    CGameEventReceiver GameEventReceiver;
 
    CGUIFontWidget *GameOverText, *GameWinText, *RestartGameText, *LivesText, *fpsText, *seedText;
+   CGUIDialogWidget *DialogWidget;
 
    public:
    CGameState();
