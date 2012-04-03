@@ -967,7 +967,7 @@ void CGameState::oldDisplay() {
             if(Event.Key == SDLK_h && !GameplayManager->isWon()) {
                NoClipMode = ~NoClipMode;
                if(NoClipMode) {
-                  Player->CollideableLevel = INTERACTOR_NULL_BLOCK;
+                  Player->CollideableLevel = 0;//INTERACTOR_NULL_BLOCK;
                   Player->CanCollideWith = INTERACTOR_NULL_BLOCK;
                   Player->setControlFall(false);
                   Player->setFallAcceleration(0.0f);
