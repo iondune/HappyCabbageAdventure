@@ -1,11 +1,13 @@
 #include "CBiggerBlock.h"
 
-CBiggerBlock::CBiggerBlock(float nx, float ny, float nw, float nh) : x(nx), y(ny), w(nw), h(nh) {
+#define MAX(x,y) ((x)>(y)?(x):(y))
+CBiggerBlock::CBiggerBlock(float nx, float ny, float nw, float nh, float d) : x(nx), y(ny), w(nw), h(nh), z(d) {
 }
 
 void CBiggerBlock::addToEngine(Cabbage::Collider::CEngine *Engine) {
    Cabbage::Collider::CObject *block = Engine->addObject();
    block->setArea(SRect2(x, y, w, h));
+   block->setDepth(z);
 }
 
 bool sortXY (CBiggerBlock* a, CBiggerBlock* b) {
@@ -26,11 +28,11 @@ CBiggerBlock * consolidateY(CBiggerBlock *a, CBiggerBlock *b) {
    if(b->x == a->x && b->w == a->w) {
       // a is on the bottom
       if((b->y == (a->y + a->h))) {
-         return new CBiggerBlock(a->x, a->y, a->w, a->h + b->h);
+         return new CBiggerBlock(a->x, a->y, a->w, a->h + b->h, MAX(a->z, b->z));
       }
       // b is on the bottom
       else if(a->y == (b->y + b->h)) {
-         return new CBiggerBlock(b->x, b->y, a->w, a->h + b->h);
+         return new CBiggerBlock(b->x, b->y, a->w, a->h + b->h, MAX(a->z, b->z));
       }
    }
    return NULL;
@@ -40,11 +42,11 @@ CBiggerBlock * consolidateX(CBiggerBlock *a, CBiggerBlock *b) {
    if(b->y == a->y && b->h == a->h) {
       // a is on the left
       if((b->x == (a->x + a->w))) {
-         return new CBiggerBlock(a->x, a->y, a->w + b->w, a->h);
+         return new CBiggerBlock(a->x, a->y, a->w + b->w, a->h, MAX(a->z, b->z));
       }
       // b is on the right
       else if((a->x == (b->x + b->w))) {
-         return new CBiggerBlock(b->x, b->y, a->w + b->w, a->h);
+         return new CBiggerBlock(b->x, b->y, a->w + b->w, a->h, MAX(a->z, b->z));
       }
    }
    return NULL;

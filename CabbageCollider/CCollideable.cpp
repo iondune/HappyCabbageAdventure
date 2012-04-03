@@ -17,7 +17,7 @@ namespace Collider
 		: Friction(1.f), Elasticity(0.f)
 	{}
 
-	CCollideable::CCollideable() : CollideableType(COLLIDEABLE_TYPE_COLLIDEABLE), CollideableLevel(INTERACTOR_ALL)
+	CCollideable::CCollideable() : CollideableType(COLLIDEABLE_TYPE_COLLIDEABLE), CollideableLevel(INTERACTOR_ALL), VisualDepth(0.0f)
 	{}
 
 	CCollideable::~CCollideable()
@@ -38,7 +38,15 @@ namespace Collider
 		return Material;
 	}
 
-	CCollideable::SMaterial & CCollideable::getMaterial()
+   void CCollideable::setDepth(float f) {
+      VisualDepth = f;
+   }
+   float CCollideable::getDepth() {
+      return VisualDepth;
+   }
+
+
+   CCollideable::SMaterial & CCollideable::getMaterial()
 	{
 		return Material;
 	}

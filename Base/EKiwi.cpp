@@ -17,6 +17,7 @@ EKiwi::EKiwi(float x, float y, float w, float h, CGameplayManager* manager, int 
    rotateBird = 0.0f;
    bombDropped = false;
 
+   Depth = 1.f;
    inZ = 0;
    zTimer = 0.0f;
    oldSineValue = 0.0f;
@@ -143,7 +144,7 @@ void EKiwi::doRenderable() {
 
    Renderable->setRotation(SVector3(-90 + rotateBird, 0, -90));
 
-   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, zTimer*0.9f*(1.0f/Z_SPEED)));
+   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, zTimer*0.9f*Depth*(1.0f/Z_SPEED)));
    //printf("%d: %0.2f %0.2f\n", this, Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y);
 
    if(Actor->getVelocity().X < -0.01f)

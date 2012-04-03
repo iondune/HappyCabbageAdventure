@@ -58,6 +58,8 @@ namespace Collider
 
 		CCollideable();
 
+      float VisualDepth;
+
 	public:
 
 		virtual ~CCollideable();
@@ -70,9 +72,11 @@ namespace Collider
 
       int CollideableType, CanCollideWith, CollideableLevel;
 
-		virtual void draw();
+      virtual void draw();
 
-	};
+      void setDepth(float);
+      float getDepth();
+   };
 }
 }
 

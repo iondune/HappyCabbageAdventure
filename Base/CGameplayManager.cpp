@@ -133,6 +133,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
                Cabbage::Collider::CActor* actor = (*it)->Actor;
                ((EKiwi*)(*it))->inZ = 1;
                ((EKiwi*)(*it))->lastX = Object->getArea().getCenter().X;
+               ((EKiwi*)(*it))->Depth = With->getDepth();
 
                SVector2 newPos = actor->LastPosition + actor->Movement;
                SVector2 size = actor->getArea().Size;

@@ -113,8 +113,13 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
                ptr->isMovingPlatform = 0;
                numBlocks++;
                int curW = w;
-               for(; curW > 0; curW--)
-                  blocksY.push_back(new CBiggerBlock((float)x + (w - curW), (float)y, 1.0f, (float)h));
+               //Hard case for ground blocks...
+               if(w == 5 && h == 5 && d == 5) {
+                  blocksY.push_back(new CBiggerBlock((float)x, (float)y, (float)w, (float)h, (float)d));
+               }
+               else
+                  for(; curW > 0; curW--)
+                     blocksY.push_back(new CBiggerBlock((float)x + (w - curW), (float)y, 1.0f, (float)h, (float)d));
             }
          }
          if(!strcmp("CEnemy", xml->getNodeName()))

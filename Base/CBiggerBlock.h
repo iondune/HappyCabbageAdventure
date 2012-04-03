@@ -2,9 +2,9 @@
 
 class CBiggerBlock {
    public:
-   float x, y, w, h;
+   float x, y, w, h, z;
    
-   CBiggerBlock(float nx, float ny, float nw, float nh);
+   CBiggerBlock(float nx, float ny, float nw, float nh, float);
    
    void addToEngine(Cabbage::Collider::CEngine *Engine);
 };
