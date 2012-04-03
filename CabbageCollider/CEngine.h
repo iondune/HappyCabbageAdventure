@@ -104,6 +104,7 @@ namespace Cabbage
 
             void removeAll() {
                Objects.clear();
+               addNullBlock();
                Actors.clear();
             }
 
@@ -120,7 +121,9 @@ namespace Cabbage
 
             CEngine()
                : Timer(0.f), CollisionResponder(0)
-            {}
+            {
+               addNullBlock();
+            }
 
             ~CEngine()
             {}
@@ -210,6 +213,13 @@ namespace Cabbage
                }
 
                return height;
+            }
+
+            void addNullBlock() {
+               CObject * nullBlock = this->addObject();
+               nullBlock->setArea(SRect2(-1000.f, -1000.f, 0.01f, 0.01f)); 
+               nullBlock->CollideableLevel = INTERACTOR_NULL_BLOCK; 
+               nullBlock->CanCollideWith = INTERACTOR_ALL_ALL;
             }
 
             CObject * addObject()

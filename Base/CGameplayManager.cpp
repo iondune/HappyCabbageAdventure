@@ -9,10 +9,6 @@ CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabb
 : PlayerActor(playerActor), PlayerRecovering(false), PlayerHealth(5), Engine(engine), PlayerEnergy(3)
 {
    Engine->setCollisionResponder(this);
-   NULL_BLOCK = Engine->addObject();
-   NULL_BLOCK->setArea(SRect2(-50.f, -50.f, 0.01f, 0.01f));
-   NULL_BLOCK->CollideableLevel = INTERACTOR_NULL_BLOCK;
-   NULL_BLOCK->CanCollideWith = INTERACTOR_ALL_ALL;
    GameEventManager = new CGameEventManager();
    won = 0;
    GodMode = 0;
