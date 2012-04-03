@@ -513,62 +513,36 @@ void CGameState::oldDisplay() {
 
    if (GameplayManager->isPlayerAlive() && !lDown)
    {
-      if(!overView) {
-         if(dDown && aDown) {
-            Player->setAction(CActor::EActionType::None);
-            PlayerView->setState(CPlayerView::State::Standing);
-         }
-         //I disabled backwards view for far view so we don't need backwards keypresses anymore
-         else if((aDown)){// && !backwardsView) || (dDown && backwardsView)) {
-            Player->setAction(CActor::EActionType::MoveLeft);
-            PlayerView->setState(CPlayerView::State::MovingLeft);
-         }
-         else if((dDown)){// && !backwardsView) || (aDown && backwardsView)) {
-            Player->setAction(CActor::EActionType::MoveRight);
-            PlayerView->setState(CPlayerView::State::MovingRight);
-         }
+      if(dDown && aDown) {
+         Player->setAction(CActor::EActionType::None);
+         PlayerView->setState(CPlayerView::State::Standing);
+      }
+      else if(aDown){
+         Player->setAction(CActor::EActionType::MoveLeft);
+         PlayerView->setState(CPlayerView::State::MovingLeft);
+      }
+      else if(dDown){
+         Player->setAction(CActor::EActionType::MoveRight);
+         PlayerView->setState(CPlayerView::State::MovingRight);
+      }
+      else if (GameplayManager->isWon()) {
+         Player->setAction(CActor::EActionType::None);
+         PlayerView->setState(CPlayerView::State::Standing);
+      }
+      else {
+         Player->setAction(CActor::EActionType::None);
+         PlayerView->setState(CPlayerView::State::Standing);
+      }
 
-         else if (GameplayManager->isWon()) {
+      if (Player->isStanding() && spaceDown != 0) {
+         playJump = true;
+      }
 
-            Player->setAction(CActor::EActionType::None);
+      Player->setJumping(spaceDown != 0);
 
-            PlayerView->setState(CPlayerView::State::Standing);
-
-         }
-
-         else {
-            Player->setAction(CActor::EActionType::None);
-            PlayerView->setState(CPlayerView::State::Standing);
-         }
-         }
-         else {
-            if(sDown && wDown) {
-               Player->setAction(CActor::EActionType::None);
-               PlayerView->setState(CPlayerView::State::Standing);
-            }
-            else if(((wDown && overView == 1)) || (sDown && overView == 2)) {
-               Player->setAction(CActor::EActionType::MoveRight);
-               PlayerView->setState(CPlayerView::State::MovingRight);
-            }
-            else if((sDown && overView == 1) || (wDown && overView == 2)) {
-               Player->setAction(CActor::EActionType::MoveLeft);
-               PlayerView->setState(CPlayerView::State::MovingLeft);
-            }
-            else {
-               Player->setAction(CActor::EActionType::None);
-               PlayerView->setState(CPlayerView::State::Standing);
-            }
-         }
-
-         if (Player->isStanding() && spaceDown != 0) {
-            playJump = true;
-         }
-
-         Player->setJumping(spaceDown != 0);
-
-         if (playJump) {
-            Mix_PlayChannel(-1, jump, 0);
-            playJump = false;
+      if (playJump) {
+         Mix_PlayChannel(-1, jump, 0);
+         playJump = false;
          }
 
          if (!playChargeLaser) {
@@ -1022,9 +996,15 @@ void CGameState::oldDisplay() {
             }
             if(Event.Key == SDLK_w && !GameplayManager->isWon()){
                wDown = 0;
+               if(NoClipMode) {
+                  Player->setVelocity(SVector2(Player->getVelocity().X, 0.0f));
+               }
             }
             if(Event.Key == SDLK_s && !GameplayManager->isWon()){
                sDown = 0;
+               if(NoClipMode) {
+                  Player->setVelocity(SVector2(Player->getVelocity().X, 0.0f));
+               }
             }
             if((Event.Key == SDLK_a || Event.Key == SDLK_LEFT) && !GameplayManager->isWon()){
                if(particleDustEngine) {
