@@ -716,7 +716,7 @@ void CLWIBState::end()
 void CLWIBState::PrepPreviews() {
    blocks.push_back(PreviewBlock = new CMeshSceneObject());
    PreviewBlock->setMesh(cubeMesh);
-   PreviewBlock->setTexture("Colors/white.bmp");
+   PreviewBlock->setTexture("Colors/White.bmp");
    PreviewBlock->setShader(ERP_DEFAULT, DiffuseTexture);
    PreviewBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
