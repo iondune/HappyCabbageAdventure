@@ -315,7 +315,6 @@ namespace Collider
 		if (CollisionResponder && CollisionType) {
          doCollision = CollisionResponder->OnCollision(this, Object);
       }
-
       if (doCollision) {
          CollisionType = checkCollision(Object, TickTime);
          if (CollisionType & ECollisionType::Up)
@@ -335,8 +334,9 @@ namespace Collider
 
          if (Attributes.Reacts && (CollisionType & ECollisionType::Left || CollisionType & ECollisionType::Right))
             Velocity.X *= -Object->getMaterial().Elasticity;
+         return (CollisionType & ECollisionType::Down) != 0;
       }
-		return (CollisionType & ECollisionType::Down) != 0;
+      return 0;
 	}
 
 	void CActor::draw()
