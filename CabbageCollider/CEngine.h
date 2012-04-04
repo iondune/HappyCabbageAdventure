@@ -24,7 +24,7 @@ namespace Cabbage
 
          public:
 
-            virtual void OnCollision(CCollideable * Object, CCollideable * With) =0;
+            virtual bool OnCollision(CCollideable * Object, CCollideable * With) =0;
 
       };
 

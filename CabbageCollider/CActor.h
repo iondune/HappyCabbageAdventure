@@ -110,6 +110,7 @@ namespace Collider
 
 		SVector2 LastPosition, Movement;
 		int checkCollision(CCollideable * Object, float const TickTime);
+		int ignoreCollision(CCollideable * Object, float const TickTime);
       float Gravity;
 		bool collidesWith(CObject * Object) const;
 		bool isAbove(CObject * Object, float & height) const;

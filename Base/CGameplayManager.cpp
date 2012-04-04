@@ -33,7 +33,7 @@ void CGameplayManager::setGodMode(float time) {
    GodModeTime = time;
 }
 
-void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With)
+bool CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With)
 {
    Cabbage::Collider::CCollideable * Other = 0;
    Cabbage::Collider::CCollideable * PlayerCollideable = 0;
@@ -108,6 +108,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
       for(ItemList::iterator it = ToKill.begin(); it != ToKill.end(); ++ it) {
          Items.erase(std::remove(Items.begin(), Items.end(), *it), Items.end());
       }
+      return false;
    }
    //return;
 
@@ -138,7 +139,7 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
                SVector2 newPos = actor->LastPosition + actor->Movement;
                SVector2 size = actor->getArea().Size;
                actor->setArea(SRect2(newPos, size));
-               return;
+               return true;
             }
          }
       }
@@ -149,14 +150,14 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
    }
 
    if ((!Other && !Projectile) || GodMode || ShootingLaser)
-      return;
+      return true;
 
    float const HitThreshold = 0.05f;
 
    if(PlayerCollideable && Flag)
       won = 1;
    if(won) {
-      return;
+      return true;
    }
 
    for (EnemyList::iterator it = Enemies.begin(); it != Enemies.end(); ++ it)
@@ -245,9 +246,10 @@ void CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
 
             }
          }
-         return;
+         return true;
       }
    }
+   return true;
 }
 
 void CGameplayManager::runDeathSequence(float elapsedTime) {

@@ -92,6 +92,36 @@ namespace Collider
 		return Out;
 	}
 
+	int CActor::ignoreCollision(CCollideable * Object, float const TickTime)
+	{
+		int Out = ECollisionType::None;
+
+		float const BufferSize = 0.0001f;
+
+		Area.Position = LastPosition;
+
+		for (int i = 0; i < 2; ++ i)
+		{
+			Area.Position[i] = LastPosition[i] + Movement[i];
+
+			if (Area.intersects(Object->getArea()))
+			{
+				if (Movement[i] > 0.f)
+				{
+					Out |= (i ? ECollisionType::Up : ECollisionType::Right);
+				}
+				else if (Movement[i] < 0.f)
+				{
+					Out |= (i ? ECollisionType::Down : ECollisionType::Left);
+				}
+			}
+
+			Area.Position[i] = LastPosition[i] + Movement[i];
+		}
+
+		return Out;
+	}
+
    void CActor::setStanding(bool s) {
       Standing = s?this:0;
    }
@@ -279,30 +309,33 @@ namespace Collider
 
 	bool CActor::updateCollision(CCollideable * Object, float const TickTime, ICollisionResponder * CollisionResponder)
 	{
-		int CollisionType = checkCollision(Object, TickTime);
+		int CollisionType = ignoreCollision(Object, TickTime);
+      bool doCollision = true;
 
 		if (CollisionResponder && CollisionType) {
-			CollisionResponder->OnCollision(this, Object);
+         doCollision = CollisionResponder->OnCollision(this, Object);
       }
 
-		if (CollisionType & ECollisionType::Up)
-		{
-			Velocity.Y *= -Object->getMaterial().Elasticity;
-			Jumping = false;
-		}
-
-		if (CollisionType & ECollisionType::Down)
-		{
-         if(Attributes.Bounce > 0.01f) {
-            Velocity.Y = Attributes.Bounce;
-            Attributes.Bounce *= 0.5f;
+      if (doCollision) {
+         CollisionType = checkCollision(Object, TickTime);
+         if (CollisionType & ECollisionType::Up)
+         {
+            Velocity.Y *= -Object->getMaterial().Elasticity;
+            Jumping = false;
          }
-			//Jumping = false;
-		}
 
-		if (Attributes.Reacts && (CollisionType & ECollisionType::Left || CollisionType & ECollisionType::Right))
-			Velocity.X *= -Object->getMaterial().Elasticity;
+         if (CollisionType & ECollisionType::Down)
+         {
+            if(Attributes.Bounce > 0.01f) {
+               Velocity.Y = Attributes.Bounce;
+               Attributes.Bounce *= 0.5f;
+            }
+            //Jumping = false;
+         }
 
+         if (Attributes.Reacts && (CollisionType & ECollisionType::Left || CollisionType & ECollisionType::Right))
+            Velocity.X *= -Object->getMaterial().Elasticity;
+      }
 		return (CollisionType & ECollisionType::Down) != 0;
 	}
 

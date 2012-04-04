@@ -62,7 +62,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       static int const getNumLives();
       static void subPlayerLife() {PlayerLives--;}
 
-      void OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With);
+      bool OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With);
       void runDeathSequence(float);
       void runVictorySequence(float);
       void Clear(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CEngine * engine);
