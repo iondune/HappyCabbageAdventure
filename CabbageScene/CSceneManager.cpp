@@ -167,8 +167,10 @@ void CScene::update()
 
    RootObject.updateAbsoluteTransformation();
    PostOpaqueRootObject.updateAbsoluteTransformation();
+   HalfClearObjects.updateAbsoluteTransformation();
    RootObject.update();
    PostOpaqueRootObject.update();
+   HalfClearObjects.update();
 }
 
 GLuint CSceneManager::QuadHandle = 0;
@@ -219,6 +221,11 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 void CSceneManager::addSceneObject(ISceneObject * sceneObject)
 {
    RootObject.addChild(sceneObject);
+}
+
+void CSceneManager::addHalfClearSceneObject(ISceneObject * sceneObject)
+{
+   HalfClearObjects.addChild(sceneObject);
 }
 
 void CSceneManager::addPostOpaqueSceneObject(ISceneObject *sceneObject) {
@@ -387,7 +394,6 @@ void CSceneManager::drawAll()
          }
 
          glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
          RootObject.draw(CurrentScene, it->Pass);
 
          if (it->Pass == ERP_DEFAULT) {
@@ -401,6 +407,17 @@ void CSceneManager::drawAll()
             glDisable(GL_BLEND);
             glDisable(GL_ALPHA);
          }
+
+         if (it->Pass == ERP_DEFAULT) {
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_ONE, GL_ONE);
+         }
+         HalfClearObjects.draw(CurrentScene, it->Pass);
+         if (it->Pass == ERP_DEFAULT) {
+            glDisable(GL_BLEND);
+            glBlendFunc(GL_ONE, GL_ONE);
+         }
+
 
          if (it->Pass == ERP_DEFERRED_LIGHTS)
          {
@@ -420,6 +437,7 @@ void CSceneManager::drawAll()
       glEnable(GL_BLEND);
       glBlendFunc(GL_SRC_ALPHA, GL_ONE);
       RootObject.draw(CurrentScene, ERP_DEFAULT);
+      HalfClearObjects.draw(CurrentScene, ERP_DEFAULT);
       PostOpaqueRootObject.draw(CurrentScene, ERP_DEFAULT);
       glBlendFunc(GL_SRC_ALPHA, GL_ONE);
       glDisable(GL_BLEND);
