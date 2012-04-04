@@ -255,6 +255,7 @@ void CSceneManager::removePostOpaqueSceneObject(ISceneObject * sceneObject) {
 void CSceneManager::removeAllSceneObjects()
 {
    RootObject.removeChildren();
+   HalfClearObjects.removeChildren();
    PostOpaqueRootObject.removeChildren();
 }
 
