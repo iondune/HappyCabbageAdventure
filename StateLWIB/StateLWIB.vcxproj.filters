@@ -35,6 +35,9 @@
     <ClCompile Include="CPItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CAlly.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CBlock.h">
@@ -65,6 +68,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CPItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CAlly.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

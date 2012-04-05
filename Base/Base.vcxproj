@@ -102,6 +102,8 @@
   <ItemGroup>
     <ClInclude Include="CBadGuy.h" />
     <ClInclude Include="CBiggerBlock.h" />
+    <ClInclude Include="CFDerp.h" />
+    <ClInclude Include="CFriends.h" />
     <ClInclude Include="CGameEventManager.h" />
     <ClInclude Include="CGameEventReceiver.h" />
     <ClInclude Include="CGameplayManager.h" />
@@ -129,6 +131,8 @@
   <ItemGroup>
     <ClCompile Include="CBadGuy.cpp" />
     <ClCompile Include="CBiggerBlock.cpp" />
+    <ClCompile Include="CFDerp.cpp" />
+    <ClCompile Include="CFriends.cpp" />
     <ClCompile Include="CGameEventReceiver.cpp" />
     <ClCompile Include="CGameplayManager.cpp" />
     <ClCompile Include="CGameState.cpp" />

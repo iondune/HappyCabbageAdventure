@@ -9,6 +9,7 @@
 #include "CItem.h"
 #include "CIHealth.h"
 #include "EApple.h"
+#include "CFriends.h"
 
 class CGameEventManager;
 class CRenderable;
@@ -38,6 +39,9 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 
       typedef std::vector<CItem*> ItemList;
       ItemList Items, KillItemList;
+
+      typedef std::vector<CFriends*> FriendList;
+      FriendList Friends;
 
    private:
       CParticleEngine * playerDeathParticleEngine; 

@@ -77,6 +77,12 @@
     <ClCompile Include="CILife.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CFriends.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CFDerp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGameEventManager.h">
@@ -152,6 +158,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CILife.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CFriends.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CFDerp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
