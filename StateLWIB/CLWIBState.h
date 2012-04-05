@@ -11,6 +11,7 @@
 #include "CCabbage.h"
 #include "CFlag.h"
 #include "CPItem.h"
+#include "CPFriends.h"
 #include "../Base/irrxml-1.2/src/irrXML.h"
 #include "wmlwriter_src/xmlwriter.h"
 #include "../CabbageGUI/CabbageGUI.h"

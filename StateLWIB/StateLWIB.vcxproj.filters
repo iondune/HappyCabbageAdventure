@@ -35,7 +35,7 @@
     <ClCompile Include="CPItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CAlly.cpp">
+    <ClCompile Include="CPFriends.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -70,7 +70,7 @@
     <ClInclude Include="CPItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CAlly.h">
+    <ClInclude Include="CPFriends.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

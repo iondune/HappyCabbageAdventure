@@ -174,6 +174,14 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             list->push_back(stuff = new CPItem((float)x,(float)y,t));
             stuff->isMovingPlatform = 0;
          }
+         if(!strcmp("CPFriends",xml->getNodeName())) {
+            CPFriends * buds;
+            x = xml->getAttributeValueAsInt(0);
+            y = xml->getAttributeValueAsInt(1);
+            t = xml->getAttributeValueAsInt(2);
+            list->push_back(buds = new CPFriends((float)x, (float)y,t));
+            buds->isMovingPlatform = 0;
+         }
          break;
 
 

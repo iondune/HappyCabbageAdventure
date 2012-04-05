@@ -85,7 +85,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CAlly.h" />
+    <ClInclude Include="CPFriends.h" />
     <ClInclude Include="CBlock.h" />
     <ClInclude Include="CCabbage.h" />
     <ClInclude Include="CEnemy.h" />
@@ -98,7 +98,7 @@
     <ClInclude Include="wmlwriter_src\xmlwriter.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CAlly.cpp" />
+    <ClCompile Include="CPFriends.cpp" />
     <ClCompile Include="CBlock.cpp" />
     <ClCompile Include="CCabbage.cpp" />
     <ClCompile Include="CEnemy.cpp" />

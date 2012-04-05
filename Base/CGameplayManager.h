@@ -16,6 +16,7 @@ class CRenderable;
 class EApple;
 class CItem;
 class CIHealth;
+class CFriends;
 
 class EKiwi;
 
