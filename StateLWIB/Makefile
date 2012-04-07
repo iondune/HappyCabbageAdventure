@@ -1,5 +1,5 @@
 ROOT_CABBAGE_DIR=../
-SOURCES=CLWIBState.cpp Materials.cpp ./wmlwriter_src/xmlwriter.cpp CBlock.cpp CEnemy.cpp CCabbage.cpp CFlag.cpp CPItem.cpp 
+SOURCES=CLWIBState.cpp Materials.cpp ./wmlwriter_src/xmlwriter.cpp CBlock.cpp CEnemy.cpp CCabbage.cpp CFlag.cpp CPItem.cpp CPFriends.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o)
 CABBAGE=-L../lib/ -lCabbageCollider -lCabbageFramework -lCabbageScene
 COMPILER_VERSION=-std=c++0x
@@ -49,6 +49,8 @@ CLWIBState.o: CLWIBState.cpp header.h
 	$(CC) $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c CLWIBState.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 Materials.o: Materials.cpp Materials.h
 	$(CC) -c Materials.cpp
+CPFriends.o: CPFriends.cpp CPFriends.h
+	$(CC) $(INCLUDE) `sdl-config --cflags` `freetype-config --cflags` -c CPFriends.cpp -DGL_GLEXT_PROTOTYPES -lGL -lGLU
 
 qclean:
 	rm cabbage.exe cabbage 2>/dev/null
