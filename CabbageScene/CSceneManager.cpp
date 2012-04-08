@@ -354,7 +354,7 @@ ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
 void CSceneManager::drawAll()
 {
    if (ImmobileSceneObjects.size() > 0) {
-      for (unsigned int i = 0; i < ImmobileSceneObjects.size(); i++) {
+      for (unsigned int i = 0; i < ImmobileSceneObjects.size(); ++ i) {
          ImmobileSceneObjects[i]->updateAbsoluteTransformation();
          ImmobileSceneObjects[i]->update();
       }

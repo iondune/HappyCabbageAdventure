@@ -163,19 +163,19 @@ public:
         return (::equals(X, v.X, Epsilon) && ::equals(Y, v.Y, Epsilon) && ::equals(Z, v.Z, Epsilon));
     }
 
-	SVector2 const xy() const
+	SVector2Reference const xy() const
     {
-        return SVector2(X, Y);
+        return SVector2Reference(X, Y);
     }
 
-    SVector2 const xz() const
+    SVector2Reference const xz() const
     {
-        return SVector2(X, Z);
+        return SVector2Reference(X, Z);
     }
 
-    SVector2 const yz() const
+    SVector2Reference const yz() const
     {
-        return SVector2(Y, Z);
+        return SVector2Reference(Y, Z);
     }
 
 };
@@ -220,6 +220,8 @@ public:
 		X = vec.X;
 		Y = vec.Y;
 		Z = vec.Z;
+
+		return * this;
 	}
 
 	SVector3 & operator = (SVector3 const & vec)

@@ -15,5 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SVector3.cpp" />
+    <ClCompile Include="SVector2.cpp" />
   </ItemGroup>
 </Project>
