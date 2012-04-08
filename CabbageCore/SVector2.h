@@ -136,6 +136,14 @@ public:
 		: X(0), Y(0), SVector2Reference(X, Y)
 	{}
 
+	SVector2(SVector2 const & vec)
+		: X(vec.X), Y(vec.Y), SVector2Reference(X, Y)
+	{}
+
+	SVector2(SVector2Reference const & vec)
+		: X(vec.X), Y(vec.Y), SVector2Reference(X, Y)
+	{}
+
 	SVector2(float in)
 		: X(in), Y(in), SVector2Reference(X, Y)
 	{}
