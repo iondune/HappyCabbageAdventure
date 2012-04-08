@@ -13,4 +13,7 @@
     <ClInclude Include="STransformation3.h" />
     <ClInclude Include="SSize2.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SVector3.cpp" />
+  </ItemGroup>
 </Project>

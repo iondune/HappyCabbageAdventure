@@ -270,7 +270,7 @@ ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
 
    NonHierarchyObject = new ISceneObject();
    NonHierarchyObject->setCullingEnabled(false);
-   for(int i = 0; i < ImmobileSceneObjects.size(); i++) {
+   for (unsigned int i = 0; i < ImmobileSceneObjects.size(); i++) {
       NonHierarchyObject->addChild(ImmobileSceneObjects[i]);
    }
 
@@ -282,18 +282,18 @@ ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
    while(aList->size() != 1) {
       iterations++;
       //printf("~~~~~~~~~~~~ NEW ITERATION (%d) ~~~~~~~~~~~~\n", iterations);
-      int j = 0;
+      unsigned int j = 0;
       // From the smallest X to the largest X in aList, do:
-      for(float i = (*aList)[0]->getWorldBoundingBoxMinPoint().X; j < aList->size() && i <= (*aList)[aList->size()-1]->getWorldBoundingBoxMinPoint().X + ARBITRARILY_INCREASING_VALUE;) {
+      for (float i = (*aList)[0]->getWorldBoundingBoxMinPoint().X; j < aList->size() && i <= (*aList)[aList->size()-1]->getWorldBoundingBoxMinPoint().X + ARBITRARILY_INCREASING_VALUE;) {
          ISceneObject * parentNode = new ISceneObject();
          parentNode->setImmobile(true);
          parentNode->setBoundingBox(SBoundingBox3(SVector3(i, -INF, -INF), SVector3(i + ARBITRARILY_INCREASING_VALUE, INF, INF)));
          // TODO: See if I can get away with not setting any transforms for the nodes in the algorithm. Reasoning: if each object has its own transforms, they'll draw correctly, and if the parent has the correct bounding box, it will cull correctly (since its transforms will be 0).
 
          int oldJ = j;
-         while(j < aList->size()) {
-            if((*aList)[j]->getWorldBoundingBox().intersects(parentNode->getBoundingBox())) {
-               if(iterations == 1) {
+         while (j < aList->size()) {
+            if ((*aList)[j]->getWorldBoundingBox().intersects(parentNode->getBoundingBox())) {
+               if (iterations == 1) {
                   tNumObjects += (*aList)[j]->getNumLeaves();
                }
                //(*aList)[j]->setImmobile(true);
@@ -330,11 +330,11 @@ ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
          i += ARBITRARILY_INCREASING_VALUE;
       }
 
-      for(int k = 0; k < aList->size(); k++) {
+      for (unsigned int k = 0; k < aList->size(); k++) {
          assert((*aList)[k] == NULL);
       }
       int numChildren = 0;
-      for(int k = 0; k < bList->size(); k++) {
+      for (unsigned int k = 0; k < bList->size(); k++) {
          numChildren += (*bList)[k]->getChildren().size();
       }
       //printf("Num children in bList: %d\n", numChildren);
@@ -353,8 +353,8 @@ ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
 
 void CSceneManager::drawAll()
 {
-   if(ImmobileSceneObjects.size() > 0) {
-      for(int i = 0; i < ImmobileSceneObjects.size(); i++) {
+   if (ImmobileSceneObjects.size() > 0) {
+      for (unsigned int i = 0; i < ImmobileSceneObjects.size(); i++) {
          ImmobileSceneObjects[i]->updateAbsoluteTransformation();
          ImmobileSceneObjects[i]->update();
       }
