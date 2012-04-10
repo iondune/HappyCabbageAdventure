@@ -1449,7 +1449,7 @@ void CGameState::oldDisplay() {
             //}
             //else
                //GenerateDesertPlants(x, y, w, h, d, false);
-         }
+         //}
       }
 
       void CGameState::GenerateDesertPlants(float x, float y, float w, float h, float d, bool genTree) {
