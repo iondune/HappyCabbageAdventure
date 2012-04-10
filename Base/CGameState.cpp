@@ -290,10 +290,7 @@ void CGameState::EngineInit( void ) {
    SRect2 area;
 
    GameplayManager = new CGameplayManager(Player, Engine);
-   /*
-   if(numLives != -3)
-      GameplayManager->setLives(numLives);
-   */
+
    numLives = GameplayManager->getPlayerLives();
 
    GameEventManager = & GameplayManager->getGameEventManager();
@@ -403,7 +400,6 @@ void CGameState::Initialize() {
    SDL_WM_SetCaption("Happy Cabbage Adventure", NULL);
 
    //Initialize Font
-   //our_font.init("WIFFLES_.TTF", 30);
    SColor FontColor(1.0f, 1.0f, 1.0f);
    SColor DarkFontColor(0.0f, 0.0f, 0.0f);
    GameWinText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
@@ -654,12 +650,6 @@ void CGameState::oldDisplay() {
             }
             else {  //Keep char
                particleLaserEngine->step(Application.getElapsedTime());
-
-               /*else if (channelTime >= 1500) {
-                 aChannel = Mix_PlayChannel(-1, chargeLaser2, 0);
-                 Mix_ExpireChannel(aChannel, 1500);
-                 channelTime += Application.getElapsedTime();
-                 }*/
             }
          }
          if(particleLaserEngine && particleLaserEngine->dead && GameplayManager->getPlayerEnergy() > 0) {
@@ -699,7 +689,7 @@ void CGameState::oldDisplay() {
 
          PlayerView->draw();
 
-         //Draw derp (enemy)
+         //DRAW DERP (will be replacing to generic allies soon)
          renderDerp->setTranslation(SVector3(Derp->getArea().getCenter().X, Derp->getArea().getCenter().Y + .2f, 0));
          renderDerp->setScale(SVector3(1.5f));
          renderDerp->setRotation(SVector3(-90, 0, -90));
@@ -716,6 +706,7 @@ void CGameState::oldDisplay() {
             (*it)->doRenderable();
          }
 
+         //ELEVATOR DISPLAY
          std::vector<CElevator*>::iterator it;
          for(it=elevators.begin();it<elevators.end();it++) {
             CElevator * ptr = (*it);
@@ -785,11 +776,6 @@ void CGameState::oldDisplay() {
          if(StartWin == 0.0f)
             UpdateLeaves();
          UpdateEnergy(Elapsed);
-
-         //Draw Text
-         /*freetype::print(our_font, 30, WindowHeight-40.f, "Elapsed Time: %0.0f\n"
-           "Energy: %d\nnumKilled: %d\nFPS: %0.2f ", Application.getRunTime(), GameplayManager->getPlayerEnergy(), numKilled, fps);*/
-
 
          if(moveDown > 0.0f) {
             moveDown -= Application.getElapsedTime();
@@ -1287,8 +1273,6 @@ void CGameState::oldDisplay() {
       void CGameState::UpdateEnergy(float const Elapsed) {
          float curEnergy = (float)GameplayManager->getPlayerEnergy();
 
-         //printf("curEnergy is %f, energyStatus is %f\n", curEnergy, energyStatus);
-
          //Check if we're at the bottom of the energy bar.  If we are, make it invisible
          //to counteract the bar glitch
          if (energyStatus < 0.1f) {
@@ -1301,10 +1285,8 @@ void CGameState::oldDisplay() {
             energyStatus = curEnergy;
 
          if (energyStatus > curEnergy) {
-            //printf("Enter\n");
             energyStatus -= .7f*Elapsed;
             CabbageMeter->setSize(SVector2(.47f*energyStatus/3.f, .1f));
-
          }
 
          else if (energyStatus < curEnergy) {
@@ -1433,35 +1415,6 @@ void CGameState::oldDisplay() {
          }
       }
 
-      void CGameState::PrepShadow() {
-      }
-
-      void CGameState::PrepBlock(float x, float y, float w, float h) {
-         CMeshSceneObject *tempBlock;
-         blocks.push_back(tempBlock = new CMeshSceneObject());
-         tempBlock->setMesh(cubeMesh);
-         tempBlock->setTexture(dirtTxt);
-         tempBlock->setShader(ERP_DEFAULT, ToonTexture);
-         tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredToonTexture);
-         tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
-         tempBlock->setScale(SVector3(w, h, 1));
-         tempBlock->setRotation(SVector3(0, 0, 0));
-         Application.getSceneManager().addSceneObject(tempBlock);
-      }
-
-      void CGameState::PrepGrass(float x, float y, float w, float h) {
-         CMeshSceneObject *tempBlock;
-         blocks.push_back(tempBlock = new CMeshSceneObject());
-         tempBlock->setMesh(cubeMesh);
-         tempBlock->setTexture(grassTxt);
-         tempBlock->setShader(ERP_DEFAULT, ToonTexture);
-         tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredToonTexture);
-         tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
-         tempBlock->setScale(SVector3(0, 0, 0));
-         Application.getSceneManager().addSceneObject(tempBlock);
-
-      }
-
       void CGameState::setLodLevel(int const level)
       {
          for (int i = 0; i < 2; ++ i)
@@ -1483,18 +1436,6 @@ void CGameState::oldDisplay() {
          //tempBlock->setCullingEnabled(false);
          Application.getSceneManager().addSceneObject(tempBlock);
 
-      }
-
-      CMeshSceneObject* CGameState::PrepEnemy(float x, float y) {
-         CMeshSceneObject *tempEnemy;
-         enemies.push_back(tempEnemy = new CMeshSceneObject());
-         tempEnemy->setMesh(enemyMesh);
-         //tempEnemy->setTexture(dirtTxt);
-         tempEnemy->setShader(ERP_DEFERRED_OBJECTS, DeferredFlat);
-         tempEnemy->setShader(ERP_DEFAULT, Flat);
-         tempEnemy->setRotation(SVector3(-90, 0, 0));
-         Application.getSceneManager().addSceneObject(tempEnemy);
-         return tempEnemy;
       }
 
       void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
@@ -1591,7 +1532,6 @@ void CGameState::oldDisplay() {
          }
       }
 
-
       void LoadShaders() {
          DeferredFlat = CShaderLoader::loadShader("Deferred/Diffuse");
          DeferredDiffuse = CShaderLoader::loadShader("Deferred/Diffuse");
@@ -1610,7 +1550,6 @@ void CGameState::oldDisplay() {
          BlackShader = CShaderLoader::loadShader("SpecialDiscThing");
          //Toon = Diffuse;
       }
-
 
       void Load3DS()
       {
@@ -1841,22 +1780,12 @@ void CGameState::oldDisplay() {
 
       void LoadTextures()
       {
-         //grassImg = CImageLoader::loadImage("Base/grass.bmp");
          skyImg = CImageLoader::loadImage("Base/sky.bmp");
-         //dirtImg = CImageLoader::loadImage("Base/dirt.bmp");
-         //blueFlwrImg = CImageLoader::loadImage("Base/blueFlower.bmp");
-         //whiteFlwrImg = CImageLoader::loadImage("Base/pinkFlower.bmp");
          flagImg = CImageLoader::loadImage("Base/white.bmp");
-
-         //grassTxt = new CTexture(grassImg);
-         skyTxt = new CTexture(skyImg);
-         //dirtTxt = new CTexture(dirtImg);
-         //blueFlwrTxt = new CTexture(blueFlwrImg);
-         //whiteFlwrTxt = new CTexture(whiteFlwrImg);
-         flagTxt = new CTexture(flagImg);
-
-
          cactusImg = CImageLoader::loadImage("Base/cactus.bmp");
+
+         skyTxt = new CTexture(skyImg);
+         flagTxt = new CTexture(flagImg);
          cactusTxt = new CTexture(cactusImg);
       }
 

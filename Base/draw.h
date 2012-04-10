@@ -6,9 +6,9 @@
 CShader *Shader, *Flat, *Diffuse, *BlackShader, *DiffuseTexture, *normalColor, *Toon, *ToonTexture, *ToonBright;  //Use Diffuse for trees (doesn't need texture)
 
 CShader * DeferredToon, * DeferredTexture, * DeferredDiffuse, * DeferredToonBright, * DeferredToonTexture , *DeferredFlat;
-CImage *grassImg, *skyImg, *dirtImg, *blueFlwrImg, *whiteFlwrImg, *ficusImg, *flagImg, *cactusImg;
+CImage *skyImg, *flagImg, *cactusImg;
 
-CTexture *grassTxt, *skyTxt, *dirtTxt, *blueFlwrTxt, *whiteFlwrTxt, *ficusTxt, *flagTxt, *cactusTxt;
+CTexture *skyTxt, *flagTxt, *cactusTxt;
 
 CMesh *basicTreeMesh, *cabbageMesh, *cabbageDamage, *christmasTreeMesh, *cubeMesh, *discMesh,
       *blueFlwrMesh, *whiteFlwrMesh, *ficusMesh, *fernMesh, *enemyMesh,
