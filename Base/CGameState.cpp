@@ -1818,7 +1818,7 @@ void CGameState::oldDisplay() {
             fprintf(stderr, "Failed to load ficus mesh.\n");
          }
 
-         fernMesh = CMeshLoader::load3dsMesh("Base/bushCactus.3ds");
+         fernMesh = CMeshLoader::load3dsMesh("Base/fern.3ds");
          if (fernMesh) {
             fernMesh->centerMeshByExtents(SVector3(0));
             fernMesh->resizeMesh(SVector3(2.f));
