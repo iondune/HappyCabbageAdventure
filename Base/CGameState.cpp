@@ -1818,7 +1818,7 @@ void CGameState::oldDisplay() {
             fprintf(stderr, "Failed to load ficus mesh.\n");
          }
 
-         fernMesh = CMeshLoader::load3dsMesh("Base/fern.3ds");
+         fernMesh = CMeshLoader::load3dsMesh("Base/bushCactus.3ds");
          if (fernMesh) {
             fernMesh->centerMeshByExtents(SVector3(0));
             fernMesh->resizeMesh(SVector3(2.f));
@@ -1841,19 +1841,23 @@ void CGameState::oldDisplay() {
 
       void LoadTextures()
       {
-         grassImg = CImageLoader::loadImage("Base/grass.bmp");
+         //grassImg = CImageLoader::loadImage("Base/grass.bmp");
          skyImg = CImageLoader::loadImage("Base/sky.bmp");
-         dirtImg = CImageLoader::loadImage("Base/dirt.bmp");
-         blueFlwrImg = CImageLoader::loadImage("Base/blueFlower.bmp");
-         whiteFlwrImg = CImageLoader::loadImage("Base/pinkFlower.bmp");
+         //dirtImg = CImageLoader::loadImage("Base/dirt.bmp");
+         //blueFlwrImg = CImageLoader::loadImage("Base/blueFlower.bmp");
+         //whiteFlwrImg = CImageLoader::loadImage("Base/pinkFlower.bmp");
          flagImg = CImageLoader::loadImage("Base/white.bmp");
 
-         grassTxt = new CTexture(grassImg);
+         //grassTxt = new CTexture(grassImg);
          skyTxt = new CTexture(skyImg);
-         dirtTxt = new CTexture(dirtImg);
-         blueFlwrTxt = new CTexture(blueFlwrImg);
-         whiteFlwrTxt = new CTexture(whiteFlwrImg);
+         //dirtTxt = new CTexture(dirtImg);
+         //blueFlwrTxt = new CTexture(blueFlwrImg);
+         //whiteFlwrTxt = new CTexture(whiteFlwrImg);
          flagTxt = new CTexture(flagImg);
+
+
+         cactusImg = CImageLoader::loadImage("Base/cactus.bmp");
+         cactusTxt = new CTexture(cactusImg);
       }
 
       void PrepMeshes()
