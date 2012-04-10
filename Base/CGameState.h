@@ -35,7 +35,7 @@ class CGameState : public CState<CGameState>
    //Initalizer fxn
    ICamera *Camera;
    float fps, timeTotal, prevEnergy, energyStatus, moveDown, StartWin, curScaleX, curScaleY;
-   int numFrames, NumTreeTypes, NumFlowerTypes, lowDef, prevHealth, numBlocks;
+   int numFrames, NumTreeTypes, NumFlowerTypes, lowDef, prevHealth, numBlocks, drawTree;
    const char * levelName;
    bool oldFern, launch;
    CGUIImageWidget *Health5, *Health4, *Health3, *Health2, *Health1, *CabbageFace, *CabbageEnergyBar, *CabbageMeter, *CabbageHurtFace, *Seed;
@@ -62,7 +62,9 @@ class CGameState : public CState<CGameState>
    void PrepBlock(float x, float y, float w, float h);
    void PrepGrass(float x, float y, float w, float h);
    void PrepSky();
-   void GeneratePlants(float x, float y, float w, float h, float d);
+   void GeneratePlants (float x, float y, float w, float h, float d, int env);
+   void GenerateForestPlants(float x, float y, float w, float h, float d);
+   void GenerateDesertPlants(float x, float y, float w, float h, float d, bool genTree);
    CMeshSceneObject* PrepEnemy(float x, float y);
    void RunVictorySequence(float Elapsed);
 
