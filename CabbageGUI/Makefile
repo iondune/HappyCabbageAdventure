@@ -14,24 +14,13 @@ endif
 
 all: ../lib/libCabbageGUI.a
 
-liboglft/OGLFT.o: liboglft/OGLFT.cpp
-	$(CC) -o $@ liboglft/OGLFT.cpp -c $(DIRECTORIES) $(OPENGL)
-CGUIEngine.o: CGUIEngine.cpp
-	$(CC) -o $@ CGUIEngine.cpp -c $(DIRECTORIES) $(OPENGL)
-CGUIDialogWidget.o: CGUIDialogWidget.cpp
-	$(CC) -o $@ CGUIDialogWidget.cpp -c $(DIRECTORIES) $(OPENGL)
-CGUIImageWidget.o: CGUIImageWidget.cpp
-	$(CC) -o $@ CGUIImageWidget.cpp -c $(DIRECTORIES) $(OPENGL)
-CGUIFontWidget.o: CGUIFontWidget.cpp
-	$(CC) -o $@ CGUIFontWidget.cpp -c $(DIRECTORIES) $(OPENGL)
-CGUIWidget.o: CGUIWidget.cpp
-	$(CC) -o $@ CGUIWidget.cpp -c $(DIRECTORIES) $(OPENGL)
-
-
 ../lib/libCabbageGUI.a: $(OFILES)
 	rm -f $@
 	mkdir -p ../lib
 	ar cq $@ $(OFILES)
+
+.cpp.o:
+	$(CC) -c $(DIRECTORIES) -DGL_GLEXT_PROTOTYPES $< -o $@
 
 clean:
 	rm -f $(OFILES)
