@@ -31,8 +31,15 @@ public:
 	void setTexture(std::string const & texture);
 	void setTexture(std::string const & texture, int const renderable);
 
-	void addAttribute(std::string const & label, IAttribute const * const attribute);
-    void addUniform(std::string const & label, IUniform const * const uniform);
+	template <typename T>
+	void addUniform(std::string const & label, T const & uniform)
+	{
+		for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
+			(* it)->addUniform(label, uniform);
+	}
+
+	void addAttribute(std::string const & label, boost::shared_ptr<IAttribute const> const attribute);
+    void addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform);
     void removeAttribute(std::string const & label);
     void removeUniform(std::string const & label);
 

@@ -78,10 +78,10 @@ void CParticleObject::setup(std::vector<SVector3*> vectorArr, std::vector<SVecto
    IndexBuffer.setIsIndexBuffer(true);
 
    // Add attributes and uniforms
-   particlesRenderable->addAttribute("aPosition", new SAttribute<float>(& PositionBuffer, 3));
-   particlesRenderable->addAttribute("aColor", new SAttribute<float>(& ColorBuffer, 3));
-   particlesRenderable->addAttribute("aPointSize", new SAttribute<float>(& SizeBuffer, 3));
-   particlesRenderable->addUniform("uTexColor", new SUniform<int>(0));
+   particlesRenderable->addAttribute("aPosition", boost::shared_ptr<IAttribute>(new SAttribute<float>(& PositionBuffer, 3)));
+   particlesRenderable->addAttribute("aColor", boost::shared_ptr<IAttribute>(new SAttribute<float>(& ColorBuffer, 3)));
+   particlesRenderable->addAttribute("aPointSize", boost::shared_ptr<IAttribute>(new SAttribute<float>(& SizeBuffer, 3)));
+   particlesRenderable->addUniform("uTexColor", boost::shared_ptr<IUniform const>(new SUniform<int>(0)));
 
    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
 

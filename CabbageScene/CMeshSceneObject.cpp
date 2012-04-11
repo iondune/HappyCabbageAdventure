@@ -49,11 +49,11 @@ void CMeshSceneObject::setMesh(CMesh * mesh)
             Child->removeUniform("uTexColor");
 
             // Add mesh attributes
-            Child->addAttribute("aPosition", new SAttribute<float>(& Mesh->MeshBuffers[i]->PositionBuffer, 3));
-            Child->addAttribute("aColor", new SAttribute<float>(& Mesh->MeshBuffers[i]->ColorBuffer, 3));
-            Child->addAttribute("aNormal", new SAttribute<float>(& Mesh->MeshBuffers[i]->NormalBuffer, 3));
-            Child->addAttribute("aTexCoord", new SAttribute<float>(& Mesh->MeshBuffers[i]->TexCoordBuffer, 2));
-            Child->addUniform("uTexColor", new SUniform<int>(0));
+            Child->addAttribute("aPosition", boost::shared_ptr<IAttribute>(new SAttribute<float>(& Mesh->MeshBuffers[i]->PositionBuffer, 3)));
+            Child->addAttribute("aColor", boost::shared_ptr<IAttribute>(new SAttribute<float>(& Mesh->MeshBuffers[i]->ColorBuffer, 3)));
+            Child->addAttribute("aNormal", boost::shared_ptr<IAttribute>(new SAttribute<float>(& Mesh->MeshBuffers[i]->NormalBuffer, 3)));
+            Child->addAttribute("aTexCoord", boost::shared_ptr<IAttribute>(new SAttribute<float>(& Mesh->MeshBuffers[i]->TexCoordBuffer, 2)));
+			Child->addUniform("uTexColor", boost::shared_ptr<IUniform const>(new SUniform<int const>(0)));
 
 			Child->getMaterial() = Mesh->MeshBuffers[i]->Material;
 
@@ -72,8 +72,8 @@ void CMeshSceneObject::setMesh(CMesh * mesh)
 
             // Add normal debugging object
             Child->getDebuggingNormalObject() = new CRenderable(this);
-            Child->getDebuggingNormalObject()->addAttribute("aPosition", new SAttribute<float>(& Mesh->MeshBuffers[i]->NormalLineBuffer, 3));
-            Child->getDebuggingNormalObject()->addAttribute("aColor", new SAttribute<float>(& Mesh->MeshBuffers[i]->NormalColorBuffer, 3));
+            Child->getDebuggingNormalObject()->addAttribute("aPosition", boost::shared_ptr<IAttribute>(new SAttribute<float>(& Mesh->MeshBuffers[i]->NormalLineBuffer, 3)));
+            Child->getDebuggingNormalObject()->addAttribute("aColor", boost::shared_ptr<IAttribute>(new SAttribute<float>(& Mesh->MeshBuffers[i]->NormalColorBuffer, 3)));
             Child->getDebuggingNormalObject()->setIndexBufferObject(& Mesh->MeshBuffers[i]->NormalIndexBuffer);
             Child->getDebuggingNormalObject()->setShader(ERP_DEFAULT, CShaderLoader::loadShader("Simple"));
             Child->getDebuggingNormalObject()->setDrawType(GL_LINES);

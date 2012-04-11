@@ -33,12 +33,12 @@ protected:
 	SUniform<glm::mat4> BindModelMatrix, BindNormalMatrix;
 
 	// Local shader variables
-    std::map<std::string, IAttribute const *> Attributes;
-    std::map<std::string, IUniform const *> Uniforms;
+    std::map<std::string, boost::shared_ptr<IAttribute const> > Attributes;
+    std::map<std::string, boost::shared_ptr<IUniform const> > Uniforms;
 
 	// Loaded shader variables
-	std::map<GLint, IAttribute const *> LoadedAttributes;
-    std::map<GLint, IUniform const *> LoadedUniforms;
+	std::map<GLint, boost::shared_ptr<IAttribute const> > LoadedAttributes;
+    std::map<GLint, boost::shared_ptr<IUniform const> > LoadedUniforms;
 
 	// Required data for drawing
 	CShader * Shader[ERP_COUNT];
@@ -79,16 +79,23 @@ public:
     virtual void draw(CScene const * const scene, ERenderPass const Pass);
 	virtual void drawNormals(CScene const * const scene);
 
-    void addAttribute(std::string const & label, IAttribute const * const attribute);
-    void addUniform(std::string const & label, IUniform const * const uniform);
+	template <typename T>
+	void addUniform(std::string const & label, T const & uniform)
+	{
+		Uniforms[label] = boost::shared_ptr<SUniform<T> >(new SUniform<T>(uniform));
+	}
+
+	void addAttribute(std::string const & label, boost::shared_ptr<IAttribute const> const attribute);
+	void addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform);
+
     void removeAttribute(std::string const & label);
     void removeUniform(std::string const & label);
 
+	boost::shared_ptr<IAttribute const> const getAttribute(std::string const & label);
+	boost::shared_ptr<IUniform const> const getUniform(std::string const & label);
+
 	void load(CScene const * const Scene, ERenderPass const Pass);
 	CShader * updateShaderVariables(CScene const * const Scene, ERenderPass const Pass);
-
-	IAttribute const * const getAttribute(std::string const & label);
-	IUniform const * const getUniform(std::string const & label);
 	
     CRenderable * & getDebuggingNormalObject();
 

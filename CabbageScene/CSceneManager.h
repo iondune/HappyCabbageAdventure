@@ -52,11 +52,11 @@ protected:
 	SUniform<glm::mat4> BindViewMatrix, BindProjMatrix;
 	SUniform<int> BindLightCount;
 
-    std::map<std::string, IUniform const *> Uniforms;
+    std::map<std::string, boost::shared_ptr<IUniform const> > Uniforms;
 
 	ISceneObject RootObject;
 	ISceneObject PostOpaqueRootObject;
-   ISceneObject *HierarchyObject, *NonHierarchyObject;
+	ISceneObject *HierarchyObject, *NonHierarchyObject;
 
 	bool UseCulling, UseHierarchy;
 
@@ -68,10 +68,15 @@ public:
 	ICamera const * const getActiveCamera() const;
     void setActiveCamera(ICamera * const activeCamera);
 
-    void addUniform(std::string const & label, IUniform const * uniform);
+	template <typename T>
+	void addUniform(std::string const & label, T const & uniform)
+	{
+		Uniforms[label] = boost::shared_ptr<SUniform<T> >(new SUniform<T>(uniform));
+	}
+    void addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform);
     void removeUniform(std::string const & label);
 
-    IUniform const * getUniform(std::string const & label) const;
+    boost::shared_ptr<IUniform const> const getUniform(std::string const & label) const;
 
     void update();
 

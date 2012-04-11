@@ -86,13 +86,13 @@ void CSceneObject::setTexture(std::string const & texture, int const renderable)
 	setTexture(CImageLoader::loadTexture(texture), renderable);
 }
 
-void CSceneObject::addAttribute(std::string const & label, IAttribute const * const attribute)
+void CSceneObject::addAttribute(std::string const & label, boost::shared_ptr<IAttribute const> const attribute)
 {
 	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
 		(* it)->addAttribute(label, attribute);
 }
 
-void CSceneObject::addUniform(std::string const & label, IUniform const * const uniform)
+void CSceneObject::addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform)
 {
 	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
 		(* it)->addUniform(label, uniform);
