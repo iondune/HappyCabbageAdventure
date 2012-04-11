@@ -1,8 +1,10 @@
 #ifndef _CABBAGE_SCENE_SATTRIBUTE_H_INCLUDED_
 #define _CABBAGE_SCENE_SATTRIBUTE_H_INCLUDED_
 
+#include <boost/shared_ptr.hpp>
 #include "CShaderContext.h"
 #include "CBufferObject.h"
+
 
 struct IAttribute
 {
@@ -41,5 +43,11 @@ struct SAttribute : public IAttribute
 		}
 	}
 };
+
+template <typename T>
+static boost::shared_ptr<IAttribute const> BindAttribute(T const & attribute)
+{
+	return new boost::shared_ptr<IAttribute const>(new SAttribute<T>(attribute));
+}
 
 #endif

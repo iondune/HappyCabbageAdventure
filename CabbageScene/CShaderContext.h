@@ -67,10 +67,11 @@ public:
 
 		uniform(it->second.Handle, uniformVar);
 	}
-
-	void bindTexture(GLuint const uniformHandle, CTexture const * const Texture);
-	void bindTexture(std::string const & Label, CTexture const * const Texture);
+	
 	void bindTexture(GLuint const uniformHandle, GLuint const TextureHandle);
+	void bindTexture(GLuint const uniformHandle, CTexture const * const Texture);
+
+	void bindTexture(std::string const & Label, CTexture const * const Texture);
 	void bindTexture(std::string const & Label, GLuint const TextureHandle);
 
 };

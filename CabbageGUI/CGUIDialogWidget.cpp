@@ -50,8 +50,8 @@ CGUIDialogWidget::CGUIDialogWidget(std::string const & DialogFileName) {
    // so the side margins should be: (aspectRatio - widthOfBoardIn1Space)2
 
    float widthOfBoard = 1.0f;
-   float heightOfBoard = 0.3*widthOfBoard;
-   float padding = widthOfBoard*0.05;
+   float heightOfBoard = 0.3f*widthOfBoard;
+   float padding = widthOfBoard*0.05f;
    Board = new CGUIImageWidget(new CTexture(CImageLoader::loadTGAImage("MainMenu/wood.tga")), SVector2(widthOfBoard, heightOfBoard));
    Board->setPosition(SVector2((aspectRatio - widthOfBoard)/2.0f, padding));
    Board->setVisible(false);
@@ -89,7 +89,7 @@ bool CTextSection::setToTextWidgets(std::vector<CGUIFontWidget*> const & widgets
       End = 0;
    if(Current > End)
       return false;
-   for(int i = 0; i < widgets.size(); i++) {
+   for(unsigned int i = 0; i < widgets.size(); i++) {
       if(i + Current < Text.size())
          widgets[i]->setText(Text[i + Current]);
       else {
@@ -112,7 +112,7 @@ void CGUIDialogWidget::start() {
 void CGUIDialogWidget::next() {
    if(!Live)
       return;
-   if(CurrentTextSection >= TextSections.size()) {
+   if(CurrentTextSection >= (int) TextSections.size()) {
       end();
       return;
    }

@@ -8,31 +8,18 @@
 #include "Utils.h"
 #include "SVector2.h"
 
-class SVector3
+class SVector3;
+
+class SVector3Reference
 {
 
 public:
 
-    float X, Y, Z;
+    float & X, & Y, & Z;
 
-    SVector3()
-        : X(0), Y(0), Z(0)
-    {}
-
-    SVector3(SVector2 vec, float in) : X(vec.X), Y(vec.Y), Z(in)
-   {}
-
-    SVector3(glm::vec3 const & vec)
-        : X(vec.x), Y(vec.y), Z(vec.z)
-    {}
-
-    SVector3(float in)
-        : X(in), Y(in), Z(in)
-    {}
-
-    SVector3(float in_x, float in_y, float in_z)
-        : X(in_x), Y(in_y), Z(in_z)
-    {}
+    SVector3Reference(float & x, float & y, float & z)
+        : X(x), Y(y), Z(z)
+	{}
 
     glm::vec3 const getGLMVector() const
     {
@@ -67,12 +54,23 @@ public:
         }
     }
 
-    SVector3 crossProduct(SVector3 const & v) const
-    {
-        return SVector3(Y*v.Z - v.Y*Z, v.X*Z - X*v.Z, X*v.Y - v.X*Y);
-    }
+    SVector3 crossProduct(SVector3Reference const & v) const;
 
-    float dotProduct(SVector3 const & v) const
+    SVector3 const getNormalized() const;
+
+    SVector3 operator + (SVector3 const & v) const;
+
+    SVector3 operator - (SVector3 const & v) const;
+
+    SVector3 operator * (SVector3 const & v) const;
+
+    SVector3 operator / (SVector3 const & v) const;
+
+    SVector3 operator * (float const s) const;
+
+    SVector3 operator / (float const s) const;
+
+    float dotProduct(SVector3Reference const & v) const
     {
         return X*v.X + Y*v.Y + Z*v.Z;
     }
@@ -86,24 +84,12 @@ public:
         Z /= len;
     }
 
-    SVector3 const getNormalized() const
-    {
-        SVector3 copy(* this);
-        copy.normalize();
-        return copy;
-    }
-
     float length() const
     {
         return sqrtf(X*X + Y*Y + Z*Z);
     }
 
-    SVector3 operator + (SVector3 const & v) const
-    {
-        return SVector3(X+v.X, Y+v.Y, Z+v.Z);
-    }
-
-    SVector3 & operator += (SVector3 const & v)
+    SVector3Reference & operator += (SVector3Reference const & v)
     {
         X += v.X;
         Y += v.Y;
@@ -112,12 +98,7 @@ public:
         return * this;
     }
 
-    SVector3 operator - (SVector3 const & v) const
-    {
-        return SVector3(X-v.X, Y-v.Y, Z-v.Z);
-    }
-
-    SVector3 & operator -= (SVector3 const & v)
+    SVector3Reference & operator -= (SVector3Reference const & v)
     {
         X -= v.X;
         Y -= v.Y;
@@ -126,12 +107,7 @@ public:
         return * this;
     }
 
-    SVector3 operator * (SVector3 const & v) const
-    {
-        return SVector3(X*v.X, Y*v.Y, Z*v.Z);
-    }
-
-    SVector3 & operator *= (SVector3 const & v)
+    SVector3Reference & operator *= (SVector3Reference const & v)
     {
         X *= v.X;
         Y *= v.Y;
@@ -140,12 +116,7 @@ public:
         return * this;
     }
 
-    SVector3 operator / (SVector3 const & v) const
-    {
-        return SVector3(X/v.X, Y/v.Y, Z/v.Z);
-    }
-
-    SVector3 & operator /= (SVector3 const & v)
+    SVector3Reference & operator /= (SVector3Reference const & v)
     {
         X /= v.X;
         Y /= v.Y;
@@ -154,12 +125,7 @@ public:
         return * this;
     }
 
-    SVector3 operator * (float const s) const
-    {
-        return SVector3(X*s, Y*s, Z*s);
-    }
-
-    SVector3 & operator *= (float const s)
+    SVector3Reference & operator *= (float const s)
     {
         X *= s;
         Y *= s;
@@ -168,12 +134,7 @@ public:
         return * this;
     }
 
-    SVector3 operator / (float const s) const
-    {
-        return SVector3(X/s, Y/s, Z/s);
-    }
-
-    SVector3 & operator /= (float const s)
+    SVector3Reference & operator /= (float const s)
     {
         X /= s;
         Y /= s;
@@ -182,40 +143,95 @@ public:
         return * this;
     }
 
-    bool const operator <= (SVector3 const & v) const
+    bool const operator <= (SVector3Reference const & v) const
     {
         return (X < v.X && Y < v.Y && Z < v.Z);
     }
 
-    bool const operator >= (SVector3 const & v) const
+    bool const operator >= (SVector3Reference const & v) const
     {
         return (X > v.X && Y > v.Y && Z > v.Z);
     }
 
-    bool const operator == (SVector3 const & v) const
+    bool const operator == (SVector3Reference const & v) const
     {
         return (::equals(X, v.X) && ::equals(Y, v.Y) && ::equals(Z, v.Z));
     }
 
-	bool const equals(SVector3 const & v, float const Epsilon = RoundingError32) const
+	bool const equals(SVector3Reference const & v, float const Epsilon = RoundingError32) const
     {
         return (::equals(X, v.X, Epsilon) && ::equals(Y, v.Y, Epsilon) && ::equals(Z, v.Z, Epsilon));
     }
 
-	SVector2 const xy() const
+	SVector2Reference const xy() const
     {
-        return SVector2(X, Y);
+        return SVector2Reference(X, Y);
     }
 
-    SVector2 const xz() const
+    SVector2Reference const xz() const
     {
-        return SVector2(X, Z);
+        return SVector2Reference(X, Z);
     }
 
-    SVector2 const yz() const
+    SVector2Reference const yz() const
     {
-        return SVector2(Y, Z);
+        return SVector2Reference(Y, Z);
     }
+
+};
+
+class SVector3 : public SVector3Reference
+{
+
+public:
+
+    float X, Y, Z;
+
+    SVector3()
+        : X(0), Y(0), Z(0), SVector3Reference(X, Y, Z)
+    {}
+
+	SVector3(SVector3Reference const & vec)
+        : X(vec.X), Y(vec.Y), Z(vec.Z), SVector3Reference(X, Y, Z)
+    {}
+
+	SVector3(SVector3 const & vec)
+        : X(vec.X), Y(vec.Y), Z(vec.Z), SVector3Reference(X, Y, Z)
+    {}
+
+    SVector3(SVector2 xy, float z)
+		: X(xy.X), Y(xy.Y), Z(z), SVector3Reference(X, Y, Z)
+    {}
+
+    SVector3(glm::vec3 const & vec)
+        : X(vec.x), Y(vec.y), Z(vec.z), SVector3Reference(X, Y, Z)
+    {}
+
+    SVector3(float in)
+        : X(in), Y(in), Z(in), SVector3Reference(X, Y, Z)
+    {}
+
+    SVector3(float in_x, float in_y, float in_z)
+        : X(in_x), Y(in_y), Z(in_z), SVector3Reference(X, Y, Z)
+    {}
+
+	SVector3 & operator = (SVector3Reference const & vec)
+	{
+		X = vec.X;
+		Y = vec.Y;
+		Z = vec.Z;
+
+		return * this;
+	}
+
+	SVector3 & operator = (SVector3 const & vec)
+	{
+		X = vec.X;
+		Y = vec.Y;
+		Z = vec.Z;
+
+		return * this;
+	}
 
 };
 

@@ -12,7 +12,7 @@ CISeed::CISeed(float x, float y, float w, float h, CGameplayManager* manager) {
 
    rotate = 0.0f;
 
-   Time = rand() % 800;
+   Time = (float) (rand() % 800);
 }
 
 //Loads and moves the mesh

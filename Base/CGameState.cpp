@@ -36,15 +36,15 @@ void ViewInit( void ) {
    renderLeftShadow->setMesh(discMesh);
    renderLeftShadow->setShader(ERP_DEFAULT, BlackShader);
    renderLeftShadow->setShader(ERP_DEFERRED_OBJECTS, BlackShader);
-   renderLeftShadow->addUniform("cutoff", & PlayerView->LeftShadowCutoff);
-   renderLeftShadow->addUniform("start", & PlayerView->LeftShadowStart);
+   renderLeftShadow->addUniform("cutoff", PlayerView->LeftShadowCutoffValue);
+   renderLeftShadow->addUniform("start", PlayerView->LeftShadowStartValue);
 
    renderRightShadow = new CMeshSceneObject();
    renderRightShadow->setMesh(discMesh);
    renderRightShadow->setShader(ERP_DEFAULT, BlackShader);
    renderRightShadow->setShader(ERP_DEFERRED_OBJECTS, BlackShader);
-   renderRightShadow->addUniform("cutoff", & PlayerView->RightShadowCutoff);
-   renderRightShadow->addUniform("start", & PlayerView->RightShadowStart);
+   renderRightShadow->addUniform("cutoff", PlayerView->RightShadowCutoffValue);
+   renderRightShadow->addUniform("start", PlayerView->RightShadowStartValue);
 
    CApplication::get().getSceneManager().addSceneObject(renderLeftShadow);
    CApplication::get().getSceneManager().addSceneObject(renderRightShadow);
