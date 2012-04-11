@@ -51,12 +51,9 @@ class CPlayerView {
       SVector3 shakeFactor;
       int Charging;
 
-	  SUniform<float> LeftShadowStart, LeftShadowCutoff, RightShadowStart, RightShadowCutoff;
 	  float LeftShadowStartValue, LeftShadowCutoffValue, RightShadowStartValue, RightShadowCutoffValue;
 
-      CPlayerView() 
-		  : LeftShadowStart(LeftShadowStartValue), LeftShadowCutoff(LeftShadowCutoffValue), 
-		  RightShadowCutoff(RightShadowCutoffValue), RightShadowStart(RightShadowStartValue)
+      CPlayerView()
 	  {
          ySineValue = 0;
          yRightShadow = yLeftShadow = 0;

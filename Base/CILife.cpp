@@ -20,7 +20,7 @@ void CILife::loadMesh() {
    Renderable = new CMeshSceneObject();
    CMesh *mesh = CMeshLoader::load3dsMesh("Base/crappycabbage2.3ds");
    if(mesh) {
-      mesh->resizeMesh(SVector3(.4));
+      mesh->resizeMesh(SVector3(0.4f));
       mesh->centerMeshByExtents(SVector3(0));
       mesh->calculateNormalsPerFace();
    }
