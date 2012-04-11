@@ -43,7 +43,7 @@ CMeshSceneObject * CEnemy::setupItem(CShader * chad, CShader * dShader, Cabbage:
     else if (num == 2)
        CBadGuy::makeBadGuy(x, y, (float) w, (float) h, CBadGuy::kiwi, GameplayManager);
     else if (num == 3)
-       CBadGuy::makeBadGuy(x, y, w, h, CBadGuy::grape, GameplayManager);
+       CBadGuy::makeBadGuy(x, y, (float) w, (float) h, CBadGuy::grape, GameplayManager);
     else if (num == 4)
        CBadGuy::makeBadGuy(x, y, (float)w, (float)h, CBadGuy::flame, GameplayManager);
     else if (num == 5)
