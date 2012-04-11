@@ -8,16 +8,6 @@ uniform mat4 uViewMatrix;
 uniform mat4 uNormalMatrix;
 uniform int uLightCount;
 
-struct SMaterial
-{
-    vec3 SpecularColor;
-    vec3 AmbientColor;
-    vec3 DiffuseColor;
-    float Shininess;
-};
-
-uniform SMaterial uMaterial;
-
 struct SLight
 {
     vec3 Position;
