@@ -5,13 +5,6 @@ OFILES = $(FILES:%.cpp=%.o)
 
 DIRECTORIES = -I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI `freetype-config --cflags`
 
-ifeq (${__MINGW__},1)
-OPENGL = -mwindows -lopengl32 -lglew32 `sdl-config --cflags` -lglu32 -DGL_GLEXT_PROTOTYPES `sdl-config --libs`
-else
-OPENGL = -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL
-endif
-
-
 all: ../lib/libCabbageGUI.a
 
 ../lib/libCabbageGUI.a: $(OFILES)
