@@ -5,6 +5,7 @@ uniform sampler2D uNormal;
 uniform sampler2D uPosition;
 
 uniform float uRadius;
+uniform vec3 uColor;
 
 // Tex Coord
 varying vec4 gPosition;
@@ -39,5 +40,5 @@ void main()
     
     vec3 DiffuseValue = DiffuseColor * clamp(dot(Normal, LightVector), 0.0, 1.0);
     
-    gl_FragColor = vec4((DiffuseValue + AmbientValue) * Attenuation, 1);
+    gl_FragColor = vec4((DiffuseValue + AmbientValue) * uColor * Attenuation, 1);
 }

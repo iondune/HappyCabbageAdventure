@@ -19,40 +19,40 @@ class CLight
 	// CLight should implement ISceneObject
 	// that way light billboards will be drawable by using a scene->set debug flag
 	// and positioning,etc will be inheritted
-	
+
 public:
 
-    SColor Color;
-    SVector3 Position;
+	SColor Color;
+	SVector3 Position;
 
 	SUniform<SColor> BindColor;
 	SUniform<SVector3> BindPosition;
 
-    // Todo: change values only through get/set, set scene changed when so
+	// Todo: change values only through get/set, set scene changed when so
 
-    CLight()
+	CLight()
 		: BindColor(Color), BindPosition(Position)
-    {}
+	{}
 
 };
 
 class CScene
 {
 
-    static CLight const NullLight;
+	static CLight const NullLight;
 
 protected:
 
-    CPerspectiveCamera DefaultCamera;
-    ICamera * ActiveCamera;
+	CPerspectiveCamera DefaultCamera;
+	ICamera * ActiveCamera;
 
-    glm::mat4 ViewMatrix, ProjMatrix;
-    int LightCount;
+	glm::mat4 ViewMatrix, ProjMatrix;
+	int LightCount;
 
 	SUniform<glm::mat4> BindViewMatrix, BindProjMatrix;
 	SUniform<int> BindLightCount;
 
-    std::map<std::string, boost::shared_ptr<IUniform const> > Uniforms;
+	std::map<std::string, boost::shared_ptr<IUniform const> > Uniforms;
 
 	ISceneObject RootObject;
 	ISceneObject PostOpaqueRootObject;
@@ -62,36 +62,36 @@ protected:
 
 public:
 
-    CScene();
+	CScene();
 
-    ICamera * const getActiveCamera();
+	ICamera * const getActiveCamera();
 	ICamera const * const getActiveCamera() const;
-    void setActiveCamera(ICamera * const activeCamera);
+	void setActiveCamera(ICamera * const activeCamera);
 
 	template <typename T>
 	void addUniform(std::string const & label, T const & uniform)
 	{
 		Uniforms[label] = boost::shared_ptr<SUniform<T> >(new SUniform<T>(uniform));
 	}
-    void addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform);
-    void removeUniform(std::string const & label);
+	void addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform);
+	void removeUniform(std::string const & label);
 
-    boost::shared_ptr<IUniform const> const getUniform(std::string const & label) const;
+	boost::shared_ptr<IUniform const> const getUniform(std::string const & label) const;
 
-    void update();
+	void update();
 
-    std::vector<CLight *> Lights;
-    bool SceneChanged;
+	std::vector<CLight *> Lights;
+	bool SceneChanged;
 
-    bool const isCullingEnabled() const;
-    void setCullingEnabled(bool const culling);
+	bool const isCullingEnabled() const;
+	void setCullingEnabled(bool const culling);
 
-    void setUseHierarchy(bool h);
-    bool getUseHierarchy();
-    void toggleUseHierarchy();
+	void setUseHierarchy(bool h);
+	bool getUseHierarchy();
+	void toggleUseHierarchy();
 
-    void enableDebugData(EDebugData::Domain const type);
-    void disableDebugData(EDebugData::Domain const type);
+	void enableDebugData(EDebugData::Domain const type);
+	void disableDebugData(EDebugData::Domain const type);
 
 };
 
@@ -100,7 +100,7 @@ class CApplication;
 class CSceneManager : public CScene
 {
 
-    CScene * CurrentScene;
+	CScene * CurrentScene;
 
 	static GLuint QuadHandle;
 
@@ -113,22 +113,22 @@ class CSceneManager : public CScene
 
 	SSize2 ScreenSize;
 
-   // Immobile scene objects: to be combined in a hierarchy and culled based on X location 
+	// Immobile scene objects: to be combined in a hierarchy and culled based on X location 
 	std::vector<ISceneObject *> ImmobileSceneObjects;
-private:
-   ISceneObject* runImmobileObjectsThroughHierarchyAlgorithm();
+
+	ISceneObject* runImmobileObjectsThroughHierarchyAlgorithm();
 
 public:
 
-    CSceneManager(SPosition2 const & screenSize);
+	CSceneManager(SPosition2 const & screenSize);
 
-    void removePostOpaqueSceneObject(ISceneObject * sceneObject);
-    void addPostOpaqueSceneObject(ISceneObject *sceneObject);
-    void addSceneObject(ISceneObject * sceneObject);
-    void addImmobileSceneObject(ISceneObject * sceneObject, unsigned int agreement);
-    void removeSceneObject(ISceneObject * sceneObject);
+	void removePostOpaqueSceneObject(ISceneObject * sceneObject);
+	void addPostOpaqueSceneObject(ISceneObject *sceneObject);
+	void addSceneObject(ISceneObject * sceneObject);
+	void addImmobileSceneObject(ISceneObject * sceneObject, unsigned int agreement);
+	void removeSceneObject(ISceneObject * sceneObject);
 
-    void removeAllSceneObjects();
+	void removeAllSceneObjects();
 
 	CMeshSceneObject * addMeshSceneObject(CMesh * Mesh);
 	CMeshSceneObject * addMeshSceneObject(CMesh * Mesh, CShader * Shader, CShader * DeferredShader);
@@ -155,10 +155,11 @@ public:
 
 	static GLuint const getQuadHandle();
 
-   void setDeferred(bool const isDeferred);
+	void setDeferred(bool const isDeferred);
 
-   int getNumObjects();
-   int getNumCulled();
-   int getTimesCalled();
+	int getNumObjects();
+	int getNumCulled();
+	int getTimesCalled();
+
 };
 #endif

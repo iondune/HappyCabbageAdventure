@@ -78,6 +78,7 @@
     <ClInclude Include="CBufferObject.h" />
     <ClInclude Include="CCamera.h" />
     <ClInclude Include="CDeferredShadingManager.h" />
+    <ClInclude Include="CDirectionalLightSceneObject.h" />
     <ClInclude Include="CFrameBufferObject.h" />
     <ClInclude Include="CImage.h" />
     <ClInclude Include="CMaterial.h" />
@@ -105,6 +106,7 @@
   <ItemGroup>
     <ClCompile Include="CCamera.cpp" />
     <ClCompile Include="CDeferredShadingManager.cpp" />
+    <ClCompile Include="CDirectionalLightSceneObject.cpp" />
     <ClCompile Include="CFrameBufferObject.cpp" />
     <ClCompile Include="CImage.cpp" />
     <ClCompile Include="CMaterial.cpp" />
