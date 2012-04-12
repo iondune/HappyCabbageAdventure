@@ -102,8 +102,6 @@ class CSceneManager : public CScene
 
 	CScene * CurrentScene;
 
-	static GLuint QuadHandle;
-
 	CFrameBufferObject * SceneFrameBuffer;
 	CTexture * SceneFrameTexture;
 	CRenderBufferObject * SceneDepthBuffer;
@@ -119,6 +117,8 @@ class CSceneManager : public CScene
 	ISceneObject* runImmobileObjectsThroughHierarchyAlgorithm();
 
 public:
+	
+	static GLuint QuadHandle;
 
 	CSceneManager(SPosition2 const & screenSize);
 
