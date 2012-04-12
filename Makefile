@@ -46,7 +46,7 @@ build-CabbageParticles:
 clean:
 	rm -f $(OBJECT_FILES)
 	rm -f Base/cabbage DemoCabbageCollider/CabbageColliderDemo DemoMeshLoader/MeshLoaderDemo
-	rm -f lib/libCLWIB.a lib/libCabbageCollider.a lib/libCabbageFramework.a lib/libCabbageParticles.a lib/libCabbageScene.a lib/libCabbageSound.a lib/libOverworldState.a lib/libCabbageGUI.a
+	rm -f lib/libCLWIB.a lib/libCabbageCollider.a lib/libCabbageFramework.a lib/libCabbageParticles.a lib/libCabbageScene.a lib/libCabbageSound.a lib/libOverworldState.a lib/libCabbageGUI.a lib/libCabbageCore.a
 
 #	cd ./CabbageScene && make -j $@ && cd ../StateOverworld && make -j $@ && cd ../StateLWIB && make -j $@ && cd ../CabbageSound && make -j $@ && cd ../CabbageCollider && make -j $@ && cd ../DemoMeshLoader && make -j $@ && cd ../DemoCabbageCollider && make -j $@ && cd ../CabbageFramework && make -j $@
 
