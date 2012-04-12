@@ -95,6 +95,7 @@
     <ClCompile Include="CPLaser.cpp" />
     <ClCompile Include="CPLaser2.cpp" />
     <ClCompile Include="CPLeaf.cpp" />
+    <ClCompile Include="CPStar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CParticle.h" />
