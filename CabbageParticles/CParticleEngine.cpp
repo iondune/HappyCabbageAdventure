@@ -63,6 +63,11 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
             cPtr->setAppearRate(2.0f);
             cPtr->useCenterPos = 0;
             break;
+         case STAR_PARTICLE:
+            particles.push_back(cPtr = new CPStar());
+            cPtr->setAppearRate(0);
+            cPtr->useCenterPos = 0;
+            break;
       }
       cPtr->setCenterPos(&centerPos);
       cPtr->setLookRight(&lookRight);
@@ -162,6 +167,11 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
 
             sizeArr.push_back((float)rand()/(float)RAND_MAX*10 + 10);
             break;
+         case STAR_PARTICLE:
+            temp = 0.2f;
+            colorArr.push_back(new SVector3(1.0f - (float)rand()/(float)RAND_MAX*temp, 1.0f - (float)rand()/(float)RAND_MAX*temp, 1.0f - (float)rand()/(float)RAND_MAX*temp));
+            sizeArr.push_back((float)rand()/(float)RAND_MAX*60 + 30);
+            break;
       }
    }
    myObj = new CParticleObject();
@@ -206,6 +216,11 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
    case DUST_PARTICLE:
       textureToUse = "Base/particle2.bmp";
       break;
+   case STAR_PARTICLE:
+      textureToUse = "Base/particleStar.bmp";
+      myObj->setAlwaysRender();
+      myObj->setSizeFactor(38.0f);
+      break;
    }
 
 
@@ -244,6 +259,7 @@ void CParticleEngine::step(float const elapsedTime) {
          for(int j = 0; j < 3; j++) {
             if((*it)->useCenterPos == 1) {
                (*(positionArr[i]))[j] = (* it)->translate[j] + centerPos[j];
+               
             }
             else {
                (*(positionArr[i]))[j] = (* it)->translate[j];
