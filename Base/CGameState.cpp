@@ -1899,7 +1899,7 @@ void CGameState::oldDisplay() {
 
          playerLight2 = new CPointLightSceneObject(4.f);
          CApplication::get().getSceneManager().addSceneObject(playerLight2);
-		 CApplication::get().getSceneManager().addSceneObject(new CDirectionalLightSceneObject(SVector3(0, -1, 0)));
+		 CApplication::get().getSceneManager().addSceneObject(new CDirectionalLightSceneObject(SVector3(0, -1, 0), SColor(0.3, 0.4, 0.7)));
 
          for (int x = -5; x < 200; ++ x)
             for (int y = -0; y < 2; ++ y)
