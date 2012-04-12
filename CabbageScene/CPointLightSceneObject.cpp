@@ -8,18 +8,23 @@
 #include "CDeferredShadingManager.h"
 
 
-CPointLightSceneObject::CPointLightSceneObject()
+CPointLightSceneObject::CPointLightSceneObject(float const radius, SColor const & color)
+	: Color(color)
 {
 	SphereMesh = CMeshLoader::load3dsMesh("Sphere.3ds");
-	SphereMesh->resizeMesh(SVector3(2.f));
-	SphereMesh->updateBuffers();
 
-	setRadius(3.f);
+	if (SphereMesh)
+	{
+		SphereMesh->resizeMesh(SVector3(2.f));
+		SphereMesh->updateBuffers();
+
+		MeshBuffer = SphereMesh->MeshBuffers[0];
+
+		Shader = CShaderLoader::loadShader("Deferred/PointLight");
+	}
+
+	setRadius(radius);
 	setBoundingBox(SphereMesh->getBoundingBox());
-
-	MeshBuffer = SphereMesh->MeshBuffers[0];
-
-	Shader = CShaderLoader::loadShader("Deferred/PointLight");
 }
 
 void CPointLightSceneObject::draw(CScene const * const scene, ERenderPass const Pass)
@@ -44,12 +49,16 @@ void CPointLightSceneObject::draw(CScene const * const scene, ERenderPass const 
 			if (MeshBuffer->PositionBuffer.isDirty())
 				MeshBuffer->PositionBuffer.syncData();
 
+			if (! Shader || ! SphereMesh)
+				break;
+
 			CShaderContext Context(* Shader);
 			Context.bindIndexBufferObject(MeshBuffer->IndexBuffer.getHandle());
 			Context.bindBufferObject("aPosition", MeshBuffer->PositionBuffer.getHandle(), 3);
 			Context.uniform("uModelMatrix", AbsoluteTransformation);
 			Context.uniform("uViewMatrix", scene->getActiveCamera()->getViewMatrix());
 			Context.uniform("uProjMatrix", scene->getActiveCamera()->getProjectionMatrix());
+			Context.uniform("uColor", Color);
 			Context.uniform("uRadius", Scale.X);
 
 			Context.bindTexture("uNormal", ((CDeferredShadingManager *) ((CSceneManager *)scene)->getEffectManager())->DeferredNormalOutput);
@@ -63,22 +72,6 @@ void CPointLightSceneObject::draw(CScene const * const scene, ERenderPass const 
 
 void CPointLightSceneObject::load(CScene const * const Scene)
 {
-}
-
-CPointLightSceneObject::CPointLightSceneObject(float const Radius)
-{
-	SphereMesh = CMeshLoader::load3dsMesh("Sphere.3ds");
-	SphereMesh->resizeMesh(SVector3(2.f));
-	SphereMesh->updateBuffers();
-	
-	setRadius(Radius);
-	setBoundingBox(SphereMesh->getBoundingBox());
-
-	MeshBuffer = SphereMesh->MeshBuffers[0];
-
-	Shader = CShaderLoader::loadShader("Deferred/PointLight");
-
-	setCullingEnabled(false);
 }
 
 void CPointLightSceneObject::setRadius(float const Radius)
