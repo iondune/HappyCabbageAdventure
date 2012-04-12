@@ -36,18 +36,14 @@ void CDirectionalLightSceneObject::draw(CScene const * const scene, ERenderPass 
 				break;
 
 			CShaderContext Context(* Shader);
-			Context.bindIndexBufferObject(MeshBuffer->IndexBuffer.getHandle());
-			Context.bindBufferObject("aPosition", MeshBuffer->PositionBuffer.getHandle(), 3);
-			Context.uniform("uModelMatrix", AbsoluteTransformation);
-			Context.uniform("uViewMatrix", scene->getActiveCamera()->getViewMatrix());
-			Context.uniform("uProjMatrix", scene->getActiveCamera()->getProjectionMatrix());
 			Context.uniform("uColor", Color);
-			Context.uniform("uRadius", Scale.X);
+			Context.uniform("uDirection", Direction);
+			Context.bindBufferObject("aPosition", CSceneManager::QuadHandle, 2);
 
 			Context.bindTexture("uNormal", ((CDeferredShadingManager *) ((CSceneManager *)scene)->getEffectManager())->DeferredNormalOutput);
 			Context.bindTexture("uPosition", ((CDeferredShadingManager *) ((CSceneManager *)scene)->getEffectManager())->DeferredPositionOutput);
 
-			glDrawElements(GL_TRIANGLES, MeshBuffer->IndexBuffer.getElements().size(), GL_UNSIGNED_SHORT, 0);
+			glDrawArrays(GL_QUADS, 0, 4);
 			break;
 		}
 	}
