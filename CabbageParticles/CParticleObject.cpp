@@ -35,6 +35,9 @@ void CParticleObject::update() {
 
 void CParticleObject::draw(CScene const * const scene, ERenderPass const Pass)
 {
+   // The next two lines make it so that if the particle object is culled, none of the children particles will even be checked for culling
+   if(ISceneObject::isCulled(scene))
+      return;
    ISceneObject::draw(scene, Pass);
 
    switch (Pass)
