@@ -13,7 +13,7 @@ EFlame::EFlame(float x, float y, float w, float h, CGameplayManager* manager) {
 
 //Loads and moves the mesh
 void EFlame::loadMesh() {
-   particleEngine = new CParticleEngine(SVector3(x, y, 0), 400, -1, FLAME_PARTICLE);
+   particleEngine = new CParticleEngine(SVector3(x, y, 0), 100, -1, FLAME_PARTICLE);
 }
 
 //Adds actor to engine and preps engine

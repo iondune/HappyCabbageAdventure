@@ -244,6 +244,7 @@ void CParticleEngine::step(float const elapsedTime) {
          for(int j = 0; j < 3; j++) {
             if((*it)->useCenterPos == 1) {
                (*(positionArr[i]))[j] = (* it)->translate[j] + centerPos[j];
+               
             }
             else {
                (*(positionArr[i]))[j] = (* it)->translate[j];

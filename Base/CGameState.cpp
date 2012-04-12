@@ -1047,7 +1047,7 @@ void CGameState::oldDisplay() {
                      GameplayManager->LaserBox = SRect2(Player->getArea().getCenter() - SVector2(5.5f, 0.0f), Player->getArea().Size + SVector2(5.0f, 0.0f));
                   }
 
-                  particleLaserFireEngine = new CParticleEngine(SVector3(0, 1, 0), 5000, 1.2f, LASER_FIRING_PARTICLE);
+                  particleLaserFireEngine = new CParticleEngine(SVector3(0, 1, 0), 1000, 1.2f, LASER_FIRING_PARTICLE);
                   particleLaserFireEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
                   particleLaserFireEngine->setLookRight(PlayerView->getLookRight());
                }
