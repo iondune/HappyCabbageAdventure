@@ -1,7 +1,7 @@
 ROOT_CABBAGE_DIR=../
 SOURCES=main.cpp CGameState.cpp CPlayerView.cpp CGameplayManager.cpp CGameEventReceiver.cpp ./irrxml-1.2/src/irrXML.cpp CBadGuy.cpp EApple.cpp EOrange.cpp EKiwi.cpp EFlame.cpp EBlade.cpp PKiwi.cpp CItem.cpp CIHealth.cpp CIEnergy.cpp CISeed.cpp CILife.cpp CBiggerBlock.cpp EGrape.cpp PGrape.cpp CFriends.cpp CFDerp.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o) ../StateMainMenu/CMainMenuState.o ../StateOverworld/COverworldState.o
-CABBAGE= -L../lib/ -lCabbageSound -lCabbageCollider -lCabbageFramework -lCabbageScene -lCLWIB -lOverworldState -lCabbageParticles -lCabbageGUI
+CABBAGE= -L../lib/ -lCabbageCore -lCabbageSound -lCabbageCollider -lCabbageFramework -lCabbageScene -lCLWIB -lOverworldState -lCabbageParticles -lCabbageGUI
 CC=g++ -O1 -s
 
 COMPILER_VERSION=-std=c++0x
@@ -32,7 +32,7 @@ all: ${TARGET}
 .cpp.o:
 	$(CC) -c $(INCLUDE) -DGL_GLEXT_PROTOTYPES $< -o $@
 
-cabbage: ${OBJECTS} ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCLWIB.a ../lib/libOverworldState.a ../lib/libCabbageParticles.a ../lib/libCabbageGUI.a
+cabbage: ${OBJECTS} ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCLWIB.a ../lib/libOverworldState.a ../lib/libCabbageParticles.a ../lib/libCabbageGUI.a ../lib/libCabbageCore.a
 	$(CC) ${COMPILER_VERSION} ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL `sdl-config --cflags --libs` ${CABBAGE} ${MIXLIB} `freetype-config --libs` -o $@
 
 qclean:
@@ -42,13 +42,13 @@ clean:
 
 mingw: cabbage.exe
 
-cabbage.exe: ${OBJECTS} ../lib/libCabbageSound.a ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCLWIB.a ../lib/libOverworldState.a ../lib/libCabbageParticles.a ../lib/libCabbageGUI.a
+cabbage.exe: ${OBJECTS} ../lib/libCabbageSound.a ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCLWIB.a ../lib/libOverworldState.a ../lib/libCabbageParticles.a ../lib/libCabbageGUI.a ../lib/libCabbageCore.a
 	$(CC) ${COMPILER_VERSION} `sdl-config --cflags` ${OBJECTS} -DGL_GLEXT_PROTOTYPES ${CABBAGE} ./*.dll -lSDL_mixer -lopengl32 -lglu32 -lglut32 `sdl-config --libs` `freetype-config --libs` -L/lib/ -o $@ -lglew32
 
 
 
 cygwin: cabbage2.exe
-cabbage2.exe: ${OBJECTS} ../lib/libCabbageSound.a ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCLWIB.a ../lib/libOverworldState.a ../lib/libCabbageParticles.a ../lib/libCabbageGUI.a
+cabbage2.exe: ${OBJECTS} ../lib/libCabbageSound.a ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCLWIB.a ../lib/libOverworldState.a ../lib/libCabbageParticles.a ../lib/libCabbageGUI.a ../lib/libCabbageCore.a
 	$(CC) ${COMPILER_VERSION} ${OBJECTS} ${CABBAGE} -lSDL_mixer -lGL -lGLU `sdl-config --libs` `freetype-config --libs` -L/lib/ -o $@ -lglew32
 #	$(CC) ${COMPILER_VERSION} `sdl-config --cflags` ${OBJECTS} -DGL_GLEXT_PROTOTYPES ${CABBAGE} ./*.dll -lSDL_mixer -lGL -lGLU `sdl-config --libs` -L/lib/ -o $@ -lglew32
 
