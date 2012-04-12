@@ -61,6 +61,7 @@ void CLWIBState::begin()
    enemyType = 0;
    itemType = 0;
    secretFlag = 0;
+   friendType = 0;
    change = 0; //this determines
    aDown = dDown = spaceDown = wDown = sDown = gDown = fDown = tDown = eDown = mDown = oneDown = twoDown = threeDown = cDown = 0;
    cubeMesh = CMeshLoader::createCubeMesh();
@@ -141,36 +142,35 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    PreviewCabbage->setTranslation(SVector3(x+0.5f,y+0.5f, 0));
    PreviewFlag->setTranslation(SVector3(x+0.5f,y+0.5f, 0));
    PreviewItem->setTranslation(SVector3(x+0.5f,y+0.5f, 0));
-   if(clickDown) {
+   if(clickDown) { //over hud
       PreviewItem->setVisible(false);
       PreviewFlag->setVisible(false);
       PreviewCabbage->setVisible(false); 
       PreviewBlock->setVisible(false);
       PreviewEnemy->setVisible(false);
    }
-   else if(tDown) {
+   else if(tDown) { // remove mode
       PreviewItem->setVisible(false);
       PreviewFlag->setVisible(false);
       PreviewCabbage->setVisible(false); 
       PreviewBlock->setVisible(false);
       PreviewEnemy->setVisible(false);
    }
-   else if(twoDown) {
+   else if(twoDown) { // prep enemy
       PreviewItem->setVisible(false);
       PreviewFlag->setVisible(false);
       PreviewCabbage->setVisible(false); 
       PreviewEnemy->setVisible(true);
       PreviewBlock->setVisible(false);
    }
-   else if(oneDown) {
-   
+   else if(oneDown) { // preview cabbage and friends
       PreviewItem->setVisible(false);
       PreviewFlag->setVisible(false);
       PreviewCabbage->setVisible(true); 
       PreviewEnemy->setVisible(false);
       PreviewBlock->setVisible(true);
    }
-   else if(threeDown) {
+   else if(threeDown) { // prep flag
       PreviewItem->setVisible(false);
       PreviewFlag->setVisible(true);
       PreviewCabbage->setVisible(false); 
@@ -178,14 +178,14 @@ void CLWIBState::OnRenderStart(float const Elapsed)
       PreviewBlock->setVisible(false);
     
    }
-   else if(fourDown) {
+   else if(fourDown) { // items
       PreviewItem->setVisible(true);
       PreviewFlag->setVisible(false);
       PreviewCabbage->setVisible(false); 
       PreviewBlock->setVisible(false);
       PreviewEnemy->setVisible(false);
    }
-   else {
+   else { // default blocks
       PreviewItem->setVisible(false);
       PreviewFlag->setVisible(false);
       PreviewCabbage->setVisible(false); 
@@ -285,7 +285,15 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    if (oneDown && !showHelp && !tDown && !twoDown && !threeDown&& !fourDown) {
        block3->setVisible(false);
        block2->setVisible(false);
-       block1->setText("Insert Cabbage");
+       if (friendType == 0) {
+           block1->setText("Insert Cabbage");
+           PreviewCabbage->setMesh(cabbageMesh);
+       } else if (friendType == 1) {
+           block1->setText("Insert derp");
+           PreviewCabbage->setMesh(cabbageMesh);
+       } else 
+           printf("error friend not here");
+
        PreviewCabbage->setMesh(cabbageMesh);
    }
    if (threeDown && !showHelp && !tDown && !twoDown && !oneDown&& !fourDown) {
@@ -462,7 +470,12 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
             showHelp = Event.Pressed;
         }
         if(Event.Key == SDLK_x ) { // adding generally
-            if (twoDown) {
+            if (oneDown) {
+                if (friendType < 1)
+                    friendType++;
+                else
+                    friendType = 0;
+            } else if (twoDown) {
                 if (enemyType < 6) //temp constraint
                     enemyType++;
                 else
@@ -515,7 +528,12 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
             }
         } 
         if (Event.Key == SDLK_z) { // subtracting generally
-            if (twoDown) {
+            if (oneDown) {
+                 if (friendType != 0)
+                    friendType--;
+                else
+                    friendType = 1;
+            } else if (twoDown) {
                 if (enemyType != 0) 
                     enemyType--;
                 else
@@ -677,6 +695,12 @@ void CLWIBState::loadWorld() {
                 y = xml->getAttributeValueAsInt(1);
                 t = xml->getAttributeValueAsInt(2);
                 PrepItem((float)x, (float)y, t);
+           }
+           if (!strcmp("CPFriends", xml->getNodeName())) {
+                x = xml->getAttributeValueAsInt(0);
+                y = xml->getAttributeValueAsInt(1);
+                t = xml->getAttributeValueAsInt(2);
+                PrepFriends(x,y,t);
            }
          break;
         }
@@ -941,6 +965,37 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
    redoPlaceables.clear();
 }
 
+void CLWIBState::PrepFriends(int x, int y, int t) {
+    if(x < -25 || y < -25 || x >= 500 || y >= 75)
+        return;
+    if(blockMap[(int)x+25][(int)(y-0.5+25)].o) {
+        printf("Blockmap space occupied. Did not place friend\n");
+        return;
+    }
+    printf("Placed friend starting at %0.2f, %0.2f\n", x, y);
+    CMeshSceneObject *tempFriends;
+    CPFriends *tempPlaceable;
+    blocks.push_back(tempFriends = new CMeshSceneObject());
+    placeables.push_back(tempPlaceable = new CPFriends(x, y, t));
+    if (t == 0)
+        tempFriends->setMesh(appleMesh);
+
+    tempFriends->setShader(ERP_DEFAULT, Diffuse);
+    tempFriends->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
+    tempFriends->setTranslation(SVector3((x+(x+1))/2, (y+(y+1))/2, 0));
+    tempFriends->setRotation(SVector3(-90, 0, 0));
+    tempFriends->setScale(SVector3(1, 1, 1));
+    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
+    blockMap[(int)x+25][(int)(y-0.5+25)].r = tempFriends;
+    blockMap[(int)x+25][(int)(y-0.5+25)].p = tempPlaceable;
+    blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
+    blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
+    Application.getSceneManager().addSceneObject(tempFriends);
+    redo.clear();
+    redoPlaceables.clear();
+}
+
+
 qd lastCabbage = blockMap[0][0];
 
 void CLWIBState::PrepCabbage(float x, float y) {
@@ -1114,7 +1169,10 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
             PrepFlag(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), secretFlag);
          }
          if(!tDown && oneDown && !threeDown && !twoDown&& !fourDown) {
-             PrepCabbage(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
+             if (friendType == 0)
+                PrepCabbage(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
+             else if (friendType == 1)
+                PrepFriends(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), friendType);
          }
          else if (!tDown && !oneDown && !threeDown &&!twoDown && !fourDown) {
             PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,textureType,mDown);
@@ -1282,9 +1340,9 @@ void CLWIBState::changeTiles() {
         tileOne->setImage(cabbageImage);
         if (!Application.getGUIEngine().isWidgetIn(tileOne))
             Application.getGUIEngine().addWidget(tileOne);
+        if (!Application.getGUIEngine().isWidgetIn(tileTwo))
+            Application.getGUIEngine().addWidget(tileTwo);
 
-        if (Application.getGUIEngine().isWidgetIn(tileTwo))
-            Application.getGUIEngine().removeWidget(tileTwo);
         if (Application.getGUIEngine().isWidgetIn(tileThree))
             Application.getGUIEngine().removeWidget(tileThree);
         if (Application.getGUIEngine().isWidgetIn(tileFour))

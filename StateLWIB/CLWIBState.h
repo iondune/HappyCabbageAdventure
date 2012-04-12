@@ -36,7 +36,7 @@ class CLWIBState : public CState<CLWIBState>
    int blockCycle;
    int change;
    bool showHelp;
-   int enemyType, textureType, itemType;
+   int enemyType, textureType, itemType, friendType;
    int WindowWidth, WindowHeight;
    //stuff for textures
    CTexture *grass,*dirt,*rock,*ground,*cabbageImage,*apple,*orange,*kiwi,*fire,*blade, *alien;
@@ -85,6 +85,7 @@ class CLWIBState : public CState<CLWIBState>
    void PrepFlag(float X ,float y, int t);
    void PrepItem(float x, float y, int type);
    void PrepGrass(float x, float y, float w, float h);
+   void PrepFriends(int x, int y, int t);
    void PrepPreviews();
 
    void PrepSky();
