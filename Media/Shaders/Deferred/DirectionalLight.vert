@@ -1,19 +1,9 @@
+attribute vec2 aPosition;
 
-
-// Vertex input
-attribute vec3 aPosition;
-
-// Transformation
-uniform mat4 uModelMatrix;
-uniform mat4 uProjMatrix;
-uniform mat4 uViewMatrix;
-
-// Tex Coord
-varying vec4 vTexCoord;
-
+varying vec2 vTexCoord;
 
 void main()
 {
-    vTexCoord = gl_MultiTexCoord0;
-    gl_Position = gl_ModelViewProjectionMatrix*gl_Vertex;
+    gl_Position = vec4(aPosition, 0, 1);
+    vTexCoord = (aPosition + vec2(1.0)) / 2.0;
 }

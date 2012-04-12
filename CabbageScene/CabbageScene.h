@@ -20,5 +20,6 @@
 
 #include "CDeferredShadingManager.h"
 #include "CPointLightSceneObject.h"
+#include "CDirectionalLightSceneObject.h"
 
 #endif
