@@ -1888,11 +1888,10 @@ void CGameState::oldDisplay() {
          playerLight2 = new CPointLightSceneObject(4.f);
          CApplication::get().getSceneManager().addSceneObject(playerLight2);
 
-         for (int x = -5; x < 20; ++ x)
+         for (int x = -5; x < 200; ++ x)
             for (int y = -0; y < 2; ++ y)
             {
-               CPointLightSceneObject * point = new CPointLightSceneObject();
-               point->setRadius(1.5f);
+               CPointLightSceneObject * point = new CPointLightSceneObject(1.5f, x % 2 ? SColor(1, 0, 0) : SColor(0, 1, 1));
                point->setTranslation(SVector3(x * 3.f, y * 3.f, 0.f));
                CApplication::get().getSceneManager().addSceneObject(point);
             }
