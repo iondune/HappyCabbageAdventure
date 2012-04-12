@@ -17,10 +17,8 @@ CMesh *basicTreeMesh, *cabbageMesh, *cabbageDamage, *christmasTreeMesh, *cubeMes
 CMesh *mCab0[2], *mCab1[2], *mCab2[2], *mCab3[2], *mCab4[2], *mCab5[2],
       *mCabOw0[2], *mCabOw1[2], *mCabOw2[2], *mCabOw3[2], *mCabOw4[2], *mCabOw5[2];
 
-CMeshSceneObject *renderWinCabbage, *playerRenderable, *renderChristmasTree,
-  *renderBasicTree, *renderBlueFlwr, *renderWhiteFlwr, *renderFicus, *renderFern,
-  *tempRender, *renderFlag, *flagLogo, *renderSecretFlag, *flagLogo2, *renderDerp, *renderPurpleFlwr, *renderYellowFlwr,
-  *renderTealFlwr, *renderWhiteSunflwr;
+CMeshSceneObject *renderWinCabbage, *playerRenderable, *tempRender, *renderFlag, *flagLogo, *renderSecretFlag, *flagLogo2, *renderDerp;
+
 ISceneObject *cabbage5, *cabbage4, *cabbage3, *cabbage2, 
   *cabbage1, *cabbage0, *cabbageHurt5, *cabbageHurt4, *cabbageHurt3, *cabbageHurt2,
   *cabbageHurt1, *cabbageHurt0;
