@@ -1436,14 +1436,15 @@ void CGameState::oldDisplay() {
 
       void CGameState::PrepSky() {
          CMeshSceneObject *tempBlock;
-         blocks.push_back(tempBlock = new CMeshSceneObject());
+
+         tempBlock = new CMeshSceneObject();
          tempBlock->setMesh(cubeMesh);
          tempBlock->setTexture(skyTxt);
          tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
          tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
          tempBlock->setTranslation(SVector3(85/*75*/, 13, -5.0));
          tempBlock->setScale(SVector3(250, -50, 1));
-         //tempBlock->setCullingEnabled(false);
+
          Application.getSceneManager().addSceneObject(tempBlock);
       }
 
@@ -1480,9 +1481,9 @@ void CGameState::oldDisplay() {
             plantType = rand()%2;
             randDist = w * .1 + (rand() / (float)RAND_MAX) * .7 * w;  //.1, .7 to make sure doesn't overlap with other randomly drawn cacti
             if (plantType == 0)
-               drawBasicTree(x + randDist, yVal - 0.2f, -d/2.0f + .4f, 8.0f, Application);
+               drawModel(x + randDist, yVal - 0.2f, -d/2.0f + .4f, 8.0f, Application, basicTreeMesh);
             else if (plantType == 1)
-               drawChristmasTree(x + randDist, yVal +  1.4f, -d/2.0f + .4f, 6.0f, Application);
+               drawModel(x + randDist, yVal +  1.4f, -d/2.0f + .4f, 6.0f, Application, christmasTreeMesh);
          }
 
          //Draw shrubbery in background
@@ -1503,9 +1504,9 @@ void CGameState::oldDisplay() {
             }
 
             if (plantType == 0)
-               drawBasicTree(x + randDist, yVal - 0.2f, d/2.0f + .4f, 8.0f, Application);
+               drawModel(x + randDist, yVal - 0.2f, d/2.0f + .4f, 8.0f, Application, basicTreeMesh);
             else if (plantType == 1)
-               drawChristmasTree(x + randDist, yVal +  1.4f, d/2.0f + .4f, 6.0f, Application);
+               drawModel(x + randDist, yVal +  1.4f, d/2.0f + .4f, 6.0f, Application, christmasTreeMesh);
          }
 
          for (int n = 0; n < numForeground; n++) {
@@ -1550,9 +1551,9 @@ void CGameState::oldDisplay() {
             random = rand()%2;
 
             if (random == 0)
-               drawBasicTree(x + (n)*div + div/2.0f, yVal -0.2f, -d/2.0f + .4f, 8.0f, Application);
+               drawModel(x + (n)*div + div/2.0f, yVal + 1.8f, -d/2.0f + .4f, 8.0f, Application, basicTreeMesh);
             else if (random == 1)
-               drawChristmasTree(x + (n)*div + div/2.0f, yVal + 1.4f, -d/2.0f + .4f, 6.0f, Application);
+               drawModel(x + (n)*div + div/2.0f, yVal + 1.4f, -d/2.0f + .4f, 6.0f, Application, christmasTreeMesh);
          }
 
          //Draw flower-type plants in background
@@ -1565,21 +1566,21 @@ void CGameState::oldDisplay() {
             randDepth = (float) randDepth*.25f;
 
             if (random == 0 || random == 1)
-               drawWhiteFlwr(x + n + .5f, yVal - 1.f, -d/2.0f + 1.6f + randDepth, .7f, Application);
+               drawModel(x + n + .5f, yVal - 1.f, -d/2.0f + 1.6f + randDepth, .7f, Application, whiteFlwrMesh);
             else if (random == 2 || random == 3 || random == 4) {
                if (subrand == 0)
-                  drawYellowFlwr(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
+                  drawModel(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application, yellowFlwrMesh);
                else if (subrand == 1)
-                  drawBlueFlwr(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
+                  drawModel(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application, blueFlwrMesh);
                else if (subrand == 2)
-                  drawWhiteSunflwr(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
+                  drawModel(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application, whiteSunflwrMesh);
                else if (subrand == 3)
-                  drawTealFlwr(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
+                  drawModel(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application, tealFlwrMesh);
                else if (subrand == 4)
-                  drawPurpleFlwr(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application);
+                  drawModel(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application, purpleFlwrMesh);
             }
             else if (random == 5 && !oldFern) {
-               drawFern(x + n + .5f, yVal + .2f, -d/2.0f + 1.5f + randDepth, 1.f + randScale, Application);
+               drawModel(x + n + .5f, yVal + .2f, -d/2.0f + 1.5f + randDepth, 1.f + randScale, Application, fernMesh);
                oldFern = true;
             }
             else if (random == 5 && oldFern)
@@ -1594,30 +1595,31 @@ void CGameState::oldDisplay() {
             random = rand()%6;
             float subrand = (float) (rand()%5);
             randScale = (float) (rand()%10);
-            randScale = randScale * 0.025f;
+            randScale = randScale * 0.04f;
             randDepth = (float) (rand()%2);
             randDepth = randDepth*0.25f;
 
             if (random == 0 || random == 1)
-               drawWhiteFlwr(x + n + 0.5f, -1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application);
+               drawModel(x + n + 0.5f, randScale/2.0 + .1f, d/2.0f - 0.6f, 0.4f + randScale, Application, whiteFlwrMesh);
             else if (random == 2 || random == 3 || random == 4) {
                if (subrand == 0)
-                  drawBlueFlwr(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application);
+                  drawModel(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application, blueFlwrMesh);
                else if (subrand == 1)
-                  drawTealFlwr(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application);
+                  drawModel(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application, tealFlwrMesh);
                else if (subrand == 2)
-                  drawPurpleFlwr(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application);
+                  drawModel(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application, purpleFlwrMesh);
                else if (subrand == 3)
-                  drawYellowFlwr(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application);
+                  drawModel(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application, yellowFlwrMesh);
                else if (subrand == 3)
-                  drawWhiteSunflwr(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application);
+                  drawModel(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application, whiteSunflwrMesh);
             }
             else if (random == 5 && !oldFern) {
-               drawFern(x + n + 0.5f, yVal + 0.2f, d/2.0f - 0.6f, 0.7f, Application);
+               drawModel(x + n + 0.5f, yVal + 0.2f, d/2.0f - 0.6f, 0.7f, Application, fernMesh);
                oldFern = true;
             }
-            else if (random == 5 && oldFern)
+            else if (random == 5 && oldFern) {
                n--;
+            }
 
             if (random != 5)
                oldFern = false;
