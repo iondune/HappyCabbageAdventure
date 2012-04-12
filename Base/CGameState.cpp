@@ -260,6 +260,16 @@ void CGameState::consolidateAndAddBlocks() {
    blocksY.clear();
 }
 
+#define PARTICLE
+#ifdef PARTICLE
+CParticleEngine *particleLeafEngine;
+CParticleEngine *particleCubeEngine;
+CParticleEngine *particleLaserEngine;
+CParticleEngine *particleLaserFireEngine;
+CParticleEngine *particleDustEngine;
+CParticleEngine *particleStarEngine;
+#endif
+
 void CGameState::EngineInit( void ) {
    elevators.clear();
    if(Engine) {
@@ -312,17 +322,10 @@ void CGameState::EngineInit( void ) {
       }
    }
 
+   particleStarEngine = new CParticleEngine(SVector3(-30.0f, 15.0f, 0.0f), 100, -1, STAR_PARTICLE);
+
    consolidateAndAddBlocks();
 }
-
-#define PARTICLE
-#ifdef PARTICLE
-CParticleEngine *particleLeafEngine;
-CParticleEngine *particleCubeEngine;
-CParticleEngine *particleLaserEngine;
-CParticleEngine *particleLaserFireEngine;
-CParticleEngine *particleDustEngine;
-#endif
 
 void CGameState::LoadHUD() {
    //Prepare GUI
@@ -385,7 +388,7 @@ void CGameState::Initialize() {
 
    f1 = f2 = f3 = glow = 0;
 #ifdef PARTICLE
-   particleLeafEngine = particleCubeEngine = particleLaserEngine = particleLaserFireEngine = particleDustEngine = 0;
+   particleLeafEngine = particleCubeEngine = particleLaserEngine = particleLaserFireEngine = particleDustEngine = particleStarEngine = 0;
 #endif
    SPosition2 size = Application.getWindowSize();
    WindowWidth = size.X;
@@ -626,6 +629,9 @@ void CGameState::oldDisplay() {
             particleDustEngine->setLookRight(PlayerView->getLookRight());
             particleDustEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
             particleDustEngine->step(Application.getElapsedTime());
+         }
+         if(particleStarEngine && !particleStarEngine->dead) {
+            particleStarEngine->step(Application.getElapsedTime());
          }
          if(particleLeafEngine && !particleLeafEngine->dead) {
             particleLeafEngine->setCenterPos(SVector3(Player->getArea().getCenter().X, Player->getArea().getCenter().Y, 0));
@@ -1076,6 +1082,10 @@ void CGameState::oldDisplay() {
 
          stopSoundtrack();
 
+         if(particleStarEngine) {
+            particleStarEngine->deconstruct();
+            delete particleStarEngine;
+         }
          if(particleLeafEngine) {
             particleLeafEngine->deconstruct();
             delete particleLeafEngine;

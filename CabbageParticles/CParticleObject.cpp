@@ -60,6 +60,18 @@ void CParticleObject::draw(CScene const * const scene, ERenderPass const Pass)
    //glEnable(GL_DEPTH_TEST);
 }
 
+void CParticleObject::setAlwaysRender() {
+   setCullingEnabled(false);
+}
+
+CParticleObject::CParticleObject() {
+   sizeFactor = 40.0f;
+}
+
+void CParticleObject::setSizeFactor(float f) {
+   sizeFactor = f;
+}
+
 void CParticleObject::setup(std::vector<SVector3*> vectorArr, std::vector<SVector3*> colorArr, std::vector<float> sizeArr, int num, const char* texturePath) {
    updated = true;
    numParticles = num;
@@ -72,7 +84,7 @@ void CParticleObject::setup(std::vector<SVector3*> vectorArr, std::vector<SVecto
          ColorBuffer.push_back((*(colorArr[i]))[j]);
          SizeBuffer.push_back(sizeArr[i]);
       }
-      CPointLightSceneObject *LightObj = new CPointLightSceneObject(sizeArr[i]/40.0f, *(colorArr[i]));
+      CPointLightSceneObject *LightObj = new CPointLightSceneObject(sizeArr[i]/sizeFactor, *(colorArr[i]));
       addChild(LightObj);
       LightsArr.push_back(LightObj);
 
