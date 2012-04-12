@@ -35,15 +35,16 @@ void CDirectionalLightSceneObject::draw(CScene const * const scene, ERenderPass 
 			if (! Shader)
 				break;
 
-			CShaderContext Context(* Shader);
-			Context.uniform("uColor", Color);
-			Context.uniform("uDirection", Direction);
-			Context.bindBufferObject("aPosition", CSceneManager::QuadHandle, 2);
+			CSceneEffectManager::SPostProcessPass Pass;
+			Pass.Textures["uNormal"] = ((CDeferredShadingManager *) ((CSceneManager *)scene)->getEffectManager())->DeferredNormalOutput;
+			Pass.SetTarget = false;
+			Pass.Shader = Shader;
 
-			Context.bindTexture("uNormal", ((CDeferredShadingManager *) ((CSceneManager *)scene)->getEffectManager())->DeferredNormalOutput);
-			Context.bindTexture("uPosition", ((CDeferredShadingManager *) ((CSceneManager *)scene)->getEffectManager())->DeferredPositionOutput);
+			Pass.begin();
+			Pass.Context->uniform("uColor", Color);
+			Pass.Context->uniform("uDirection", Direction);
 
-			glDrawArrays(GL_QUADS, 0, 4);
+			Pass.end();
 			break;
 		}
 	}

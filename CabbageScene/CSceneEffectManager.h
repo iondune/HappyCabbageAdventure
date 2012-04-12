@@ -84,6 +84,13 @@ public:
 
 		void doPass();
 
+		void begin();
+		void end();
+
+		bool SetTarget;
+
+		CShaderContext * Context;
+
 	};
 
 	std::vector<SRenderPass> RenderPasses;

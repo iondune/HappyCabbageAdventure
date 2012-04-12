@@ -14,36 +14,55 @@ bool const CSceneEffectManager::SRenderPass::operator == (SRenderPass const & rh
 
 
 CSceneEffectManager::SPostProcessPass::SPostProcessPass()
-	: Target(0), Shader(0)
+	: Target(0), Shader(0), SetTarget(true)
 {}
 
-void CSceneEffectManager::SPostProcessPass::doPass()
+void CSceneEffectManager::SPostProcessPass::begin()
 {
-	if (Target)
-		Target->bind();
-	else
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	if (SetTarget)
+	{
+		if (Target)
+			Target->bind();
+		else
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
+	}
+	
 	glDisable(GL_DEPTH_TEST);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	Context = new CShaderContext(* Shader);
+}
 
-	CShaderContext Context(* Shader);
+void CSceneEffectManager::SPostProcessPass::end()
+{
+	if (! Context)
+		begin();
 
 	for (std::map<std::string, CTexture *>::iterator it = Textures.begin(); it != Textures.end(); ++ it)
-		Context.bindTexture(it->first, it->second);
+		Context->bindTexture(it->first, it->second);
 
 	for (std::map<std::string, float>::iterator it = Floats.begin(); it != Floats.end(); ++ it)
-		Context.uniform(it->first, it->second);
+		Context->uniform(it->first, it->second);
 
 	for (std::map<std::string, int>::iterator it = Ints.begin(); it != Ints.end(); ++ it)
-		Context.uniform(it->first, it->second);
+		Context->uniform(it->first, it->second);
 
-	Context.bindBufferObject("aPosition", CSceneManager::getQuadHandle(), 2);
+	Context->bindBufferObject("aPosition", CSceneManager::getQuadHandle(), 2);
 
 	glDrawArrays(GL_QUADS, 0, 4);
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	if (SetTarget)
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 	glEnable(GL_DEPTH_TEST);
+
+	delete Context;
+}
+
+void CSceneEffectManager::SPostProcessPass::doPass()
+{
+	begin();
+	end();
 }
 
 
