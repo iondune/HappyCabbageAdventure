@@ -152,7 +152,7 @@ bool CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
    if ((!Other && !Projectile) || GodMode || ShootingLaser)
       return true;
 
-   float const HitThreshold = 0.05f;
+   float const HitThreshold = 0.2f;
 
    if(PlayerCollideable && Flag)
       won = 1;
@@ -172,6 +172,7 @@ bool CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
       {
 
          if (PlayerActor->getArea().Position.Y > Other->getArea().otherCorner().Y - HitThreshold &&
+               PlayerActor->getVelocity().Y <= 0 &&
                (*it)->Actor->CollideableType != COLLIDEABLE_TYPE_FLAME && (*it)->Actor->CollideableType != COLLIDEABLE_TYPE_PKIWI)
          {
             Mix_PlayChannel(-1, killEnemy, 0);
@@ -179,9 +180,13 @@ bool CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
             (* it)->KilledBy = 0;
             //fprintf(stderr, "Enemy detected as dead! %d\n", it->Renderable);
 
-            Enemies.erase(it);
 
             PlayerActor->setImpulse(SVector2(0.f, 1.0f), 0.05f);
+            PlayerActor->setVelocity(SVector2(PlayerActor->getVelocity().X, 0.0f));
+
+            Enemies.erase(std::remove(Enemies.begin(), Enemies.end(), *it), Enemies.end());
+            printf("In kill code: %d\n", Other);
+            return true;
          }
          //Need to rewrite so works without SEnemy
          else
@@ -201,6 +206,7 @@ bool CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
             }
             if (isPlayerAlive() && PlayerRecovering <= 0.f)
             {
+               printf("In getting damaged code: %d\n", Other);
                SPlayerDamagedEvent Event;
                SEnemy enemy;
                enemy.Actor = (*it)->Actor;
