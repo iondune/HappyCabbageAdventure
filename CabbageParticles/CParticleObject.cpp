@@ -35,6 +35,8 @@ void CParticleObject::update() {
 
 void CParticleObject::draw(CScene const * const scene, ERenderPass const Pass)
 {
+   if(ISceneObject::isCulled(scene))
+      return;
    ISceneObject::draw(scene, Pass);
 
    switch (Pass)
