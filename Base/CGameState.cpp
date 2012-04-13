@@ -71,6 +71,7 @@ CGameState::CGameState()
 
 void CGameState::loadWorld(std::vector<CPlaceable*> *list)
 {
+   drawTree = rand()%2 + 1;
    NumTreeTypes = 2;
    NumFlowerTypes = 2;
    numBlocks = 0;
@@ -101,7 +102,7 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             t = xml->getAttributeValueAsInt(5);
             moving = xml->getAttributeValueAsInt(6);
             if (t == -5 && !lowDef)
-               GeneratePlants((float) x, (float) y, (float) w, (float) h, (float) d, 0/*hardcode of the env variable for now*/);
+               GeneratePlants((float) x, (float) y, (float) w, (float) h, (float) d);
 
             list->push_back(ptr = new CBlock((float)x,(float)y,w,h,d,t,moving));
             if(xml->getAttributeValueAsInt(6)) {
@@ -1503,20 +1504,25 @@ void CGameState::PrepSky() {
    Application.getSceneManager().addSceneObject(tempBlock);
 }
 
-void CGameState::GeneratePlants(float x, float y, float w, float h, float d, int env) {
-   GenerateForestPlants(x, y, w, h, d);
+void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
 
-
-   //if (env variable means desert)
-   //drawTree--;
-   //if (drawTree == 0) {
-   //drawTree = rand()%2;
-   //GenerateDesertPlants(x, y, w, h, d, true);
-   //}
-   //else
-   //GenerateDesertPlants(x, y, w, h, d, false);
-   //}
+   if (env == 0) {
+      GenerateForestPlants(x, y, w, h, d);
    }
+
+   else if (env == 1) {
+      drawTree--;
+
+      if (drawTree == 0) {
+         drawTree = rand()%2 + 1;
+         GenerateDesertPlants(x, y, w, h, d, true);
+      }
+
+      else {
+         GenerateDesertPlants(x, y, w, h, d, false);
+      }
+   }
+}
 
 void CGameState::GenerateDesertPlants(float x, float y, float w, float h, float d, bool genTree) {
    int numForeground, numBackground;

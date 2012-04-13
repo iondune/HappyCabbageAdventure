@@ -65,7 +65,7 @@ class CGameState : public CState<CGameState>
    void PrepGrass(float x, float y, float w, float h);
    void PrepSky();
    void PrepClouds();
-   void GeneratePlants (float x, float y, float w, float h, float d, int env);
+   void GeneratePlants (float x, float y, float w, float h, float d);
    void GenerateForestPlants(float x, float y, float w, float h, float d);
    void GenerateDesertPlants(float x, float y, float w, float h, float d, bool genTree);
    CMeshSceneObject* PrepEnemy(float x, float y);
