@@ -1539,10 +1539,10 @@ void CGameState::GenerateDesertPlants(float x, float y, float w, float h, float 
 
    //Draw Tree in background
    if (genTree) {
-      plantType = rand()%2;
+      plantType = rand()%1;
       randDist = w * .1 + (rand() / (float)RAND_MAX) * .7 * w;  //.1, .7 to make sure doesn't overlap with other randomly drawn cacti
       if (plantType == 0)
-         drawModel(x + randDist, yVal - 0.2f, -d/2.0f + .4f, 8.0f, Application, basicTreeMesh);
+         drawModel(x + randDist, yVal + 1.5f, -d/2.0f + .4f, 5.5f, Application, cactusMesh);
       else if (plantType == 1)
          drawModel(x + randDist, yVal +  1.4f, -d/2.0f + .4f, 6.0f, Application, christmasTreeMesh);
    }
@@ -1818,6 +1818,35 @@ void Load3DS()
       fprintf(stderr, "Failed to load derp mesh\n");
    }
 
+   cabbageMesh = CMeshLoader::load3dsMesh("Base/crappycabbage2.3ds");
+   if (cabbageMesh) {
+      cabbageMesh->resizeMesh(SVector3(0.5));
+      cabbageMesh->centerMeshByExtents(SVector3(0));
+      cabbageMesh->calculateNormalsPerVertex();
+   }
+   else {
+      fprintf(stderr, "Failed to load the cabbage mesh\n");
+   }
+
+   cabbageDamage = CMeshLoader::load3dsMesh("Base/cabbageouch2.3ds");
+   if (cabbageDamage) {
+      cabbageDamage->resizeMesh(SVector3(0.5));
+      cabbageDamage->centerMeshByExtents(SVector3(0));
+      cabbageDamage->calculateNormalsPerVertex();
+   }
+
+   flagMesh = CMeshLoader::load3dsMesh("Base/flag2.3ds");
+   if (flagMesh) {
+      flagMesh->centerMeshByExtents(SVector3(0));
+      flagMesh->calculateNormalsPerFace();
+   }
+
+   else {
+      fprintf(stderr, "Failed to load flag mesh.\n");
+   }
+
+
+   //Forest Meshes
    basicTreeMesh = CMeshLoader::load3dsMesh("Base/tree4.3ds");
    if (basicTreeMesh) {
       basicTreeMesh->resizeMesh(SVector3(0.5));
@@ -1838,23 +1867,6 @@ void Load3DS()
       fprintf(stderr, "Failed to load the christmas tree mesh\n");
    }
 
-   cabbageMesh = CMeshLoader::load3dsMesh("Base/crappycabbage2.3ds");
-   if (cabbageMesh) {
-      cabbageMesh->resizeMesh(SVector3(0.5));
-      cabbageMesh->centerMeshByExtents(SVector3(0));
-      cabbageMesh->calculateNormalsPerVertex();
-   }
-   else {
-      fprintf(stderr, "Failed to load the cabbage mesh\n");
-   }
-
-   cabbageDamage = CMeshLoader::load3dsMesh("Base/cabbageouch2.3ds");
-   if (cabbageDamage) {
-      cabbageDamage->resizeMesh(SVector3(0.5));
-      cabbageDamage->centerMeshByExtents(SVector3(0));
-      cabbageDamage->calculateNormalsPerVertex();
-   }
-
    blueFlwrMesh = CMeshLoader::load3dsMesh("Base/simpleflower1.3ds");
    if (blueFlwrMesh) {
       blueFlwrMesh->centerMeshByExtents(SVector3(0));
@@ -1870,6 +1882,8 @@ void Load3DS()
       whiteFlwrMesh->resizeMesh(SVector3(.8f));
       whiteFlwrMesh->calculateNormalsPerFace();
    }
+   else
+      fprintf(stderr, "Failed to load white flower mesh.\n");
 
    whiteSunflwrMesh = CMeshLoader::load3dsMesh("Base/sunflowerwhite.3ds");
    if (whiteSunflwrMesh) {
@@ -1877,6 +1891,7 @@ void Load3DS()
       whiteSunflwrMesh->resizeMesh(SVector3(.8f));
       whiteSunflwrMesh->calculateNormalsPerFace();
    }
+      fprintf(stderr, "Failed to load white sunflower mesh.\n");
 
    yellowFlwrMesh = CMeshLoader::load3dsMesh("Base/sunfloweryellow.3ds");
    if (yellowFlwrMesh) {
@@ -1884,6 +1899,7 @@ void Load3DS()
       yellowFlwrMesh->resizeMesh(SVector3(.8f));
       yellowFlwrMesh->calculateNormalsPerFace();
    }
+      fprintf(stderr, "Failed to load yellow sunflower mesh.\n");
 
    purpleFlwrMesh = CMeshLoader::load3dsMesh("Base/sunflowerpurple.3ds");
    if (purpleFlwrMesh) {
@@ -1891,6 +1907,7 @@ void Load3DS()
       purpleFlwrMesh->resizeMesh(SVector3(.8f));
       purpleFlwrMesh->calculateNormalsPerFace();
    }
+      fprintf(stderr, "Failed to load purple sunflower mesh.\n");
 
    tealFlwrMesh = CMeshLoader::load3dsMesh("Base/sunflowerteal.3ds");
    if (tealFlwrMesh) {
@@ -1898,19 +1915,8 @@ void Load3DS()
       tealFlwrMesh->resizeMesh(SVector3(.8f));
       tealFlwrMesh->calculateNormalsPerFace();
    }
-
-   else {
-      fprintf(stderr, "Failed to load pink flower mesh.\n");
-   }
-
-   ficusMesh = CMeshLoader::load3dsMesh("Base/ficus.3ds");
-   if (ficusMesh) {
-      ficusMesh->centerMeshByExtents(SVector3(0));
-      ficusMesh->calculateNormalsPerFace();
-   }
-   else {
-      fprintf(stderr, "Failed to load ficus mesh.\n");
-   }
+   else
+      fprintf(stderr, "Failed to load teal sunflower mesh.\n");
 
    fernMesh = CMeshLoader::load3dsMesh("Base/fern.3ds");
    if (fernMesh) {
@@ -1922,15 +1928,16 @@ void Load3DS()
       fprintf(stderr, "Failed to load fern mesh.\n");
    }
 
-   flagMesh = CMeshLoader::load3dsMesh("Base/flag2.3ds");
-   if (flagMesh) {
-      flagMesh->centerMeshByExtents(SVector3(0));
-      flagMesh->calculateNormalsPerFace();
-   }
-
-   else {
-      fprintf(stderr, "Failed to load flag mesh.\n");
-   }
+   //Desert Meshes
+   cactusMesh = CMeshLoader::load3dsMesh("Base/cactus.3ds");
+   if (cactusMesh) {
+         cactusMesh->centerMeshByExtents(SVector3(0));
+         cactusMesh->resizeMesh(SVector3(.8f));
+         cactusMesh->calculateNormalsPerFace();
+      }
+      else {
+         fprintf(stderr, "Failed to load cactus mesh.\n");
+      }
 }
 
 void LoadTextures()
