@@ -62,6 +62,8 @@ void CLWIBState::begin()
    itemType = 0;
    secretFlag = 0;
    friendType = 0;
+   dayNight = 0;
+   env = 0;
    change = 0; //this determines
    aDown = dDown = spaceDown = wDown = sDown = gDown = fDown = tDown = eDown = mDown = oneDown = twoDown = threeDown = cDown = 0;
    cubeMesh = CMeshLoader::createCubeMesh();
@@ -702,6 +704,11 @@ void CLWIBState::loadWorld() {
                 t = xml->getAttributeValueAsInt(2);
                 PrepFriends(x,y,t);
            }
+           if (!strcmp("envVar", xml->getNodeName()))
+           {
+               env= xml->getAttributeValueAsInt(0);
+               dayNight = xml->getAttributeValueAsInt(1);
+           }
          break;
         }
     }
@@ -716,7 +723,16 @@ void CLWIBState::printXML() {
     cout << name;
 
     xmlwriter *worldlist = new xmlwriter(name);
-    
+    std::stringstream DN, area, tag;
+    //for day or night
+    DN << dayNight;
+    area << env;
+    tag << "envVar";
+    worldlist->AddAtributes("dayNight", DN.str());
+    worldlist->AddAtributes("env", area.str());
+    worldlist->Createtag(tag.str());
+    worldlist->CloseLasttag();
+
     std::vector<CPlaceable*>::iterator it;
     for(it=placeables.begin();it<placeables.end();it++) {
        (*it)->writeXML(worldlist);
