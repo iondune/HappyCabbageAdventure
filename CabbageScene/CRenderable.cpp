@@ -176,6 +176,8 @@ void CRenderable::draw(CScene const * const Scene, ERenderPass const Pass)
 
 	for (std::vector<GLenum>::const_iterator it = RenderCapabilities.begin(); it != RenderCapabilities.end(); ++ it)
 		glEnable(* it);
+	for (std::vector<GLenum>::const_iterator it = RemovedRenderCapabilities.begin(); it != RemovedRenderCapabilities.end(); ++ it)
+		glDisable(* it);
 
 	// Finally draw!
 	if(DrawType == GL_POINTS) {
@@ -188,6 +190,8 @@ void CRenderable::draw(CScene const * const Scene, ERenderPass const Pass)
 
 	for (std::vector<GLenum>::const_iterator it = RenderCapabilities.begin(); it != RenderCapabilities.end(); ++ it)
 		glDisable(* it);
+	for (std::vector<GLenum>::const_iterator it = RemovedRenderCapabilities.begin(); it != RemovedRenderCapabilities.end(); ++ it)
+		glEnable(* it);
 
 	// Draw the normal object if it is enabled
 	if (Parent->isDebugDataEnabled(EDebugData::Normals) && NormalObject)
@@ -350,10 +354,12 @@ void CRenderable::reloadVariablesOnNextDraw()
 
 void CRenderable::addRenderCapability(GLenum const capability)
 {
+	RemovedRenderCapabilities.erase(std::remove(RemovedRenderCapabilities.begin(), RemovedRenderCapabilities.end(), capability), RemovedRenderCapabilities.end());
 	RenderCapabilities.push_back(capability);
 }
 
 void CRenderable::removeRenderCapability(GLenum const capability)
 {
 	RenderCapabilities.erase(std::remove(RenderCapabilities.begin(), RenderCapabilities.end(), capability), RenderCapabilities.end());
+	RemovedRenderCapabilities.push_back(capability);
 }

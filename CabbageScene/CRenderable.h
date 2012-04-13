@@ -60,6 +60,7 @@ protected:
 	ISceneObject * Parent;
 
 	std::vector<GLenum> RenderCapabilities;
+	std::vector<GLenum> RemovedRenderCapabilities;
 
 public:
 
