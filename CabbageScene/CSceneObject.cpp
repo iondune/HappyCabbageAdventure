@@ -171,3 +171,19 @@ void CSceneObject::load(CScene const * const Scene, ERenderPass const Pass)
 		(* it)->load(Scene, Pass);
 	}
 }
+
+void CSceneObject::addRenderCapability(GLenum const capability)
+{
+	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
+	{
+		(* it)->addRenderCapability(capability);
+	}
+}
+
+void CSceneObject::removeRenderCapability(GLenum const capability)
+{
+	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
+	{
+		(* it)->removeRenderCapability(capability);
+	}
+}

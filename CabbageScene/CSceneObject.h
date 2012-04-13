@@ -51,6 +51,9 @@ public:
 
 	virtual void load(CScene const * const Scene, ERenderPass const Pass);
 
+	void addRenderCapability(GLenum const capability);
+	void removeRenderCapability(GLenum const capability);
+
 };
 
 #endif

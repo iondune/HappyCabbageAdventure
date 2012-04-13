@@ -59,6 +59,8 @@ protected:
 
 	ISceneObject * Parent;
 
+	std::vector<GLenum> RenderCapabilities;
+
 public:
 
 	int Size;
@@ -100,6 +102,9 @@ public:
     CRenderable * & getDebuggingNormalObject();
 
 	void reloadVariablesOnNextDraw();
+
+	void addRenderCapability(GLenum const capability);
+	void removeRenderCapability(GLenum const capability);
 
 };
 

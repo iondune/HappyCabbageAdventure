@@ -174,6 +174,9 @@ void CRenderable::draw(CScene const * const Scene, ERenderPass const Pass)
 	// And bind the synced buffer object to shader...
 	ShaderContext.bindIndexBufferObject(IndexBufferObject->getHandle());
 
+	for (std::vector<GLenum>::const_iterator it = RenderCapabilities.begin(); it != RenderCapabilities.end(); ++ it)
+		glEnable(* it);
+
 	// Finally draw!
 	if(DrawType == GL_POINTS) {
 		glDrawArrays(DrawType, 0, Size);
@@ -182,6 +185,9 @@ void CRenderable::draw(CScene const * const Scene, ERenderPass const Pass)
 	{
 		glDrawElements(DrawType, IndexBufferObject->getElements().size(), GL_UNSIGNED_SHORT, 0);
 	}
+
+	for (std::vector<GLenum>::const_iterator it = RenderCapabilities.begin(); it != RenderCapabilities.end(); ++ it)
+		glDisable(* it);
 
 	// Draw the normal object if it is enabled
 	if (Parent->isDebugDataEnabled(EDebugData::Normals) && NormalObject)
@@ -340,4 +346,14 @@ CRenderable * & CRenderable::getDebuggingNormalObject()
 void CRenderable::reloadVariablesOnNextDraw()
 {
 	LastLoadedShader = 0;
+}
+
+void CRenderable::addRenderCapability(GLenum const capability)
+{
+	RenderCapabilities.push_back(capability);
+}
+
+void CRenderable::removeRenderCapability(GLenum const capability)
+{
+	RenderCapabilities.erase(std::remove(RenderCapabilities.begin(), RenderCapabilities.end(), capability), RenderCapabilities.end());
 }
