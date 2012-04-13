@@ -369,6 +369,8 @@ void CSceneManager::drawAll()
 	timesCalled = numObjects = numCulled = 0;
 	CurrentScene->update();
 
+   PostOpaqueRootObject.sortChildrenByZTranslation();
+
 	if (EffectManager)
 	{
 		for (std::vector<CSceneEffectManager::SRenderPass>::iterator it = EffectManager->RenderPasses.begin(); it != EffectManager->RenderPasses.end(); ++ it)
@@ -393,13 +395,13 @@ void CSceneManager::drawAll()
 			if (it->Pass != ERP_DEFERRED_LIGHTS) {
 				glEnable(GL_ALPHA);
 				glEnable(GL_BLEND);
-            glDepthMask(GL_FALSE);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            //glDepthMask(GL_FALSE);
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 			}
 			PostOpaqueRootObject.draw(CurrentScene, it->Pass);
 			if (it->Pass != ERP_DEFERRED_LIGHTS) {
 				glBlendFunc(GL_ONE, GL_MAX);
-            glDepthMask(GL_TRUE);
+            //glDepthMask(GL_TRUE);
 				glDisable(GL_BLEND);
 				glDisable(GL_ALPHA);
 			}

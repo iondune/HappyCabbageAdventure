@@ -314,6 +314,13 @@ SBoundingBox3 ISceneObject::getWorldBoundingBox() {
 		return getBoundingBox();
 }
 
+bool sortByZTranslation(ISceneObject *a, ISceneObject *b) {
+   return a->getTranslation().Z > b->getTranslation().Z;
+}
+
+void ISceneObject::sortChildrenByZTranslation() {
+   Children.sort(sortByZTranslation);
+}
 
 bool const ISceneObject::isCullingEnabled() const
 {
