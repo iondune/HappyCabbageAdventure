@@ -399,6 +399,9 @@ void CSceneManager::drawAll()
             glDepthMask(GL_FALSE);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			}
+         else {
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+         }
 			PostOpaqueRootObject.draw(CurrentScene, it->Pass);
 			if (it->Pass != ERP_DEFERRED_LIGHTS) {
 				glBlendFunc(GL_ONE, GL_MAX);
