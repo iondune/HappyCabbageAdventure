@@ -301,7 +301,6 @@ void CGameState::EngineInit( void ) {
    Derp = Engine->addActor();
    Derp->setArea(SRect2(-20, 3, 1, 1));
 
-   PrepSky();
 
    SRect2 area;
 
@@ -317,6 +316,8 @@ void CGameState::EngineInit( void ) {
    std::vector<CPlaceable*> list;
    CObject *lastOne = NULL;
    loadWorld(&list);
+
+   PrepSky();
 
    std::vector<CPlaceable*>::iterator it;
    for(it=list.begin();it<list.end();it++) {
@@ -1501,7 +1502,10 @@ void CGameState::PrepSky() {
 
    tempBlock = new CMeshSceneObject();
    tempBlock->setMesh(cubeMesh);
-   tempBlock->setTexture(skyTxt);
+   if(env == 0)
+      tempBlock->setTexture(skyTxt);
+   if(env == 1)
+      tempBlock->setTexture(CImageLoader::loadTexture("Base/desert_bg.bmp", true));
    tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
    tempBlock->setTranslation(SVector3(85/*75*/, 13, -5.0));

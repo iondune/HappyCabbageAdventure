@@ -28,6 +28,7 @@ void CIEnergy::loadMesh() {
       printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
 
    Renderable->setMesh(mesh);
+
    Renderable->setShader(ERP_DEFAULT, "Toon");
    Renderable->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
    //Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2 + 10.6f, 0));
