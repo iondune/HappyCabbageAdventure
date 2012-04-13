@@ -11,7 +11,7 @@
 
 #define NUM_LEVELS 7
 #define NUM_CAMERAS 3
-#define TRANSITION_PERIOD 2.45f
+#define TRANSITION_PERIOD 0.45f
 #define RAD_TO_DEG 180.0f/3.145f
 #define DEG_TO_RAD 3.145f/180.0f
 

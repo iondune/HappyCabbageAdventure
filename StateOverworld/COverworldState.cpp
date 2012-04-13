@@ -97,15 +97,17 @@ void COverworldState::begin()
 }
 
 void COverworldState::PrepSkySphere() {
-   CMesh *cubeMesh = CMeshLoader::load3dsMesh("Base/cube.3ds");
-   if(cubeMesh) {
-      cubeMesh->centerMeshByExtents(SVector3(0));
-      cubeMesh->calculateNormalsPerFace();
+   printf("Loading sky sphere mesh\n");
+   CMesh *splitSphereMesh = CMeshLoader::load3dsMesh("Base/SphereSplit.3ds");
+   if(splitSphereMesh) {
+      splitSphereMesh->centerMeshByExtents(SVector3(0));
+      splitSphereMesh->linearizeIndices();
+      splitSphereMesh->calculateNormalsPerFace();
    }
    CMeshSceneObject *temp = new CMeshSceneObject();
 
-   temp->setMesh(cubeMesh);
-   temp->setScale(SVector3(4.0f));
+   temp->setMesh(splitSphereMesh);
+   temp->setScale(SVector3(0.5f));
    temp->setTexture(CImageLoader::loadTexture("Base/sky.bmp", 1));
    temp->setShader(ERP_DEFAULT, ToonTexture);
    temp->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
@@ -113,6 +115,7 @@ void COverworldState::PrepSkySphere() {
 
 
    Application.getSceneManager().addSceneObject(SkySphere = temp);
+   printf("Done\n");
 }
 
 void COverworldState::step(float delta) {
@@ -362,6 +365,7 @@ void COverworldState::PrepMeshes()
    renderMap = CApplication::get().getSceneManager().addMeshSceneObject(mapMesh, ToonTexture, DeferredTexture);
    renderMap->setMaterial(mat);
    renderMap->setCullingEnabled(false);
+   //renderMap->setVisible(false);
 
    //Set up player renderable
    CMesh *playerMesh = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_5.3ds");
