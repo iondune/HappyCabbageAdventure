@@ -14,8 +14,9 @@ ISceneObject::ISceneObject()
 
 void ISceneObject::updateAbsoluteTransformation()
 {
-	if(Immobile)
+	if (Immobile)
 		return;
+
 	AbsoluteTransformation = Transformation;
 	if (Parent)
 	{
@@ -35,7 +36,9 @@ glm::mat4 const & ISceneObject::getAbsoluteTransformation() const
 
 void ISceneObject::setTranslation(SVector3 const & translation)
 {
-	assert(!Immobile);
+	if (Immobile)
+		return;
+
 	Translation = translation;
 	Transformation.setTranslation(translation);
 }
