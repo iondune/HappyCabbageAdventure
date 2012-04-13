@@ -12,8 +12,8 @@ CTexture *skyTxt, *flagTxt, *cactusTxt;
 
 CMesh *basicTreeMesh, *cabbageMesh, *cabbageDamage, *christmasTreeMesh, *cubeMesh, *discMesh,
       *blueFlwrMesh, *whiteFlwrMesh, *ficusMesh, *fernMesh, *enemyMesh, *flagMesh, *derpMesh,
-      *purpleFlwrMesh, *yellowFlwrMesh, *tealFlwrMesh, *whiteSunflwrMesh, *cactusMesh,
-      *cactusBushMesh;
+      *purpleFlwrMesh, *yellowFlwrMesh, *tealFlwrMesh, *whiteSunflwrMesh, *cactus1Mesh,
+      *cactusBushMesh, *cactus2Mesh, *cactus3Mesh;
 
 CMesh *mCab0[2], *mCab1[2], *mCab2[2], *mCab3[2], *mCab4[2], *mCab5[2],
       *mCabOw0[2], *mCabOw1[2], *mCabOw2[2], *mCabOw3[2], *mCabOw4[2], *mCabOw5[2];
@@ -52,11 +52,14 @@ void drawModel(float x, float y, float z, float scale, CApplication app, CMesh* 
    else if (model == whiteFlwrMesh) {
       render->setRotation(SVector3(-90, 0, -80));
    }
-   else if (model == cactusMesh) {
+   else if (model == cactus1Mesh) {
       render->setShader(ERP_DEFAULT, ToonTexture);
       render->setTexture(cactusTxt);
       render->setShader(ERP_DEFERRED_OBJECTS, DeferredToonTexture);
 
+      render->setRotation(SVector3(-90, 0, rand()%179 - 90));
+   }
+   else if (model == cactus2Mesh) {
       render->setRotation(SVector3(-90, 0, rand()%179 - 90));
    }
 
