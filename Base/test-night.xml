@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<envVar env="1" dayNight="1">
+</envVar>
+<CBlock X ="-24" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-23" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-22" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-21" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-20" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-19" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-18" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-17" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CBlock X ="-16" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+</CBlock>
+<CPFriends x ="-17" y ="0" type ="1">
+</CPFriends>
+<CPFriends x ="-17" y ="1" type ="1">
+</CPFriends>
+<CCabbage X ="-17" Y ="2" height ="1" width ="1" isMoving ="0">
+</CCabbage>
