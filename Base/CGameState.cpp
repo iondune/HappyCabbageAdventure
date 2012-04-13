@@ -1465,9 +1465,10 @@ void CGameState::PrepClouds() {
    tempBlock->setScale(SVector3(250, -50, 1));
    tempBlock->setVisible(false);
 
-   //Application.getSceneManager().addSceneObject(tempBlock);
-   //Clouds.push_back(tempBlock);
+   Application.getSceneManager().addSceneObject(tempBlock);
+   Clouds.push_back(tempBlock);
 
+   /* Not using the clouds/mist until we have good transparency for DS
    CMesh* quad = CMeshLoader::load3dsMesh("Base/Quad.3ds");
    quad->centerMeshByExtents(SVector3(0.0f));
    quad->calculateNormalsPerFace();
@@ -1487,6 +1488,7 @@ void CGameState::PrepClouds() {
       //Application.getSceneManager().addSceneObject(tempBlock);
       Clouds.push_back(tempBlock);
    }
+   */
 }
 
 
