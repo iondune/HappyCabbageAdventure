@@ -52,7 +52,7 @@ void CParticleObject::draw(CScene const * const scene, ERenderPass const Pass)
       GLint oldAlpha, oldRGB;
       glGetIntegerv(GL_BLEND_DST_ALPHA, &oldAlpha);
       glGetIntegerv(GL_BLEND_DST_RGB, &oldRGB);
-      glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
       particlesRenderable->draw(scene, Pass);
       glBlendFunc(oldAlpha, oldRGB);
       //glDepthMask(GL_TRUE);
