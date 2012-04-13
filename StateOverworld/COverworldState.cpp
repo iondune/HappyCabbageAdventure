@@ -36,13 +36,14 @@ void COverworldState::begin()
    {
       printf("Completed level %d\n", curNode);
       levels[curNode].completed = true;
-
    }
    else if(!levelCompleted)
    {
       printf("Level failed\n");
-
    }
+   isDay = (strstr(levels[curNode].name, "night") == NULL);
+   if(!isDay)
+      sineValue = 180.0f;
 
    //testFun();
 
