@@ -8,10 +8,11 @@ class EApple : public CBadGuy
 {
 
 public:
-   EApple(float x, float y, float w, float h, CGameplayManager* manager);
+   EApple(float x, float y, float w, float h, CGameplayManager* manager, int env);
 
    float rotate;
    bool rollingLeft, rollingRight;
+   int env;
 
    void update(const float TickTime);
    void loadMesh();

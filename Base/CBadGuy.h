@@ -32,7 +32,7 @@ public:
    CShader* Shader;
 
    void setShader(CShader* shader);
-   static void makeBadGuy(float x, float y, float w, float h, EnemyType enemy, CGameplayManager* manager);
+   static void makeBadGuy(float x, float y, float w, float h, EnemyType enemy, CGameplayManager* manager, int env);
 
    //Methods that must be implemented in subclasses
    virtual void update(float const TickTime) =0;

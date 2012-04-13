@@ -74,7 +74,7 @@ void EGrape::ThrowGrape() {
    printf("Firing a grape\n");
 
    if (Manager->getPlayerLocation().X < Actor->getArea().getCenter().X) //spawn to the left
-      CBadGuy::makeBadGuy(pos.X - w/2.f - .05f, pos.Y, w, h, pGrape, Manager);
+      CBadGuy::makeBadGuy(pos.X - w/2.f - .05f, pos.Y, w, h, pGrape, Manager, 0);
    else //spawn to the right
-      CBadGuy::makeBadGuy(pos.X + w/2.f + .5f, pos.Y, w, h, pGrape, Manager);
+      CBadGuy::makeBadGuy(pos.X + w/2.f + .5f, pos.Y, w, h, pGrape, Manager, 0);
 }

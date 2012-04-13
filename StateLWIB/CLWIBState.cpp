@@ -989,7 +989,7 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
    CMeshSceneObject *tempEnemy;
    CEnemy *tempPlaceable;
    blocks.push_back(tempEnemy = new CMeshSceneObject());
-   placeables.push_back(tempPlaceable = new CEnemy(x, y, 1, 1, type));
+   placeables.push_back(tempPlaceable = new CEnemy(x, y, 1, 1, type, env));
    if (type == 0)
         tempEnemy->setMesh(appleMesh);
    if (type == 1)

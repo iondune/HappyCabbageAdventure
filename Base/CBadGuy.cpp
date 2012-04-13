@@ -12,15 +12,15 @@ void CBadGuy::setShader(CShader* shade) {
    CBadGuy::Shader = shade;
 }
 
-void CBadGuy::makeBadGuy(float x, float y, float w, float h, EnemyType enemy, CGameplayManager* manager) {
+void CBadGuy::makeBadGuy(float x, float y, float w, float h, EnemyType enemy, CGameplayManager* manager, int env) {
    CBadGuy* temp;
 
    if (enemy == apple) {
-      temp = new EApple(x, y, w, h, manager);
+      temp = new EApple(x, y, w, h, manager, env);
    }
 
    else if (enemy == orange) {
-      temp = new EOrange(x, y, w, h, manager);
+      temp = new EOrange(x, y, w, h, manager, env);
    }
 
    else if (enemy == kiwi) {
