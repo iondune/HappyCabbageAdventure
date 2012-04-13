@@ -11,6 +11,6 @@ void main()
    }
    gl_FragData[0] = vec4(vColor.xyz, color.r / 1.0);
    gl_FragData[1] = vec4(vPosition, 1.0); 
-   gl_FragData[2] = vec4(1.0, 1.0, 1.0, 1.0);
-   //gl_FragData[2] = vec4(0.5, 0.5, 1.0, 1.0);
+   //gl_FragData[2] = vec4(1.0, 1.0, 1.0, 1.0);
+   gl_FragData[2] = vec4(0.5, 0.5, 1.0, 1.0);
 }
