@@ -15,6 +15,12 @@ uniform mat4 uInvProjMatrix;
 // Deferred Values
 varying vec3 vLightPosition;
 
+float stepmix(float edge0, float edge1, float E, float x)
+{
+    float T = clamp(0.5 * (x - edge0) / E, 0.0, 1.0);
+    return mix(edge0, edge1, T);
+}
+
 void main()
 {
     const vec3 AmbientValue = vec3(0.2, 0.2, 0.2);
