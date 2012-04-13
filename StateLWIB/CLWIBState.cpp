@@ -322,11 +322,11 @@ void CLWIBState::OnRenderStart(float const Elapsed)
         }
         else if (itemType == 2) {// life
             block2->setText("Adding life");
-            PreviewItem->setMesh(energy);
+            PreviewItem->setMesh(lifeMesh);
         }
         else if (itemType == 3) { // powerup 
             block2->setText("Adding Seeds");
-            PreviewItem->setMesh(energy);
+            PreviewItem->setMesh(seedMesh);
         }
    }
    if (sixDown) {
@@ -791,6 +791,8 @@ void CLWIBState::PrepPreviews() {
    blocks.push_back(PreviewCabbage = new CMeshSceneObject());
    blocks.push_back(PreviewItem = new CMeshSceneObject());
    blocks.push_back(PreviewEnemy = new CMeshSceneObject());
+   lifeMesh = CMeshLoader::load3dsMesh("Base/crappycabbage2.3ds");
+   seedMesh = CMeshLoader::load3dsMesh("Base/seed.3DS");
    flameMesh = CMeshLoader::load3dsMesh("Base/rabbit.3DS");
    appleMesh = CMeshLoader::load3dsMesh("Base/appleEnemy.3ds");
    orangeMesh = CMeshLoader::load3dsMesh("Base/orange.3ds");
@@ -802,7 +804,16 @@ void CLWIBState::PrepPreviews() {
    energy = CMeshLoader::load3dsMesh("Base/water_energy.3ds");
 
    //PreviewCabbage->setMesh(appleMesh);
-   
+   if(lifeMesh) {
+       lifeMesh->resizeMesh(SVector3(1));
+       lifeMesh->centerMeshByExtents(SVector3(0));
+       lifeMesh->calculateNormalsPerFace();
+   }
+   if(seedMesh) {
+       seedMesh->resizeMesh(SVector3(1));
+       seedMesh->centerMeshByExtents(SVector3(0));
+       seedMesh->calculateNormalsPerFace();
+   }
    if(appleMesh) {
       appleMesh->resizeMesh(SVector3(1));
       appleMesh->centerMeshByExtents(SVector3(0));
@@ -915,9 +926,9 @@ void CLWIBState::PrepItem(float x, float y, int item) {
    if (item == 1)
        tempItem->setMesh(energy);
    if (item == 2)
-       tempItem->setMesh(energy);
+       tempItem->setMesh(lifeMesh);
    if (item == 3)
-       tempItem->setMesh(energy);
+       tempItem->setMesh(seedMesh);
    tempItem->setShader(ERP_DEFAULT, Diffuse);
    tempItem->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
    tempItem->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
