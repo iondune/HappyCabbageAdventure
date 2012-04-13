@@ -11,6 +11,7 @@ void COverworldState::begin()
    isDay = 1;
    aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0, yDown = 0, sineValue = 0;
    transitionTimer = 0.0;
+   transitionWorld = 0;
 
    camRotValue = stepValue = 0;
    rot = SVector3(-90, 0, -90);
