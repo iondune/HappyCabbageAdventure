@@ -55,6 +55,8 @@ void drawModel(float x, float y, float z, float scale, CApplication app, CMesh* 
       render->setShader(ERP_DEFAULT, ToonTexture);
       render->setTexture(cactusTxt);
       render->setShader(ERP_DEFERRED_OBJECTS, DeferredToonTexture);
+
+      render->setRotation(SVector3(-90, 0, rand()%179 - 90));
    }
 
    //if (model == fernMesh || model == whiteFlwrMesh)
