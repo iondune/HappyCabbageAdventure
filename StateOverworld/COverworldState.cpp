@@ -100,17 +100,24 @@ void COverworldState::PrepSkySphere() {
    printf("Loading sky sphere mesh\n");
    CMesh *splitSphereMesh = CMeshLoader::load3dsMesh("Base/SphereSplit.3ds");
    if(splitSphereMesh) {
+      splitSphereMesh->resizeMesh(SVector3(10.0f));
       splitSphereMesh->centerMeshByExtents(SVector3(0));
       splitSphereMesh->linearizeIndices();
-      splitSphereMesh->calculateNormalsPerFace();
+      splitSphereMesh->calculateNormalsPerVertex();
    }
    CMeshSceneObject *temp = new CMeshSceneObject();
 
    temp->setMesh(splitSphereMesh);
-   temp->setScale(SVector3(0.5f));
-   temp->setTexture(CImageLoader::loadTexture("Base/sky.bmp", 1));
-   temp->setShader(ERP_DEFAULT, ToonTexture);
-   temp->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
+   temp->setScale(SVector3(9.0f));
+   temp->setTranslation(SVector3(0.0f, -24.0f, 0.0f));
+   /*
+   temp->setTexture(CImageLoader::loadTexture("Colors/LightBlue.bmp", 1), 0);
+   temp->setTexture(CImageLoader::loadTexture("Colors/DarkBlue.bmp", 1), 1);
+   */
+   temp->setTexture(CImageLoader::loadTexture("Base/DayOverworld.bmp", 1), 0);
+   temp->setTexture(CImageLoader::loadTexture("Base/NightOverworld.bmp", 1), 1);
+   temp->setShader(ERP_DEFAULT, CShaderLoader::loadShader("DiffuseTexture"));
+   temp->setShader(ERP_DEFERRED_OBJECTS, CShaderLoader::loadShader("Deferred/Textured"));
    temp->setCullingEnabled(false);
 
 
@@ -153,7 +160,9 @@ void COverworldState::step(float delta) {
 
       sineValue += 180.0f/TRANSITION_PERIOD*delta;
    }
-   SkySphere->setRotation(SVector3(0, 0, sineValue));
+   //SkySphere->setScale(SVector3(0.0f + sineValue/20.0f));
+   //printf("Total: %0.0f\n", 0.0f + sineValue/20.0f);
+   SkySphere->setRotation(SVector3(90, 180 + sineValue, 0));
 
 
    stepValue += 0.5f*delta;
@@ -506,12 +515,14 @@ void COverworldState::movePlayer() {
          //Day
          if(!isDay) {
             transitionWorld = 1;
+            isDay = 1;
          }
       }
       else {
          //Night
          if(isDay) {
             transitionWorld = 1;
+            isDay = 0;
          }
       }
       moved = true;
