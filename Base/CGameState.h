@@ -29,6 +29,7 @@ class CGameState : public CState<CGameState>
 
    CGUIFontWidget *GameOverText, *GameWinText, *RestartGameText, *LivesText, *fpsText, *seedText;
    CGUIDialogWidget *DialogWidget;
+   CMeshSceneObject* Cloud;
 
    public:
    CGameState();
@@ -62,6 +63,7 @@ class CGameState : public CState<CGameState>
    void PrepBlock(float x, float y, float w, float h);
    void PrepGrass(float x, float y, float w, float h);
    void PrepSky();
+   void PrepClouds();
    void GeneratePlants (float x, float y, float w, float h, float d, int env);
    void GenerateForestPlants(float x, float y, float w, float h, float d);
    void GenerateDesertPlants(float x, float y, float w, float h, float d, bool genTree);

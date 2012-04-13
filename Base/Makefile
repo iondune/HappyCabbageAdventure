@@ -36,9 +36,9 @@ cabbage: ${OBJECTS} ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/
 	$(CC) ${COMPILER_VERSION} ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL `sdl-config --cflags --libs` ${CABBAGE} ${MIXLIB} `freetype-config --libs` -o $@
 
 qclean:
-	rm cabbage.exe cabbage 2>/dev/null
+	rm -rf cabbage.exe cabbage 2>/dev/null
 clean:
-	rm *.o a.out cabbage cabbage.exe 2>/dev/null
+	rm -rf *.o a.out cabbage cabbage.exe 2>/dev/null
 
 mingw: cabbage.exe
 

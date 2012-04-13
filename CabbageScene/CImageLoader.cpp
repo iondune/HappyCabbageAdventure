@@ -74,6 +74,9 @@ CImage * const CImageLoader::loadImage(std::string const & fileName, bool const 
 
     SBitmapInfo infoheader;
 
+    if(fileName.find(".tga") != std::string::npos) {
+       return CImageLoader::loadTGAImage(fileName);
+    }
     if( (file = fopen((ImageDirectory + fileName).c_str(), "rb"))==NULL)
 	{
 		std::cerr << "Failed to open bmp image file: '" << (ImageDirectory + fileName) << "'." << std::endl;
