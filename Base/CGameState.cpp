@@ -364,7 +364,7 @@ void CGameState::LoadHUD() {
    CabbageMeter = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/EnergyBarBottom.tga"), SVector2(.47f, .1f));
    CabbageMeter->setPosition(SVector2(.02f, .78f));
 
-   Seed = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage5.tga"), SVector2(.075f, .075f));
+   Seed = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/seed.tga"), SVector2(.075f, .075f));
    Seed->setPosition(SVector2((float)WindowWidth/(float)WindowHeight - 0.15f, 0.90f));
 
    //Application.getGUIEngine().addWidget(CabbageFace);
