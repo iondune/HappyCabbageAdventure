@@ -672,8 +672,8 @@ void CLWIBState::loadWorld() {
             }
         }
     }
-    cout << "Enter the name of the file you want to load: ";
-    cin >> name;
+    //cout << "Enter the name of the file you want to load: ";
+    //cin >> name;
     irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader(name.c_str());
 	while (xml && xml->read())
 	{

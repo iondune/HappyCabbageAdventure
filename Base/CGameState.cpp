@@ -1578,7 +1578,7 @@ void CGameState::GenerateDesertPlants(float x, float y, float w, float h, float 
       }
 
       if (plantType == 0)
-         drawModel(x + randDist, yVal + 1.5f, d/2.0f - 0.6f, 5.5f, Application, cactus2Mesh);
+         drawModel(x + randDist, yVal + 1.6f, d/2.0f - 0.6f, 5.5f, Application, cactus2Mesh);
       //else if (plantType < 3 && randScale > .5f)
       //   drawModel(x + randDist, yVal + randScale/4.5f, d/2.0f - 0.6f, randScale, Application, cactusBushMesh);
       else if (plantType < 5 && randScale > .5f)

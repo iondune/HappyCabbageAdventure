@@ -36,14 +36,13 @@ void COverworldState::begin()
    {
       printf("Completed level %d\n", curNode);
       levels[curNode].completed = true;
+
    }
    else if(!levelCompleted)
    {
       printf("Level failed\n");
+
    }
-   isDay = (strstr(levels[curNode].name, "night") == NULL);
-   if(!isDay)
-      sineValue = 180.0f;
 
    //testFun();
 
@@ -321,22 +320,21 @@ void COverworldState::end()
 void COverworldState::loadLevels()
 {
    //If you're adding more levels be sure to update COverworldState's NUM_LEVELS
-   
    levels[0].name = "jorge1.xml";
    levels[0].loc = SVector3(0.33f, -0.17f, 1.05f); //bit of green near sole orange hill
    levels[1].name = "jorge2.xml";
    levels[1].loc = SVector3(0.83f, 0.00f, 0.65f); //Green hill
-   levels[2].name = "chris-night.xml";
-   levels[2].loc = SVector3(0.78f, -0.14f, 0.1f);
-   //levels[2].loc = SVector3(0.9f, -0.12999999f, 0.3f);
-   levels[3].name = "jorge3.xml";
-   levels[3].loc = SVector3(0.98f, -0.27f, -0.19f); //Green beach
-   levels[4].name = "chris2.xml";
-   levels[4].loc = SVector3(0.94f, -0.25f, -0.38f); //Yellow beach
-   levels[5].name = "test-night.xml";
-   levels[5].loc = SVector3(0.77f, -0.20f, -0.66f); //Yellow hills
-   levels[6].name = "test.xml";
-   levels[6].loc = SVector3(0.56, -0.16, -0.54); //Yellow valley 
+   levels[2].name = "jorge3.xml";
+   levels[2].loc = SVector3(0.9f, -0.12999999f, 0.3f);
+   levels[3].name = "chris-night.xml";
+   levels[3].loc = SVector3(0.5f, -0.13f, 0.1f);
+   levels[4].name = "test.xml";
+   //levels[4].name = "chris2-night.xml";
+   levels[4].loc = SVector3(0.98f, -0.27f, -0.19f); //Green beach
+   levels[5].name = "chrisDesert.xml";
+   levels[5].loc = SVector3(0.94f, -0.25f, -0.38f); //Yellow beach
+   levels[6].name = "chrisDesert1-night.xml";
+   levels[6].loc = SVector3(0.77f, -0.20f, -0.66f); //Yellow hills
 
    for(int i = 0; i < NUM_LEVELS; i++)
    {
