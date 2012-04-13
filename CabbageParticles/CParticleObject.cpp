@@ -44,6 +44,8 @@ void CParticleObject::draw(CScene const * const scene, ERenderPass const Pass)
    switch (Pass)
    {
    case ERP_DEFAULT:
+   case ERP_MODEL_NORMALS:
+   case ERP_DEFERRED_LIGHTS:
    case ERP_DEFERRED_OBJECTS:
       glEnable(GL_POINT_SPRITE);
       glDepthMask(GL_FALSE);
@@ -56,10 +58,6 @@ void CParticleObject::draw(CScene const * const scene, ERenderPass const Pass)
       glDepthMask(GL_TRUE);
       glDisable(GL_POINT_SPRITE);
       glDepthFunc(GL_LESS);
-      break;
-   case ERP_MODEL_NORMALS:
-      break;
-   case ERP_DEFERRED_LIGHTS:
       break;
    }
    //glEnable(GL_DEPTH_TEST);
