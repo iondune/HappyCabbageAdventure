@@ -8,10 +8,11 @@ class EOrange : public CBadGuy
 {
 
 public:
-   EOrange(float x, float y, float w, float h, CGameplayManager* manager);
+   EOrange(float x, float y, float w, float h, CGameplayManager* manager, int env);
 
    bool jump;
    double oldX;
+   int env;
 
    void update(float const TickTime);
    void loadMesh();

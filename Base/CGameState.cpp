@@ -131,7 +131,7 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             h = xml->getAttributeValueAsInt(2);
             w = xml->getAttributeValueAsInt(3);
             t = xml->getAttributeValueAsInt(4);
-            list->push_back(cen = new CEnemy((float)x,(float)y,w,h,t));
+            list->push_back(cen = new CEnemy((float)x,(float)y,w,h,t, env));
             cen->setShader(Toon);
             cen->isMovingPlatform = 0;
          }
@@ -277,6 +277,8 @@ CParticleEngine *particleStarEngine;
 #endif
 
 void CGameState::EngineInit( void ) {
+   fprintf(stderr, "Start engineinit");
+
    elevators.clear();
    if(Engine) {
       Engine->removeAll();
@@ -319,6 +321,7 @@ void CGameState::EngineInit( void ) {
 
    PrepSky();
 
+   fprintf(stderr, "Got to here.\n");
    std::vector<CPlaceable*>::iterator it;
    for(it=list.begin();it<list.end();it++) {
       (*it)->setupItem(ToonTexture, DeferredToonTexture, Engine, GameplayManager);
@@ -336,6 +339,8 @@ void CGameState::EngineInit( void ) {
    }
 
    consolidateAndAddBlocks();
+
+   fprintf(stderr, "We reached the end of engineinit successfully.\n");
 }
 
 void CGameState::LoadHUD() {
@@ -1906,6 +1911,7 @@ void Load3DS()
       whiteSunflwrMesh->resizeMesh(SVector3(.8f));
       whiteSunflwrMesh->calculateNormalsPerFace();
    }
+   else
       fprintf(stderr, "Failed to load white sunflower mesh.\n");
 
    yellowFlwrMesh = CMeshLoader::load3dsMesh("Base/sunfloweryellow.3ds");
@@ -1914,6 +1920,7 @@ void Load3DS()
       yellowFlwrMesh->resizeMesh(SVector3(.8f));
       yellowFlwrMesh->calculateNormalsPerFace();
    }
+   else
       fprintf(stderr, "Failed to load yellow sunflower mesh.\n");
 
    purpleFlwrMesh = CMeshLoader::load3dsMesh("Base/sunflowerpurple.3ds");
@@ -1922,6 +1929,7 @@ void Load3DS()
       purpleFlwrMesh->resizeMesh(SVector3(.8f));
       purpleFlwrMesh->calculateNormalsPerFace();
    }
+   else
       fprintf(stderr, "Failed to load purple sunflower mesh.\n");
 
    tealFlwrMesh = CMeshLoader::load3dsMesh("Base/sunflowerteal.3ds");

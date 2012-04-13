@@ -1,12 +1,14 @@
 #include "CEnemy.h"
 #include "../Base/CBadGuy.h"
 
-CEnemy::CEnemy(float nx, float ny, int width, int height, int type )
+CEnemy::CEnemy(float nx, float ny, int width, int height, int type, int env)
 {
    num = type;
    x = nx; y = ny;
    w = width; h = height;
    isMovingPlatform = 0;
+
+   this->env = env;
 }
 
 void CEnemy::writeXML(xmlwriter *l) {
@@ -35,19 +37,19 @@ void CEnemy::moveTo(float x,float y) {
 void CEnemy::setShader(CShader * chad) {
    shader = chad;
 }
-CMeshSceneObject * CEnemy::setupItem(CShader * chad, CShader * dShader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
+CMeshSceneObject * CEnemy::setupItem(CShader * chad, CShader * dShader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager) {
     if (num == 0)
-       CBadGuy::makeBadGuy(x, y, (float) w, (float) h, CBadGuy::apple, GameplayManager);
+       CBadGuy::makeBadGuy(x, y, (float) w, (float) h, CBadGuy::apple, GameplayManager, env);
     else if (num == 1)
-       CBadGuy::makeBadGuy(x, y, (float) w, (float) h, CBadGuy::orange, GameplayManager);
+       CBadGuy::makeBadGuy(x, y, (float) w, (float) h, CBadGuy::orange, GameplayManager, env);
     else if (num == 2)
-       CBadGuy::makeBadGuy(x, y, (float) w, (float) h, CBadGuy::kiwi, GameplayManager);
+       CBadGuy::makeBadGuy(x, y, (float) w, (float) h, CBadGuy::kiwi, GameplayManager, env);
     else if (num == 3)
-       CBadGuy::makeBadGuy(x, y, (float) w, (float) h, CBadGuy::grape, GameplayManager);
+       CBadGuy::makeBadGuy(x, y, (float) w, (float) h, CBadGuy::grape, GameplayManager, env);
     else if (num == 4)
-       CBadGuy::makeBadGuy(x, y, (float) w, (float) h, CBadGuy::flame, GameplayManager);
+       CBadGuy::makeBadGuy(x, y, (float) w, (float) h, CBadGuy::flame, GameplayManager, env);
     else if (num == 5)
-       CBadGuy::makeBadGuy(x, y, 2.0f, 2.0f/*(float)w, (float)h*/, CBadGuy::blade, GameplayManager);
+       CBadGuy::makeBadGuy(x, y, 2.0f, 2.0f/*(float)w, (float)h*/, CBadGuy::blade, GameplayManager, env);
     else
         printf("Unknown enemy type received.\n");
 

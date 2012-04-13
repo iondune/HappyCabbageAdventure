@@ -1,26 +1,32 @@
 #include "EOrange.h"
 
-#include "EApple.h"
+EOrange::EOrange(float x, float y, float w, float h, CGameplayManager* manager, int env) {
 
-EOrange::EOrange(float x, float y, float w, float h, CGameplayManager* manager) {
    this->x = x;
    this->y = y;
    this->w = w;
    this->h = h;
    Manager = manager;
 
+   this->env = env;
+
    loadMesh();
    loadActor();
 
    jump = true;
    oldX = x;
-
 }
 
 //Loads and moves the mesh
 void EOrange::loadMesh() {
    Renderable = new CMeshSceneObject();
-   CMesh *mesh = CMeshLoader::load3dsMesh("Base/orange.3ds");
+   CMesh *mesh;
+
+   if (env == 0)
+      mesh = CMeshLoader::load3dsMesh("Base/orange.3ds");
+   else if (env == 1)
+      mesh = CMeshLoader::load3dsMesh("Base/desertorange.3ds");
+
    if(mesh) {
       mesh->resizeMesh(SVector3(1));
       mesh->centerMeshByExtents(SVector3(0));

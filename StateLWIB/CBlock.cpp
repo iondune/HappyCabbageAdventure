@@ -10,8 +10,6 @@ CBlock::CBlock(float nx, float ny, int width, int height, int depth, int texture
    t = texture;
    isMovingPlatform = 0;
    this->env = env;
-
-   printf("env is: %d\n", env);
 }
 
 void CBlock::writeXML(xmlwriter *l) {

@@ -1,11 +1,13 @@
 #include "EApple.h"
 
-EApple::EApple(float x, float y, float w, float h, CGameplayManager* manager) {
+EApple::EApple(float x, float y, float w, float h, CGameplayManager* manager, int env) {
    this->x = x;
    this->y = y;
    this->w = w;
    this->h = h;
    Manager = manager;
+
+   this->env = env;
 
    loadMesh();
    loadActor();
@@ -20,8 +22,16 @@ EApple::EApple(float x, float y, float w, float h, CGameplayManager* manager) {
 //Loads and moves the mesh
 void EApple::loadMesh() {
    Renderable = new CMeshSceneObject();
-   CMesh *mesh = CMeshLoader::load3dsMesh("Base/appleEnemy.3ds");
-   //CMesh *mesh = CMeshLoader::loadAsciiMesh("Base/Tyra.obj");
+   CMesh *mesh;
+
+   if (env == 0) {
+      mesh = CMeshLoader::load3dsMesh("Base/appleEnemy.3ds");
+   }
+
+   else if (env == 1) {
+      mesh = CMeshLoader::load3dsMesh("Base/desertapple.3ds");
+   }
+
    if(mesh) {
       mesh->resizeMesh(SVector3(1));
       mesh->centerMeshByExtents(SVector3(0));
