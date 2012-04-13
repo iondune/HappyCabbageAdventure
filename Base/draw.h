@@ -13,7 +13,7 @@ CTexture *skyTxt, *flagTxt, *cactusTxt;
 CMesh *basicTreeMesh, *cabbageMesh, *cabbageDamage, *christmasTreeMesh, *cubeMesh, *discMesh,
       *blueFlwrMesh, *whiteFlwrMesh, *ficusMesh, *fernMesh, *enemyMesh, *flagMesh, *derpMesh,
       *purpleFlwrMesh, *yellowFlwrMesh, *tealFlwrMesh, *whiteSunflwrMesh, *cactus1Mesh,
-      *cactusBushMesh, *cactus2Mesh, *cactus3Mesh;
+      *cactusBushMesh, *cactusBush2Mesh, *cactus2Mesh;
 
 CMesh *mCab0[2], *mCab1[2], *mCab2[2], *mCab3[2], *mCab4[2], *mCab5[2],
       *mCabOw0[2], *mCabOw1[2], *mCabOw2[2], *mCabOw3[2], *mCabOw4[2], *mCabOw5[2];
@@ -59,7 +59,7 @@ void drawModel(float x, float y, float z, float scale, CApplication app, CMesh* 
 
       render->setRotation(SVector3(-90, 0, rand()%179 - 90));
    }
-   else if (model == cactus2Mesh) {
+   else if (model == cactus2Mesh || model == cactusBush2Mesh) {
       render->setRotation(SVector3(-90, 0, rand()%179 - 90));
    }
 

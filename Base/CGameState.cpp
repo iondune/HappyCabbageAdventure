@@ -1552,10 +1552,12 @@ void CGameState::GenerateDesertPlants(float x, float y, float w, float h, float 
 
    //Draw Tree in background
    if (genTree) {
-      plantType = rand()%1;
+      plantType = rand()%3;
       randDist = w * .1 + (rand() / (float)RAND_MAX) * .7 * w;  //.1, .7 to make sure doesn't overlap with other randomly drawn cacti
-      if (plantType == 0)
-         drawModel(x + randDist, yVal + 1.5f, -d/2.0f + .4f, 5.5f, Application, cactus3Mesh);
+      if (plantType < 2)
+         drawModel(x + randDist, yVal + 1.5f, -d/2.0f + .4f, 5.5f, Application, cactus2Mesh);
+      else if (plantType == 2)
+         drawModel(x + randDist, yVal + 1.5f, -d/2.0f + .4f, 5.5f, Application, cactus1Mesh);
    }
 
    //Draw shrubbery in background
@@ -1577,8 +1579,10 @@ void CGameState::GenerateDesertPlants(float x, float y, float w, float h, float 
 
       if (plantType == 0)
          drawModel(x + randDist, yVal + 1.5f, d/2.0f - 0.6f, 5.5f, Application, cactus2Mesh);
+      //else if (plantType < 3 && randScale > .5f)
+      //   drawModel(x + randDist, yVal + randScale/4.5f, d/2.0f - 0.6f, randScale, Application, cactusBushMesh);
       else if (plantType < 5 && randScale > .5f)
-         drawModel(x + randDist, yVal + randScale/4.5f, d/2.0f - 0.6f, randScale, Application, cactusBushMesh);
+         drawModel(x + randDist, yVal + randScale/4.5f, d/2.0f - 0.6f, randScale, Application, cactusBush2Mesh);
    }
 
    for (int n = 0; n < numForeground; n++) {
@@ -1960,11 +1964,11 @@ void Load3DS()
       fprintf(stderr, "Failed to load cactus mesh.\n");
    }
 
-   cactus3Mesh = CMeshLoader::load3dsMesh("Base/cactus2.3ds");
-   if (cactus3Mesh) {
-      cactus3Mesh->centerMeshByExtents(SVector3(0));
-      cactus3Mesh->resizeMesh(SVector3(.8f));
-      cactus3Mesh->calculateNormalsPerFace();
+   cactusBush2Mesh = CMeshLoader::load3dsMesh("Base/cactus2.3ds");
+   if (cactusBush2Mesh) {
+      cactusBush2Mesh->centerMeshByExtents(SVector3(0));
+      cactusBush2Mesh->resizeMesh(SVector3(.8f));
+      cactusBush2Mesh->calculateNormalsPerFace();
    }
    else {
       fprintf(stderr, "Failed to load cactus mesh.\n");
