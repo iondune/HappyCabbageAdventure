@@ -19,7 +19,16 @@ PGrape::PGrape(float x, float y, float w, float h, CGameplayManager* manager) {
 //Loads and moves the mesh
 void PGrape::loadMesh() {
    Renderable = new CMeshSceneObject();
-   CMesh *mesh = CMeshLoader::load3dsMesh("Base/kiwi_seed.3ds");
+   CMesh *mesh;
+
+   r = rand()%3;
+   if (r == 0)
+      mesh = CMeshLoader::load3dsMesh("Base/grape1.3ds");
+   else if (r == 1)
+      mesh = CMeshLoader::load3dsMesh("Base/grape2.3ds");
+   else
+      mesh = CMeshLoader::load3dsMesh("Base/grape3.3ds");
+
    if(mesh) {
       mesh->resizeMesh(SVector3(.5));
       mesh->centerMeshByExtents(SVector3(0));
@@ -33,7 +42,6 @@ void PGrape::loadMesh() {
    Renderable->setShader(ERP_DEFAULT, "Toon");
    Renderable->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
    Renderable->setScale(SVector3(1.0f, 1.0f, 1.0f));
-   Renderable->setRotation(SVector3(-90, 0, 90));
 
    CApplication::get().getSceneManager().addSceneObject(Renderable);
 }
@@ -66,10 +74,14 @@ void PGrape::update(float const TickTime) {
 
    if (Manager->isPlayerAlive())
    {
-      if (!Direction) //go left
+      if (!Direction) { //go left
          Actor->setVelocity(SVector2(-5.f, 0.f));
-      else //go right
+         Renderable->setRotation(SVector3(-90, 0, -45));
+      }
+      else { //go right
          Actor->setVelocity(SVector2(5.f, 0.f));
+         Renderable->setRotation(SVector3(-90, 0, 45));
+      }
 
    }
 }

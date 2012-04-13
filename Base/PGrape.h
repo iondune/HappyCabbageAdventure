@@ -15,6 +15,7 @@ public:
    void loadActor();
 
    bool Direction;
+   int r;
 };
 
 #endif /* PGRAPE_H_ */
