@@ -108,6 +108,7 @@ public:
 	void addChild(ISceneObject * child);
 	void setParent(ISceneObject * parent);
 	void removeChildren();
+   void sortChildrenByZTranslation();
 
 	SVector3 const & getRotation() const;
 	SVector3 const & getTranslation() const;

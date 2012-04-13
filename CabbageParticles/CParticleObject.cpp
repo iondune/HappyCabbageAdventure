@@ -47,15 +47,17 @@ void CParticleObject::draw(CScene const * const scene, ERenderPass const Pass)
    case ERP_DEFERRED_OBJECTS:
       glEnable(GL_POINT_SPRITE);
       glDepthMask(GL_FALSE);
+      GLint oldAlpha, oldRGB;
+      glGetIntegerv(GL_BLEND_DST_ALPHA, &oldAlpha);
+      glGetIntegerv(GL_BLEND_DST_RGB, &oldRGB);
       glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
       particlesRenderable->draw(scene, Pass);
-      glBlendFunc(GL_ONE, GL_MAX);
-      glDepthMask(GL_TRUE);
+      glBlendFunc(oldAlpha, oldRGB);
+      //glDepthMask(GL_TRUE);
       glDisable(GL_POINT_SPRITE);
       glDepthFunc(GL_LESS);
       break;
    case ERP_MODEL_NORMALS:
-      break;
    case ERP_DEFERRED_LIGHTS:
       break;
    }
