@@ -35,6 +35,7 @@ class CLWIBState : public CState<CLWIBState>
    int yCabbage;
    int blockCycle;
    int change;
+   int dayNight, env; 
    bool showHelp;
    int enemyType, textureType, itemType, friendType;
    int WindowWidth, WindowHeight;
