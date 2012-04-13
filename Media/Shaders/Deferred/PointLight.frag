@@ -26,7 +26,7 @@ void main()
     const vec3 AmbientValue = vec3(0.2, 0.2, 0.2);
     const vec3 DiffuseColor = vec3(0.6, 0.6, 0.6);
     const vec3 SpecularColor = vec3(1.8, 1.8, 1.8);
-    const float Shininess = 20.0;
+    const float Shininess = 0.80;
     
     vec2 vTexCoord = (gPosition.xy / gPosition.w + 1.0) / 2.0;
     
