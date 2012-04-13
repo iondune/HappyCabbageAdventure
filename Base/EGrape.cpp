@@ -16,7 +16,7 @@ EGrape::EGrape(float x, float y, float w, float h, CGameplayManager* manager) {
 //Loads and moves the mesh
 void EGrape::loadMesh() {
    Renderable = new CMeshSceneObject();
-   CMesh *mesh = CMeshLoader::load3dsMesh("Base/alien.3ds");
+   CMesh *mesh = CMeshLoader::load3dsMesh("Base/grape_bunch.3ds");
    if(mesh) {
       mesh->resizeMesh(SVector3(1));
       mesh->centerMeshByExtents(SVector3(0));
