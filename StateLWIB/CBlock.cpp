@@ -1,6 +1,6 @@
 #include "CBlock.h"
 
-CBlock::CBlock(float nx, float ny, int width, int height, int depth, int texture, int moving)
+CBlock::CBlock(float nx, float ny, int width, int height, int depth, int texture, int moving, int env)
 {
    x = nx; y = ny;
    w = width; h = height;
@@ -9,6 +9,9 @@ CBlock::CBlock(float nx, float ny, int width, int height, int depth, int texture
    z = depth;
    t = texture;
    isMovingPlatform = 0;
+   this->env = env;
+
+   printf("env is: %d\n", env);
 }
 
 void CBlock::writeXML(xmlwriter *l) {
@@ -64,31 +67,64 @@ CMeshSceneObject * CBlock::setupItem(CShader * shader, CShader * dShader, Cabbag
    mesh = CMeshLoader::createCubeMesh();
    mesh->calculateNormalsPerVertex();
    tempBlock->setMesh(mesh);
-   if (t == 0) {
-        tempBlock->setTexture("Base/grass.bmp");
-   }
-   else if (t == 1) {
-        tempBlock->setTexture("Base/dirt.bmp");
-   }
-   else if (t == 2) {
-        tempBlock->setTexture("Base/rock.bmp");
-   }
-   else if (t == -5) {
-      mesh = CMeshLoader::load3dsMesh("Base/levelBlock.3ds");
-      if (mesh) {
-         mesh->resizeMesh(SVector3(1.0));
-         mesh->centerMeshByExtents(SVector3(0));
-         mesh->calculateNormalsPerVertex();
+   if (env == 0) {
+      if (t == 0) {
+           tempBlock->setTexture("Base/grass.bmp");
+      }
+      else if (t == 1) {
+          tempBlock->setTexture("Base/dirt.bmp");
+      }
+      else if (t == 2) {
+         tempBlock->setTexture("Base/rock.bmp");
+      }
+
+      else if (t == -5) {
+         mesh = CMeshLoader::load3dsMesh("Base/levelBlock.3ds");
+         if (mesh) {
+            mesh->resizeMesh(SVector3(1.0));
+            mesh->centerMeshByExtents(SVector3(0));
+            mesh->calculateNormalsPerVertex();
+         }
+         else {
+            fprintf(stderr, "Failed to load the mesh\n");
+         }
+         tempBlock->setMesh(mesh);
+         tempBlock->setTexture("Base/GrassyGrass.bmp", 2);
+         tempBlock->setTexture("Base/DirtyDirt.bmp", 3);
       }
       else {
-         fprintf(stderr, "Failed to load the mesh\n");
+           printf("texture not found\n" );
       }
-      tempBlock->setMesh(mesh);
-		tempBlock->setTexture("Base/GrassyGrass.bmp", 2);
-		tempBlock->setTexture("Base/DirtyDirt.bmp", 3);
    }
-   else {
-        printf("texture not found\n" );   
+
+   else if (env == 1) {
+      if (t == 0) {
+           tempBlock->setTexture("Base/desert.bmp");
+      }
+      else if (t == 1) {
+          tempBlock->setTexture("Base/desert.bmp");
+      }
+      else if (t == 2) {
+         tempBlock->setTexture("Base/desert.bmp");
+      }
+
+      else if (t == -5) {
+         mesh = CMeshLoader::load3dsMesh("Base/levelBlock.3ds");
+         if (mesh) {
+            mesh->resizeMesh(SVector3(1.0));
+            mesh->centerMeshByExtents(SVector3(0));
+            mesh->calculateNormalsPerVertex();
+         }
+         else {
+            fprintf(stderr, "Failed to load the mesh\n");
+         }
+         tempBlock->setMesh(mesh);
+         tempBlock->setTexture("Base/GrassyGrass.bmp", 2);
+         tempBlock->setTexture("Base/DirtyDirt.bmp", 3);
+      }
+      else {
+           printf("texture not found\n" );
+      }
    }
    tempBlock->setShader(ERP_DEFAULT, shader);
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, dShader);
