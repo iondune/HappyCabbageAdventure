@@ -104,7 +104,7 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             if (t == -5 && !lowDef)
                GeneratePlants((float) x, (float) y, (float) w, (float) h, (float) d);
 
-            list->push_back(ptr = new CBlock((float)x,(float)y,w,h,d,t,moving));
+            list->push_back(ptr = new CBlock((float)x,(float)y,w,h,d,t,moving, env));
             if(xml->getAttributeValueAsInt(6)) {
                ptr->isMovingPlatform = 1;
                ptr->Range = (int) xml->getAttributeValueAsFloat(7); //Range

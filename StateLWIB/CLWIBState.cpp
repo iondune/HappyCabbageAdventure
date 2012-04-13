@@ -1109,7 +1109,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
    CMeshSceneObject *tempBlock;
    CBlock *tempPlaceable;
    blocks.push_back(tempBlock = new CMeshSceneObject());
-   placeables.push_back(tempPlaceable = new CBlock(x, y, w, h, d, t, moving));
+   placeables.push_back(tempPlaceable = new CBlock(x, y, w, h, d, t, moving, env));
    tempBlock->setMesh(cubeMesh);
    if (t == 0)
         tempBlock->setTexture("Base/grass.bmp");
