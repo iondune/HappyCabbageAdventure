@@ -27,7 +27,7 @@ class CLWIBState : public CState<CLWIBState>
 
    //Boolean integers for keypressing
    int aDown , dDown , spaceDown , wDown , sDown , gDown , fDown , tDown, eDown, mDown, cDown;
-   int oneDown, twoDown, threeDown, fourDown, clickDown;
+   int oneDown, twoDown, threeDown, fourDown, sixDown, clickDown;
    int cabbageFlag;
    int flagFlag;
    int secretFlag;
@@ -35,6 +35,7 @@ class CLWIBState : public CState<CLWIBState>
    int yCabbage;
    int blockCycle;
    int change;
+   int dayNight, env; 
    bool showHelp;
    int enemyType, textureType, itemType, friendType;
    int WindowWidth, WindowHeight;

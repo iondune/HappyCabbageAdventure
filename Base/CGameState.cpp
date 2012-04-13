@@ -182,6 +182,11 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             list->push_back(buds = new CPFriends((float)x, (float)y,t));
             buds->isMovingPlatform = 0;
          }
+         if (!strcmp("envVar", xml->getNodeName()))
+         {
+             env = xml->getAttributeValueAsInt(0);
+             dayNight = xml->getAttributeValueAsInt(1);
+         }
          break;
 
 

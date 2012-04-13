@@ -31,7 +31,7 @@ void CPFriends::moveTo(float x,float y) {
 
 CMeshSceneObject * CPFriends::setupItem(CShader * shader, CShader * dShader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
 
-    if (t == 0)
+    if (t == 1)
         CFriends::makeFriend((float)x, (float)y, 1, 1, CFriends::Derp, GameplayManager);
     else
         printf("unknown friend type\n");

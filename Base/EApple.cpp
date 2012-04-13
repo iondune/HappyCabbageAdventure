@@ -54,6 +54,7 @@ void EApple::loadActor() {
 //Updates AI's decision per frame
 void EApple::update(float const TickTime) {
    Time = TickTime;
+    
    if (Manager->isPlayerAlive())
    {
        if (Manager->getPlayerLocation().X < Actor->getArea().getCenter().X && (!rollingLeft && !rollingRight))
