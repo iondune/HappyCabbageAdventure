@@ -1477,7 +1477,7 @@ void CGameState::PrepClouds() {
       tempBlock->setTexture(cloudTextures[i % 3]);
       tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
       tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
-      tempBlock->setTranslation(SVector3(-20 + i*60, 10, 5));
+      tempBlock->setTranslation(SVector3(-20 + i*60, 4, 5));
       tempBlock->setScale(SVector3(10, 1, 10));
       tempBlock->setRotation(SVector3(90, 0, 0));
       tempBlock->setVisible(false);
