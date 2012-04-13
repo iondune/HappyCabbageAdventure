@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<envVar env="0" dayNight="0">
+</envVar>
 <CBlock X ="-24" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
 <CBlock X ="-19" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
@@ -96,8 +98,6 @@
 <CEnemy X ="32" Y ="3" height ="1" width ="1" type ="2">
 </CEnemy>
 <CEnemy X ="20" Y ="0" height ="1" width ="1" type ="5">
-</CEnemy>
-<CEnemy X ="39" Y ="0" height ="1" width ="1" type ="0">
 </CEnemy>
 <CEnemy X ="50" Y ="0" height ="1" width ="1" type ="0">
 </CEnemy>
