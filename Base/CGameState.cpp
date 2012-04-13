@@ -186,7 +186,7 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
          if (!strcmp("envVar", xml->getNodeName()))
          {
              env = xml->getAttributeValueAsInt(0);
-             dayNight = xml->getAttributeValueAsInt(1);
+             isNight = xml->getAttributeValueAsInt(1);
          }
          break;
 
@@ -302,7 +302,6 @@ void CGameState::EngineInit( void ) {
    Derp->setArea(SRect2(-20, 3, 1, 1));
 
    PrepSky();
-   PrepClouds();
 
    SRect2 area;
 
@@ -328,8 +327,12 @@ void CGameState::EngineInit( void ) {
          lastOne = ((CBlock*)(*it))->elevator;
       }
    }
-
-   particleStarEngine = new CParticleEngine(SVector3(-30.0f, 15.0f, 0.0f), 100, -1, STAR_PARTICLE);
+   if(isNight) {
+      printf("Here\n");
+      SceneManager.setDeferred(true);
+      PrepClouds();
+      particleStarEngine = new CParticleEngine(SVector3(-30.0f, 15.0f, 0.0f), 100, -1, STAR_PARTICLE);
+   }
 
    consolidateAndAddBlocks();
 }
@@ -383,6 +386,7 @@ void CGameState::LoadHUD() {
 void CGameState::Initialize() {
    Charged = 0; aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0; lDown = 0;
    backwardsView = 0; overView = 0; energyStatus = 3.f; prevEnergy = 3.f;
+   env = isNight = 0;
    prevHealth = 0;
    StartWin = 0.0f;
    curScaleX = curScaleY = 1.f;
@@ -1463,7 +1467,7 @@ void CGameState::PrepClouds() {
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
    tempBlock->setTranslation(SVector3(85/*75*/, 13, -4.9));
    tempBlock->setScale(SVector3(250, -50, 1));
-   tempBlock->setVisible(false);
+   tempBlock->setVisible(true);
 
    Application.getSceneManager().addSceneObject(tempBlock);
    Clouds.push_back(tempBlock);
