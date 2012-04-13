@@ -329,6 +329,29 @@ void CLWIBState::OnRenderStart(float const Elapsed)
             PreviewItem->setMesh(energy);
         }
    }
+   if (sixDown) {
+        block3->setVisible(true);
+        block2->setVisible(true);
+        block1->setText("Set enviroment");
+        if (dayNight == 0)  {
+            block2->setText("Day");
+        }
+        else if (dayNight == 1) {
+            block2->setText("Night");
+        }
+        if (env == 0) {
+            block3->setText("Green Plains");
+        }
+        else if (env == 1) { 
+            block3->setText("Desert");
+        }
+        else if (env == 2) { 
+            block3->setText("mountains");
+        }
+        else if (env == 3) { 
+            block3->setText("Space");
+        }
+   }
    if (tDown && !showHelp ){
        block1->setText("Remove mode");
        block2->setText("");
@@ -373,6 +396,9 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
         }
         if (Event.Key == SDLK_4) {
             change = 4;
+        }
+        if (Event.Key == SDLK_6) {
+            change = 6;
         }
         if(Event.Key == SDLK_w){
             wDown = 1;
@@ -1483,19 +1509,44 @@ void CLWIBState::changeTiles() {
         if (Application.getGUIEngine().isWidgetIn(tileTen))
             Application.getGUIEngine().removeWidget(tileTen);
     }
+    if (change == 6) {
+
+        if (!Application.getGUIEngine().isWidgetIn(tileOne))
+            Application.getGUIEngine().addWidget(tileOne);
+        if (!Application.getGUIEngine().isWidgetIn(tileTwo))
+            Application.getGUIEngine().addWidget(tileTwo);
+        if (!Application.getGUIEngine().isWidgetIn(tileThree))
+            Application.getGUIEngine().addWidget(tileThree);
+        if (!Application.getGUIEngine().isWidgetIn(tileFour))
+            Application.getGUIEngine().addWidget(tileFour);
+        if (!Application.getGUIEngine().isWidgetIn(tileFive))
+            Application.getGUIEngine().addWidget(tileFive);
+        if (!Application.getGUIEngine().isWidgetIn(tileSix))
+            Application.getGUIEngine().addWidget(tileSix);
+
+        if (Application.getGUIEngine().isWidgetIn(tileSeven))
+            Application.getGUIEngine().removeWidget(tileSeven);
+        if (Application.getGUIEngine().isWidgetIn(tileEight))
+            Application.getGUIEngine().removeWidget(tileEight);
+        if (Application.getGUIEngine().isWidgetIn(tileNine))
+            Application.getGUIEngine().removeWidget(tileNine);
+        if (Application.getGUIEngine().isWidgetIn(tileTen))
+            Application.getGUIEngine().removeWidget(tileTen);
+    }
+
 }
 void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     
     if (widget == leftArrow) {
         if (change == 0)
-            change = 5;
+            change = 6;
         else
             change--;
         if (change == 0)
             cDown = 0;
     }
     if (widget == rightArrow){
-        if (change == 5)
+        if (change == 6)
             change = 0;
         else
             change++;
@@ -1522,6 +1573,8 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 4) {
             itemType = 0;
         }
+        if (change == 6)
+            dayNight = 0;
     }
     if (widget == tileTwo) {
         if (change == 0) {
@@ -1543,6 +1596,8 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 4) {
             itemType =1; 
         }
+        if (change == 6)
+            dayNight = 1;
     }
     if (widget == tileThree) {
         if (change == 0) {
@@ -1560,6 +1615,8 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         }
         if (change == 4)
             itemType = 2;
+        if (change == 6)
+            env = 0;
     }
     if (widget == tileFour) {
         if (change == 0) {
@@ -1575,6 +1632,8 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         }
         if (change == 4)
             itemType = 3;
+        if (change == 6)
+            env = 1;
     }
     if (widget == tileFive) {
         if (change == 0) {
@@ -1586,6 +1645,8 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 2) {
             enemyType = 4;
         }
+        if (change == 6)
+            env = 2;
     }
     if (widget == tileSix) {
         if (change == 0) {
@@ -1598,6 +1659,8 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 2) {
             enemyType = 5;
         }
+        if (change == 6)
+            env = 3;
     }
     if (widget == tileSeven) {
         if (change == 0) {
@@ -1703,6 +1766,7 @@ void CLWIBState::pickInsert()
         tDown = 0;
         twoDown = 0;
         fourDown = 0;
+        sixDown = 0;
 
         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
@@ -1712,21 +1776,23 @@ void CLWIBState::pickInsert()
         tDown = 0;
         twoDown = 0;
         fourDown = 0;
+        sixDown = 0;
         blockWidth = 1;
         blockHeight = 1;
         blockDepth = 1;
         PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     if (change == 2) {
-      twoDown = 1; //enemy
-                threeDown = 0; 
-                tDown = 0;
-                oneDown = 0;
-                fourDown = 0;
-                blockWidth = 1;
-                blockHeight = 1;
-                blockDepth = 1;
-                PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+        twoDown = 1; //enemy
+        threeDown = 0; 
+        tDown = 0;
+        oneDown = 0;
+        sixDown = 0;
+        fourDown = 0;
+        blockWidth = 1;
+        blockHeight = 1;
+        blockDepth = 1;
+        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     if (change == 3) {
         threeDown = 1;
@@ -1734,6 +1800,7 @@ void CLWIBState::pickInsert()
         tDown = 0;
         twoDown = 0;
         fourDown = 0;
+        sixDown = 0;
         blockWidth = 1;
         blockHeight = 1;
         blockDepth = 1;
@@ -1744,6 +1811,7 @@ void CLWIBState::pickInsert()
         threeDown = 0;
         oneDown = 0;
         tDown = 0;
+        sixDown = 0;
         twoDown = 0;
         blockWidth = 1;
         blockHeight = 1;
@@ -1755,6 +1823,19 @@ void CLWIBState::pickInsert()
         threeDown = 0;
         oneDown = 0;
         tDown = 1;
+        twoDown = 0;
+        sixDown = 0;
+        blockWidth = 1;
+        blockHeight = 1;
+        blockDepth = 1;
+        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+    }
+    if (change == 6) {
+        fourDown = 0;;
+        threeDown = 0;
+        oneDown = 0;
+        sixDown = 1;
+        tDown = 0;
         twoDown = 0;
         blockWidth = 1;
         blockHeight = 1;
