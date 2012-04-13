@@ -672,8 +672,8 @@ void CLWIBState::loadWorld() {
             }
         }
     }
-    //cout << "Enter the name of the file you want to load: ";
-    //cin >> name;
+    cout << "Enter the name of the file you want to load: ";
+    cin >> name;
     irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader(name.c_str());
 	while (xml && xml->read())
 	{
@@ -912,7 +912,7 @@ void CLWIBState::PrepItem(float x, float y, int item) {
    if(x < -25 || y < -25 || x >= 500 || y >= 75)
       return;
    if(blockMap[(int)x+25][(int)(y-0.5+25)].o) {
-      printf("Blockmap space occupied. Did not place Cabbage\n");
+      printf("Blockmap space occupied. Did not place Item\n");
       return;
    }
 
@@ -1236,11 +1236,12 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          //else { //Delete item
          if (tDown && !oneDown && !threeDown && !twoDown && !fourDown) {
              if(lastMouseOveredBlock.o) {
+                 printf("clicked on removing\n");
                  Application.getSceneManager().removeSceneObject(lastMouseOveredBlock.r);
                  placeables.erase(std::remove(placeables.begin(), placeables.end(), lastMouseOveredBlock.p), placeables.end());
                  blocks.erase(std::remove(blocks.begin(), blocks.end(), lastMouseOveredBlock.r), blocks.end());
-                 //redoPlaceables.push_back(lastMouseOveredBlock.p);
-                 //redo.push_back(lastMouseOveredBlock.r);
+                 redoPlaceables.push_back(lastMouseOveredBlock.p);
+                 redo.push_back(lastMouseOveredBlock.r);
                  int x = lastMouseOveredBlock.mapX;
                  int y = lastMouseOveredBlock.mapY;
 
@@ -1252,6 +1253,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
                          blockMap[x+i][y+j].p = NULL;
                          blockMap[x+i][y+j].mapX = -1;
                          blockMap[x+i][y+j].mapY = -1;
+                         printf("removed object at %d , %d\n",x,y);
                      }
                  }
                  lastMouseOveredBlock = blockMap[x][y];

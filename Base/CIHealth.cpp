@@ -40,7 +40,8 @@ void CIHealth::loadMesh() {
 //Adds actor to engine and preps engine
 void CIHealth::loadActor() {
    Actor = Manager->getEngine()->addActor();
-   Actor->setArea(SRect2(SVector2(x, y) + h*0.4f, SVector2(w, h)*0.8f));
+   //Actor->setArea(SRect2(SVector2(x, y) , SVector2(w, h)*0.5f));
+   Actor->setArea(SRect2((float)x, (float)y, 1, 1));
 
    //Set actor attributes
    Actor->CollideableType = COLLIDEABLE_TYPE_ITEM;
@@ -56,6 +57,6 @@ void CIHealth::update(float const TickTime) {
 }
 
 void CIHealth::doRenderable() {
-   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y + 0.1f, 0));
+   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y , 0));
    Renderable->setRotation(SVector3(-90, 0, 90 + Time));
 }

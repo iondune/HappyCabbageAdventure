@@ -4,6 +4,8 @@ CPItem::CPItem(float nx, float ny, int type)
 {
    x = nx; y = ny;
    t = type;
+   w = 1;
+   h = 1;
    isMovingPlatform = 0;
 }
 

@@ -301,7 +301,7 @@ void CGameState::EngineInit( void ) {
    //WinPlayer->CanCollideWith |= INTERACTOR_NULL_BLOCK; // Block for procing the physics engine
 
    Derp = Engine->addActor();
-   Derp->setArea(SRect2(-20, 3, 1, 1));
+   Derp->setArea(SRect2(-20, 1, 1, 1));
 
 
    SRect2 area;
