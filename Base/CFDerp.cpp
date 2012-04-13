@@ -12,30 +12,30 @@ CFDerp::CFDerp(float x, float y, float w, float h, CGameplayManager* manager) {
 
    rotate = 0.0f;
 
-   Time = 0.f;
+
 }
 
-//Loads and moves the mesh
 void CFDerp::loadMesh() {
-   Renderable = new CMeshSceneObject();
-   CMesh *mesh = CMeshLoader::load3dsMesh("Base/derp.3ds");
-   if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
-      mesh->calculateNormalsPerFace();
-   }
-   else
-      printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
+    Renderable = new CMeshSceneObject();
+    CMesh *mesh = CMeshLoader::load3dsMesh("Base/derp.3ds");
+    if(mesh) {
+        mesh->resizeMesh(SVector3(1));
+        mesh->centerMeshByExtents(SVector3(0));
+        mesh->calculateNormalsPerFace();
+    }
+    else
+        printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
 
-   Renderable->setMesh(mesh);
-   Renderable->setShader(ERP_DEFAULT, "Toon");
-   Renderable->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   //Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2 + 10.6f, 0));
-   //Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
-   Renderable->setScale(SVector3(.8f));
+    Renderable->setMesh(mesh);
+    Renderable->setShader(ERP_DEFAULT, "Toon");
+    Renderable->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
+    Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2 + 10.6f, 0));
+    Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
+    Renderable->setScale(SVector3(1.0f));
 
-   CApplication::get().getSceneManager().addSceneObject(Renderable);
+    CApplication::get().getSceneManager().addSceneObject(Renderable);
 }
+
 
 //Adds actor to engine and preps engine
 void CFDerp::loadActor() {
@@ -44,16 +44,15 @@ void CFDerp::loadActor() {
    Actor->setJumping(true);
 
    //Set actor attributes
-   Actor->CollideableType = COLLIDEABLE_TYPE_ITEM;
-   Actor->CollideableLevel = INTERACTOR_ITEMS;
-   Actor->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS;
 }
 
 //Updates AI's decision per frame
 void CFDerp::update(float const TickTime) {
-   Time += 140*TickTime;
-   if(Time >= 360.0f)
-      Time = 0;
+    if (Manager->isPlayerAlive())
+        Actor->setJumping(true);
+    Time += 140*TickTime;
+    if(Time >= 360.0f)
+        Time = 0;
 }
 
 void CFDerp::doRenderable() {

@@ -29,7 +29,7 @@ class CGameState : public CState<CGameState>
 
    CGUIFontWidget *GameOverText, *GameWinText, *RestartGameText, *LivesText, *fpsText, *seedText;
    CGUIDialogWidget *DialogWidget;
-   CMeshSceneObject* Cloud;
+   std::vector<CMeshSceneObject*> Clouds;
 
    public:
    CGameState();
@@ -37,6 +37,7 @@ class CGameState : public CState<CGameState>
    ICamera *Camera;
    float fps, timeTotal, prevEnergy, energyStatus, moveDown, StartWin, curScaleX, curScaleY;
    int numFrames, NumTreeTypes, NumFlowerTypes, lowDef, prevHealth, numBlocks, drawTree;
+   int dayNight, env; //for day and night
    const char * levelName;
    bool oldFern, launch;
    CGUIImageWidget *Health5, *Health4, *Health3, *Health2, *Health1, *CabbageFace, *CabbageEnergyBar, *CabbageMeter, *CabbageHurtFace, *Seed;

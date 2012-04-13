@@ -182,6 +182,11 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
             list->push_back(buds = new CPFriends((float)x, (float)y,t));
             buds->isMovingPlatform = 0;
          }
+         if (!strcmp("envVar", xml->getNodeName()))
+         {
+             env = xml->getAttributeValueAsInt(0);
+             dayNight = xml->getAttributeValueAsInt(1);
+         }
          break;
 
 
@@ -795,8 +800,8 @@ void CGameState::OnRenderStart(float const Elapsed)
 void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
    if (Event.Key == SDLK_t && Event.Pressed) {
-      if(Cloud != NULL)
-         Cloud->setVisible(!Cloud->isVisible());
+      for(int i = 0; i < Clouds.size(); i++)
+         Clouds[i]->setVisible(!Clouds[i]->isVisible());
    }
    if (Event.Key == SDLK_c && !GameplayManager->isWon())
       CApplication::get().getSceneManager().setCullingEnabled(! Event.Pressed);
@@ -1442,10 +1447,14 @@ void CGameState::setLodLevel(int const level)
 
 void CGameState::PrepClouds() {
    CTexture *tex = CImageLoader::loadTexture("Base/Clouds/clouds 3 lowest.tga", true);
-   //CTexture *tex = CImageLoader::loadTexture(CImageLoader::loadTGAImage("Base/Clouds/clouds 3 lowest.tga"), true);
+   std::vector<CTexture*> cloudTextures;
+   cloudTextures.push_back(CImageLoader::loadTexture("Base/Clouds/clouds1.tga", true));
+   cloudTextures.push_back(CImageLoader::loadTexture("Base/Clouds/clouds2.tga", true));
+   cloudTextures.push_back(CImageLoader::loadTexture("Base/Clouds/clouds3.tga", true));
 
    CMeshSceneObject *tempBlock;
 
+   /*Initial Sky*/
    tempBlock = new CMeshSceneObject();
    tempBlock->setMesh(cubeMesh);
    tempBlock->setTexture(tex);
@@ -1455,7 +1464,28 @@ void CGameState::PrepClouds() {
    tempBlock->setScale(SVector3(250, -50, 1));
    tempBlock->setVisible(false);
 
-   Application.getSceneManager().addSceneObject(Cloud = tempBlock);
+   //Application.getSceneManager().addSceneObject(tempBlock);
+   //Clouds.push_back(tempBlock);
+
+   CMesh* quad = CMeshLoader::load3dsMesh("Base/Quad.3ds");
+   quad->centerMeshByExtents(SVector3(0.0f));
+   quad->calculateNormalsPerFace();
+
+   for(int i = 0; i < 10; i++) {
+      tempBlock = new CMeshSceneObject();
+      tempBlock->setMesh(quad);
+      tempBlock->setTexture(cloudTextures[i % 3]);
+      tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
+      tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
+      tempBlock->setTranslation(SVector3(-20 + i*60, 10, 5));
+      tempBlock->setScale(SVector3(10, 1, 10));
+      tempBlock->setRotation(SVector3(90, 0, 0));
+      tempBlock->setVisible(false);
+
+      Application.getSceneManager().addPostOpaqueSceneObject(tempBlock);
+      //Application.getSceneManager().addSceneObject(tempBlock);
+      Clouds.push_back(tempBlock);
+   }
 }
 
 
