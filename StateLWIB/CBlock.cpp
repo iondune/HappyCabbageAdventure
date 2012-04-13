@@ -119,7 +119,7 @@ CMeshSceneObject * CBlock::setupItem(CShader * shader, CShader * dShader, Cabbag
             fprintf(stderr, "Failed to load the mesh\n");
          }
          tempBlock->setMesh(mesh);
-         tempBlock->setTexture("Base/GrassyGrass.bmp", 2);
+         tempBlock->setTexture("Base/DesertyDesert.tga", 2);
          tempBlock->setTexture("Base/DirtyDirt.bmp", 3);
       }
       else {
