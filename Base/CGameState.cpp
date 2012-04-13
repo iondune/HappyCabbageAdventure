@@ -739,7 +739,10 @@ void CGameState::oldDisplay() {
 //Runs at very start of display
 void CGameState::OnRenderStart(float const Elapsed)
 {
-   glClearColor(0.4f,0.8f,1.f,0);
+   if(env == 0)
+      glClearColor(0.4f,0.8f,1.f,0);
+   else if(env == 1)
+      glClearColor(226.0f/256.0f,119.0f/256.0f, 18.0f/256.0f, 0.0f);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
