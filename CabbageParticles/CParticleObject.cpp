@@ -30,6 +30,7 @@ void CParticleObject::update() {
          PositionBuffer.push_back((*(positionsArr[i]))[j]);
       }
       LightsArr[i]->setTranslation(*(positionsArr[i]));
+      //LightsDArr[i]->setTranslation(*(positionsArr[i]));
    }
 }
 
@@ -53,10 +54,8 @@ void CParticleObject::draw(CScene const * const scene, ERenderPass const Pass)
       glDisable(GL_POINT_SPRITE);
       glDepthFunc(GL_LESS);
       break;
-
    case ERP_MODEL_NORMALS:
       break;
-
    case ERP_DEFERRED_LIGHTS:
       break;
    }
@@ -88,8 +87,12 @@ void CParticleObject::setup(std::vector<SVector3*> vectorArr, std::vector<SVecto
          SizeBuffer.push_back(sizeArr[i]);
       }
       CPointLightSceneObject *LightObj = new CPointLightSceneObject(sizeArr[i]/sizeFactor, *(colorArr[i]));
+      CDirectionalLightSceneObject *LightDObj = new CDirectionalLightSceneObject(SVector3(0, 0, 1), *(colorArr[i]));
       addChild(LightObj);
+      //addChild(LightDObj);
       LightsArr.push_back(LightObj);
+      LightObj->setCullingEnabled(false);
+      //LightsDArr.push_back(LightDObj);
 
       IndexBuffer.push_back((unsigned short)i);
    }

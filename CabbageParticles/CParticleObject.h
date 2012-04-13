@@ -12,6 +12,7 @@ protected:
    CBufferObject<unsigned short> IndexBuffer;
    std::vector<SVector3*> positionsArr;
    std::vector<CPointLightSceneObject*> LightsArr;
+   std::vector<CDirectionalLightSceneObject*> LightsDArr;
    bool updated, AlwaysRender;
    int numParticles;
    float sizeFactor;

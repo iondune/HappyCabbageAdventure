@@ -29,7 +29,7 @@ class CGameState : public CState<CGameState>
 
    CGUIFontWidget *GameOverText, *GameWinText, *RestartGameText, *LivesText, *fpsText, *seedText;
    CGUIDialogWidget *DialogWidget;
-   CMeshSceneObject* Cloud;
+   std::vector<CMeshSceneObject*> Clouds;
 
    public:
    CGameState();
