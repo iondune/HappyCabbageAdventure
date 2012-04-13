@@ -8,8 +8,10 @@ COverworldState::COverworldState()
 //Initalizer fxn
 void COverworldState::begin()
 {
-   aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0;
+   isDay = 1;
+   aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0, yDown = 0, sineValue = 0;
    transitionTimer = 0.0;
+   transitionWorld = 0;
 
    camRotValue = stepValue = 0;
    rot = SVector3(-90, 0, -90);
@@ -22,23 +24,23 @@ void COverworldState::begin()
 
    if(newGame)
    {
-     printf("Starting new game\n");
-     newGame = false;
-     curNode = 0;
-     curCamera = 0;
-     levelsUnlocked = true; //NOTE: this should be switched to false upon release
-     loadLevels();
-     setCameraTrans();
+      printf("Starting new game\n");
+      newGame = false;
+      curNode = 0;
+      curCamera = 0;
+      levelsUnlocked = true; //NOTE: this should be switched to false upon release
+      loadLevels();
+      setCameraTrans();
    }
    else if(levelCompleted)
    {
-     printf("Completed level %d\n", curNode);
-     levels[curNode].completed = true;
+      printf("Completed level %d\n", curNode);
+      levels[curNode].completed = true;
 
    }
    else if(!levelCompleted)
    {
-     printf("Level failed\n");
+      printf("Level failed\n");
 
    }
 
@@ -63,29 +65,30 @@ void COverworldState::begin()
    Camera->setPosition(eye);
    Camera->setLookDirection(look - eye);
 
-    CSceneManager & SceneManager = Application.getSceneManager();
+   CSceneManager & SceneManager = Application.getSceneManager();
 
-    SceneManager.Lights.push_back(new CLight());
-    SceneManager.Lights.back()->Color = SVector3(LightBrightness);
-    SceneManager.Lights.back()->Position = SVector3(30.f, 2.f, 3.f);
+   SceneManager.Lights.push_back(new CLight());
+   SceneManager.Lights.back()->Color = SVector3(LightBrightness);
+   SceneManager.Lights.back()->Position = SVector3(30.f, 2.f, 3.f);
 
-    SceneManager.Lights.push_back(new CLight());
-    SceneManager.Lights.back()->Color = SVector3(LightBrightness);
-    SceneManager.Lights.back()->Position = SVector3(-1.f, -2.f, 30.f);
+   SceneManager.Lights.push_back(new CLight());
+   SceneManager.Lights.back()->Color = SVector3(LightBrightness);
+   SceneManager.Lights.back()->Position = SVector3(-1.f, -2.f, 30.f);
 
-    SceneManager.Lights.push_back(new CLight());
-    SceneManager.Lights.back()->Color = SVector3(LightBrightness);
-    SceneManager.Lights.back()->Position = SVector3(-30.f, 0.f, 0.f);
+   SceneManager.Lights.push_back(new CLight());
+   SceneManager.Lights.back()->Color = SVector3(LightBrightness);
+   SceneManager.Lights.back()->Position = SVector3(-30.f, 0.f, 0.f);
 
-    SceneManager.Lights.push_back(new CLight());
-    SceneManager.Lights.back()->Color = SVector3(LightBrightness);
-    PlayerLight = SceneManager.Lights.back();
+   SceneManager.Lights.push_back(new CLight());
+   SceneManager.Lights.back()->Color = SVector3(LightBrightness);
+   PlayerLight = SceneManager.Lights.back();
 
 
    LoadShaders();
 
    //Load the meshes into VBOs
    PrepMeshes();
+   PrepSkySphere();
 
 
    //Initialize Fxns
@@ -94,34 +97,73 @@ void COverworldState::begin()
 
 }
 
+void COverworldState::PrepSkySphere() {
+   printf("Loading sky sphere mesh\n");
+   CMesh *splitSphereMesh = CMeshLoader::load3dsMesh("Base/SphereSplit.3ds");
+   if(splitSphereMesh) {
+      splitSphereMesh->resizeMesh(SVector3(10.0f));
+      splitSphereMesh->centerMeshByExtents(SVector3(0));
+      splitSphereMesh->linearizeIndices();
+      splitSphereMesh->calculateNormalsPerVertex();
+   }
+   CMeshSceneObject *temp = new CMeshSceneObject();
+
+   temp->setMesh(splitSphereMesh);
+   temp->setScale(SVector3(9.0f));
+   temp->setTranslation(SVector3(0.0f, -24.0f, 0.0f));
+   /*
+   temp->setTexture(CImageLoader::loadTexture("Colors/LightBlue.bmp", 1), 0);
+   temp->setTexture(CImageLoader::loadTexture("Colors/DarkBlue.bmp", 1), 1);
+   */
+   temp->setTexture(CImageLoader::loadTexture("Base/DayOverworld.bmp", 1), 0);
+   temp->setTexture(CImageLoader::loadTexture("Base/NightOverworld.bmp", 1), 1);
+   temp->setShader(ERP_DEFAULT, CShaderLoader::loadShader("DiffuseTexture"));
+   temp->setShader(ERP_DEFERRED_OBJECTS, CShaderLoader::loadShader("Deferred/Textured"));
+   temp->setCullingEnabled(false);
+
+
+   Application.getSceneManager().addSceneObject(SkySphere = temp);
+   printf("Done\n");
+}
+
 void COverworldState::step(float delta) {
    //rot.X += 10*delta;
 
-  superInterpolator(playerVector, playerVecShift, delta, TRANSITION_PERIOD);
+   superInterpolator(playerVector, playerVecShift, delta, TRANSITION_PERIOD);
    superInterpolator(look, lookShift, delta, TRANSITION_PERIOD);
    superInterpolator(eye, eyeShift, delta, TRANSITION_PERIOD);
 
    if(transitionTimer == 0.0f)
    {
-     //camRotValue += 0.5f*delta;
+      //camRotValue += 0.5f*delta;
    }
    else if(transitionTimer < 0.0f )
    { 
-     transitionTimer =  0.0f;
-     playerRender->setRotation(SVector3(-90, 0, angleMaker(levels[curNode].loc, cameraPos[curCamera])));
+      transitionTimer =  0.0f;
+      playerRender->setRotation(SVector3(-90, 0, angleMaker(levels[curNode].loc, cameraPos[curCamera])));
+      transitionWorld = 0;
 
-     /*
-     if(curNode != NUM_LEVELS -1)
-     {
-arrowRender2->setTranslation(SVector3(0,0.2,0) + playerVector);
-   arrowRender2->setRotation(SVector3(90.0f, 0.0f, angleMaker(playerVector, levels[curNode + 1].loc)));
-     }
-     */
+      /*
+         if(curNode != NUM_LEVELS -1)
+         {
+         arrowRender2->setTranslation(SVector3(0,0.2,0) + playerVector);
+         arrowRender2->setRotation(SVector3(90.0f, 0.0f, angleMaker(playerVector, levels[curNode + 1].loc)));
+         }
+         */
    }
    else
    {
-     transitionTimer -= delta;
+      transitionTimer -= delta;
    }
+
+   if(transitionTimer && transitionWorld) {
+      //Needs to travel 180 degrees in TRANSITION_PERIOD time
+
+      sineValue += 180.0f/TRANSITION_PERIOD*delta;
+   }
+   //SkySphere->setScale(SVector3(0.0f + sineValue/20.0f));
+   //printf("Total: %0.0f\n", 0.0f + sineValue/20.0f);
+   SkySphere->setRotation(SVector3(90, 180 + sineValue, 0));
 
 
    stepValue += 0.5f*delta;
@@ -166,9 +208,9 @@ void COverworldState::OnRenderStart(float const Elapsed)
 //Sends event every time key pressed (also when held)
 void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
-  bool diskChanger = false;
-  bool eyeChanger = false;
-  bool arrowChanger = false;
+   bool diskChanger = false;
+   bool eyeChanger = false;
+   bool arrowChanger = false;
 
    if(Event.Pressed ){
       if(Event.Key == SDLK_w){
@@ -176,6 +218,9 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_s){
          sDown = 1;
+      }
+      if(Event.Key == SDLK_y) {
+         yDown = 1;
       }
       if(Event.Key == SDLK_a || Event.Key == SDLK_LEFT){
          aDown = 1;
@@ -190,7 +235,7 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
          printf("Look coords: %0.2f %0.2f %0.2f\n", look.X, look.Y, look.Z);
       }
       if(Event.Key == SDLK_SPACE && transitionTimer == 0.0f) {
-        CGameState::get().levelName = levels[curNode].name;
+         CGameState::get().levelName = levels[curNode].name;
          Application.getStateManager().setState(new CFadeOutState(& CGameState::get()));
          spaceDown = 1;
       }
@@ -213,39 +258,42 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_d){
          dDown = 0;
       }
+      if(Event.Key == SDLK_y) {
+         yDown = 0;
+      }
       if(Event.Key == SDLK_v){
          levelsUnlocked = !levelsUnlocked;
       }
       if(Event.Key == SDLK_i){
-        changey += 0.01f;
-        diskChanger = true;
+         changey += 0.01f;
+         diskChanger = true;
       }
       if(Event.Key == SDLK_k){
-        changey -= 0.01f;
-        diskChanger = true;
+         changey -= 0.01f;
+         diskChanger = true;
       }
       if(Event.Key == SDLK_u){
-        changex += 0.01f;
-        diskChanger = true;
+         changex += 0.01f;
+         diskChanger = true;
       }
       if(Event.Key == SDLK_j){
-        changex -= 0.01f;
-        diskChanger = true;
+         changex -= 0.01f;
+         diskChanger = true;
       }
       if(Event.Key == SDLK_o){
-        changez += 0.01f;
-        diskChanger = true;
+         changez += 0.01f;
+         diskChanger = true;
       }
       if(Event.Key == SDLK_l){
-        changez -= 0.01f;
-        diskChanger = true;
+         changez -= 0.01f;
+         diskChanger = true;
       }
       if(Event.Key == SDLK_p){
          printf("disk coords: %0.2f %0.2f %0.2f\n", changex,changey, changez);
       }
       if(Event.Key == SDLK_n){
-        look = levels[0].loc;
-        eye = SVector3(0.74f, 0.48f, 1.50f);
+         look = levels[0].loc;
+         eye = SVector3(0.74f, 0.48f, 1.50f);
       }
       if(Event.Key == SDLK_SPACE){
          spaceDown = 0;
@@ -253,13 +301,13 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
    }
 
    if(diskChanger)
-        discRender->setTranslation(SVector3(changex,changey, changez));
+      discRender->setTranslation(SVector3(changex,changey, changez));
 
    if(eyeChanger)
-     eye = SVector3(changex, changey, changez);
+      eye = SVector3(changex, changey, changez);
 
    if(arrowChanger)
-     arrowRender2->setRotation(SVector3(90.0f, 0.0f, changez ));
+      arrowRender2->setRotation(SVector3(90.0f, 0.0f, changez ));
 
 }
 
@@ -271,33 +319,33 @@ void COverworldState::end()
 
 void COverworldState::loadLevels()
 {
-  //If you're adding more levels be sure to update COverworldState's NUM_LEVELS
-  levels[0].name = "jorge1.xml";
-  levels[0].loc = SVector3(0.33f, -0.17f, 1.05f); //bit of green near sole orange hill
-  levels[1].name = "jorge2.xml";
-  levels[1].loc = SVector3(0.83f, 0.00f, 0.65f); //Green hill
-  levels[2].name = "jorge3.xml";
-  levels[2].loc = SVector3(0.9f, -0.12999999f, 0.3f);
-  levels[3].name = "chris.xml";
-  levels[3].loc = SVector3(0.5f, -0.13f, 0.1f);
-  levels[4].name = "chris2.xml";
-  levels[4].loc = SVector3(0.98f, -0.27f, -0.19f); //Green beach
-  levels[5].name = "test.xml";
-  levels[5].loc = SVector3(0.94f, -0.25f, -0.38f); //Yellow beach
-  levels[6].name = "test2.xml";
-  levels[6].loc = SVector3(0.77f, -0.20f, -0.66f); //Yellow hills
+   //If you're adding more levels be sure to update COverworldState's NUM_LEVELS
+   levels[0].name = "jorge1.xml";
+   levels[0].loc = SVector3(0.33f, -0.17f, 1.05f); //bit of green near sole orange hill
+   levels[1].name = "jorge2.xml";
+   levels[1].loc = SVector3(0.83f, 0.00f, 0.65f); //Green hill
+   levels[2].name = "jorge3.xml";
+   levels[2].loc = SVector3(0.9f, -0.12999999f, 0.3f);
+   levels[3].name = "chris-night.xml";
+   levels[3].loc = SVector3(0.5f, -0.13f, 0.1f);
+   levels[4].name = "chris2.xml";
+   levels[4].loc = SVector3(0.98f, -0.27f, -0.19f); //Green beach
+   levels[5].name = "test.xml";
+   levels[5].loc = SVector3(0.94f, -0.25f, -0.38f); //Yellow beach
+   levels[6].name = "test2.xml";
+   levels[6].loc = SVector3(0.77f, -0.20f, -0.66f); //Yellow hills
 
-  for(int i = 0; i < NUM_LEVELS; i++)
-  {
-    levels[i].completed = false;
-  }
+   for(int i = 0; i < NUM_LEVELS; i++)
+   {
+      levels[i].completed = false;
+   }
 }
 
 void COverworldState::setCameraTrans()
 {
-  cameraPos[0] = SVector3(0.21f, 0.36f, 1.76f);
-  cameraPos[1] = SVector3(1.47f, 0.33f, 0.0f);
-  cameraPos[2] = SVector3(1.11f, 0.45f, -2.16f);
+   cameraPos[0] = SVector3(0.21f, 0.36f, 1.76f);
+   cameraPos[1] = SVector3(1.47f, 0.33f, 0.0f);
+   cameraPos[2] = SVector3(1.11f, 0.45f, -2.16f);
 
 }
 
@@ -320,17 +368,18 @@ void COverworldState::PrepMeshes()
       mapMesh->centerMeshByExtents(SVector3(0));
       mapMesh->calculateNormalsPerFace();
    }
-   
+
    CMaterial mat;
 
    mat.Texture = CImageLoader::loadTexture("../Models/Base/world.bmp");
    renderMap = CApplication::get().getSceneManager().addMeshSceneObject(mapMesh, ToonTexture, DeferredTexture);
    renderMap->setMaterial(mat);
    renderMap->setCullingEnabled(false);
+   //renderMap->setVisible(false);
 
    //Set up player renderable
    CMesh *playerMesh = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_5.3ds");
-// CMesh *playerMesh = CMeshLoader::load3dsMesh("Base/crappycabbage2.3ds");
+   // CMesh *playerMesh = CMeshLoader::load3dsMesh("Base/crappycabbage2.3ds");
 
    if (playerMesh) {
       playerMesh->resizeMesh(SVector3(0.45f));
@@ -352,18 +401,18 @@ void COverworldState::PrepMeshes()
 
    CMesh *arrowMesh = CMeshLoader::load3dsMesh("Base/arrow.3ds");
    if (arrowMesh) {
-     arrowMesh->resizeMesh(SVector3(0.5f));
-     arrowMesh->centerMeshByExtents(SVector3(0));
-     arrowMesh->calculateNormalsPerFace();
+      arrowMesh->resizeMesh(SVector3(0.5f));
+      arrowMesh->centerMeshByExtents(SVector3(0));
+      arrowMesh->calculateNormalsPerFace();
    }
    else {
-     fprintf(stderr, "Failed to load the cababge mesh\n");
+      fprintf(stderr, "Failed to load the cababge mesh\n");
    }
    arrowRender1 = CApplication::get().getSceneManager().addMeshSceneObject(arrowMesh, Flat, DeferredFlat);
    arrowRender1->setTranslation(SVector3(0, -0.2f, 0.0) + playerVector);
    arrowRender1->setRotation(SVector3(-90.0f, 0.0f, 45.0f));
    arrowRender1->setScale(SVector3(0.18f));
-                  
+
    arrowRender2 = CApplication::get().getSceneManager().addMeshSceneObject(arrowMesh, Flat, DeferredFlat);
    arrowRender2->setTranslation(SVector3(0,-0.2f,0) + playerVector);
    arrowRender2->setRotation(SVector3(90.0f, 0.0f, angleMaker(playerVector, levels[curNode + 1].loc) + 90.0f ));
@@ -376,14 +425,14 @@ void COverworldState::PrepMeshes()
    discMesh->calculateNormalsPerFace();
 
    CMesh *flagMesh = CMeshLoader::load3dsMesh("Base/flag2.3ds");
-   
+
    if (flagMesh) {
-     flagMesh->centerMeshByExtents(SVector3(0));
-     flagMesh->calculateNormalsPerFace();
+      flagMesh->centerMeshByExtents(SVector3(0));
+      flagMesh->calculateNormalsPerFace();
    }
 
    else {
-     fprintf(stderr, "Failed to load flag mesh.\n");
+      fprintf(stderr, "Failed to load flag mesh.\n");
    }
 
    CTexture *flagTxt = new CTexture(CImageLoader::loadImage("Base/white.bmp"));
@@ -391,15 +440,15 @@ void COverworldState::PrepMeshes()
 
    for(int i = 0; i < NUM_LEVELS; i++)
    {
-     if(levels[i].completed)
-     {
-      levelIcons(levels[i].loc, discMesh, 1);
-      addMeshes(levels[i].loc, flagMesh, flagTxt);
-     }
-     else
-     {
-      levelIcons(levels[i].loc, discMesh, 2);
-     }
+      if(levels[i].completed)
+      {
+         levelIcons(levels[i].loc, discMesh, 1);
+         addMeshes(levels[i].loc, flagMesh, flagTxt);
+      }
+      else
+      {
+         levelIcons(levels[i].loc, discMesh, 2);
+      }
 
    }
 
@@ -408,22 +457,22 @@ void COverworldState::PrepMeshes()
 void COverworldState::levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor)
 {
 
-	discRender = CApplication::get().getSceneManager().addMeshSceneObject(levelIcon, ToonTexture, DeferredTexture);
+   discRender = CApplication::get().getSceneManager().addMeshSceneObject(levelIcon, ToonTexture, DeferredTexture);
 
    CMaterial mat;
    switch(iconColor)
    {
-     case 1:
-       mat.Texture = CImageLoader::loadTexture("Base/GrassyGrass.bmp");
-       break;
+   case 1:
+      mat.Texture = CImageLoader::loadTexture("Base/GrassyGrass.bmp");
+      break;
 
-     case 2:
-       mat.Texture = CImageLoader::loadTexture("Base/dirt.bmp");
-       break;
-       
-     default:
-       mat.Texture = CImageLoader::loadTexture("../Models/disc_red.bmp");
-       break;
+   case 2:
+      mat.Texture = CImageLoader::loadTexture("Base/dirt.bmp");
+      break;
+
+   default:
+      mat.Texture = CImageLoader::loadTexture("../Models/disc_red.bmp");
+      break;
    }
    discRender->setMaterial(mat);
 
@@ -433,16 +482,16 @@ void COverworldState::levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor)
 
 void COverworldState::addMeshes(SVector3 loc, CMesh *newMesh, CTexture *texture)
 {
-  CMeshSceneObject *renderFlag = new CMeshSceneObject();
-  renderFlag->setMesh(newMesh);
-  renderFlag->setTranslation(loc + SVector3(-0.05f, 0.05f, 0.05f));
-  renderFlag->setRotation(SVector3(-90,0,0));
-  renderFlag->setScale(SVector3(.00150f, .000025f,.00016f));
-  renderFlag->setTexture(texture);
-  renderFlag->setShader(ERP_DEFAULT, ToonTexture);
-  renderFlag->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
+   CMeshSceneObject *renderFlag = new CMeshSceneObject();
+   renderFlag->setMesh(newMesh);
+   renderFlag->setTranslation(loc + SVector3(-0.05f, 0.05f, 0.05f));
+   renderFlag->setRotation(SVector3(-90,0,0));
+   renderFlag->setScale(SVector3(.00150f, .000025f,.00016f));
+   renderFlag->setTexture(texture);
+   renderFlag->setShader(ERP_DEFAULT, ToonTexture);
+   renderFlag->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
 
-  Application.getSceneManager().addSceneObject(renderFlag);
+   Application.getSceneManager().addSceneObject(renderFlag);
 
 
 
@@ -456,110 +505,138 @@ void COverworldState::bouncePlayer() {
 
 
 void COverworldState::movePlayer() {
-  bool moved = false;
-  if(transitionTimer != 0.0f)
-    return;
+   bool moved = false;
+   if(transitionTimer != 0.0f)
+      return;
 
-  if(aDown && curNode > 0 )
-  {
-    curNode--;
-    moved = true;
-  }
-  else if(dDown && curNode < NUM_LEVELS - 1 && (levels[curNode].completed || levelsUnlocked))
-  {
-    curNode++;
-    moved = true;
-  }
+   if(aDown && curNode > 0 )
+   {
+      curNode--;
+      if(strstr(levels[curNode].name, "night") == NULL) {
+         //Day
+         if(!isDay) {
+            transitionWorld = 1;
+            isDay = 1;
+         }
+      }
+      else {
+         //Night
+         if(isDay) {
+            transitionWorld = 1;
+            isDay = 0;
+         }
+      }
+      moved = true;
+   }
+   else if(dDown && curNode < NUM_LEVELS - 1 && (levels[curNode].completed || levelsUnlocked))
+   {
+      curNode++;
+      if(strstr(levels[curNode].name, "night") == NULL) {
+         //Day
+         if(!isDay) {
+            transitionWorld = 1;
+            isDay = 1;
+         }
+      }
+      else {
+         //Night
+         if(isDay) {
+            transitionWorld = 1;
+            isDay = 0;
+         }
+      }
+      moved = true;
+   }
 
-  if(moved)
-  {
-    transitionTimer = TRANSITION_PERIOD;
+   if(moved)
+   {
+      transitionTimer = TRANSITION_PERIOD;
 
-    playerVecTarget = levels[curNode].loc;
-    playerVecTarget.Y += 0.05f;
-    shiftSetter(playerVector, playerVecShift, playerVecTarget);
+      playerVecTarget = levels[curNode].loc;
+      playerVecTarget.Y += 0.05f;
+      shiftSetter(playerVector, playerVecShift, playerVecTarget);
 
-    lookTarget = levels[curNode].loc;
-    shiftSetter(look, lookShift, lookTarget);
+      lookTarget = levels[curNode].loc;
+      shiftSetter(look, lookShift, lookTarget);
 
-    if(curNode == 1 && aDown)
-    {
-      eyeTarget = cameraPos[0];
-      curCamera = 0;
-      shiftSetter(eye, eyeShift, eyeTarget);
-    }
-    else if(curNode == 2 && dDown)
-    {
-      eyeTarget = cameraPos[1];
-      curCamera = 1;
-      shiftSetter(eye, eyeShift, eyeTarget);
-    }
-    else if(curNode == 5 && aDown)
-    {
-      eyeTarget = cameraPos[1];
-      curCamera = 1;
-      shiftSetter(eye, eyeShift, eyeTarget);
-    }
-    else if(curNode == 6 && dDown)
-    {
-      eyeTarget = cameraPos[2];
-      curCamera = 2;
-      shiftSetter(eye, eyeShift, eyeTarget);
-    }
-  }
+      if(curNode == 1 && aDown)
+      {
+         eyeTarget = cameraPos[0];
+         curCamera = 0;
+         shiftSetter(eye, eyeShift, eyeTarget);
+      }
+      else if(curNode == 2 && dDown)
+      {
+         eyeTarget = cameraPos[1];
+         curCamera = 1;
+         shiftSetter(eye, eyeShift, eyeTarget);
+      }
+      else if(curNode == 5 && aDown)
+      {
+         eyeTarget = cameraPos[1];
+         curCamera = 1;
+         shiftSetter(eye, eyeShift, eyeTarget);
+      }
+      else if(curNode == 6 && dDown)
+      {
+         eyeTarget = cameraPos[2];
+         curCamera = 2;
+         shiftSetter(eye, eyeShift, eyeTarget);
+      }
+   }
 }
 
 void COverworldState::superInterpolator(SVector3 & curr, SVector3 & change,
-    float delta, float transLength)
+      float delta, float transLength)
 {
-  SVector3 zeroV = SVector3(0.0f, 0.0f, 0.0f);
+   SVector3 zeroV = SVector3(0.0f, 0.0f, 0.0f);
 
-  if(transitionTimer <= 0.0f)
-  {
-    change = zeroV;
-    return;
-  }
-  else if(change == zeroV)
-  {
-    return;
-  }
-  else
-  {
-    curr = curr + (change * delta/transLength);
-  }
+   if(transitionTimer <= 0.0f)
+   {
+      change = zeroV;
+      return;
+   }
+   else if(change == zeroV)
+   {
+      return;
+   }
+   else
+   {
+      curr = curr + (change * delta/transLength);
+   }
 }
 
 void COverworldState::shiftSetter(SVector3 & curr, SVector3 & change, SVector3 & target)
 {
-  change = target - curr;
+   change = target - curr;
 }
 
 float COverworldState::angleMaker(SVector3 start, SVector3 toPoint)
 {
-    //float asinxz, asinzx, acosxz, acoszx;
-	float lookat = 0.f;
-     SVector3 temp = toPoint - start;
+   //float asinxz, asinzx, acosxz, acoszx;
+   float lookat = 0.f;
+   SVector3 temp = toPoint - start;
 
-     temp.normalize();
-     /*
+   temp.normalize();
+   /*
 
-     lookat = atan2(temp.X,temp.Z) * RAD_TO_DEG;
-     asinxz = asinf(temp.X/temp.Z) * RAD_TO_DEG;
-     asinzx = asinf(temp.Z/temp.X) * RAD_TO_DEG;
-     acosxz = acosf(temp.X/temp.Z) * RAD_TO_DEG;
-     acoszx = acosf(temp.Z/temp.X) * RAD_TO_DEG;
+      lookat = atan2(temp.X,temp.Z) * RAD_TO_DEG;
+      asinxz = asinf(temp.X/temp.Z) * RAD_TO_DEG;
+      asinzx = asinf(temp.Z/temp.X) * RAD_TO_DEG;
+      acosxz = acosf(temp.X/temp.Z) * RAD_TO_DEG;
+      acoszx = acosf(temp.Z/temp.X) * RAD_TO_DEG;
 
-     printf("asin %f %f\n acos %f %f\natan2xz %f\n\n",
-         asinxz, asinzx, acosxz, acoszx,lookat);
-*/
-     lookat = lookat < 0 ? lookat + 55 : lookat;
-     return lookat;
+      printf("asin %f %f\n acos %f %f\natan2xz %f\n\n",
+      asinxz, asinzx, acosxz, acoszx,lookat);
+      */
+   lookat = lookat < 0 ? lookat + 55 : lookat;
+   return lookat;
 }
 void COverworldState::testFun()
 {
-  SVector3 temp = cameraPos[1] -levels[2].loc;
-  temp.normalize();
+   SVector3 temp = cameraPos[1] -levels[2].loc;
+   temp.normalize();
 
-  printf("TEST %f\n", (atan2(temp.X,temp.Z) * RAD_TO_DEG));
+   printf("TEST %f\n", (atan2(temp.X,temp.Z) * RAD_TO_DEG));
 
 }

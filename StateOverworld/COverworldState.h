@@ -29,20 +29,21 @@ class COverworldState : public CState<COverworldState>
 //   CGameEventReceiver GameEventReceiver;
 
    //Boolean integers for keypressing
-   int aDown, dDown, spaceDown, wDown, sDown;
-   float changex, changey, changez;
+   int aDown, dDown, spaceDown, wDown, sDown, yDown;
+   float changex, changey, changez, sineValue;
    SVector3 playerVector, playerVecShift, playerVecTarget;
 
    CShader *Flat, *Diffuse, *ToonTexture;
    CShader *DeferredFlat, * DeferredDiffuse, * DeferredTexture;
    CMeshSceneObject *renderMap, *discRender, *playerRender,
-                    *arrowRender1, *arrowRender2;
+                    *arrowRender1, *arrowRender2, *SkySphere;
 
    int startx, starty;
    float pitchphi, yawtheta;
    int mouseDown;
 
 
+   bool isDay, transitionWorld;
    SVector3 eye, look, eyeShift, lookShift, eyeTarget, lookTarget;
    int WindowWidth, WindowHeight;
    SVector3 rot;
@@ -56,6 +57,7 @@ class COverworldState : public CState<COverworldState>
    void LoadShaders();
    void addMeshes(SVector3 loc, CMesh *newMesh, CTexture *texture);
    void PrepMeshes();
+   void PrepSkySphere();
    void loadLevels();
    void setCameraTrans();
    void levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor);
