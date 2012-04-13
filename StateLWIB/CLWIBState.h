@@ -54,8 +54,9 @@ class CLWIBState : public CState<CLWIBState>
    CGUIImageWidget *save, *load, *undoTile, *redoTile;
     //CMESH stuff
    CMesh *cubeMesh, *appleMesh, *orangeMesh, *kiwiMesh, *cabbageMesh, *groundMesh, *bladeMesh, *flagMesh;
-   CMesh *health, *energy;
+   CMesh *health, *energy, *lifeMesh;
    CMesh *flameMesh;
+   CMesh *seedMesh;
    float xp2w(int oldX);
    float yp2w(int oldY);
    
