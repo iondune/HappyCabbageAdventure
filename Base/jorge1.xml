@@ -73,7 +73,7 @@
 </CBlock>
 <CBlock X ="171" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CEnemy X ="-5" Y ="0" height ="1" width ="1" type ="3">
+<CEnemy X ="-5" Y ="0" height ="1" width ="1" type ="0">
 </CEnemy>
 <CEnemy X ="0" Y ="0" height ="1" width ="1" type ="0">
 </CEnemy>
