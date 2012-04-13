@@ -1543,16 +1543,14 @@ void CGameState::GenerateDesertPlants(float x, float y, float w, float h, float 
       randDist = w * .1 + (rand() / (float)RAND_MAX) * .7 * w;  //.1, .7 to make sure doesn't overlap with other randomly drawn cacti
       if (plantType == 0)
          drawModel(x + randDist, yVal + 1.5f, -d/2.0f + .4f, 5.5f, Application, cactusMesh);
-      else if (plantType == 1)
-         drawModel(x + randDist, yVal +  1.4f, -d/2.0f + .4f, 6.0f, Application, christmasTreeMesh);
    }
 
    //Draw shrubbery in background
    for (int n = 0; n < numBackground; n++) {
-      plantType = rand()%2;
+      plantType = rand()%5;
 
-      randScale = (float) (rand()%20);
-      randScale = randScale * .025f;
+      randScale = (float) (rand()%10);
+      randScale = randScale * .2f;
 
       randDepth = (float) (rand()%2);
       randDepth = (float) randDepth*.25f;
@@ -1565,9 +1563,9 @@ void CGameState::GenerateDesertPlants(float x, float y, float w, float h, float 
       }
 
       if (plantType == 0)
-         drawModel(x + randDist, yVal - 0.2f, d/2.0f + .4f, 8.0f, Application, basicTreeMesh);
-      else if (plantType == 1)
-         drawModel(x + randDist, yVal +  1.4f, d/2.0f + .4f, 6.0f, Application, christmasTreeMesh);
+         drawModel(x + randDist, yVal + 1.5f, d/2.0f - 0.6f, 5.5f, Application, cactusMesh);
+      else if (plantType < 5 && randScale > .5f)
+         drawModel(x + randDist, yVal + randScale/4.5f, d/2.0f - 0.6f, randScale, Application, cactusBushMesh);
    }
 
    for (int n = 0; n < numForeground; n++) {
@@ -1938,6 +1936,16 @@ void Load3DS()
       else {
          fprintf(stderr, "Failed to load cactus mesh.\n");
       }
+
+   cactusBushMesh = CMeshLoader::load3dsMesh("Base/bushCactus.3ds");
+   if (cactusBushMesh) {
+      cactusBushMesh->centerMeshByExtents(SVector3(0));
+      cactusBushMesh->resizeMesh(SVector3(.8f));
+      cactusBushMesh->calculateNormalsPerFace();
+   }
+   else {
+      fprintf(stderr, "Failed to load cactus bush mesh.\n");
+   }
 }
 
 void LoadTextures()
