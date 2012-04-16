@@ -181,7 +181,8 @@ bool CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
             //fprintf(stderr, "Enemy detected as dead! %d\n", it->Renderable);
 
 
-            PlayerActor->setImpulse(SVector2(0.f, 1.0f), 0.05f);
+            //Chris look here for the player impulse!
+            PlayerActor->setImpulse(SVector2(0.f, 10.0f), 0.05f);
             PlayerActor->setVelocity(SVector2(PlayerActor->getVelocity().X, 0.0f));
 
             Enemies.erase(std::remove(Enemies.begin(), Enemies.end(), *it), Enemies.end());
