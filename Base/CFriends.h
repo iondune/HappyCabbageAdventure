@@ -5,6 +5,7 @@
 #include "../CabbageFramework/CabbageFramework.h"
 #include "../CabbageCollider/CEngine.h"
 #include "../CabbageSound/sound.h"
+#include "../CabbageGUI/CabbageGUI.h"
 #include "CCollideable.h"
 
 class CGameplayManager;

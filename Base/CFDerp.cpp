@@ -49,10 +49,11 @@ void CFDerp::loadActor() {
 //Updates AI's decision per frame
 void CFDerp::update(float const TickTime) {
 //    if (Manager->isPlayerAlive())
-//        Actor->setJumping(true);
+        Actor->setJumping(true);
 }
 
 void CFDerp::doRenderable() {
    Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X, Actor->getArea().getCenter().Y + .2f, 0));
-   printf("%0.2f, %0.2f\n", Actor->getArea().getCenter().X, Actor->getArea().getCenter().Y);
+   //printf("%0.2f, %0.2f\n", Actor->getArea().getCenter().X, Actor->getArea().getCenter().Y);
+ Actor->setJumping(true);
 }
