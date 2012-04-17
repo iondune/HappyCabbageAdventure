@@ -1,303 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <envVar env="0" dayNight="0">
 </envVar>
-<CBlock X ="-24" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-25" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CBlock X ="-19" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-21" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CBlock X ="-14" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-20" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CBlock X ="-9" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-22" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CBlock X ="-4" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-23" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CBlock X ="1" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-24" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CBlock X ="6" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-19" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CBlock X ="11" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-18" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CBlock X ="16" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-17" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CBlock X ="21" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-16" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CBlock X ="26" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-15" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CBlock X ="31" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-14" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CBlock X ="36" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="41" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="46" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="51" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="56" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="61" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="66" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="71" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="76" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="81" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="86" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="91" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="96" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="101" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="106" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="111" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="116" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="121" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="126" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="131" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="136" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="141" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="146" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="151" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="156" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="161" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="166" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="171" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="181" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="186" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="191" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="196" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CFlag X ="190" Y ="0" height ="1" width ="1" secret ="0" isMoving ="0">
-</CFlag>
-<CBlock X ="-14" Y ="1" height ="1" width ="4" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="-14" Y ="3" height ="1" width ="4" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="-14" Y ="5" height ="1" width ="4" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CEnemy X ="-12" Y ="0" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="-12" Y ="2" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="-12" Y ="4" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="-12" Y ="6" height ="1" width ="1" type ="3">
-</CEnemy>
-<CBlock X ="-20" Y ="0" height ="4" width ="2" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CPItem X ="-11" Y ="6" texture ="2" isMoving ="0">
-</CPItem>
-<CBlock X ="7" Y ="0" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="7" Y ="2" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="9" Y ="4" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="5" Y ="0" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="11" Y ="4" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="13" Y ="2" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="13" Y ="0" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CEnemy X ="7" Y ="1" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="13" Y ="1" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="10" Y ="0" height ="1" width ="1" type ="1">
-</CEnemy>
-<CEnemy X ="10" Y ="4" height ="1" width ="1" type ="2">
-</CEnemy>
-<CBlock X ="-1" Y ="6" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="-1" Y ="4" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="-1" Y ="2" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="-1" Y ="0" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="43" Y ="1" height ="3" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="44" Y ="1" height ="2" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="45" Y ="1" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CEnemy X ="44" Y ="0" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="41" Y ="0" height ="1" width ="1" type ="5">
-</CEnemy>
-<CBlock X ="40" Y ="1" height ="3" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="39" Y ="1" height ="2" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="38" Y ="1" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CEnemy X ="39" Y ="0" height ="1" width ="1" type ="3">
-</CEnemy>
-<CBlock X ="56" Y ="0" height ="1" width ="5" depth ="1" texture ="1" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="57" Y ="1" height ="1" width ="5" depth ="1" texture ="1" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="58" Y ="2" height ="1" width ="5" depth ="1" texture ="1" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="60" Y ="3" height ="1" width ="4" depth ="1" texture ="1" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="59" Y ="4" height ="1" width ="4" depth ="1" texture ="1" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="70" Y ="5" height ="1" width ="4" depth ="1" texture ="1" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CPItem X ="63" Y ="0" texture ="0" isMoving ="0">
-</CPItem>
-<CPItem X ="62" Y ="0" texture ="0" isMoving ="0">
-</CPItem>
-<CPItem X ="61" Y ="0" texture ="0" isMoving ="0">
-</CPItem>
-<CPItem X ="65" Y ="0" texture ="1" isMoving ="0">
-</CPItem>
-<CPItem X ="66" Y ="0" texture ="1" isMoving ="0">
-</CPItem>
-<CPItem X ="67" Y ="0" texture ="1" isMoving ="0">
-</CPItem>
-<CPItem X ="17" Y ="0" texture ="3" isMoving ="0">
-</CPItem>
-<CPItem X ="19" Y ="0" texture ="3" isMoving ="0">
-</CPItem>
-<CPItem X ="18" Y ="0" texture ="3" isMoving ="0">
-</CPItem>
-<CPItem X ="20" Y ="0" texture ="3" isMoving ="0">
-</CPItem>
-<CPItem X ="21" Y ="0" texture ="3" isMoving ="0">
-</CPItem>
-<CPItem X ="22" Y ="0" texture ="3" isMoving ="0">
-</CPItem>
-<CPItem X ="23" Y ="0" texture ="3" isMoving ="0">
-</CPItem>
-<CPItem X ="24" Y ="0" texture ="3" isMoving ="0">
-</CPItem>
-<CPItem X ="25" Y ="0" texture ="3" isMoving ="0">
-</CPItem>
-<CPItem X ="26" Y ="0" texture ="3" isMoving ="0">
-</CPItem>
-<CPItem X ="27" Y ="0" texture ="3" isMoving ="0">
-</CPItem>
-<CPItem X ="28" Y ="0" texture ="3" isMoving ="0">
-</CPItem>
-<CPItem X ="29" Y ="0" texture ="3" isMoving ="0">
-</CPItem>
-<CPItem X ="30" Y ="0" texture ="3" isMoving ="0">
-</CPItem>
-<CPItem X ="31" Y ="0" texture ="3" isMoving ="0">
-</CPItem>
-<CPItem X ="32" Y ="0" texture ="3" isMoving ="0">
-</CPItem>
-<CPItem X ="33" Y ="0" texture ="3" isMoving ="0">
-</CPItem>
-<CPItem X ="34" Y ="0" texture ="3" isMoving ="0">
-</CPItem>
-<CPItem X ="35" Y ="0" texture ="3" isMoving ="0">
-</CPItem>
-<CEnemy X ="59" Y ="3" height ="1" width ="1" type ="3">
-</CEnemy>
-<CBlock X ="66" Y ="3" height ="1" width ="1" depth ="1" texture ="1" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CEnemy X ="109" Y ="0" height ="1" width ="1" type ="1">
-</CEnemy>
-<CEnemy X ="116" Y ="0" height ="1" width ="1" type ="0">
-</CEnemy>
-<CEnemy X ="112" Y ="4" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="113" Y ="0" height ="1" width ="1" type ="3">
-</CEnemy>
-<CBlock X ="134" Y ="0" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="137" Y ="0" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="140" Y ="0" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="137" Y ="1" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="140" Y ="1" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="140" Y ="2" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CEnemy X ="134" Y ="1" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="137" Y ="2" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="140" Y ="3" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="135" Y ="0" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="136" Y ="0" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="138" Y ="0" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="139" Y ="0" height ="1" width ="1" type ="4">
-</CEnemy>
-<CPItem X ="126" Y ="0" texture ="1" isMoving ="0">
-</CPItem>
-<CPItem X ="127" Y ="0" texture ="1" isMoving ="0">
-</CPItem>
-<CPItem X ="128" Y ="0" texture ="1" isMoving ="0">
-</CPItem>
-<CPItem X ="143" Y ="0" texture ="0" isMoving ="0">
-</CPItem>
-<CPItem X ="144" Y ="0" texture ="0" isMoving ="0">
-</CPItem>
-<CPItem X ="145" Y ="0" texture ="0" isMoving ="0">
-</CPItem>
-<CEnemy X ="159" Y ="3" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="157" Y ="0" height ="1" width ="1" type ="3">
-</CEnemy>
-<CBlock X ="178" Y ="-1" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CCabbage X ="-24" Y ="0" height ="1" width ="1" isMoving ="0">
+<CCabbage X ="-25" Y ="0" height ="1" width ="1" isMoving ="0">
 </CCabbage>
-<CEnemy X ="74" Y ="0" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="75" Y ="0" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="75" Y ="1" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="76" Y ="0" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="76" Y ="1" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="76" Y ="2" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="77" Y ="1" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="77" Y ="0" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="78" Y ="0" height ="1" width ="1" type ="4">
-</CEnemy>
-<CPItem X ="72" Y ="0" texture ="2" isMoving ="0">
-</CPItem>
-<CBlock X ="200" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CBlock X ="205" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
-</CBlock>
+<CPFriends x ="-23" y ="4" type ="1">
+</CPFriends>
+<CPFriends x ="-21" y ="4" type ="1">
+</CPFriends>
+<CPFriends x ="-19" y ="4" type ="1">
+</CPFriends>
+<CPFriends x ="-17" y ="4" type ="1">
+</CPFriends>
+<CPFriends x ="-16" y ="4" type ="1">
+</CPFriends>

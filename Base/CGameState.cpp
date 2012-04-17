@@ -729,6 +729,11 @@ void CGameState::oldDisplay() {
       (*it)->doRenderable();
    }
 
+   for (std::vector<CFriends*>::iterator it = GameplayManager->Friends.begin(); it != GameplayManager->Friends.end(); ++it)
+   {
+      (*it)->doRenderable();
+   }
+
    //ELEVATOR DISPLAY
    std::vector<CElevator*>::iterator it;
    for(it=elevators.begin();it<elevators.end();it++) {
