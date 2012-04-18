@@ -18,13 +18,14 @@ class CGroundBlock {
 class CDecorManager : public IUpdater {
    private:
       int env;
-      bool oldFern;
+      bool oldFern, night;
 
       //These functions setup and add things to the scene manager
       ISceneObject *SetupObject(float,float,float,float,CMesh*);
       void GenerateForestPlants(CGroundBlock*);
       void GenerateDesertPlants(CGroundBlock*, bool genTree);
       void SetupSky();
+      void SetupClouds();
 
       //These functions initialize the following lists of attributes. Yuck!
       void PrepMeshes();
@@ -39,7 +40,7 @@ class CDecorManager : public IUpdater {
       CShader *Shader, *Flat, *Diffuse, *BlackShader, *DiffuseTexture, *normalColor, *Toon, *ToonTexture, *ToonBright;
       CShader *DeferredToon, *DeferredTexture, *DeferredDiffuse, *DeferredToonBright, *DeferredToonTexture , *DeferredFlat;
    public:
-      CDecorManager(std::vector<CGroundBlock*>, int);
+      CDecorManager(std::vector<CGroundBlock*>, int, bool);
       void update(float);
 };
 

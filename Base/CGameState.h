@@ -39,7 +39,7 @@ class CGameState : public CState<CGameState>
    int numFrames, NumTreeTypes, NumFlowerTypes, lowDef, prevHealth, numBlocks, drawTree;
    int isNight, env; //for day and night
    const char * levelName;
-   bool oldFern, launch;
+   bool launch;
    CGUIImageWidget *Health5, *Health4, *Health3, *Health2, *Health1, *CabbageFace, *CabbageEnergyBar, *CabbageMeter, *CabbageHurtFace, *Seed;
    std::vector<CBiggerBlock*> blocksY, blocksX, blocksFinal;
 
@@ -62,12 +62,6 @@ class CGameState : public CState<CGameState>
    void end();
    void PrepShadow();
    void PrepBlock(float x, float y, float w, float h);
-   void PrepGrass(float x, float y, float w, float h);
-   void PrepSky();
-   void PrepClouds();
-   void GeneratePlants (float x, float y, float w, float h, float d);
-   void GenerateForestPlants(float x, float y, float w, float h, float d);
-   void GenerateDesertPlants(float x, float y, float w, float h, float d, bool genTree);
    CMeshSceneObject* PrepEnemy(float x, float y);
    void RunVictorySequence(float Elapsed);
 

@@ -39,11 +39,14 @@ ISceneObject *CDecorManager::SetupObject(float x, float y, float z, float scale,
    return render;
 }
 
-CDecorManager::CDecorManager(std::vector<CGroundBlock*> groundBlocks, int environment) {
+CDecorManager::CDecorManager(std::vector<CGroundBlock*> groundBlocks, int environment, bool isNight) {
    env = environment;
+   night = isNight;
    PrepShaders();
    PrepMeshes();
    SetupSky();
+   if(night)
+      SetupClouds();
    oldFern = false;
 
    CGroundBlock *curBlock;
@@ -403,4 +406,49 @@ void CDecorManager::SetupSky() {
    tempBlock->setScale(SVector3(250, -50, 1));
 
    CApplication::get().getSceneManager().addSceneObject(tempBlock);
+}
+
+void CDecorManager::SetupClouds() {
+   CTexture *tex = CImageLoader::loadTexture("Base/Clouds/clouds 3 lowest.tga", true);
+   std::vector<CTexture*> cloudTextures;
+   cloudTextures.push_back(CImageLoader::loadTexture("Base/Clouds/clouds1.tga", true));
+   cloudTextures.push_back(CImageLoader::loadTexture("Base/Clouds/clouds2.tga", true));
+   cloudTextures.push_back(CImageLoader::loadTexture("Base/Clouds/clouds3.tga", true));
+
+   CMeshSceneObject *tempBlock;
+
+   /*Initial Sky*/
+   tempBlock = new CMeshSceneObject();
+   tempBlock->setMesh(cubeMesh);
+   tempBlock->setTexture(tex);
+   tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
+   tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
+   tempBlock->setTranslation(SVector3(85/*75*/, 13, -4.9));
+   tempBlock->setScale(SVector3(250, -50, 1));
+   tempBlock->setVisible(true);
+
+   CApplication::get().getSceneManager().addSceneObject(tempBlock);
+   //Clouds.push_back(tempBlock);
+
+   /* Not using the clouds/mist until we have good transparency for DS
+   CMesh* quad = CMeshLoader::load3dsMesh("Base/Quad.3ds");
+   quad->centerMeshByExtents(SVector3(0.0f));
+   quad->calculateNormalsPerFace();
+
+   for(int i = 0; i < 10; i++) {
+      tempBlock = new CMeshSceneObject();
+      tempBlock->setMesh(quad);
+      tempBlock->setTexture(cloudTextures[i % 3]);
+      tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
+      tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
+      tempBlock->setTranslation(SVector3(-20 + i*60, 4, 5));
+      tempBlock->setScale(SVector3(10, 1, 10));
+      tempBlock->setRotation(SVector3(90, 0, 0));
+      tempBlock->setVisible(false);
+
+      Application.getSceneManager().addPostOpaqueSceneObject(tempBlock);
+      //Application.getSceneManager().addSceneObject(tempBlock);
+      Clouds.push_back(tempBlock);
+   }
+   */
 }
