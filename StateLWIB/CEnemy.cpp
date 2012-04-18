@@ -34,9 +34,6 @@ void CEnemy::moveTo(float x,float y) {
    //For usage in LWIB
 }
 
-void CEnemy::setShader(CShader * chad) {
-   shader = chad;
-}
 CMeshSceneObject * CEnemy::setupItem(CShader * chad, CShader * dShader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager) {
     if (num == 0)
        CBadGuy::makeBadGuy(x, y, (float) w, (float) h, CBadGuy::apple, GameplayManager, env);
@@ -51,7 +48,7 @@ CMeshSceneObject * CEnemy::setupItem(CShader * chad, CShader * dShader, Cabbage:
     else if (num == 5)
        CBadGuy::makeBadGuy(x, y, 2.0f, 2.0f/*(float)w, (float)h*/, CBadGuy::blade, GameplayManager, env);
     else
-        printf("Unknown enemy type received.\n");
+        fprintf(stderr, "Unknown enemy type received.\n");
 
     //BS return.  Either need to make useful or make this void.
     return new CMeshSceneObject();

@@ -13,3 +13,7 @@ void CGameState::OnRenderEnd(float const Elapsed) {
    CApplication::get().getSceneManager().drawAll();
    CApplication::get().getGUIEngine().drawAll();
 }
+
+void CGameState::end() {
+
+}

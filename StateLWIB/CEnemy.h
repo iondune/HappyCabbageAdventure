@@ -13,14 +13,12 @@
 #include <string>
 class CEnemy : public CPlaceable
 {
-   CShader* shader;
    public:
    int num, env;
    CEnemy(float nx, float ny, int width, int height, int type, int env);
    void writeXML(xmlwriter *);
    void moveTo(float,float);
-   void setShader(CShader*);
-   CMeshSceneObject * setupItem(CShader * shader, CShader * dShader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager);
+   CMeshSceneObject* setupItem(CShader*, CShader*, Cabbage::Collider::CEngine*, CGameplayManager*);
 };
 
 #endif

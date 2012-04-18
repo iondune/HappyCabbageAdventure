@@ -186,8 +186,6 @@ void CGameState::loadWorld(std::vector<CPlaceable*> *list)
              isNight = xml->getAttributeValueAsInt(1);
          }
          break;
-
-
       }
    }
 }
