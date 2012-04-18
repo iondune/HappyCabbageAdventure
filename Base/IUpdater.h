@@ -2,7 +2,7 @@
 #define __IUPDATER_HEADER_GUARD
 
 class IUpdater {
-  virtual void update(float); 
+  virtual void update(float)=0; 
 };
 
 #endif

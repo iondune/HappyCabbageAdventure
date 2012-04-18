@@ -12,7 +12,7 @@ class CGameplayElement : public IUpdater, public ICollisionResponder {
    CCollideable* PhysicsEngineObject;
    ISceneObject* SceneObject;
 
-   virtual void update();
+   virtual void update(float);
    virtual bool OnCollision()=0;
 };
 

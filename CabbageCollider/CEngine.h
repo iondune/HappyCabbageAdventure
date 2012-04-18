@@ -143,6 +143,10 @@ namespace Cabbage
                   }
             }
 
+            void update(float const Elapsed) {
+               updateAll(Elapsed);
+            }
+
             void updateAll(float const Elapsed)
             {
                static int const TicksPerSecond = 200;
