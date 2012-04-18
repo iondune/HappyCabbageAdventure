@@ -316,8 +316,6 @@ void CGameState::EngineInit( void ) {
    CObject *lastOne = NULL;
    loadWorld(&list);
 
-   PrepSky();
-
    fprintf(stderr, "Got to here.\n");
    std::vector<CPlaceable*>::iterator it;
    for(it=list.begin();it<list.end();it++) {
@@ -1485,7 +1483,6 @@ void PrepMeshes()
          point->setTranslation(SVector3(x * 3.f, y * 3.f, 0.f));
          CApplication::get().getSceneManager().addSceneObject(point);
       }
-
 
    cabbage5 = new ISceneObject();
    for (int i = 0; i < 2; ++ i)
