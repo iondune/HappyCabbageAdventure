@@ -45,14 +45,12 @@ class CGameState : public CState<CGameState>
 
    CParticleEngine *f1, *f2, *f3, *glow;
 
-   void consolidateAndAddBlocks();
    void EngineInit( void );
    void begin();
    void LoadHUD();
    void oldDisplay();
    void UpdateLeaves();
    void UpdateEnergy(float const Elapsed);
-   void loadWorld(std::vector<CPlaceable*> *list);
    //Runs at very start of display
    void OnRenderStart(float const Elapsed);
    //Sends event every time key pressed (also when held)
