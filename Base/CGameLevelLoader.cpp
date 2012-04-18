@@ -1,12 +1,9 @@
 #include "CGameLevelLoader.h"
 
 CGameLevelLoader::CGameLevelLoader(const char* levelName) {
-   /* Block consolidation algorithm code
+   //Block consolidation algorithm code
    numBlocks = 0;
    blocksY.clear();
-   blocksX.clear();
-   blocksFinal.clear();
-   */
 
    int x,y,w,d,h,t, moving;
    //float spd, rng;
@@ -42,7 +39,6 @@ CGameLevelLoader::CGameLevelLoader(const char* levelName) {
             }
             else {
                ptr->isMovingPlatform = 0;
-               /*
                numBlocks++;
                int curW = w;
                //Hard case for ground blocks...
@@ -52,7 +48,6 @@ CGameLevelLoader::CGameLevelLoader(const char* levelName) {
                else
                   for(; curW > 0; curW--)
                      blocksY.push_back(new CBiggerBlock((float)x + (w - curW), (float)y, 1.0f, (float)h, (float)d));
-               */
             }
          }
          if(!strcmp("CEnemy", xml->getNodeName()))
@@ -154,4 +149,79 @@ bool CGameLevelLoader::isNight() {
 
 int CGameLevelLoader::getEnv() {
    return env;
+}
+
+void CGameLevelLoader::consolidateAndAddBlocks() {
+   printf("Size of blocksY: %d\n", blocksY.size());
+   std::vector<CBiggerBlock*> blocksX;
+
+   sort(blocksY.begin(), blocksY.end(), sortXY);
+
+   CBiggerBlock *curBlock = blocksY[0];
+   for(unsigned int i = 1; i < blocksY.size(); i++) {
+      CBiggerBlock * newBlock = consolidateY(curBlock, blocksY[i]);
+      /*
+         printf("Consolidation of [%0.0f,%0.0f,%0.0f,%0.0f] and [%0.0f,%0.0f,%0.0f,%0.0f]? %s\n", 
+         curBlock->x, curBlock->y, curBlock->w, curBlock->h,
+         blocksY[i]->x, blocksY[i]->y, blocksY[i]->w, blocksY[i]->h,
+         newBlock==NULL?"NO":"YES");
+         */
+      // There was nothing to consolidate, which means this CBiggerBlock is done (in the Y direction)
+      if(newBlock == NULL) {
+         blocksX.push_back(curBlock);
+         curBlock = blocksY[i];
+      }
+      else {
+         delete curBlock;
+         delete blocksY[i];
+         blocksY[i] = NULL;
+         curBlock = newBlock;
+      }
+   }
+   blocksX.push_back(curBlock);
+
+   sort(blocksX.begin(), blocksX.end(), sortYX);
+   printf("Size of blocksX: %d\n", blocksX.size());
+   curBlock = blocksX[0];
+   for(unsigned int i = 1; i < blocksX.size(); i++) {
+      CBiggerBlock * newBlock = consolidateX(curBlock, blocksX[i]);
+      /*
+         printf("Consolidation of [%0.0f,%0.0f,%0.0f,%0.0f] and [%0.0f,%0.0f,%0.0f,%0.0f]? %s\n", 
+         curBlock->x, curBlock->y, curBlock->w, curBlock->h,
+         blocksX[i]->x, blocksX[i]->y, blocksX[i]->w, blocksX[i]->h,
+         newBlock==NULL?"NO":"YES");
+         */
+
+      // There was nothing to consolidate, which means this CBiggerBlock is done (in the X direction)
+      if(newBlock == NULL) {
+         blocksFinal.push_back(curBlock);
+         curBlock = blocksX[i];
+      }
+      else {
+         delete curBlock;
+         delete blocksX[i];
+         blocksX[i] = NULL;
+         curBlock = newBlock;
+      }
+   }
+   blocksFinal.push_back(curBlock);
+
+   printf("Size of blocksFinal: %d\n", blocksFinal.size());
+   /*
+   for(unsigned int i = 0; i < blocksFinal.size(); i++) {
+      //   printf("Block %d: [%0.0f,%0.0f,%0.0f,%0.0f]\n", i,
+      //   blocksFinal[i]->x, blocksFinal[i]->y, blocksFinal[i]->w, blocksFinal[i]->h);
+      blocksFinal[i]->addToEngine(Engine);
+      delete blocksFinal[i];
+      blocksFinal[i] = NULL;
+   }
+   */
+   printf("Total blocks saved: %d\n", numBlocks - blocksFinal.size());
+   numBlocks = blocksFinal.size();
+   blocksX.clear();
+   blocksY.clear();
+}
+
+std::vector<CBiggerBlock*> & CGameLevelLoader::getConsolidatedBlocks() {
+   return blocksFinal;
 }

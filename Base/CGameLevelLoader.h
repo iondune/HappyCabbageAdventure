@@ -10,17 +10,21 @@
 #include "CPlaceable.h"
 
 #include "CDecorManager.h" //For CGroundBlock
+#include "CBiggerBlock.h"
 
 class CGameLevelLoader {
    private:
       bool loaded, night;
-      int env;
+      int env, numBlocks;
+      std::vector<CBiggerBlock*> blocksY, blocksFinal;
       std::vector<CPlaceable*> Placeables;
       std::vector<CPFriends*> Friends;
       std::vector<CPItem*> Items;
       std::vector<CBlock*> Blocks;
       std::vector<CEnemy*> Enemies;
       std::vector<CGroundBlock*> GroundBlocks;
+
+      void consolidateAndAddBlocks();
 
    public:
       std::vector<CPlaceable*> & getPlaceables();
@@ -29,6 +33,7 @@ class CGameLevelLoader {
       std::vector<CBlock*> & getBlocks();
       std::vector<CEnemy*> & getEnemies();
       std::vector<CGroundBlock*> & getGroundBlocks();
+      std::vector<CBiggerBlock*> & getConsolidatedBlocks();
 
       CGameLevelLoader(const char*);
 
