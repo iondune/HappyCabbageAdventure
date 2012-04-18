@@ -22,8 +22,6 @@ class CGameplayElement : public IUpdater, public ICollisionResponder {
 
       //Functions for CLWIBState
       virtual void writeXML(xmlwriter *)=0;
-
-      //Functions for CGameLevel[Loader]
 };
 
 #endif
