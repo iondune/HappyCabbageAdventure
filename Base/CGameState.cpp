@@ -71,9 +71,6 @@ CGameState::CGameState()
 
 void CGameState::loadWorld(std::vector<CPlaceable*> *list)
 {
-   drawTree = rand()%2 + 1;
-   NumTreeTypes = 2;
-   NumFlowerTypes = 2;
    numBlocks = 0;
    blocksY.clear();
    blocksX.clear();
@@ -399,7 +396,6 @@ void CGameState::Initialize() {
    launch = true;
 
    GameEventReceiver = CGameEventReceiver();
-   oldFern = false;
 
    CApplication::get().getSceneManager().setCullingEnabled(true);
 
@@ -1615,120 +1611,6 @@ void CGameState::GenerateDesertPlants(float x, float y, float w, float h, float 
          printf ("Draw a shrubbery!\n");
       }
    }
-}
-
-void CGameState::GenerateForestPlants(float x, float y, float w, float h, float d) {
-   int numForeground, numBackground;
-   int random;
-   float randScale, randDepth;
-   float div, yVal = y + h;
-
-   if (w > 0.5f && w < 1.5f)  //If block size roughly 1, don't draw any trees
-      numForeground = numBackground = 0;
-   else {
-      numForeground = (int) w / 2;
-      numBackground = (int) w / 2;
-   }
-
-   div =  w/(float)numBackground;
-
-   //Check how many tree-type objects we should draw in the background
-   for (int n = 0; n < numBackground; n++) {
-      random = rand()%2;
-
-      if (random == 0)
-         drawModel(x + (n)*div + div/2.0f, yVal + 1.8f, -d/2.0f + .4f, 8.0f, Application, basicTreeMesh);
-      else if (random == 1)
-         drawModel(x + (n)*div + div/2.0f, yVal + 1.4f, -d/2.0f + .4f, 6.0f, Application, christmasTreeMesh);
-   }
-
-   //Draw flower-type plants in background
-   for (int n = 0; n < w; n++) {
-      random = rand()%6;
-      float subrand = (float) (rand()%5);
-      randScale = (float) (rand()%20);
-      randScale = randScale * .025f;
-      randDepth = (float) (rand()%2);
-      randDepth = (float) randDepth*.25f;
-
-      if (random == 0 || random == 1)
-         drawModel(x + n + .5f, yVal - 1.f, -d/2.0f + 1.6f + randDepth, .7f, Application, whiteFlwrMesh);
-      else if (random == 2 || random == 3 || random == 4) {
-         if (subrand == 0)
-            drawModel(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application, yellowFlwrMesh);
-         else if (subrand == 1)
-            drawModel(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application, blueFlwrMesh);
-         else if (subrand == 2)
-            drawModel(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application, whiteSunflwrMesh);
-         else if (subrand == 3)
-            drawModel(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application, tealFlwrMesh);
-         else if (subrand == 4)
-            drawModel(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, Application, purpleFlwrMesh);
-      }
-      else if (random == 5 && !oldFern) {
-         drawModel(x + n + .5f, yVal + .2f, -d/2.0f + 1.5f + randDepth, 1.f + randScale, Application, fernMesh);
-         oldFern = true;
-      }
-      else if (random == 5 && oldFern)
-         n--;
-
-      if (random != 5)
-         oldFern = false;
-   }
-
-   //Draw flower-type plants in foreground
-   for (int n = 0; n < w; n++) {
-      random = rand()%6;
-      float subrand = (float) (rand()%5);
-      randScale = (float) (rand()%10);
-      randScale = randScale * 0.04f;
-      randDepth = (float) (rand()%2);
-      randDepth = randDepth*0.25f;
-
-      if (random == 0 || random == 1)
-         drawModel(x + n + 0.5f, randScale/2.0 + .1f, d/2.0f - 0.6f, 0.4f + randScale, Application, whiteFlwrMesh);
-      else if (random == 2 || random == 3 || random == 4) {
-         if (subrand == 0)
-            drawModel(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application, blueFlwrMesh);
-         else if (subrand == 1)
-            drawModel(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application, tealFlwrMesh);
-         else if (subrand == 2)
-            drawModel(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application, purpleFlwrMesh);
-         else if (subrand == 3)
-            drawModel(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application, yellowFlwrMesh);
-         else if (subrand == 3)
-            drawModel(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, Application, whiteSunflwrMesh);
-      }
-      else if (random == 5 && !oldFern) {
-         drawModel(x + n + 0.5f, yVal + 0.2f, d/2.0f - 0.6f, 0.7f, Application, fernMesh);
-         oldFern = true;
-      }
-      else if (random == 5 && oldFern) {
-         n--;
-      }
-
-      if (random != 5)
-         oldFern = false;
-   }
-}
-
-void LoadShaders() {
-   DeferredFlat = CShaderLoader::loadShader("Deferred/Diffuse");
-   DeferredDiffuse = CShaderLoader::loadShader("Deferred/Diffuse");
-   DeferredToonTexture = CShaderLoader::loadShader("Deferred/Textured");
-   DeferredTexture = CShaderLoader::loadShader("Deferred/Textured");
-   DeferredToon = CShaderLoader::loadShader("Deferred/Diffuse");
-   DeferredToonBright = CShaderLoader::loadShader("Deferred/Diffuse");
-
-   Flat = CShaderLoader::loadShader("Diffuse");
-   Diffuse = CShaderLoader::loadShader("Diffuse");
-   ToonTexture = CShaderLoader::loadShader("ToonTexture");
-   DiffuseTexture = CShaderLoader::loadShader("DiffuseTextureBright");
-   normalColor = CShaderLoader::loadShader("Simple");
-   Toon = CShaderLoader::loadShader("Toon");
-   ToonBright = CShaderLoader::loadShader("ToonBright");
-   BlackShader = CShaderLoader::loadShader("SpecialDiscThing");
-   //Toon = Diffuse;
 }
 
 void Load3DS()
