@@ -3,7 +3,7 @@
 CGroundBlock::CGroundBlock(float nx, float ny, float nw, float nh, float nd) : x(nx), y(ny), w(nw), h(nh), d(nd) {
 }
 
-ISceneObject *CDecorManager::setupObject(float x, float y, float z, float scale, CMesh* model) {
+ISceneObject *CDecorManager::SetupObject(float x, float y, float z, float scale, CMesh* model) {
    if (y == -1) {
       y = scale / 2.0f;
    }
@@ -39,9 +39,11 @@ ISceneObject *CDecorManager::setupObject(float x, float y, float z, float scale,
    return render;
 }
 
-CDecorManager::CDecorManager(std::vector<CGroundBlock*> groundBlocks, int env) {
+CDecorManager::CDecorManager(std::vector<CGroundBlock*> groundBlocks, int environment) {
+   env = environment;
    PrepShaders();
    PrepMeshes();
+   SetupSky();
    oldFern = false;
 
    CGroundBlock *curBlock;
@@ -87,9 +89,9 @@ void CDecorManager::GenerateDesertPlants(CGroundBlock* block, bool genTree) {
       plantType = rand()%3;
       randDist = w * .1 + (rand() / (float)RAND_MAX) * .7 * w;  //.1, .7 to make sure doesn't overlap with other randomly drawn cacti
       if (plantType < 2)
-         setupObject(x + randDist, yVal + 1.5f, -d/2.0f + .4f, 5.5f, cactus2Mesh);
+         SetupObject(x + randDist, yVal + 1.5f, -d/2.0f + .4f, 5.5f, cactus2Mesh);
       else if (plantType == 2)
-         setupObject(x + randDist, yVal + 1.5f, -d/2.0f + .4f, 5.5f, cactus1Mesh);
+         SetupObject(x + randDist, yVal + 1.5f, -d/2.0f + .4f, 5.5f, cactus1Mesh);
    }
 
    //Draw shrubbery in background
@@ -110,11 +112,11 @@ void CDecorManager::GenerateDesertPlants(CGroundBlock* block, bool genTree) {
       }
 
       if (plantType == 0)
-         setupObject(x + randDist, yVal + 1.6f, d/2.0f - 0.6f, 5.5f, cactus2Mesh);
+         SetupObject(x + randDist, yVal + 1.6f, d/2.0f - 0.6f, 5.5f, cactus2Mesh);
       //else if (plantType < 3 && randScale > .5f)
-      //   setupObject(x + randDist, yVal + randScale/4.5f, d/2.0f - 0.6f, randScale, cactusBushMesh);
+      //   SetupObject(x + randDist, yVal + randScale/4.5f, d/2.0f - 0.6f, randScale, cactusBushMesh);
       else if (plantType < 5 && randScale > .5f)
-         setupObject(x + randDist, yVal + randScale/4.5f, d/2.0f - 0.6f, randScale, cactusBush2Mesh);
+         SetupObject(x + randDist, yVal + randScale/4.5f, d/2.0f - 0.6f, randScale, cactusBush2Mesh);
    }
 
    for (int n = 0; n < numForeground; n++) {
@@ -164,9 +166,9 @@ void CDecorManager::GenerateForestPlants(CGroundBlock* block) {
       random = rand()%2;
 
       if (random == 0)
-         setupObject(x + (n)*div + div/2.0f, yVal + 1.8f, -d/2.0f + .4f, 8.0f, basicTreeMesh);
+         SetupObject(x + (n)*div + div/2.0f, yVal + 1.8f, -d/2.0f + .4f, 8.0f, basicTreeMesh);
       else if (random == 1)
-         setupObject(x + (n)*div + div/2.0f, yVal + 1.4f, -d/2.0f + .4f, 6.0f, christmasTreeMesh);
+         SetupObject(x + (n)*div + div/2.0f, yVal + 1.4f, -d/2.0f + .4f, 6.0f, christmasTreeMesh);
    }
 
    //Draw flower-type plants in background
@@ -179,21 +181,21 @@ void CDecorManager::GenerateForestPlants(CGroundBlock* block) {
       randDepth = (float) randDepth*.25f;
 
       if (random == 0 || random == 1)
-         setupObject(x + n + .5f, yVal - 1.f, -d/2.0f + 1.6f + randDepth, .7f, whiteFlwrMesh);
+         SetupObject(x + n + .5f, yVal - 1.f, -d/2.0f + 1.6f + randDepth, .7f, whiteFlwrMesh);
       else if (random == 2 || random == 3 || random == 4) {
          if (subrand == 0)
-            setupObject(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, yellowFlwrMesh);
+            SetupObject(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, yellowFlwrMesh);
          else if (subrand == 1)
-            setupObject(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, blueFlwrMesh);
+            SetupObject(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, blueFlwrMesh);
          else if (subrand == 2)
-            setupObject(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, whiteSunflwrMesh);
+            SetupObject(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, whiteSunflwrMesh);
          else if (subrand == 3)
-            setupObject(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, tealFlwrMesh);
+            SetupObject(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, tealFlwrMesh);
          else if (subrand == 4)
-            setupObject(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, purpleFlwrMesh);
+            SetupObject(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, purpleFlwrMesh);
       }
       else if (random == 5 && !oldFern) {
-         setupObject(x + n + .5f, yVal + .2f, -d/2.0f + 1.5f + randDepth, 1.f + randScale, fernMesh);
+         SetupObject(x + n + .5f, yVal + .2f, -d/2.0f + 1.5f + randDepth, 1.f + randScale, fernMesh);
          oldFern = true;
       }
       else if (random == 5 && oldFern)
@@ -213,21 +215,21 @@ void CDecorManager::GenerateForestPlants(CGroundBlock* block) {
       randDepth = randDepth*0.25f;
 
       if (random == 0 || random == 1)
-         setupObject(x + n + 0.5f, randScale/2.0 + .1f, d/2.0f - 0.6f, 0.4f + randScale, whiteFlwrMesh);
+         SetupObject(x + n + 0.5f, randScale/2.0 + .1f, d/2.0f - 0.6f, 0.4f + randScale, whiteFlwrMesh);
       else if (random == 2 || random == 3 || random == 4) {
          if (subrand == 0)
-            setupObject(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, blueFlwrMesh);
+            SetupObject(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, blueFlwrMesh);
          else if (subrand == 1)
-            setupObject(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, tealFlwrMesh);
+            SetupObject(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, tealFlwrMesh);
          else if (subrand == 2)
-            setupObject(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, purpleFlwrMesh);
+            SetupObject(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, purpleFlwrMesh);
          else if (subrand == 3)
-            setupObject(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, yellowFlwrMesh);
+            SetupObject(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, yellowFlwrMesh);
          else if (subrand == 3)
-            setupObject(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, whiteSunflwrMesh);
+            SetupObject(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, whiteSunflwrMesh);
       }
       else if (random == 5 && !oldFern) {
-         setupObject(x + n + 0.5f, yVal + 0.2f, d/2.0f - 0.6f, 0.7f, fernMesh);
+         SetupObject(x + n + 0.5f, yVal + 0.2f, d/2.0f - 0.6f, 0.7f, fernMesh);
          oldFern = true;
       }
       else if (random == 5 && oldFern) {
@@ -384,4 +386,21 @@ void CDecorManager::PrepMeshes()
    else {
       fprintf(stderr, "Failed to load cactus bush mesh.\n");
    }
+}
+
+void CDecorManager::SetupSky() {
+   CMeshSceneObject *tempBlock;
+
+   tempBlock = new CMeshSceneObject();
+   tempBlock->setMesh(cubeMesh);
+   if(env == 0)
+      tempBlock->setTexture(CImageLoader::loadTexture("Base/sky.bmp", true));
+   else if(env == 1)
+      tempBlock->setTexture(CImageLoader::loadTexture("Base/desert_bg.bmp", true));
+   tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
+   tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
+   tempBlock->setTranslation(SVector3(85/*75*/, 13, -5.0));
+   tempBlock->setScale(SVector3(250, -50, 1));
+
+   CApplication::get().getSceneManager().addSceneObject(tempBlock);
 }

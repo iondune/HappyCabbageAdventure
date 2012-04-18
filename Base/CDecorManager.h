@@ -17,11 +17,19 @@ class CGroundBlock {
 
 class CDecorManager : public IUpdater {
    private:
-      ISceneObject *setupObject(float,float,float,float,CMesh*);
+      int env;
+      bool oldFern;
+
+      //These functions setup and add things to the scene manager
+      ISceneObject *SetupObject(float,float,float,float,CMesh*);
       void GenerateForestPlants(CGroundBlock*);
       void GenerateDesertPlants(CGroundBlock*, bool genTree);
+      void SetupSky();
 
-      bool oldFern;
+      //These functions initialize the following lists of attributes. Yuck!
+      void PrepMeshes();
+      void PrepShaders();
+
       //Chris wtf is all this!
       CMesh *basicTreeMesh, *cabbageMesh, *cabbageDamage, *christmasTreeMesh, *cubeMesh, *discMesh,
             *blueFlwrMesh, *whiteFlwrMesh, *ficusMesh, *fernMesh, *enemyMesh, *flagMesh, *derpMesh,
@@ -30,10 +38,6 @@ class CDecorManager : public IUpdater {
 
       CShader *Shader, *Flat, *Diffuse, *BlackShader, *DiffuseTexture, *normalColor, *Toon, *ToonTexture, *ToonBright;
       CShader *DeferredToon, *DeferredTexture, *DeferredDiffuse, *DeferredToonBright, *DeferredToonTexture , *DeferredFlat;
-
-      void PrepMeshes();
-      void PrepShaders();
-
    public:
       CDecorManager(std::vector<CGroundBlock*>, int);
       void update(float);

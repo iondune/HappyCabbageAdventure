@@ -1506,23 +1506,6 @@ void CGameState::PrepClouds() {
 }
 
 
-void CGameState::PrepSky() {
-   CMeshSceneObject *tempBlock;
-
-   tempBlock = new CMeshSceneObject();
-   tempBlock->setMesh(cubeMesh);
-   if(env == 0)
-      tempBlock->setTexture(skyTxt);
-   if(env == 1)
-      tempBlock->setTexture(CImageLoader::loadTexture("Base/desert_bg.bmp", true));
-   tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
-   tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
-   tempBlock->setTranslation(SVector3(85/*75*/, 13, -5.0));
-   tempBlock->setScale(SVector3(250, -50, 1));
-
-   Application.getSceneManager().addSceneObject(tempBlock);
-}
-
 void CGameState::GeneratePlants(float x, float y, float w, float h, float d) {
 
    if (env == 0) {
@@ -1882,7 +1865,7 @@ void Load3DS()
 
 void LoadTextures()
 {
-   skyImg = CImageLoader::loadImage("Base/sky.bmp");
+   skyImg = CImageLoader::loadTexture("Base/sky.bmp");
    flagImg = CImageLoader::loadImage("Base/white.bmp");
    cactusImg = CImageLoader::loadImage("Base/cactus.bmp");
 
