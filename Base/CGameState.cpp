@@ -1,7 +1,9 @@
 #include "CGameState.h"
 
 void CGameState::begin() {
-
+   CGameLevel & level = CGameLevelLoader::loadLevel("jorge1.xml");
+   GameplayManager = new CGameplayManager(level);
+   DecorManager = new CDecorManager(level);
 }
 
 void CGameState::OnRenderStart(float const Elapsed) {

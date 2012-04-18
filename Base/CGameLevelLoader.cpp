@@ -1,11 +1,32 @@
 #include "CGameLevelLoader.h"
 
-CGameLevelLoader::CGameLevelLoader(const char* levelName) {
-   //Block consolidation algorithm code
-   numBlocks = 0;
-   blocksY.clear();
+#include "CGameLevel.h"
+#include "CBlock.h"
+#include "CEnemy.h"
+#include "CPItem.h"
+#include "CPFriends.h"
+#include "CPlaceable.h"
 
-   int x,y,w,d,h,t, moving;
+std::map<std::string, CGameLevel*> CGameLevelLoader::LoadedLevels;
+//std::string CGameLevelLoader::LevelDirectory = "../Media/Levels/";
+
+CGameLevel &CGameLevelLoader::loadLevel(const char* levelName) {
+   return CGameLevelLoader::loadLevel(levelName, true);
+}
+
+CGameLevel &CGameLevelLoader::loadLevel(const char* levelName, bool useCache) {
+	if (useCache)
+	{
+		std::map<std::string, CGameLevel *>::iterator it = LoadedLevels.find(levelName);
+
+		if (it != LoadedLevels.end())
+		{
+			return *(it->second);
+		}
+	}
+   CGameLevel *newLevel = new CGameLevel();
+   std::vector<CBiggerBlock*> blocksY;
+   int x,y,w,d,h,t, moving, env = -1;
    //float spd, rng;
 
    irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader(levelName);
@@ -28,10 +49,10 @@ CGameLevelLoader::CGameLevelLoader(const char* levelName) {
             t = xml->getAttributeValueAsInt(5);
             moving = xml->getAttributeValueAsInt(6);
             if (t == -5)
-               GroundBlocks.push_back(new CGroundBlock((float) x, (float) y, (float) w, (float) h, (float) d));
+               newLevel->GroundBlocks.push_back(new CGroundBlock((float) x, (float) y, (float) w, (float) h, (float) d));
 
-            Blocks.push_back(ptr = new CBlock((float)x,(float)y,w,h,d,t,moving, env));
-            Placeables.push_back(ptr);
+            newLevel->Blocks.push_back(ptr = new CBlock((float)x,(float)y,w,h,d,t,moving, env));
+            newLevel->Placeables.push_back(ptr);
             if(xml->getAttributeValueAsInt(6)) {
                ptr->isMovingPlatform = 1;
                ptr->Range = (int) xml->getAttributeValueAsFloat(7); //Range
@@ -39,7 +60,7 @@ CGameLevelLoader::CGameLevelLoader(const char* levelName) {
             }
             else {
                ptr->isMovingPlatform = 0;
-               numBlocks++;
+               //numBlocks++;
                int curW = w;
                //Hard case for ground blocks...
                if(w == 5 && h == 5 && d == 5) {
@@ -58,8 +79,8 @@ CGameLevelLoader::CGameLevelLoader(const char* levelName) {
             h = xml->getAttributeValueAsInt(2);
             w = xml->getAttributeValueAsInt(3);
             t = xml->getAttributeValueAsInt(4);
-            Enemies.push_back(cen = new CEnemy((float)x,(float)y,w,h,t, env));
-            Placeables.push_back(cen);
+            newLevel->Enemies.push_back(cen = new CEnemy((float)x,(float)y,w,h,t, env));
+            newLevel->Placeables.push_back(cen);
             cen->isMovingPlatform = 0;
          }
          if(!strcmp("CCabbage",xml->getNodeName())) {
@@ -101,8 +122,8 @@ CGameLevelLoader::CGameLevelLoader(const char* levelName) {
             x = xml->getAttributeValueAsInt(0);
             y = xml->getAttributeValueAsInt(1);
             t = xml->getAttributeValueAsInt(2);
-            Items.push_back(stuff = new CPItem((float)x,(float)y,t));
-            Placeables.push_back(stuff);
+            newLevel->Items.push_back(stuff = new CPItem((float)x,(float)y,t));
+            newLevel->Placeables.push_back(stuff);
             stuff->isMovingPlatform = 0;
          }
          if(!strcmp("CPFriends",xml->getNodeName())) {
@@ -110,50 +131,27 @@ CGameLevelLoader::CGameLevelLoader(const char* levelName) {
             x = xml->getAttributeValueAsInt(0);
             y = xml->getAttributeValueAsInt(1);
             t = xml->getAttributeValueAsInt(2);
-            Friends.push_back(buds = new CPFriends((float)x, (float)y,t));
-            Placeables.push_back(buds);
+            newLevel->Friends.push_back(buds = new CPFriends((float)x, (float)y,t));
+            newLevel->Placeables.push_back(buds);
             buds->isMovingPlatform = 0;
          }
          if (!strcmp("envVar", xml->getNodeName()))
          {
-             env = xml->getAttributeValueAsInt(0);
-             night = xml->getAttributeValueAsInt(1);
+             newLevel->env = env = xml->getAttributeValueAsInt(0);
+             newLevel->night = xml->getAttributeValueAsInt(1);
          }
          break;
       }
    }
+   newLevel->blocksFinal = CGameLevelLoader::consolidateBlocks(blocksY);
+	if (useCache)
+		LoadedLevels[levelName] = newLevel;
+   return *newLevel;
 }
 
-std::vector<CPlaceable*> & CGameLevelLoader::getPlaceables() {
-   return Placeables;
-}
-std::vector<CPFriends*> & CGameLevelLoader::getFriends() {
-   return Friends;
-}
-std::vector<CPItem*> & CGameLevelLoader::getItems() {
-   return Items;
-}
-std::vector<CBlock*> & CGameLevelLoader::getBlocks() {
-   return Blocks;
-}
-std::vector<CEnemy*> & CGameLevelLoader::getEnemies() {
-   return Enemies;
-}
-std::vector<CGroundBlock*> & CGameLevelLoader::getGroundBlocks() {
-   return GroundBlocks;
-}
-
-bool CGameLevelLoader::isNight() {
-   return night;
-}
-
-int CGameLevelLoader::getEnv() {
-   return env;
-}
-
-void CGameLevelLoader::consolidateAndAddBlocks() {
+std::vector<CBiggerBlock*> CGameLevelLoader::consolidateBlocks(std::vector<CBiggerBlock*> blocksY) {
    printf("Size of blocksY: %d\n", blocksY.size());
-   std::vector<CBiggerBlock*> blocksX;
+   std::vector<CBiggerBlock*> blocksX, blocksFinal;
 
    sort(blocksY.begin(), blocksY.end(), sortXY);
 
@@ -216,12 +214,7 @@ void CGameLevelLoader::consolidateAndAddBlocks() {
       blocksFinal[i] = NULL;
    }
    */
-   printf("Total blocks saved: %d\n", numBlocks - blocksFinal.size());
-   numBlocks = blocksFinal.size();
-   blocksX.clear();
-   blocksY.clear();
-}
-
-std::vector<CBiggerBlock*> & CGameLevelLoader::getConsolidatedBlocks() {
+   //printf("Total blocks saved: %d\n", numBlocks - blocksFinal.size());
+   //numBlocks = blocksFinal.size();
    return blocksFinal;
 }

@@ -9,11 +9,13 @@
 using namespace Cabbage::Collider;
 
 class CGameplayElement : public IUpdater, public ICollisionResponder {
-   CCollideable* PhysicsEngineObject;
-   ISceneObject* SceneObject;
+   private:
+      CCollideable* PhysicsEngineObject;
+      ISceneObject* SceneObject;
 
-   virtual void update(float);
-   virtual bool OnCollision()=0;
+   public:
+      virtual void update(float);
+      virtual bool OnCollision()=0;
 };
 
 #endif

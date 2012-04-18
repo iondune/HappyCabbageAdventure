@@ -5,6 +5,7 @@
 #include "CGameplayManager.h"
 #include "CDecorManager.h"
 #include "CabbageFramework.h"
+#include "CGameLevelLoader.h"
 
 class CGameState : public CState<CGameState> {
    private:

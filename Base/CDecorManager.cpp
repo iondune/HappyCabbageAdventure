@@ -1,4 +1,5 @@
 #include "CDecorManager.h"
+#include "CGameLevel.h"
 
 CGroundBlock::CGroundBlock(float nx, float ny, float nw, float nh, float nd) : x(nx), y(ny), w(nw), h(nh), d(nd) {
 }
@@ -39,9 +40,10 @@ ISceneObject *CDecorManager::SetupObject(float x, float y, float z, float scale,
    return render;
 }
 
-CDecorManager::CDecorManager(std::vector<CGroundBlock*> groundBlocks, int environment, bool isNight) {
-   env = environment;
-   night = isNight;
+CDecorManager::CDecorManager(CGameLevel & level) {
+   std::vector<CGroundBlock*> & groundBlocks = level.getGroundBlocks();
+   env = level.getEnvironment();
+   night = level.isNight();
    PrepShaders();
    PrepMeshes();
    SetupSky();

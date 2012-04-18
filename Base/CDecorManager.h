@@ -8,6 +8,8 @@
 
 #include <stdio.h>
 
+class CGameLevel;
+
 class CGroundBlock {
    private:
    public:
@@ -40,7 +42,7 @@ class CDecorManager : public IUpdater {
       CShader *Shader, *Flat, *Diffuse, *BlackShader, *DiffuseTexture, *normalColor, *Toon, *ToonTexture, *ToonBright;
       CShader *DeferredToon, *DeferredTexture, *DeferredDiffuse, *DeferredToonBright, *DeferredToonTexture , *DeferredFlat;
    public:
-      CDecorManager(std::vector<CGroundBlock*>, int, bool);
+      CDecorManager(CGameLevel& level);
       void update(float);
 };
 
