@@ -310,6 +310,7 @@ void CGameState::EngineInit( void ) {
 
    numLives = GameplayManager->getPlayerLives();
 
+
    GameEventManager = & GameplayManager->getGameEventManager();
    GameEventManager->OnEnemyDeath.connect(& GameEventReceiver, &CGameEventReceiver::OnEnemyDeath);
    GameEventManager->OnPlayerDamaged.connect(& GameEventReceiver, &CGameEventReceiver::OnPlayerDamaged);
