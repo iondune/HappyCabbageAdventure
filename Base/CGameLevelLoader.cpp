@@ -11,7 +11,7 @@ std::map<std::string, CGameLevel*> CGameLevelLoader::LoadedLevels;
 //std::string CGameLevelLoader::LevelDirectory = "../Media/Levels/";
 
 CGameLevel &CGameLevelLoader::loadLevel(const char* levelName) {
-   return CGameLevelLoader::loadLevel(levelName, true);
+   return CGameLevelLoader::loadLevel(levelName, false);
 }
 
 CGameLevel &CGameLevelLoader::loadLevel(const char* levelName, bool useCache) {

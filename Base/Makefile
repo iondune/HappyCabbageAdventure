@@ -6,7 +6,7 @@ CABBAGE= -L../lib/ -lCabbageCore -lCabbageSound -lCabbageCollider -lCabbageFrame
 CC=g++ -O1 -s
 
 COMPILER_VERSION=-std=c++0x
-INCLUDE=-I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI `sdl-config --cflags` `freetype-config --cflags` -I../irrxml-1.2/src/
+INCLUDE=-I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI `sdl-config --cflags` `freetype-config --cflags` -I../irrxml-1.2/src/ -I./Elements/ -I.
 
 #Chris Code.  Adding check for 32 or 64 bit
 LBITS:=$(shell getconf LONG_BIT)

@@ -21,7 +21,6 @@ class CPlaceable {
       int isMovingPlatform;
 
       virtual void writeXML(xmlwriter *) =0;
-      virtual void moveTo(float,float) =0;
       virtual CMeshSceneObject* setupItem(CShader*, CShader*, Cabbage::Collider::CEngine*, CGameplayManager*)=0;
 
 };
