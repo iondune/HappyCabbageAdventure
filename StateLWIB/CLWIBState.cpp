@@ -292,7 +292,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
            PreviewCabbage->setMesh(cabbageMesh);
        } else if (friendType == 1) {
            block1->setText("Insert derp");
-           PreviewCabbage->setMesh(cabbageMesh);
+           PreviewCabbage->setMesh(cubeMesh);
        } else 
            printf("error friend not here");
 
@@ -1018,7 +1018,7 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
    redoPlaceables.clear();
 }
 
-void CLWIBState::PrepFriends(int x, int y, int t) {
+void CLWIBState::PrepFriends(float x, float y, int t) {
     if(x < -25 || y < -25 || x >= 500 || y >= 75)
         return;
     if(blockMap[(int)x+25][(int)(y-0.5+25)].o) {
@@ -1030,8 +1030,8 @@ void CLWIBState::PrepFriends(int x, int y, int t) {
     CPFriends *tempPlaceable;
     blocks.push_back(tempFriends = new CMeshSceneObject());
     placeables.push_back(tempPlaceable = new CPFriends(x, y, t));
-    if (t == 0)
-        tempFriends->setMesh(appleMesh);
+    if (t == 1)
+        tempFriends->setMesh(cubeMesh);
 
     tempFriends->setShader(ERP_DEFAULT, Diffuse);
     tempFriends->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);

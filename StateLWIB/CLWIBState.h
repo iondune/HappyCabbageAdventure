@@ -87,7 +87,7 @@ class CLWIBState : public CState<CLWIBState>
    void PrepFlag(float X ,float y, int t);
    void PrepItem(float x, float y, int type);
    void PrepGrass(float x, float y, float w, float h);
-   void PrepFriends(int x, int y, int t);
+   void PrepFriends(float x, float y, int t);
    void PrepPreviews();
 
    void PrepSky();
