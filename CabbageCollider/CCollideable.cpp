@@ -13,7 +13,8 @@ CCollideable::SMaterial::SMaterial()
 	: Friction(1.f), Elasticity(0.f)
 {}
 
-CCollideable::CCollideable() : CollideableType(COLLIDEABLE_TYPE_COLLIDEABLE), CollideableLevel(INTERACTOR_ALL), VisualDepth(0.0f)
+CCollideable::CCollideable()
+	: CollisionType(1), CollisionMask(-1), VisualDepth(0.f)
 {}
 
 CCollideable::~CCollideable()
@@ -32,13 +33,6 @@ void CCollideable::setArea(SRect2 const & area)
 CCollideable::SMaterial const & CCollideable::getMaterial() const
 {
 	return Material;
-}
-
-void CCollideable::setDepth(float f) {
-	VisualDepth = f;
-}
-float CCollideable::getDepth() {
-	return VisualDepth;
 }
 
 
@@ -60,4 +54,34 @@ void CCollideable::draw()
 	glEnd();
 
 	glPopMatrix();
+}
+
+void CCollideable::setVisualDepth(float const f)
+{
+	VisualDepth = f;
+}
+
+float const CCollideable::getVisualDepth() const
+{
+	return VisualDepth;
+}
+
+void CCollideable::setCollisionType(unsigned int const type)
+{
+	CollisionType = type;
+}
+
+void CCollideable::setCollisionMask(unsigned int const mask)
+{
+	CollisionMask = mask;
+}
+
+unsigned int const CCollideable::getCollisionType() const
+{
+	return CollisionType;
+}
+
+unsigned int const CCollideable::getCollisionMask() const
+{
+	return CollisionMask;
 }

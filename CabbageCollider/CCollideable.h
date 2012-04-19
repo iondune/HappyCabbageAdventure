@@ -1,7 +1,8 @@
 #ifndef _CABBAGECOLLIDER_CCOLLIDEABLE_H_INCLUDED_
 #define _CABBAGECOLLIDER_CCOLLIDEABLE_H_INCLUDED_
 
-#include "../CabbageCore/SRect2.h"
+#include <SRect2.h>
+
 #define COLLIDEABLE_TYPE_BLOCK 10
 #define COLLIDEABLE_TYPE_ELEVATOR 11
 #define COLLIDEABLE_TYPE_ACTOR 12
@@ -47,14 +48,15 @@ public:
 protected:
 
 	friend class CCollisionEngine;
-
-	SMaterial Material;
-
-	SRect2 Area;
-
 	CCollideable();
 
+	SMaterial Material;
+	SRect2 Area;
+
 	float VisualDepth;
+
+	unsigned int CollisionType;
+	unsigned int CollisionMask;
 
 public:
 
@@ -66,12 +68,17 @@ public:
 	SMaterial const & getMaterial() const;
 	SMaterial & getMaterial();
 
-	int CollideableType, CanCollideWith, CollideableLevel;
-
 	virtual void draw();
 
-	void setDepth(float);
-	float getDepth();
+	void setVisualDepth(float const depth);
+	float const getVisualDepth() const;
+
+	void setCollisionType(unsigned int const type);
+	void setCollisionMask(unsigned int const mask);
+
+	unsigned int const getCollisionType() const;
+	unsigned int const getCollisionMask() const;
+
 };
 
 #endif
