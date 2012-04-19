@@ -26,6 +26,12 @@ CElementEnemy *CEnemyLoader::LoadEnemy(SRect2 nArea, int type, int texture) {
    case 5:
       return NULL;//new CElementEnemyBlade(nArea, type);
       break;
+   case -2:
+      return NULL;//new CElementEnemyKiwiProjectile(nArea, type);
+      break;
+   case -3:
+      return NULL;//new CElementEnemyGrapeProjectile(nArea, type);
+      break;
    default:
       fprintf(stderr, "Error: unknown enemy type %d\n", type);
       exit(1);
