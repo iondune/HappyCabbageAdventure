@@ -10,8 +10,6 @@
     <ClCompile Include="CActor.cpp" />
     <ClCompile Include="CObject.cpp" />
     <ClCompile Include="CCollideable.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Makefile" />
+    <ClCompile Include="CEngine.cpp" />
   </ItemGroup>
 </Project>

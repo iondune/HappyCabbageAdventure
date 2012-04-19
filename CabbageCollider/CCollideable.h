@@ -31,53 +31,47 @@
 #define INTERACTOR_ALL_ALL 1+2+4+8+16+32+64
 
 
-namespace Cabbage
+class CCollideable
 {
-namespace Collider
-{
-	class CCollideable
+
+public:
+
+	struct SMaterial
 	{
+		float Friction;
+		float Elasticity;
 
-	public:
+		SMaterial();
+	};
 
-		struct SMaterial
-		{
-			float Friction;
-			float Elasticity;
+protected:
 
-			SMaterial();
-		};
+	friend class CEngine;
 
-	protected:
+	SMaterial Material;
 
-		friend class CEngine;
+	SRect2 Area;
 
-		SMaterial Material;
+	CCollideable();
 
-		SRect2 Area;
+	float VisualDepth;
 
-		CCollideable();
+public:
 
-      float VisualDepth;
+	virtual ~CCollideable();
 
-	public:
+	SRect2 const & getArea() const;
+	void setArea(SRect2 const & area);
 
-		virtual ~CCollideable();
+	SMaterial const & getMaterial() const;
+	SMaterial & getMaterial();
 
-		SRect2 const & getArea() const;
-		void setArea(SRect2 const & area);
+	int CollideableType, CanCollideWith, CollideableLevel;
 
-		SMaterial const & getMaterial() const;
-		SMaterial & getMaterial();
+	virtual void draw();
 
-      int CollideableType, CanCollideWith, CollideableLevel;
-
-      virtual void draw();
-
-      void setDepth(float);
-      float getDepth();
-   };
-}
-}
+	void setDepth(float);
+	float getDepth();
+};
 
 #endif

@@ -14,247 +14,189 @@
 */
 #define INTERACTOR_NON 128
 
-namespace Cabbage
+class ICollisionResponder
 {
-   namespace Collider
-   {
 
-      class ICollisionResponder
-      {
+public:
 
-         public:
+	virtual bool OnCollision(CCollideable * Object, CCollideable * With) =0;
 
-            virtual bool OnCollision(CCollideable * Object, CCollideable * With) =0;
+};
 
-      };
+class CEngine
+{
 
-      class CEngine
-      {
+public:
 
-         public:
+	typedef std::vector<CObject *> ObjectList;
+	typedef std::vector<CActor *> ActorList;
 
-            typedef std::vector<CObject *> ObjectList;
-            typedef std::vector<CActor *> ActorList;
+private:
 
-         private:
+	ObjectList Objects;
+	ActorList Actors;
 
-            ObjectList Objects;
-            ActorList Actors;
+	ICollisionResponder * CollisionResponder;
 
-            ICollisionResponder * CollisionResponder;
+	bool CanCollide(CCollideable *a, CCollideable *b);
 
-            bool CanCollide(CCollideable *a, CCollideable *b) {
-               return (a->CollideableLevel & b->CanCollideWith) ||
-                  (b->CollideableLevel & a->CanCollideWith);
-            }
+	void performTick(float const TickTime);
 
-            void performTick(float const TickTime)
-            {
-               // Perform actor update
-               // 
-               int numThings = Actors.size() + Objects.size();
-               //printf("There are %d things\n", numThings);
-               for (ActorList::iterator it = Actors.begin(); it != Actors.end(); ++ it)
-               {
-                  (* it)->updateVectors(TickTime);
+	float Timer;
 
-                  CCollideable * Which = 0;
+public:
 
-                  for (ObjectList::iterator jt = Objects.begin(); jt != Objects.end(); ++ jt)
-                  {
-                     if(CanCollide((*it), (*jt))) {
-                        //printf("%d and %d are within 2\n", (*it)->CollideableLevel, (*jt)->CollideableLevel);
-                        bool Alighted = (* it)->updateCollision(* jt, TickTime, CollisionResponder);
-                        if (Alighted)
-                           Which = (* jt);
-                     }
-                  }
+	void removeAll() {
+		Objects.clear();
+		addNullBlock();
+		Actors.clear();
+	}
 
-                  for (ActorList::iterator jt = Actors.begin(); jt != Actors.end(); ++ jt)
-                  {
-                     if(CanCollide((*it), (*jt))) {
-                        //printf("%d and %d are within 2\n", (*it)->CollideableLevel, (*jt)->CollideableLevel);
-                        if (* it != * jt)
-                        {
-                           bool Alighted = (* it)->updateCollision(* jt, TickTime, CollisionResponder);
-                           if (Alighted)
-                              Which = (* jt);
-                        }
-                     }
-                  }
-
-                  if (Which)
-                     (* it)->onStanding(Which);
-               }
-
-               for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
-               {
-                  SVector2 Movement = (* it)->performMovement(TickTime);
-
-                  for (ActorList::iterator jt = Actors.begin(); jt != Actors.end(); ++ jt)
-                  {
-                     (* jt)->pushIfCollided(* it, Movement);
-                  }
-               }
-            }
-
-            float Timer;
-
-         public:
-
-            void removeAll() {
-               Objects.clear();
-               addNullBlock();
-               Actors.clear();
-            }
-
-            void removeObject(CObject * Object)
-            {
-               for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
-                  if (* it == Object )
-                  {
-                     Objects.erase(it);
-                     return;
-                  }
-            }
+	void removeObject(CObject * Object)
+	{
+		for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
+			if (* it == Object )
+			{
+				Objects.erase(it);
+				return;
+			}
+	}
 
 
-            CEngine()
-               : Timer(0.f), CollisionResponder(0)
-            {
-               addNullBlock();
-            }
+	CEngine()
+		: Timer(0.f), CollisionResponder(0)
+	{
+		addNullBlock();
+	}
 
-            ~CEngine()
-            {}
+	~CEngine()
+	{}
 
-            void setCollisionResponder(ICollisionResponder * collisionResponder)
-            {
-               CollisionResponder = collisionResponder;
-            }
+	void setCollisionResponder(ICollisionResponder * collisionResponder)
+	{
+		CollisionResponder = collisionResponder;
+	}
 
-            void removeActor(CActor * Actor)
-            {
-               for (ActorList::iterator it = Actors.begin(); it != Actors.end(); ++ it)
-                  if (* it == Actor)
-                  {
-                     Actors.erase(it);
-                     return;
-                  }
-            }
+	void removeActor(CActor * Actor)
+	{
+		for (ActorList::iterator it = Actors.begin(); it != Actors.end(); ++ it)
+			if (* it == Actor)
+			{
+				Actors.erase(it);
+				return;
+			}
+	}
 
-            void updateAll(float const Elapsed)
-            {
-               static int const TicksPerSecond = 200;
-               Timer += std::min(Elapsed, 0.1f);
+	void updateAll(float const Elapsed)
+	{
+		static int const TicksPerSecond = 200;
+		Timer += std::min(Elapsed, 0.1f);
 
-               float const TimePerTick = 1.f / TicksPerSecond;
+		float const TimePerTick = 1.f / TicksPerSecond;
 
-               while (Timer > TimePerTick)
-               {
-                  Timer -= TimePerTick;
-                  performTick(TimePerTick);
-               }
-            }
+		while (Timer > TimePerTick)
+		{
+			Timer -= TimePerTick;
+			performTick(TimePerTick);
+		}
+	}
 
-            CObject* const getObjectBelow(SVector2 pos)
-            {
-               float height = - std::numeric_limits<float>::infinity();
-               CObject *Object, *objBelow = NULL;
+	CObject* const getObjectBelow(SVector2 pos)
+	{
+		float height = - std::numeric_limits<float>::infinity();
+		CObject *Object, *objBelow = NULL;
 
-               for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
-               {
-                  Object = *it;
-                  if (pos.Y < Object->getArea().otherCorner().Y)
-                     continue;
+		for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
+		{
+			Object = *it;
+			if (pos.Y < Object->getArea().otherCorner().Y)
+				continue;
 
-                  if (pos.X < Object->getArea().Position.X || pos.X > Object->getArea().otherCorner().X)
-                     continue;
+			if (pos.X < Object->getArea().Position.X || pos.X > Object->getArea().otherCorner().X)
+				continue;
 
-                  if(Object->getArea().otherCorner().Y > height) {
-                     height = Object->getArea().otherCorner().Y;
-                     objBelow = Object;
-                  }
-               }
+			if(Object->getArea().otherCorner().Y > height) {
+				height = Object->getArea().otherCorner().Y;
+				objBelow = Object;
+			}
+		}
 
-               return objBelow;
-            }
+		return objBelow;
+	}
 
-            float const getHeightBelow(SVector2 pos) {
-               float height = - std::numeric_limits<float>::infinity();
-               CObject* Object;
+	float const getHeightBelow(SVector2 pos) {
+		float height = - std::numeric_limits<float>::infinity();
+		CObject* Object;
 
-               for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
-               {
-                  Object = *it;
-                  if (pos.Y < Object->getArea().otherCorner().Y)
-                     continue;
+		for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
+		{
+			Object = *it;
+			if (pos.Y < Object->getArea().otherCorner().Y)
+				continue;
 
-                  if (pos.X < Object->getArea().Position.X || pos.X > Object->getArea().otherCorner().X)
-                     continue;
+			if (pos.X < Object->getArea().Position.X || pos.X > Object->getArea().otherCorner().X)
+				continue;
 
-                  if(Object->getArea().otherCorner().Y > height)
-                     height = Object->getArea().otherCorner().Y;
-               }
+			if(Object->getArea().otherCorner().Y > height)
+				height = Object->getArea().otherCorner().Y;
+		}
 
-               return height;
-            }
+		return height;
+	}
 
-            float const getHeightBelow(CActor * Actor)
-            {
-               float height = - std::numeric_limits<float>::infinity();
-               float checkHeight;
+	float const getHeightBelow(CActor * Actor)
+	{
+		float height = - std::numeric_limits<float>::infinity();
+		float checkHeight;
 
-               for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
-               {
-                  if (CanCollide(*it, Actor) && Actor->isAbove(* it, checkHeight))
-                     if (checkHeight > height)
-                        height = checkHeight;
-               }
+		for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
+		{
+			if (CanCollide(*it, Actor) && Actor->isAbove(* it, checkHeight))
+				if (checkHeight > height)
+					height = checkHeight;
+		}
 
-               return height;
-            }
+		return height;
+	}
 
-            void addNullBlock() {
-               CObject * nullBlock = this->addObject();
-               nullBlock->setArea(SRect2(-1000.f, -1000.f, 0.01f, 0.01f)); 
-               nullBlock->CollideableLevel = INTERACTOR_NULL_BLOCK; 
-               nullBlock->CanCollideWith = INTERACTOR_ALL_ALL;
-            }
+	void addNullBlock() {
+		CObject * nullBlock = this->addObject();
+		nullBlock->setArea(SRect2(-1000.f, -1000.f, 0.01f, 0.01f)); 
+		nullBlock->CollideableLevel = INTERACTOR_NULL_BLOCK; 
+		nullBlock->CanCollideWith = INTERACTOR_ALL_ALL;
+	}
 
-            CObject * addObject()
-            {
-               CObject * a;
-               Objects.push_back(a = new CObject());
-               return Objects.back();
-            }
+	CObject * addObject()
+	{
+		CObject * a;
+		Objects.push_back(a = new CObject());
+		return Objects.back();
+	}
 
-            CElevator * addElevator()
-            {
-               CElevator * cen;
-               Objects.push_back(cen = new CElevator());
-               return cen; 
-            }
+	CElevator * addElevator()
+	{
+		CElevator * cen;
+		Objects.push_back(cen = new CElevator());
+		return cen; 
+	}
 
-            CActor * addActor()
-            {
-               CActor *a;
-               Actors.push_back(a = new CActor());
-               return Actors.back();
-            }
+	CActor * addActor()
+	{
+		CActor *a;
+		Actors.push_back(a = new CActor());
+		return Actors.back();
+	}
 
-            ObjectList const & getObjects() const
-            {
-               return Objects;
-            }
+	ObjectList const & getObjects() const
+	{
+		return Objects;
+	}
 
-            ActorList const & getActors() const
-            {
-               return Actors;
-            }
+	ActorList const & getActors() const
+	{
+		return Actors;
+	}
 
-      };
-   }
-}
+};
 
 #endif

@@ -17,6 +17,7 @@
 #pragma comment(lib, "SDLmain.lib")
 #pragma comment(lib, "CabbageScene.lib")
 #pragma comment(lib, "CabbageCollider.lib")
+#pragma comment(lib, "CabbageCore.lib")
 #pragma comment(lib, "OpenGL32.lib")
 #pragma comment(lib, "glu32.lib")
 
