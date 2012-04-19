@@ -1,6 +1,6 @@
 #include "CEngine.h"
 
-void Cabbage::Collider::CEngine::performTick( float const TickTime )
+void CCollisionEngine::performTick( float const TickTime )
 {
 	// Perform actor update
 	// 
@@ -48,5 +48,11 @@ void Cabbage::Collider::CEngine::performTick( float const TickTime )
 			(* jt)->pushIfCollided(* it, Movement);
 		}
 	}
+}
+
+bool CCollisionEngine::CanCollide( CCollideable *a, CCollideable *b )
+{
+	return (a->CollideableLevel & b->CanCollideWith) ||
+		(b->CollideableLevel & a->CanCollideWith);
 }
 

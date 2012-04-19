@@ -53,12 +53,12 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       int PlayerHealth, PlayerEnergy;
       float PlayerRecovering;
 
-      Cabbage::Collider::CEngine * Engine;
+      Cabbage::Collider::CCollisionEngine * Engine;
 
       CGameEventManager * GameEventManager;
 
    public:
-      CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CEngine * engine);
+      CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CCollisionEngine * engine);
 
       static int PlayerLives;
       static int SeedCount;
@@ -70,7 +70,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       bool OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With);
       void runDeathSequence(float);
       void runVictorySequence(float);
-      void Clear(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CEngine * engine);
+      void Clear(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CCollisionEngine * engine);
       void Clear();
 
       int ShootingLaser;
@@ -96,7 +96,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 
       SVector2 getPlayerLocation();
 
-      Cabbage::Collider::CEngine* getEngine();
+      Cabbage::Collider::CCollisionEngine* getEngine();
 
       void run(float const TickTime);
 

@@ -9,7 +9,7 @@ class CObject : public CCollideable
 
 protected:
 
-	friend class CEngine;
+	friend class CCollisionEngine;
 
 	CObject();
 

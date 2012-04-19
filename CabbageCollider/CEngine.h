@@ -23,7 +23,7 @@ public:
 
 };
 
-class CEngine
+class CCollisionEngine
 {
 
 public:
@@ -63,13 +63,13 @@ public:
 	}
 
 
-	CEngine()
+	CCollisionEngine()
 		: Timer(0.f), CollisionResponder(0)
 	{
 		addNullBlock();
 	}
 
-	~CEngine()
+	~CCollisionEngine()
 	{}
 
 	void setCollisionResponder(ICollisionResponder * collisionResponder)

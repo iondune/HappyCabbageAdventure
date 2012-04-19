@@ -73,7 +73,7 @@ public:
 
 protected:
 
-	friend class CEngine;
+	friend class CCollisionEngine;
 
 	float FallAcceleration;
 	SVector2 Velocity;

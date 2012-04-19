@@ -46,7 +46,7 @@ public:
 
 protected:
 
-	friend class CEngine;
+	friend class CCollisionEngine;
 
 	SMaterial Material;
 

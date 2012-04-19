@@ -15,7 +15,7 @@ void PrepMeshes();
 void EngineInit();
 
 using namespace Cabbage::Collider;
-CEngine *Engine;
+CCollisionEngine *Engine;
 CActor *Player, *Derp, *WinPlayer;
 CLight * PlayerLight;
 CObject *Floor, *Block, *victoryBlock, *secretVictoryBlock;
@@ -283,7 +283,7 @@ void CGameState::EngineInit( void ) {
    if(Engine) {
       Engine->removeAll();
    }
-   Engine = new CEngine();
+   Engine = new CCollisionEngine();
    Player = Engine->addActor();
    Player->setArea(SRect2(-24.5f, 3, 1, 1));
    Player->getAttributes().MaxWalk = 3.5f;

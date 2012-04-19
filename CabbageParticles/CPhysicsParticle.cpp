@@ -1,6 +1,6 @@
 #include "CPhysicsParticle.h"
 
-void CPhysicsParticle::setEngine(Cabbage::Collider::CEngine *engine) {
+void CPhysicsParticle::setEngine(Cabbage::Collider::CCollisionEngine *engine) {
    Engine = engine;
    Actor = Engine->addActor();
    Actor->CollideableLevel = INTERACTOR_NONCOLLIDERS;

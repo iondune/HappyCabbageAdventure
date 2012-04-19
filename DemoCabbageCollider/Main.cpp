@@ -125,7 +125,7 @@ int main(int argc, char * argv[])
 	for (unsigned int i = 0; i < SDLK_LAST; ++ i)
 		IsKeyDown[i] = false;
 
-	CEngine * Engine = new CEngine();
+	CCollisionEngine * Engine = new CCollisionEngine();
 	Player = Engine->addActor();
 	Player->setArea(SRect2(0, 3, 1, 1));
 
@@ -209,10 +209,10 @@ int main(int argc, char * argv[])
 
 		Draw();
 
-		for (CEngine::ObjectList::const_iterator it = Engine->getObjects().begin(); it != Engine->getObjects().end(); ++ it)
+		for (CCollisionEngine::ObjectList::const_iterator it = Engine->getObjects().begin(); it != Engine->getObjects().end(); ++ it)
 			(* it)->draw();
 
-		for (CEngine::ActorList::const_iterator it = Engine->getActors().begin(); it != Engine->getActors().end(); ++ it)
+		for (CCollisionEngine::ActorList::const_iterator it = Engine->getActors().begin(); it != Engine->getActors().end(); ++ it)
 			(* it)->draw();
 
 		SDL_GL_SwapBuffers();

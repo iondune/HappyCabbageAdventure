@@ -31,7 +31,7 @@ void CFlag::moveTo(float x,float y) {
    //For usage in LWIB
 }
 
-CMeshSceneObject * CFlag::setupItem(CShader * shader, CShader * dShader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager){
+CMeshSceneObject * CFlag::setupItem(CShader * shader, CShader * dShader, Cabbage::Collider::CCollisionEngine *Engine, CGameplayManager *GameplayManager){
 //    Engine->addActor()->setArea(SRect2(CPlaceable::x,y,(float)w,(float)h));
     return new CMeshSceneObject(); // not sure to really return here
 }

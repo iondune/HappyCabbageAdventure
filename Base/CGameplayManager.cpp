@@ -5,7 +5,7 @@
 int CGameplayManager::PlayerLives;
 int CGameplayManager::SeedCount;
 
-CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CEngine * engine)
+CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CCollisionEngine * engine)
 : PlayerActor(playerActor), PlayerRecovering(false), PlayerHealth(5), Engine(engine), PlayerEnergy(3)
 {
    Engine->setCollisionResponder(this);
@@ -443,7 +443,7 @@ void CGameplayManager::run(float const TickTime)
    runDeathSequence(TickTime);
 }
 
-Cabbage::Collider::CEngine* CGameplayManager::getEngine() {
+Cabbage::Collider::CCollisionEngine* CGameplayManager::getEngine() {
    return Engine;
 }
 

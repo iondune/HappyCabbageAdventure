@@ -49,7 +49,7 @@ class CParticleEngine {
       //Duration in milliseconds
       CParticleEngine(SVector3 pos, int maxParticles, float duration, int);
       void setCenterPos(SVector3 cP);
-      void UsePhysics(Cabbage::Collider::CEngine *engine);
+      void UsePhysics(Cabbage::Collider::CCollisionEngine *engine);
       void setLookRight(int pf);
       void step(float const elapsedTime);
       void deconstruct();
