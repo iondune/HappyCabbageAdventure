@@ -16,7 +16,7 @@ class CGameplayElement : public IUpdater, public ICollisionResponder {
       CCollideable *& PhysicsEngineObject;
       //A top-level object in the scene manager. Subclasses may create new pointers of a more specific subclass.
       ISceneObject *& SceneObject;
-      //Make sure level in CGameState is set before initializing any CGameplayElements
+      //If CGameLevelLoader isn't being used to load a level, this value will be wrong when created.
       CGameLevel & Level;
       SRect2 Area;
 
