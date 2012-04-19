@@ -200,13 +200,12 @@ CCollisionActor * CCollisionEngine::addActor()
 	return Actors.back();
 }
 
-ObjectList const & CCollisionEngine::getObjects() const
+CCollisionEngine::ObjectList const & CCollisionEngine::getObjects() const
 {
 	return Objects;
 }
 
-ActorList const & CCollisionEngine::getActors() const
+CCollisionEngine::ActorList const & CCollisionEngine::getActors() const
 {
 	return Actors;
 }
-
