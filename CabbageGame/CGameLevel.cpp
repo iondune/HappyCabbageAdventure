@@ -1,12 +1,12 @@
 #include "CGameLevel.h"
 
-std::vector<CPlaceable*> & CGameLevel::getPlaceables() {
-   return Placeables;
+std::vector<CGameplayElement*> & CGameLevel::getElements() {
+   return Elements;
 }
-std::vector<CPFriends*> & CGameLevel::getFriends() {
+std::vector<CFriend*> & CGameLevel::getFriends() {
    return Friends;
 }
-std::vector<CPItem*> & CGameLevel::getItems() {
+std::vector<CItem*> & CGameLevel::getItems() {
    return Items;
 }
 std::vector<CBlock*> & CGameLevel::getBlocks() {
@@ -17,6 +17,9 @@ std::vector<CEnemy*> & CGameLevel::getEnemies() {
 }
 std::vector<CGroundBlock*> & CGameLevel::getGroundBlocks() {
    return GroundBlocks;
+}
+std::vector<CElevator*> & CGameLevel::getElevators() {
+   return Elevators;
 }
 
 bool CGameLevel::isNight() {

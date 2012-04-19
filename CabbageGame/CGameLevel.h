@@ -18,20 +18,22 @@ class CGameLevel {
       int env, numBlocks;
       std::vector<CBiggerBlock*> blocksFinal;
 
-      std::vector<CPlaceable*> Placeables;
-      std::vector<CPFriends*> Friends;
-      std::vector<CPItem*> Items;
+      std::vector<CGameplayElement*> Elements;
+      std::vector<CFriends*> Friends;
+      std::vector<CItem*> Items;
       std::vector<CBlock*> Blocks;
       std::vector<CEnemy*> Enemies;
       std::vector<CGroundBlock*> GroundBlocks;
+      std::vector<CElevator*> GroundBlocks;
 
    public:
-      std::vector<CPlaceable*> & getPlaceables();
+      std::vector<CGameplayElement*> & getElements();
       std::vector<CPFriends*> & getFriends();
       std::vector<CPItem*> & getItems();
       std::vector<CBlock*> & getBlocks();
       std::vector<CEnemy*> & getEnemies();
       std::vector<CGroundBlock*> & getGroundBlocks();
+      std::vector<CElevator*> & getElevators();
       std::vector<CBiggerBlock*> & getConsolidatedBlocks();
 
       bool isNight();
