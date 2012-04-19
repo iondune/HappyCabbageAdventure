@@ -1,4 +1,4 @@
-#include "CActor.h"
+#include "CCollisionActor.h"
 
 #include <algorithm>
 
@@ -14,7 +14,7 @@
 #endif
 
 
-CActor::SAttributes::SAttributes()
+CCollisionActor::SAttributes::SAttributes()
 	: MaxWalk(4.5f),
 	WalkAccel(60.f),
 	JumpAccel(6.4f),
@@ -28,21 +28,21 @@ CActor::SAttributes::SAttributes()
 {}
 
 
-CActor::EActionType::EActionType()
+CCollisionActor::EActionType::EActionType()
 	: Value(None)
 {}
 
-CActor::EActionType::EActionType(Domain const value)
+CCollisionActor::EActionType::EActionType(Domain const value)
 	: Value(value)
 {}
 
-bool const CActor::EActionType::operator == (Domain const value)
+bool const CCollisionActor::EActionType::operator == (Domain const value)
 {
 	return Value == value;
 }
 
 
-CActor::CActor()
+CCollisionActor::CCollisionActor()
 	: Standing(0), JumpTimer(0.f), FallAcceleration(0), Impulse(false), ControlFall(true) 
 {
 	CollideableType = COLLIDEABLE_TYPE_ACTOR;
@@ -52,10 +52,10 @@ CActor::CActor()
 	Gravity = 100.0f;
 }
 
-CActor::~CActor()
+CCollisionActor::~CCollisionActor()
 {}
 
-int CActor::checkCollision(CCollideable * Object, float const TickTime)
+int CCollisionActor::checkCollision(CCollideable * Object, float const TickTime)
 {
 	int Out = ECollisionType::None;
 
@@ -87,7 +87,7 @@ int CActor::checkCollision(CCollideable * Object, float const TickTime)
 	return Out;
 }
 
-int CActor::ignoreCollision(CCollideable * Object, float const TickTime)
+int CCollisionActor::ignoreCollision(CCollideable * Object, float const TickTime)
 {
 	int Out = ECollisionType::None;
 
@@ -117,23 +117,23 @@ int CActor::ignoreCollision(CCollideable * Object, float const TickTime)
 	return Out;
 }
 
-void CActor::setStanding(bool s) {
+void CCollisionActor::setStanding(bool s) {
 	Standing = s?this:0;
 }
 
-void CActor::onStanding(CCollideable * Object)
+void CCollisionActor::onStanding(CCollideable * Object)
 {
 	Standing = Object;
 	FallAcceleration = 0;
 	Velocity.Y = std::max(Velocity.Y, 0.f);
 }
 
-bool CActor::collidesWith(CCollisionObject * Object) const
+bool CCollisionActor::collidesWith(CCollisionObject * Object) const
 {
 	return Area.intersects(Object->getArea());
 }
 
-bool CActor::isAbove(CCollisionObject * Object, float & height) const
+bool CCollisionActor::isAbove(CCollisionObject * Object, float & height) const
 {
 	if (Area.getCenter().Y < Object->getArea().otherCorner().Y)
 		return false;
@@ -146,11 +146,11 @@ bool CActor::isAbove(CCollisionObject * Object, float & height) const
 	return true;
 }
 
-bool CActor::getControlFall() {
+bool CCollisionActor::getControlFall() {
 	return ControlFall;
 }
 
-void CActor::updateVectors(float const TickTime)
+void CCollisionActor::updateVectors(float const TickTime)
 {
 	if (ControlFall)
 		FallAcceleration -= Gravity * TickTime;
@@ -223,7 +223,7 @@ void CActor::updateVectors(float const TickTime)
 	Movement = Velocity * TickTime;
 }
 
-void CActor::pushIfCollided(CCollisionObject * Object, SVector2 const & Movement)
+void CCollisionActor::pushIfCollided(CCollisionObject * Object, SVector2 const & Movement)
 {
 	if (! collidesWith(Object) && Object != Standing)
 		return;
@@ -243,46 +243,46 @@ void CActor::pushIfCollided(CCollisionObject * Object, SVector2 const & Movement
 	}*/
 }
 
-bool const CActor::isStanding() const
+bool const CCollisionActor::isStanding() const
 {
 	return Standing != 0;
 }
 
-void CActor::setVelocity(SVector2 const & vel)
+void CCollisionActor::setVelocity(SVector2 const & vel)
 {
 	Velocity = vel;
 }
 
-SVector2 const & CActor::getVelocity() const
+SVector2 const & CCollisionActor::getVelocity() const
 {
 	return Velocity;
 }
 
-CActor::SAttributes const & CActor::getAttributes() const
+CCollisionActor::SAttributes const & CCollisionActor::getAttributes() const
 {
 	return Attributes;
 }
 
-CActor::SAttributes & CActor::getAttributes()
+CCollisionActor::SAttributes & CCollisionActor::getAttributes()
 {
 	return Attributes;
 }
 
-void CActor::setAction(EActionType const & action)
+void CCollisionActor::setAction(EActionType const & action)
 {
 	Action = action;
 }
 
-bool CActor::isJumping()
+bool CCollisionActor::isJumping()
 {
 	return Jumping;
 }
 
-CActor::EActionType CActor::getAction() {
+CCollisionActor::EActionType CCollisionActor::getAction() {
 	return Action;
 }
 
-void CActor::setJumping(bool const jumping)
+void CCollisionActor::setJumping(bool const jumping)
 {
 	if (! Jumping && ! Standing)
 		return; // Can't start jupming unless we are standing
@@ -298,11 +298,11 @@ void CActor::setJumping(bool const jumping)
 	}*/
 }
 
-void CActor::setControlFall(bool const fall) {
+void CCollisionActor::setControlFall(bool const fall) {
 	ControlFall = fall;
 }
 
-bool CActor::updateCollision(CCollideable * Object, float const TickTime, ICollisionResponder * CollisionResponder)
+bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTime, ICollisionResponder * CollisionResponder)
 {
 	int CollisionType = ignoreCollision(Object, TickTime);
 	bool doCollision = true;
@@ -334,7 +334,7 @@ bool CActor::updateCollision(CCollideable * Object, float const TickTime, IColli
 	return 0;
 }
 
-void CActor::draw()
+void CCollisionActor::draw()
 {
 	if (! Standing && ! Jumping)
 		glColor3f(1, 1, 1);
@@ -346,20 +346,20 @@ void CActor::draw()
 	glColor3f(1, 1, 1);
 }
 
-void CActor::setImpulse(SVector2 const & velocity, float const duration)
+void CCollisionActor::setImpulse(SVector2 const & velocity, float const duration)
 {
 	Impulse = true;
 	ImpulseTimer = duration;
 	ImpulseVelocity = velocity;
 }
 
-void CActor::addImpulse(SVector2 const & velocity) {
+void CCollisionActor::addImpulse(SVector2 const & velocity) {
 	Impulse = true;
 	ImpulseVelocity += velocity;
 }
 
 
-void CActor::setFallAcceleration(float speed)
+void CCollisionActor::setFallAcceleration(float speed)
 {
 	FallAcceleration = speed;
 }

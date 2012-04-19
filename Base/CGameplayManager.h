@@ -28,7 +28,7 @@ class CGameplayManager : public ICollisionResponder
 
       struct SEnemy
       {
-         CActor * Actor;
+         CCollisionActor * Actor;
          ISceneObject * Renderable;
          int KillMethod;
       };
@@ -47,7 +47,7 @@ class CGameplayManager : public ICollisionResponder
    private:
       CParticleEngine * playerDeathParticleEngine; 
       int won, dead, gameOver;
-      CActor * PlayerActor;
+      CCollisionActor * PlayerActor;
       CCollisionObject * VictoryFlag;
       CCollisionObject * SecretVictoryFlag;
       int PlayerHealth, PlayerEnergy;
@@ -58,7 +58,7 @@ class CGameplayManager : public ICollisionResponder
       CGameEventManager * GameEventManager;
 
    public:
-      CGameplayManager(CActor * playerActor, CCollisionEngine * engine);
+      CGameplayManager(CCollisionActor * playerActor, CCollisionEngine * engine);
 
       static int PlayerLives;
       static int SeedCount;
@@ -70,7 +70,7 @@ class CGameplayManager : public ICollisionResponder
       bool OnCollision(CCollideable * Object, CCollideable * With);
       void runDeathSequence(float);
       void runVictorySequence(float);
-      void Clear(CActor * playerActor, CCollisionEngine * engine);
+      void Clear(CCollisionActor * playerActor, CCollisionEngine * engine);
       void Clear();
 
       int ShootingLaser;

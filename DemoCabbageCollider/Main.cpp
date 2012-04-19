@@ -40,7 +40,7 @@ void Initialize()
 	gluPerspective(60.0, 1.0, 0.01, 100.0);
 }
 
-CActor * Player;
+CCollisionActor * Player;
 
 void Draw()
 {
@@ -140,7 +140,7 @@ int main(int argc, char * argv[])
     Elevator = Engine->addElevator();
     Elevator->setArea(SRect2(6, 1, 1, 1));
 
-	CActor * Derp = Engine->addActor();
+	CCollisionActor * Derp = Engine->addActor();
 	Derp->setArea(SRect2(4, 0, 1, 1));
 
 
@@ -183,19 +183,19 @@ int main(int argc, char * argv[])
 
 		if (IsKeyDown[SDLK_d] && IsKeyDown[SDLK_a])
 		{
-			Player->setAction(CActor::EActionType::None);
+			Player->setAction(CCollisionActor::EActionType::None);
 		}
 		else if (IsKeyDown[SDLK_d])
 		{
-			Player->setAction(CActor::EActionType::MoveRight);
+			Player->setAction(CCollisionActor::EActionType::MoveRight);
 		}
 		else if (IsKeyDown[SDLK_a])
 		{
-			Player->setAction(CActor::EActionType::MoveLeft);
+			Player->setAction(CCollisionActor::EActionType::MoveLeft);
 		}
 		else
 		{
-			Player->setAction(CActor::EActionType::None);
+			Player->setAction(CCollisionActor::EActionType::None);
 		}
 
 

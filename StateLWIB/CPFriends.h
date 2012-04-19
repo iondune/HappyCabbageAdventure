@@ -8,7 +8,8 @@
 #include "../Base/CGameplayManager.h"
 #include "../CabbageCollider/CCollisionEngine.h"
 #include "../CabbageCollider/CCollisionObject.h"
-#include "../CabbageCollider/CActor.h"
+
+#include "../CabbageCollider/CCollisionActor.h"
 #include <sstream>
 #include <string>
 class CPFriends : public CPlaceable

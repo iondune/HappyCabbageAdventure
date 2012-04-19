@@ -15,7 +15,7 @@ void PrepMeshes();
 void EngineInit();
 
 CCollisionEngine *Engine;
-CActor *Player, *Derp, *WinPlayer;
+CCollisionActor *Player, *Derp, *WinPlayer;
 CLight * PlayerLight;
 CCollisionObject *Floor, *Block, *victoryBlock, *secretVictoryBlock;
 CPlayerView *PlayerView;
@@ -543,23 +543,23 @@ void CGameState::oldDisplay() {
    if (GameplayManager->isPlayerAlive() && !lDown)
    {
       if(dDown && aDown) {
-         Player->setAction(CActor::EActionType::None);
+         Player->setAction(CCollisionActor::EActionType::None);
          PlayerView->setState(CPlayerView::State::Standing);
       }
       else if(aDown){
-         Player->setAction(CActor::EActionType::MoveLeft);
+         Player->setAction(CCollisionActor::EActionType::MoveLeft);
          PlayerView->setState(CPlayerView::State::MovingLeft);
       }
       else if(dDown){
-         Player->setAction(CActor::EActionType::MoveRight);
+         Player->setAction(CCollisionActor::EActionType::MoveRight);
          PlayerView->setState(CPlayerView::State::MovingRight);
       }
       else if (GameplayManager->isWon()) {
-         Player->setAction(CActor::EActionType::None);
+         Player->setAction(CCollisionActor::EActionType::None);
          PlayerView->setState(CPlayerView::State::Standing);
       }
       else {
-         Player->setAction(CActor::EActionType::None);
+         Player->setAction(CCollisionActor::EActionType::None);
          PlayerView->setState(CPlayerView::State::Standing);
       }
 
@@ -602,7 +602,7 @@ void CGameState::oldDisplay() {
             RestartGameText->setVisible(true);
          }
       }
-      Player->setAction(CActor::EActionType::None);
+      Player->setAction(CCollisionActor::EActionType::None);
       PlayerView->setState(CPlayerView::State::Standing);
       Player->setJumping(false);
    }

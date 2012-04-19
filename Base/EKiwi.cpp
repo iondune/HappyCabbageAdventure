@@ -102,15 +102,15 @@ void EKiwi::update(float const TickTime) {
       Actor->setArea(SRect2(curX, y, w, h));
 
 
-      Actor->setAction(CActor::EActionType::None);
+      Actor->setAction(CCollisionActor::EActionType::None);
 
       SVector2 vel = Actor->getVelocity();
       Actor->setVelocity(SVector2(vel.X, vel.Y > 0 ? vel.Y - 1.0f*TickTime : 0));
 
       if(Direction == 0)
-         Actor->setAction(CActor::EActionType::MoveLeft);
+         Actor->setAction(CCollisionActor::EActionType::MoveLeft);
       else
-         Actor->setAction(CActor::EActionType::MoveRight);
+         Actor->setAction(CCollisionActor::EActionType::MoveRight);
       oldSineValue = SineValue;
 
       if(!inZ) {
@@ -132,7 +132,7 @@ void EKiwi::update(float const TickTime) {
    }
    else
    {
-       Actor->setAction(CActor::EActionType::None);
+       Actor->setAction(CCollisionActor::EActionType::None);
    }
 }
 

@@ -68,9 +68,9 @@ void EOrange::update(const float TickTime) {
    if (Manager->isPlayerAlive())
    {
        if (Manager->getPlayerLocation().X < Actor->getArea().getCenter().X)
-           Actor->setAction(CActor::EActionType::MoveLeft);
+           Actor->setAction(CCollisionActor::EActionType::MoveLeft);
        else
-           Actor->setAction(CActor::EActionType::MoveRight);
+           Actor->setAction(CCollisionActor::EActionType::MoveRight);
 
        if (Manager->getPlayerLocation().X - Actor->getArea().getCenter().X < 2.2 &&
                 Manager->getPlayerLocation().X - Actor->getArea().getCenter().X > -2.2) {
@@ -84,7 +84,7 @@ void EOrange::update(const float TickTime) {
    }
    else
    {
-       Actor->setAction(CActor::EActionType::None);
+       Actor->setAction(CCollisionActor::EActionType::None);
    }
 
    oldX = Actor->getArea().getCenter().X;

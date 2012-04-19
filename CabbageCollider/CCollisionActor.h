@@ -23,7 +23,7 @@ public:
 
 };
 
-class CActor : public CCollideable
+class CCollisionActor : public CCollideable
 {
 
 public:
@@ -85,7 +85,7 @@ protected:
 	float JumpTimer;
 	bool Jumping, ControlFall;
 
-	CActor();
+	CCollisionActor();
 
 	// Update functions, used by engine
 	void updateVectors(float const TickTime);
@@ -101,7 +101,7 @@ protected:
 
 public:
 
-	~CActor();
+	~CCollisionActor();
 
 	SVector2 LastPosition, Movement;
 	int checkCollision(CCollideable * Object, float const TickTime);

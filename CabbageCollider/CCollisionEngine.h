@@ -5,7 +5,7 @@
 #include <limits>
 
 #include "CCollisionObject.h"
-#include "CActor.h"
+#include "CCollisionActor.h"
 
 /*
 #define INTERACTOR_
@@ -29,7 +29,7 @@ class CCollisionEngine
 public:
 
 	typedef std::vector<CCollisionObject *> ObjectList;
-	typedef std::vector<CActor *> ActorList;
+	typedef std::vector<CCollisionActor *> ActorList;
 
 private:
 
@@ -77,7 +77,7 @@ public:
 		CollisionResponder = collisionResponder;
 	}
 
-	void removeActor(CActor * Actor)
+	void removeActor(CCollisionActor * Actor)
 	{
 		for (ActorList::iterator it = Actors.begin(); it != Actors.end(); ++ it)
 			if (* it == Actor)
@@ -144,7 +144,7 @@ public:
 		return height;
 	}
 
-	float const getHeightBelow(CActor * Actor)
+	float const getHeightBelow(CCollisionActor * Actor)
 	{
 		float height = - std::numeric_limits<float>::infinity();
 		float checkHeight;
@@ -180,10 +180,10 @@ public:
 		return cen; 
 	}
 
-	CActor * addActor()
+	CCollisionActor * addActor()
 	{
-		CActor *a;
-		Actors.push_back(a = new CActor());
+		CCollisionActor *a;
+		Actors.push_back(a = new CCollisionActor());
 		return Actors.back();
 	}
 

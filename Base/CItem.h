@@ -23,7 +23,7 @@ public:
    float x, y, w, h;
    ItemType Type;
    CGameplayManager* Manager;
-   CActor* Actor;
+   CCollisionActor* Actor;
    CMeshSceneObject* Renderable;
    //Currently the Shader stuff appears to be acting up.
    CShader* Shader;

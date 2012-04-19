@@ -10,7 +10,7 @@ class CPhysicsParticle : public CParticle {
    virtual void updateMatrices(float) =0;
 
    public:
-   CActor *Actor;
+   CCollisionActor *Actor;
    CCollisionEngine *Engine;
 
    virtual void setEngine(CCollisionEngine *engine);

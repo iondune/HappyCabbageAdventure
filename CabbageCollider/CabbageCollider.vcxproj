@@ -11,13 +11,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CActor.h" />
+    <ClInclude Include="CCollisionActor.h" />
     <ClInclude Include="CCollideable.h" />
     <ClInclude Include="CCollisionEngine.h" />
     <ClInclude Include="CCollisionObject.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CActor.cpp" />
+    <ClCompile Include="CCollisionActor.cpp" />
     <ClCompile Include="CCollideable.cpp" />
     <ClCompile Include="CCollisionEngine.cpp" />
     <ClCompile Include="CCollisionObject.cpp" />

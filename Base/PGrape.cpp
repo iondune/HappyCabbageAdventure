@@ -70,7 +70,7 @@ void PGrape::loadActor() {
 //Updates AI's decision per frame
 void PGrape::update(float const TickTime) {
 
-   Actor->setAction(CActor::EActionType::None);
+   Actor->setAction(CCollisionActor::EActionType::None);
 
    if (Manager->isPlayerAlive())
    {

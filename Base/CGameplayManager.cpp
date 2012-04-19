@@ -5,7 +5,7 @@
 int CGameplayManager::PlayerLives;
 int CGameplayManager::SeedCount;
 
-CGameplayManager::CGameplayManager(CActor * playerActor, CCollisionEngine * engine)
+CGameplayManager::CGameplayManager(CCollisionActor * playerActor, CCollisionEngine * engine)
 : PlayerActor(playerActor), PlayerRecovering(false), PlayerHealth(5), Engine(engine), PlayerEnergy(3)
 {
    Engine->setCollisionResponder(this);
@@ -116,12 +116,12 @@ bool CGameplayManager::OnCollision(CCollideable * Object, CCollideable * With)
          && Object->CollideableType == COLLIDEABLE_TYPE_KIWI) {
 
       if(With->CollideableType == COLLIDEABLE_TYPE_ACTOR) {
-         ((CActor*)With)->setImpulse(SVector2(0.00f, -0.3f), 0.2f);
+         ((CCollisionActor*)With)->setImpulse(SVector2(0.00f, -0.3f), 0.2f);
       }
       birdCollision = 1;
 
       if(With == PlayerActor) {
-         ((CActor*)Object)->setImpulse(SVector2(0.03f, 0.3f)*7, 0.2f);
+         ((CCollisionActor*)Object)->setImpulse(SVector2(0.03f, 0.3f)*7, 0.2f);
       }
       else {
          Object->CollideableLevel = INTERACTOR_SUPERNONCOLLIDERS;
@@ -131,7 +131,7 @@ bool CGameplayManager::OnCollision(CCollideable * Object, CCollideable * With)
          {
             //Remove projectile from scene
             if (Object == (*it)->Actor) {
-               CActor* actor = (*it)->Actor;
+               CCollisionActor* actor = (*it)->Actor;
                ((EKiwi*)(*it))->inZ = 1;
                ((EKiwi*)(*it))->lastX = Object->getArea().getCenter().X;
                ((EKiwi*)(*it))->Depth = With->getDepth();

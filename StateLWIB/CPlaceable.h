@@ -8,7 +8,8 @@
 #include "../Base/CGameplayManager.h"
 #include "../CabbageCollider/CCollisionEngine.h"
 #include "../CabbageCollider/CCollisionObject.h"
-#include "../CabbageCollider/CActor.h"
+
+#include "../CabbageCollider/CCollisionActor.h"
 #include "./wmlwriter_src/xmlwriter.h"
 #include <sstream>
 #include <string>
