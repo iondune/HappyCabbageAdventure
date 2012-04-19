@@ -22,14 +22,13 @@ class CGameplayElement : public IUpdater, public ICollisionResponder {
 
    public:
       //Functions for CGameplayManager 
-      virtual void update(float)=0;
+      //virtual void update(float)=0;
       virtual void setupObjects()=0;
       virtual void OnCollision(CCollideable *Object, CCollideable *With)=0;
 
       //Functions for CLWIBState
       virtual void writeXML(xmlwriter *)=0;
       CGameplayElement(CCollideable * const c, ISceneObject * const s, SRect2 a);
-      virtual ~CGameplayElement();
 };
 
 #endif

@@ -14,6 +14,9 @@
 */
 #define INTERACTOR_NON 128
 
+typedef std::vector<CCollisionObject *> ObjectList;
+typedef std::vector<CCollisionActor *> ActorList;
+
 class ICollisionResponder
 {
 
@@ -27,9 +30,6 @@ class CCollisionEngine
 {
 
 public:
-
-	typedef std::vector<CCollisionObject *> ObjectList;
-	typedef std::vector<CCollisionActor *> ActorList;
 
 private:
 

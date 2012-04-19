@@ -40,6 +40,10 @@ ISceneObject *CDecorManager::SetupObject(float x, float y, float z, float scale,
    return render;
 }
 
+void CDecorManager::update(float f) {
+
+}
+
 CDecorManager::CDecorManager(CGameLevel & level) {
    std::vector<CGroundBlock*> & groundBlocks = level.getGroundBlocks();
    env = level.getEnvironment();

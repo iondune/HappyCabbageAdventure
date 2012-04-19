@@ -1,10 +1,11 @@
 ROOT_CABBAGE_DIR=../
 SOURCES=main.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o)
-CABBAGE= -L../lib/ -lCabbageCore -lCabbageSound -lCabbageCollider -lCabbageFramework -lCabbageScene -lCabbageGame -lStateGame -lCabbageGUI
+CABBAGE= -L../lib/ -lCabbageFramework -lCabbageGUI -lCabbageScene -lStateGame -lCabbageCore -lCabbageGame -lCabbageCollider 
 INCLUDE=-I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI `sdl-config --cflags` `freetype-config --cflags` -I../irrxml-1.2/src/ -I./Elements/ -I. -I../CabbageGame -I../StateGame -I../CabbageGame/Elements -I../CabbageGame/Elements/Blocks
 LIBFILES=../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCabbageCore.a ../lib/libCabbageGame.a ../lib/libStateGame.a ../lib/libCabbageCore.a ../lib/libCabbageGUI.a
-CC=g++ -O1 -s
+CC=g++ -g
+COMPILER_VERSION= -std=c++0x 
 
 #Chris Code.  Adding check for 32 or 64 bit
 LBITS:=$(shell getconf LONG_BIT)
@@ -32,7 +33,7 @@ all: ${TARGET}
 	$(CC) -c $(INCLUDE) -DGL_GLEXT_PROTOTYPES $< -o $@
 
 cabbage: ${OBJECTS} ${LIBFILES} 
-	$(CC) ${COMPILER_VERSION} ${OBJECTS} -DGL_GLEXT_PROTOTYPES -lGL -lGLU -lSDL `sdl-config --cflags --libs` ${CABBAGE} ${MIXLIB} `freetype-config --libs` -o $@
+	$(CC) ${COMPILER_VERSION} ${OBJECTS} -lGL -lGLU -lSDL `sdl-config --libs` ${CABBAGE} ${MIXLIB} `freetype-config --libs` -o $@
 
 qclean:
 	rm -rf cabbage.exe cabbage 2>/dev/null
