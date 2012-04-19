@@ -35,7 +35,6 @@ CCollideable::SMaterial const & CCollideable::getMaterial() const
 	return Material;
 }
 
-
 CCollideable::SMaterial & CCollideable::getMaterial()
 {
 	return Material;
