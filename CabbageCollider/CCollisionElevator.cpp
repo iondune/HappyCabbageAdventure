@@ -1,7 +1,7 @@
 #include "CCollisionElevator.h"
 
 
-CElevator::CElevator()
+CCollisionElevator::CCollisionElevator()
 {
 	CollisionMask = INTERACTOR_ALL;
 	Timer = 0.f;
@@ -10,7 +10,7 @@ CElevator::CElevator()
 	InitialDirection = 1.f;
 }
 
-SVector2 CElevator::performMovement(float const TickTime)
+SVector2 CCollisionElevator::performMovement(float const TickTime)
 {
 	SVector2 Movement;
 	Timer += TickTime * Speed;

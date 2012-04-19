@@ -1,17 +1,15 @@
 #include "CCollisionEngine.h"
 
-bool CCollisionEngine::CanCollide( CCollideable *a, CCollideable *b )
+#include <algorithm>
+
+bool CCollisionEngine::CanCollide(CCollideable *a, CCollideable *b)
 {
-	return (a->CollideableLevel & b->CanCollideWith) ||
-		(b->CollideableLevel & a->CanCollideWith);
+	return (a->CollisionType & b->CollisionMask) ||
+		(b->CollisionType & a->CollisionMask);
 }
 
 void CCollisionEngine::performTick( float const TickTime )
 {
-	// Perform actor update
-	// 
-	int numThings = Actors.size() + Objects.size();
-	//printf("There are %d things\n", numThings);
 	for (ActorList::iterator it = Actors.begin(); it != Actors.end(); ++ it)
 	{
 		(* it)->updateVectors(TickTime);
@@ -20,9 +18,9 @@ void CCollisionEngine::performTick( float const TickTime )
 
 		for (ObjectList::iterator jt = Objects.begin(); jt != Objects.end(); ++ jt)
 		{
-			if(CanCollide((*it), (*jt))) {
-				//printf("%d and %d are within 2\n", (*it)->CollideableLevel, (*jt)->CollideableLevel);
-				bool Alighted = (* it)->updateCollision(* jt, TickTime, CollisionResponder);
+			if(CanCollide((*it), (*jt)))
+			{
+				bool Alighted = (* it)->updateCollision(* jt, TickTime);
 				if (Alighted)
 					Which = (* jt);
 			}
@@ -30,11 +28,11 @@ void CCollisionEngine::performTick( float const TickTime )
 
 		for (ActorList::iterator jt = Actors.begin(); jt != Actors.end(); ++ jt)
 		{
-			if(CanCollide((*it), (*jt))) {
-				//printf("%d and %d are within 2\n", (*it)->CollideableLevel, (*jt)->CollideableLevel);
+			if(CanCollide((*it), (*jt)))
+			{
 				if (* it != * jt)
 				{
-					bool Alighted = (* it)->updateCollision(* jt, TickTime, CollisionResponder);
+					bool Alighted = (* it)->updateCollision(* jt, TickTime);
 					if (Alighted)
 						Which = (* jt);
 				}
@@ -59,48 +57,29 @@ void CCollisionEngine::performTick( float const TickTime )
 void CCollisionEngine::removeAll()
 {
 	Objects.clear();
-	addNullBlock();
 	Actors.clear();
 }
 
-void CCollisionEngine::removeObject( CCollisionObject * Object )
+void CCollisionEngine::removeObject(CCollisionObject * Object)
 {
-	for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
-		if (* it == Object )
-		{
-			Objects.erase(it);
-			return;
-		}
+	Objects.erase(std::remove(Objects.begin(), Objects.end(), Object), Objects.end());
 }
 
-CCollisionEngine::CCollisionEngine() : Timer(0.f), CollisionResponder(0)
-{
-	addNullBlock();
-}
+CCollisionEngine::CCollisionEngine()
+	: Timer(0.f)
+{}
 
 CCollisionEngine::~CCollisionEngine()
-{
+{}
 
+void CCollisionEngine::removeActor(CCollisionActor * Actor)
+{
+	Actors.erase(std::remove(Actors.begin(), Actors.end(), Actor), Actors.end());
 }
 
-void CCollisionEngine::setCollisionResponder( ICollisionResponder * collisionResponder )
+void CCollisionEngine::updateAll(float const Elapsed)
 {
-	CollisionResponder = collisionResponder;
-}
-
-void CCollisionEngine::removeActor( CCollisionActor * Actor )
-{
-	for (ActorList::iterator it = Actors.begin(); it != Actors.end(); ++ it)
-		if (* it == Actor)
-		{
-			Actors.erase(it);
-			return;
-		}
-}
-
-void CCollisionEngine::updateAll( float const Elapsed )
-{
-	static int const TicksPerSecond = 200;
+	static int const TicksPerSecond = 2000;
 	Timer += std::min(Elapsed, 0.1f);
 
 	float const TimePerTick = 1.f / TicksPerSecond;
@@ -112,7 +91,7 @@ void CCollisionEngine::updateAll( float const Elapsed )
 	}
 }
 
-CCollisionObject* const CCollisionEngine::getObjectBelow( SVector2 pos )
+CCollisionObject* const CCollisionEngine::getObjectBelow(SVector2 pos)
 {
 	float height = - std::numeric_limits<float>::infinity();
 	CCollisionObject *Object, *objBelow = NULL;
@@ -135,7 +114,7 @@ CCollisionObject* const CCollisionEngine::getObjectBelow( SVector2 pos )
 	return objBelow;
 }
 
-float const CCollisionEngine::getHeightBelow( SVector2 pos )
+float const CCollisionEngine::getHeightBelow(SVector2 pos)
 {
 	float height = - std::numeric_limits<float>::infinity();
 	CCollisionObject* Object;
@@ -171,14 +150,6 @@ float const CCollisionEngine::getHeightBelow( CCollisionActor * Actor )
 	return height;
 }
 
-void CCollisionEngine::addNullBlock()
-{
-	CCollisionObject * nullBlock = this->addObject();
-	nullBlock->setArea(SRect2(-1000.f, -1000.f, 0.01f, 0.01f)); 
-	nullBlock->CollideableLevel = INTERACTOR_NULL_BLOCK; 
-	nullBlock->CanCollideWith = INTERACTOR_ALL_ALL;
-}
-
 CCollisionObject * CCollisionEngine::addObject()
 {
 	CCollisionObject * a;
@@ -186,10 +157,10 @@ CCollisionObject * CCollisionEngine::addObject()
 	return Objects.back();
 }
 
-CElevator * CCollisionEngine::addElevator()
+CCollisionElevator * CCollisionEngine::addElevator()
 {
-	CElevator * cen;
-	Objects.push_back(cen = new CElevator());
+	CCollisionElevator * cen;
+	Objects.push_back(cen = new CCollisionElevator());
 	return cen;
 }
 

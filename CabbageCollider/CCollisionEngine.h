@@ -6,22 +6,12 @@
 
 #include "CCollisionObject.h"
 #include "CCollisionActor.h"
+#include "CCollisionElevator.h"
 
-/*
-#define INTERACTOR_
-#define INTERACTOR_
-#define INTERACTOR_
-*/
+
 #define INTERACTOR_NON 128
 
-class ICollisionResponder
-{
 
-public:
-
-	virtual bool OnCollision(CCollideable * Object, CCollideable * With) =0;
-
-};
 
 class CCollisionEngine
 {
@@ -35,8 +25,6 @@ private:
 
 	ObjectList Objects;
 	ActorList Actors;
-
-	ICollisionResponder * CollisionResponder;
 
 	bool CanCollide(CCollideable *a, CCollideable *b);
 
@@ -68,11 +56,9 @@ public:
 
 	float const getHeightBelow(CCollisionActor * Actor);
 
-	void addNullBlock();
-
 	CCollisionObject * addObject();
 
-	CElevator * addElevator();
+	CCollisionElevator * addElevator();
 
 	CCollisionActor * addActor();
 

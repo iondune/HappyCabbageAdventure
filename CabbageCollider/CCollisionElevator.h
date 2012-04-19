@@ -3,14 +3,14 @@
 
 #include "CCollisionObject.h"
 
-class CElevator : public CCollisionObject
+class CCollisionElevator : public CCollisionObject
 {
 
 	float Timer;
 
 public:
 
-	CElevator();
+	CCollisionElevator();
 
 	virtual SVector2 performMovement(float const TickTime);
 

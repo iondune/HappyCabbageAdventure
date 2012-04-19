@@ -67,7 +67,7 @@ void Draw()
 
 int main(int argc, char * argv[])
 {
-	int const WindowWidth = 800, WindowHeight = 600;
+	int const WindowWidth = 1600, WindowHeight = 900;
 	SDL_VideoInfo const * video;
 
     if ( SDL_Init(SDL_INIT_VIDEO) < 0 )
@@ -144,7 +144,7 @@ int main(int argc, char * argv[])
 	Derp->setArea(SRect2(4, 0, 1, 1));
 
 
-	// Time-independant movement variables
+	// Time-independent movement variables
 	int Time0, Time1;
 
 	// Start keeping track of time
@@ -178,7 +178,7 @@ int main(int argc, char * argv[])
 
 		// Determine time since last draw
 		Time1 = SDL_GetTicks();
-		float Delta = (float) (Time1 - Time0) / 1000.f;
+		float Delta = (float) (Time1 - Time0) / 10000.f;
 		Time0 = Time1;
 
 		if (IsKeyDown[SDLK_d] && IsKeyDown[SDLK_a])

@@ -45,9 +45,8 @@ bool const CCollisionActor::EActionType::operator == (Domain const value)
 CCollisionActor::CCollisionActor()
 	: Standing(0), JumpTimer(0.f), FallAcceleration(0), Impulse(false), ControlFall(true) 
 {
-	CollideableType = COLLIDEABLE_TYPE_ACTOR;
-	CollideableLevel = INTERACTOR_ACTORS;
-	CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_ACTORS;
+	CollisionType = INTERACTOR_ACTORS;
+	CollisionMask = INTERACTOR_BLOCKS | INTERACTOR_ACTORS;
 
 	Gravity = 100.0f;
 }
@@ -71,12 +70,12 @@ int CCollisionActor::checkCollision(CCollideable * Object, float const TickTime)
 		{
 			if (Movement[i] > 0.f)
 			{
-				Movement[i] = std::max(Object->getArea().Position[i] - (LastPosition + Area.Size)[i], 0.f);
+				Movement[i] = 0.f;//std::max(Object->getArea().Position[i] - (LastPosition + Area.Size)[i], 0.f);
 				Out |= (i ? ECollisionType::Up : ECollisionType::Right);
 			}
 			else if (Movement[i] < 0.f)
 			{
-				Movement[i] = std::min(Object->getArea().otherCorner()[i] - LastPosition[i], 0.f);
+				Movement[i] = 0.f;//std::min(Object->getArea().otherCorner()[i] - LastPosition[i], 0.f);
 				Out |= (i ? ECollisionType::Down : ECollisionType::Left);
 			}
 		}
@@ -117,10 +116,6 @@ int CCollisionActor::ignoreCollision(CCollideable * Object, float const TickTime
 	return Out;
 }
 
-void CCollisionActor::setStanding(bool s) {
-	Standing = s?this:0;
-}
-
 void CCollisionActor::onStanding(CCollideable * Object)
 {
 	Standing = Object;
@@ -146,7 +141,8 @@ bool CCollisionActor::isAbove(CCollisionObject * Object, float & height) const
 	return true;
 }
 
-bool CCollisionActor::getControlFall() {
+bool CCollisionActor::getControlFall()
+{
 	return ControlFall;
 }
 
@@ -221,6 +217,7 @@ void CCollisionActor::updateVectors(float const TickTime)
 
 	LastPosition = Area.Position;
 	Movement = Velocity * TickTime;
+	Area.Position += Movement;
 }
 
 void CCollisionActor::pushIfCollided(CCollisionObject * Object, SVector2 const & Movement)
@@ -285,7 +282,7 @@ CCollisionActor::EActionType CCollisionActor::getAction() {
 void CCollisionActor::setJumping(bool const jumping)
 {
 	if (! Jumping && ! Standing)
-		return; // Can't start jupming unless we are standing
+		return; // Can't start jumping unless we are standing
 
 	if (! Jumping && jumping)
 		JumpTimer = Attributes.JumpLength; // Start jumping
@@ -298,40 +295,37 @@ void CCollisionActor::setJumping(bool const jumping)
 	}*/
 }
 
-void CCollisionActor::setControlFall(bool const fall) {
+void CCollisionActor::setControlFall(bool const fall)
+{
 	ControlFall = fall;
 }
 
-bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTime, ICollisionResponder * CollisionResponder)
+bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTime)
 {
 	int CollisionType = ignoreCollision(Object, TickTime);
-	bool doCollision = true;
 
-	if (CollisionResponder && CollisionType) {
-		doCollision = CollisionResponder->OnCollision(this, Object);
+	CollisionType = checkCollision(Object, TickTime);
+
+	if (CollisionType & ECollisionType::Up)
+	{
+		Velocity.Y *= -Object->getMaterial().Elasticity;
+		Jumping = false;
 	}
-	if (doCollision) {
-		CollisionType = checkCollision(Object, TickTime);
-		if (CollisionType & ECollisionType::Up)
-		{
-			Velocity.Y *= -Object->getMaterial().Elasticity;
-			Jumping = false;
-		}
 
-		if (CollisionType & ECollisionType::Down)
+	if (CollisionType & ECollisionType::Down)
+	{
+		if(Attributes.Bounce > 0.01f)
 		{
-			if(Attributes.Bounce > 0.01f) {
-				Velocity.Y = Attributes.Bounce;
-				Attributes.Bounce *= 0.5f;
-			}
-			//Jumping = false;
+			Velocity.Y = Attributes.Bounce;
+			Attributes.Bounce *= 0.5f;
 		}
-
-		if (Attributes.Reacts && (CollisionType & ECollisionType::Left || CollisionType & ECollisionType::Right))
-			Velocity.X *= -Object->getMaterial().Elasticity;
-		return (CollisionType & ECollisionType::Down) != 0;
+		//Jumping = false;
 	}
-	return 0;
+
+	if (Attributes.Reacts && (CollisionType & ECollisionType::Left || CollisionType & ECollisionType::Right))
+		Velocity.X *= -Object->getMaterial().Elasticity;
+
+	return (CollisionType & ECollisionType::Down) != 0;
 }
 
 void CCollisionActor::draw()
