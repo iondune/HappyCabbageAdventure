@@ -20,9 +20,6 @@
     <ClCompile Include="CGameState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CPlayerView.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="irrxml-1.2\src\irrXML.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -32,55 +29,43 @@
     <ClCompile Include="Materials.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CBadGuy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EApple.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EOrange.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EKiwi.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EFlame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EBlade.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PKiwi.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CIEnergy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CIHealth.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CBiggerBlock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PGrape.cpp">
+    <ClCompile Include="Elements\CGameplayElement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EGrape.cpp">
+    <ClCompile Include="Elements\Player\CCabbage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CISeed.cpp">
+    <ClCompile Include="Elements\Player\CPlayerView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CILife.cpp">
+    <ClCompile Include="Elements\Items\CIEnergy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CFriends.cpp">
+    <ClCompile Include="Elements\Items\CIHealth.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CFDerp.cpp">
+    <ClCompile Include="Elements\Items\CILife.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Items\CISeed.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Items\CItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Items\CPItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Friends\CFDerp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Friends\CFriends.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Friends\CPFriends.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -97,12 +82,6 @@
     <ClInclude Include="CGameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CPlayerView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="draw.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="header.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -115,55 +94,46 @@
     <ClInclude Include="SDL_mixer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CBadGuy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EApple.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EOrange.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EKiwi.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EFlame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EBlade.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PKiwi.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CIEnergy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CIHealth.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CBiggerBlock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PGrape.h">
+    <ClInclude Include="Elements\CGameplayElement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EGrape.h">
+    <ClInclude Include="Elements\CPlaceable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CISeed.h">
+    <ClInclude Include="Elements\Player\CCabbage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CILife.h">
+    <ClInclude Include="Elements\Player\CPlayerView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CFriends.h">
+    <ClInclude Include="Elements\Items\CIEnergy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CFDerp.h">
+    <ClInclude Include="Elements\Items\CIHealth.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Items\CILife.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Items\CISeed.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Items\CItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Items\CPItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Friends\CFDerp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Friends\CFriends.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Friends\CPFriends.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
