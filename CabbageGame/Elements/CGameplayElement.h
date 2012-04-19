@@ -22,7 +22,7 @@ class CGameplayElement : public IUpdater, public ICollisionResponder {
 
    public:
       //Functions for CGameplayManager 
-      //virtual void update(float)=0;
+      virtual void update(float);
       virtual void setupObjects()=0;
       virtual void OnCollision(CCollideable *Object, CCollideable *With)=0;
 

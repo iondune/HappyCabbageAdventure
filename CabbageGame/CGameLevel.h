@@ -9,7 +9,7 @@ class CElementBlock;
 #include "CGameLevelLoader.h"
 
 class CGameLevel {
-   friend CGameLevel & CGameLevelLoader::loadLevel(const char*, bool);
+   friend CGameLevel & CGameLevelLoader::loadLevel(std::string, bool);
    private:
       bool night;
       int env, numBlocks;

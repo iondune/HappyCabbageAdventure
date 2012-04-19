@@ -6,33 +6,36 @@
 
 std::map<std::string, CGameLevel*> CGameLevelLoader::LoadedLevels;
 CGameLevel *CGameLevelLoader::LatestLevel = NULL;
-//std::string CGameLevelLoader::LevelDirectory = "../Media/Levels/";
+std::string CGameLevelLoader::LevelDirectory = "../Media/Levels/";
 CGameLevel & CGameLevelLoader::getLatestLevel() {
    if(LatestLevel == NULL)
       LatestLevel = new CGameLevel();
    return *LatestLevel;
 }
 
-CGameLevel &CGameLevelLoader::loadLevel(const char* levelName) {
+CGameLevel &CGameLevelLoader::loadLevel(std::string levelName) {
    return CGameLevelLoader::loadLevel(levelName, false);
 }
 
-CGameLevel &CGameLevelLoader::loadLevel(const char* levelName, bool useCache) {
+CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
 	if (useCache)
 	{
+      //We aren't using cache currently
+      /*
 		std::map<std::string, CGameLevel *>::iterator it = LoadedLevels.find(levelName);
 
 		if (it != LoadedLevels.end())
 		{
 			return *(it->second);
 		}
+      */
 	}
    CGameLevel *newLevel = LatestLevel = new CGameLevel();
    std::vector<CBiggerBlock*> blocksY;
    int x,y,w,d,h,t, moving, env = -1;
    //float spd, rng;
 
-   irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader(levelName);
+   irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader((CGameLevelLoader::LevelDirectory + levelName).c_str());
    while (xml && xml->read())
    {
       switch(xml->getNodeType())
