@@ -8,10 +8,10 @@ CCabbage::CCabbage(float nx, float ny, int width, int height)
 }
 void CCabbage::writeXML(xmlwriter *l) {
     std::stringstream xValue, yValue, widthValue, heightValue, tagValue, isMovingValue;
-    xValue << x;
-    yValue << y;
-    widthValue << w;
-    heightValue << h;
+    xValue << Area.Position.X;
+    yValue << Area.Position.Y;
+    widthValue << Area.Size.X;
+    heightValue << Area.Size.Y;
     isMovingValue << isMovingPlatform;
 
     tagValue << "CCabbage";

@@ -3,7 +3,14 @@
 
 CBlock::CBlock(SRect2 nArea, int depth, int texture)
 : CGameplayElement(PhysicsEngineObject, SceneObject, nArea), Depth(depth), Texture(texture) {
+}
 
+void update(float f) {
+   return;
+}
+
+void OnCollision(CCollideable *Object, CCollideable *With) {
+   return;
 }
 
 void CBlock::writeXML(xmlwriter *l) {

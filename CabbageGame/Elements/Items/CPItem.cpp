@@ -11,9 +11,9 @@ CPItem::CPItem(float nx, float ny, int type)
 
 void CPItem::writeXML(xmlwriter *l) {
     std::stringstream xValue, yValue, isMovingValue, itemType, tagValue;
-    xValue << x;
-    yValue << y;
-    itemType << t;
+    xValue << Area.Position.X;
+    yValue << Area.Position.Y;
+    itemType << Type;
     isMovingValue << isMovingPlatform;
 
     tagValue << "CPItem";

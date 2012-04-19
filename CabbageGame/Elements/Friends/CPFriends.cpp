@@ -11,11 +11,11 @@ CPFriends::CPFriends(float nx, float ny, int type)
 
 void CPFriends::writeXML(xmlwriter *l) {
     std::stringstream xValue, yValue, widthValue, heightValue, tagValue, type;
-    xValue << x;
-    yValue << y;
-    widthValue << w;
-    heightValue << h;
-    type << t;
+    xValue << Area.Position.X;
+    yValue << Area.Position.Y;
+    widthValue << Area.Size.X;
+    heightValue << Area.Size.Y;
+    type << Texture;
 
     tagValue << "CPFriends";
 
