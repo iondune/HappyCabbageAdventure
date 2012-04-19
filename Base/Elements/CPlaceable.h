@@ -6,10 +6,9 @@
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
 #include "../Base/CGameplayManager.h"
-#include "../CabbageCollider/CCollisionEngine.h"
-#include "../CabbageCollider/CCollisionObject.h"
-
-#include "../CabbageCollider/CCollisionActor.h"
+#include "../CabbageCollider/CEngine.h"
+#include "../CabbageCollider/CObject.h"
+#include "../CabbageCollider/CActor.h"
 #include "./wmlwriter_src/xmlwriter.h"
 #include <sstream>
 #include <string>
@@ -22,8 +21,7 @@ class CPlaceable {
       int isMovingPlatform;
 
       virtual void writeXML(xmlwriter *) =0;
-      virtual void moveTo(float,float) =0;
-      virtual CMeshSceneObject* setupItem(CShader*, CShader*, CCollisionEngine*, CGameplayManager*)=0;
+      virtual CMeshSceneObject* setupItem(CShader*, CShader*, Cabbage::Collider::CEngine*, CGameplayManager*)=0;
 
 };
 #endif

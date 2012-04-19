@@ -21,6 +21,9 @@ public:
 		: Position(x, y), Size(w, h)
 	{}
 
+   SRect2(float const v) : Position(v, v), Size(v, v)
+   {}
+
 	SVector2 const otherCorner() const
 	{
 		return Position + Size;
