@@ -60,6 +60,7 @@ public:
 
 	void removeActor(CCollisionActor * Actor);
 
+	void update(float const Elapsed);
 	void updateAll(float const Elapsed);
 
 	CCollisionObject* const getObjectBelow(SVector2 pos);

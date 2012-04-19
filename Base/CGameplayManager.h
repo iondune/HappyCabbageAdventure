@@ -4,6 +4,8 @@
 #include "CGameplayElement.h"
 #include "CGameLevelLoader.h"
 
+class CGameLevel;
+
 class CGameplayManager : public IUpdater {
    private:
       std::vector<CGameplayElement*> Elements;

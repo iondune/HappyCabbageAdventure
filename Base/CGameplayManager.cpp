@@ -1,5 +1,7 @@
 #include "CGameplayManager.h"
 
+#include "CGameLevel.h"
+
 CGameplayManager::CGameplayManager(CGameLevel & level) {
    PhysicsEngine = new CCollisionEngine();
    for(int i = 0; i < level.getPlaceables().size(); i++) {
