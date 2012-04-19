@@ -1,58 +1,58 @@
 #include "CBlock.h"
+#include "CGameLevel.h"
 
-CBlock(SRect2 nArea, int depth, int texture)
-: CGameplayElement(PhysicsEngineObject, SceneObject), Area(nArea), Depth(depth), Texture(texture) {
+CBlock::CBlock(SRect2 nArea, int depth, int texture)
+: CGameplayElement(PhysicsEngineObject, SceneObject, nArea), Depth(depth), Texture(texture) {
 
 }
 
 void CBlock::writeXML(xmlwriter *l) {
-    std::stringstream xValue, yValue, widthValue, heightValue, tagValue, isMovingValue, rangeValue, speedValue, depthValue, textureType;
-    xValue << Area.Position.X;
-    yValue << Area.Position.Y;
-    widthValue << Area.Size.X;
-    heightValue << Area.Size.Y;
-    depthValue << Depth;
-    textureType << Texture;
+   std::stringstream xValue, yValue, widthValue, heightValue, tagValue, isMovingValue, rangeValue, speedValue, depthValue, textureType;
+   xValue << Area.Position.X;
+   yValue << Area.Position.Y;
+   widthValue << Area.Size.X;
+   heightValue << Area.Size.Y;
+   depthValue << Depth;
+   textureType << Texture;
 
-    tagValue << "CBlock";
+   tagValue << "CBlock";
 
-    l->AddAtributes("texture ", textureType.str());
-    l->AddAtributes("depth ", depthValue.str());
-    l->AddAtributes("width ", widthValue.str());
-    l->AddAtributes("height ", heightValue.str());
-    l->AddAtributes("Y ", yValue.str());
-    l->AddAtributes("X ", xValue.str());
-    l->Createtag(tagValue.str());
-    l->CloseLasttag();
+   l->AddAtributes("texture ", textureType.str());
+   l->AddAtributes("depth ", depthValue.str());
+   l->AddAtributes("width ", widthValue.str());
+   l->AddAtributes("height ", heightValue.str());
+   l->AddAtributes("Y ", yValue.str());
+   l->AddAtributes("X ", xValue.str());
+   l->Createtag(tagValue.str());
+   l->CloseLasttag();
 }
 
-void setupObjects() {
+void CBlock::setupObjects() {
    CMeshSceneObject *tempBlock = new CMeshSceneObject();
    /*
     * Doing this in the consolidation phase in CGameState
     * Thus, there will be no physics engine object that this can refer to! TODO: Check if this is good enough or not
-     CObject *engBlock = Engine->addObject();
-     engBlock->setArea(SRect2(x, y, (float) w, (float) h));
-   */
+    CObject *engBlock = Engine->addObject();
+    engBlock->setArea(SRect2(x, y, Area.Size.X, Area.Size.Y));
+    */
 
    CMesh *mesh;
-
 
    mesh = CMeshLoader::createCubeMesh();
    mesh->calculateNormalsPerVertex();
    tempBlock->setMesh(mesh);
-   if (env == 0) {
-      if (t == 0) {
-           tempBlock->setTexture("Base/grass.bmp");
-      }
-      else if (t == 1) {
-          tempBlock->setTexture("Base/dirt.bmp");
-      }
-      else if (t == 2) {
+   if (Level.getEnvironment() == 0) {
+      switch(Texture) {
+      case 0:
+         tempBlock->setTexture("Base/grass.bmp");
+         break; 
+      case 1:
+         tempBlock->setTexture("Base/dirt.bmp");
+         break;
+      case 2:
          tempBlock->setTexture("Base/rock.bmp");
-      }
-
-      else if (t == -5) {
+         break;
+      case -5:
          mesh = CMeshLoader::load3dsMesh("Base/levelBlock.3ds");
          if (mesh) {
             mesh->resizeMesh(SVector3(1.0));
@@ -65,24 +65,15 @@ void setupObjects() {
          tempBlock->setMesh(mesh);
          tempBlock->setTexture("Base/GrassyGrass.bmp", 2);
          tempBlock->setTexture("Base/DirtyDirt.bmp", 3);
-      }
-      else {
-           printf("texture not found\n" );
+         break;
+      default:
+         fprintf(stderr, "Unknown texture type %d\n", Texture);
+         break;
       }
    }
-
-   else if (env == 1) {
-      if (t == 0) {
-           tempBlock->setTexture("Base/desert.bmp");
-      }
-      else if (t == 1) {
-          tempBlock->setTexture("Base/desert.bmp");
-      }
-      else if (t == 2) {
-         tempBlock->setTexture("Base/desert.bmp");
-      }
-
-      else if (t == -5) {
+   else if (Level.getEnvironment() == 1) {
+      switch(Texture) {
+      case -5:
          mesh = CMeshLoader::load3dsMesh("Base/levelBlock.3ds");
          if (mesh) {
             mesh->resizeMesh(SVector3(1.0));
@@ -95,30 +86,29 @@ void setupObjects() {
          tempBlock->setMesh(mesh);
          tempBlock->setTexture("Base/DesertyDesert.tga", 2);
          tempBlock->setTexture("Base/DirtyDirt.bmp", 3);
-      }
-      else {
-           printf("texture not found\n" );
+         break;
+      case 0:
+      case 1:
+      case 2:
+         tempBlock->setTexture("Base/desert.bmp");
+         break;
+      default:
+         fprintf(stderr, "Unknown texture type %d\n", Texture);
+         break;
       }
    }
-   tempBlock->setShader(ERP_DEFAULT, shader);
-   tempBlock->setShader(ERP_DEFERRED_OBJECTS, dShader);
-   if(t != -5) {
-      tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
-      tempBlock->setScale(SVector3((float) w, (float) h, (float) z));
+   tempBlock->setShader(ERP_DEFAULT, CShaderLoader::loadShader("ToonTexture"));
+   tempBlock->setShader(ERP_DEFERRED_OBJECTS, CShaderLoader::loadShader("Deferred/Textured"));
+   if(Texture != -5) {
+      tempBlock->setTranslation(SVector3((Area.Position.X+(Area.Position.X+Area.Size.X))/2, (Area.Position.Y+(Area.Position.Y+Area.Size.Y))/2, 0));
+      tempBlock->setScale(SVector3(Area.Size.X, Area.Size.Y, (float) Depth));
    }
    else /* For ground blocks */{
-      tempBlock->setTranslation(SVector3((x+(x+w))/2, y+.84f*h, 0));
-      tempBlock->setScale(SVector3((float) w, (float) z, (float) h)); //w, h, z
+      tempBlock->setTranslation(SVector3((Area.Position.X+(Area.Position.X+Area.Size.X))/2, Area.Position.Y+.84f*Area.Size.Y, 0));
+      tempBlock->setScale(SVector3(Area.Size.X, (float) Depth, Area.Size.Y)); //Area.Size.X, Area.Size.Y, Depth
    }
 
-   tempBlock->setRotation(SVector3(t==-5?-90.f:0, 0, 0));
+   tempBlock->setRotation(SVector3(Texture==-5?-90.f:0, 0, 0));
 
-   if(isMovingPlatform) {
-      CApplication::get().getSceneManager().addSceneObject(tempBlock);
-   }
-   else {
-      //CApplication::get().getSceneManager().addSceneObject(tempBlock);
-      CApplication::get().getSceneManager().addImmobileSceneObject(tempBlock, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
-   }
-
-   return tempBlock;
+   CApplication::get().getSceneManager().addImmobileSceneObject(tempBlock, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
+}

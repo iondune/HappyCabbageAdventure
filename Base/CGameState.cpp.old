@@ -120,7 +120,6 @@ void CGameState::EngineInit( void ) {
 
    std::vector<CPlaceable*> list;
    CObject *lastOne = NULL;
-   loadWorld(&list);
 
    fprintf(stderr, "Got to here.\n");
    std::vector<CPlaceable*>::iterator it;

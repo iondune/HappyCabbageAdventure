@@ -8,9 +8,11 @@
 
 class CGameLevel;
 #include "./wmlwriter_src/xmlwriter.h"
+#include <sstream>
+#include <string>
 
 class CGameplayElement : public IUpdater, public ICollisionResponder {
-   private:
+   protected:
       CCollideable *& PhysicsEngineObject;
       //A top-level object in the scene manager. Subclasses may create new pointers of a more specific subclass.
       ISceneObject *& SceneObject;
@@ -26,7 +28,7 @@ class CGameplayElement : public IUpdater, public ICollisionResponder {
 
       //Functions for CLWIBState
       virtual void writeXML(xmlwriter *)=0;
-      CGameplayElement(CCollideable * const c, ISceneObject * const s);
+      CGameplayElement(CCollideable * const c, ISceneObject * const s, SRect2 a);
       virtual ~CGameplayElement();
 };
 
