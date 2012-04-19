@@ -98,6 +98,10 @@ void CCollisionEngine::removeActor( CCollisionActor * Actor )
 		}
 }
 
+void CCollisionEngine::update(float const Elapsed) {
+   updateAll(Elapsed);
+}
+
 void CCollisionEngine::updateAll( float const Elapsed )
 {
 	static int const TicksPerSecond = 200;

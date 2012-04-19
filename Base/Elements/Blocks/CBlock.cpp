@@ -31,7 +31,7 @@ void setupObjects() {
    /*
     * Doing this in the consolidation phase in CGameState
     * Thus, there will be no physics engine object that this can refer to! TODO: Check if this is good enough or not
-     Cabbage::Collider::CObject *engBlock = Engine->addObject();
+     CObject *engBlock = Engine->addObject();
      engBlock->setArea(SRect2(x, y, (float) w, (float) h));
    */
 

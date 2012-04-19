@@ -34,7 +34,7 @@ void CEnemy::moveTo(float x,float y) {
    //For usage in LWIB
 }
 
-CMeshSceneObject * CEnemy::setupItem(CShader * chad, CShader * dShader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager) {
+CMeshSceneObject * CEnemy::setupItem(CShader * chad, CShader * dShader, CCollisionEngine *Engine, CGameplayManager *GameplayManager) {
     if (num == 0)
        CBadGuy::makeBadGuy(x, y, (float) w, (float) h, CBadGuy::apple, GameplayManager, env);
     else if (num == 1)

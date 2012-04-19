@@ -19,7 +19,7 @@ class ICollisionResponder
 
 public:
 
-	virtual bool OnCollision(CCollideable * Object, CCollideable * With) =0;
+	virtual void OnCollision(CCollideable * Object, CCollideable * With) =0;
 
 };
 

@@ -3,12 +3,11 @@
 
 #include "IUpdater.h"
 #include "CCollideable.h"
-#include "CEngine.h"
+#include "CCollisionEngine.h"
 #include "CabbageScene.h"
 
 class CGameLevel;
 #include "./wmlwriter_src/xmlwriter.h"
-using namespace Cabbage::Collider;
 
 class CGameplayElement : public IUpdater, public ICollisionResponder {
    private:

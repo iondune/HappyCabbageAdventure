@@ -7,7 +7,7 @@
 class CGameplayManager : public IUpdater {
    private:
       std::vector<CGameplayElement*> Elements;
-      CEngine *PhysicsEngine;
+      CCollisionEngine *PhysicsEngine;
    public:
       CGameplayManager(CGameLevel & level);
       void update(float);

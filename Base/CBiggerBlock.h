@@ -1,7 +1,7 @@
 #ifndef __CBIGGERBLOCK_HEADER
 #define __CBIGGERBLOCK_HEADER
 
-#include "CEngine.h"
+#include "CCollisionEngine.h"
 
 class CBiggerBlock {
    public:
@@ -9,7 +9,7 @@ class CBiggerBlock {
    
    CBiggerBlock(float nx, float ny, float nw, float nh, float);
    
-   void addToEngine(Cabbage::Collider::CEngine *Engine);
+   void addToEngine(CCollisionEngine *Engine);
 };
 
 bool sortXY (CBiggerBlock* a, CBiggerBlock* b);
