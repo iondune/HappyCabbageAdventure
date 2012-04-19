@@ -2,7 +2,7 @@
 #define _______CPHYSICSPARTICLE___H__INCLUDE___
 
 #include "CParticle.h"
-#include "CEngine.h"
+#include "CCollisionEngine.h"
 
 class CPhysicsParticle : public CParticle {
 

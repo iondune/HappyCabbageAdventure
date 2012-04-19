@@ -3,7 +3,7 @@
 
 #include "CParticle.h"
 #include "CPhysicsParticle.h"
-#include "CEngine.h"
+#include "CCollisionEngine.h"
 
 class CPBurst : public CPhysicsParticle {
    float zFactor, zVelocity, zAcceleration;

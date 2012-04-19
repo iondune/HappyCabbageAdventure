@@ -3,7 +3,7 @@
 #include <algorithm>
 
 #include "../CabbageCore/Utils.h"
-#include "CEngine.h"
+#include "CCollisionEngine.h"
 
 #ifdef __unix__
 #include <GL/gl.h>
