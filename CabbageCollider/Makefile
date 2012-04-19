@@ -1,4 +1,4 @@
-FILES = CActor.cpp CCollideable.cpp CObject.cpp 
+FILES = CCollisionActor.cpp CCollideable.cpp CCollisionObject.cpp 
 CC=g++ -O1 -s
 
 OFILES = $(FILES:%.cpp=%.o)

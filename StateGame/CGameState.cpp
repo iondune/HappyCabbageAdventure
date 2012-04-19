@@ -1,5 +1,9 @@
 #include "CGameState.h"
 
+CGameState::CGameState() {
+
+}
+
 void CGameState::begin() {
    Level = &CGameLevelLoader::loadLevel("jorge1.xml");
    GameplayManager = new CGameplayManager(*Level);

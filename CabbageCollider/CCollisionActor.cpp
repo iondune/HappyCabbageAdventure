@@ -308,7 +308,8 @@ bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTim
 	bool doCollision = true;
 
 	if (CollisionResponder && CollisionType) {
-		doCollision = CollisionResponder->OnCollision(this, Object);
+		CollisionResponder->OnCollision(this, Object);
+      doCollision = true;
 	}
 	if (doCollision) {
 		CollisionType = checkCollision(Object, TickTime);

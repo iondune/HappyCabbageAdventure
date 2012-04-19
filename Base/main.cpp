@@ -1,6 +1,7 @@
 //#include "CGameState.h"
-#include "../StateMainMenu/CMainMenuState.h"
-#include "../StateOverworld/COverworldState.h"
+//#include "../StateMainMenu/CMainMenuState.h"
+//#include "../StateOverworld/COverworldState.h"
+#include "../StateGame/CGameState.h"
 
 #ifdef _WIN32
 #pragma comment(lib, "freetype.lib")
@@ -24,6 +25,7 @@ int main(int argc, char * argv[])
     //Application.init(SPosition2(800, 600));
     Application.init(SPosition2(1200, 900));
 
+    /*
 	printf("Argc: %d %s\n", argc, argv[1]);
 	if(argc > 1 && strcmp(argv[1], "-l") == 0) {
 		CGameState::get().lowDef = 1;
@@ -33,11 +35,12 @@ int main(int argc, char * argv[])
 		CGameState::get().lowDef = 0;
 		printf("Low Definition Mode: Off\n");
 	}
+   */
 
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
     CStateManager & StateManager = Application.getStateManager();
-    StateManager.setState(& CMainMenuState::get());
+    StateManager.setState(& CGameState::get());
     //StateManager.setState(& COverworldState::get());
 
     Application.run();
