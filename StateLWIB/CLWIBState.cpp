@@ -19,7 +19,6 @@ void PrepPreviews();
 
 float previewBlockMouseX, previewBlockMouseY; 
 float lastBlockPlacedLocationX, lastBlockPlacedLocationY;
-using namespace Cabbage::Collider;
 CMeshSceneObject *PreviewBlock, *PreviewEnemy, *PreviewCabbage, *PreviewGround, *PreviewFlag, *PreviewItem;
 
 CLWIBState::CLWIBState()

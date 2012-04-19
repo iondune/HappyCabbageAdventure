@@ -27,8 +27,6 @@
 
 
 #include "../CabbageCollider/CEngine.h"
-using namespace Cabbage;
-using namespace Collider;
 
 
 void Initialize()

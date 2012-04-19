@@ -14,7 +14,6 @@ void LoadTextures();
 void PrepMeshes();
 void EngineInit();
 
-using namespace Cabbage::Collider;
 CCollisionEngine *Engine;
 CActor *Player, *Derp, *WinPlayer;
 CLight * PlayerLight;
