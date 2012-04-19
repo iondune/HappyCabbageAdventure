@@ -17,7 +17,7 @@ void EngineInit();
 CCollisionEngine *Engine;
 CActor *Player, *Derp, *WinPlayer;
 CLight * PlayerLight;
-CObject *Floor, *Block, *victoryBlock, *secretVictoryBlock;
+CCollisionObject *Floor, *Block, *victoryBlock, *secretVictoryBlock;
 CPlayerView *PlayerView;
 std::vector<CElevator*> elevators;
 int Charged = 0;
@@ -316,7 +316,7 @@ void CGameState::EngineInit( void ) {
    Application.getEventManager().OnGameTickStart.connect(& GameEventReceiver, & CGameEventReceiver::OnGameTickStart);
 
    std::vector<CPlaceable*> list;
-   CObject *lastOne = NULL;
+   CCollisionObject *lastOne = NULL;
    loadWorld(&list);
 
    PrepSky();
@@ -632,7 +632,7 @@ void CGameState::oldDisplay() {
    PlayerView->setRightGround(Engine->getHeightBelow(rightOfPlayer));
 
    // Split the shadow into two
-   CObject *l, *r;
+   CCollisionObject *l, *r;
    l = Engine->getObjectBelow(leftOfPlayer);
    r = Engine->getObjectBelow(rightOfPlayer);
    // If the cabbage is hanging over an edge, there might not be an object below it, so this check is necessary

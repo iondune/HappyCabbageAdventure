@@ -5,7 +5,7 @@ CBiggerBlock::CBiggerBlock(float nx, float ny, float nw, float nh, float d) : x(
 }
 
 void CBiggerBlock::addToEngine(CCollisionEngine *Engine) {
-   CObject *block = Engine->addObject();
+   CCollisionObject *block = Engine->addObject();
    block->setArea(SRect2(x, y, w, h));
    block->setDepth(z);
 }

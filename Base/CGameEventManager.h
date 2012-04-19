@@ -3,7 +3,7 @@
 
 
 #include "../CabbageFramework/sigslot/sigslot.h"
-#include "../CabbageCollider/CEngine.h"
+#include "../CabbageCollider/CCollisionEngine.h"
 #include "CGameplayManager.h"
 
 class CRenderable;

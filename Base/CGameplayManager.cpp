@@ -289,11 +289,11 @@ SVector2 CGameplayManager::getPlayerLocation() {
    return SVector2(PlayerActor->getArea().getCenter().X, PlayerActor->getArea().getCenter().Y);
 }
 
-void CGameplayManager::setVictoryFlag(CObject * f) {
+void CGameplayManager::setVictoryFlag(CCollisionObject * f) {
    VictoryFlag = f;
 }
 
-void CGameplayManager::setSecretVictoryFlag(CObject * f) {
+void CGameplayManager::setSecretVictoryFlag(CCollisionObject * f) {
    SecretVictoryFlag = f;
 }
 

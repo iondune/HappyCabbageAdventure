@@ -3,7 +3,7 @@
 
 #include "../CabbageCore/SRect2.h"
 
-#include "CObject.h"
+#include "CCollisionObject.h"
 
 class ICollisionResponder;
 
@@ -93,7 +93,7 @@ protected:
 	bool updateCollision(CCollideable * Object, float const TickTime, ICollisionResponder * CollisionResponder);
 	void onStanding(CCollideable * Object);
 
-	void pushIfCollided(CObject * Object, SVector2 const & Movement);
+	void pushIfCollided(CCollisionObject * Object, SVector2 const & Movement);
 
 	bool Impulse;
 	float ImpulseTimer;
@@ -107,8 +107,8 @@ public:
 	int checkCollision(CCollideable * Object, float const TickTime);
 	int ignoreCollision(CCollideable * Object, float const TickTime);
 	float Gravity;
-	bool collidesWith(CObject * Object) const;
-	bool isAbove(CObject * Object, float & height) const;
+	bool collidesWith(CCollisionObject * Object) const;
+	bool isAbove(CCollisionObject * Object, float & height) const;
 
 	bool const isStanding() const;
 

@@ -128,12 +128,12 @@ void CActor::onStanding(CCollideable * Object)
 	Velocity.Y = std::max(Velocity.Y, 0.f);
 }
 
-bool CActor::collidesWith(CObject * Object) const
+bool CActor::collidesWith(CCollisionObject * Object) const
 {
 	return Area.intersects(Object->getArea());
 }
 
-bool CActor::isAbove(CObject * Object, float & height) const
+bool CActor::isAbove(CCollisionObject * Object, float & height) const
 {
 	if (Area.getCenter().Y < Object->getArea().otherCorner().Y)
 		return false;
@@ -223,7 +223,7 @@ void CActor::updateVectors(float const TickTime)
 	Movement = Velocity * TickTime;
 }
 
-void CActor::pushIfCollided(CObject * Object, SVector2 const & Movement)
+void CActor::pushIfCollided(CCollisionObject * Object, SVector2 const & Movement)
 {
 	if (! collidesWith(Object) && Object != Standing)
 		return;

@@ -6,8 +6,8 @@
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
 #include "../Base/CGameplayManager.h"
-#include "../CabbageCollider/CEngine.h"
-#include "../CabbageCollider/CObject.h"
+#include "../CabbageCollider/CCollisionEngine.h"
+#include "../CabbageCollider/CCollisionObject.h"
 #include "../CabbageCollider/CActor.h"
 #include "./wmlwriter_src/xmlwriter.h"
 #include <sstream>

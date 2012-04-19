@@ -1,7 +1,7 @@
 #ifndef _CGAMEPLAYEMANAGER_H_INCLUDED_
 #define _CGAMEPLAYEMANAGER_H_INCLUDED_
 
-#include "../CabbageCollider/CEngine.h"
+#include "../CabbageCollider/CCollisionEngine.h"
 //#include "../CabbageSound/sound.h"
 #include "../CabbageParticles/CParticleEngine.h"
 #include "CPlayerView.h"
@@ -48,8 +48,8 @@ class CGameplayManager : public ICollisionResponder
       CParticleEngine * playerDeathParticleEngine; 
       int won, dead, gameOver;
       CActor * PlayerActor;
-      CObject * VictoryFlag;
-      CObject * SecretVictoryFlag;
+      CCollisionObject * VictoryFlag;
+      CCollisionObject * SecretVictoryFlag;
       int PlayerHealth, PlayerEnergy;
       float PlayerRecovering;
 
@@ -102,8 +102,8 @@ class CGameplayManager : public ICollisionResponder
 
       CGameEventManager & getGameEventManager();
 
-      void setVictoryFlag(CObject * f);
-      void setSecretVictoryFlag(CObject * f);
+      void setVictoryFlag(CCollisionObject * f);
+      void setSecretVictoryFlag(CCollisionObject * f);
 };
 
 #endif

@@ -1,16 +1,16 @@
-#include "CObject.h"
+#include "CCollisionObject.h"
 
-CObject::CObject()
+CCollisionObject::CCollisionObject()
 {
 	CollideableType = COLLIDEABLE_TYPE_BLOCK;
 	CollideableLevel = INTERACTOR_BLOCKS; 
 	CanCollideWith = INTERACTOR_ALL;
 }
 
-CObject::~CObject()
+CCollisionObject::~CCollisionObject()
 {}
 
-SVector2 CObject::performMovement(float const TickTime)
+SVector2 CCollisionObject::performMovement(float const TickTime)
 {
 	return SVector2();
 }

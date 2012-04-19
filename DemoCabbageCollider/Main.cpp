@@ -26,7 +26,7 @@
 #endif
 
 
-#include "../CabbageCollider/CEngine.h"
+#include "../CabbageCollider/CCollisionEngine.h"
 
 
 void Initialize()
@@ -127,14 +127,14 @@ int main(int argc, char * argv[])
 	Player = Engine->addActor();
 	Player->setArea(SRect2(0, 3, 1, 1));
 
-	CObject * Block2 = Engine->addObject();
+	CCollisionObject * Block2 = Engine->addObject();
 	Block2->setArea(SRect2(2, 1.1f, 1, 1.f));
 
-	CObject * Block = Engine->addObject();
+	CCollisionObject * Block = Engine->addObject();
 	Block->setArea(SRect2(-1, -1, 15, 0.9f));
 	Block->getMaterial().Friction = 0.4f;
 
-    CObject * Elevator = Engine->addElevator();
+    CCollisionObject * Elevator = Engine->addElevator();
     Elevator->setArea(SRect2(6, -3, 1, 1));
 
     Elevator = Engine->addElevator();

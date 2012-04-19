@@ -4,7 +4,7 @@
 #include <vector>
 #include <limits>
 
-#include "CObject.h"
+#include "CCollisionObject.h"
 #include "CActor.h"
 
 /*
@@ -28,7 +28,7 @@ class CCollisionEngine
 
 public:
 
-	typedef std::vector<CObject *> ObjectList;
+	typedef std::vector<CCollisionObject *> ObjectList;
 	typedef std::vector<CActor *> ActorList;
 
 private:
@@ -52,7 +52,7 @@ public:
 		Actors.clear();
 	}
 
-	void removeObject(CObject * Object)
+	void removeObject(CCollisionObject * Object)
 	{
 		for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
 			if (* it == Object )
@@ -101,10 +101,10 @@ public:
 		}
 	}
 
-	CObject* const getObjectBelow(SVector2 pos)
+	CCollisionObject* const getObjectBelow(SVector2 pos)
 	{
 		float height = - std::numeric_limits<float>::infinity();
-		CObject *Object, *objBelow = NULL;
+		CCollisionObject *Object, *objBelow = NULL;
 
 		for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
 		{
@@ -126,7 +126,7 @@ public:
 
 	float const getHeightBelow(SVector2 pos) {
 		float height = - std::numeric_limits<float>::infinity();
-		CObject* Object;
+		CCollisionObject* Object;
 
 		for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
 		{
@@ -160,16 +160,16 @@ public:
 	}
 
 	void addNullBlock() {
-		CObject * nullBlock = this->addObject();
+		CCollisionObject * nullBlock = this->addObject();
 		nullBlock->setArea(SRect2(-1000.f, -1000.f, 0.01f, 0.01f)); 
 		nullBlock->CollideableLevel = INTERACTOR_NULL_BLOCK; 
 		nullBlock->CanCollideWith = INTERACTOR_ALL_ALL;
 	}
 
-	CObject * addObject()
+	CCollisionObject * addObject()
 	{
-		CObject * a;
-		Objects.push_back(a = new CObject());
+		CCollisionObject * a;
+		Objects.push_back(a = new CCollisionObject());
 		return Objects.back();
 	}
 

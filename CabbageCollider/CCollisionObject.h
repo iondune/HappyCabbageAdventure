@@ -4,23 +4,23 @@
 #include "CCollideable.h"
 #include "../CabbageScene/CSceneObject.h"
 
-class CObject : public CCollideable
+class CCollisionObject : public CCollideable
 {
 
 protected:
 
 	friend class CCollisionEngine;
 
-	CObject();
+	CCollisionObject();
 
 public:
 
-	~CObject();
+	~CCollisionObject();
 
 	virtual SVector2 performMovement(float const TickTime);
 };
 
-class CElevator : public CObject
+class CElevator : public CCollisionObject
 {
 
 	float Timer;

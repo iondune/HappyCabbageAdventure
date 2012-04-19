@@ -13,14 +13,14 @@
   <ItemGroup>
     <ClInclude Include="CActor.h" />
     <ClInclude Include="CCollideable.h" />
-    <ClInclude Include="CEngine.h" />
-    <ClInclude Include="CObject.h" />
+    <ClInclude Include="CCollisionEngine.h" />
+    <ClInclude Include="CCollisionObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CActor.cpp" />
     <ClCompile Include="CCollideable.cpp" />
-    <ClCompile Include="CEngine.cpp" />
-    <ClCompile Include="CObject.cpp" />
+    <ClCompile Include="CCollisionEngine.cpp" />
+    <ClCompile Include="CCollisionObject.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{10A797C8-94C1-4EA0-89FF-7E03C5943D82}</ProjectGuid>

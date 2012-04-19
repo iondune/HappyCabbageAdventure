@@ -16,7 +16,7 @@
 #include "CParticleObject.h"
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
-#include "../CabbageCollider/CEngine.h"
+#include "../CabbageCollider/CCollisionEngine.h"
 #include "CPhysicsParticle.h"
 
 
