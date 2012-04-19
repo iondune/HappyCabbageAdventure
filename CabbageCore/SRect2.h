@@ -2,6 +2,7 @@
 #define _CABBAGE_CORE_SRECT2_H_INCLUDED_
 
 #include "SVector2.h"
+#include "Utils.h"
 
 class SRect2
 {
@@ -33,10 +34,10 @@ public:
 
 	bool const intersects(SRect2 const & r) const
 	{
-		return (otherCorner().Y > r.Position.Y && 
-			Position.Y < r.otherCorner().Y && 
-			otherCorner().X > r.Position.X && 
-			Position.X < r.otherCorner().X);
+		return (otherCorner().Y > r.Position.Y || equals(otherCorner().Y, r.Position.Y) ) && 
+			(Position.Y < r.otherCorner().Y || equals(Position.Y, r.otherCorner().Y) ) && 
+			(otherCorner().X > r.Position.X || equals(otherCorner().X, r.Position.X) ) && 
+			(Position.X < r.otherCorner().X || equals(Position.X, r.otherCorner().X) );
 	}
 
 	bool const isPointInside(SVector2 const & v) const

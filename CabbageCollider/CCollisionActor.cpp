@@ -121,6 +121,7 @@ void CCollisionActor::onStanding(CCollideable * Object)
 	Standing = Object;
 	FallAcceleration = 0;
 	Velocity.Y = std::max(Velocity.Y, 0.f);
+	Area.Position.Y = Object->getArea().otherCorner().Y;
 }
 
 bool CCollisionActor::collidesWith(CCollisionObject * Object) const

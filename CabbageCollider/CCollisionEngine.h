@@ -43,9 +43,6 @@ public:
 
 	~CCollisionEngine();
 
-
-	void setCollisionResponder(ICollisionResponder * collisionResponder);
-
 	void removeActor(CCollisionActor * Actor);
 
 	void updateAll(float const Elapsed);
