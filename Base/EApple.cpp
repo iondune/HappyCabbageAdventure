@@ -68,15 +68,15 @@ void EApple::update(float const TickTime) {
    if (Manager->isPlayerAlive())
    {
        if (Manager->getPlayerLocation().X < Actor->getArea().getCenter().X && (!rollingLeft && !rollingRight))
-           Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveLeft);
+           Actor->setAction(CActor::EActionType::MoveLeft);
        else if (Manager->getPlayerLocation().X > Actor->getArea().getCenter().X && (!rollingLeft && !rollingRight))
-           Actor->setAction(Cabbage::Collider::CActor::EActionType::MoveRight);
+           Actor->setAction(CActor::EActionType::MoveRight);
 
        float curTime = TickTime;
        for(; curTime > 0; curTime -= 0.002f) { 
           if (Manager->getPlayerLocation().X - Actor->getArea().getCenter().X < 7 && Manager->getPlayerLocation().X - Actor->getArea().getCenter().X > -7 &&
                 Manager->getPlayerLocation().Y - Actor->getArea().getCenter().Y < 1.0f && Manager->getPlayerLocation().Y - Actor->getArea().getCenter().Y > -1.0f && rand()%1000 <= 2) {
-             if (Actor->getAction() == Cabbage::Collider::CActor::EActionType::MoveLeft)
+             if (Actor->getAction() == CActor::EActionType::MoveLeft)
                 rollingLeft = true;
              else
                 rollingRight = true;
@@ -103,7 +103,7 @@ void EApple::update(float const TickTime) {
    }
    else
    {
-       Actor->setAction(Cabbage::Collider::CActor::EActionType::None);
+       Actor->setAction(CActor::EActionType::None);
    }
    //if (rand()%1000 == 1)
    //it->Actor->setJumping(true);

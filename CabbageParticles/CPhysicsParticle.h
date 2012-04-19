@@ -10,10 +10,10 @@ class CPhysicsParticle : public CParticle {
    virtual void updateMatrices(float) =0;
 
    public:
-   Cabbage::Collider::CActor *Actor;
-   Cabbage::Collider::CCollisionEngine *Engine;
+   CActor *Actor;
+   CCollisionEngine *Engine;
 
-   virtual void setEngine(Cabbage::Collider::CCollisionEngine *engine);
+   virtual void setEngine(CCollisionEngine *engine);
    virtual void deconstruct();
 };
 

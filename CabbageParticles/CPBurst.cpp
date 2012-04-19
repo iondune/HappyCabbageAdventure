@@ -12,7 +12,7 @@ void CPBurst::setupRenderable() {
    Counter = 0;
 }
 
-void CPBurst::setEngine(Cabbage::Collider::CCollisionEngine *engine) {
+void CPBurst::setEngine(CCollisionEngine *engine) {
    Engine = engine;
    Actor = Engine->addActor();
    Actor->CollideableLevel = INTERACTOR_NONCOLLIDERS;

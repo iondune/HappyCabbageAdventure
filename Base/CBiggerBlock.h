@@ -6,7 +6,7 @@ class CBiggerBlock {
    
    CBiggerBlock(float nx, float ny, float nw, float nh, float);
    
-   void addToEngine(Cabbage::Collider::CCollisionEngine *Engine);
+   void addToEngine(CCollisionEngine *Engine);
 };
 
 bool sortXY (CBiggerBlock* a, CBiggerBlock* b);

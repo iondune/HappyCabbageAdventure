@@ -30,7 +30,7 @@ struct SPlayerDeathEvent
 struct SPlayerDamagedEvent
 {
     CGameplayManager::SEnemy DamagedBy;
-    Cabbage::Collider::CActor *Damagee;
+    CActor *Damagee;
 };
 
 class CGameEventManager

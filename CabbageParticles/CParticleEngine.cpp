@@ -1,6 +1,6 @@
 #include "CParticleEngine.h"
 
-void CParticleEngine::UsePhysics(Cabbage::Collider::CCollisionEngine *engine) {
+void CParticleEngine::UsePhysics(CCollisionEngine *engine) {
    for(int i = 0; i < numParticles; i++) {
       ((CPhysicsParticle*)particles[i])->setEngine(engine);
    }

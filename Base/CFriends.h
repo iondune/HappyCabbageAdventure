@@ -22,7 +22,7 @@ public:
    float x, y, w, h;
    FriendType Type;
    CGameplayManager* Manager;
-   Cabbage::Collider::CActor* Actor;
+   CActor* Actor;
    CMeshSceneObject* Renderable;
    //Currently the Shader stuff appears to be acting up.
    CShader* Shader;

@@ -20,7 +20,7 @@ class CFriends;
 
 class EKiwi;
 
-class CGameplayManager : public Cabbage::Collider::ICollisionResponder
+class CGameplayManager : public ICollisionResponder
 {
 
    public:
@@ -28,7 +28,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 
       struct SEnemy
       {
-         Cabbage::Collider::CActor * Actor;
+         CActor * Actor;
          ISceneObject * Renderable;
          int KillMethod;
       };
@@ -47,18 +47,18 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
    private:
       CParticleEngine * playerDeathParticleEngine; 
       int won, dead, gameOver;
-      Cabbage::Collider::CActor * PlayerActor;
-      Cabbage::Collider::CObject * VictoryFlag;
-      Cabbage::Collider::CObject * SecretVictoryFlag;
+      CActor * PlayerActor;
+      CObject * VictoryFlag;
+      CObject * SecretVictoryFlag;
       int PlayerHealth, PlayerEnergy;
       float PlayerRecovering;
 
-      Cabbage::Collider::CCollisionEngine * Engine;
+      CCollisionEngine * Engine;
 
       CGameEventManager * GameEventManager;
 
    public:
-      CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CCollisionEngine * engine);
+      CGameplayManager(CActor * playerActor, CCollisionEngine * engine);
 
       static int PlayerLives;
       static int SeedCount;
@@ -67,10 +67,10 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       static int const getNumLives();
       static void subPlayerLife() {PlayerLives--;}
 
-      bool OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With);
+      bool OnCollision(CCollideable * Object, CCollideable * With);
       void runDeathSequence(float);
       void runVictorySequence(float);
-      void Clear(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CCollisionEngine * engine);
+      void Clear(CActor * playerActor, CCollisionEngine * engine);
       void Clear();
 
       int ShootingLaser;
@@ -88,7 +88,7 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
       static int const getSeedCount();
 
       void UseAbility(int energyCost);
-      int const DamagePlayer(int damageTaken, CBadGuy* attacker, Cabbage::Collider::CCollideable* Other);
+      int const DamagePlayer(int damageTaken, CBadGuy* attacker, CCollideable* Other);
       float getRecovering() {return PlayerRecovering;}
       void setRecovering(float val) {PlayerRecovering = val;}
 
@@ -96,14 +96,14 @@ class CGameplayManager : public Cabbage::Collider::ICollisionResponder
 
       SVector2 getPlayerLocation();
 
-      Cabbage::Collider::CCollisionEngine* getEngine();
+      CCollisionEngine* getEngine();
 
       void run(float const TickTime);
 
       CGameEventManager & getGameEventManager();
 
-      void setVictoryFlag(Cabbage::Collider::CObject * f);
-      void setSecretVictoryFlag(Cabbage::Collider::CObject * f);
+      void setVictoryFlag(CObject * f);
+      void setSecretVictoryFlag(CObject * f);
 };
 
 #endif

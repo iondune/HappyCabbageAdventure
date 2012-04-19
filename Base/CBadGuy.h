@@ -25,7 +25,7 @@ public:
    float x, y, w, h;
    EnemyType Enemy;
    CGameplayManager* Manager;
-   Cabbage::Collider::CActor* Actor;
+   CActor* Actor;
    CMeshSceneObject* Renderable;
    int KilledBy;
    //Currently the Shader stuff appears to be acting up.

@@ -14,14 +14,14 @@
 class CPItem : public CPlaceable
 {
    public:
-   Cabbage::Collider::CElevator* elevator;
+   CElevator* elevator;
    int Speed, Range;
    CPItem(float nx, float ny, int type);
    int t;
    void writeXML(xmlwriter *);
    void moveTo(float,float);
    
-   CMeshSceneObject * setupItem(CShader * shader, CShader * dShader, Cabbage::Collider::CCollisionEngine *Engine, CGameplayManager *GameplayManager);
+   CMeshSceneObject * setupItem(CShader * shader, CShader * dShader, CCollisionEngine *Engine, CGameplayManager *GameplayManager);
 };
 
 #endif

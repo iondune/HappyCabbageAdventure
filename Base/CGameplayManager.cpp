@@ -5,7 +5,7 @@
 int CGameplayManager::PlayerLives;
 int CGameplayManager::SeedCount;
 
-CGameplayManager::CGameplayManager(Cabbage::Collider::CActor * playerActor, Cabbage::Collider::CCollisionEngine * engine)
+CGameplayManager::CGameplayManager(CActor * playerActor, CCollisionEngine * engine)
 : PlayerActor(playerActor), PlayerRecovering(false), PlayerHealth(5), Engine(engine), PlayerEnergy(3)
 {
    Engine->setCollisionResponder(this);
@@ -33,12 +33,12 @@ void CGameplayManager::setGodMode(float time) {
    GodModeTime = time;
 }
 
-bool CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cabbage::Collider::CCollideable * With)
+bool CGameplayManager::OnCollision(CCollideable * Object, CCollideable * With)
 {
-   Cabbage::Collider::CCollideable * Other = 0;
-   Cabbage::Collider::CCollideable * PlayerCollideable = 0;
-   Cabbage::Collider::CCollideable * Flag = 0;
-   Cabbage::Collider::CCollideable * Projectile = 0;
+   CCollideable * Other = 0;
+   CCollideable * PlayerCollideable = 0;
+   CCollideable * Flag = 0;
+   CCollideable * Projectile = 0;
 
    //Read that a projectile collided with something
    if (Object->CollideableType == COLLIDEABLE_TYPE_PKIWI) {
@@ -116,12 +116,12 @@ bool CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
          && Object->CollideableType == COLLIDEABLE_TYPE_KIWI) {
 
       if(With->CollideableType == COLLIDEABLE_TYPE_ACTOR) {
-         ((Cabbage::Collider::CActor*)With)->setImpulse(SVector2(0.00f, -0.3f), 0.2f);
+         ((CActor*)With)->setImpulse(SVector2(0.00f, -0.3f), 0.2f);
       }
       birdCollision = 1;
 
       if(With == PlayerActor) {
-         ((Cabbage::Collider::CActor*)Object)->setImpulse(SVector2(0.03f, 0.3f)*7, 0.2f);
+         ((CActor*)Object)->setImpulse(SVector2(0.03f, 0.3f)*7, 0.2f);
       }
       else {
          Object->CollideableLevel = INTERACTOR_SUPERNONCOLLIDERS;
@@ -131,7 +131,7 @@ bool CGameplayManager::OnCollision(Cabbage::Collider::CCollideable * Object, Cab
          {
             //Remove projectile from scene
             if (Object == (*it)->Actor) {
-               Cabbage::Collider::CActor* actor = (*it)->Actor;
+               CActor* actor = (*it)->Actor;
                ((EKiwi*)(*it))->inZ = 1;
                ((EKiwi*)(*it))->lastX = Object->getArea().getCenter().X;
                ((EKiwi*)(*it))->Depth = With->getDepth();
@@ -289,11 +289,11 @@ SVector2 CGameplayManager::getPlayerLocation() {
    return SVector2(PlayerActor->getArea().getCenter().X, PlayerActor->getArea().getCenter().Y);
 }
 
-void CGameplayManager::setVictoryFlag(Cabbage::Collider::CObject * f) {
+void CGameplayManager::setVictoryFlag(CObject * f) {
    VictoryFlag = f;
 }
 
-void CGameplayManager::setSecretVictoryFlag(Cabbage::Collider::CObject * f) {
+void CGameplayManager::setSecretVictoryFlag(CObject * f) {
    SecretVictoryFlag = f;
 }
 
@@ -443,7 +443,7 @@ void CGameplayManager::run(float const TickTime)
    runDeathSequence(TickTime);
 }
 
-Cabbage::Collider::CCollisionEngine* CGameplayManager::getEngine() {
+CCollisionEngine* CGameplayManager::getEngine() {
    return Engine;
 }
 

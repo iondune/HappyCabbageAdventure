@@ -8,7 +8,7 @@ void CPDust::setupRenderable() {
    zFactor = 0;
 }
 
-void CPDust::setEngine(Cabbage::Collider::CCollisionEngine *engine) {
+void CPDust::setEngine(CCollisionEngine *engine) {
    ready = 0;
    Engine = engine;
    Actor = Engine->addActor();

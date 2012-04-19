@@ -57,7 +57,7 @@ void PKiwi::loadActor() {
 //Updates AI's decision per frame
 void PKiwi::update(float const TickTime) {
 
-   Actor->setAction(Cabbage::Collider::CActor::EActionType::None);
+   Actor->setAction(CActor::EActionType::None);
 
    if (Manager->isPlayerAlive())
    {

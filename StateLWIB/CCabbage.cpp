@@ -28,7 +28,7 @@ void CCabbage::moveTo(float x,float y) {
    //For usage in LWIB
 }
 
-CMeshSceneObject * CCabbage::setupItem(CShader * shader, CShader * Shader, Cabbage::Collider::CCollisionEngine *Engine, CGameplayManager *GameplayManager){
+CMeshSceneObject * CCabbage::setupItem(CShader * shader, CShader * Shader, CCollisionEngine *Engine, CGameplayManager *GameplayManager){
 //    Engine->addActor()->setArea(SRect2(CPlaceable::x,y,(float)w,(float)h));
     return new CMeshSceneObject(); // not sure to really return here
 }

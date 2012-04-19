@@ -21,7 +21,7 @@ class CFlag : public CPlaceable
    void writeXML(xmlwriter *);
    void moveTo(float,float);
    void setShader(CShader*);
-   CMeshSceneObject * setupItem(CShader * shader, CShader * dShader, Cabbage::Collider::CCollisionEngine *Engine, CGameplayManager *GameplayManager);
+   CMeshSceneObject * setupItem(CShader * shader, CShader * dShader, CCollisionEngine *Engine, CGameplayManager *GameplayManager);
 };
 
 #endif

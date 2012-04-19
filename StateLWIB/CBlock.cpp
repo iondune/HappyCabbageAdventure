@@ -42,10 +42,10 @@ void CBlock::moveTo(float x,float y) {
    //For usage in LWIB
 }
 
-CMeshSceneObject * CBlock::setupItem(CShader * shader, CShader * dShader, Cabbage::Collider::CCollisionEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
+CMeshSceneObject * CBlock::setupItem(CShader * shader, CShader * dShader, CCollisionEngine *Engine, CGameplayManager *GameplayManager /* For enemy handling */) {
    CMeshSceneObject *tempBlock = new CMeshSceneObject();
    if(isMovingPlatform) {
-      Cabbage::Collider::CElevator *engBlock = Engine->addElevator();
+      CElevator *engBlock = Engine->addElevator();
       engBlock->setArea(SRect2(x, y, (float) w, (float) h));
       engBlock->Speed = (float) Speed;
       engBlock->Range = (float) Range;
@@ -54,7 +54,7 @@ CMeshSceneObject * CBlock::setupItem(CShader * shader, CShader * dShader, Cabbag
    }
    else {
       /* Doing this in the consolidation phase in CGameState
-      Cabbage::Collider::CObject *engBlock = Engine->addObject();
+      CObject *engBlock = Engine->addObject();
       engBlock->setArea(SRect2(x, y, (float) w, (float) h));
       */
    }
