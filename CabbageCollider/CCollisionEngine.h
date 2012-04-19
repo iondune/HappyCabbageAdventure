@@ -46,156 +46,39 @@ private:
 
 public:
 
-	void removeAll() {
-		Objects.clear();
-		addNullBlock();
-		Actors.clear();
-	}
+	void removeAll();
 
-	void removeObject(CCollisionObject * Object)
-	{
-		for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
-			if (* it == Object )
-			{
-				Objects.erase(it);
-				return;
-			}
-	}
+	void removeObject(CCollisionObject * Object);
 
 
-	CCollisionEngine()
-		: Timer(0.f), CollisionResponder(0)
-	{
-		addNullBlock();
-	}
+	CCollisionEngine();
 
-	~CCollisionEngine()
-	{}
+	~CCollisionEngine();
 
-	void setCollisionResponder(ICollisionResponder * collisionResponder)
-	{
-		CollisionResponder = collisionResponder;
-	}
 
-	void removeActor(CCollisionActor * Actor)
-	{
-		for (ActorList::iterator it = Actors.begin(); it != Actors.end(); ++ it)
-			if (* it == Actor)
-			{
-				Actors.erase(it);
-				return;
-			}
-	}
+	void setCollisionResponder(ICollisionResponder * collisionResponder);
 
-	void updateAll(float const Elapsed)
-	{
-		static int const TicksPerSecond = 200;
-		Timer += std::min(Elapsed, 0.1f);
+	void removeActor(CCollisionActor * Actor);
 
-		float const TimePerTick = 1.f / TicksPerSecond;
+	void updateAll(float const Elapsed);
 
-		while (Timer > TimePerTick)
-		{
-			Timer -= TimePerTick;
-			performTick(TimePerTick);
-		}
-	}
+	CCollisionObject* const getObjectBelow(SVector2 pos);
 
-	CCollisionObject* const getObjectBelow(SVector2 pos)
-	{
-		float height = - std::numeric_limits<float>::infinity();
-		CCollisionObject *Object, *objBelow = NULL;
+	float const getHeightBelow(SVector2 pos);
 
-		for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
-		{
-			Object = *it;
-			if (pos.Y < Object->getArea().otherCorner().Y)
-				continue;
+	float const getHeightBelow(CCollisionActor * Actor);
 
-			if (pos.X < Object->getArea().Position.X || pos.X > Object->getArea().otherCorner().X)
-				continue;
+	void addNullBlock();
 
-			if(Object->getArea().otherCorner().Y > height) {
-				height = Object->getArea().otherCorner().Y;
-				objBelow = Object;
-			}
-		}
+	CCollisionObject * addObject();
 
-		return objBelow;
-	}
+	CElevator * addElevator();
 
-	float const getHeightBelow(SVector2 pos) {
-		float height = - std::numeric_limits<float>::infinity();
-		CCollisionObject* Object;
+	CCollisionActor * addActor();
 
-		for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
-		{
-			Object = *it;
-			if (pos.Y < Object->getArea().otherCorner().Y)
-				continue;
+	ObjectList const & getObjects() const;
 
-			if (pos.X < Object->getArea().Position.X || pos.X > Object->getArea().otherCorner().X)
-				continue;
-
-			if(Object->getArea().otherCorner().Y > height)
-				height = Object->getArea().otherCorner().Y;
-		}
-
-		return height;
-	}
-
-	float const getHeightBelow(CCollisionActor * Actor)
-	{
-		float height = - std::numeric_limits<float>::infinity();
-		float checkHeight;
-
-		for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
-		{
-			if (CanCollide(*it, Actor) && Actor->isAbove(* it, checkHeight))
-				if (checkHeight > height)
-					height = checkHeight;
-		}
-
-		return height;
-	}
-
-	void addNullBlock() {
-		CCollisionObject * nullBlock = this->addObject();
-		nullBlock->setArea(SRect2(-1000.f, -1000.f, 0.01f, 0.01f)); 
-		nullBlock->CollideableLevel = INTERACTOR_NULL_BLOCK; 
-		nullBlock->CanCollideWith = INTERACTOR_ALL_ALL;
-	}
-
-	CCollisionObject * addObject()
-	{
-		CCollisionObject * a;
-		Objects.push_back(a = new CCollisionObject());
-		return Objects.back();
-	}
-
-	CElevator * addElevator()
-	{
-		CElevator * cen;
-		Objects.push_back(cen = new CElevator());
-		return cen; 
-	}
-
-	CCollisionActor * addActor()
-	{
-		CCollisionActor *a;
-		Actors.push_back(a = new CCollisionActor());
-		return Actors.back();
-	}
-
-	ObjectList const & getObjects() const
-	{
-		return Objects;
-	}
-
-	ActorList const & getActors() const
-	{
-		return Actors;
-	}
+	ActorList const & getActors() const;
 
 };
 
