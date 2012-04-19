@@ -3,13 +3,6 @@
 
 #include "irrxml-1.2/src/irrXML.h"
 
-class CBlock;
-class CEnemy;
-class CPItem;
-class CPFriends;
-class CPlaceable;
-class CGameLevel;
-
 #include "CDecorManager.h" //For CGroundBlock
 #include "CBiggerBlock.h"
 

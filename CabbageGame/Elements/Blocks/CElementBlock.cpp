@@ -1,7 +1,7 @@
-#include "CBlock.h"
+#include "CElementBlock.h"
 #include "CGameLevel.h"
 
-CBlock::CBlock(SRect2 nArea, int depth, int texture)
+CElementBlock::CElementBlock(SRect2 nArea, int depth, int texture)
 : CGameplayElement(PhysicsEngineObject, SceneObject, nArea), Depth(depth), Texture(texture) {
 }
 
@@ -13,7 +13,7 @@ void OnCollision(CCollideable *Object, CCollideable *With) {
    return;
 }
 
-void CBlock::writeXML(xmlwriter *l) {
+void CElementBlock::writeXML(xmlwriter *l) {
    std::stringstream xValue, yValue, widthValue, heightValue, tagValue, isMovingValue, rangeValue, speedValue, depthValue, textureType;
    xValue << Area.Position.X;
    yValue << Area.Position.Y;
@@ -34,7 +34,7 @@ void CBlock::writeXML(xmlwriter *l) {
    l->CloseLasttag();
 }
 
-void CBlock::setupObjects() {
+void CElementBlock::setupObjects() {
    CMeshSceneObject *tempBlock = new CMeshSceneObject();
    /*
     * Doing this in the consolidation phase in CGameState

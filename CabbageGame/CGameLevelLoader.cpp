@@ -1,11 +1,8 @@
 #include "CGameLevelLoader.h"
 
 #include "CGameLevel.h"
-#include "CBlock.h"
-#include "CEnemy.h"
-#include "CPItem.h"
-#include "CPFriends.h"
-#include "CPlaceable.h"
+#include "CElementBlock.h"
+#include "CGameplayElement.h"
 
 std::map<std::string, CGameLevel*> CGameLevelLoader::LoadedLevels;
 CGameLevel *CGameLevelLoader::LatestLevel = NULL;
@@ -45,7 +42,7 @@ CGameLevel &CGameLevelLoader::loadLevel(const char* levelName, bool useCache) {
       case irr::io::EXN_ELEMENT:
          if(!strcmp("CBlock", xml->getNodeName()))
          {
-            CBlock * ptr;
+            CElementBlock * ptr;
             // id, X, Y, height, width / from 0,1,2 so on
             x = xml->getAttributeValueAsInt(0);
             y = xml->getAttributeValueAsInt(1);
@@ -57,15 +54,17 @@ CGameLevel &CGameLevelLoader::loadLevel(const char* levelName, bool useCache) {
             if (t == -5)
                newLevel->GroundBlocks.push_back(new CGroundBlock((float) x, (float) y, (float) w, (float) h, (float) d));
 
-            newLevel->Blocks.push_back(ptr = new CBlock((float)x,(float)y,w,h,d,t,moving, env));
-            newLevel->Placeables.push_back(ptr);
+            newLevel->Blocks.push_back(ptr = new CElementBlock(SRect2((float)x, (float)y, (float)w, (float)h), d, t));
+            newLevel->Elements.push_back(ptr);
             if(xml->getAttributeValueAsInt(6)) {
+               /*TODO: fix elevators
                ptr->isMovingPlatform = 1;
                ptr->Range = (int) xml->getAttributeValueAsFloat(7); //Range
                ptr->Speed = (int) xml->getAttributeValueAsFloat(8); //Speed
+               */
             }
             else {
-               ptr->isMovingPlatform = 0;
+               //ptr->isMovingPlatform = 0;
                //numBlocks++;
                int curW = w;
                //Hard case for ground blocks...
@@ -79,15 +78,15 @@ CGameLevel &CGameLevelLoader::loadLevel(const char* levelName, bool useCache) {
          }
          if(!strcmp("CEnemy", xml->getNodeName()))
          {
-            CEnemy *cen;
+            //CEnemy *cen;
             x = xml->getAttributeValueAsInt(0);
             y = xml->getAttributeValueAsInt(1);
             h = xml->getAttributeValueAsInt(2);
             w = xml->getAttributeValueAsInt(3);
             t = xml->getAttributeValueAsInt(4);
-            newLevel->Enemies.push_back(cen = new CEnemy((float)x,(float)y,w,h,t, env));
-            newLevel->Placeables.push_back(cen);
-            cen->isMovingPlatform = 0;
+            //TODO newLevel->Enemies.push_back(cen = new CEnemy((float)x,(float)y,w,h,t, env));
+            //TODO newLevel->Elements.push_back(cen);
+            //cen->isMovingPlatform = 0;
          }
          if(!strcmp("CCabbage",xml->getNodeName())) {
             x = xml->getAttributeValueAsInt(0);
@@ -124,22 +123,22 @@ CGameLevel &CGameLevelLoader::loadLevel(const char* levelName, bool useCache) {
             */
          }
          if(!strcmp("CPItem",xml->getNodeName())) {
-            CPItem * stuff;
+            //CPItem * stuff;
             x = xml->getAttributeValueAsInt(0);
             y = xml->getAttributeValueAsInt(1);
             t = xml->getAttributeValueAsInt(2);
-            newLevel->Items.push_back(stuff = new CPItem((float)x,(float)y,t));
-            newLevel->Placeables.push_back(stuff);
-            stuff->isMovingPlatform = 0;
+            //TODO newLevel->Items.push_back(stuff = new CPItem((float)x,(float)y,t));
+            //TODO newLevel->Elements.push_back(stuff);
+            //stuff->isMovingPlatform = 0;
          }
          if(!strcmp("CPFriends",xml->getNodeName())) {
-            CPFriends * buds;
+            //CPFriends * buds;
             x = xml->getAttributeValueAsInt(0);
             y = xml->getAttributeValueAsInt(1);
             t = xml->getAttributeValueAsInt(2);
-            newLevel->Friends.push_back(buds = new CPFriends((float)x, (float)y,t));
-            newLevel->Placeables.push_back(buds);
-            buds->isMovingPlatform = 0;
+            //TODO newLevel->Friends.push_back(buds = new CPFriends((float)x, (float)y,t));
+            //TODO newLevel->Elements.push_back(buds);
+            //buds->isMovingPlatform = 0;
          }
          if (!strcmp("envVar", xml->getNodeName()))
          {

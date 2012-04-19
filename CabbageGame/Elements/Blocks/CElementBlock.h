@@ -3,7 +3,7 @@
 
 #include "../CGameplayElement.h"
 
-class CBlock : public CGameplayElement {
+class CElementBlock : public CGameplayElement {
    private:
       CCollisionObject * PhysicsEngineObject; //Override CGameplayElement's but with type CObject
       CMeshSceneObject * SceneObject; //Override CGameplayElement's but with type CMeshSceneObject
@@ -14,8 +14,8 @@ class CBlock : public CGameplayElement {
       virtual void OnCollision(CCollideable *Object, CCollideable *With);
 
       virtual void writeXML(xmlwriter *);
-      CBlock(SRect2 nArea, int depth, int texture);
-      virtual ~CBlock();
+      CElementBlock(SRect2 nArea, int depth, int texture);
+      virtual ~CElementBlock();
 };
 
 #endif

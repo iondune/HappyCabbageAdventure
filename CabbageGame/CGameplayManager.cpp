@@ -4,8 +4,8 @@
 
 CGameplayManager::CGameplayManager(CGameLevel & level) {
    PhysicsEngine = new CCollisionEngine();
-   for(int i = 0; i < level.getPlaceables().size(); i++) {
-      level.getPlaceables()[i]->setup();
+   for(int i = 0; i < level.getElements().size(); i++) {
+      level.getElements()[i]->setupObjects();
    }
 }
 

@@ -1,11 +1,8 @@
 #ifndef ______CGAMELEVEL_OMG_HEADER
 #define ______CGAMELEVEL_OMG_HEADER
 
-class CBlock;
-class CEnemy;
-class CPItem;
-class CPFriends;
-class CPlaceable;
+class CGameplayElement;
+class CElementBlock;
 
 #include "CDecorManager.h" //For CGroundBlock
 #include "CBiggerBlock.h"
@@ -16,25 +13,29 @@ class CGameLevel {
    private:
       bool night;
       int env, numBlocks;
-      std::vector<CBiggerBlock*> blocksFinal;
 
       std::vector<CGameplayElement*> Elements;
+      std::vector<CElementBlock*> Blocks;
+      std::vector<CGroundBlock*> GroundBlocks;
+      std::vector<CBiggerBlock*> blocksFinal;
+      /*
       std::vector<CFriends*> Friends;
       std::vector<CItem*> Items;
-      std::vector<CBlock*> Blocks;
       std::vector<CEnemy*> Enemies;
-      std::vector<CGroundBlock*> GroundBlocks;
-      std::vector<CElevator*> GroundBlocks;
+      std::vector<CElevator*> Elevators;
+      */
 
    public:
       std::vector<CGameplayElement*> & getElements();
+      std::vector<CElementBlock*> & getBlocks();
+      std::vector<CGroundBlock*> & getGroundBlocks();
+      std::vector<CBiggerBlock*> & getConsolidatedBlocks();
+      /*
       std::vector<CPFriends*> & getFriends();
       std::vector<CPItem*> & getItems();
-      std::vector<CBlock*> & getBlocks();
       std::vector<CEnemy*> & getEnemies();
-      std::vector<CGroundBlock*> & getGroundBlocks();
       std::vector<CElevator*> & getElevators();
-      std::vector<CBiggerBlock*> & getConsolidatedBlocks();
+      */
 
       bool isNight();
       int getEnvironment();

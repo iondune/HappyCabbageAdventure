@@ -1,26 +1,33 @@
 #include "CGameLevel.h"
 
+#include "CGameplayElement.h"
+#include "CElementBlock.h"
+
 std::vector<CGameplayElement*> & CGameLevel::getElements() {
    return Elements;
 }
+std::vector<CElementBlock*> & CGameLevel::getBlocks() {
+   return Blocks;
+}
+
+std::vector<CGroundBlock*> & CGameLevel::getGroundBlocks() {
+   return GroundBlocks;
+}
+
+/*
 std::vector<CFriend*> & CGameLevel::getFriends() {
    return Friends;
 }
 std::vector<CItem*> & CGameLevel::getItems() {
    return Items;
 }
-std::vector<CBlock*> & CGameLevel::getBlocks() {
-   return Blocks;
-}
 std::vector<CEnemy*> & CGameLevel::getEnemies() {
    return Enemies;
-}
-std::vector<CGroundBlock*> & CGameLevel::getGroundBlocks() {
-   return GroundBlocks;
 }
 std::vector<CElevator*> & CGameLevel::getElevators() {
    return Elevators;
 }
+*/
 
 bool CGameLevel::isNight() {
    return night;
