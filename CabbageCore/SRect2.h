@@ -40,12 +40,25 @@ public:
 			(Position.X < r.otherCorner().X || equals(Position.X, r.otherCorner().X) );
 	}
 
+	SRect2 const getIntersection(SRect2 const & r) const
+	{
+		SVector2 Position(std::max(r.Position.X, Position.X), std::max(r.Position.Y, Position.Y));
+		SVector2 OtherCorner(std::min(r.otherCorner().X, otherCorner().X), std::min(r.otherCorner().Y, otherCorner().Y));
+
+		return SRect2(Position, OtherCorner - Position);
+	}
+
 	bool const isPointInside(SVector2 const & v) const
 	{
 		return (otherCorner().Y > v.Y && 
 			Position.Y < v.Y && 
 			otherCorner().X > v.X && 
 			Position.X < v.X);
+	}
+
+	float const getArea() const
+	{
+		return Size.X * Size.Y;
 	}
 
 };

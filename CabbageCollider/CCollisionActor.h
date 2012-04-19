@@ -1,7 +1,7 @@
 #ifndef _CABBAGECOLLIDER_CACTOR_H_INCLUDED_
 #define _CABBAGECOLLIDER_CACTOR_H_INCLUDED_
 
-#include "../CabbageCore/SRect2.h"
+#include <SRect2.h>
 
 #include "CCollisionObject.h"
 
@@ -134,13 +134,14 @@ protected:
 	float ImpulseTimer;
 	SVector2 ImpulseVelocity;
 
+	bool AllowedMovement;
+
 public:
 
 	~CCollisionActor();
 
 	SVector2 LastPosition, Movement;
 	int checkCollision(CCollideable * Object, float const TickTime);
-	int ignoreCollision(CCollideable * Object, float const TickTime);
 	float Gravity;
 	bool collidesWith(CCollisionObject * Object) const;
 	bool isAbove(CCollisionObject * Object, float & height) const;

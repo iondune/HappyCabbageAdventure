@@ -178,7 +178,7 @@ int main(int argc, char * argv[])
 
 		// Determine time since last draw
 		Time1 = SDL_GetTicks();
-		float Delta = (float) (Time1 - Time0) / 10000.f;
+		float Delta = (float) (Time1 - Time0) / 5000.f;
 		Time0 = Time1;
 
 		if (IsKeyDown[SDLK_d] && IsKeyDown[SDLK_a])
