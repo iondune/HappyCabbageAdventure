@@ -8,7 +8,13 @@
 #include "CPlaceable.h"
 
 std::map<std::string, CGameLevel*> CGameLevelLoader::LoadedLevels;
+CGameLevel *CGameLevelLoader::LatestLevel = NULL;
 //std::string CGameLevelLoader::LevelDirectory = "../Media/Levels/";
+CGameLevel & CGameLevelLoader::getLatestLevel() {
+   if(LatestLevel == NULL)
+      LatestLevel = new CGameLevel();
+   return *LatestLevel;
+}
 
 CGameLevel &CGameLevelLoader::loadLevel(const char* levelName) {
    return CGameLevelLoader::loadLevel(levelName, false);
@@ -24,7 +30,7 @@ CGameLevel &CGameLevelLoader::loadLevel(const char* levelName, bool useCache) {
 			return *(it->second);
 		}
 	}
-   CGameLevel *newLevel = new CGameLevel();
+   CGameLevel *newLevel = LatestLevel = new CGameLevel();
    std::vector<CBiggerBlock*> blocksY;
    int x,y,w,d,h,t, moving, env = -1;
    //float spd, rng;

@@ -71,6 +71,7 @@ CDecorManager::CDecorManager(CGameLevel & level) {
       delete curBlock;
    }
 }
+
 void CDecorManager::GenerateDesertPlants(CGroundBlock* block, bool genTree) {
    float x = block->x,
          y = block->y,

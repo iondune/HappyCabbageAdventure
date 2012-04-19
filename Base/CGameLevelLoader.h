@@ -17,10 +17,12 @@ class CGameLevelLoader {
    private:
       static std::map<std::string, CGameLevel*> LoadedLevels;
       static std::vector<CBiggerBlock*> consolidateBlocks(std::vector<CBiggerBlock*> blocksY);
+      static CGameLevel *LatestLevel;
 
    public:
       static CGameLevel &loadLevel(const char*);
       static CGameLevel &loadLevel(const char*, bool);
+      static CGameLevel &getLatestLevel();
 };
 
 #endif

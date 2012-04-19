@@ -1,26 +1,21 @@
 #ifndef __CBLOCK_H____
 #define __CBLOCK_H____
 
-#include <stdio.h>
-#include "CPlaceable.h"
-#include "../CabbageScene/CabbageScene.h"
-#include "../CabbageFramework/CabbageFramework.h"
-#include "../Base/CGameplayManager.h"
-#include "../CabbageCollider/CEngine.h"
-#include "../CabbageCollider/CObject.h"
-#include "../CabbageCollider/CActor.h"
-#include <sstream>
-#include <string>
-class CBlock : public CPlaceable
-{
+#include "../CGameplayElement.h"
+
+class CBlock : public CGameplayElement {
+   private:
+      CObject * PhysicsEngineObject; //Override CGameplayElement's but with type CObject
+      CMeshSceneObject * SceneObject; //Override CGameplayElement's but with type CMeshSceneObject
+      int Depth, Texture;
    public:
-   Cabbage::Collider::CElevator* elevator;
-   int Speed, Range;
-   CBlock(float nx, float ny, int width, int height, int depth, int texture, int moving, int env);
-   int z, t, env;
-   void writeXML(xmlwriter *);
-   void moveTo(float,float);
-   CMeshSceneObject * setupItem(CShader * shader, CShader * dShader, Cabbage::Collider::CEngine *Engine, CGameplayManager *GameplayManager);
+      virtual void update(float);
+      virtual void setupObjects();
+      virtual void OnCollision(CCollideable *Object, CCollideable *With);
+
+      virtual void writeXML(xmlwriter *);
+      CBlock(SRect2 nArea, int depth, int texture);
+      virtual ~CBlock();
 };
 
 #endif

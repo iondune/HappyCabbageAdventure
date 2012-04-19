@@ -3,7 +3,7 @@
 CGameplayManager::CGameplayManager(CGameLevel & level) {
    PhysicsEngine = new CEngine();
    for(int i = 0; i < level.getPlaceables().size(); i++) {
-      
+      level.getPlaceables()[i]->setup();
    }
 }
 

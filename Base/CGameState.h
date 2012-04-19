@@ -11,11 +11,13 @@ class CGameState : public CState<CGameState> {
    private:
       CGameplayManager *GameplayManager;
       CDecorManager *DecorManager;
+      CGameLevel *Level;
    public:
       CGameState();
       void begin();
       void OnRenderStart(float const Elapsed);
       void OnRenderEnd(float const Elapsed);
       void end();
+      CGameLevel & getCurrentLevel();
 };
 #endif
