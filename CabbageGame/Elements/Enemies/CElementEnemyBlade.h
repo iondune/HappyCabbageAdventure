@@ -18,4 +18,4 @@ class CElementEnemyBlade : public CElementEnemy
       virtual void updateSceneObject(float time);
 };
 
-#endif /* EKIWI_H_ */
+#endif

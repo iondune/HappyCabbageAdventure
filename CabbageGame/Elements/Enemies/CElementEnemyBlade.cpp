@@ -45,10 +45,13 @@ void CElementEnemyBlade::OnCollision(CCollideable *Object, CCollideable *With) {
 }
                                                             
 //CGameplayElement has an attribute called ElapsedTime, which is updated by CGameplayElement's update function.
+
+//This is where the AI would be updated for more complex enemies
 void CElementEnemyBlade::updatePhysicsEngineObject(float time) {
    return; //Doesn't move in physics engine
 }
 
+//This is where the renderable would be updated for the more complex enemies
 void CElementEnemyBlade::updateSceneObject(float time) {
    BladeRotate -= 300.0f * time;
 
