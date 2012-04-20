@@ -5,8 +5,10 @@ CElementBlock::CElementBlock(SRect2 nArea, int depth, int texture)
 : CGameplayElement(PhysicsEngineObject, SceneObject, nArea), Depth(depth), Texture(texture) {
 }
 
-void CElementBlock::update(float f) {
-   return;
+void CElementBlock::updatePhysicsEngineObject(float time) {
+}
+
+void CElementBlock::updateSceneObject(float time) {
 }
 
 void CElementBlock::OnCollision(CCollideable *Object, CCollideable *With) {

@@ -1,35 +1,35 @@
 #include "CElementEnemy.h"
 
 //Generic enemy, for usage in the LWIB, I guess.
-CElementEnemy::CElementEnemy(SRect2 nArea, int type)
+CElementEnemy::CElementEnemy(SRect2 nArea, Enemies::EEnemyType type)
 : CGameplayElement(PhysicsEngineObject, SceneObject, nArea), Type(type) {
 }
 
 //Enemy created by factory
-CElementEnemy *CEnemyLoader::LoadEnemy(SRect2 nArea, int type, int texture) {
+CElementEnemy *CEnemyLoader::LoadEnemy(SRect2 nArea, Enemies::EEnemyType type) {
    switch(type) {
-   case 0:
+   case Enemies::APPLE:
       return NULL;//new CElementEnemyApple(nArea, type);
       break;
-   case 1:
+   case Enemies::ORANGE:
       return NULL;//new CElementEnemyOrange(nArea, type);
       break;
-   case 2:
+   case Enemies::KIWI:
       return NULL;//new CElementEnemyKiwi(nArea, type);
       break;
-   case 3:
+   case Enemies::GRAPE:
       return NULL;//new CElementEnemyGrape(nArea, type);
       break;
-   case 4:
+   case Enemies::FLAME:
       return NULL;//new CElementEnemyFlame(nArea, type);
       break;
-   case 5:
+   case Enemies::BLADE:
       return NULL;//new CElementEnemyBlade(nArea, type);
       break;
-   case -2:
+   case Enemies::KIWI_PROJECTILE:
       return NULL;//new CElementEnemyKiwiProjectile(nArea, type);
       break;
-   case -3:
+   case Enemies::GRAPE_PROJECTILE:
       return NULL;//new CElementEnemyGrapeProjectile(nArea, type);
       break;
    default:
@@ -63,9 +63,13 @@ void CElementEnemy::OnCollision(CCollideable *Object, CCollideable *With) {
    exit(1);
 }
 
-void CElementEnemy::update(float f) {
-   fprintf(stderr, "Error: update on generic enemy type %d (perhaps the CElementEnemy::update function wasn't overridden?).\n", Type);
+void CElementEnemy::updatePhysicsEngineObject(float time) {
+   fprintf(stderr, "Error: updatePhysicsEngineObject on generic enemy type %d (perhaps the CElementEnemy::updatePhysicsEngineObject function wasn't overridden?).\n", Type);
    exit(1);
+}
+
+void CElementEnemy::updateSceneObject(float time) {
+   return;
 }
 
 void CElementEnemy::setupObjects() {

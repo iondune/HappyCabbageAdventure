@@ -2,18 +2,40 @@
 #define ____CELEMENTENEMY_HEADER_
 #include "../CGameplayElement.h"
 
+namespace Enemies {
+   enum EEnemyType {
+      APPLE					= 0,
+      ORANGE				= 1,
+      KIWI					= 2,
+      GRAPE					= 3,
+      FLAME					= 4,
+      BLADE					= 5,
+      KIWI_PROJECTILE	= 6,
+      GRAPE_PROJECTILE	= 7
+   };
+}
+
 class CElementEnemy : public CGameplayElement {
-   int Type;
+   public:
 
-   virtual void update(float f);
-   virtual void setupObjects();
-   virtual void OnCollision(CCollideable *Object, CCollideable *With);
-   virtual void writeXML(xmlwriter *l);
+   protected:
+      CCollisionActor * PhysicsEngineObject; //Override CGameplayElement's but with type CCollisionActor
+      CMeshSceneObject * SceneObject; //Override CGameplayElement's but with type CMeshSceneObject
 
-   CElementEnemy(SRect2 nArea, int type);
+      Enemies::EEnemyType Type;
+
+   public:
+      virtual void setupObjects();
+      virtual void OnCollision(CCollideable *Object, CCollideable *With);
+      virtual void writeXML(xmlwriter *l);
+
+      virtual void updatePhysicsEngineObject(float time);
+      virtual void updateSceneObject(float time);
+
+      CElementEnemy(SRect2 nArea, Enemies::EEnemyType type);
 };
 
 class CEnemyLoader {
-   static CElementEnemy *LoadEnemy(SRect2 nArea, int type, int texture); 
+   static CElementEnemy *LoadEnemy(SRect2 nArea, Enemies::EEnemyType type); 
 };
 #endif

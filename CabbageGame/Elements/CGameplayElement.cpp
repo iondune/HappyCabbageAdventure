@@ -6,7 +6,8 @@ SceneObject(s), PhysicsEngineObject(c), Level(CGameLevelLoader::getLatestLevel()
 {
 }
 
-void CGameplayElement::update(float e) {
-   fprintf(stderr, "Tried to update a generic CGameplayElement!\n");
-   exit(1);
+void CGameplayElement::update(float time) {
+   ElapsedTime += time;
+   updatePhysicsEngineObject(time);
+   updateSceneObject(time);
 }

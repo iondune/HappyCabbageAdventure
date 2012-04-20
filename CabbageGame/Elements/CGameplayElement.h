@@ -19,12 +19,17 @@ class CGameplayElement : public IUpdater, public ICollisionResponder {
       //If CGameLevelLoader isn't being used to load a level, this value will be wrong when created.
       CGameLevel & Level;
       SRect2 Area;
+      float ElapsedTime;
 
    public:
       //Functions for CGameplayManager 
-      virtual void update(float);
+      virtual void update(float); //By default it just updates both objects, but can be overridden
       virtual void setupObjects()=0;
       virtual void OnCollision(CCollideable *Object, CCollideable *With)=0;
+
+      //Functions for subclasses
+      virtual void updatePhysicsEngineObject(float)=0;
+      virtual void updateSceneObject(float)=0;
 
       //Functions for CLWIBState
       virtual void writeXML(xmlwriter *)=0;
