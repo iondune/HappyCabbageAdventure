@@ -5,11 +5,13 @@
 #include "CGameLevelLoader.h"
 
 class CGameLevel;
+class CElementPlayer;
 
 class CGameplayManager : public IUpdater {
    private:
       std::vector<CGameplayElement*> Elements;
       CCollisionEngine *PhysicsEngine;
+      CElementPlayer *Player;
    public:
       CGameplayManager(CGameLevel & level);
       void update(float);
