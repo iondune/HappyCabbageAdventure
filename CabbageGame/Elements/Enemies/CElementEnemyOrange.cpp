@@ -2,7 +2,7 @@
 #include "CGameLevel.h"
 
 CElementEnemyOrange::CElementEnemyOrange(SRect2 nArea) :
-   CElementEnemy(nArea, Enemies::APPLE), Jumped(true) {
+   CElementEnemy(nArea, Enemies::ORANGE), Jumped(true) {
 
 }
 
