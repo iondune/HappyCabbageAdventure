@@ -34,7 +34,7 @@ namespace Cabbage {
 
 class CElementPlayer : public CGameplayElement, public CApplicationEventReceiver {
    private:
-      CCollisionObject * PhysicsEngineObject; //Override CGameplayElement's but with type CObject
+      CCollisionActor * PhysicsEngineObject; //Override CGameplayElement's but with type CObject
       ISceneObject * SceneObject; //Override CGameplayElement's. This will contain the cabbage and its shadow 
 
       ISceneObject HurtCabbageArr[NUM_CABBAGE_MESH_STATES];

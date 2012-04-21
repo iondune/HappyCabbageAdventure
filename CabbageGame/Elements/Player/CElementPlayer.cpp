@@ -33,6 +33,13 @@ void CElementPlayer::writeXML(xmlwriter *l) {
 }
 
 void CElementPlayer::setupPhysicsEngineObject() {
+   //TODO: Fix this once we have a way to refer to the physics engine
+   PhysicsEngineObject = (new CCollisionEngine())->addActor();
+   PhysicsEngineObject->setArea(Area);
+   PhysicsEngineObject->getAttributes().MaxWalk = 3.5f;
+   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_PLAYER;
+   PhysicsEngineObject->CollideableLevel |= INTERACTOR_SUPERACTORS;
+   PhysicsEngineObject->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
 }
 
 #include <sstream>
