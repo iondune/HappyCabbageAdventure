@@ -29,28 +29,6 @@ int NoClipMode = 0;
 CGameplayManager *GameplayManager;
 
 void ViewInit( void ) {
-   PlayerView = new CPlayerView();
-   CMeshSceneObject *renderLeftShadow, *renderRightShadow;
-
-   renderLeftShadow = new CMeshSceneObject();
-   renderLeftShadow->setMesh(discMesh);
-   renderLeftShadow->setShader(ERP_DEFAULT, BlackShader);
-   renderLeftShadow->setShader(ERP_DEFERRED_OBJECTS, BlackShader);
-   renderLeftShadow->addUniform("cutoff", PlayerView->LeftShadowCutoffValue);
-   renderLeftShadow->addUniform("start", PlayerView->LeftShadowStartValue);
-
-   renderRightShadow = new CMeshSceneObject();
-   renderRightShadow->setMesh(discMesh);
-   renderRightShadow->setShader(ERP_DEFAULT, BlackShader);
-   renderRightShadow->setShader(ERP_DEFERRED_OBJECTS, BlackShader);
-   renderRightShadow->addUniform("cutoff", PlayerView->RightShadowCutoffValue);
-   renderRightShadow->addUniform("start", PlayerView->RightShadowStartValue);
-
-   CApplication::get().getSceneManager().addSceneObject(renderLeftShadow);
-   CApplication::get().getSceneManager().addSceneObject(renderRightShadow);
-
-   PlayerView->setRenderable(playerRenderable, renderLeftShadow, renderRightShadow);
-   PlayerView->setSize(SVector2(1.0f, 1.0f));
 }
 
 void BlockMesh() {
