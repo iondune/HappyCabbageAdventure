@@ -19,6 +19,8 @@ class CElementBlock : public CGameplayElement {
 
       virtual void writeXML(xmlwriter *);
       CElementBlock(SRect2 nArea, int depth, int texture);
+
+      virtual void printInformation();
 };
 
 #endif

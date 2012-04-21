@@ -35,7 +35,12 @@ class CGameplayElement : public IUpdater, public ICollisionResponder {
 
       //Functions for CLWIBState
       virtual void writeXML(xmlwriter *)=0;
+
+      //Constructor
       CGameplayElement(CCollideable * const c, ISceneObject * const s, SRect2 a);
+
+      //Function for debugging
+      virtual void printInformation();
 };
 
 #endif

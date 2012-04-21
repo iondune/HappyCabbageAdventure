@@ -127,3 +127,7 @@ void CElementEnemyApple::updateSceneObject(float time) {
          SceneObject->setScale(SVector3(1,1,1));
    }
 }
+
+void CElementEnemyApple::printInformation() {
+   printf("CElementEnemyApple; Area: [[%0.0f, %0.0f],[%0.0f, %0.0f]]\n", Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y);
+}

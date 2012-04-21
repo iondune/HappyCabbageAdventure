@@ -8,7 +8,15 @@ bool CGameLevel::isLoaded() {
    return Loaded;
 }
 
-CGameLevel::CGameLevel() : Loaded(false) {
+void CGameLevel::setNoRender() {
+   Render = false;
+}
+
+bool CGameLevel::shouldRender() {
+   return Render;
+}
+
+CGameLevel::CGameLevel() : Loaded(false), Render(true) {
 
 }
 

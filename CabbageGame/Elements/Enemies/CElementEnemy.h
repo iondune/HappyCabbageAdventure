@@ -37,6 +37,8 @@ class CElementEnemy : public CGameplayElement {
       Enemies::EEnemyType getEnemyType();
 
       CElementEnemy(SRect2 nArea, Enemies::EEnemyType type);
+
+      virtual void printInformation();
 };
 
 class CEnemyLoader {

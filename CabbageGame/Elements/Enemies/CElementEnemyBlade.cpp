@@ -57,3 +57,7 @@ void CElementEnemyBlade::updateSceneObject(float time) {
    BladeRotate -= 300.0f * time;
    SceneObject->setRotation(SVector3(-90, 0, BladeRotate));
 }
+
+void CElementEnemyBlade::printInformation() {
+   printf("CElementEnemyBlade; Area: [[%0.0f, %0.0f],[%0.0f, %0.0f]]\n", Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y);
+}

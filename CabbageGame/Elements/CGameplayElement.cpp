@@ -12,11 +12,17 @@ void CGameplayElement::update(float time) {
       Area = PhysicsEngineObject->getArea();
       updatePhysicsEngineObject(time);
    }
-   updateSceneObject(time);
+   if(Level.shouldRender())
+      updateSceneObject(time);
 }
 
 void CGameplayElement::setupObjects() {
    if(Level.isLoaded())
       setupPhysicsEngineObject();
-   setupSceneObject();
+   if(Level.shouldRender())
+      setupSceneObject();
+}
+
+void CGameplayElement::printInformation() {
+   printf("CGameplayElement; Area: [[%0.0f, %0.0f],[%0.0f, %0.0f]]\n", Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y);
 }

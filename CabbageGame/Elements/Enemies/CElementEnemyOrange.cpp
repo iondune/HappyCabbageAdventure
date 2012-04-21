@@ -103,3 +103,7 @@ void CElementEnemyOrange::updateSceneObject(float time) {
    else if(PhysicsEngineObject->getVelocity().X > 0.01f)
       SceneObject->setScale(SVector3(1,1,1));
 }
+
+void CElementEnemyOrange::printInformation() {
+   printf("CElementEnemyOrange; Area: [[%0.0f, %0.0f],[%0.0f, %0.0f]]\n", Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y);
+}

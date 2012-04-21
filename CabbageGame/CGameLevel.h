@@ -12,7 +12,7 @@ class CElementEnemy;
 class CGameLevel {
    friend CGameLevel & CGameLevelLoader::loadLevel(std::string, bool);
    private:
-      bool night, Loaded;
+      bool night, Loaded, Render;
       int env, numBlocks;
 
       std::vector<CGameplayElement*> Elements;
@@ -35,6 +35,8 @@ class CGameLevel {
       std::vector<CBiggerBlock*> & getConsolidatedBlocks();
       std::vector<CElementEnemy*> & getEnemies();
 
+      void setNoRender();
+      bool shouldRender();
       /*
       std::vector<CPFriends*> & getFriends();
       std::vector<CPItem*> & getItems();

@@ -123,3 +123,7 @@ void CElementBlock::setupSceneObject() {
 
    CApplication::get().getSceneManager().addImmobileSceneObject(tempBlock, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
 }
+
+void CElementBlock::printInformation() {
+   printf("CElementBlock; Area: [[%0.0f, %0.0f],[%0.0f, %0.0f]]; Depth: %d; Texture: %d\n", Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y, Depth, Texture);
+}

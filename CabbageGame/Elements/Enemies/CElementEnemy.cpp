@@ -79,3 +79,7 @@ void CElementEnemy::updateSceneObject(float time) {
 Enemies::EEnemyType CElementEnemy::getEnemyType() {
    return Type;
 }
+
+void CElementEnemy::printInformation() {
+   printf("CElementEnemy; Area: [[%0.0f, %0.0f],[%0.0f, %0.0f]]; Type: %d\n", Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y, Type);
+}

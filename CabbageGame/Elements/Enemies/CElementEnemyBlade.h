@@ -18,6 +18,8 @@ class CElementEnemyBlade : public CElementEnemy
       virtual void updateSceneObject(float time);
 
       virtual void OnCollision(CCollideable *Object, CCollideable *With);
+
+      virtual void printInformation();
 };
 
 #endif
