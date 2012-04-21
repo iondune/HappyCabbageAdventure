@@ -6,6 +6,10 @@ SceneObject(s), PhysicsEngineObject(c), Level(CGameLevelLoader::getLatestLevel()
 {
 }
 
+SRect2 & CGameplayElement::getArea() {
+   return Area;
+}
+
 void CGameplayElement::update(float time) {
    ElapsedTime += time;
    if(Level.isLoaded()) {

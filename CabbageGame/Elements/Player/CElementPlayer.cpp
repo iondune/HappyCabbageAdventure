@@ -10,9 +10,6 @@ CElementPlayer::CElementPlayer(SRect2 nArea)
 #include "CEventManager.h"
 #include "CApplication.h"
 
-void CElementPlayer::OnKeyboardEvent(SKeyboardEvent const & Event) {
-}
-
 void CElementPlayer::updatePlayerAction() {
    if(CApplication::get().getEventManager().IsKeyDown[SDLK_a]) {
       Direction = Left;

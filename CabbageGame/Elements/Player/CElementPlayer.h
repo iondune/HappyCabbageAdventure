@@ -31,7 +31,7 @@ namespace Cabbage {
 
 class CPlayerView;
 
-class CElementPlayer : public CGameplayElement, public CApplicationEventReceiver {
+class CElementPlayer : public CGameplayElement {
    public:
       enum EDirection {
          Left = 0,

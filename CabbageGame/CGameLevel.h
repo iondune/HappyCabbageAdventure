@@ -4,6 +4,7 @@
 class CGameplayElement;
 class CElementBlock;
 class CElementEnemy;
+class CElementPlayer;
 
 #include "CDecorManager.h" //For CGroundBlock
 #include "CBiggerBlock.h"
@@ -29,6 +30,7 @@ class CGameLevel {
 
       void toggleLoaded(); // Only available for CGameLevelLoader::loadLevel().
       void incrementXmlCount();
+      CElementPlayer * PlayerElement;
 
    public:
       std::vector<CGameplayElement*> & getElements();
@@ -51,6 +53,8 @@ class CGameLevel {
       int getEnvironment();
       int getEnv();
       int  getXmlCount();
+
+      CElementPlayer & getPlayer();
 
       void printInformation();
 };

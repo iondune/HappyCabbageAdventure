@@ -3,6 +3,7 @@
 #include "CGameLevel.h"
 #include "CElementBlock.h"
 #include "CElementEnemy.h"
+#include "CElementPlayer.h"
 #include "CGameplayElement.h"
 
 std::map<std::string, CGameLevel*> CGameLevelLoader::LoadedLevels;
@@ -104,8 +105,9 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             h = xml->getAttributeValueAsInt(2);
             w = xml->getAttributeValueAsInt(3);
             t = xml->getAttributeValueAsInt(4);
-            //TODO: Change this
-            //Player->setArea(SRect2((float)x, (float)y, (float)h, (float)w));
+            CElementPlayer *player = new CElementPlayer(SRect2((float)x, (float)y, (float)h, (float)w));
+            newLevel->Elements.push_back(player);
+            newLevel->PlayerElement = player;
          }
          if(!strcmp("CFlag", xml->getNodeName()))
          {

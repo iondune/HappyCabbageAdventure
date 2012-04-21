@@ -4,7 +4,7 @@ CC=g++ -g
 
 OFILES = $(FILES:%.cpp=%.o) $(ELEMENTS:%.cpp=%.o)
 
-DIRECTORIES = -I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI -I./Elements/ -I./ -I./Elements/Blocks -I./Elements/Enemies
+DIRECTORIES = -I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI -I./Elements/ -I./ -I./Elements/Blocks -I./Elements/Enemies -I./Elements/Player
 
 all: ../lib/libCabbageGame.a
 
