@@ -40,6 +40,7 @@ class CElementEnemy : public CGameplayElement {
 };
 
 class CEnemyLoader {
-   static CElementEnemy *LoadEnemy(SRect2 nArea, Enemies::EEnemyType type); 
+   public:
+      static CElementEnemy *LoadEnemy(SRect2 nArea, Enemies::EEnemyType type); 
 };
 #endif

@@ -2,6 +2,7 @@
 
 #include "CGameLevel.h"
 #include "CElementBlock.h"
+#include "CElementEnemy.h"
 #include "CGameplayElement.h"
 
 std::map<std::string, CGameLevel*> CGameLevelLoader::LoadedLevels;
@@ -87,9 +88,11 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             h = xml->getAttributeValueAsInt(2);
             w = xml->getAttributeValueAsInt(3);
             t = xml->getAttributeValueAsInt(4);
-            //TODO newLevel->Enemies.push_back(cen = new CEnemy((float)x,(float)y,w,h,t, env));
-            //TODO newLevel->Elements.push_back(cen);
-            //cen->isMovingPlatform = 0;
+            CElementEnemy *myEnemy = CEnemyLoader::LoadEnemy(SRect2((float)x, (float)y, (float)w, (float)h), (Enemies::EEnemyType)t);
+            if(myEnemy != NULL) {
+               newLevel->Enemies.push_back(myEnemy);
+               newLevel->Elements.push_back(myEnemy);
+            }
          }
          if(!strcmp("CCabbage",xml->getNodeName())) {
             x = xml->getAttributeValueAsInt(0);

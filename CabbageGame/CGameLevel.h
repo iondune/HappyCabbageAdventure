@@ -3,6 +3,7 @@
 
 class CGameplayElement;
 class CElementBlock;
+class CElementEnemy;
 
 #include "CDecorManager.h" //For CGroundBlock
 #include "CBiggerBlock.h"
@@ -18,10 +19,10 @@ class CGameLevel {
       std::vector<CElementBlock*> Blocks;
       std::vector<CGroundBlock*> GroundBlocks;
       std::vector<CBiggerBlock*> blocksFinal;
+      std::vector<CElementEnemy*> Enemies;
       /*
-      std::vector<CFriends*> Friends;
       std::vector<CItem*> Items;
-      std::vector<CEnemy*> Enemies;
+      std::vector<CFriends*> Friends;
       std::vector<CElevator*> Elevators;
       */
 
@@ -32,11 +33,11 @@ class CGameLevel {
       std::vector<CElementBlock*> & getBlocks();
       std::vector<CGroundBlock*> & getGroundBlocks();
       std::vector<CBiggerBlock*> & getConsolidatedBlocks();
+      std::vector<CElementEnemy*> & getEnemies();
 
       /*
       std::vector<CPFriends*> & getFriends();
       std::vector<CPItem*> & getItems();
-      std::vector<CEnemy*> & getEnemies();
       std::vector<CElevator*> & getElevators();
       */
 

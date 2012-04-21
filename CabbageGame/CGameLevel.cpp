@@ -2,6 +2,7 @@
 
 #include "CGameplayElement.h"
 #include "CElementBlock.h"
+#include "CElementEnemy.h"
 
 bool CGameLevel::isLoaded() {
    return Loaded;
@@ -22,15 +23,16 @@ std::vector<CGroundBlock*> & CGameLevel::getGroundBlocks() {
    return GroundBlocks;
 }
 
+std::vector<CElementEnemy*> & CGameLevel::getEnemies() {
+   return Enemies;
+}
+
 /*
 std::vector<CFriend*> & CGameLevel::getFriends() {
    return Friends;
 }
 std::vector<CItem*> & CGameLevel::getItems() {
    return Items;
-}
-std::vector<CEnemy*> & CGameLevel::getEnemies() {
-   return Enemies;
 }
 std::vector<CElevator*> & CGameLevel::getElevators() {
    return Elevators;
