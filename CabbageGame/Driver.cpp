@@ -3,11 +3,13 @@
 #include "CGameplayManager.h"
 
 int main(int argc, char* argv[]) {
-   printf("Here\n");
-   CGameLevel *Level = &CGameLevelLoader::loadLevel("jorge1.xml");
-   printf("Here2\n");
-   CGameplayManager *GameplayManager = new CGameplayManager(*Level);
-   printf("Here3\n");
+   CGameLevel *Level;
+   if(argc > 1) 
+      Level = &CGameLevelLoader::loadLevel(argv[1]);
+   else
+      Level = &CGameLevelLoader::loadLevel("jorge1.xml");
+   //CGameplayManager *GameplayManager = new CGameplayManager(*Level);
+   Level->printInformation();
 
    return 0;
 }

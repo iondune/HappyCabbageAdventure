@@ -46,6 +46,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
       case irr::io::EXN_ELEMENT:
          if(!strcmp("CBlock", xml->getNodeName()))
          {
+            newLevel->incrementXmlCount();
             CElementBlock * ptr;
             // id, X, Y, height, width / from 0,1,2 so on
             x = xml->getAttributeValueAsInt(0);
@@ -82,6 +83,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
          }
          if(!strcmp("CEnemy", xml->getNodeName()))
          {
+            newLevel->incrementXmlCount();
             //CEnemy *cen;
             x = xml->getAttributeValueAsInt(0);
             y = xml->getAttributeValueAsInt(1);
@@ -94,7 +96,9 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
                newLevel->Elements.push_back(myEnemy);
             }
          }
-         if(!strcmp("CCabbage",xml->getNodeName())) {
+         if(!strcmp("CCabbage",xml->getNodeName())) 
+         {
+            newLevel->incrementXmlCount();
             x = xml->getAttributeValueAsInt(0);
             y = xml->getAttributeValueAsInt(1);
             h = xml->getAttributeValueAsInt(2);
@@ -103,7 +107,9 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             //TODO: Change this
             //Player->setArea(SRect2((float)x, (float)y, (float)h, (float)w));
          }
-         if(!strcmp("CFlag", xml->getNodeName())) {
+         if(!strcmp("CFlag", xml->getNodeName()))
+         {
+            newLevel->incrementXmlCount();
             x = xml->getAttributeValueAsInt(0);
             y = xml->getAttributeValueAsInt(1);
             h = xml->getAttributeValueAsInt(2);
@@ -128,7 +134,9 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             }
             */
          }
-         if(!strcmp("CPItem",xml->getNodeName())) {
+         if(!strcmp("CPItem",xml->getNodeName()))
+         {
+            newLevel->incrementXmlCount();
             //CPItem * stuff;
             x = xml->getAttributeValueAsInt(0);
             y = xml->getAttributeValueAsInt(1);
@@ -137,7 +145,9 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             //TODO newLevel->Elements.push_back(stuff);
             //stuff->isMovingPlatform = 0;
          }
-         if(!strcmp("CPFriends",xml->getNodeName())) {
+         if(!strcmp("CPFriends",xml->getNodeName()))
+         {
+            newLevel->incrementXmlCount();
             //CPFriends * buds;
             x = xml->getAttributeValueAsInt(0);
             y = xml->getAttributeValueAsInt(1);
@@ -154,6 +164,10 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
          break;
       }
    }
+   if(newLevel->getXmlCount() <= 1) {
+      fprintf(stderr, "There was something wrong with the level file. %s could not be opened or had too few things.\n", (CGameLevelLoader::LevelDirectory + levelName).c_str()); 
+      exit(1);
+   }
    newLevel->blocksFinal = CGameLevelLoader::consolidateBlocks(blocksY);
 	if (useCache)
 		LoadedLevels[levelName] = newLevel;
@@ -162,7 +176,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
 }
 
 std::vector<CBiggerBlock*> CGameLevelLoader::consolidateBlocks(std::vector<CBiggerBlock*> blocksY) {
-   printf("Size of blocksY: %d\n", blocksY.size());
+   //printf("Size of blocksY: %d\n", blocksY.size());
    std::vector<CBiggerBlock*> blocksX, blocksFinal;
 
    sort(blocksY.begin(), blocksY.end(), sortXY);
@@ -191,7 +205,7 @@ std::vector<CBiggerBlock*> CGameLevelLoader::consolidateBlocks(std::vector<CBigg
    blocksX.push_back(curBlock);
 
    sort(blocksX.begin(), blocksX.end(), sortYX);
-   printf("Size of blocksX: %d\n", blocksX.size());
+   //printf("Size of blocksX: %d\n", blocksX.size());
    curBlock = blocksX[0];
    for(unsigned int i = 1; i < blocksX.size(); i++) {
       CBiggerBlock * newBlock = consolidateX(curBlock, blocksX[i]);
@@ -216,7 +230,7 @@ std::vector<CBiggerBlock*> CGameLevelLoader::consolidateBlocks(std::vector<CBigg
    }
    blocksFinal.push_back(curBlock);
 
-   printf("Size of blocksFinal: %d\n", blocksFinal.size());
+   //printf("Size of blocksFinal: %d\n", blocksFinal.size());
    /*
    for(unsigned int i = 0; i < blocksFinal.size(); i++) {
       //   printf("Block %d: [%0.0f,%0.0f,%0.0f,%0.0f]\n", i,

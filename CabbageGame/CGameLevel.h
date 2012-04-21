@@ -14,6 +14,7 @@ class CGameLevel {
    private:
       bool night, Loaded, Render;
       int env, numBlocks;
+      int XmlCount;
 
       std::vector<CGameplayElement*> Elements;
       std::vector<CElementBlock*> Blocks;
@@ -27,6 +28,7 @@ class CGameLevel {
       */
 
       void toggleLoaded(); // Only available for CGameLevelLoader::loadLevel().
+      void incrementXmlCount();
 
    public:
       std::vector<CGameplayElement*> & getElements();
@@ -48,6 +50,9 @@ class CGameLevel {
       bool isNight();
       int getEnvironment();
       int getEnv();
+      int  getXmlCount();
+
+      void printInformation();
 };
 
 #endif
