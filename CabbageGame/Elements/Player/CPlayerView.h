@@ -20,12 +20,14 @@ class CPlayerView {
       bool Hurt;
       CElementPlayer::EDirection & Direction;
       CElementPlayer::EAction & Action;
+      SRect2 & Area;
       float LeftShadowCutoffValue, LeftShadowStartValue, RightShadowCutoffValue, RightShadowStartValue; 
 
    public:
       void addLeaf();
       void removeLeaf();
-      CPlayerView(ISceneObject *, CElementPlayer::EDirection &, CElementPlayer::EAction &, int);
+      void updateView(float time);
+      CPlayerView(ISceneObject *, CElementPlayer::EDirection &, CElementPlayer::EAction &, int, SRect2 &);
 };
 
 #endif

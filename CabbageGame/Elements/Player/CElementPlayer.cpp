@@ -69,9 +69,7 @@ void CElementPlayer::setupPhysicsEngineObject() {
    PhysicsEngineObject->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
 }
 
-#include <sstream>
 void CElementPlayer::setupSceneObject() {
    SceneObject = new ISceneObject();
-  
-
+   View = new CPlayerView(SceneObject, Direction, Action, Stats.Health, Area);
 }

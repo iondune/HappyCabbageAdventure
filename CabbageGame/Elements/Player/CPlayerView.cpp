@@ -1,8 +1,9 @@
 #include "CPlayerView.h"
 #include "CApplication.h"
 
-CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth) :
-   SceneObject(obj), CabbageIndex(CurHealth - 1), Direction(dir), Action(act), Hurt(false) {
+#include <sstream>
+CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2 & nArea) :
+   SceneObject(obj), CabbageIndex(CurHealth - 1), Direction(dir), Action(act), Hurt(false), Area(nArea) {
    //Normal cabbage meshes and renderables
    ISceneObject *NormalCabbage = new ISceneObject();
    SceneObject->addChild(NormalCabbage);
@@ -98,4 +99,8 @@ void CPlayerView::removeLeaf() {
       NormalCabbageRenderables[CabbageIndex--]->setVisible(false);
       NormalCabbageRenderables[CabbageIndex]->setVisible(true);
    }
+}
+
+void CPlayerView::updateView(float time) {
+   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
 }
