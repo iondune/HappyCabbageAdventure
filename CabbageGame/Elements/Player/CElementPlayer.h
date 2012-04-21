@@ -4,8 +4,6 @@
 #include "../CGameplayElement.h"
 #include "CEventManager.h"
 
-#define NUM_CABBAGE_MESH_STATES 5
-
 namespace Cabbage {
    //Information kept between levels
    class PlayerInformation {
@@ -16,7 +14,6 @@ namespace Cabbage {
          int Seeds;
 
          PlayerInformation() : Health(5), Energy(3), Lives(3), Seeds(0) {
-
          }
    };
 
@@ -31,6 +28,8 @@ namespace Cabbage {
          }
    };
 }
+
+class CPlayerView;
 
 class CElementPlayer : public CGameplayElement, public CApplicationEventReceiver {
    public:
@@ -47,9 +46,7 @@ class CElementPlayer : public CGameplayElement, public CApplicationEventReceiver
    private:
       CCollisionActor * PhysicsEngineObject; //Override CGameplayElement's but with type CObject
       ISceneObject * SceneObject; //Override CGameplayElement's. This will contain the cabbage and its shadow 
-
-      ISceneObject HurtCabbageArr[NUM_CABBAGE_MESH_STATES];
-      ISceneObject NormalCabbageArr[NUM_CABBAGE_MESH_STATES];
+      CPlayerView *View;
 
       Cabbage::PlayerInformation Stats;
       EDirection Direction;
