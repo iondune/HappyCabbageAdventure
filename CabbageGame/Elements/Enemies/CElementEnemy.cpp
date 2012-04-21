@@ -1,6 +1,9 @@
 #include "CElementEnemy.h"
 #include "CGameLevel.h"
 
+#include "CElementEnemyApple.h"
+#include "CElementEnemyBlade.h"
+
 //Generic enemy, for usage in the LWIB, I guess.
 CElementEnemy::CElementEnemy(SRect2 nArea, Enemies::EEnemyType type)
 : CGameplayElement(PhysicsEngineObject, SceneObject, nArea), Type(type) {
@@ -10,28 +13,28 @@ CElementEnemy::CElementEnemy(SRect2 nArea, Enemies::EEnemyType type)
 CElementEnemy *CEnemyLoader::LoadEnemy(SRect2 nArea, Enemies::EEnemyType type) {
    switch(type) {
    case Enemies::APPLE:
-      return NULL;//new CElementEnemyApple(nArea, type);
+      return new CElementEnemyApple(nArea);
       break;
    case Enemies::ORANGE:
-      return NULL;//new CElementEnemyOrange(nArea, type);
+      return NULL;//new CElementEnemyOrange(nArea);
       break;
    case Enemies::KIWI:
-      return NULL;//new CElementEnemyKiwi(nArea, type);
+      return NULL;//new CElementEnemyKiwi(nArea);
       break;
    case Enemies::GRAPE:
-      return NULL;//new CElementEnemyGrape(nArea, type);
+      return NULL;//new CElementEnemyGrape(nArea);
       break;
    case Enemies::FLAME:
-      return NULL;//new CElementEnemyFlame(nArea, type);
+      return NULL;//new CElementEnemyFlame(nArea);
       break;
    case Enemies::BLADE:
-      return NULL;//new CElementEnemyBlade(nArea, type);
+      return new CElementEnemyBlade(nArea);
       break;
    case Enemies::KIWI_PROJECTILE:
-      return NULL;//new CElementEnemyKiwiProjectile(nArea, type);
+      return NULL;//new CElementEnemyKiwiProjectile(nArea);
       break;
    case Enemies::GRAPE_PROJECTILE:
-      return NULL;//new CElementEnemyGrapeProjectile(nArea, type);
+      return NULL;//new CElementEnemyGrapeProjectile(nArea);
       break;
    default:
       fprintf(stderr, "Error: unknown enemy type %d\n", type);
