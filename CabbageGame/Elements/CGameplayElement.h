@@ -24,7 +24,9 @@ class CGameplayElement : public IUpdater, public ICollisionResponder {
    public:
       //Functions for CGameplayManager 
       virtual void update(float); //By default it just updates both objects, but can be overridden
-      virtual void setupObjects()=0;
+      void setupObjects();
+      virtual void setupPhysicsEngineObject()=0;
+      virtual void setupSceneObject()=0;
       virtual void OnCollision(CCollideable *Object, CCollideable *With)=0;
 
       //Functions for subclasses

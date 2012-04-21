@@ -6,7 +6,7 @@ CElementEnemyBlade::CElementEnemyBlade(SRect2 nArea) :
 
 }
 
-void CElementEnemyBlade::setupObjects() {
+void CElementEnemyBlade::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    //TODO: Use singleton class
    //PhysicsEngineObject = CCollisionEngine::get().addActor();
@@ -17,8 +17,9 @@ void CElementEnemyBlade::setupObjects() {
    PhysicsEngineObject->setFallAcceleration(0.0f);
    PhysicsEngineObject->setArea(SRect2(SVector2(Area.Position.X, Area.Position.Y-1.0f), Area.Size));
    PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_FLAME;
+}
 
-
+void CElementEnemyBlade::setupSceneObject() {
    /* Set up the renderable */
    SceneObject = new CMeshSceneObject();
    CMesh *mesh = CMeshLoader::load3dsMesh("Base/trap1.3ds");
@@ -54,6 +55,5 @@ void CElementEnemyBlade::updatePhysicsEngineObject(float time) {
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyBlade::updateSceneObject(float time) {
    BladeRotate -= 300.0f * time;
-
    SceneObject->setRotation(SVector3(-90, 0, BladeRotate));
 }

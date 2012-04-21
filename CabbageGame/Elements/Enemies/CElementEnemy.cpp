@@ -1,4 +1,5 @@
 #include "CElementEnemy.h"
+#include "CGameLevel.h"
 
 //Generic enemy, for usage in the LWIB, I guess.
 CElementEnemy::CElementEnemy(SRect2 nArea, Enemies::EEnemyType type)
@@ -39,6 +40,15 @@ CElementEnemy *CEnemyLoader::LoadEnemy(SRect2 nArea, Enemies::EEnemyType type) {
    }
 }
 
+void CGameplayElement::update(float time) {
+   ElapsedTime += time;
+   if(Level.isLoaded()) {
+      Area = PhysicsEngineObject->getArea();
+      updatePhysicsEngineObject(time);
+   }
+   updateSceneObject(time);
+}
+
 void CElementEnemy::writeXML(xmlwriter *l) {
     std::stringstream xValue, yValue, widthValue, heightValue, tagValue, eType;
     xValue << Area.Position.X;
@@ -72,7 +82,6 @@ void CElementEnemy::updateSceneObject(float time) {
    return;
 }
 
-void CElementEnemy::setupObjects() {
-   fprintf(stderr, "Error: setupObjects on generic enemy type %d (perhaps the CElementEnemy::setupObjects function wasn't overridden?).\n", Type);
-   exit(1);
+Enemies::EEnemyType CElementEnemy::getEnemyType() {
+   return Type;
 }

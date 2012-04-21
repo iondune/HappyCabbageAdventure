@@ -36,15 +36,17 @@ void CElementBlock::writeXML(xmlwriter *l) {
    l->CloseLasttag();
 }
 
-void CElementBlock::setupObjects() {
-   CMeshSceneObject *tempBlock = new CMeshSceneObject();
+void CElementBlock::setupPhysicsEngineObject() {
    /*
     * Doing this in the consolidation phase in CGameState
     * Thus, there will be no physics engine object that this can refer to! TODO: Check if this is good enough or not
     CObject *engBlock = Engine->addObject();
     engBlock->setArea(SRect2(x, y, Area.Size.X, Area.Size.Y));
     */
+}
 
+void CElementBlock::setupSceneObject() {
+   CMeshSceneObject *tempBlock = new CMeshSceneObject();
    CMesh *mesh;
 
    mesh = CMeshLoader::createCubeMesh();

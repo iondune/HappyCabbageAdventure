@@ -25,12 +25,18 @@ class CElementEnemy : public CGameplayElement {
       Enemies::EEnemyType Type;
 
    public:
-      virtual void setupObjects();
       virtual void OnCollision(CCollideable *Object, CCollideable *With);
       virtual void writeXML(xmlwriter *l);
 
+      void update(float time);
+
+      virtual void setupPhysicsEngineObject()=0;
+      virtual void setupSceneObject()=0;
+
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);
+
+      Enemies::EEnemyType getEnemyType();
 
       CElementEnemy(SRect2 nArea, Enemies::EEnemyType type);
 };

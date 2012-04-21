@@ -1,15 +1,23 @@
-#ifndef CELEMENTENEMYBLADE_H_
-#define CELEMENTENEMYBLADE_H_
+#ifndef CELEMENTENEMYAPPLE_H_
+#define CELEMENTENEMYAPPLE_H_
 
 #include "CElementEnemy.h"
 
-class CElementEnemyBlade : public CElementEnemy
+class CElementEnemyApple : public CElementEnemy
 {
+   public:
+      enum RollDirection {
+         Left,
+         Right,
+         None
+      };
    private:
-      float BladeRotate;
+      RollDirection Roll;
+      float Rotate, ScaleMult;
+      bool PositiveScale;
 
    public:
-      CElementEnemyBlade(SRect2 nArea);
+      CElementEnemyApple(SRect2 nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

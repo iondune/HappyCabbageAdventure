@@ -11,7 +11,7 @@ class CElementBlock;
 class CGameLevel {
    friend CGameLevel & CGameLevelLoader::loadLevel(std::string, bool);
    private:
-      bool night;
+      bool night, Loaded;
       int env, numBlocks;
 
       std::vector<CGameplayElement*> Elements;
@@ -25,11 +25,14 @@ class CGameLevel {
       std::vector<CElevator*> Elevators;
       */
 
+      void toggleLoaded(); // Only available for CGameLevelLoader::loadLevel().
+
    public:
       std::vector<CGameplayElement*> & getElements();
       std::vector<CElementBlock*> & getBlocks();
       std::vector<CGroundBlock*> & getGroundBlocks();
       std::vector<CBiggerBlock*> & getConsolidatedBlocks();
+
       /*
       std::vector<CPFriends*> & getFriends();
       std::vector<CPItem*> & getItems();
@@ -37,6 +40,8 @@ class CGameLevel {
       std::vector<CElevator*> & getElevators();
       */
 
+      CGameLevel();
+      bool isLoaded();
       bool isNight();
       int getEnvironment();
       int getEnv();

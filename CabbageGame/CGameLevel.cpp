@@ -3,6 +3,14 @@
 #include "CGameplayElement.h"
 #include "CElementBlock.h"
 
+bool CGameLevel::isLoaded() {
+   return Loaded;
+}
+
+CGameLevel::CGameLevel() : Loaded(false) {
+
+}
+
 std::vector<CGameplayElement*> & CGameLevel::getElements() {
    return Elements;
 }
@@ -31,6 +39,10 @@ std::vector<CElevator*> & CGameLevel::getElevators() {
 
 bool CGameLevel::isNight() {
    return night;
+}
+
+void CGameLevel::toggleLoaded() {
+   Loaded = !Loaded;
 }
 
 int CGameLevel::getEnvironment() {
