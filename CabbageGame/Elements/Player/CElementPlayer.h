@@ -33,6 +33,17 @@ namespace Cabbage {
 }
 
 class CElementPlayer : public CGameplayElement, public CApplicationEventReceiver {
+   public:
+      enum EDirection {
+         Left = 0,
+         Right = 1
+      };
+      enum EAction {
+         Standing = 0,
+         Walking = 1,
+         Jumping = 2
+      };
+
    private:
       CCollisionActor * PhysicsEngineObject; //Override CGameplayElement's but with type CObject
       ISceneObject * SceneObject; //Override CGameplayElement's. This will contain the cabbage and its shadow 
@@ -41,6 +52,10 @@ class CElementPlayer : public CGameplayElement, public CApplicationEventReceiver
       ISceneObject NormalCabbageArr[NUM_CABBAGE_MESH_STATES];
 
       Cabbage::PlayerInformation Stats;
+      EDirection Direction;
+      EAction Action; 
+
+      void updatePlayerAction();
 
    public:
       CElementPlayer(SRect2 nArea);
@@ -57,7 +72,7 @@ class CElementPlayer : public CGameplayElement, public CApplicationEventReceiver
       virtual void writeXML(xmlwriter *);
 
       //Keyboard event functions
-      //void OnKeyboardEvent(SKeyboardEvent const & Event);
+      void OnKeyboardEvent(SKeyboardEvent const & Event);
 };
 
 #endif

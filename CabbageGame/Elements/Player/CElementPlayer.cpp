@@ -2,13 +2,39 @@
 #include "CGameLevel.h"
 
 CElementPlayer::CElementPlayer(SRect2 nArea)
-: CGameplayElement(PhysicsEngineObject, SceneObject, nArea) {
+: CGameplayElement(PhysicsEngineObject, SceneObject, nArea), Direction(Right), Action(Standing) {
+
+}
+
+#include "CEventManager.h"
+#include "CApplication.h"
+
+void CElementPlayer::OnKeyboardEvent(SKeyboardEvent const & Event) {
+}
+
+void CElementPlayer::updatePlayerAction() {
+   if(CApplication::get().getEventManager().IsKeyDown[SDLK_a]) {
+      Direction = Left;
+      Action = Walking;
+      PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
+   }
+   if(CApplication::get().getEventManager().IsKeyDown[SDLK_d]) {
+      Direction = Right;
+      Action = Walking;
+      PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
+   }
+   if(CApplication::get().getEventManager().IsKeyDown[SDLK_SPACE]) {
+      Action = Jumping;
+      PhysicsEngineObject->setJumping(true);
+   }
 }
 
 void CElementPlayer::updatePhysicsEngineObject(float time) {
+   updatePlayerAction();
 }
 
 void CElementPlayer::updateSceneObject(float time) {
+
 }
 
 void CElementPlayer::OnCollision(CCollideable *Object, CCollideable *With) {
