@@ -43,15 +43,6 @@ CElementEnemy *CEnemyLoader::LoadEnemy(SRect2 nArea, Enemies::EEnemyType type) {
    }
 }
 
-void CGameplayElement::update(float time) {
-   ElapsedTime += time;
-   if(Level.isLoaded()) {
-      Area = PhysicsEngineObject->getArea();
-      updatePhysicsEngineObject(time);
-   }
-   updateSceneObject(time);
-}
-
 void CElementEnemy::writeXML(xmlwriter *l) {
     std::stringstream xValue, yValue, widthValue, heightValue, tagValue, eType;
     xValue << Area.Position.X;

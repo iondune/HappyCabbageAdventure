@@ -28,8 +28,6 @@ class CElementEnemy : public CGameplayElement {
       virtual void OnCollision(CCollideable *Object, CCollideable *With);
       virtual void writeXML(xmlwriter *l);
 
-      void update(float time);
-
       virtual void setupPhysicsEngineObject()=0;
       virtual void setupSceneObject()=0;
 

@@ -8,8 +8,10 @@ SceneObject(s), PhysicsEngineObject(c), Level(CGameLevelLoader::getLatestLevel()
 
 void CGameplayElement::update(float time) {
    ElapsedTime += time;
-   if(Level.isLoaded())
+   if(Level.isLoaded()) {
+      Area = PhysicsEngineObject->getArea();
       updatePhysicsEngineObject(time);
+   }
    updateSceneObject(time);
 }
 
