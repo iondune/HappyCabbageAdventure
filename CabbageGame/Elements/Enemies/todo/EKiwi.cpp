@@ -138,14 +138,11 @@ void EKiwi::update(float const TickTime) {
 
 void EKiwi::doRenderable() {
 
-      rotateBird = -100.0f * SineValue;
-
-   //printf("rotateBird: %f\n", rotateBird);
+   rotateBird = -100.0f * SineValue;
 
    Renderable->setRotation(SVector3(-90 + rotateBird, 0, -90));
 
    Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, zTimer*0.9f*Depth*(1.0f/Z_SPEED)));
-   //printf("%d: %0.2f %0.2f\n", this, Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y);
 
    if(Actor->getVelocity().X < -0.01f)
       Renderable->setScale(SVector3(-1,1,1)*(zTimer + 1.0f));
