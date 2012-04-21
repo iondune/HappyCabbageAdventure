@@ -35,7 +35,7 @@ void CElementPlayer::updatePhysicsEngineObject(float time) {
 }
 
 void CElementPlayer::updateSceneObject(float time) {
-
+   View->updateView(time);
 }
 
 void CElementPlayer::OnCollision(CCollideable *Object, CCollideable *With) {
