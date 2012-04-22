@@ -4,6 +4,7 @@
 #include "CElementBlock.h"
 #include "CElementEnemy.h"
 #include "CElementPlayer.h"
+#include "CElementItem.h"
 #include "CGameplayElement.h"
 
 std::map<std::string, CGameLevel*> CGameLevelLoader::LoadedLevels;
@@ -37,7 +38,9 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
    int x,y,w,d,h,t, moving, env = -1;
    //float spd, rng;
 
+   int count = 0;
    irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader((CGameLevelLoader::LevelDirectory + levelName).c_str());
+   do {
    while (xml && xml->read())
    {
       switch(xml->getNodeType())
@@ -146,10 +149,13 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             x = xml->getAttributeValueAsInt(0);
             y = xml->getAttributeValueAsInt(1);
             t = xml->getAttributeValueAsInt(2);
-            //TODO newLevel->Items.push_back(stuff = new CPItem((float)x,(float)y,t));
-            //TODO newLevel->Elements.push_back(stuff);
-            //stuff->isMovingPlatform = 0;
-            printf("Not yet implemented: CElementItem type %d\n", t);
+            CElementItem *myItem = CItemLoader::LoadItem(SRect2((float)x, (float)y, 1.0f, 1.0f), (Items::EItemType)t);
+            if(myItem != NULL) {
+               newLevel->Items.push_back(myItem);
+               newLevel->Elements.push_back(myItem);
+            }
+            else
+               printf("Not yet implemented: CElementItem type %d\n", t);
          }
          if(!strcmp("CPFriends",xml->getNodeName()))
          {
@@ -171,7 +177,14 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
          break;
       }
    }
-   if(newLevel->getXmlCount() <= 1) {
+   if(newLevel->getXmlCount() < 1) {
+      xml = irr::io::createIrrXMLReader(levelName.c_str());
+      count++;
+   }
+   else
+      count = 10;
+   } while(count < 2);
+   if(newLevel->getXmlCount() < 1) {
       fprintf(stderr, "There was something wrong with the level file. %s could not be opened or had too few things.\n", (CGameLevelLoader::LevelDirectory + levelName).c_str()); 
       exit(1);
    }

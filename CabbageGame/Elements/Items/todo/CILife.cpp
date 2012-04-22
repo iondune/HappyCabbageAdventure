@@ -1,6 +1,6 @@
-#include "CILife.h"
+#include "CIHealth.h"
 
-CILife::CILife(float x, float y, float w, float h, CGameplayManager* manager) {
+CIHealth::CIHealth(float x, float y, float w, float h, CGameplayManager* manager) {
    this->x = x;
    this->y = y;
    this->w = w;
@@ -16,7 +16,7 @@ CILife::CILife(float x, float y, float w, float h, CGameplayManager* manager) {
 }
 
 //Loads and moves the mesh
-void CILife::loadMesh() {
+void CIHealth::loadMesh() {
    Renderable = new CMeshSceneObject();
    CMesh *mesh = CMeshLoader::load3dsMesh("Base/crappycabbage2.3ds");
    if(mesh) {
@@ -38,7 +38,7 @@ void CILife::loadMesh() {
 }
 
 //Adds actor to engine and preps engine
-void CILife::loadActor() {
+void CIHealth::loadActor() {
    Actor = Manager->getEngine()->addActor();
    Actor->setArea(SRect2(SVector2(x, y) + h*0.4f, SVector2(w, h)*0.8f));
 
@@ -49,13 +49,13 @@ void CILife::loadActor() {
 }
 
 //Updates AI's decision per frame
-void CILife::update(float const TickTime) {
+void CIHealth::update(float const TickTime) {
    Time += 140*TickTime;
    if(Time >= 360.0f)
       Time = 0;
 }
 
-void CILife::doRenderable() {
+void CIHealth::doRenderable() {
    Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y + 0.1f, 0));
    Renderable->setRotation(SVector3(-90, 0, 90 + Time));
 }

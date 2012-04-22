@@ -1,0 +1,24 @@
+#ifndef CELEMENTITEMSEED_H_
+#define CELEMENTITEMSEED_H_
+
+#include "CElementItem.h"
+
+class CElementItemSeed : public CElementItem
+{
+   private:
+
+   public:
+      CElementItemSeed(SRect2 nArea);
+
+      virtual void setupPhysicsEngineObject();
+      virtual void setupSceneObject();
+
+      virtual void updatePhysicsEngineObject(float time);
+      virtual void updateSceneObject(float time);
+
+      virtual void OnCollision(CCollideable *Object, CCollideable *With);
+
+      virtual void printInformation();
+};
+
+#endif

@@ -1,6 +1,6 @@
-#include "CISeed.h"
+#include "CIHealth.h"
 
-CISeed::CISeed(float x, float y, float w, float h, CGameplayManager* manager) {
+CIHealth::CIHealth(float x, float y, float w, float h, CGameplayManager* manager) {
    this->x = x;
    this->y = y;
    this->w = w;
@@ -16,7 +16,7 @@ CISeed::CISeed(float x, float y, float w, float h, CGameplayManager* manager) {
 }
 
 //Loads and moves the mesh
-void CISeed::loadMesh() {
+void CIHealth::loadMesh() {
    Renderable = new CMeshSceneObject();
    CMesh *mesh = CMeshLoader::load3dsMesh("Base/seed.3ds");
    if(mesh) {
@@ -38,7 +38,7 @@ void CISeed::loadMesh() {
 }
 
 //Adds actor to engine and preps engine
-void CISeed::loadActor() {
+void CIHealth::loadActor() {
    Actor = Manager->getEngine()->addActor();
    Actor->setArea(SRect2(SVector2(x, y), SVector2(w, h)));
 
@@ -55,13 +55,13 @@ void CISeed::loadActor() {
 }
 
 //Updates AI's decision per frame
-void CISeed::update(float const TickTime) {
+void CIHealth::update(float const TickTime) {
    Time += 140*TickTime;
    if(Time >= 360.0f)
       Time = 0;
 }
 
-void CISeed::doRenderable() {
+void CIHealth::doRenderable() {
    Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y + 0.1f, 0));
    Renderable->setRotation(SVector3(-90 + 2.f*Time, 0 + 1.f*Time, 90 + 4.f*Time));
 }

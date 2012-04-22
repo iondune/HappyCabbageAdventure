@@ -4,6 +4,7 @@
 #include "CElementBlock.h"
 #include "CElementEnemy.h"
 #include "CElementPlayer.h"
+#include "CElementItem.h"
 
 bool CGameLevel::isLoaded() {
    return Loaded;
@@ -40,12 +41,13 @@ std::vector<CElementEnemy*> & CGameLevel::getEnemies() {
    return Enemies;
 }
 
+std::vector<CElementItem*> & CGameLevel::getItems() {
+   return Items;
+}
+
 /*
 std::vector<CFriend*> & CGameLevel::getFriends() {
    return Friends;
-}
-std::vector<CItem*> & CGameLevel::getItems() {
-   return Items;
 }
 std::vector<CElevator*> & CGameLevel::getElevators() {
    return Elevators;

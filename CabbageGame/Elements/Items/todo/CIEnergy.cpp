@@ -1,6 +1,6 @@
-#include "CIEnergy.h"
+#include "CIHealth.h"
 
-CIEnergy::CIEnergy(float x, float y, float w, float h, CGameplayManager* manager) {
+CIHealth::CIHealth(float x, float y, float w, float h, CGameplayManager* manager) {
    this->x = x;
    this->y = y;
    this->w = w;
@@ -16,7 +16,7 @@ CIEnergy::CIEnergy(float x, float y, float w, float h, CGameplayManager* manager
 }
 
 //Loads and moves the mesh
-void CIEnergy::loadMesh() {
+void CIHealth::loadMesh() {
    Renderable = new CMeshSceneObject();
    CMesh *mesh = CMeshLoader::load3dsMesh("Base/water_energy.3ds");
    if(mesh) {
@@ -39,7 +39,7 @@ void CIEnergy::loadMesh() {
 }
 
 //Adds actor to engine and preps engine
-void CIEnergy::loadActor() {
+void CIHealth::loadActor() {
    Actor = Manager->getEngine()->addActor();
    Actor->setArea(SRect2(SVector2(x, y) + h*0.4f, SVector2(w, h)*0.8f));
 
@@ -50,13 +50,13 @@ void CIEnergy::loadActor() {
 }
 
 //Updates AI's decision per frame
-void CIEnergy::update(float const TickTime) {
+void CIHealth::update(float const TickTime) {
    Time += 140*TickTime;
    if(Time >= 360.0f)
       Time = 0;
 }
 
-void CIEnergy::doRenderable() {
+void CIHealth::doRenderable() {
    Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y + 0.1f, 0));
    Renderable->setRotation(SVector3(-90, 0, 90 + Time));
 }

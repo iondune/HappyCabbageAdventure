@@ -2,8 +2,9 @@
 #include "CGameLevel.h"
 
 #include "CElementItemHealth.h"
-//#include "CElementItemEnergy.h"
-//#include "CElementItemLife.h"
+#include "CElementItemEnergy.h"
+#include "CElementItemLife.h"
+#include "CElementItemSeed.h"
 
 //Generic item, for usage in the LWIB, I guess.
 CElementItem::CElementItem(SRect2 nArea, Items::EItemType type)
@@ -17,13 +18,13 @@ CElementItem *CItemLoader::LoadItem(SRect2 nArea, Items::EItemType type) {
       return new CElementItemHealth(nArea);
       break;
    case Items::ENERGY:
-      //return new CElementItemEnergy(nArea);
+      return new CElementItemEnergy(nArea);
       break;
    case Items::LIFE:
-      //return new CElementItemLife(nArea);
+      return new CElementItemLife(nArea);
       break;
    case Items::SEED:
-      return NULL;//new CElementItemSeed(nArea);
+      return new CElementItemSeed(nArea);
       break;
    default:
       fprintf(stderr, "Error: unknown item type %d\n", type);
