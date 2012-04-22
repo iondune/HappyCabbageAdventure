@@ -3,6 +3,7 @@
 
 #include "../CGameplayElement.h"
 
+
 class CElementBlock : public CGameplayElement {
    private:
       CCollisionObject * PhysicsEngineObject; //Override CGameplayElement's but with type CObject

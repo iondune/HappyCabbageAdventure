@@ -11,6 +11,7 @@ class CGameLevel;
 #include <sstream>
 #include <string>
 
+
 class CGameplayElement : public IUpdater, public ICollisionResponder {
    protected:
       CCollideable *& PhysicsEngineObject;
