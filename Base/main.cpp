@@ -21,30 +21,30 @@
 
 int main(int argc, char * argv[])
 {
-    CApplication & Application = CApplication::get();
-    //Application.init(SPosition2(800, 600));
-    Application.init(SPosition2(1200, 900));
+   CApplication & Application = CApplication::get();
+   //Application.init(SPosition2(800, 600));
+   Application.init(SPosition2(1200, 900));
 
-    /*
-	printf("Argc: %d %s\n", argc, argv[1]);
-	if(argc > 1 && strcmp(argv[1], "-l") == 0) {
-		CGameState::get().lowDef = 1;
-		printf("Low Definition Mode: On\n");
-	}
-	else {
-		CGameState::get().lowDef = 0;
-		printf("Low Definition Mode: Off\n");
-	}
-   */
+   /*
+      printf("Argc: %d %s\n", argc, argv[1]);
+      if(argc > 1 && strcmp(argv[1], "-l") == 0) {
+      CGameState::get().lowDef = 1;
+      printf("Low Definition Mode: On\n");
+      }
+      else {
+      CGameState::get().lowDef = 0;
+      printf("Low Definition Mode: Off\n");
+      }
+      */
 
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
-    CStateManager & StateManager = Application.getStateManager();
-    StateManager.setState(& CGameState::get());
-    //StateManager.setState(& COverworldState::get());
+   CStateManager & StateManager = Application.getStateManager();
+   StateManager.setState(& CGameState::get());
+   //StateManager.setState(& COverworldState::get());
 
-    Application.run();
+   Application.run();
 
-    return 0;
+   return 0;
 }
 

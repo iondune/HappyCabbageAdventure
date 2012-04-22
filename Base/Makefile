@@ -1,7 +1,7 @@
 ROOT_CABBAGE_DIR=../
 SOURCES=main.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o)
-CABBAGE= -L../lib/ -lCabbageGame -lCabbageFramework -lCabbageGUI -lCabbageParticles -lCabbageScene -lStateGame -lCabbageCore -lCabbageCollider 
+CABBAGE= -L../lib/ -lCabbageFramework -lCabbageGUI -lStateGame -lCabbageGame -lCabbageParticles -lCabbageScene -lCabbageCore -lCabbageCollider 
 INCLUDE=-I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI `sdl-config --cflags` `freetype-config --cflags` -I../irrxml-1.2/src/ -I./Elements/ -I. -I../CabbageGame -I../StateGame -I../CabbageGame/Elements -I../CabbageGame/Elements/Blocks
 LIBFILES=../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCabbageCore.a ../lib/libCabbageGame.a ../lib/libStateGame.a ../lib/libCabbageCore.a ../lib/libCabbageGUI.a
 CC=g++ -g
