@@ -66,7 +66,7 @@ int CCollisionActor::checkCollision(CCollideable * Object, float const TickTime)
 
 	for (int i = 0; i < 2; ++ i)
 	{
-		//float TryMovement = Movement[i];
+		float OriginalMovement = Movement[i];
 
 		if (equals(Movement[i], 0.f))
 			continue;
@@ -90,30 +90,31 @@ int CCollisionActor::checkCollision(CCollideable * Object, float const TickTime)
 				std::cout << "Null movement, undefined behavior." << std::endl;
 			}
 
+			Movement[i] = 0.f;
 			Area.Position[i] = LastPosition[i];
 
-			if (Area.intersects(Object->getArea()))
+			if (Area.intersects(Object->getArea())) // If still collision after revert...
 			{
 				float Intersections[2];
-				Intersections[0] = Area.getIntersection(Object->getArea()).getArea();
+				Intersections[0] = Area.getIntersection(Object->getArea()).getArea(); // 0 - old position
 
-				//TryMovement = Movement[i];
-				Area.Position[i] = LastPosition[i] + Movement[i];
-				Intersections[1] = Area.getIntersection(Object->getArea()).getArea();
+				Area.Position[i] = LastPosition[i] + OriginalMovement;
+				Intersections[1] = Area.getIntersection(Object->getArea()).getArea(); // 1 - new position
 
-				if (Intersections[0] < Intersections[1] && ! equals(Intersections[0], Intersections[1]))
+				if (Intersections[1] < Intersections[0] || equals(Intersections[0], Intersections[1]))
 				{
-					Area.Position[i] = LastPosition[i];
-				}
-				else
-				{
-					//std::cout << "Allowed collision movement due to reduced intersection." << std::endl;
+					// If new position is better or equal
+
+					std::cout << "Allowed collision movement (" << (i ? 'y' : 'x') << "): (" << Intersections[0] << " -> " << Intersections[1] << ")" << std::endl;
 					AllowedMovement = true;
-					if (Movement[i] > 0.f)
+					Movement[i] = OriginalMovement;
+
+					// Cancel collision output
+					if (OriginalMovement > 0.f)
 					{
 						Out ^= (i ? ECollisionType::Up : ECollisionType::Right);
 					}
-					else if (Movement[i] < 0.f)
+					else if (OriginalMovement < 0.f)
 					{
 						Out ^= (i ? ECollisionType::Down : ECollisionType::Left);
 					}
@@ -121,6 +122,10 @@ int CCollisionActor::checkCollision(CCollideable * Object, float const TickTime)
 					{
 						std::cout << "Null movement, undefined behavior." << std::endl;
 					}
+				}
+				else
+				{
+					Area.Position[i] = LastPosition[i];
 				}
 			}
 		}
