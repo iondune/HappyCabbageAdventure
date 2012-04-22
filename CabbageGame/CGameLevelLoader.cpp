@@ -2,6 +2,7 @@
 
 #include "CGameLevel.h"
 #include "CElementBlock.h"
+#include "CElementBlockFlag.h"
 #include "CElementEnemy.h"
 #include "CElementPlayer.h"
 #include "CElementItem.h"
@@ -122,25 +123,10 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             h = xml->getAttributeValueAsInt(2);
             w = xml->getAttributeValueAsInt(3);
             t = xml->getAttributeValueAsInt(4);
-            /* TODO: Change this (make it use Flag placeables and add it as a CGameplayElement)
-            if (t == 0) {
-               victoryBlock = Engine->addObject();
-               victoryBlock->setArea(SRect2((float)x,(float)y, 1, 5));
-               flagLogo->setTranslation(SVector3((float)x, (float) y+.9f, 1.0f));
-               renderFlag->setTranslation(SVector3((float)x,(float) y+.5f, 1.0f));
-               GameplayManager->setVictoryFlag(victoryBlock);
-            }
-            if (t == 1){
-               secretVictoryBlock = Engine->addObject();
-               secretVictoryBlock->setArea(SRect2((float)x,(float)y, 1, 5));
 
-               flagLogo2->setTranslation(SVector3((float)x, (float) y+.9f, 1.0f));
-               renderSecretFlag->setTranslation(SVector3((float)x,(float) y+.5f, 1.0f));
-               GameplayManager->setSecretVictoryFlag(secretVictoryBlock);
-               //add victory flag
-            }
-            */
-            printf("Not yet implemented: CFlag\n");
+            CElementBlockFlag *myFlag = new CElementBlockFlag(SRect2((float)x, (float)y, (float)w, (float)h), t);
+            newLevel->Flags.push_back(myFlag);
+            newLevel->Elements.push_back(myFlag);
          }
          if(!strcmp("CPItem",xml->getNodeName()))
          {

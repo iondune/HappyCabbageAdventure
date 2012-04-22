@@ -5,7 +5,7 @@
 
 
 class CElementBlock : public CGameplayElement {
-   private:
+   protected:
       CCollisionObject * PhysicsEngineObject; //Override CGameplayElement's but with type CObject
       CMeshSceneObject * SceneObject; //Override CGameplayElement's but with type CMeshSceneObject
       int Depth, Texture;
