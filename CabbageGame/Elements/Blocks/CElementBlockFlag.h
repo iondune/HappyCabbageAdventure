@@ -23,6 +23,7 @@ class CElementBlockFlag : public CElementBlock {
       CElementBlockFlag(SRect2 nArea, int role); //So we don't need a block loader
 
       virtual void printInformation();
+      CElementBlockFlag::FlagRole getRole();
 };
 
 #endif

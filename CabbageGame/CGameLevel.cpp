@@ -95,6 +95,11 @@ void CGameLevel::printInformation() {
    std::cout << "   The starting location is at [" << PlayerElement->getArea().Position.X << ", " << PlayerElement->getArea().Position.Y << "]." << std::endl; 
    std::cout << "   Blocks: " << Blocks.size() << " (" << GroundBlocks.size() << " of them are ground blocks). The total was consolidated into " << blocksFinal.size() << " physics engine objects." << std::endl; 
    std::cout << "   Enemies: " << Enemies.size() << std::endl; 
+   std::cout << "   Items: " << Items.size() << std::endl; 
+   std::cout << "   Flags: " << Flags.size() << std::endl; 
+   for(int i = 0; i < Flags.size(); i++) {
+      std::cout << "      Flag " << i << " is located at [" << Flags[i]->getArea().Position.X << ", " << Flags[i]->getArea().Position.Y << "], and has a role value of " << Flags[i]->getRole() << std::endl; 
+   }
 }
 
 CCollisionEngine & CGameLevel::getPhysicsEngine() {

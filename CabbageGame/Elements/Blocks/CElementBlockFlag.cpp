@@ -56,3 +56,7 @@ void CElementBlockFlag::setupSceneObject() {
 void CElementBlockFlag::printInformation() {
    printf("CElementBlockFlag; Area: [[%0.0f, %0.0f],[%0.0f, %0.0f]]; Role: %d\n", Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y, Role);
 }
+
+CElementBlockFlag::FlagRole CElementBlockFlag::getRole() {
+   return Role;
+}
