@@ -3,6 +3,10 @@
 
 #include "CElementEnemyApple.h"
 #include "CElementEnemyBlade.h"
+#include "CElementEnemyOrange.h"
+#include "CElementEnemyGrape.h"
+#include "CElementEnemyKiwi.h"
+#include "CElementEnemyFlame.h"
 
 //Generic enemy, for usage in the LWIB, I guess.
 CElementEnemy::CElementEnemy(SRect2 nArea, Enemies::EEnemyType type)
@@ -16,16 +20,16 @@ CElementEnemy *CEnemyLoader::LoadEnemy(SRect2 nArea, Enemies::EEnemyType type) {
       return new CElementEnemyApple(nArea);
       break;
    case Enemies::ORANGE:
-      return NULL;//new CElementEnemyOrange(nArea);
+      return new CElementEnemyOrange(nArea);
       break;
    case Enemies::KIWI:
-      return NULL;//new CElementEnemyKiwi(nArea);
+      return new CElementEnemyKiwi(nArea, 0);
       break;
    case Enemies::GRAPE:
-      return NULL;//new CElementEnemyGrape(nArea);
+      return new CElementEnemyGrape(nArea);
       break;
    case Enemies::FLAME:
-      return NULL;//new CElementEnemyFlame(nArea);
+      return new CElementEnemyFlame(nArea);
       break;
    case Enemies::BLADE:
       return new CElementEnemyBlade(nArea);

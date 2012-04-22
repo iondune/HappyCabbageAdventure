@@ -42,7 +42,7 @@ void CElementEnemyGrape::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   SceneObject->setTranslation(SVector3((x+(x+1))/2, (y+(y+1))/2, 0));
+   SceneObject->setTranslation(SVector3((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y+1))/2, 0));
    SceneObject->setScale(SVector3(1, 1, 1));
    SceneObject->setRotation(SVector3(-90, 0, 90));
 

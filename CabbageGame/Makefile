@@ -20,7 +20,7 @@ clean:
 	rm -f $(OFILES) Driver.o
 	rm -f ../lib/libCabbageGame.a
 
-LIBRARIES= -L../lib/ -lCabbageFramework -lCabbageGUI -lCabbageScene -lStateGame -lCabbageCore -lCabbageGame -lCabbageCollider 
+LIBRARIES= -L../lib/ -lCabbageFramework -lCabbageGUI -lCabbageParticles -lCabbageScene -lStateGame -lCabbageCore -lCabbageGame -lCabbageCollider 
 test-game: Driver.o ${OFILES}
 	$(CC) Driver.o ${COMPILER_VERSION} ${OFILES} -lGL -lGLU -lSDL `sdl-config --libs` ${LIBRARIES} `freetype-config --libs` -o $@
 test: test-game

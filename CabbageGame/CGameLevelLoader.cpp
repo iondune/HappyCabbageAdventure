@@ -96,6 +96,8 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
                newLevel->Enemies.push_back(myEnemy);
                newLevel->Elements.push_back(myEnemy);
             }
+            else
+               printf("Not yet implemented: CElementEnemy type %d\n", t);
          }
          if(!strcmp("CCabbage",xml->getNodeName())) 
          {
@@ -135,6 +137,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
                //add victory flag
             }
             */
+            printf("Not yet implemented: CFlag\n");
          }
          if(!strcmp("CPItem",xml->getNodeName()))
          {
@@ -146,6 +149,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             //TODO newLevel->Items.push_back(stuff = new CPItem((float)x,(float)y,t));
             //TODO newLevel->Elements.push_back(stuff);
             //stuff->isMovingPlatform = 0;
+            printf("Not yet implemented: CElementItem type %d\n", t);
          }
          if(!strcmp("CPFriends",xml->getNodeName()))
          {
@@ -157,6 +161,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             //TODO newLevel->Friends.push_back(buds = new CPFriends((float)x, (float)y,t));
             //TODO newLevel->Elements.push_back(buds);
             //buds->isMovingPlatform = 0;
+            printf("Not yet implemented: CElementFriends type %d\n", t);
          }
          if (!strcmp("envVar", xml->getNodeName()))
          {
