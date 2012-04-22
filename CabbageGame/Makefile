@@ -4,10 +4,11 @@ CC=g++ -g
 
 OFILES = $(FILES:%.cpp=%.o) $(ELEMENTS:%.cpp=%.o)
 ELEMENTSHEADER=$(shell find Elements -type d | awk 'BEGIN{}{print "-I./"$$1}')
+DIRS=$(shell find . -type d | sed -e '/sdlmixer/d' -e '/todo/d' -e '/old/d' -e 's/\.\/*//' -e '/.dependencies/d' | awk 'BEGIN {} {print ".dependencies/"$$1} END{}')
 DIRECTORIES = -I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI -I. $(ELEMENTSHEADER)
 all: ../lib/libCabbageGame.a
 
-../lib/libCabbageGame.a: $(OFILES)
+../lib/libCabbageGame.a: directories $(OFILES)
 	rm -f $@
 	mkdir -p ../lib
 	ar cq $@ $(OFILES)
@@ -17,10 +18,13 @@ print:
 
 -include $(OFILES:%.o=.dependencies/%.d)
 
-directories:
-	mkdir -p `find . -type d | sed -e '/sdlmixer/d' -e '/todo/d' -e '/old/d' -e 's/\.\/*//' -e '/.dependencies/d' | awk 'BEGIN {} {print ".dependencies/"$$1} END{}'`
+directories: dirs.file
 
-.cpp.o: directories
+dirs.file:
+	mkdir -p `find . -type d | sed -e '/sdlmixer/d' -e '/todo/d' -e '/old/d' -e 's/\.\/*//' -e '/.dependencies/d' | awk 'BEGIN {} {print ".dependencies/"$$1} END{}'`
+	touch dirs.file
+
+.cpp.o:
 	$(CC) -c $(DIRECTORIES) -DGL_GLEXT_PROTOTYPES $< -o $@
 	$(CC) -MM $(DIRECTORIES) -DGL_GLEXT_PROTOTYPES $< > .dependencies/$*.d
 
@@ -28,7 +32,7 @@ directories:
 clean:
 	rm -f $(OFILES) Driver.o
 	rm -f ../lib/libCabbageGame.a
-	rm -rf .dependencies
+	rm -rf .dependencies dirs.file
 
 LIBRARIES= -L../lib/ -lCabbageGame -lCabbageFramework -lCabbageGUI -lCabbageParticles -lCabbageScene -lStateGame -lCabbageCore -lCabbageCollider 
 test-game: Driver.o ../lib/libCabbageGame.a

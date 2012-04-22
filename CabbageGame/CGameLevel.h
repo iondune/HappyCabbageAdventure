@@ -30,7 +30,9 @@ class CGameLevel {
 
       void toggleLoaded(); // Only available for CGameLevelLoader::loadLevel().
       void incrementXmlCount();
-      CElementPlayer * PlayerElement;
+      CElementPlayer *PlayerElement;
+
+      CCollisionEngine *PhysicsEngine;
 
    public:
       std::vector<CGameplayElement*> & getElements();
@@ -55,6 +57,7 @@ class CGameLevel {
       int  getXmlCount();
 
       CElementPlayer & getPlayer();
+      CCollisionEngine & getPhysicsEngine();
 
       void printInformation();
 };

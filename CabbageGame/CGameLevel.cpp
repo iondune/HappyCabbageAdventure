@@ -89,3 +89,7 @@ void CGameLevel::printInformation() {
    std::cout << "   Blocks: " << Blocks.size() << " (" << GroundBlocks.size() << " of them are ground blocks). The total was consolidated into " << blocksFinal.size() << " physics engine objects." << std::endl; 
    std::cout << "   Enemies: " << Enemies.size() << std::endl; 
 }
+
+CCollisionEngine & CGameLevel::getPhysicsEngine() {
+   return *PhysicsEngine;
+}
