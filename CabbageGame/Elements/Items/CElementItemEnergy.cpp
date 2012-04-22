@@ -8,9 +8,7 @@ CElementItemEnergy::CElementItemEnergy(SRect2 nArea) :
 
 void CElementItemEnergy::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
-   //TODO: Use singleton class
-   //PhysicsEngineObject = CCollisionEngine::get().addActor();
-   PhysicsEngineObject = (new CCollisionEngine())->addActor(); //just to compile
+   PhysicsEngineObject = Level.getPhysicsEngine().addActor();
    Area.Position += SVector2(Area.Size.Y*0.4f);
    Area.Size *= SVector2(0.8f);
    PhysicsEngineObject->setArea(Area);

@@ -16,6 +16,7 @@ class CElementBlockFlag : public CElementBlock {
 
    public:
       virtual void OnCollision(CCollideable *Object, CCollideable *With);
+      virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
       virtual void writeXML(xmlwriter *);
 

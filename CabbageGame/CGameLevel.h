@@ -62,6 +62,7 @@ class CGameLevel {
 
       CElementPlayer & getPlayer();
       CCollisionEngine & getPhysicsEngine();
+      void setPhysicsEngine(CCollisionEngine *p);
 
       void printInformation();
 };

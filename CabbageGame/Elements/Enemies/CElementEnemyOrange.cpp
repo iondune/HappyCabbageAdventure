@@ -8,9 +8,7 @@ CElementEnemyOrange::CElementEnemyOrange(SRect2 nArea) :
 
 void CElementEnemyOrange::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
-   //TODO: Use singleton class
-   //PhysicsEngineObject = CCollisionEngine::get().addActor();
-   PhysicsEngineObject = (new CCollisionEngine())->addActor(); //just to compile
+   PhysicsEngineObject = Level.getPhysicsEngine().addActor();
    PhysicsEngineObject->setArea(Area);
 
    //Set actor attributes

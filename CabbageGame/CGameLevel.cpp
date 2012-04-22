@@ -105,3 +105,7 @@ void CGameLevel::printInformation() {
 CCollisionEngine & CGameLevel::getPhysicsEngine() {
    return *PhysicsEngine;
 }
+
+void CGameLevel::setPhysicsEngine(CCollisionEngine *p) {
+   PhysicsEngine = p;
+}

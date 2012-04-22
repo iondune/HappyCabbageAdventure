@@ -32,6 +32,11 @@ void CElementBlockFlag::writeXML(xmlwriter *l) {
    l->CloseLasttag();
 }
 
+void CElementBlockFlag::setupPhysicsEngineObject() {
+   PhysicsEngineObject = Level.getPhysicsEngine().addObject();
+   PhysicsEngineObject->setArea(Area);
+}
+
 void CElementBlockFlag::setupSceneObject() {
    CMesh *mesh = CMeshLoader::load3dsMesh("Base/flag2.3ds");
    if(mesh) {

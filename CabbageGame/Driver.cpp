@@ -8,7 +8,7 @@ int main(int argc, char* argv[]) {
       Level = &CGameLevelLoader::loadLevel(argv[1]);
    else
       Level = &CGameLevelLoader::loadLevel("jorge1.xml");
-   //CGameplayManager *GameplayManager = new CGameplayManager(*Level);
+   CGameplayManager *GameplayManager = new CGameplayManager(*Level);
    Level->printInformation();
 
    return 0;
