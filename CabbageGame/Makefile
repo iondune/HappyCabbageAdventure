@@ -8,7 +8,7 @@ DIRS=$(shell find . -type d | sed -e '/sdlmixer/d' -e '/todo/d' -e '/old/d' -e '
 DIRECTORIES = -I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI -I. $(ELEMENTSHEADER)
 all: ../lib/libCabbageGame.a
 
-../lib/libCabbageGame.a: directories $(OFILES)
+../lib/libCabbageGame.a: $(DIRS) $(OFILES)
 	rm -f $@
 	mkdir -p ../lib
 	ar cq $@ $(OFILES)
@@ -18,15 +18,14 @@ print:
 
 -include $(OFILES:%.o=.dependencies/%.d)
 
-directories: dirs.file
-
-dirs.file:
+$(DIRS):
 	mkdir -p `find . -type d | sed -e '/sdlmixer/d' -e '/todo/d' -e '/old/d' -e 's/\.\/*//' -e '/.dependencies/d' | awk 'BEGIN {} {print ".dependencies/"$$1} END{}'`
-	touch dirs.file
+
+.dependencies/%.d: %.cpp $(DIRS)
+	$(CC) -MM $(DIRECTORIES) -DGL_GLEXT_PROTOTYPES $< > $@
 
 .cpp.o:
 	$(CC) -c $(DIRECTORIES) -DGL_GLEXT_PROTOTYPES $< -o $@
-	$(CC) -MM $(DIRECTORIES) -DGL_GLEXT_PROTOTYPES $< > .dependencies/$*.d
 
 
 clean:
