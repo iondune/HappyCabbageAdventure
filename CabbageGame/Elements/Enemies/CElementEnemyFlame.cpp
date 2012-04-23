@@ -23,7 +23,7 @@ void CElementEnemyFlame::setupSceneObject() {
 }
 
 void CElementEnemyFlame::OnCollision(CCollideable *Object) {
-   static float const flameJumpFactor = 6.0f;
+   static float const flameJumpFactor = 8.0f;
    if(!Dead) {
       if(Object == Level.getPlayer().getPhysicsEngineObject()) {
          if(Level.getPlayer().decrementHealth()) {
