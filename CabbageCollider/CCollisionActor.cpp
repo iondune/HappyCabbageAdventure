@@ -304,35 +304,29 @@ void CCollisionActor::setControlFall(bool const fall) {
 
 bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTime, ICollisionResponder * CollisionResponder)
 {
-	int CollisionType = ignoreCollision(Object, TickTime);
-	bool doCollision = true;
+	int CollisionType = checkCollision(Object, TickTime);
 
 	if (CollisionResponder && CollisionType) {
 		CollisionResponder->OnCollision(this, Object);
-      doCollision = true;
-	}
-	if (doCollision) {
-		CollisionType = checkCollision(Object, TickTime);
-		if (CollisionType & ECollisionType::Up)
-		{
-			Velocity.Y *= -Object->getMaterial().Elasticity;
-			Jumping = false;
-		}
+   }
+   if (CollisionType & ECollisionType::Up)
+   {
+      Velocity.Y *= -Object->getMaterial().Elasticity;
+      Jumping = false;
+   }
 
-		if (CollisionType & ECollisionType::Down)
-		{
-			if(Attributes.Bounce > 0.01f) {
-				Velocity.Y = Attributes.Bounce;
-				Attributes.Bounce *= 0.5f;
-			}
-			//Jumping = false;
-		}
+   if (CollisionType & ECollisionType::Down)
+   {
+      if(Attributes.Bounce > 0.01f) {
+         Velocity.Y = Attributes.Bounce;
+         Attributes.Bounce *= 0.5f;
+      }
+      //Jumping = false;
+   }
 
-		if (Attributes.Reacts && (CollisionType & ECollisionType::Left || CollisionType & ECollisionType::Right))
-			Velocity.X *= -Object->getMaterial().Elasticity;
-		return (CollisionType & ECollisionType::Down) != 0;
-	}
-	return 0;
+   if (Attributes.Reacts && (CollisionType & ECollisionType::Left || CollisionType & ECollisionType::Right))
+      Velocity.X *= -Object->getMaterial().Elasticity;
+   return (CollisionType & ECollisionType::Down) != 0;
 }
 
 void CCollisionActor::draw()

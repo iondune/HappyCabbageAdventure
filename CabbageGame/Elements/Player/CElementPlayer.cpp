@@ -16,14 +16,21 @@ void CElementPlayer::updatePlayerAction() {
       Action = Walking;
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
    }
-   if(CApplication::get().getEventManager().IsKeyDown[SDLK_d]) {
+   else if(CApplication::get().getEventManager().IsKeyDown[SDLK_d]) {
       Direction = Right;
       Action = Walking;
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
    }
+   else {
+      Action = Walking;
+      PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
+   }
    if(CApplication::get().getEventManager().IsKeyDown[SDLK_SPACE]) {
       Action = Jumping;
       PhysicsEngineObject->setJumping(true);
+   }
+   else {
+      PhysicsEngineObject->setJumping(false);
    }
 }
 

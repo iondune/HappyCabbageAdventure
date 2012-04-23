@@ -1,5 +1,5 @@
 #include "CPlayerView.h"
-#include "CApplication.h"
+#include "CabbageFramework.h"
 
 #include <sstream>
 CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2 & nArea) :
@@ -7,6 +7,8 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
    //Normal cabbage meshes and renderables
    ISceneObject *NormalCabbage = new ISceneObject();
    SceneObject->addChild(NormalCabbage);
+   SceneObject->setCullingEnabled(false);
+   NormalCabbage->setCullingEnabled(false);
 
    for(int i = 1; i <= 5; i++) {
       std::ostringstream fileName;
@@ -32,6 +34,7 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
    //Hurt cabbage meshes and renderables
    ISceneObject *HurtCabbage = new ISceneObject();
    SceneObject->addChild(HurtCabbage);
+   HurtCabbage->setCullingEnabled(false);
 
    for(int i = 1; i <= 5; i++) {
       std::ostringstream fileName;
@@ -54,6 +57,7 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
       HurtCabbage->addChild(cabbageRenderable);
       HurtCabbageRenderables[i-1] = cabbageRenderable;
    }
+   SceneObject->setScale(SVector3(2.0f));
 
    //Shadow renderables
    ShadowLeft = new CMeshSceneObject();
@@ -102,5 +106,7 @@ void CPlayerView::removeLeaf() {
 }
 
 void CPlayerView::updateView(float time) {
+   CApplication::get().getSceneManager().getActiveCamera()->setPosition(SVector3(Area.getCenter().X, Area.getCenter().Y, 10));
+   SceneObject->setRotation(SVector3(-90.0f, 0, Direction == CElementPlayer::Right ? 80.0f : 0.0f));
    SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
 }
