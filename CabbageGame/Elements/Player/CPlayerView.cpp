@@ -4,7 +4,7 @@
 #include <sstream>
 CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2 & nArea, SVector3 & sf) :
    SceneObject(obj), CabbageIndex(CurHealth - 1), Direction(dir), Action(act), Hurt(false), Area(nArea), ShakeFactor(sf),
-   ySineValue(0.0f) {
+   ySineValue(0.0f), xScale(2.0f), yScale(2.0f) {
 
    //Normal cabbage meshes and renderables
    ISceneObject *NormalCabbage = new ISceneObject();
@@ -59,7 +59,6 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
       HurtCabbage->addChild(cabbageRenderable);
       HurtCabbageRenderables[i-1] = cabbageRenderable;
    }
-   SceneObject->setScale(SVector3(2.0f));
 
    //Shadow renderables
    ShadowLeft = new CMeshSceneObject();
@@ -122,6 +121,9 @@ void CPlayerView::updateView(float time) {
    SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y + ySineAmount, 0));
 
    //TODO: Add cabbage scaling (in air)
+   scaleCabbage(time);
+
+   SceneObject->setScale(SVector3(xScale, xScale, yScale));
 }
 
 void CPlayerView::setHurt(bool b) {
@@ -153,4 +155,8 @@ void CPlayerView::translateCabbage(float time) {
    else if (Action == CElementPlayer::Walking && Direction == CElementPlayer::Right) {
       ySineValue -=10.f*time;
    }
+}
+
+void CPlayerView::scaleCabbage(float time) {
+
 }
