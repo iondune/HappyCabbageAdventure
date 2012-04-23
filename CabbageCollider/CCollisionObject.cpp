@@ -1,6 +1,6 @@
 #include "CCollisionObject.h"
 
-CCollisionObject::CCollisionObject()
+CCollisionObject::CCollisionObject() : CCollideable()
 {
 	CollideableType = COLLIDEABLE_TYPE_BLOCK;
 	CollideableLevel = INTERACTOR_BLOCKS; 

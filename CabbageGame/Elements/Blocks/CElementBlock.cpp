@@ -46,6 +46,9 @@ void CElementBlock::setupPhysicsEngineObject() {
     CObject *engBlock = Engine->addObject();
     engBlock->setArea(SRect2(x, y, Area.Size.X, Area.Size.Y));
     */
+   //Point of this is so any functions (superclass) that use the physics engine object pointer won't break
+   PhysicsEngineObject = Level.getPhysicsEngine().addObject();
+   Level.getPhysicsEngine().removeObject(PhysicsEngineObject);
 }
 
 void CElementBlock::setupSceneObject() {

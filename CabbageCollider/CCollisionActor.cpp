@@ -43,7 +43,7 @@ bool const CCollisionActor::EActionType::operator == (Domain const value)
 
 
 CCollisionActor::CCollisionActor()
-	: Standing(0), JumpTimer(0.f), FallAcceleration(0), Impulse(false), ControlFall(true) 
+	: CCollideable(), Standing(0), JumpTimer(0.f), FallAcceleration(0), Impulse(false), ControlFall(true) 
 {
 	CollideableType = COLLIDEABLE_TYPE_ACTOR;
 	CollideableLevel = INTERACTOR_ACTORS;
