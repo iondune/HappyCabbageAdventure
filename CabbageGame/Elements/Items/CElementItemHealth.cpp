@@ -40,8 +40,7 @@ void CElementItemHealth::setupSceneObject() {
 
 void CElementItemHealth::OnCollision(CCollideable *Object) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
-      if(Level.getPlayer().getStats().Health < 5)
-         Level.getPlayer().getStats().Health++;
+      Level.getPlayer().incrementHealth();
       Level.removeItem(this);
       Area.Position.Y = 5.0f;
       Level.addItem(CItemLoader::LoadItem(Area, Items::HEALTH));

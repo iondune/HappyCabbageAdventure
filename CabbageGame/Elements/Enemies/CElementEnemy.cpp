@@ -67,8 +67,13 @@ void CElementEnemy::writeXML(xmlwriter *l) {
 }
 
 void CElementEnemy::OnCollision(CCollideable *Object) {
-   fprintf(stderr, "Error: collision on generic enemy type %d (perhaps the CElementEnemy::OnCollision function wasn't overridden?).\n", Type);
-   exit(1);
+   if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
+      Level.getPlayer().decrementHealth();
+      printf("Health is now %d\n", Level.getPlayer().getStats().Health);
+      Level.removeEnemy(this);
+      removeFromEngines();
+      Dead = true;
+   }
 }
 
 void CElementEnemy::updatePhysicsEngineObject(float time) {

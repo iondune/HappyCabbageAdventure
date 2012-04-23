@@ -17,8 +17,6 @@ class CElementEnemyGrape : public CElementEnemy
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);
 
-      virtual void OnCollision(CCollideable *Object);
-
       virtual void printInformation();
 
       void ShootGrape();

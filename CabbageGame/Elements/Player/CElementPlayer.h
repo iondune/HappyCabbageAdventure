@@ -68,6 +68,9 @@ class CElementPlayer : public CGameplayElement {
 
       virtual void writeXML(xmlwriter *);
 
+      void decrementHealth();
+      void incrementHealth();
+
       //Keyboard event functions
       void OnKeyboardEvent(SKeyboardEvent const & Event);
       Cabbage::PlayerInformation & getStats();

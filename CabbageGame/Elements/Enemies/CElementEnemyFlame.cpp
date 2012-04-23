@@ -22,6 +22,7 @@ void CElementEnemyFlame::setupSceneObject() {
 }
 
 void CElementEnemyFlame::OnCollision(CCollideable *Object) {
+   printf("Collision with Flame\n");
    //Optional code: setImpulse to other object away from this object, lower their health?
 }
 

@@ -47,9 +47,13 @@ void CElementEnemyApple::setupSceneObject() {
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
+/*
 void CElementEnemyApple::OnCollision(CCollideable *Object) {
+   if(Object == Level.getPlayer().getPhysicsEngineObject())
+      printf("Touched an apple\n");
    //Optional code: setImpulse to other object away from this object, lower their health?
 }
+*/
                                                             
 //CGameplayElement has an attribute called ElapsedTime, which is updated by CGameplayElement's update function.
 

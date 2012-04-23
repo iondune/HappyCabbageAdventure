@@ -106,7 +106,7 @@ void CPlayerView::removeLeaf() {
 }
 
 void CPlayerView::updateView(float time) {
-   CApplication::get().getSceneManager().getActiveCamera()->setPosition(SVector3(Area.getCenter().X, Area.getCenter().Y, 10));
+   CApplication::get().getSceneManager().getActiveCamera()->setPosition(SVector3(Area.getCenter().X, Area.getCenter().Y + 1.3f, 10));
    SceneObject->setRotation(SVector3(-90.0f, 0, Direction == CElementPlayer::Right ? 80.0f : 0.0f));
    SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
 }

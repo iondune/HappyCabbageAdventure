@@ -40,6 +40,7 @@ void CElementEnemyBlade::setupSceneObject() {
 }
 
 void CElementEnemyBlade::OnCollision(CCollideable *Object) {
+   printf("Collision with Blade\n");
    //Optional code: setImpulse to other object away from this object, lower their health?
 }
                                                             

@@ -81,3 +81,17 @@ void CElementPlayer::setupSceneObject() {
    SceneObject = new ISceneObject();
    View = new CPlayerView(SceneObject, Direction, Action, Stats.Health, Area);
 }
+
+void CElementPlayer::decrementHealth() {
+   if(Stats.Health > 0) {
+      Stats.Health--; 
+      View->removeLeaf();
+   }
+   //Else lose state
+}
+void CElementPlayer::incrementHealth() {
+   if(Stats.Health < 5) {
+      Stats.Health++; 
+      View->addLeaf();
+   }
+}

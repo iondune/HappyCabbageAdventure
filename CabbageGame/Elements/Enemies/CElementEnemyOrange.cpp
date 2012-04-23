@@ -51,9 +51,11 @@ void CElementEnemyOrange::setupSceneObject() {
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
+/*
 void CElementEnemyOrange::OnCollision(CCollideable *Object) {
    //Optional code: setImpulse to other object away from this object, lower their health?
 }
+*/
                                                             
 //CGameplayElement has an attribute called ElapsedTime, which is updated by CGameplayElement's update function.
 
