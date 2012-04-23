@@ -401,12 +401,17 @@ void CDecorManager::PrepMeshes()
 void CDecorManager::SetupSky() {
    CMeshSceneObject *tempBlock;
 
+   CMesh* quad = CMeshLoader::load3dsMesh("Base/Quad.3ds");
+   quad->centerMeshByExtents(SVector3(0.0f));
+   quad->linearizeIndices();
+   quad->calculateNormalsPerFace();
+
    cubeMesh = CMeshLoader::createCubeMesh();
    cubeMesh->linearizeIndices();
    cubeMesh->calculateNormalsPerFace();
 
    tempBlock = new CMeshSceneObject();
-   tempBlock->setMesh(cubeMesh);
+   tempBlock->setMesh(quad);
    if(env == 0)
       tempBlock->setTexture(CImageLoader::loadTexture("Base/sky.bmp", true));
    else if(env == 1)
@@ -414,7 +419,8 @@ void CDecorManager::SetupSky() {
    tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
    tempBlock->setTranslation(SVector3(85/*75*/, 13, -5.0));
-   tempBlock->setScale(SVector3(250, -50, 1));
+   tempBlock->setScale(SVector3(250, 1, 50));
+   tempBlock->setRotation(SVector3(90.0f, 0.0f, 0.0f));
 
    CApplication::get().getSceneManager().addSceneObject(tempBlock);
 }

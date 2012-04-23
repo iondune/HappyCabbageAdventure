@@ -9,7 +9,8 @@ class CElementPlayer;
 
 class CGameplayManager : public IUpdater {
    private:
-      std::vector<CGameplayElement*> Elements;
+      CGameLevel &Level;
+      std::vector<CGameplayElement*> & Elements;
       CCollisionEngine *PhysicsEngine;
       CElementPlayer *Player;
    public:

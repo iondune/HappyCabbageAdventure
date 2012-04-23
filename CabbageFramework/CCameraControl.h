@@ -26,7 +26,7 @@ public:
     float Phi, Theta;
 
 	CCameraControl(SVector3 const position = SVector3(0, 3, 2))
-        : Application(CApplication::get()), EventManager(CApplication::get().getEventManager()), Phi(0), Theta(-1.5708f), Tracking(false), MoveSpeed(2.5f)
+        : Application(CApplication::get()), EventManager(CApplication::get().getEventManager()), Phi(0), Theta(-1.5708f), Tracking(false), MoveSpeed(20.5f)
 	{
         Application.getEventManager().OnMouseEvent.connect(this, & CCameraControl::OnMouseEvent);
 	}

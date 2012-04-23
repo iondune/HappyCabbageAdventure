@@ -15,6 +15,7 @@ class CElementBlock : public CGameplayElement {
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
 
+      virtual void update(float);
       virtual void updatePhysicsEngineObject(float);
       virtual void updateSceneObject(float);
 

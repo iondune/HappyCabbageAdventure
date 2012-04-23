@@ -38,7 +38,7 @@ class CGameplayElement : public IUpdater, public ICollisionResponder {
       virtual void writeXML(xmlwriter *)=0;
 
       //Constructor
-      CGameplayElement(CCollideable * const c, ISceneObject * const s, SRect2 a);
+      CGameplayElement(CCollideable *& c, ISceneObject *& s, SRect2 a);
       SRect2 & getArea();
 
       //Function for debugging

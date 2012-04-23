@@ -2,7 +2,10 @@
 #include "CGameLevel.h"
 
 CElementBlock::CElementBlock(SRect2 nArea, int depth, int texture)
-: CGameplayElement(PhysicsEngineObject, SceneObject, nArea), Depth(depth), Texture(texture) {
+: CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Depth(depth), Texture(texture) {
+}
+
+void CElementBlock::update(float time) {
 }
 
 void CElementBlock::updatePhysicsEngineObject(float time) {

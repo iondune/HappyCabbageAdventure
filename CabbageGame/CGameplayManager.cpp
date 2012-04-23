@@ -6,7 +6,7 @@
 
 #define DEBUG_PRINTFS
 
-CGameplayManager::CGameplayManager(CGameLevel & level) {
+CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(level.getElements()) {
    PhysicsEngine = new CCollisionEngine();
    level.setPhysicsEngine(PhysicsEngine);
 
@@ -25,16 +25,16 @@ CGameplayManager::CGameplayManager(CGameLevel & level) {
    //Set up each object
    for(int i = 0; i < level.getElements().size(); i++) {
       level.getElements()[i]->setupObjects();
-#ifdef DEBUG_PRINTFS
-      printf("Setting up object #%d:\n", i);
-      level.getElements()[i]->printInformation();
-#endif
    }
    //Add consolidated blocks
    for(int i = 0; i < level.getConsolidatedBlocks().size(); i++) {
       level.getConsolidatedBlocks()[i]->addToEngine(PhysicsEngine);
    }
 #ifdef DEBUG_PRINTFS
+   for(int i = 0; i < level.getElements().size(); i++) {
+      printf("Element %d: ", i);
+      level.getElements()[i]->printInformation();
+   }
    printf("Total number in physics engine after setup: %d (%d actors + %d objects).\n",
       PhysicsEngine->getActors().size() + PhysicsEngine->getObjects().size(),
       PhysicsEngine->getActors().size(), PhysicsEngine->getObjects().size());

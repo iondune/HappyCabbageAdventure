@@ -10,7 +10,7 @@
 
 //Generic enemy, for usage in the LWIB, I guess.
 CElementEnemy::CElementEnemy(SRect2 nArea, Enemies::EEnemyType type)
-: CGameplayElement(PhysicsEngineObject, SceneObject, nArea), Type(type) {
+: CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), PhysicsEngineObject(NULL), SceneObject(NULL), Type(type) {
 }
 
 //Enemy created by factory

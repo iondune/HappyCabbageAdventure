@@ -8,7 +8,7 @@
 
 //Generic item, for usage in the LWIB, I guess.
 CElementItem::CElementItem(SRect2 nArea, Items::EItemType type)
-: CGameplayElement(PhysicsEngineObject, SceneObject, nArea), Type(type) {
+: CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Type(type) {
 }
 
 //Item created by factory
