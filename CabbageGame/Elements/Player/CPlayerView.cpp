@@ -3,7 +3,9 @@
 
 #include <sstream>
 CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2 & nArea, SVector3 & sf) :
-   SceneObject(obj), CabbageIndex(CurHealth - 1), Direction(dir), Action(act), Hurt(false), Area(nArea), ShakeFactor(sf) {
+   SceneObject(obj), CabbageIndex(CurHealth - 1), Direction(dir), Action(act), Hurt(false), Area(nArea), ShakeFactor(sf),
+   ySineValue(0.0f) {
+
    //Normal cabbage meshes and renderables
    ISceneObject *NormalCabbage = new ISceneObject();
    SceneObject->addChild(NormalCabbage);
@@ -107,8 +109,19 @@ void CPlayerView::removeLeaf() {
 
 void CPlayerView::updateView(float time) {
    CApplication::get().getSceneManager().getActiveCamera()->setPosition(SVector3(Area.getCenter().X, Area.getCenter().Y + 1.3f, 10) + ShakeFactor);
-   SceneObject->setRotation(SVector3(-90.0f, 0, Direction == CElementPlayer::Right ? 80.0f : 0.0f));
-   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
+
+   float rotateX = 15*sin(ySineValue/2)-90.f;
+
+   SceneObject->setRotation(SVector3(rotateX, 0, Direction == CElementPlayer::Right ? 80.0f : 0.0f));
+
+   //TODO: Prevent from translating in air.
+   translateCabbage(time);
+
+   float ySineAmount = 0.065f*sin(ySineValue);
+
+   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y + ySineAmount, 0));
+
+   //TODO: Add cabbage scaling (in air)
 }
 
 void CPlayerView::setHurt(bool b) {
@@ -125,4 +138,19 @@ void CPlayerView::setHurt(bool b) {
 
 void CPlayerView::setVisible(bool b) {
    SceneObject->setVisible(b);
+}
+
+
+void CPlayerView::translateCabbage(float time) {
+   if (Action == CElementPlayer::Standing) {
+      ySineValue += 5.f*time;
+   }
+
+   else if (Action == CElementPlayer::Walking && Direction == CElementPlayer::Left) {
+      ySineValue +=10.f*time;
+   }
+
+   else if (Action == CElementPlayer::Walking && Direction == CElementPlayer::Right) {
+      ySineValue -=10.f*time;
+   }
 }

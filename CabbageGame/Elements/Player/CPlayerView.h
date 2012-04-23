@@ -21,7 +21,7 @@ class CPlayerView {
       CElementPlayer::EDirection & Direction;
       CElementPlayer::EAction & Action;
       SRect2 & Area;
-      float LeftShadowCutoffValue, LeftShadowStartValue, RightShadowCutoffValue, RightShadowStartValue; 
+      float LeftShadowCutoffValue, LeftShadowStartValue, RightShadowCutoffValue, RightShadowStartValue, ySineValue;
       SVector3 & ShakeFactor;
 
    public:
@@ -30,6 +30,7 @@ class CPlayerView {
       void setHurt(bool);
       void setVisible(bool);
       void updateView(float time);
+      void translateCabbage(float time);
       CPlayerView(ISceneObject *, CElementPlayer::EDirection &, CElementPlayer::EAction &, int, SRect2 &, SVector3 & sf);
 };
 
