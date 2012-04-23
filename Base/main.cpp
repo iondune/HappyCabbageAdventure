@@ -25,21 +25,14 @@ int main(int argc, char * argv[])
    //Application.init(SPosition2(800, 600));
    Application.init(SPosition2(1200, 900));
 
-   /*
-      printf("Argc: %d %s\n", argc, argv[1]);
-      if(argc > 1 && strcmp(argv[1], "-l") == 0) {
-      CGameState::get().lowDef = 1;
-      printf("Low Definition Mode: On\n");
-      }
-      else {
-      CGameState::get().lowDef = 0;
-      printf("Low Definition Mode: Off\n");
-      }
-      */
-
    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
    CStateManager & StateManager = Application.getStateManager();
+   if(argc > 1)
+      CGameState::get().LevelName = argv[1];
+   else
+      CGameState::get().LevelName = "jorge1.xml";
+
    StateManager.setState(& CGameState::get());
    //StateManager.setState(& COverworldState::get());
 
@@ -47,4 +40,3 @@ int main(int argc, char * argv[])
 
    return 0;
 }
-

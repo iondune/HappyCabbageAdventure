@@ -7,7 +7,7 @@ CGameState::CGameState() {
 
 void CGameState::begin() {
    printf("Here in begin\n");
-   Level = &CGameLevelLoader::loadLevel("jorge1.xml");
+   Level = &CGameLevelLoader::loadLevel(LevelName);
 
    GameplayManager = new CGameplayManager(*Level);
    DecorManager = new CDecorManager(*Level);

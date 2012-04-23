@@ -71,7 +71,7 @@ void CElementEnemy::writeXML(xmlwriter *l) {
 void CElementEnemy::OnCollision(CCollideable *Object) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
       CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
-      if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y) {
+      if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {
          Level.removeEnemy(this);
          removeFromEngines();
          Dead = true;
