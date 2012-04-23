@@ -55,17 +55,17 @@ void CElementEnemyApple::OnCollision(CCollideable *Object, CCollideable *With) {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyApple::updatePhysicsEngineObject(float time) {
+   SVector2 PlayerPosition = Level.getPlayer().getArea().Position;
    //TODO: Make some class singleton so we can get the player's location
-   /*
-   if (Manager->getPlayerLocation().X < Area.getCenter().X && (Roll == None))
+   if (PlayerPosition.X < Area.getCenter().X && (Roll == None))
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
-   else if (Manager->getPlayerLocation().X > Area.getCenter().X && (Roll == None))
+   else if (PlayerPosition.X > Area.getCenter().X && (Roll == None))
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
 
    float curTime = time;
    for(; curTime > 0; curTime -= 0.002f) { 
-      if (Manager->getPlayerLocation().X - Area.getCenter().X < 7 && Manager->getPlayerLocation().X - Area.getCenter().X > -7 &&
-            Manager->getPlayerLocation().Y - Area.getCenter().Y < 1.0f && Manager->getPlayerLocation().Y - Area.getCenter().Y > -1.0f && rand()%1000 <= 2) {
+      if (PlayerPosition.X - Area.getCenter().X < 7 && PlayerPosition.X - Area.getCenter().X > -7 &&
+            PlayerPosition.Y - Area.getCenter().Y < 1.0f && PlayerPosition.Y - Area.getCenter().Y > -1.0f && rand()%1000 <= 2) {
          if(PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveLeft)
             Roll = Left;
          else
@@ -73,7 +73,6 @@ void CElementEnemyApple::updatePhysicsEngineObject(float time) {
          PhysicsEngineObject->getAttributes().MaxWalk = 6.0f;
       }
    }
-   */
 
    if (Rotate >= 360 || Rotate <= -360) {
       Rotate = 0;
