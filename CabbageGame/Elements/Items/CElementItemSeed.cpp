@@ -42,7 +42,6 @@ void CElementItemSeed::setupSceneObject() {
 void CElementItemSeed::OnCollision(CCollideable *Object) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
       Level.getPlayer().getStats().Seeds++;
-      printf("Num seeds: %d\n", Level.getPlayer().getStats().Seeds);
       Level.removeItem(this);
       removeFromEngines();
       Dead = true;

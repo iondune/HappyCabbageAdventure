@@ -122,50 +122,6 @@ void CGameState::EngineInit( void ) {
 }
 
 void CGameState::LoadHUD() {
-   //Prepare GUI
-   CabbageFace =  new CGUIImageWidget(CImageLoader::loadTGAImage("Base/cabbage.tga"), SVector2(.3f, .15f));
-   CabbageFace->setPosition(SVector2(-.07f, .85f));
-
-   CabbageHurtFace =  new CGUIImageWidget(CImageLoader::loadTGAImage("Base/cabbageouch.tga"), SVector2(.3f, .15f));
-   CabbageHurtFace->setPosition(SVector2(-.081f, .861f));
-   CabbageHurtFace->setVisible(false);
-
-   Health5 = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage5.tga"), SVector2(.1f, .1f));
-   Health5->setPosition(SVector2(.36f, .86f));
-
-   Health4 = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage4.tga"), SVector2(.1f, .1f));
-   Health4->setPosition(SVector2(.31f, .86f));
-
-   Health3 = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage3.tga"), SVector2(.1f, .1f));
-   Health3->setPosition(SVector2(.26f, .86f));
-
-   Health2 = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage2.tga"), SVector2(.1f, .1f));
-   Health2->setPosition(SVector2(.21f, .86f));
-
-   Health1 = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/HealthCabbage1.tga"), SVector2(.1f, .1f));
-   Health1->setPosition(SVector2(.16f, .86f));
-
-   CabbageEnergyBar = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/EnergyBarTop.tga"), SVector2(.47f, .1f));
-   CabbageEnergyBar->setPosition(SVector2(.02f, .78f));
-
-   CabbageMeter = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/EnergyBarBottom.tga"), SVector2(.47f, .1f));
-   CabbageMeter->setPosition(SVector2(.02f, .78f));
-
-   Seed = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/seed.tga"), SVector2(.075f, .075f));
-   Seed->setPosition(SVector2((float)WindowWidth/(float)WindowHeight - 0.15f, 0.90f));
-
-   //Application.getGUIEngine().addWidget(CabbageFace);
-   Application.getGUIEngine().addWidget(Health1);
-   Application.getGUIEngine().addWidget(Health2);
-   Application.getGUIEngine().addWidget(Health3);
-   Application.getGUIEngine().addWidget(Health4);
-   Application.getGUIEngine().addWidget(Health5);
-   Application.getGUIEngine().addWidget(CabbageMeter);
-   Application.getGUIEngine().addWidget(CabbageEnergyBar);
-   Application.getGUIEngine().addWidget(CabbageFace);
-   Application.getGUIEngine().addWidget(CabbageHurtFace);
-   Application.getGUIEngine().addWidget(Seed);
-
 }
 void CGameState::Initialize() {
    Charged = 0; aDown = 0; dDown = 0; spaceDown = 0; wDown = 0; sDown = 0; lDown = 0;

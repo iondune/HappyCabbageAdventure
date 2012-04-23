@@ -10,7 +10,7 @@ CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(
    PhysicsEngine = new CCollisionEngine();
    level.setPhysicsEngine(PhysicsEngine);
 
-   CPerspectiveCamera *Camera = new CPerspectiveCamera();
+   CPerspectiveCamera *Camera = new CPerspectiveCamera(CApplication::getAspectRatio(), 0.01f, 100.0f, 60.0f);
    Camera->setPosition(SVector3(0, 0, 20));
    Camera->setLookDirection(SVector3(0, 0, -1));
    CApplication::get().getSceneManager().setActiveCamera(Camera);
@@ -39,6 +39,9 @@ CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(
       PhysicsEngine->getActors().size() + PhysicsEngine->getObjects().size(),
       PhysicsEngine->getActors().size(), PhysicsEngine->getObjects().size());
 #endif
+
+   GUIManager = new CGameplayGUIManager(level.getPlayer().getStats());
+
    CApplication::get().getSceneManager().load();
 }
 
@@ -48,4 +51,5 @@ void CGameplayManager::update(float time) {
    for(int i = 0; i < Elements.size(); i++) {
       Elements[i]->update(time);
    }
+   GUIManager->update();
 }
