@@ -70,6 +70,7 @@ class CElementPlayer : public CGameplayElement {
 
       //Keyboard event functions
       void OnKeyboardEvent(SKeyboardEvent const & Event);
+      Cabbage::PlayerInformation & getStats();
 };
 
 #endif

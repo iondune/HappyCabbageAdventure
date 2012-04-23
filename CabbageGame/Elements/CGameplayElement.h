@@ -6,6 +6,7 @@
 #include "CCollisionEngine.h"
 #include "CabbageScene.h"
 
+class CElementPlayer;
 class CGameLevel;
 #include "./wmlwriter_src/xmlwriter.h"
 #include <sstream>
@@ -21,6 +22,7 @@ class CGameplayElement : public IUpdater, public ICollisionResponder {
       CGameLevel & Level;
       SRect2 Area;
       float ElapsedTime;
+      bool Dead;
 
    public:
       //Functions for CGameplayManager 
@@ -37,12 +39,16 @@ class CGameplayElement : public IUpdater, public ICollisionResponder {
       //Functions for CLWIBState
       virtual void writeXML(xmlwriter *)=0;
 
+      virtual void removeFromEngines();
+
       //Constructor
       CGameplayElement(CCollideable *& c, ISceneObject *& s, SRect2 a);
       SRect2 & getArea();
 
       //Function for debugging
       virtual void printInformation();
+
+      CCollideable *& getPhysicsEngineObject();
 };
 
 #endif

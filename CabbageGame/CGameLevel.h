@@ -65,6 +65,11 @@ class CGameLevel {
       void setPhysicsEngine(CCollisionEngine *p);
 
       void printInformation();
+
+      void removeEnemy(CElementEnemy *Enemy);
+      void addEnemy(CElementEnemy *Enemy);
+      void removeItem(CElementItem* Item);
+      void addItem(CElementItem* Item);
 };
 
 #endif

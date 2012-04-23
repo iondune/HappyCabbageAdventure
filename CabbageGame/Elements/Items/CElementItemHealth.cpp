@@ -39,7 +39,15 @@ void CElementItemHealth::setupSceneObject() {
 }
 
 void CElementItemHealth::OnCollision(CCollideable *Object) {
-   //Optional code: setImpulse to other object away from this object, lower their health?
+   if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
+      if(Level.getPlayer().getStats().Health < 5)
+         Level.getPlayer().getStats().Health++;
+      Level.removeItem(this);
+      Area.Position.Y = 5.0f;
+      Level.addItem(CItemLoader::LoadItem(Area, Items::HEALTH));
+      removeFromEngines();
+      Dead = true;
+   }
 }
                                                             
 //CGameplayElement has an attribute called ElapsedTime, which is updated by CGameplayElement's update function.

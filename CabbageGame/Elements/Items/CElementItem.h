@@ -1,6 +1,7 @@
 #ifndef ____CELEMENTITEM_HEADER_
 #define ____CELEMENTITEM_HEADER_
 #include "../CGameplayElement.h"
+#include "CElementPlayer.h"
 
 namespace Items {
    enum EItemType {

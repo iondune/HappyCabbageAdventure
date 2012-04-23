@@ -42,6 +42,10 @@ void CElementPlayer::updateSceneObject(float time) {
    View->updateView(time);
 }
 
+Cabbage::PlayerInformation & CElementPlayer::getStats() {
+   return Stats;
+}
+
 void CElementPlayer::OnCollision(CCollideable *Object) {
    return;
 }

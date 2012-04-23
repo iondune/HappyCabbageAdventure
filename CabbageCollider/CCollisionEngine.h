@@ -47,6 +47,7 @@ public:
 
 
 	void removeActor(CCollisionActor * Actor);
+	void remove(CCollideable *);
 
 	void update(float const Elapsed);
 	void updateAll(float const Elapsed);

@@ -6,6 +6,8 @@ bool CCollisionEngine::CanCollide( CCollideable *a, CCollideable *b )
 		(b->CollideableLevel & a->CanCollideWith);
 }
 
+std::vector<CCollideable*> KillList;
+
 void CCollisionEngine::performTick( float const TickTime )
 {
 	// Perform actor update
@@ -54,6 +56,23 @@ void CCollisionEngine::performTick( float const TickTime )
 			(* jt)->pushIfCollided(* it, Movement);
 		}
 	}
+
+   for(int i = 0; i < KillList.size(); i++) {
+      CCollideable *Object = KillList[i];
+      for (ActorList::iterator it = Actors.begin(); it != Actors.end(); ++ it)
+         if (* it == Object)
+         {
+            Actors.erase(it);
+            return;
+         }
+      for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
+         if (* it == Object )
+         {
+            Objects.erase(it);
+            return;
+         }
+   }
+   KillList.clear();
 }
 
 void CCollisionEngine::removeAll()
@@ -81,6 +100,10 @@ CCollisionEngine::CCollisionEngine() : Timer(0.f)
 CCollisionEngine::~CCollisionEngine()
 {
 
+}
+
+void CCollisionEngine::remove(CCollideable * Object) {
+   KillList.push_back(Object);
 }
 
 

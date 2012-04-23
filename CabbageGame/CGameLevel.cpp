@@ -109,3 +109,23 @@ CCollisionEngine & CGameLevel::getPhysicsEngine() {
 void CGameLevel::setPhysicsEngine(CCollisionEngine *p) {
    PhysicsEngine = p;
 }
+
+void CGameLevel::removeEnemy(CElementEnemy *Enemy) {
+   Enemies.erase(std::remove(Enemies.begin(), Enemies.end(), Enemy), Enemies.end());
+}
+
+void CGameLevel::addEnemy(CElementEnemy *Enemy) {
+   Enemy->setupObjects();
+   Enemies.push_back(Enemy);
+   Elements.push_back(Enemy);
+}
+
+void CGameLevel::removeItem(CElementItem* Item) {
+   Items.erase(std::remove(Items.begin(), Items.end(), Item), Items.end());
+}
+
+void CGameLevel::addItem(CElementItem* Item) {
+   Item->setupObjects();
+   Items.push_back(Item);
+   Elements.push_back(Item);
+}
