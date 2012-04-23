@@ -401,6 +401,10 @@ void CDecorManager::PrepMeshes()
 void CDecorManager::SetupSky() {
    CMeshSceneObject *tempBlock;
 
+   cubeMesh = CMeshLoader::createCubeMesh();
+   cubeMesh->linearizeIndices();
+   cubeMesh->calculateNormalsPerFace();
+
    tempBlock = new CMeshSceneObject();
    tempBlock->setMesh(cubeMesh);
    if(env == 0)
