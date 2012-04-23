@@ -40,7 +40,7 @@ void CElementItemLife::setupSceneObject() {
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
-void CElementItemLife::OnCollision(CCollideable *Object, CCollideable *With) {
+void CElementItemLife::OnCollision(CCollideable *Object) {
    //Optional code: setImpulse to other object away from this object, lower their health?
 }
                                                             

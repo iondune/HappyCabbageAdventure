@@ -58,7 +58,7 @@ class CElementPlayer : public CGameplayElement {
       CElementPlayer(SRect2 nArea);
 
       //CGameplayElement functions
-      virtual void OnCollision(CCollideable *Object, CCollideable *With);
+      virtual void OnCollision(CCollideable *Object);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

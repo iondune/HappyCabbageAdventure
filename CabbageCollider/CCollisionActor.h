@@ -90,7 +90,7 @@ protected:
 	// Update functions, used by engine
 	void updateVectors(float const TickTime);
 
-	bool updateCollision(CCollideable * Object, float const TickTime, ICollisionResponder * CollisionResponder);
+	bool updateCollision(CCollideable * Object, float const TickTime);
 	void onStanding(CCollideable * Object);
 
 	void pushIfCollided(CCollisionObject * Object, SVector2 const & Movement);

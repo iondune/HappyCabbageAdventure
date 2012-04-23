@@ -42,7 +42,7 @@ void CElementPlayer::updateSceneObject(float time) {
    View->updateView(time);
 }
 
-void CElementPlayer::OnCollision(CCollideable *Object, CCollideable *With) {
+void CElementPlayer::OnCollision(CCollideable *Object) {
    return;
 }
 

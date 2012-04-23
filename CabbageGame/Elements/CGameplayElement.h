@@ -28,7 +28,7 @@ class CGameplayElement : public IUpdater, public ICollisionResponder {
       void setupObjects();
       virtual void setupPhysicsEngineObject()=0;
       virtual void setupSceneObject()=0;
-      virtual void OnCollision(CCollideable *Object, CCollideable *With)=0;
+      virtual void OnCollision(CCollideable *Object)=0;
 
       //Functions for subclasses
       virtual void updatePhysicsEngineObject(float)=0;

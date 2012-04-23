@@ -302,12 +302,15 @@ void CCollisionActor::setControlFall(bool const fall) {
 	ControlFall = fall;
 }
 
-bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTime, ICollisionResponder * CollisionResponder)
+bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTime)
 {
 	int CollisionType = checkCollision(Object, TickTime);
 
-	if (CollisionResponder && CollisionType) {
-		CollisionResponder->OnCollision(this, Object);
+	if (CollisionType) {
+      if(CollisionResponder)
+         CollisionResponder->OnCollision(Object);
+      if(Object->CollisionResponder)
+         Object->CollisionResponder->OnCollision(this);
    }
    if (CollisionType & ECollisionType::Up)
    {

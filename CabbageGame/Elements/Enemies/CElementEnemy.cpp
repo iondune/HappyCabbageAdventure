@@ -66,7 +66,7 @@ void CElementEnemy::writeXML(xmlwriter *l) {
     l->CloseLasttag();
 }
 
-void CElementEnemy::OnCollision(CCollideable *Object, CCollideable *With) {
+void CElementEnemy::OnCollision(CCollideable *Object) {
    fprintf(stderr, "Error: collision on generic enemy type %d (perhaps the CElementEnemy::OnCollision function wasn't overridden?).\n", Type);
    exit(1);
 }

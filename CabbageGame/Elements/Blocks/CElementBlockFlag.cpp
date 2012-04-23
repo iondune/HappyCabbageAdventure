@@ -9,7 +9,7 @@ CElementBlockFlag::CElementBlockFlag(SRect2 nArea, int role)
 : CElementBlock(nArea, 1, 0), Role((FlagRole)role) {
 }
 
-void CElementBlockFlag::OnCollision(CCollideable *Object, CCollideable *With) {
+void CElementBlockFlag::OnCollision(CCollideable *Object) {
    return;
 }
 

@@ -58,7 +58,7 @@ void CElementEnemyKiwi::setupSceneObject() {
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
-void CElementEnemyKiwi::OnCollision(CCollideable *Object, CCollideable *With) {
+void CElementEnemyKiwi::OnCollision(CCollideable *Object) {
    //Optional code: setImpulse to other object away from this object, lower their health?
 }
                                                             

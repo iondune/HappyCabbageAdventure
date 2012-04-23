@@ -13,7 +13,7 @@ CCollideable::SMaterial::SMaterial()
 	: Friction(1.f), Elasticity(0.f)
 {}
 
-CCollideable::CCollideable() : CollideableType(COLLIDEABLE_TYPE_COLLIDEABLE), CollideableLevel(INTERACTOR_ALL), VisualDepth(0.0f)
+CCollideable::CCollideable() : CollideableType(COLLIDEABLE_TYPE_COLLIDEABLE), CollideableLevel(INTERACTOR_ALL), VisualDepth(0.0f), CollisionResponder(NULL)
 {}
 
 CCollideable::~CCollideable()
@@ -60,4 +60,9 @@ void CCollideable::draw()
 	glEnd();
 
 	glPopMatrix();
+}
+
+void CCollideable::setCollisionResponder( ICollisionResponder * collisionResponder )
+{
+	CollisionResponder = collisionResponder;
 }

@@ -39,7 +39,7 @@ void CElementEnemyBlade::setupSceneObject() {
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
-void CElementEnemyBlade::OnCollision(CCollideable *Object, CCollideable *With) {
+void CElementEnemyBlade::OnCollision(CCollideable *Object) {
    //Optional code: setImpulse to other object away from this object, lower their health?
 }
                                                             

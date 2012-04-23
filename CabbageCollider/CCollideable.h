@@ -30,6 +30,7 @@
 #define INTERACTOR_NULL_BLOCK 64 
 #define INTERACTOR_ALL_ALL 1+2+4+8+16+32+64
 
+class ICollisionResponder;
 
 class CCollideable
 {
@@ -56,8 +57,10 @@ protected:
 
 	float VisualDepth;
 
+
 public:
 
+	ICollisionResponder * CollisionResponder;
 	virtual ~CCollideable();
 
 	SRect2 const & getArea() const;
@@ -72,6 +75,16 @@ public:
 
 	void setDepth(float);
 	float getDepth();
+   void setCollisionResponder( ICollisionResponder * collisionResponder );
+};
+
+class ICollisionResponder
+{
+
+public:
+
+	virtual void OnCollision(CCollideable * Object) =0;
+
 };
 
 #endif

@@ -22,7 +22,7 @@ void CCollisionEngine::performTick( float const TickTime )
 		{
 			if(CanCollide((*it), (*jt))) {
 				//printf("%d and %d are within 2\n", (*it)->CollideableLevel, (*jt)->CollideableLevel);
-				bool Alighted = (* it)->updateCollision(* jt, TickTime, CollisionResponder);
+				bool Alighted = (* it)->updateCollision(* jt, TickTime);
 				if (Alighted)
 					Which = (* jt);
 			}
@@ -34,7 +34,7 @@ void CCollisionEngine::performTick( float const TickTime )
 				//printf("%d and %d are within 2\n", (*it)->CollideableLevel, (*jt)->CollideableLevel);
 				if (* it != * jt)
 				{
-					bool Alighted = (* it)->updateCollision(* jt, TickTime, CollisionResponder);
+					bool Alighted = (* it)->updateCollision(* jt, TickTime);
 					if (Alighted)
 						Which = (* jt);
 				}
@@ -73,7 +73,7 @@ void CCollisionEngine::removeObject( CCollisionObject * Object )
 		}
 }
 
-CCollisionEngine::CCollisionEngine() : Timer(0.f), CollisionResponder(0)
+CCollisionEngine::CCollisionEngine() : Timer(0.f)
 {
 	addNullBlock();
 }
@@ -83,10 +83,6 @@ CCollisionEngine::~CCollisionEngine()
 
 }
 
-void CCollisionEngine::setCollisionResponder( ICollisionResponder * collisionResponder )
-{
-	CollisionResponder = collisionResponder;
-}
 
 void CCollisionEngine::removeActor( CCollisionActor * Actor )
 {

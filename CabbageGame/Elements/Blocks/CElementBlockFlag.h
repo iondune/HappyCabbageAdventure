@@ -15,7 +15,7 @@ class CElementBlockFlag : public CElementBlock {
       FlagRole Role;
 
    public:
-      virtual void OnCollision(CCollideable *Object, CCollideable *With);
+      virtual void OnCollision(CCollideable *Object);
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
       virtual void writeXML(xmlwriter *);

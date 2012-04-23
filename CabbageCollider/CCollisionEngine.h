@@ -17,14 +17,6 @@
 typedef std::vector<CCollisionObject *> ObjectList;
 typedef std::vector<CCollisionActor *> ActorList;
 
-class ICollisionResponder
-{
-
-public:
-
-	virtual void OnCollision(CCollideable * Object, CCollideable * With) =0;
-
-};
 
 class CCollisionEngine
 {
@@ -35,8 +27,6 @@ private:
 
 	ObjectList Objects;
 	ActorList Actors;
-
-	ICollisionResponder * CollisionResponder;
 
 	bool CanCollide(CCollideable *a, CCollideable *b);
 
@@ -55,8 +45,6 @@ public:
 
 	~CCollisionEngine();
 
-
-	void setCollisionResponder(ICollisionResponder * collisionResponder);
 
 	void removeActor(CCollisionActor * Actor);
 

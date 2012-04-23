@@ -25,7 +25,7 @@ class CElementEnemyApple : public CElementEnemy
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);
 
-      virtual void OnCollision(CCollideable *Object, CCollideable *With);
+      virtual void OnCollision(CCollideable *Object);
 
       virtual void printInformation();
 };

@@ -14,7 +14,7 @@ void CElementBlock::updatePhysicsEngineObject(float time) {
 void CElementBlock::updateSceneObject(float time) {
 }
 
-void CElementBlock::OnCollision(CCollideable *Object, CCollideable *With) {
+void CElementBlock::OnCollision(CCollideable *Object) {
    return;
 }
 

@@ -26,7 +26,7 @@ class CElementEnemy : public CGameplayElement {
       Enemies::EEnemyType Type;
 
    public:
-      virtual void OnCollision(CCollideable *Object, CCollideable *With);
+      virtual void OnCollision(CCollideable *Object);
       virtual void writeXML(xmlwriter *l);
 
       virtual void setupPhysicsEngineObject()=0;

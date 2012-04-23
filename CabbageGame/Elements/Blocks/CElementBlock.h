@@ -10,7 +10,7 @@ class CElementBlock : public CGameplayElement {
       CMeshSceneObject * SceneObject; //Override CGameplayElement's but with type CMeshSceneObject
       int Depth, Texture;
    public:
-      virtual void OnCollision(CCollideable *Object, CCollideable *With);
+      virtual void OnCollision(CCollideable *Object);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
