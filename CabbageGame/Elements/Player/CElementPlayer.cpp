@@ -3,7 +3,7 @@
 #include "CPlayerView.h"
 
 CElementPlayer::CElementPlayer(SRect2 nArea)
-: CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing) {
+: CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f) {
 
 }
 
@@ -39,6 +39,17 @@ void CElementPlayer::updatePhysicsEngineObject(float time) {
 }
 
 void CElementPlayer::updateSceneObject(float time) {
+   if(Recovering > 0.0f) {
+      Recovering -= time;
+      if(Recovering <= 0.0f) {
+         View->setVisible(true);
+         View->setHurt(false);
+         Recovering = 0.0f;
+      }
+      else {
+         View->setVisible((int)(ElapsedTime * 50.0f) % 2 != 0);
+      }
+   }
    View->updateView(time);
 }
 
@@ -83,9 +94,11 @@ void CElementPlayer::setupSceneObject() {
 }
 
 void CElementPlayer::decrementHealth() {
-   if(Stats.Health > 0) {
+   if(Stats.Health > 0 && Recovering == 0.0f) {
       Stats.Health--; 
       View->removeLeaf();
+      View->setHurt(true);
+      Recovering = 1.0f;
    }
    //Else lose state
 }

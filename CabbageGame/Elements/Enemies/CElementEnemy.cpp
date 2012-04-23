@@ -68,11 +68,14 @@ void CElementEnemy::writeXML(xmlwriter *l) {
 
 void CElementEnemy::OnCollision(CCollideable *Object) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
-      Level.getPlayer().decrementHealth();
-      printf("Health is now %d\n", Level.getPlayer().getStats().Health);
-      Level.removeEnemy(this);
-      removeFromEngines();
-      Dead = true;
+      if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y) {
+         Level.removeEnemy(this);
+         removeFromEngines();
+         Dead = true;
+      }
+      else {
+         Level.getPlayer().decrementHealth();
+      }
    }
 }
 

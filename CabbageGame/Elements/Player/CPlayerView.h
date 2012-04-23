@@ -26,6 +26,8 @@ class CPlayerView {
    public:
       void addLeaf();
       void removeLeaf();
+      void setHurt(bool);
+      void setVisible(bool);
       void updateView(float time);
       CPlayerView(ISceneObject *, CElementPlayer::EDirection &, CElementPlayer::EAction &, int, SRect2 &);
 };

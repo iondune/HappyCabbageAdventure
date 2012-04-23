@@ -110,3 +110,19 @@ void CPlayerView::updateView(float time) {
    SceneObject->setRotation(SVector3(-90.0f, 0, Direction == CElementPlayer::Right ? 80.0f : 0.0f));
    SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
 }
+
+void CPlayerView::setHurt(bool b) {
+   Hurt = b;
+   if(Hurt) {
+      HurtCabbageRenderables[CabbageIndex]->setVisible(true);
+      NormalCabbageRenderables[CabbageIndex]->setVisible(false);
+   }
+   else {
+      HurtCabbageRenderables[CabbageIndex]->setVisible(false);
+      NormalCabbageRenderables[CabbageIndex]->setVisible(true);
+   }
+}
+
+void CPlayerView::setVisible(bool b) {
+   SceneObject->setVisible(b);
+}

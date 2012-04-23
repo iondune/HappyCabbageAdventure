@@ -53,6 +53,7 @@ class CElementPlayer : public CGameplayElement {
       EAction Action; 
 
       void updatePlayerAction();
+      float Recovering;
 
    public:
       CElementPlayer(SRect2 nArea);
