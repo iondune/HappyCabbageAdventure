@@ -74,7 +74,13 @@ void CElementEnemy::OnCollision(CCollideable *Object) {
          Dead = true;
       }
       else {
-         Level.getPlayer().decrementHealth();
+         CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
+         if(Level.getPlayer().decrementHealth()) {
+            if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
+               PlayerActor->setImpulse(SVector2(7.f, 2.8f), 0.1f);
+            else
+               PlayerActor->setImpulse(SVector2(-7.f, 2.8f), 0.1f);
+         }
       }
    }
 }

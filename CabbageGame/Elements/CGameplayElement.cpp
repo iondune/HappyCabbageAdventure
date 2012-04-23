@@ -45,5 +45,6 @@ void CGameplayElement::removeFromEngines() {
    if(!Dead) {
       Level.getPhysicsEngine().remove(PhysicsEngineObject);
       CApplication::get().getSceneManager().removeSceneObject(SceneObject);
+      Dead = true;
    }
 }

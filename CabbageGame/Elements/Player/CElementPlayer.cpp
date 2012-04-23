@@ -93,13 +93,18 @@ void CElementPlayer::setupSceneObject() {
    View = new CPlayerView(SceneObject, Direction, Action, Stats.Health, Area);
 }
 
-void CElementPlayer::decrementHealth() {
-   if(Stats.Health > 0 && Recovering == 0.0f) {
+bool CElementPlayer::decrementHealth() {
+   if(Stats.Health <= 0) {
+      return false; //Lose state
+   }
+   if(Recovering == 0.0f) {
       Stats.Health--; 
       View->removeLeaf();
       View->setHurt(true);
       Recovering = 1.0f;
+      return true;
    }
+   return false;
    //Else lose state
 }
 void CElementPlayer::incrementHealth() {

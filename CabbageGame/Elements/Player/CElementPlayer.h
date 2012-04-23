@@ -69,7 +69,7 @@ class CElementPlayer : public CGameplayElement {
 
       virtual void writeXML(xmlwriter *);
 
-      void decrementHealth();
+      bool decrementHealth();
       void incrementHealth();
 
       //Keyboard event functions
