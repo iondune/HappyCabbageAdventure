@@ -3,7 +3,7 @@
 #include "CPlayerView.h"
 
 CElementPlayer::CElementPlayer(SRect2 nArea)
-: CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f) {
+: CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f), Shaking(0.0f), ShakeFactor(SVector3(0.0f)) {
 
 }
 
@@ -50,6 +50,14 @@ void CElementPlayer::updateSceneObject(float time) {
          View->setVisible((int)(ElapsedTime * 50.0f) % 2 != 0);
       }
    }
+   if(Shaking > 0.0f) {
+      Shaking -= time;
+      if((int)((ElapsedTime - (int)ElapsedTime)*20.0f) % 2 == 0)
+         ShakeFactor = SVector3((float)rand()/(float)RAND_MAX * 0.3f - 0.15f, (float)rand()/(float)RAND_MAX * 0.3f - 0.15f, 0) / ShakeFactorFactor;
+      if(Shaking <= 0.0f) {
+         ShakeFactor = SVector3(0.0f);
+      }
+   }
    View->updateView(time);
 }
 
@@ -89,7 +97,7 @@ void CElementPlayer::setupPhysicsEngineObject() {
 
 void CElementPlayer::setupSceneObject() {
    SceneObject = new ISceneObject();
-   View = new CPlayerView(SceneObject, Direction, Action, Stats.Health, Area);
+   View = new CPlayerView(SceneObject, Direction, Action, Stats.Health, Area, ShakeFactor);
 }
 
 bool CElementPlayer::decrementHealth() {
@@ -111,4 +119,9 @@ void CElementPlayer::incrementHealth() {
       Stats.Health++; 
       View->addLeaf();
    }
+}
+
+void CElementPlayer::setShaking(float time, float factor) {
+   Shaking = time;
+   ShakeFactorFactor = factor;
 }

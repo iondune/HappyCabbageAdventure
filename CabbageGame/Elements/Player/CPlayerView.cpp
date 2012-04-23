@@ -2,8 +2,8 @@
 #include "CabbageFramework.h"
 
 #include <sstream>
-CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2 & nArea) :
-   SceneObject(obj), CabbageIndex(CurHealth - 1), Direction(dir), Action(act), Hurt(false), Area(nArea) {
+CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2 & nArea, SVector3 & sf) :
+   SceneObject(obj), CabbageIndex(CurHealth - 1), Direction(dir), Action(act), Hurt(false), Area(nArea), ShakeFactor(sf) {
    //Normal cabbage meshes and renderables
    ISceneObject *NormalCabbage = new ISceneObject();
    SceneObject->addChild(NormalCabbage);
@@ -106,7 +106,7 @@ void CPlayerView::removeLeaf() {
 }
 
 void CPlayerView::updateView(float time) {
-   CApplication::get().getSceneManager().getActiveCamera()->setPosition(SVector3(Area.getCenter().X, Area.getCenter().Y + 1.3f, 10));
+   CApplication::get().getSceneManager().getActiveCamera()->setPosition(SVector3(Area.getCenter().X, Area.getCenter().Y + 1.3f, 10) + ShakeFactor);
    SceneObject->setRotation(SVector3(-90.0f, 0, Direction == CElementPlayer::Right ? 80.0f : 0.0f));
    SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
 }

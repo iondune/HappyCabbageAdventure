@@ -84,6 +84,7 @@ void CElementEnemy::OnCollision(CCollideable *Object) {
 
             ((CCollisionActor *)seed->getPhysicsEngineObject())->setImpulse(SVector2(rand1*8.f - 4.f, rand2*4.5f + 1.0f), 0.01f);
          }
+         Level.getPlayer().setShaking(0.4f, 3.0f);
       }
       else {
          CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
@@ -92,6 +93,7 @@ void CElementEnemy::OnCollision(CCollideable *Object) {
                PlayerActor->setImpulse(SVector2(7.f, 2.8f), 0.1f);
             else
                PlayerActor->setImpulse(SVector2(-7.f, 2.8f), 0.1f);
+            Level.getPlayer().setShaking(1.0f, 3.0f);
          }
       }
    }

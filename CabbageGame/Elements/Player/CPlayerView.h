@@ -22,6 +22,7 @@ class CPlayerView {
       CElementPlayer::EAction & Action;
       SRect2 & Area;
       float LeftShadowCutoffValue, LeftShadowStartValue, RightShadowCutoffValue, RightShadowStartValue; 
+      SVector3 & ShakeFactor;
 
    public:
       void addLeaf();
@@ -29,7 +30,7 @@ class CPlayerView {
       void setHurt(bool);
       void setVisible(bool);
       void updateView(float time);
-      CPlayerView(ISceneObject *, CElementPlayer::EDirection &, CElementPlayer::EAction &, int, SRect2 &);
+      CPlayerView(ISceneObject *, CElementPlayer::EDirection &, CElementPlayer::EAction &, int, SRect2 &, SVector3 & sf);
 };
 
 #endif

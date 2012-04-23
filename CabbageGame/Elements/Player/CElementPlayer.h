@@ -53,7 +53,8 @@ class CElementPlayer : public CGameplayElement {
       EAction Action; 
 
       void updatePlayerAction();
-      float Recovering;
+      float Recovering, Shaking, ShakeFactorFactor;
+      SVector3 ShakeFactor;
 
    public:
       CElementPlayer(SRect2 nArea);
@@ -71,6 +72,8 @@ class CElementPlayer : public CGameplayElement {
 
       bool decrementHealth();
       void incrementHealth();
+
+      void setShaking(float, float);
 
       //Keyboard event functions
       void OnKeyboardEvent(SKeyboardEvent const & Event);
