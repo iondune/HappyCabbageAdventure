@@ -8,6 +8,8 @@
 #include "CElementEnemyKiwi.h"
 #include "CElementEnemyFlame.h"
 
+#include "CElementItemSeed.h"
+
 //Generic enemy, for usage in the LWIB, I guess.
 CElementEnemy::CElementEnemy(SRect2 nArea, Enemies::EEnemyType type)
 : CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), PhysicsEngineObject(NULL), SceneObject(NULL), Type(type) {
@@ -72,6 +74,16 @@ void CElementEnemy::OnCollision(CCollideable *Object) {
          Level.removeEnemy(this);
          removeFromEngines();
          Dead = true;
+         Area.Position.Y += 0.3f;
+         for(int i = 0; i < rand()%7 + 3; i++) {
+            CElementItem *seed;
+            Level.addItem(seed = CItemLoader::LoadItem(Area, Items::SEED));
+
+            float rand1 = (float)rand()/(float)RAND_MAX;
+            float rand2 = (float)rand()/(float)RAND_MAX;
+
+            ((CCollisionActor *)seed->getPhysicsEngineObject())->setImpulse(SVector2(rand1*8.f - 4.f, rand2*4.5f + 1.0f), 0.01f);
+         }
       }
       else {
          CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();

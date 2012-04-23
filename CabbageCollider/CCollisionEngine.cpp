@@ -7,6 +7,7 @@ bool CCollisionEngine::CanCollide( CCollideable *a, CCollideable *b )
 }
 
 std::vector<CCollideable*> KillList;
+std::vector<CCollisionActor *> AddList;
 
 void CCollisionEngine::performTick( float const TickTime )
 {
@@ -73,6 +74,10 @@ void CCollisionEngine::performTick( float const TickTime )
          }
    }
    KillList.clear();
+   for(int i = 0; i < AddList.size(); i++) {
+      Actors.push_back(AddList[i]);
+   }
+   AddList.clear();
 }
 
 void CCollisionEngine::removeAll()
@@ -216,11 +221,13 @@ CElevator * CCollisionEngine::addElevator()
 	return cen;
 }
 
+
 CCollisionActor * CCollisionEngine::addActor()
 {
 	CCollisionActor *a;
-	Actors.push_back(a = new CCollisionActor());
-	return Actors.back();
+	a = new CCollisionActor();
+   AddList.push_back(a);
+	return a;
 }
 
 ObjectList const & CCollisionEngine::getObjects() const

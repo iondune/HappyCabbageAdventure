@@ -7,14 +7,14 @@ CElementItemSeed::CElementItemSeed(SRect2 nArea) :
 }
 
 void CElementItemSeed::setupPhysicsEngineObject() {
-   /* Set up the actor (not actually an actor, since this one doesn't move its position) */
+   Area.Size = SVector2(0.1f, 0.1f);
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
    PhysicsEngineObject->setArea(Area);
 
    //Set actor attributes
    PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_ITEM;
    PhysicsEngineObject->CollideableLevel = INTERACTOR_ITEMS;
-   PhysicsEngineObject->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS;
+   PhysicsEngineObject->CanCollideWith = INTERACTOR_BLOCKS;// | INTERACTOR_SUPERACTORS;
    PhysicsEngineObject->getAttributes().Bounce = 3;
 }
 
@@ -40,7 +40,13 @@ void CElementItemSeed::setupSceneObject() {
 }
 
 void CElementItemSeed::OnCollision(CCollideable *Object) {
-   //Optional code: setImpulse to other object away from this object, lower their health?
+   if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
+      Level.getPlayer().getStats().Seeds++;
+      printf("Num seeds: %d\n", Level.getPlayer().getStats().Seeds);
+      Level.removeItem(this);
+      removeFromEngines();
+      Dead = true;
+   }
 }
                                                             
 //CGameplayElement has an attribute called ElapsedTime, which is updated by CGameplayElement's update function.
@@ -53,7 +59,8 @@ void CElementItemSeed::updatePhysicsEngineObject(float time) {
 //This is where the renderable would be updated for the more complex enemies
 void CElementItemSeed::updateSceneObject(float time) {
    SceneObject->setTranslation(SVector3(PhysicsEngineObject->getArea().getCenter() + SVector2(0.0f, 0.1f), 0));
-   SceneObject->setRotation(SVector3(-90, 0, 90 + 140*ElapsedTime));
+   float Time = 140*ElapsedTime;
+   SceneObject->setRotation(SVector3(-90 + 2.f*Time, 0 + 1.f*Time, 90 + 4.f*Time));
 }
 
 void CElementItemSeed::printInformation() {
