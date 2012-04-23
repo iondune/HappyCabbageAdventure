@@ -3,6 +3,7 @@
 #include "CGameLevel.h"
 #include "CabbageScene.h"
 #include "CabbageFramework.h"
+#include "CGameplayGUIManager.h"
 
 #define DEBUG_PRINTFS
 

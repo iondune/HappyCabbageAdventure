@@ -3,10 +3,10 @@
 
 #include "CGameplayElement.h"
 #include "CGameLevelLoader.h"
-#include "CGameplayGUIManager.h"
 
 class CGameLevel;
 class CElementPlayer;
+class CGameplayGUIManager;
 
 class CGameplayManager : public IUpdater {
    private:
