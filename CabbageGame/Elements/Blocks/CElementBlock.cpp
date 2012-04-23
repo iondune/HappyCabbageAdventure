@@ -19,7 +19,7 @@ void CElementBlock::OnCollision(CCollideable *Object) {
 }
 
 void CElementBlock::writeXML(xmlwriter *l) {
-   std::stringstream xValue, yValue, widthValue, heightValue, tagValue, isMovingValue, rangeValue, speedValue, depthValue, textureType;
+   std::stringstream xValue, yValue, widthValue, heightValue, tagValue, rangeValue, speedValue, depthValue, textureType;
    xValue << Area.Position.X;
    yValue << Area.Position.Y;
    widthValue << Area.Size.X;
@@ -127,6 +127,7 @@ void CElementBlock::setupSceneObject() {
 
    tempBlock->setRotation(SVector3(Texture==-5?-90.f:0, 0, 0));
 
+   SceneObject = tempBlock;
    CApplication::get().getSceneManager().addImmobileSceneObject(tempBlock, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
 }
 

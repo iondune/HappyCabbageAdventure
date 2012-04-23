@@ -6,6 +6,7 @@ class CElementBlock;
 class CElementEnemy;
 class CElementPlayer;
 class CElementItem;
+class CElementBlockElevator;
 class CElementBlockFlag;
 
 #include "CDecorManager.h" //For CGroundBlock
@@ -26,9 +27,9 @@ class CGameLevel {
       std::vector<CElementEnemy*> Enemies;
       std::vector<CElementItem*> Items;
       std::vector<CElementBlockFlag*> Flags; 
+      std::vector<CElementBlockElevator*> Elevators; 
       /*
       std::vector<CFriends*> Friends;
-      std::vector<CElevator*> Elevators;
       */
 
       void toggleLoaded(); // Only available for CGameLevelLoader::loadLevel().
@@ -45,6 +46,7 @@ class CGameLevel {
       std::vector<CElementEnemy*> & getEnemies();
       std::vector<CElementItem*> & getItems();
       std::vector<CElementBlockFlag*> & getFlags();
+      std::vector<CElementBlockElevator*> & getElevators();
 
       void setNoRender();
       bool shouldRender();

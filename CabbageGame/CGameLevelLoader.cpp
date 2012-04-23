@@ -3,6 +3,7 @@
 #include "CGameLevel.h"
 #include "CElementBlock.h"
 #include "CElementBlockFlag.h"
+#include "CElementBlockElevator.h"
 #include "CElementEnemy.h"
 #include "CElementPlayer.h"
 #include "CElementItem.h"
@@ -64,16 +65,17 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             if (t == -5)
                newLevel->GroundBlocks.push_back(new CGroundBlock((float) x, (float) y, (float) w, (float) h, (float) d));
 
-            newLevel->Blocks.push_back(ptr = new CElementBlock(SRect2((float)x, (float)y, (float)w, (float)h), d, t));
-            newLevel->Elements.push_back(ptr);
             if(xml->getAttributeValueAsInt(6)) {
-               /*TODO: fix elevators
-               ptr->isMovingPlatform = 1;
-               ptr->Range = (int) xml->getAttributeValueAsFloat(7); //Range
-               ptr->Speed = (int) xml->getAttributeValueAsFloat(8); //Speed
-               */
+               float range, speed;
+               range = (float) xml->getAttributeValueAsInt(7);
+               speed = (float) xml->getAttributeValueAsInt(8);
+               CElementBlockElevator * ptr2;
+               newLevel->Elevators.push_back(ptr2 = new CElementBlockElevator(SRect2((float)x, (float)y, (float)w, (float)h), d, t, range, speed));
+               newLevel->Elements.push_back(ptr2);
             }
             else {
+               newLevel->Blocks.push_back(ptr = new CElementBlock(SRect2((float)x, (float)y, (float)w, (float)h), d, t));
+               newLevel->Elements.push_back(ptr);
                //ptr->isMovingPlatform = 0;
                //numBlocks++;
                int curW = w;

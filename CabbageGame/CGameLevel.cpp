@@ -2,6 +2,7 @@
 
 #include "CGameplayElement.h"
 #include "CElementBlock.h"
+#include "CElementBlockElevator.h"
 #include "CElementEnemy.h"
 #include "CElementPlayer.h"
 #include "CElementItem.h"
@@ -50,12 +51,13 @@ std::vector<CElementBlockFlag*> & CGameLevel::getFlags() {
    return Flags;
 }
 
+std::vector<CElementBlockElevator*> & CGameLevel::getElevators() {
+   return Elevators;
+}
+
 /*
 std::vector<CFriend*> & CGameLevel::getFriends() {
    return Friends;
-}
-std::vector<CElevator*> & CGameLevel::getElevators() {
-   return Elevators;
 }
 */
 
