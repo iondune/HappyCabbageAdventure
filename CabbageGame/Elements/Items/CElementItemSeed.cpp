@@ -41,7 +41,7 @@ void CElementItemSeed::setupSceneObject() {
 
 void CElementItemSeed::OnCollision(CCollideable *Object) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
-      Level.getPlayer().getStats().Seeds++;
+      Level.getPlayer().incrementSeeds();
       Level.removeItem(this);
       removeFromEngines();
       Dead = true;

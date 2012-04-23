@@ -125,3 +125,11 @@ void CElementPlayer::setShaking(float time, float factor) {
    Shaking = time;
    ShakeFactorFactor = factor;
 }
+
+void CElementPlayer::incrementSeeds() {
+   Stats.Seeds++;
+   if(Stats.Seeds == 100) {
+      Stats.Seeds = 0;
+      Stats.Lives++;
+   }
+}

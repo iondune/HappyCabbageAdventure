@@ -22,6 +22,7 @@ CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(
    CApplication::get().getSceneManager().Lights.back()->Color = SVector3(0.4f);
    CApplication::get().getSceneManager().Lights.back()->Position = SVector3(-5.f, 200.f, 500.f);
 
+   CApplication::get().getSceneManager().setDeferred(level.isNight());
    //level.setNoRender();
    //Set up each object
    for(int i = 0; i < level.getElements().size(); i++) {

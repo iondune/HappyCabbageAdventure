@@ -72,6 +72,7 @@ class CElementPlayer : public CGameplayElement {
 
       bool decrementHealth();
       void incrementHealth();
+      void incrementSeeds();
 
       void setShaking(float, float);
 
