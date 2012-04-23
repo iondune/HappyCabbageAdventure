@@ -56,7 +56,6 @@ void CElementEnemyGrape::OnCollision(CCollideable *Object, CCollideable *With) {
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyGrape::updatePhysicsEngineObject(float time) {
    //TODO: Make some class singleton so we can get the player's location
-
 /*   if (Manager->getPlayerLocation().X < Area.getCenter().X && (Roll == None))
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
    else if (Manager->getPlayerLocation().X > Area.getCenter().X && (Roll == None))

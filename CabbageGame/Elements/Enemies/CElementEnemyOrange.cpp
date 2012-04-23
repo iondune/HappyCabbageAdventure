@@ -59,16 +59,14 @@ void CElementEnemyOrange::OnCollision(CCollideable *Object, CCollideable *With) 
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyOrange::updatePhysicsEngineObject(float time) {
-   //TODO: Make some class singleton so we can get the player's location
-
-   /*
-   if (Manager->getPlayerLocation().X < Area.getCenter().X)
+   SVector2 PlayerPosition = Level.getPlayer().getArea().Position;
+   if (PlayerPosition.X < Area.getCenter().X)
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
    else
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
 
-   if (Manager->getPlayerLocation().X - Area.getCenter().X < 2.2 &&
-         Manager->getPlayerLocation().X - Actor->getArea().getCenter().X > -2.2) {
+   if (PlayerPosition.X - Area.getCenter().X < 2.2 &&
+         PlayerPosition.X - Area.getCenter().X > -2.2) {
       if (Jumped) {
          PhysicsEngineObject->setJumping(true);
          Jumped = false;
@@ -76,7 +74,6 @@ void CElementEnemyOrange::updatePhysicsEngineObject(float time) {
    }
    else
       Jumped = true;
-      */
 }
 
 //This is where the renderable would be updated for the more complex enemies
@@ -87,7 +84,7 @@ void CElementEnemyOrange::updateSceneObject(float time) {
       SceneObject->setRotation(SVector3(-90, PhysicsEngineObject->getVelocity().X*10.0f, 90));
    else {
       /*
-      if (Manager->getPlayerLocation().X < Area.getCenter().X)
+      if (PlayerPosition.X < Area.getCenter().X)
          SceneObject->setRotation(SVector3(-90, 0, -90));
       else
          SceneObject->setRotation(SVector3(-90, 0, 90));

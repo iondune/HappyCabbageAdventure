@@ -104,7 +104,8 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
       //TODO:  Z-Code
       //TODO:  Player location
       /*if(!inZ) {*/
-      float xDist = Area.Position.X /*- Manager->getPlayerLocation().X*/;
+
+      float xDist = Area.Position.X - Level.getPlayer().getArea().Position.X;
 
       //Drop bomb projectile
       if (xDist < .2f && !bombDropped && Direction == 0) {
