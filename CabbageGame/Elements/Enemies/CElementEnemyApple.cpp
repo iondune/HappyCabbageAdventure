@@ -2,7 +2,7 @@
 #include "CGameLevel.h"
 
 CElementEnemyApple::CElementEnemyApple(SRect2 nArea) :
-   CElementEnemy(nArea, Enemies::APPLE), PositiveScale(false), ScaleMult(0.0f), Roll(None), Rotate(0.0f) {
+   CElementEnemy(nArea, Enemies::APPLE), PositiveScale(false), ScaleMult(0.0f), Roll(None), Rotate(0.0f), ISquishable(1.0f, 1.0f) {
 
 }
 
@@ -103,6 +103,8 @@ void CElementEnemyApple::updateSceneObject(float time) {
       break;
    }
 
+   Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
+
    if (ScaleMult > 1.1f)
       PositiveScale = false;
    else if (ScaleMult < .9f)
@@ -115,11 +117,15 @@ void CElementEnemyApple::updateSceneObject(float time) {
 
    ScaleMult = std::max(std::min(ScaleMult, 1.2f), 0.8f);
 
-   if (Roll == None) {
+   Scale.Y += ScaleMult - 1.0f;
+
+   printf("Scale for Apple (in Y): %f\n", Scale.Y);
+
+   if (Roll == None && PhysicsEngineObject->getVelocity().Y < .01f && PhysicsEngineObject->getVelocity().Y > -.01f) {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)
-         SceneObject->setScale(SVector3(-1,1,ScaleMult));
+         SceneObject->setScale(SVector3(-Scale.X,Scale.X,Scale.Y));
       else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-         SceneObject->setScale(SVector3(1,1,ScaleMult));
+         SceneObject->setScale(SVector3(Scale.X,Scale.X,Scale.Y));
    }
    else {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)

@@ -5,7 +5,7 @@ ISquishable::ISquishable(float x, float y) : xScale(x), yScale(y), xScaleOrig(x)
 
 SVector2 ISquishable::Squish(SVector2 velocity) {
    SVector2 scale;
-   printf("xScaleOrig: %f\n", xScaleOrig);
+
    //If the player is grounded, slowly revert back to normal.
    if (velocity.Y < .01f && velocity.Y > -.01f) {
       if (xScale < xScaleOrig + .01f) {

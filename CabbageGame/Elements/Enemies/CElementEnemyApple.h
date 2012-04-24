@@ -3,7 +3,7 @@
 
 #include "CElementEnemy.h"
 
-class CElementEnemyApple : public CElementEnemy
+class CElementEnemyApple : public CElementEnemy, public ISquishable
 {
    public:
       enum RollDirection {
@@ -15,6 +15,7 @@ class CElementEnemyApple : public CElementEnemy
       RollDirection Roll;
       float Rotate, ScaleMult;
       bool PositiveScale;
+      SVector2 Scale;
 
    public:
       CElementEnemyApple(SRect2 nArea);

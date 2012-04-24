@@ -63,7 +63,6 @@ void CElementPlayer::updateSceneObject(float time) {
 
    Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
 
-   printf("Scale is: %f, %f\n", Scale.X, Scale.Y);
    SceneObject->setScale(SVector3(Scale.X, Scale.X, Scale.Y));
 }
 
