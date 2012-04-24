@@ -52,7 +52,9 @@
       ;$(SolutionDir)\CabbageScene;
       ;$(SolutionDir)\CabbageGUI;
       ;$(SolutionDir)\CabbageParticle;
+      ;$(SolutionDir)\CabbageGame;
       ;$(SolutionDir)\CabbageCollider;
+      ;$(SolutionDir)\StateGame;
       ;$(IncludePath);
     </IncludePath>
     <LibraryPath>

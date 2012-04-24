@@ -10,6 +10,14 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CLWIBState.h" />
+    <ClInclude Include="Materials.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CLWIBState.cpp" />
+    <ClCompile Include="Materials.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{26292FEE-7E8B-4179-92E3-B40C314ECB0F}</ProjectGuid>
     <RootNamespace>StateLWIB</RootNamespace>
@@ -84,33 +92,6 @@
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="CPFriends.h" />
-    <ClInclude Include="CBlock.h" />
-    <ClInclude Include="CCabbage.h" />
-    <ClInclude Include="CEnemy.h" />
-    <ClInclude Include="CFlag.h" />
-    <ClInclude Include="CPItem.h" />
-    <ClInclude Include="CLWIBState.h" />
-    <ClInclude Include="CPlaceable.h" />
-    <ClInclude Include="header.h" />
-    <ClInclude Include="Materials.h" />
-    <ClInclude Include="wmlwriter_src\xmlwriter.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="CPFriends.cpp" />
-    <ClCompile Include="CBlock.cpp" />
-    <ClCompile Include="CCabbage.cpp" />
-    <ClCompile Include="CEnemy.cpp" />
-    <ClCompile Include="CFlag.cpp" />
-    <ClCompile Include="CPItem.cpp" />
-    <ClCompile Include="CLWIBState.cpp" />
-    <ClCompile Include="Materials.cpp" />
-    <ClCompile Include="wmlwriter_src\xmlwriter.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Makefile" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
