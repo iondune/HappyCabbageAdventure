@@ -33,9 +33,11 @@ void CElementPlayer::updatePlayerAction() {
       PhysicsEngineObject->setJumping(false);
    }
 }
-
 void CElementPlayer::updatePhysicsEngineObject(float time) {
    updatePlayerAction();
+   for(int i = 0; i < Abilities.size(); i++) {
+      Abilities[i]->inUpdatePhysicsEngineObject(time);
+   }
 }
 
 void CElementPlayer::updateSceneObject(float time) {
@@ -59,6 +61,9 @@ void CElementPlayer::updateSceneObject(float time) {
       }
    }
    View->updateView(time);
+   for(int i = 0; i < Abilities.size(); i++) {
+      Abilities[i]->inUpdateSceneObject(time);
+   }
 }
 
 Cabbage::PlayerInformation & CElementPlayer::getStats() {
@@ -66,6 +71,9 @@ Cabbage::PlayerInformation & CElementPlayer::getStats() {
 }
 
 void CElementPlayer::OnCollision(CCollideable *Object) {
+   for(int i = 0; i < Abilities.size(); i++) {
+      Abilities[i]->inOnCollision(Object);
+   }
    return;
 }
 

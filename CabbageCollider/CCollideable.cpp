@@ -13,11 +13,19 @@ CCollideable::SMaterial::SMaterial()
 	: Friction(1.f), Elasticity(0.f)
 {}
 
-CCollideable::CCollideable() : CollideableType(COLLIDEABLE_TYPE_COLLIDEABLE), CollideableLevel(INTERACTOR_ALL), VisualDepth(0.0f), CollisionResponder(NULL)
+CCollideable::CCollideable() : CollideableType(COLLIDEABLE_TYPE_COLLIDEABLE), CollideableLevel(INTERACTOR_ALL), VisualDepth(0.0f), CollisionResponder(NULL), Element(NULL)
 {}
 
 CCollideable::~CCollideable()
 {}
+
+void CCollideable::setElement(CGameplayElement * e) {
+   Element = e;
+}
+
+CGameplayElement *CCollideable::getElement() {
+   return Element;
+}
 
 SRect2 const & CCollideable::getArea() const
 {
