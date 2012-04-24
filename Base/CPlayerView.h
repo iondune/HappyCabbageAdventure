@@ -18,9 +18,9 @@
 #define CAM_TIMER 0.2f
 
 class CPlayerView {
-   SVector2 Size;
-   SVector2 CenterPosition;
-   SVector2 Velocity;
+   SVector2f Size;
+   SVector2f CenterPosition;
+   SVector2f Velocity;
    CMeshSceneObject *PlayerRenderable, *renderLeftShadow, *renderRightShadow;
    float recovering;
    private:
@@ -80,14 +80,14 @@ class CPlayerView {
          recovering = recovVal;
       }
       void setState(State const value);
-      void setVelocity(SVector2 vel) {
+      void setVelocity(SVector2f vel) {
          Velocity = vel;
       }
       void establishCamera(ICamera*,int,int);
-      void setMiddle(SVector2 middle) {
+      void setMiddle(SVector2f middle) {
          CenterPosition = middle;
       }
-      void setSize(SVector2 size) {
+      void setSize(SVector2f size) {
          Size = size;
       }
       float cutOffPoint;

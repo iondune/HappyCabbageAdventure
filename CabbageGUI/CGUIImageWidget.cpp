@@ -2,19 +2,19 @@
 
 #include <CTextureLoader.h>
 
-CGUIImageWidget::CGUIImageWidget(CImage * image, SVector2 const & size)
+CGUIImageWidget::CGUIImageWidget(CImage * image, SVector2f const & size)
 	: Image(new CTexture(image))
 {
 	Box.Size = size;
 }
 
-CGUIImageWidget::CGUIImageWidget(CTexture * image, SVector2 const & size)
+CGUIImageWidget::CGUIImageWidget(CTexture * image, SVector2f const & size)
 	: Image(image)
 {
 	Box.Size = size;
 }
 
-CGUIImageWidget::CGUIImageWidget(std::string const & imagePath, SVector2 const & size)
+CGUIImageWidget::CGUIImageWidget(std::string const & imagePath, SVector2f const & size)
 	: Image(CTextureLoader::loadTexture(imagePath))
 {
 	Box.Size = size;
@@ -73,12 +73,12 @@ void CGUIImageWidget::setImage(CTexture * image)
 }
 
 
-SVector2 const & CGUIImageWidget::getSize() const
+SVector2f const & CGUIImageWidget::getSize() const
 {
 	return Box.Size;
 }
 
-void CGUIImageWidget::setSize(SVector2 const & size)
+void CGUIImageWidget::setSize(SVector2f const & size)
 {
 	Box.Size = size;
 }

@@ -45,7 +45,7 @@ void CCollisionEngine::performTick(float const TickTime)
 
 	for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
 	{
-		SVector2 Movement = (* it)->performMovement(TickTime);
+		SVector2f Movement = (* it)->performMovement(TickTime);
 
 		for (ActorList::iterator jt = Actors.begin(); jt != Actors.end(); ++ jt)
 		{
@@ -91,7 +91,7 @@ void CCollisionEngine::updateAll(float const Elapsed)
 	}
 }
 
-CCollisionObject* const CCollisionEngine::getObjectBelow(SVector2 pos)
+CCollisionObject* const CCollisionEngine::getObjectBelow(SVector2f pos)
 {
 	float height = - std::numeric_limits<float>::infinity();
 	CCollisionObject *Object, *objBelow = NULL;
@@ -114,7 +114,7 @@ CCollisionObject* const CCollisionEngine::getObjectBelow(SVector2 pos)
 	return objBelow;
 }
 
-float const CCollisionEngine::getHeightBelow(SVector2 pos)
+float const CCollisionEngine::getHeightBelow(SVector2f pos)
 {
 	float height = - std::numeric_limits<float>::infinity();
 	CCollisionObject* Object;

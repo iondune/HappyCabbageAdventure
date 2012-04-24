@@ -104,7 +104,7 @@ void EKiwi::update(float const TickTime) {
 
       Actor->setAction(CCollisionActor::EActionType::None);
 
-      SVector2 vel = Actor->getVelocity();
+      SVector2f vel = Actor->getVelocity();
       Actor->setVelocity(SVector2(vel.X, vel.Y > 0 ? vel.Y - 1.0f*TickTime : 0));
 
       if(Direction == 0)
@@ -155,7 +155,7 @@ void EKiwi::doRenderable() {
 }
 
 void EKiwi::DropBomb() {
-   SVector2 pos = Actor->getArea().Position;
+   SVector2f pos = Actor->getArea().Position;
 
    if (Direction == 0)
       CBadGuy::makeBadGuy(pos.X + w/2.f - .05f, pos.Y - .5f, w, h, pKiwi, Manager, 0);

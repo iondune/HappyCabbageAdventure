@@ -21,8 +21,8 @@ public:
 
 	CGUIWidget();
 
-	SVector2 const & getPosition() const;
-	void setPosition(SVector2 const & position);
+	SVector2f const & getPosition() const;
+	void setPosition(SVector2f const & position);
 
 	float const getRotation() const;
 	void setRotation(float  const rotation);

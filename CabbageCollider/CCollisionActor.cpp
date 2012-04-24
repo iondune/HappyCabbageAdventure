@@ -241,7 +241,7 @@ void CCollisionActor::updateVectors(float const TickTime)
 	Area.Position += Movement;
 }
 
-void CCollisionActor::pushIfCollided(CCollisionObject * Object, SVector2 const & Movement)
+void CCollisionActor::pushIfCollided(CCollisionObject * Object, SVector2f const & Movement)
 {
 	if (! collidesWith(Object) && Object != Standing)
 		return;
@@ -266,12 +266,12 @@ bool const CCollisionActor::isStanding() const
 	return Standing != 0;
 }
 
-void CCollisionActor::setVelocity(SVector2 const & vel)
+void CCollisionActor::setVelocity(SVector2f const & vel)
 {
 	Velocity = vel;
 }
 
-SVector2 const & CCollisionActor::getVelocity() const
+SVector2f const & CCollisionActor::getVelocity() const
 {
 	return Velocity;
 }
@@ -361,14 +361,14 @@ void CCollisionActor::draw()
 	glColor3f(1, 1, 1);
 }
 
-void CCollisionActor::setImpulse(SVector2 const & velocity, float const duration)
+void CCollisionActor::setImpulse(SVector2f const & velocity, float const duration)
 {
 	Impulse = true;
 	ImpulseTimer = duration;
 	ImpulseVelocity = velocity;
 }
 
-void CCollisionActor::addImpulse(SVector2 const & velocity) {
+void CCollisionActor::addImpulse(SVector2f const & velocity) {
 	Impulse = true;
 	ImpulseVelocity += velocity;
 }

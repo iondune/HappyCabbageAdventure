@@ -624,10 +624,10 @@ void CGameState::oldDisplay() {
 
    PlayerView->step(Application.getElapsedTime());
 
-   SVector2 middleOfPlayer = Player->getArea().getCenter();
+   SVector2f middleOfPlayer = Player->getArea().getCenter();
    PlayerView->setMiddle(middleOfPlayer);
-   SVector2 leftOfPlayer = SVector2(Player->getArea().Position.X, Player->getArea().getCenter().Y);
-   SVector2 rightOfPlayer = SVector2(Player->getArea().Position.X + Player->getArea().Size.X, Player->getArea().getCenter().Y);
+   SVector2f leftOfPlayer = SVector2(Player->getArea().Position.X, Player->getArea().getCenter().Y);
+   SVector2f rightOfPlayer = SVector2(Player->getArea().Position.X + Player->getArea().Size.X, Player->getArea().getCenter().Y);
    PlayerView->setLeftGround(Engine->getHeightBelow(leftOfPlayer));
    PlayerView->setRightGround(Engine->getHeightBelow(rightOfPlayer));
 
@@ -738,8 +738,8 @@ void CGameState::oldDisplay() {
    std::vector<CElevator*>::iterator it;
    for(it=elevators.begin();it<elevators.end();it++) {
       CElevator * ptr = (*it);
-      SVector2 pos = ptr->getArea().Position;
-      SVector2 size = ptr->getArea().Size;
+      SVector2f pos = ptr->getArea().Position;
+      SVector2f size = ptr->getArea().Size;
       ptr->getRenderable()->setTranslation(SVector3(pos.X + (float)size.X/2, pos.Y + (float)size.Y/2, 0));
    }
 
@@ -1363,7 +1363,7 @@ void CGameState::RunVictorySequence(float Elapsed) {
 
    //perform cabbage sequence
    SVector3f curRotation = cabbage5->getRotation();
-   SVector2 curLocation = SVector2 (Player->getArea().getCenter().X - .5f, Player->getArea().getCenter().Y - .5f);
+   SVector2f curLocation = SVector2f (Player->getArea().getCenter().X - .5f, Player->getArea().getCenter().Y - .5f);
 
    if (StartWin > .00f && StartWin < .07f) {
       WinPlayer->CollideableLevel |= INTERACTOR_SUPERACTORS;

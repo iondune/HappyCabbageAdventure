@@ -94,7 +94,7 @@ class CGameplayManager : public ICollisionResponder
 
       bool const isJumping() const;
 
-      SVector2 getPlayerLocation();
+      SVector2f getPlayerLocation();
 
       CCollisionEngine* getEngine();
 

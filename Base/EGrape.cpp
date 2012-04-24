@@ -69,7 +69,7 @@ void EGrape::doRenderable() {
 }
 
 void EGrape::ThrowGrape() {
-   SVector2 pos = Actor->getArea().Position;
+   SVector2f pos = Actor->getArea().Position;
 
    printf("Firing a grape\n");
 

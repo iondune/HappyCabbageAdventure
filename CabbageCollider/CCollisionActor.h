@@ -99,7 +99,7 @@ protected:
 	float FallAcceleration;
 
 	//! Current velocity of this actor
-	SVector2 Velocity;
+	SVector2f Velocity;
 
 	//! While standing, points to the object being stood on
 	CCollideable * Standing;
@@ -128,11 +128,11 @@ protected:
 	bool updateCollision(CCollideable * Object, float const TickTime);
 	void onStanding(CCollideable * Object);
 
-	void pushIfCollided(CCollisionObject * Object, SVector2 const & Movement);
+	void pushIfCollided(CCollisionObject * Object, SVector2f const & Movement);
 
 	bool Impulse;
 	float ImpulseTimer;
-	SVector2 ImpulseVelocity;
+	SVector2f ImpulseVelocity;
 
 	bool AllowedMovement;
 
@@ -140,7 +140,7 @@ public:
 
 	~CCollisionActor();
 
-	SVector2 LastPosition, Movement;
+	SVector2f LastPosition, Movement;
 	int checkCollision(CCollideable * Object, float const TickTime);
 	float Gravity;
 	bool collidesWith(CCollisionObject * Object) const;
@@ -150,9 +150,9 @@ public:
 	bool const isStanding() const;
 
 	//! See Velocity
-	void setVelocity(SVector2 const & vel);
+	void setVelocity(SVector2f const & vel);
 	//! See Velocity
-	SVector2 const & getVelocity() const;
+	SVector2f const & getVelocity() const;
 
 	//! see Attributes
 	SAttributes const & getAttributes() const;
@@ -178,8 +178,8 @@ public:
 
 	virtual void draw();
 
-	void setImpulse(SVector2 const & velocity, float const duration = 0.3f);
-	void addImpulse(SVector2 const & velocity);
+	void setImpulse(SVector2f const & velocity, float const duration = 0.3f);
+	void addImpulse(SVector2f const & velocity);
 
 };
 

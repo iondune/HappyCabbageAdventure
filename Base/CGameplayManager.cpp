@@ -136,8 +136,8 @@ bool CGameplayManager::OnCollision(CCollideable * Object, CCollideable * With)
                ((EKiwi*)(*it))->lastX = Object->getArea().getCenter().X;
                ((EKiwi*)(*it))->Depth = With->getDepth();
 
-               SVector2 newPos = actor->LastPosition + actor->Movement;
-               SVector2 size = actor->getArea().Size;
+               SVector2f newPos = actor->LastPosition + actor->Movement;
+               SVector2f size = actor->getArea().Size;
                actor->setArea(SRect2(newPos, size));
                return true;
             }
@@ -285,7 +285,7 @@ void CGameplayManager::runDeathSequence(float elapsedTime) {
    }
 }
 
-SVector2 CGameplayManager::getPlayerLocation() {
+SVector2f CGameplayManager::getPlayerLocation() {
    return SVector2(PlayerActor->getArea().getCenter().X, PlayerActor->getArea().getCenter().Y);
 }
 

@@ -12,7 +12,7 @@ public:
 
 	SVector3f Position;
     SVector3f Normal;
-	SVector2 TextureCoordinates;
+	SVector2f TextureCoordinates;
 
 	SColor Color;
 

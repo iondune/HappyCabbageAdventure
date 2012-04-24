@@ -47,9 +47,9 @@ public:
 
 	void updateAll(float const Elapsed);
 
-	CCollisionObject* const getObjectBelow(SVector2 pos);
+	CCollisionObject* const getObjectBelow(SVector2f pos);
 
-	float const getHeightBelow(SVector2 pos);
+	float const getHeightBelow(SVector2f pos);
 
 	float const getHeightBelow(CCollisionActor * Actor);
 

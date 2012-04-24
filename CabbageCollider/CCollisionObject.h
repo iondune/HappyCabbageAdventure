@@ -16,7 +16,7 @@ public:
 
 	~CCollisionObject();
 
-	virtual SVector2 performMovement(float const TickTime);
+	virtual SVector2f performMovement(float const TickTime);
 
 };
 

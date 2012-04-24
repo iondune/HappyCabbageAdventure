@@ -10,7 +10,7 @@ CCollisionObject::CCollisionObject()
 CCollisionObject::~CCollisionObject()
 {}
 
-SVector2 CCollisionObject::performMovement(float const TickTime)
+SVector2f CCollisionObject::performMovement(float const TickTime)
 {
 	return SVector2();
 }
