@@ -11,6 +11,60 @@
     <ClInclude Include="CGameplayManager.h" />
     <ClInclude Include="IUpdater.h" />
     <ClInclude Include="SDL_mixer.h" />
+    <ClInclude Include="Elements\CGameplayElement.h">
+      <Filter>Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Blocks\CElementBlock.h">
+      <Filter>Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Blocks\CElementBlockElevator.h">
+      <Filter>Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Blocks\CElementBlockFlag.h">
+      <Filter>Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Enemies\CElementEnemy.h">
+      <Filter>Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Enemies\CElementEnemyApple.h">
+      <Filter>Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Enemies\CElementEnemyBlade.h">
+      <Filter>Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Enemies\CElementEnemyFlame.h">
+      <Filter>Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Enemies\CElementEnemyGrape.h">
+      <Filter>Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Enemies\CElementEnemyKiwi.h">
+      <Filter>Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Enemies\CElementEnemyOrange.h">
+      <Filter>Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Items\CElementItem.h">
+      <Filter>Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Items\CElementItemEnergy.h">
+      <Filter>Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Items\CElementItemHealth.h">
+      <Filter>Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Items\CElementItemLife.h">
+      <Filter>Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Items\CElementItemSeed.h">
+      <Filter>Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Player\CElementPlayer.h">
+      <Filter>Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Player\CPlayerView.h">
+      <Filter>Elements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CBiggerBlock.cpp" />
@@ -21,5 +75,73 @@
     <ClCompile Include="CGameplayGUIManager.cpp" />
     <ClCompile Include="CGameplayManager.cpp" />
     <ClCompile Include="Driver.cpp" />
+    <ClCompile Include="Elements\CGameplayElement.cpp">
+      <Filter>Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Blocks\CElementBlock.cpp">
+      <Filter>Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Blocks\CElementBlockElevator.cpp">
+      <Filter>Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Blocks\CElementBlockFlag.cpp">
+      <Filter>Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Enemies\CElementEnemy.cpp">
+      <Filter>Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Enemies\CElementEnemyApple.cpp">
+      <Filter>Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Enemies\CElementEnemyBlade.cpp">
+      <Filter>Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Enemies\CElementEnemyFlame.cpp">
+      <Filter>Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Enemies\CElementEnemyGrape.cpp">
+      <Filter>Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Enemies\CElementEnemyKiwi.cpp">
+      <Filter>Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Enemies\CElementEnemyOrange.cpp">
+      <Filter>Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Items\CElementItem.cpp">
+      <Filter>Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Items\CElementItemEnergy.cpp">
+      <Filter>Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Items\CElementItemHealth.cpp">
+      <Filter>Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Items\CElementItemLife.cpp">
+      <Filter>Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Items\CElementItemSeed.cpp">
+      <Filter>Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Player\CElementPlayer.cpp">
+      <Filter>Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Player\CPlayerView.cpp">
+      <Filter>Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="irrxml-1.2\src\irrXML.cpp">
+      <Filter>xmlwriter</Filter>
+    </ClCompile>
+    <ClCompile Include="wmlwriter_src\xmlwriter.cpp">
+      <Filter>xmlwriter</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Elements">
+      <UniqueIdentifier>{09ef2c4b-5807-4df0-a736-47527c3f4fe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xmlwriter">
+      <UniqueIdentifier>{741ac57b-99a4-422d-bfa1-72dbf29350aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

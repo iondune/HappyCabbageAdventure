@@ -53,6 +53,12 @@
       ;$(SolutionDir)\CabbageGUI;
       ;$(SolutionDir)\CabbageParticle;
       ;$(SolutionDir)\CabbageGame;
+      ;$(SolutionDir)\CabbageGame\Elements;
+      ;$(SolutionDir)\CabbageGame\Elements\Blocks;
+      ;$(SolutionDir)\CabbageGame\Elements\Enemies;
+      ;$(SolutionDir)\CabbageGame\Elements\Friends;
+      ;$(SolutionDir)\CabbageGame\Elements\Items;
+      ;$(SolutionDir)\CabbageGame\Elements\Player;
       ;$(SolutionDir)\CabbageCollider;
       ;$(SolutionDir)\StateGame;
       ;$(IncludePath);
