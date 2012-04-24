@@ -34,9 +34,11 @@ void CElementPlayer::updatePlayerAction() {
       PhysicsEngineObject->setJumping(false);
    }
 }
-
 void CElementPlayer::updatePhysicsEngineObject(float time) {
    updatePlayerAction();
+   for(int i = 0; i < Abilities.size(); i++) {
+      Abilities[i]->inUpdatePhysicsEngineObject(time);
+   }
 }
 
 void CElementPlayer::updateSceneObject(float time) {
@@ -64,6 +66,11 @@ void CElementPlayer::updateSceneObject(float time) {
    Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
 
    SceneObject->setScale(SVector3(Scale.X, Scale.X, Scale.Y));
+
+   for(int i = 0; i < Abilities.size(); i++) {
+      Abilities[i]->inUpdateSceneObject(time);
+   }
+
 }
 
 Cabbage::PlayerInformation & CElementPlayer::getStats() {
@@ -71,6 +78,9 @@ Cabbage::PlayerInformation & CElementPlayer::getStats() {
 }
 
 void CElementPlayer::OnCollision(CCollideable *Object) {
+   for(int i = 0; i < Abilities.size(); i++) {
+      Abilities[i]->inOnCollision(Object);
+   }
    return;
 }
 
@@ -102,7 +112,7 @@ void CElementPlayer::setupPhysicsEngineObject() {
 
 void CElementPlayer::setupSceneObject() {
    SceneObject = new ISceneObject();
-   View = new CPlayerView(SceneObject, Direction, Action, Stats.Health, Area, ShakeFactor, PhysicsEngineObject);
+   View = new CPlayerView(SceneObject, Direction, Action, Stats.Health, Area, ShakeFactor);
 }
 
 bool CElementPlayer::decrementHealth() {

@@ -12,6 +12,15 @@ class CGameLevel;
 #include <sstream>
 #include <string>
 
+namespace Cabbage {
+   enum EAbility {
+      SHIELD = 0,
+      LASERCHARGE = 1,
+      LASERFIRE = 2,
+      DASH = 3,
+      BLINK = 4
+   };
+}
 
 class CGameplayElement : public IUpdater, public ICollisionResponder {
    protected:

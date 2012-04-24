@@ -234,5 +234,6 @@ public:
 	}
 
 };
+typedef SVector3 SVector3f;
 
 #endif

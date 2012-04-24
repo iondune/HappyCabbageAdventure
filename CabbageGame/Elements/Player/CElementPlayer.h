@@ -33,6 +33,7 @@ namespace Cabbage {
 class CPlayerView;
 
 class CElementPlayer : public CGameplayElement, public ISquishable {
+   friend class CPlayerAbility;
    public:
       enum EDirection {
          Left = 0,
@@ -57,6 +58,8 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       float Recovering, Shaking, ShakeFactorFactor;
       SVector2 Scale;
       SVector3 ShakeFactor;
+
+      std::vector<CPlayerAbility*> Abilities;
 
    public:
       CElementPlayer(SRect2 nArea);

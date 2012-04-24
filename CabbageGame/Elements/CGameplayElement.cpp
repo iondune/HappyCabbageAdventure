@@ -26,6 +26,7 @@ void CGameplayElement::setupObjects() {
    if(Level.isLoaded()) {
       setupPhysicsEngineObject();
       PhysicsEngineObject->setCollisionResponder(this);
+      PhysicsEngineObject->setElement(this);
    }
    if(Level.shouldRender())
       setupSceneObject();

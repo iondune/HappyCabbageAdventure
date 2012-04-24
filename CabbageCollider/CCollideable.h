@@ -31,6 +31,7 @@
 #define INTERACTOR_ALL_ALL 1+2+4+8+16+32+64
 
 class ICollisionResponder;
+class CGameplayElement;
 
 class CCollideable
 {
@@ -48,15 +49,12 @@ public:
 protected:
 
 	friend class CCollisionEngine;
-
 	SMaterial Material;
-
 	SRect2 Area;
-
 	CCollideable();
-
 	float VisualDepth;
 
+   CGameplayElement* Element;
 
 public:
 
@@ -76,6 +74,8 @@ public:
 	void setDepth(float);
 	float getDepth();
    void setCollisionResponder( ICollisionResponder * collisionResponder );
+   void setElement(CGameplayElement * e);
+   CGameplayElement *getElement();
 };
 
 class ICollisionResponder

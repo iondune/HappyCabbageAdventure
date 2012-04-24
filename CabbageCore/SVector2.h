@@ -169,5 +169,6 @@ public:
 	}
 
 };
+typedef SVector2 SVector2f;
 
 #endif
