@@ -57,13 +57,14 @@ public:
 			Position.X < v.X);
 	}
 
-	float const getArea() const
+	T const getArea() const
 	{
 		return Size.X * Size.Y;
 	}
 
 };
 
+typedef SRect2<double> SRect2d;
 typedef SRect2<float> SRect2f;
 typedef SRect2<int> SRect2i;
 

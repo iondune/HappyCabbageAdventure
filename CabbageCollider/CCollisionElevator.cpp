@@ -10,9 +10,9 @@ CCollisionElevator::CCollisionElevator()
 	InitialDirection = 1.f;
 }
 
-SVector2f CCollisionElevator::performMovement(float const TickTime)
+SVec2 CCollisionElevator::performMovement(CollisionReal const TickTime)
 {
-	SVector2f Movement;
+	SVec2 Movement;
 	Timer += TickTime * Speed;
 	Movement.X = InitialDirection * TickTime * sin(Timer) * Range;
 	Area.Position += Movement;

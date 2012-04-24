@@ -106,7 +106,7 @@ CCollisionObject* const CCollisionEngine::getObjectBelow(SVector2f pos)
 			continue;
 
 		if(Object->getArea().otherCorner().Y > height) {
-			height = Object->getArea().otherCorner().Y;
+			height = (float) Object->getArea().otherCorner().Y;
 			objBelow = Object;
 		}
 	}
@@ -129,7 +129,7 @@ float const CCollisionEngine::getHeightBelow(SVector2f pos)
 			continue;
 
 		if(Object->getArea().otherCorner().Y > height)
-			height = Object->getArea().otherCorner().Y;
+			height = (float) Object->getArea().otherCorner().Y;
 	}
 
 	return height;

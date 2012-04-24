@@ -24,7 +24,7 @@ public:
 		return (i == 0 ? X : Y);
 	}
 
-	float & operator[] (int i)
+	T & operator[] (int i)
 	{
 		return (i == 0 ? X : Y);
 	}

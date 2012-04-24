@@ -31,8 +31,9 @@
 #define INTERACTOR_NULL_BLOCK 64 
 #define INTERACTOR_ALL_ALL 1+2+4+8+16+32+64
 
-
-typedef SRect2f SArea;
+typedef double CollisionReal;
+typedef SVector2<CollisionReal> SVec2;
+typedef SRect2<CollisionReal> SArea;
 
 class CCollideable
 {

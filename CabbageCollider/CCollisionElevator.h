@@ -6,13 +6,13 @@
 class CCollisionElevator : public CCollisionObject
 {
 
-	float Timer;
+	CollisionReal Timer;
 
 public:
 
 	CCollisionElevator();
 
-	virtual SVector2f performMovement(float const TickTime);
+	virtual SVec2 performMovement(CollisionReal const TickTime);
 
 	float Speed;
 

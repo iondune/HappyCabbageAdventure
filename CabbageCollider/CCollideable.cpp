@@ -20,12 +20,12 @@ CCollideable::CCollideable()
 CCollideable::~CCollideable()
 {}
 
-SRect2f const & CCollideable::getArea() const
+SArea const & CCollideable::getArea() const
 {
 	return Area;
 }
 
-void CCollideable::setArea(SRect2f const & area)
+void CCollideable::setArea(SArea const & area)
 {
 	Area = area;
 }
@@ -43,13 +43,13 @@ CCollideable::SMaterial & CCollideable::getMaterial()
 void CCollideable::draw()
 {
 	glPushMatrix();
-	glTranslatef(Area.Position.X, Area.Position.Y, 0);
+	glTranslatef((float) Area.Position.X, (float) Area.Position.Y, 0);
 
 	glBegin(GL_QUADS);
 	glVertex3f(0.f, 0.f, 0.f);
-	glVertex3f(Area.Size.X, 0.f, 0.f);
-	glVertex3f(Area.Size.X, Area.Size.Y, 0.f);
-	glVertex3f(0.f, Area.Size.Y, 0.f);
+	glVertex3f((float) Area.Size.X, 0.f, 0.f);
+	glVertex3f((float) Area.Size.X, (float) Area.Size.Y, 0.f);
+	glVertex3f(0.f, (float) Area.Size.Y, 0.f);
 	glEnd();
 
 	glPopMatrix();

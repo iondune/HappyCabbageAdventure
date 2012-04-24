@@ -33,31 +33,31 @@ public:
 	struct SAttributes
 	{
 		//! Initial acceleration given during a jump
-		float JumpAccel;
+		CollisionReal JumpAccel;
 		
 		//! Duration in seconds that the actor can continuously jump for
-		float JumpLength;
+		CollisionReal JumpLength;
 
 		//! Maximum walking speed of this actor
-		float MaxWalk;
+		CollisionReal MaxWalk;
 
 		//! Rate of acceleration for walking
-		float WalkAccel;
+		CollisionReal WalkAccel;
 
 		//! Degree of movement control while falling (factors into max velocity)
-		float AirControl;
+		CollisionReal AirControl;
 
 		//! Degree of movement control while falling (factors into acceleration)
-		float AirSpeedFactor;
+		CollisionReal AirSpeedFactor;
 
 		//! Rate at which horizontal velocity decreases while falling
-		float AirStandingFriction;
+		CollisionReal AirStandingFriction;
 
 		//! Rate at which horizontal velocity decreases while falling
-		float GroundStandingFriction;
+		CollisionReal GroundStandingFriction;
 
 		//! Ratio of velocity reflected during collisions
-		float Bounce;
+		CollisionReal Bounce;
 
 		//! ?
 		int Reacts;
@@ -96,10 +96,10 @@ protected:
 	friend class CCollisionEngine;
 
 	//! ?
-	float FallAcceleration;
+	CollisionReal FallAcceleration;
 
 	//! Current velocity of this actor
-	SVector2f Velocity;
+	SVec2 Velocity;
 
 	//! While standing, points to the object being stood on
 	CCollideable * Standing;
@@ -112,7 +112,7 @@ protected:
 	EActionType Action;
 
 	//! While jumping, holds the current duration of the jump in seconds
-	float JumpTimer;
+	CollisionReal JumpTimer;
 
 	//! True while this object is in the middle of a jump
 	bool Jumping;
@@ -123,16 +123,16 @@ protected:
 	CCollisionActor();
 
 	// Update functions, used by engine
-	void updateVectors(float const TickTime);
+	void updateVectors(CollisionReal const TickTime);
 
 	bool updateCollision(CCollideable * Object, float const TickTime);
 	void onStanding(CCollideable * Object);
 
-	void pushIfCollided(CCollisionObject * Object, SVector2f const & Movement);
+	void pushIfCollided(CCollisionObject * Object, SVec2 const & Movement);
 
 	bool Impulse;
-	float ImpulseTimer;
-	SVector2f ImpulseVelocity;
+	CollisionReal ImpulseTimer;
+	SVec2 ImpulseVelocity;
 
 	bool AllowedMovement;
 
@@ -140,8 +140,8 @@ public:
 
 	~CCollisionActor();
 
-	SVector2f LastPosition, Movement;
-	int checkCollision(CCollideable * Object, float const TickTime);
+	SVec2 LastPosition, Movement;
+	int checkCollision(CCollideable * Object, CollisionReal const TickTime);
 	float Gravity;
 	bool collidesWith(CCollisionObject * Object) const;
 	bool isAbove(CCollisionObject * Object, float & height) const;
@@ -150,9 +150,9 @@ public:
 	bool const isStanding() const;
 
 	//! See Velocity
-	void setVelocity(SVector2f const & vel);
+	void setVelocity(SVec2 const & vel);
 	//! See Velocity
-	SVector2f const & getVelocity() const;
+	SVec2 const & getVelocity() const;
 
 	//! see Attributes
 	SAttributes const & getAttributes() const;
@@ -172,14 +172,14 @@ public:
 	bool getControlFall();
 
 	//! see FallAcceleration
-	void setFallAcceleration(float speed);
+	void setFallAcceleration(CollisionReal speed);
 	//! see FallAcceleration
 	float getFallAcceleration();
 
 	virtual void draw();
 
-	void setImpulse(SVector2f const & velocity, float const duration = 0.3f);
-	void addImpulse(SVector2f const & velocity);
+	void setImpulse(SVec2 const & velocity, CollisionReal const duration = 0.3f);
+	void addImpulse(SVec2 const & velocity);
 
 };
 
