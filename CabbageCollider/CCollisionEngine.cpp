@@ -58,7 +58,7 @@ void CCollisionEngine::performTick( float const TickTime )
 		}
 	}
 
-   for(int i = 0; i < KillList.size(); i++) {
+   for(unsigned int i = 0; i < KillList.size(); i++) {
       CCollideable *Object = KillList[i];
       for (ActorList::iterator it = Actors.begin(); it != Actors.end(); ++ it)
          if (* it == Object)
@@ -74,7 +74,7 @@ void CCollisionEngine::performTick( float const TickTime )
          }
    }
    KillList.clear();
-   for(int i = 0; i < AddList.size(); i++) {
+   for(unsigned int i = 0; i < AddList.size(); i++) {
       Actors.push_back(AddList[i]);
    }
    AddList.clear();

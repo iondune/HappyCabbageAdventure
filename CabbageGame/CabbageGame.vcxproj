@@ -10,22 +10,23 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{11D86DD3-FE36-4890-8515-41B0B2DBFE9E}</ProjectGuid>
-    <RootNamespace>base</RootNamespace>
+    <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and '$(VisualStudioVersion)' == ''">$(VCTargetsPath11)</VCTargetsPath>
+  </PropertyGroup>
+  <PropertyGroup Label="Globals">
+    <RootNamespace>CabbageGame</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -60,7 +61,6 @@
       ;$(SolutionDir)\CabbageGame\Elements\Items;
       ;$(SolutionDir)\CabbageGame\Elements\Player;
       ;$(SolutionDir)\CabbageCollider;
-      ;$(SolutionDir)\StateGame;
       ;$(IncludePath);
     </IncludePath>
     <LibraryPath>
@@ -82,15 +82,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SubSystem>Console</SubSystem>
+      <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Console</SubSystem>
-      <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>
-      <IgnoreAllDefaultLibraries>
-      </IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -99,6 +95,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -107,6 +104,66 @@
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="CBiggerBlock.h" />
+    <ClInclude Include="CDecorManager.h" />
+    <ClInclude Include="CGameEventReceiver.h" />
+    <ClInclude Include="CGameLevel.h" />
+    <ClInclude Include="CGameLevelEventManager.h" />
+    <ClInclude Include="CGameLevelLoader.h" />
+    <ClInclude Include="CGameplayGUIManager.h" />
+    <ClInclude Include="CGameplayManager.h" />
+    <ClInclude Include="Elements\Blocks\CElementBlock.h" />
+    <ClInclude Include="Elements\Blocks\CElementBlockElevator.h" />
+    <ClInclude Include="Elements\Blocks\CElementBlockFlag.h" />
+    <ClInclude Include="Elements\CGameplayElement.h" />
+    <ClInclude Include="Elements\Enemies\CElementEnemy.h" />
+    <ClInclude Include="Elements\Enemies\CElementEnemyApple.h" />
+    <ClInclude Include="Elements\Enemies\CElementEnemyBlade.h" />
+    <ClInclude Include="Elements\Enemies\CElementEnemyFlame.h" />
+    <ClInclude Include="Elements\Enemies\CElementEnemyGrape.h" />
+    <ClInclude Include="Elements\Enemies\CElementEnemyKiwi.h" />
+    <ClInclude Include="Elements\Enemies\CElementEnemyOrange.h" />
+    <ClInclude Include="Elements\Items\CElementItem.h" />
+    <ClInclude Include="Elements\Items\CElementItemEnergy.h" />
+    <ClInclude Include="Elements\Items\CElementItemHealth.h" />
+    <ClInclude Include="Elements\Items\CElementItemLife.h" />
+    <ClInclude Include="Elements\Items\CElementItemSeed.h" />
+    <ClInclude Include="Elements\Player\CElementPlayer.h" />
+    <ClInclude Include="Elements\Player\CPlayerView.h" />
+    <ClInclude Include="IUpdater.h" />
+    <ClInclude Include="SDL_mixer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CBiggerBlock.cpp" />
+    <ClCompile Include="CDecorManager.cpp" />
+    <ClCompile Include="CGameEventReceiver.cpp" />
+    <ClCompile Include="CGameLevel.cpp" />
+    <ClCompile Include="CGameLevelLoader.cpp" />
+    <ClCompile Include="CGameplayGUIManager.cpp" />
+    <ClCompile Include="CGameplayManager.cpp" />
+    <ClCompile Include="Driver.cpp" />
+    <ClCompile Include="Elements\Blocks\CElementBlock.cpp" />
+    <ClCompile Include="Elements\Blocks\CElementBlockElevator.cpp" />
+    <ClCompile Include="Elements\Blocks\CElementBlockFlag.cpp" />
+    <ClCompile Include="Elements\CGameplayElement.cpp" />
+    <ClCompile Include="Elements\Enemies\CElementEnemy.cpp" />
+    <ClCompile Include="Elements\Enemies\CElementEnemyApple.cpp" />
+    <ClCompile Include="Elements\Enemies\CElementEnemyBlade.cpp" />
+    <ClCompile Include="Elements\Enemies\CElementEnemyFlame.cpp" />
+    <ClCompile Include="Elements\Enemies\CElementEnemyGrape.cpp" />
+    <ClCompile Include="Elements\Enemies\CElementEnemyKiwi.cpp" />
+    <ClCompile Include="Elements\Enemies\CElementEnemyOrange.cpp" />
+    <ClCompile Include="Elements\Items\CElementItem.cpp" />
+    <ClCompile Include="Elements\Items\CElementItemEnergy.cpp" />
+    <ClCompile Include="Elements\Items\CElementItemHealth.cpp" />
+    <ClCompile Include="Elements\Items\CElementItemLife.cpp" />
+    <ClCompile Include="Elements\Items\CElementItemSeed.cpp" />
+    <ClCompile Include="Elements\Player\CElementPlayer.cpp" />
+    <ClCompile Include="Elements\Player\CPlayerView.cpp" />
+    <ClCompile Include="irrxml-1.2\src\irrXML.cpp" />
+    <ClCompile Include="wmlwriter_src\xmlwriter.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

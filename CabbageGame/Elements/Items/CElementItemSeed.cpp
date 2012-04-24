@@ -3,7 +3,7 @@
 
 CElementItemSeed::CElementItemSeed(SRect2 nArea) :
    CElementItem(nArea, Items::SEED) {
-   ElapsedTime = rand() % 800;
+   ElapsedTime = (float) (rand() % 800);
 }
 
 void CElementItemSeed::setupPhysicsEngineObject() {
@@ -28,7 +28,7 @@ void CElementItemSeed::setupSceneObject() {
    }
    else
       printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
-
+   
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");

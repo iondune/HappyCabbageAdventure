@@ -11,9 +11,13 @@
 #pragma comment(lib, "SDL_mixer.lib")
 #pragma comment(lib, "CabbageCore.lib")
 #pragma comment(lib, "CabbageScene.lib")
+#pragma comment(lib, "CabbageParticles.lib")
 #pragma comment(lib, "CabbageCollider.lib")
+#pragma comment(lib, "CabbageGame.lib")
+#pragma comment(lib, "CabbageGUI.lib")
 #pragma comment(lib, "CabbageFramework.lib")
 #pragma comment(lib, "StateMainMenu.lib")
+#pragma comment(lib, "StateGame.lib")
 #pragma comment(lib, "OpenGL32.lib")
 #pragma comment(lib, "glu32.lib")
 
