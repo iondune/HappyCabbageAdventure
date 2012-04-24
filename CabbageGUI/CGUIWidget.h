@@ -9,7 +9,7 @@ class CGUIWidget
 
 protected:
 
-	SRect2 Box;
+	SRect2f Box;
 	float Rotation;
 
 	bool Visible;
@@ -33,7 +33,7 @@ public:
 	virtual void setVisible(bool const visible);
 	bool const isHovered() const;
 
-	SRect2 const & getBoundingBox() const;
+	SRect2f const & getBoundingBox() const;
 
 };
 

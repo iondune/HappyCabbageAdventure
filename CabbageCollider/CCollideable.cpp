@@ -20,12 +20,12 @@ CCollideable::CCollideable()
 CCollideable::~CCollideable()
 {}
 
-SRect2 const & CCollideable::getArea() const
+SRect2f const & CCollideable::getArea() const
 {
 	return Area;
 }
 
-void CCollideable::setArea(SRect2 const & area)
+void CCollideable::setArea(SRect2f const & area)
 {
 	Area = area;
 }

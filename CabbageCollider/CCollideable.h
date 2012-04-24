@@ -32,6 +32,8 @@
 #define INTERACTOR_ALL_ALL 1+2+4+8+16+32+64
 
 
+typedef SRect2f SArea;
+
 class CCollideable
 {
 
@@ -51,7 +53,7 @@ protected:
 	CCollideable();
 
 	SMaterial Material;
-	SRect2 Area;
+	SArea Area;
 
 	float VisualDepth;
 
@@ -62,8 +64,8 @@ public:
 
 	virtual ~CCollideable();
 
-	SRect2 const & getArea() const;
-	void setArea(SRect2 const & area);
+	SArea const & getArea() const;
+	void setArea(SArea const & area);
 
 	SMaterial const & getMaterial() const;
 	SMaterial & getMaterial();

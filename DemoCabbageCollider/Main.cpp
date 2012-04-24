@@ -124,23 +124,23 @@ int main(int argc, char * argv[])
 
 	CCollisionEngine * Engine = new CCollisionEngine();
 	Player = Engine->addActor();
-	Player->setArea(SRect2(0, 3, 1, 1));
+	Player->setArea(SArea(0, 3, 1, 1));
 
 	CCollisionObject * Block2 = Engine->addObject();
-	Block2->setArea(SRect2(2, 1.1f, 1, 1.f));
+	Block2->setArea(SArea(2, 1.1f, 1, 1.f));
 
 	CCollisionObject * Block = Engine->addObject();
-	Block->setArea(SRect2(-1, -1, 15, 0.9f));
+	Block->setArea(SArea(-1, -1, 15, 0.9f));
 	Block->getMaterial().Friction = 0.4f;
 
     CCollisionObject * Elevator = Engine->addElevator();
-    Elevator->setArea(SRect2(6, -3, 1, 1));
+    Elevator->setArea(SArea(6, -3, 1, 1));
 
     Elevator = Engine->addElevator();
-    Elevator->setArea(SRect2(6, 1, 1, 1));
+    Elevator->setArea(SArea(6, 1, 1, 1));
 
 	CCollisionActor * Derp = Engine->addActor();
-	Derp->setArea(SRect2(4, 0, 1, 1));
+	Derp->setArea(SArea(4, 0, 1, 1));
 
 
 	// Time-independent movement variables
