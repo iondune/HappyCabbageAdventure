@@ -290,7 +290,7 @@ SVector3f ISceneObject::getWorldBoundingBoxMinPoint() {
 		glm::vec4 temp = Transformation() * p4; 
 
 		//printf("Min: %0.2f %0.2f %0.2f\n", temp.x, temp.y, temp.z);
-		return SVector3(temp.x, temp.y, temp.z);
+		return SVector3f(temp.x, temp.y, temp.z);
 	}
 	else
 		return getBoundingBox().MinCorner;
@@ -308,7 +308,7 @@ SBoundingBox3 ISceneObject::getWorldBoundingBox() {
 		glm::vec4 temp2 = Transformation() * max4; 
 		//printf("Max: %0.2f %0.2f %0.2f\n", temp2.x, temp2.y, temp2.z);
 
-		return SBoundingBox3(SVector3(temp.x, temp.y, temp.z), SVector3(temp2.x, temp2.y, temp2.z));
+		return SBoundingBox3(SVector3f(temp.x, temp.y, temp.z), SVector3f(temp2.x, temp2.y, temp2.z));
 	}
 	else
 		return getBoundingBox();

@@ -180,7 +180,7 @@ void CMesh::calculateNormalsPerVertex(bool CombineNear, float const NearToleranc
 
 	for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
 		for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
-			it->Normal = SVector3();
+			it->Normal = SVector3f();
 
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
 		for (std::vector<STriangle>::iterator it = (* bit)->Triangles.begin(); it != (* bit)->Triangles.end(); ++ it)
@@ -228,7 +228,7 @@ void CMesh::calculateTextureCoordinates(SVector3f const uVec, SVector3f const vV
     for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
     {
 		SVector3f const RelativePosition = (it->Position - Min) / (Max - Min);
-		it->TextureCoordinates = SVector2((RelativePosition * uVec.getNormalized()).length(),
+		it->TextureCoordinates = SVector2f((RelativePosition * uVec.getNormalized()).length(),
 			(RelativePosition * vVec.getNormalized()).length());
 	}
 }
@@ -244,7 +244,7 @@ void CMesh::updateBuffers()
 
 SBoundingBox3 const CMesh::getBoundingBox() const
 {
-    SBoundingBox3 Box(SVector3(std::numeric_limits<float>().max()), SVector3(-std::numeric_limits<float>().max()));
+    SBoundingBox3 Box(SVector3f(std::numeric_limits<float>().max()), SVector3f(-std::numeric_limits<float>().max()));
 
     for (std::vector<SMeshBuffer *>::const_iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
     for (std::vector<SVertex>::const_iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)

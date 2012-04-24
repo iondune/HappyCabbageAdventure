@@ -152,7 +152,7 @@ void CApplication::run()
 					SMouseEvent MouseEvent;
 					MouseEvent.Type = SMouseEvent::EType::Click;
 					MouseEvent.Location = EventManager->MouseLocation;
-					MouseEvent.RelativeLocation = SVector2(MouseEvent.Location.X / (float) WindowSize.X,
+					MouseEvent.RelativeLocation = SVector2f(MouseEvent.Location.X / (float) WindowSize.X,
 						MouseEvent.Location.Y / (float) WindowSize.Y);
 					MouseEvent.Pressed = Event.button.state == SDL_PRESSED;
 
@@ -192,7 +192,7 @@ void CApplication::run()
                     SMouseEvent MouseEvent;
                     MouseEvent.Type = SMouseEvent::EType::Move;
                     MouseEvent.Location = EventManager->MousePositionState = SPosition2(Event.motion.x, Event.motion.y);
-					MouseEvent.RelativeLocation = SVector2(MouseEvent.Location.X / (float) WindowSize.X,
+					MouseEvent.RelativeLocation = SVector2f(MouseEvent.Location.X / (float) WindowSize.X,
 						MouseEvent.Location.Y / (float) WindowSize.Y);
                     MouseEvent.Movement = SPosition2(Event.motion.xrel, Event.motion.yrel);
                     EventManager->OnMouseEvent(MouseEvent);

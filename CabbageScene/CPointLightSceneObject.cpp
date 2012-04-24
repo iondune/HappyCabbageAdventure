@@ -15,7 +15,7 @@ CPointLightSceneObject::CPointLightSceneObject(float const radius, SColor const 
 
 	if (SphereMesh)
 	{
-		SphereMesh->resizeMesh(SVector3(2.f));
+		SphereMesh->resizeMesh(SVector3f(2.f));
 		SphereMesh->updateBuffers();
 
 		MeshBuffer = SphereMesh->MeshBuffers[0];
@@ -76,7 +76,7 @@ void CPointLightSceneObject::load(CScene const * const Scene)
 
 void CPointLightSceneObject::setRadius(float const Radius)
 {
-	ISceneObject::setScale(SVector3(Radius));
+	ISceneObject::setScale(SVector3f(Radius));
 }
 
 void CPointLightSceneObject::setScale(SVector3f const & scale)

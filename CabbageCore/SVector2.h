@@ -128,7 +128,7 @@ public:
 };
 
 template <typename T>
-class SVector2f : public SVector2Reference<T>
+class SVector2 : public SVector2Reference<T>
 {
 
 public:

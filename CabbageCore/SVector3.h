@@ -244,13 +244,13 @@ public:
 template <typename T>
 SVector3<T> SVector3Reference<T>::crossProduct(SVector3Reference<T> const & v) const
 {
-    return SVector3(Y*v.Z - v.Y*Z, v.X*Z - X*v.Z, X*v.Y - v.X*Y);
+    return SVector3<T>(Y*v.Z - v.Y*Z, v.X*Z - X*v.Z, X*v.Y - v.X*Y);
 }
 
 template <typename T>
 SVector3<T> const SVector3Reference<T>::getNormalized() const
 {
-    SVector3 copy(* this);
+    SVector3<T> copy(* this);
     copy.normalize();
     return copy;
 }

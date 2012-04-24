@@ -12,5 +12,5 @@ CCollisionObject::~CCollisionObject()
 
 SVector2f CCollisionObject::performMovement(float const TickTime)
 {
-	return SVector2();
+	return SVector2f();
 }
