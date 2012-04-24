@@ -13,3 +13,11 @@ void CPlayerAbility::inOnCollision(CCollideable *Object) {
 void CPlayerAbility::updateTime(float time) {
    ElapsedTime += time;
 }
+
+bool CPlayerAbility::isDead() {
+   return Dead;
+}
+
+Abilities::EAbilityType CPlayerAbility::getType() {
+   return Type;
+}

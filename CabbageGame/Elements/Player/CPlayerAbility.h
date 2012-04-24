@@ -27,8 +27,10 @@ class CPlayerAbility {
       virtual void inUpdatePhysicsEngineObject(float)=0;
       virtual void inUpdateSceneObject(float)=0;
       void updateTime(float);
+      bool isDead();
       virtual void inOnCollision(CCollideable *Object);
       CPlayerAbility(CElementPlayer &, Abilities::EAbilityType);
+      Abilities::EAbilityType getType();
 };
 
 #endif

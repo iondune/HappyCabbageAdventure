@@ -62,6 +62,8 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       SVector3 ShakeFactor;
 
       std::vector<CPlayerAbility*> Abilities;
+      void checkAbilityKeypress();
+      void updateAbilities(float time);
 
    public:
       CElementPlayer(SRect2 nArea);

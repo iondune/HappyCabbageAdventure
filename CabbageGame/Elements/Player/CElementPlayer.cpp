@@ -34,14 +34,40 @@ void CElementPlayer::updatePlayerAction() {
       PhysicsEngineObject->setJumping(false);
    }
 }
-void CElementPlayer::updatePhysicsEngineObject(float time) {
+
+#include "CPlayerAbilityShield.h"
+
+void CElementPlayer::checkAbilityKeypress() {
+   //Probably a more OO way to set this up, but meh
+   bool usedLeafShield = false;
+   for(int i = 0; i < Abilities.size(); i++) {
+      if(Abilities[i]->getType() == Abilities::SHIELD)
+         usedLeafShield = true;
+   }
+   if(!usedLeafShield && CApplication::get().getEventManager().IsKeyDown[SDLK_r]) {
+      Abilities.push_back(new CPlayerAbilityShield(*this));
+   }
+}
+
+void CElementPlayer::updateAbilities(float time) {
+   std::vector<CPlayerAbility *> AbilityKillList;
    for(int i = 0; i < Abilities.size(); i++) {
       Abilities[i]->updateTime(time);
-   }
-   updatePlayerAction();
-   for(int i = 0; i < Abilities.size(); i++) {
       Abilities[i]->inUpdatePhysicsEngineObject(time);
+      Abilities[i]->inUpdateSceneObject(time);
+      if(Abilities[i]->isDead())
+         AbilityKillList.push_back(Abilities[i]);
    }
+   for(int i = 0; i < AbilityKillList.size(); i++) {
+      Abilities.erase(std::remove(Abilities.begin(), Abilities.end(), AbilityKillList[i]), Abilities.end());
+      delete AbilityKillList[i];
+   }
+}
+
+void CElementPlayer::updatePhysicsEngineObject(float time) {
+   updatePlayerAction();
+   checkAbilityKeypress();
+   updateAbilities(time);
 }
 
 void CElementPlayer::updateSceneObject(float time) {
@@ -70,9 +96,6 @@ void CElementPlayer::updateSceneObject(float time) {
 
    SceneObject->setScale(SVector3(Scale.X, Scale.X, Scale.Y));
 
-   for(int i = 0; i < Abilities.size(); i++) {
-      Abilities[i]->inUpdateSceneObject(time);
-   }
 }
 
 Cabbage::PlayerInformation & CElementPlayer::getStats() {
