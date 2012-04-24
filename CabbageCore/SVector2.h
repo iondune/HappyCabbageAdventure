@@ -4,16 +4,18 @@
 #include <cmath>
 #include <stdio.h>
 
+template <typename T>
 class SVector2;
 
+template <typename T>
 class SVector2Reference
 {
 
 public:
 
-	float & X, & Y;
+	T & X, & Y;
 
-	SVector2Reference(float & x, float & y)
+	SVector2Reference(T & x, T & y)
 		: X(x), Y(y)
 	{}
 
@@ -33,47 +35,47 @@ public:
 		Y = 0;
 	}
 
-	void set(float in)
+	void set(T in)
 	{
 		X = in;
 		Y = in;
 	}
 
-	void set(float in_x, float in_y)
+	void set(T in_x, T in_y)
 	{
 		X = in_x;
 		Y = in_y;
 	}
 
-	float dotProduct(SVector2Reference const & v) const
+	T dotProduct(SVector2Reference<T> const & v) const
 	{
 		return X*v.X + Y*v.Y;
 	}
 
-	float length() const
+	T const length() const
 	{
 		return sqrtf(X*X + Y*Y);
 	}
 
-	SVector2 operator + (SVector2Reference const & v) const;
+	SVector2<T> operator + (SVector2Reference<T> const & v) const;
 
-	SVector2 operator - (SVector2Reference const & v) const;
+	SVector2<T> operator - (SVector2Reference<T> const & v) const;
 
-	SVector2 operator * (SVector2Reference const & v) const;
+	SVector2<T> operator * (SVector2Reference<T> const & v) const;
 
-	SVector2 operator / (SVector2Reference const & v) const;
+	SVector2<T> operator / (SVector2Reference<T> const & v) const;
 
-	SVector2 operator + (SVector2 const & v) const;
+	SVector2<T> operator + (SVector2<T> const & v) const;
 
-	SVector2 operator - (SVector2 const & v) const;
+	SVector2<T> operator - (SVector2<T> const & v) const;
 
-	SVector2 operator * (SVector2 const & v) const;
+	SVector2<T> operator * (SVector2<T> const & v) const;
 
-	SVector2 operator / (SVector2 const & v) const;
+	SVector2<T> operator / (SVector2<T> const & v) const;
 
-	SVector2 operator * (float const s) const;
+	SVector2<T> operator * (T const s) const;
 
-	SVector2 operator / (float const s) const;
+	SVector2<T> operator / (T const s) const;
 
 	SVector2Reference & operator += (SVector2Reference const & v)
 	{
@@ -125,34 +127,37 @@ public:
 
 };
 
-class SVector2 : public SVector2Reference
+template <typename T>
+class SVector2 : public SVector2Reference<T>
 {
 
 public:
 
-	float X, Y;
+	T X, Y;
 
 	SVector2()
 		: X(0), Y(0), SVector2Reference(X, Y)
 	{}
 
-	SVector2(SVector2 const & vec)
+	template <typename U>
+	SVector2(SVector2<U> const & vec)
+		: X(vec.X), Y(vec.Y), SVector2Reference(X, Y)
+	{}
+	
+	template <typename U>
+	SVector2(SVector2Reference<U> const & vec)
 		: X(vec.X), Y(vec.Y), SVector2Reference(X, Y)
 	{}
 
-	SVector2(SVector2Reference const & vec)
-		: X(vec.X), Y(vec.Y), SVector2Reference(X, Y)
-	{}
-
-	SVector2(float in)
+	SVector2(T in)
 		: X(in), Y(in), SVector2Reference(X, Y)
 	{}
 
-	SVector2(float in_x, float in_y)
+	SVector2(T in_x, T in_y)
 		: X(in_x), Y(in_y), SVector2Reference(X, Y)
 	{}
 
-	SVector2 & operator = (SVector2Reference const & vec)
+	SVector2<T> & operator = (SVector2Reference<T> const & vec)
 	{
 		X = vec.X;
 		Y = vec.Y;
@@ -160,7 +165,7 @@ public:
 		return * this;
 	}
 
-	SVector2 & operator = (SVector2 const & vec)
+	SVector2<T> & operator = (SVector2<T> const & vec)
 	{
 		X = vec.X;
 		Y = vec.Y;
@@ -169,5 +174,68 @@ public:
 	}
 
 };
+
+template <typename T>
+SVector2<T> SVector2Reference<T>::operator + (SVector2Reference<T> const & v) const
+{
+	return SVector2<T>(X+v.X, Y+v.Y);
+}
+
+template <typename T>
+SVector2<T> SVector2Reference<T>::operator - (SVector2Reference<T> const & v) const
+{
+	return SVector2<T>(X-v.X, Y-v.Y);
+}
+
+template <typename T>
+SVector2<T> SVector2Reference<T>::operator * (SVector2Reference<T> const & v) const
+{
+	return SVector2<T>(X*v.X, Y*v.Y);
+}
+
+template <typename T>
+SVector2<T> SVector2Reference<T>::operator / (SVector2Reference<T> const & v) const
+{
+	return SVector2<T>(X/v.X, Y/v.Y);
+}
+
+template <typename T>
+SVector2<T> SVector2Reference<T>::operator + (SVector2<T> const & v) const
+{
+	return SVector2<T>(X+v.X, Y+v.Y);
+}
+
+template <typename T>
+SVector2<T> SVector2Reference<T>::operator - (SVector2<T> const & v) const
+{
+	return SVector2<T>(X-v.X, Y-v.Y);
+}
+
+template <typename T>
+SVector2<T> SVector2Reference<T>::operator * (SVector2<T> const & v) const
+{
+	return SVector2<T>(X*v.X, Y*v.Y);
+}
+
+template <typename T>
+SVector2<T> SVector2Reference<T>::operator / (SVector2<T> const & v) const
+{
+	return SVector2<T>(X/v.X, Y/v.Y);
+}
+
+template <typename T>
+SVector2<T> SVector2Reference<T>::operator * (T const s) const
+{
+	return SVector2<T>(X*s, Y*s);
+}
+
+template <typename T>
+SVector2<T> SVector2Reference<T>::operator / (T const s) const
+{
+	return SVector2<T>(X/s, Y/s);
+}
+
+typedef SVector2<float> SVector2f;
+typedef SVector2<double> SVector2d;
 
 #endif
