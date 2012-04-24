@@ -23,7 +23,7 @@ class CLight
 public:
 
 	SColor Color;
-	SVector3 Position;
+	SVector3f Position;
 
 	SUniform<SColor> BindColor;
 	SUniform<SVector3> BindPosition;

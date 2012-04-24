@@ -48,7 +48,7 @@ class CPlayerView {
       float xScale;
       float yScale;
       float time,timeChange;
-      SVector3 shakeFactor;
+      SVector3f shakeFactor;
       int Charging;
 
 	  float LeftShadowStartValue, LeftShadowCutoffValue, RightShadowStartValue, RightShadowCutoffValue;

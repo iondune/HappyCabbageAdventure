@@ -10,8 +10,8 @@ class SVertex
 
 public:
 
-	SVector3 Position;
-    SVector3 Normal;
+	SVector3f Position;
+    SVector3f Normal;
 	SVector2 TextureCoordinates;
 
 	SColor Color;

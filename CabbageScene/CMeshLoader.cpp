@@ -331,7 +331,7 @@ CMesh * const CMeshLoader::loadAsciiMesh(std::string const & fileName)
             int Index;
             Stream >> Index; // We don't care, throw it away
 
-            SVector3 Position;
+            SVector3f Position;
             Stream >> Position.X;
             Stream >> Position.Y;
             Stream >> Position.Z;

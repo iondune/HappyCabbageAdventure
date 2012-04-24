@@ -1362,7 +1362,7 @@ void CGameState::RunVictorySequence(float Elapsed) {
       glow->step(Elapsed);
 
    //perform cabbage sequence
-   SVector3 curRotation = cabbage5->getRotation();
+   SVector3f curRotation = cabbage5->getRotation();
    SVector2 curLocation = SVector2 (Player->getArea().getCenter().X - .5f, Player->getArea().getCenter().Y - .5f);
 
    if (StartWin > .00f && StartWin < .07f) {
@@ -1382,7 +1382,7 @@ void CGameState::RunVictorySequence(float Elapsed) {
       spaceDown = 1;
    else if (StartWin > .76f && StartWin < 1.f) {
       if (!f1) {
-         SVector3 flagPosition = renderFlag->getTranslation();
+         SVector3f flagPosition = renderFlag->getTranslation();
 
          f1 = new CParticleEngine(SVector3(flagPosition.X, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);  //Would like to change these later so not leaves. Fine for now
          f2 = new CParticleEngine(SVector3(flagPosition.X + 4.f, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);

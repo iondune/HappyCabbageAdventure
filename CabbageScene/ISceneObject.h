@@ -53,7 +53,7 @@ protected:
     glm::mat4 RotationMatrix;
     SBoundingBox3 BoundingBox;
 
-	SVector3 Rotation, Translation, Scale;
+	SVector3f Rotation, Translation, Scale;
 
     int DebugDataFlags;
 
@@ -77,10 +77,10 @@ public:
 	glm::mat4 const & getAbsoluteTransformation() const;
 
     void setTreeImmobile(bool value);
-    void setTranslation(SVector3 const & translation);
-    void setRotation(SVector3 const & rotation);
+    void setTranslation(SVector3f const & translation);
+    void setRotation(SVector3f const & rotation);
     void setRotation(glm::mat4 const & matrix);
-    void setScale(SVector3 const & scale);
+    void setScale(SVector3f const & scale);
 
 	virtual void update();
     virtual void draw(CScene const * const scene, ERenderPass const Pass);
@@ -110,16 +110,16 @@ public:
 	void removeChildren();
    void sortChildrenByZTranslation();
 
-	SVector3 const & getRotation() const;
-	SVector3 const & getTranslation() const;
-	SVector3 const & getScale() const;
+	SVector3f const & getRotation() const;
+	SVector3f const & getTranslation() const;
+	SVector3f const & getScale() const;
 
 	bool const isCulled(CScene const * const Scene) const;
 	bool const isCullingEnabled() const;
 	void setCullingEnabled(bool const culling);
 
 	virtual void load(CScene const * const Scene, ERenderPass const Pass);
-   SVector3 getWorldBoundingBoxMinPoint();
+   SVector3f getWorldBoundingBoxMinPoint();
    SBoundingBox3 getWorldBoundingBox();
 
 };

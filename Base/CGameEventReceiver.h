@@ -25,7 +25,7 @@ class CGameEventReceiver : public sigslot::has_slots<>
     std::vector<SDeadEnemy> DeadEnemies;
     CParticleEngine *playerDamagedEngine;
     CCollisionActor *Player;
-    SVector3 loc;
+    SVector3f loc;
 
     public:
 

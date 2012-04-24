@@ -33,7 +33,7 @@
 
 class CParticleEngine {
    std::vector<CParticle*> particles;
-   SVector3 centerPos;
+   SVector3f centerPos;
    int numParticles;
    float totalDuration;
    float currentDuration;
@@ -47,8 +47,8 @@ class CParticleEngine {
    public:
       int dead, lookRight;
       //Duration in milliseconds
-      CParticleEngine(SVector3 pos, int maxParticles, float duration, int);
-      void setCenterPos(SVector3 cP);
+      CParticleEngine(SVector3f pos, int maxParticles, float duration, int);
+      void setCenterPos(SVector3f cP);
       void UsePhysics(CCollisionEngine *engine);
       void setLookRight(int pf);
       void step(float const elapsedTime);

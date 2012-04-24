@@ -79,11 +79,11 @@ void CPointLightSceneObject::setRadius(float const Radius)
 	ISceneObject::setScale(SVector3(Radius));
 }
 
-void CPointLightSceneObject::setScale(SVector3 const & scale)
+void CPointLightSceneObject::setScale(SVector3f const & scale)
 {
 }
 
-void CPointLightSceneObject::setColor(SVector3 const & color)
+void CPointLightSceneObject::setColor(SVector3f const & color)
 {
 	Color = color;
 }

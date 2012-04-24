@@ -252,8 +252,8 @@ void CSceneManager::removeAllSceneObjects()
 }
 
 bool sortISOXY (ISceneObject* a, ISceneObject* b) {
-	SVector3 av = a->getWorldBoundingBoxMinPoint();
-	SVector3 bv = b->getWorldBoundingBoxMinPoint();
+	SVector3f av = a->getWorldBoundingBoxMinPoint();
+	SVector3f bv = b->getWorldBoundingBoxMinPoint();
 	if(av.X == bv.X) {
 		return av.Y < bv.Y;
 	}
