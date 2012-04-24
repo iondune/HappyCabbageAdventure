@@ -16,15 +16,18 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(VisualStudioVersion)'=='11.0'" Label="Configuration">
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -36,7 +39,41 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup>
+    <IncludePath>
+      ;$(VisualStudioDir)\Projects\glew-1.7.0\include;
+      ;$(VisualStudioDir)\Projects\SDL-1.2.15\include;
+      ;$(VisualStudioDir)\Projects\freetype-2.4.2\include;
+      ;$(SolutionDir)\CabbageCore;
+      ;$(SolutionDir)\CabbageFramework;
+      ;$(SolutionDir)\CabbageScene;
+      ;$(SolutionDir)\CabbageGUI;
+      ;$(SolutionDir)\CabbageParticle;
+      ;$(SolutionDir)\CabbageGame;
+      ;$(SolutionDir)\CabbageGame\Elements;
+      ;$(SolutionDir)\CabbageGame\Elements\Blocks;
+      ;$(SolutionDir)\CabbageGame\Elements\Enemies;
+      ;$(SolutionDir)\CabbageGame\Elements\Friends;
+      ;$(SolutionDir)\CabbageGame\Elements\Items;
+      ;$(SolutionDir)\CabbageGame\Elements\Player;
+      ;$(SolutionDir)\CabbageCollider;
+      ;$(IncludePath);
+    </IncludePath>
+    <LibraryPath>
+      ;$(VisualStudioDir)\Projects\glew-1.7.0\lib;
+      ;$(VisualStudioDir)\Projects\SDL-1.2.15\lib\x86;
+      ;$(VisualStudioDir)\Projects\freetype-2.4.2\lib;
+      ;$(LibraryPath);
+    </LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      ;$(SolutionDir)\Debug;
+      ;$(LibraryPath);
+    </LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      ;$(SolutionDir)\Release;
+      ;$(LibraryPath);
+    </LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -122,6 +159,8 @@
     <ClCompile Include="Elements\Items\CElementItemSeed.cpp" />
     <ClCompile Include="Elements\Player\CElementPlayer.cpp" />
     <ClCompile Include="Elements\Player\CPlayerView.cpp" />
+    <ClCompile Include="irrxml-1.2\src\irrXML.cpp" />
+    <ClCompile Include="wmlwriter_src\xmlwriter.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
