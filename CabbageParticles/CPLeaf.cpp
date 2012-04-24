@@ -12,14 +12,8 @@ void CPLeaf::updateMatrices(float timeElapsed) {
    if(Counter > 0) {
       Counter -= timeElapsed;
    }
-   else if(Duration >= TotalDuration - (float)AppearRate*0.85) {
-      //CApplication::get().getSceneManager().removeSceneObject(getRenderable());
-      Duration = -1;
-   }
-   else if(Duration == -1) {}
    else {
       sineValue += 4*timeElapsed;
-      Duration += timeElapsed;
       translate = SVector3(Amplitude*cos(Period*sineValue),
                            yFactor,
                            Amplitude*sin(Period*sineValue));

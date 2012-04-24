@@ -5,22 +5,13 @@
 #include "CCollideable.h"
 #include "CCollisionEngine.h"
 #include "CabbageScene.h"
+#include "CPlayerAbility.h"
 
 class CElementPlayer;
 class CGameLevel;
 #include "./wmlwriter_src/xmlwriter.h"
 #include <sstream>
 #include <string>
-
-namespace Cabbage {
-   enum EAbility {
-      SHIELD = 0,
-      LASERCHARGE = 1,
-      LASERFIRE = 2,
-      DASH = 3,
-      BLINK = 4
-   };
-}
 
 class CGameplayElement : public IUpdater, public ICollisionResponder {
    protected:
@@ -49,6 +40,7 @@ class CGameplayElement : public IUpdater, public ICollisionResponder {
       virtual void writeXML(xmlwriter *)=0;
 
       virtual void removeFromEngines();
+      virtual void reactToAbility(Abilities::EAbilityType ability); 
 
       //Constructor
       CGameplayElement(CCollideable *& c, ISceneObject *& s, SRect2 a);

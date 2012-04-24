@@ -24,6 +24,7 @@ class CElementEnemy : public CGameplayElement {
       CMeshSceneObject * SceneObject; //Override CGameplayElement's but with type CMeshSceneObject
 
       Enemies::EEnemyType Type;
+      void dieWithSeeds();
 
    public:
       virtual void OnCollision(CCollideable *Object);
@@ -34,6 +35,7 @@ class CElementEnemy : public CGameplayElement {
 
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);
+      virtual void reactToAbility(Abilities::EAbilityType);
 
       Enemies::EEnemyType getEnemyType();
 

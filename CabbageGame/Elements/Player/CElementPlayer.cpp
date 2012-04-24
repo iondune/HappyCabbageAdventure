@@ -35,6 +35,9 @@ void CElementPlayer::updatePlayerAction() {
    }
 }
 void CElementPlayer::updatePhysicsEngineObject(float time) {
+   for(int i = 0; i < Abilities.size(); i++) {
+      Abilities[i]->updateTime(time);
+   }
    updatePlayerAction();
    for(int i = 0; i < Abilities.size(); i++) {
       Abilities[i]->inUpdatePhysicsEngineObject(time);
@@ -70,7 +73,6 @@ void CElementPlayer::updateSceneObject(float time) {
    for(int i = 0; i < Abilities.size(); i++) {
       Abilities[i]->inUpdateSceneObject(time);
    }
-
 }
 
 Cabbage::PlayerInformation & CElementPlayer::getStats() {
@@ -112,7 +114,7 @@ void CElementPlayer::setupPhysicsEngineObject() {
 
 void CElementPlayer::setupSceneObject() {
    SceneObject = new ISceneObject();
-   View = new CPlayerView(SceneObject, Direction, Action, Stats.Health, Area, ShakeFactor);
+   View = new CPlayerView(SceneObject, Direction, Action, Stats.Health, Area, ShakeFactor, PhysicsEngineObject);
 }
 
 bool CElementPlayer::decrementHealth() {

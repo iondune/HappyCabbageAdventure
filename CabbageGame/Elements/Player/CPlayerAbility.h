@@ -6,16 +6,29 @@
 class CElementPlayer;
 class CCollideable;
 
+namespace Abilities {
+   enum EAbilityType {
+      SHIELD = 0,
+      LASERCHARGE = 1,
+      LASERFIRE = 2,
+      DASH = 3,
+      BLINK = 4
+   };
+}
+
 class CPlayerAbility {
-   CElementPlayer & Player;
-   float ElapsedTime;
+   protected:
+      CElementPlayer & Player;
+      float ElapsedTime;
+      bool Dead;
+      Abilities::EAbilityType Type;
 
    public:
-
-      virtual void inUpdatePhysicsEngine(float)=0;
+      virtual void inUpdatePhysicsEngineObject(float)=0;
       virtual void inUpdateSceneObject(float)=0;
-      virtual void inOnCollision(CCollideable *)=0;
-      CPlayerAbility(CElementPlayer &);
+      void updateTime(float);
+      virtual void inOnCollision(CCollideable *Object);
+      CPlayerAbility(CElementPlayer &, Abilities::EAbilityType);
 };
 
 #endif

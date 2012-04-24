@@ -1,22 +1,31 @@
 #include "CPlayerAbilityShield.h"
 #include "CElementPlayer.h"
+float const CPlayerAbilityShield::LEAF_SHIELD_DURATION;
+int const CPlayerAbilityShield::LEAF_SHIELD_PARTICLE_COUNT;
 
-void CPlayerAbilityShield::inUpdatePhysicsEngine(float time) {
+void CPlayerAbilityShield::inUpdatePhysicsEngineObject(float time) {
+   if(Dead)
+      return;
    //To make the cabbage impervious to damage
-   Recovering = 5.0f;
+   Player.Recovering = 5.0f;
    return;
 }
 
 void CPlayerAbilityShield::inUpdateSceneObject(float time) {
+   if(Dead)
+      return;
+   if(ElapsedTime >= LEAF_SHIELD_DURATION) {
+      ParticleEngine->deconstruct();
+      delete ParticleEngine;
+      Player.Recovering = 0.0f;
+      Dead = true;
+      return;
+   }
    //Update the particles
    ParticleEngine->setCenterPos(SVector3(Player.getArea().getCenter(), 0.0f));
    ParticleEngine->step(time);
 }
 
-void CPlayerAbilityShield::inOnCollision(CCollideable *Object) {
-   if(Object->
-}
-
-CPlayerAbilityShield::CPlayerAbilityShield(CElementPlayer & p) : CPlayerAbility(p) {
-   ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), 150, 6, LEAF_PARTICLE);
+CPlayerAbilityShield::CPlayerAbilityShield(CElementPlayer & p) : CPlayerAbility(p, Abilities::SHIELD) {
+   ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), LEAF_SHIELD_PARTICLE_COUNT, -1, LEAF_PARTICLE);
 }

@@ -4,6 +4,7 @@
 #include "../CGameplayElement.h"
 #include "CEventManager.h"
 #include "../ISquishable.h"
+#include "CPlayerAbility.h"
 
 namespace Cabbage {
    //Information kept between levels
@@ -34,6 +35,7 @@ class CPlayerView;
 
 class CElementPlayer : public CGameplayElement, public ISquishable {
    friend class CPlayerAbility;
+   friend class CPlayerAbilityShield;
    public:
       enum EDirection {
          Left = 0,

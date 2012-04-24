@@ -6,9 +6,11 @@
 
 class CPlayerAbilityShield : public CPlayerAbility {
    CParticleEngine *ParticleEngine;
+   static float const LEAF_SHIELD_DURATION = 6.0f;
+   static int const LEAF_SHIELD_PARTICLE_COUNT = 150;
 
    public:
-      void inUpdatePhysicsEngine(float);
+      void inUpdatePhysicsEngineObject(float);
       void inUpdateSceneObject(float);
       void inOnCollision(CCollideable *);
       CPlayerAbilityShield(CElementPlayer &);

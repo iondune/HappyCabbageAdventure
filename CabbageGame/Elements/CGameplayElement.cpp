@@ -49,3 +49,8 @@ void CGameplayElement::removeFromEngines() {
       Dead = true;
    }
 }
+
+void CGameplayElement::reactToAbility(Abilities::EAbilityType ability) {
+   //Default behavior to react to abilities:
+   return;
+}
