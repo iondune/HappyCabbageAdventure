@@ -2,9 +2,9 @@
 #include "CabbageFramework.h"
 
 #include <sstream>
-CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2 & nArea, SVector3 & sf) :
+CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2 & nArea, SVector3 & sf, CCollisionActor* peo) :
    SceneObject(obj), CabbageIndex(CurHealth - 1), Direction(dir), Action(act), Hurt(false), Area(nArea), ShakeFactor(sf),
-   ySineValue(0.0f), xScale(2.0f), yScale(2.0f) {
+   ySineValue(0.0f), xScale(2.0f), yScale(2.0f), PhysicsEngineObject(peo) {
 
    //Normal cabbage meshes and renderables
    ISceneObject *NormalCabbage = new ISceneObject();
@@ -113,7 +113,6 @@ void CPlayerView::updateView(float time) {
 
    SceneObject->setRotation(SVector3(rotateX, 0, Direction == CElementPlayer::Right ? 80.0f : 0.0f));
 
-   //TODO: Prevent from translating in air.
    translateCabbage(time);
 
    float ySineAmount = 0.065f*sin(ySineValue);
@@ -144,17 +143,21 @@ void CPlayerView::setVisible(bool b) {
 
 
 void CPlayerView::translateCabbage(float time) {
-   if (Action == CElementPlayer::Standing) {
-      ySineValue += 5.f*time;
+   //Verify we aren't moving vertically.
+   if (PhysicsEngineObject->getVelocity().Y < .01f && PhysicsEngineObject->getVelocity().Y > -.01f) {
+      if (Action == CElementPlayer::Standing)
+         ySineValue += 5.f*time;
+
+      else if (Action == CElementPlayer::Walking && Direction == CElementPlayer::Left)
+         ySineValue +=10.f*time;
+
+      else if (Action == CElementPlayer::Walking && Direction == CElementPlayer::Right)
+         ySineValue -=10.f*time;
    }
 
-   else if (Action == CElementPlayer::Walking && Direction == CElementPlayer::Left) {
-      ySineValue +=10.f*time;
-   }
-
-   else if (Action == CElementPlayer::Walking && Direction == CElementPlayer::Right) {
-      ySineValue -=10.f*time;
-   }
+   //If we are moving vertically, stop dancing and revert to our normal position.
+   else
+      ySineValue = 0.f;
 }
 
 void CPlayerView::scaleCabbage(float time) {

@@ -97,7 +97,7 @@ void CElementPlayer::setupPhysicsEngineObject() {
 
 void CElementPlayer::setupSceneObject() {
    SceneObject = new ISceneObject();
-   View = new CPlayerView(SceneObject, Direction, Action, Stats.Health, Area, ShakeFactor);
+   View = new CPlayerView(SceneObject, Direction, Action, Stats.Health, Area, ShakeFactor, PhysicsEngineObject);
 }
 
 bool CElementPlayer::decrementHealth() {

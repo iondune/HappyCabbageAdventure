@@ -8,6 +8,7 @@
 class CPlayerView {
    private:
       ISceneObject *SceneObject; //Contains the next 4 things listed here
+      CCollisionActor *PhysicsEngineObject;
 
       ISceneObject *NormalCabbageContainer, *HurtCabbageContainer; //Contain all of the cabbage meshes
       CMeshSceneObject *ShadowLeft, *ShadowRight;
@@ -33,7 +34,7 @@ class CPlayerView {
       void updateView(float time);
       void translateCabbage(float time);
       void scaleCabbage(float time);
-      CPlayerView(ISceneObject *, CElementPlayer::EDirection &, CElementPlayer::EAction &, int, SRect2 &, SVector3 & sf);
+      CPlayerView(ISceneObject *, CElementPlayer::EDirection &, CElementPlayer::EAction &, int, SRect2 &, SVector3 & sf, CCollisionActor *);
 };
 
 #endif
