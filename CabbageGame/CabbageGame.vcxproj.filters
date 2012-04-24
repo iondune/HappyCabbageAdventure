@@ -15,55 +15,64 @@
       <Filter>Elements</Filter>
     </ClInclude>
     <ClInclude Include="Elements\Blocks\CElementBlock.h">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Blocks</Filter>
     </ClInclude>
     <ClInclude Include="Elements\Blocks\CElementBlockElevator.h">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Blocks</Filter>
     </ClInclude>
     <ClInclude Include="Elements\Blocks\CElementBlockFlag.h">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Blocks</Filter>
     </ClInclude>
     <ClInclude Include="Elements\Enemies\CElementEnemy.h">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Elements\Enemies\CElementEnemyApple.h">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Elements\Enemies\CElementEnemyBlade.h">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Elements\Enemies\CElementEnemyFlame.h">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Elements\Enemies\CElementEnemyGrape.h">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Elements\Enemies\CElementEnemyKiwi.h">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Elements\Enemies\CElementEnemyOrange.h">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Enemies\CElementEnemyProjectile.h">
+      <Filter>Elements\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Enemies\CElementEnemyProjectileGrape.h">
+      <Filter>Elements\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Enemies\CElementEnemyProjectileKiwi.h">
+      <Filter>Elements\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Elements\Items\CElementItem.h">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Items</Filter>
     </ClInclude>
     <ClInclude Include="Elements\Items\CElementItemEnergy.h">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Items</Filter>
     </ClInclude>
     <ClInclude Include="Elements\Items\CElementItemHealth.h">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Items</Filter>
     </ClInclude>
     <ClInclude Include="Elements\Items\CElementItemLife.h">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Items</Filter>
     </ClInclude>
     <ClInclude Include="Elements\Items\CElementItemSeed.h">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Items</Filter>
     </ClInclude>
     <ClInclude Include="Elements\Player\CElementPlayer.h">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Player</Filter>
     </ClInclude>
     <ClInclude Include="Elements\Player\CPlayerView.h">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -79,69 +88,84 @@
       <Filter>Elements</Filter>
     </ClCompile>
     <ClCompile Include="Elements\Blocks\CElementBlock.cpp">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Blocks</Filter>
     </ClCompile>
     <ClCompile Include="Elements\Blocks\CElementBlockElevator.cpp">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Blocks</Filter>
     </ClCompile>
     <ClCompile Include="Elements\Blocks\CElementBlockFlag.cpp">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Blocks</Filter>
     </ClCompile>
     <ClCompile Include="Elements\Enemies\CElementEnemy.cpp">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Elements\Enemies\CElementEnemyApple.cpp">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Elements\Enemies\CElementEnemyBlade.cpp">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Elements\Enemies\CElementEnemyFlame.cpp">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Elements\Enemies\CElementEnemyGrape.cpp">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Elements\Enemies\CElementEnemyKiwi.cpp">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Elements\Enemies\CElementEnemyOrange.cpp">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Enemies\CElementEnemyProjectile.cpp">
+      <Filter>Elements\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Enemies\CElementEnemyProjectileGrape.cpp">
+      <Filter>Elements\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Enemies\CElementEnemyProjectileKiwi.cpp">
+      <Filter>Elements\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Elements\Items\CElementItem.cpp">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Items</Filter>
     </ClCompile>
     <ClCompile Include="Elements\Items\CElementItemEnergy.cpp">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Items</Filter>
     </ClCompile>
     <ClCompile Include="Elements\Items\CElementItemHealth.cpp">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Items</Filter>
     </ClCompile>
     <ClCompile Include="Elements\Items\CElementItemLife.cpp">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Items</Filter>
     </ClCompile>
     <ClCompile Include="Elements\Items\CElementItemSeed.cpp">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Items</Filter>
     </ClCompile>
     <ClCompile Include="Elements\Player\CElementPlayer.cpp">
-      <Filter>Elements</Filter>
+      <Filter>Elements\Player</Filter>
     </ClCompile>
     <ClCompile Include="Elements\Player\CPlayerView.cpp">
-      <Filter>Elements</Filter>
-    </ClCompile>
-    <ClCompile Include="irrxml-1.2\src\irrXML.cpp">
-      <Filter>xmlwriter</Filter>
-    </ClCompile>
-    <ClCompile Include="wmlwriter_src\xmlwriter.cpp">
-      <Filter>xmlwriter</Filter>
+      <Filter>Elements\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Elements">
-      <UniqueIdentifier>{09ef2c4b-5807-4df0-a736-47527c3f4fe5}</UniqueIdentifier>
+      <UniqueIdentifier>{c44f1c13-92ac-4417-a02a-e86725b7037f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="xmlwriter">
-      <UniqueIdentifier>{741ac57b-99a4-422d-bfa1-72dbf29350aa}</UniqueIdentifier>
+    <Filter Include="Elements\Blocks">
+      <UniqueIdentifier>{196e7945-0105-4b46-8414-18404c778bb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Elements\Enemies">
+      <UniqueIdentifier>{693f9443-1cd6-4ec4-bcda-7d4cb57112c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Elements\Items">
+      <UniqueIdentifier>{0192b2a7-fc40-4aa7-b6a9-959e9d48430e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Elements\Friends">
+      <UniqueIdentifier>{87283a55-8ee8-4e65-9317-41337d1c361f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Elements\Player">
+      <UniqueIdentifier>{cb13936c-6d1b-46d1-9483-81ac2bd897b4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

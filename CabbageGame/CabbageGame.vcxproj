@@ -11,27 +11,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and '$(VisualStudioVersion)' == ''">$(VCTargetsPath11)</VCTargetsPath>
-  </PropertyGroup>
-  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7C4FA584-ADC9-4CD3-9553-4286F6C1F5B2}</ProjectGuid>
     <RootNamespace>CabbageGame</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(VisualStudioVersion)'=='11.0'" Label="Configuration">
-    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -43,47 +36,11 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup>
-    <IncludePath>
-      ;$(VisualStudioDir)\Projects\glew-1.7.0\include;
-      ;$(VisualStudioDir)\Projects\SDL-1.2.15\include;
-      ;$(VisualStudioDir)\Projects\freetype-2.4.2\include;
-      ;$(SolutionDir)\CabbageCore;
-      ;$(SolutionDir)\CabbageFramework;
-      ;$(SolutionDir)\CabbageScene;
-      ;$(SolutionDir)\CabbageGUI;
-      ;$(SolutionDir)\CabbageParticle;
-      ;$(SolutionDir)\CabbageGame;
-      ;$(SolutionDir)\CabbageGame\Elements;
-      ;$(SolutionDir)\CabbageGame\Elements\Blocks;
-      ;$(SolutionDir)\CabbageGame\Elements\Enemies;
-      ;$(SolutionDir)\CabbageGame\Elements\Friends;
-      ;$(SolutionDir)\CabbageGame\Elements\Items;
-      ;$(SolutionDir)\CabbageGame\Elements\Player;
-      ;$(SolutionDir)\CabbageCollider;
-      ;$(IncludePath);
-    </IncludePath>
-    <LibraryPath>
-      ;$(VisualStudioDir)\Projects\glew-1.7.0\lib;
-      ;$(VisualStudioDir)\Projects\SDL-1.2.15\lib\x86;
-      ;$(VisualStudioDir)\Projects\freetype-2.4.2\lib;
-      ;$(LibraryPath);
-    </LibraryPath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      ;$(SolutionDir)\Debug;
-      ;$(LibraryPath);
-    </LibraryPath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      ;$(SolutionDir)\Release;
-      ;$(LibraryPath);
-    </LibraryPath>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SubSystem>Console</SubSystem>
-      <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -95,13 +52,11 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -124,6 +79,9 @@
     <ClInclude Include="Elements\Enemies\CElementEnemyGrape.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyKiwi.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyOrange.h" />
+    <ClInclude Include="Elements\Enemies\CElementEnemyProjectile.h" />
+    <ClInclude Include="Elements\Enemies\CElementEnemyProjectileGrape.h" />
+    <ClInclude Include="Elements\Enemies\CElementEnemyProjectileKiwi.h" />
     <ClInclude Include="Elements\Items\CElementItem.h" />
     <ClInclude Include="Elements\Items\CElementItemEnergy.h" />
     <ClInclude Include="Elements\Items\CElementItemHealth.h" />
@@ -154,6 +112,9 @@
     <ClCompile Include="Elements\Enemies\CElementEnemyGrape.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyKiwi.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyOrange.cpp" />
+    <ClCompile Include="Elements\Enemies\CElementEnemyProjectile.cpp" />
+    <ClCompile Include="Elements\Enemies\CElementEnemyProjectileGrape.cpp" />
+    <ClCompile Include="Elements\Enemies\CElementEnemyProjectileKiwi.cpp" />
     <ClCompile Include="Elements\Items\CElementItem.cpp" />
     <ClCompile Include="Elements\Items\CElementItemEnergy.cpp" />
     <ClCompile Include="Elements\Items\CElementItemHealth.cpp" />
@@ -161,8 +122,6 @@
     <ClCompile Include="Elements\Items\CElementItemSeed.cpp" />
     <ClCompile Include="Elements\Player\CElementPlayer.cpp" />
     <ClCompile Include="Elements\Player\CPlayerView.cpp" />
-    <ClCompile Include="irrxml-1.2\src\irrXML.cpp" />
-    <ClCompile Include="wmlwriter_src\xmlwriter.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
