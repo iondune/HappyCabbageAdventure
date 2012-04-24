@@ -3,6 +3,7 @@
 
 #include "../CGameplayElement.h"
 #include "CEventManager.h"
+#include "../ISquishable.h"
 
 namespace Cabbage {
    //Information kept between levels
@@ -31,7 +32,7 @@ namespace Cabbage {
 
 class CPlayerView;
 
-class CElementPlayer : public CGameplayElement {
+class CElementPlayer : public CGameplayElement, public ISquishable {
    public:
       enum EDirection {
          Left = 0,
@@ -54,6 +55,7 @@ class CElementPlayer : public CGameplayElement {
 
       void updatePlayerAction();
       float Recovering, Shaking, ShakeFactorFactor;
+      SVector2 Scale;
       SVector3 ShakeFactor;
 
    public:

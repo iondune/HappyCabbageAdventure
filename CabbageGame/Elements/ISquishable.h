@@ -2,10 +2,11 @@
 #define ISQUISHABLE_H_
 #include "CGameplayElement.h"
 
-class ISquishable : public CGameplayElement {
+class ISquishable {
 
    private:
       float xScale, yScale;
+      float xScaleOrig, yScaleOrig;
 
    public:
       SVector2 Squish(SVector2 velocity);

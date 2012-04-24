@@ -1,10 +1,11 @@
 #include "CPlayerView.h"
 #include "CabbageFramework.h"
 
+
 #include <sstream>
 CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2 & nArea, SVector3 & sf, CCollisionActor* peo) :
    SceneObject(obj), CabbageIndex(CurHealth - 1), Direction(dir), Action(act), Hurt(false), Area(nArea), ShakeFactor(sf),
-   ySineValue(0.0f), xScale(2.0f), yScale(2.0f), PhysicsEngineObject(peo) {
+   ySineValue(0.0f), PhysicsEngineObject(peo) {
 
    //Normal cabbage meshes and renderables
    ISceneObject *NormalCabbage = new ISceneObject();
@@ -118,11 +119,6 @@ void CPlayerView::updateView(float time) {
    float ySineAmount = 0.065f*sin(ySineValue);
 
    SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y + ySineAmount, 0));
-
-   //TODO: Add cabbage scaling (in air)
-   scaleCabbage(time);
-
-   SceneObject->setScale(SVector3(xScale, xScale, yScale));
 }
 
 void CPlayerView::setHurt(bool b) {
@@ -158,8 +154,4 @@ void CPlayerView::translateCabbage(float time) {
    //If we are moving vertically, stop dancing and revert to our normal position.
    else
       ySineValue = 0.f;
-}
-
-void CPlayerView::scaleCabbage(float time) {
-
 }

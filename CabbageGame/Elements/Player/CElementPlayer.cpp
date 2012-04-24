@@ -3,7 +3,8 @@
 #include "CPlayerView.h"
 
 CElementPlayer::CElementPlayer(SRect2 nArea)
-: CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f), Shaking(0.0f), ShakeFactor(SVector3(0.0f)) {
+: CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f), Shaking(0.0f), ShakeFactor(SVector3(0.0f)),
+  ISquishable(2.0f, 2.0f){
 
 }
 
@@ -59,6 +60,11 @@ void CElementPlayer::updateSceneObject(float time) {
       }
    }
    View->updateView(time);
+
+   Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
+
+   printf("Scale is: %f, %f\n", Scale.X, Scale.Y);
+   SceneObject->setScale(SVector3(Scale.X, Scale.X, Scale.Y));
 }
 
 Cabbage::PlayerInformation & CElementPlayer::getStats() {

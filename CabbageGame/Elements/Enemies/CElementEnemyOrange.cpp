@@ -2,7 +2,7 @@
 #include "CGameLevel.h"
 
 CElementEnemyOrange::CElementEnemyOrange(SRect2 nArea) :
-   CElementEnemy(nArea, Enemies::ORANGE), Jumped(true) {
+   CElementEnemy(nArea, Enemies::ORANGE), Jumped(true), ISquishable(1.0f, 1.0f) {
 
 }
 
@@ -45,7 +45,7 @@ void CElementEnemyOrange::setupSceneObject() {
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
    SceneObject->setTranslation(SVector3((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y-1))/2, 0));
-   SceneObject->setScale(SVector3(1, 1, 1));
+   SceneObject->setScale(SVector3(Scale.X, Scale.X, Scale.Y));
    SceneObject->setRotation(SVector3(-90, 0, 0));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
@@ -95,10 +95,12 @@ void CElementEnemyOrange::updateSceneObject(float time) {
 
    SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
 
+   Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
+
    if(PhysicsEngineObject->getVelocity().X < -0.01f)
-      SceneObject->setScale(SVector3(-1,1,1));
+      SceneObject->setScale(SVector3(-Scale.X,Scale.X,Scale.Y));
    else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-      SceneObject->setScale(SVector3(1,1,1));
+      SceneObject->setScale(SVector3(Scale.X,Scale.X,Scale.Y));
 }
 
 void CElementEnemyOrange::printInformation() {

@@ -2,11 +2,13 @@
 #define CELEMENTENEMYORANGE_H_
 
 #include "CElementEnemy.h"
+#include "../ISquishable.h"
 
-class CElementEnemyOrange : public CElementEnemy
+class CElementEnemyOrange : public CElementEnemy, public ISquishable
 {
    private:
       bool Jumped;
+      SVector2 Scale;
 
    public:
       CElementEnemyOrange(SRect2 nArea);

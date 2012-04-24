@@ -2,6 +2,7 @@
 #define CPLAYERVIEW_HEADER_GUARD
 
 #include "CElementPlayer.h"
+//#include "../ISquishable.h"
 
 #define NUM_CABBAGE_MESH_STATES 5
 
@@ -23,7 +24,7 @@ class CPlayerView {
       CElementPlayer::EAction & Action;
       SRect2 & Area;
       float LeftShadowCutoffValue, LeftShadowStartValue, RightShadowCutoffValue, RightShadowStartValue;
-      float ySineValue, xScale, yScale;
+      float ySineValue;
       SVector3 & ShakeFactor;
 
    public:
@@ -33,7 +34,6 @@ class CPlayerView {
       void setVisible(bool);
       void updateView(float time);
       void translateCabbage(float time);
-      void scaleCabbage(float time);
       CPlayerView(ISceneObject *, CElementPlayer::EDirection &, CElementPlayer::EAction &, int, SRect2 &, SVector3 & sf, CCollisionActor *);
 };
 
