@@ -26,6 +26,10 @@ void CPlayerAbilityShield::inUpdateSceneObject(float time) {
    ParticleEngine->step(time);
 }
 
+void CPlayerAbilityShield::inOnCollision(CCollideable * collider) {
+   return;
+}
+
 CPlayerAbilityShield::CPlayerAbilityShield(CElementPlayer & p) : CPlayerAbility(p, Abilities::SHIELD) {
    ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), LEAF_SHIELD_PARTICLE_COUNT, -1, LEAF_PARTICLE);
 }

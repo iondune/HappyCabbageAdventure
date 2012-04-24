@@ -5,7 +5,7 @@
 #include "CCollideable.h"
 #include "CCollisionEngine.h"
 #include "CabbageScene.h"
-#include "CPlayerAbility.h"
+#include "Player/CPlayerAbility.h"
 
 class CElementPlayer;
 class CGameLevel;
