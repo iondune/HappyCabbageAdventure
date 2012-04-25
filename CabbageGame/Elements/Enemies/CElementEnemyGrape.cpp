@@ -88,7 +88,6 @@ void CElementEnemyGrape::ShootGrape() {
    float x, y;
 
    if (playerPosition.X < Area.Position.X) {//spawn to the left
-      printf("Shooting projectile\n");
       x = Area.Position.X - Area.Size.X/2.f - .5f;
       y = Area.Position.Y + .15f;
 
