@@ -36,16 +36,22 @@ void CElementPlayer::updatePlayerAction() {
 }
 
 #include "CPlayerAbilityShield.h"
+#include "CPlayerAbilityBlink.h"
 
 void CElementPlayer::checkAbilityKeypress() {
    //Probably a more OO way to set this up, but meh
-   usedLeafShield = false;
+   usedLeafShield = usedBlink = false;
    for(int i = 0; i < Abilities.size(); i++) {
       if(Abilities[i]->getType() == Abilities::SHIELD)
          usedLeafShield = true;
+      if(Abilities[i]->getType() == Abilities::BLINK)
+         usedBlink = true;
    }
    if(!usedLeafShield && CApplication::get().getEventManager().IsKeyDown[SDLK_r]) {
       Abilities.push_back(new CPlayerAbilityShield(*this));
+   }
+   if(!usedBlink && CApplication::get().getEventManager().IsKeyDown[SDLK_e]) {
+      Abilities.push_back(new CPlayerAbilityBlink(*this));
    }
 }
 
@@ -55,8 +61,10 @@ void CElementPlayer::updateAbilities(float time) {
       Abilities[i]->updateTime(time);
       Abilities[i]->inUpdatePhysicsEngineObject(time);
       Abilities[i]->inUpdateSceneObject(time);
-      if(Abilities[i]->isDead())
+      if(Abilities[i]->isDead()) {
+         printf("dead\n"); 
          AbilityKillList.push_back(Abilities[i]);
+      }
    }
    for(int i = 0; i < AbilityKillList.size(); i++) {
       Abilities.erase(std::remove(Abilities.begin(), Abilities.end(), AbilityKillList[i]), Abilities.end());
@@ -176,4 +184,8 @@ void CElementPlayer::incrementSeeds() {
 
 bool CElementPlayer::isLeafShieldOn() {
    return usedLeafShield;
+}
+
+bool CElementPlayer::isBlinkOn() {
+   return usedBlink;
 }

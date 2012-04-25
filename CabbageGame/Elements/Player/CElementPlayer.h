@@ -36,6 +36,7 @@ class CPlayerView;
 class CElementPlayer : public CGameplayElement, public ISquishable {
    friend class CPlayerAbility;
    friend class CPlayerAbilityShield;
+   friend class CPlayerAbilityBlink;
    public:
       enum EDirection {
          Left = 0,
@@ -64,7 +65,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       std::vector<CPlayerAbility*> Abilities;
       void checkAbilityKeypress();
       void updateAbilities(float time);
-      bool usedLeafShield;
+      bool usedLeafShield, usedBlink;
 
    public:
       CElementPlayer(SRect2 nArea);
@@ -81,6 +82,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       virtual void writeXML(xmlwriter *);
 
       bool isLeafShieldOn();
+      bool isBlinkOn();
 
       bool decrementHealth();
       void incrementHealth();
