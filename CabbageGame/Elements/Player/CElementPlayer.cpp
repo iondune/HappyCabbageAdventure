@@ -55,11 +55,11 @@ void CElementPlayer::checkAbilityKeypress() {
       usedAbility[Abilities[i]->getType()] = i;
    }
    if(!used(Abilities::SHIELD)) {
-      if(CApplication::get().getEventManager().IsKeyDown[SDLK_r])
+      if(CApplication::get().getEventManager().IsKeyDown[SDLK_k])
          Abilities.push_back(new CPlayerAbilityShield(*this));
    }
    else {
-      getAbility(Abilities::SHIELD)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_r]);
+      getAbility(Abilities::SHIELD)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_k]);
    }
    if(!used(Abilities::BLINK) && CApplication::get().getEventManager().IsKeyDown[SDLK_e]) {
       Abilities.push_back(new CPlayerAbilityBlink(*this));
