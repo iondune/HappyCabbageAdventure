@@ -6,10 +6,25 @@ float const CPlayerAbilityLaser::LASER_FIRING_DURATION;
 int const CPlayerAbilityLaser::LASER_CHARGE_PARTICLE_COUNT;
 int const CPlayerAbilityLaser::LASER_FIRING_PARTICLE_COUNT;
 
+#include "CGameLevel.h"
 void CPlayerAbilityLaser::inUpdatePhysicsEngineObject(float time) {
    if(Dead)
       return;
    TemporaryTimeVariable += time;
+   if(LaserState == FIRING) {
+      SRect2 FiringRange = Player.Area;
+      if(Player.Direction == CElementPlayer::Right) {
+         FiringRange.Size.X += 5.0f;
+      }
+      else {
+         FiringRange.Position.X -= 5.0f;
+         FiringRange.Size.X += 5.0f;
+      }
+      std::vector<CCollideable*> InRange = Player.Level.getPhysicsEngine().getAllInBound(FiringRange);
+      for(int i = 0; i < InRange.size(); i++) {
+         InRange[i]->getElement().reactToAbility(Abilities::LASER);
+      }
+   }
    return;
 }
 
@@ -85,7 +100,7 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
          Player.View->setVisible(true);
          Player.View->setHurt(false);
          Player.Recovering = 0.0f;
-      } 
+      }
    }
    else if(LaserState == FIRED) {
       Player.AllowMovement = true;

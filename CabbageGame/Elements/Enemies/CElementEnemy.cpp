@@ -129,6 +129,9 @@ void CElementEnemy::reactToAbility(Abilities::EAbilityType Ability) {
          ((CCollisionActor*)PhysicsEngineObject)->setImpulse((PlayerVelocity + SVector2(0.0f, 2.5f)) * 3.0f, 0.01f);
          //dieWithSeeds();
          break;
+      case Abilities::LASER:
+         dieWithSeeds();
+         break;
       default:
          break;
    }

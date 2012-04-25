@@ -221,6 +221,22 @@ CElevator * CCollisionEngine::addElevator()
 	return cen;
 }
 
+std::vector<CCollideable *> CCollisionEngine::getAllInBound(SRect2 Bound) {
+   std::vector<CCollideable *> toReturn;
+   for (ObjectList::iterator jt = Objects.begin(); jt != Objects.end(); ++ jt)
+   {
+      if(Bound.intersects((*jt)->getArea()))
+         toReturn.push_back((*jt));
+   }
+
+   for (ActorList::iterator jt = Actors.begin(); jt != Actors.end(); ++ jt)
+   {
+      if(Bound.intersects((*jt)->getArea()))
+         toReturn.push_back((*jt));
+   }
+   return toReturn;
+}
+
 
 CCollisionActor * CCollisionEngine::addActor()
 {

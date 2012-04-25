@@ -36,6 +36,7 @@ private:
 
 public:
 
+   std::vector<CCollideable *> getAllInBound(SRect2 Bound);
 	void removeAll();
 
 	void removeObject(CCollisionObject * Object);
