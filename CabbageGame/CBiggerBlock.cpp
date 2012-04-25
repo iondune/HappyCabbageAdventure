@@ -1,4 +1,5 @@
 #include "CBiggerBlock.h"
+#include "CElementBlock.h"
 
 #define MAX(x,y) ((x)>(y)?(x):(y))
 CBiggerBlock::CBiggerBlock(float nx, float ny, float nw, float nh, float d) : x(nx), y(ny), w(nw), h(nh), z(d) {
@@ -9,6 +10,7 @@ void CBiggerBlock::addToEngine(CCollisionEngine *Engine) {
    block->setCollisionResponder(NULL);
    block->setArea(SRect2(x, y, w, h));
    block->setDepth(z);
+   block->setElement(new CElementBlock(SRect2(x, y, w, h), z, 3));
 }
 
 bool sortXY (CBiggerBlock* a, CBiggerBlock* b) {

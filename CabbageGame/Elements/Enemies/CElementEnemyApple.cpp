@@ -119,7 +119,7 @@ void CElementEnemyApple::updateSceneObject(float time) {
 
    Scale.Y += ScaleMult - 1.0f;
 
-   printf("Scale for Apple (in Y): %f\n", Scale.Y);
+   //printf("Scale for Apple (in Y): %f\n", Scale.Y);
 
    if (Roll == None && PhysicsEngineObject->getVelocity().Y < .01f && PhysicsEngineObject->getVelocity().Y > -.01f) {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)

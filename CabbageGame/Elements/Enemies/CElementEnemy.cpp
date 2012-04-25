@@ -122,9 +122,13 @@ void CElementEnemy::printInformation() {
 }
 
 void CElementEnemy::reactToAbility(Abilities::EAbilityType Ability) {
+   if(Type == Enemies::BLADE && Type == Enemies::FLAME)
+      return;
+   SVector2 PlayerVelocity = ((CCollisionActor*)Level.getPlayer().getPhysicsEngineObject())->getVelocity();
    switch(Ability) {
       case Abilities::SHIELD:
-         dieWithSeeds();
+         ((CCollisionActor*)PhysicsEngineObject)->setImpulse((PlayerVelocity + SVector2(0.0f, 2.5f)) * 3.0f, 0.01f);
+         //dieWithSeeds();
          break;
       default:
          break;

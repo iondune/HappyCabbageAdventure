@@ -64,6 +64,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       std::vector<CPlayerAbility*> Abilities;
       void checkAbilityKeypress();
       void updateAbilities(float time);
+      bool usedLeafShield;
 
    public:
       CElementPlayer(SRect2 nArea);
@@ -78,6 +79,8 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       virtual void updateSceneObject(float);
 
       virtual void writeXML(xmlwriter *);
+
+      bool isLeafShieldOn();
 
       bool decrementHealth();
       void incrementHealth();

@@ -12,7 +12,7 @@ class CPlayerAbilityShield : public CPlayerAbility {
    public:
       void inUpdatePhysicsEngineObject(float);
       void inUpdateSceneObject(float);
-      void inOnCollision(CCollideable *);
+      //void inOnCollision(CCollideable *);
       CPlayerAbilityShield(CElementPlayer &);
 };
 

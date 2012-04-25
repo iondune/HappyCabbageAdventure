@@ -39,7 +39,7 @@ void CElementPlayer::updatePlayerAction() {
 
 void CElementPlayer::checkAbilityKeypress() {
    //Probably a more OO way to set this up, but meh
-   bool usedLeafShield = false;
+   usedLeafShield = false;
    for(int i = 0; i < Abilities.size(); i++) {
       if(Abilities[i]->getType() == Abilities::SHIELD)
          usedLeafShield = true;
@@ -67,7 +67,6 @@ void CElementPlayer::updateAbilities(float time) {
 void CElementPlayer::updatePhysicsEngineObject(float time) {
    updatePlayerAction();
    checkAbilityKeypress();
-   updateAbilities(time);
 }
 
 void CElementPlayer::updateSceneObject(float time) {
@@ -90,6 +89,7 @@ void CElementPlayer::updateSceneObject(float time) {
          ShakeFactor = SVector3(0.0f);
       }
    }
+   updateAbilities(time);
    View->updateView(time);
 
    Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
@@ -172,4 +172,8 @@ void CElementPlayer::incrementSeeds() {
       Stats.Seeds = 0;
       Stats.Lives++;
    }
+}
+
+bool CElementPlayer::isLeafShieldOn() {
+   return usedLeafShield;
 }

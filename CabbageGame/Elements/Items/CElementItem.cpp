@@ -69,3 +69,15 @@ Items::EItemType CElementItem::getItemType() {
 void CElementItem::printInformation() {
    printf("CElementItem; Area: [[%0.0f, %0.0f],[%0.0f, %0.0f]]; Type: %d\n", Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y, Type);
 }
+
+void CElementItem::reactToAbility(Abilities::EAbilityType Ability) {
+   SVector2 PlayerVelocity = ((CCollisionActor*)Level.getPlayer().getPhysicsEngineObject())->getVelocity();
+   switch(Ability) {
+      case Abilities::SHIELD:
+         ((CCollisionActor*)PhysicsEngineObject)->setImpulse((PlayerVelocity + SVector2(0.0f, 2.5f)) * 3.0f, 0.01f);
+         //dieWithSeeds();
+         break;
+      default:
+         break;
+   }
+}

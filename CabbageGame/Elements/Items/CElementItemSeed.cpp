@@ -40,7 +40,7 @@ void CElementItemSeed::setupSceneObject() {
 }
 
 void CElementItemSeed::OnCollision(CCollideable *Object) {
-   if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
+   if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject() && !Level.getPlayer().isLeafShieldOn()) {
       Level.getPlayer().incrementSeeds();
       Level.removeItem(this);
       removeFromEngines();

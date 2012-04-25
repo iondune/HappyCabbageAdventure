@@ -31,6 +31,7 @@ class CElementItem : public CGameplayElement {
 
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);
+      virtual void reactToAbility(Abilities::EAbilityType);
 
       Items::EItemType getItemType();
 
