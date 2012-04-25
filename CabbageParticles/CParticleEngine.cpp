@@ -40,7 +40,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
             break;
          case LASER_CHARGING_PARTICLE:
             particles.push_back(cPtr = new CPLaser());
-            cPtr->setAppearRate(2);
+            cPtr->setAppearRate(0.8f);
             cPtr->useCenterPos = 1;
             break;
          case LASER_FIRING_PARTICLE:

@@ -37,6 +37,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
    friend class CPlayerAbility;
    friend class CPlayerAbilityShield;
    friend class CPlayerAbilityBlink;
+   friend class CPlayerAbilityLaser;
    public:
       enum EDirection {
          Left = 0,
@@ -56,6 +57,8 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       Cabbage::PlayerInformation Stats;
       EDirection Direction;
       EAction Action; 
+
+      bool AllowMovement;
 
       void updatePlayerAction();
       float Recovering, Shaking, ShakeFactorFactor;

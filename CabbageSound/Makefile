@@ -1,5 +1,5 @@
 FILES = Sound.cpp
-CC=g++ -g
+CC=g++ -O1 -s
 
 OFILES = $(FILES:%.cpp=%.o)
 

@@ -4,7 +4,7 @@
 
 CElementPlayer::CElementPlayer(SRect2 nArea)
 : CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f), Shaking(0.0f), ShakeFactor(SVector3(0.0f)),
-  ISquishable(2.0f, 2.0f){
+  ISquishable(2.0f, 2.0f), AllowMovement(true) {
 
 }
 
@@ -12,6 +12,12 @@ CElementPlayer::CElementPlayer(SRect2 nArea)
 #include "CApplication.h"
 
 void CElementPlayer::updatePlayerAction() {
+   if(!AllowMovement) {
+      Action = Standing;
+      PhysicsEngineObject->setJumping(false);
+      PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
+      return;
+   }
    if(CApplication::get().getEventManager().IsKeyDown[SDLK_a]) {
       Direction = Left;
       Action = Walking;
@@ -37,6 +43,7 @@ void CElementPlayer::updatePlayerAction() {
 
 #include "CPlayerAbilityShield.h"
 #include "CPlayerAbilityBlink.h"
+#include "CPlayerAbilityLaser.h"
 
 bool CElementPlayer::used(Abilities::EAbilityType a) {
    return (usedAbility.find(a) != usedAbility.end());
@@ -50,16 +57,28 @@ CPlayerAbility *CElementPlayer::getAbility(Abilities::EAbilityType a) {
 }
 
 void CElementPlayer::checkAbilityKeypress() {
+   AllowMovement = true;
    usedAbility.clear();
    for(int i = 0; i < Abilities.size(); i++) {
       usedAbility[Abilities[i]->getType()] = i;
    }
+   /* Shield */
    if(!used(Abilities::SHIELD)) {
-      if(CApplication::get().getEventManager().IsKeyDown[SDLK_k])
+      if(CApplication::get().getEventManager().IsKeyDown[SDLK_k]) {
          Abilities.push_back(new CPlayerAbilityShield(*this));
+      }
    }
    else {
       getAbility(Abilities::SHIELD)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_k]);
+   }
+   /* Laser */
+   if(!used(Abilities::LASER)) {
+      if(CApplication::get().getEventManager().IsKeyDown[SDLK_l]) {
+         Abilities.push_back(new CPlayerAbilityLaser(*this));
+      }
+   }
+   else {
+      getAbility(Abilities::LASER)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_l]);
    }
    if(!used(Abilities::BLINK) && CApplication::get().getEventManager().IsKeyDown[SDLK_e]) {
       Abilities.push_back(new CPlayerAbilityBlink(*this));
@@ -73,7 +92,6 @@ void CElementPlayer::updateAbilities(float time) {
       Abilities[i]->inUpdatePhysicsEngineObject(time);
       Abilities[i]->inUpdateSceneObject(time);
       if(Abilities[i]->isDead()) {
-         printf("dead\n"); 
          AbilityKillList.push_back(Abilities[i]);
       }
    }

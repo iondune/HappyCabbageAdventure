@@ -9,10 +9,9 @@ class CCollideable;
 namespace Abilities {
    enum EAbilityType {
       SHIELD = 0,
-      LASERCHARGE = 1,
-      LASERFIRE = 2,
-      DASH = 3,
-      BLINK = 4
+      LASER = 1,
+      DASH = 2,
+      BLINK = 3
    };
 }
 
