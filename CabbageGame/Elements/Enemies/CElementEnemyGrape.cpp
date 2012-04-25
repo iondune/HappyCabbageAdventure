@@ -29,7 +29,7 @@ void CElementEnemyGrape::setupSceneObject() {
    }
 
    if(mesh) {
-      mesh->resizeMesh(SVector3(1));
+      mesh->resizeMesh(SVector3(2));
       mesh->centerMeshByExtents(SVector3(0));
       mesh->calculateNormalsPerFace();
    }
@@ -67,15 +67,10 @@ void CElementEnemyGrape::updateSceneObject(float time) {
 
    shootTime += time;
 
-   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
+   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y + .2f, 0));
 
-   //TODO:  Determine if the grape should be facing left or right.
-   if (playerPosition.X < Area.getCenter().X)
-      SceneObject->setRotation(SVector3(-90, 0, 90));
-   else
-      SceneObject->setRotation(SVector3(-90, 0, -90));
+   SceneObject->setRotation(SVector3(-90, 0, 90));
 
-   //TODO:  Determine the player is alive.
    if (shootTime - 2.f > 0.f /*&& Manager->isPlayerAlive()*/) {
       shootTime = 0.f;
 
@@ -94,14 +89,14 @@ void CElementEnemyGrape::ShootGrape() {
 
    if (playerPosition.X < Area.Position.X) {//spawn to the left
       printf("Shooting projectile\n");
-      x = Area.Position.X - Area.Size.X/2.f - 2.05f;
-      y = Area.Position.Y + .5f;
+      x = Area.Position.X - Area.Size.X/2.f - .5f;
+      y = Area.Position.Y + .15f;
 
       Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(x, y, Area.Size.X, Area.Size.Y), Enemies::GRAPE_PROJECTILE));
    }
    else {//spawn to the right
-      x = Area.Position.X - Area.Size.X/2.f + 2.05f;
-      y = Area.Position.Y + .5f;
+      x = Area.Position.X + Area.Size.X/2.f + .55f;
+      y = Area.Position.Y + .15f;
 
       Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(x, y, Area.Size.X, Area.Size.Y), Enemies::GRAPE_PROJECTILE));
    }

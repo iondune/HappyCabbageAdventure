@@ -52,7 +52,7 @@ void CElementEnemyProjectileGrape::setupSceneObject() {
 
 
    if (mesh) {
-      mesh->resizeMesh(SVector3(.5f));
+      mesh->resizeMesh(SVector3(.4f));
       mesh->centerMeshByExtents(SVector3(0));
       mesh->calculateNormalsPerFace();
    }
