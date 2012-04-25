@@ -38,19 +38,19 @@ void CElementPlayer::updatePlayerAction() {
 #include "CPlayerAbilityShield.h"
 #include "CPlayerAbilityBlink.h"
 
+bool CElementPlayer::used(Abilities::EAbilityType a) {
+   return (usedAbility.find(a) != usedAbility.end());
+}
+
 void CElementPlayer::checkAbilityKeypress() {
-   //Probably a more OO way to set this up, but meh
-   usedLeafShield = usedBlink = false;
+   usedAbility.clear();
    for(int i = 0; i < Abilities.size(); i++) {
-      if(Abilities[i]->getType() == Abilities::SHIELD)
-         usedLeafShield = true;
-      if(Abilities[i]->getType() == Abilities::BLINK)
-         usedBlink = true;
+      usedAbility[Abilities[i]->getType()] = true;
    }
-   if(!usedLeafShield && CApplication::get().getEventManager().IsKeyDown[SDLK_r]) {
+   if(!used(Abilities::SHIELD) && CApplication::get().getEventManager().IsKeyDown[SDLK_r]) {
       Abilities.push_back(new CPlayerAbilityShield(*this));
    }
-   if(!usedBlink && CApplication::get().getEventManager().IsKeyDown[SDLK_e]) {
+   if(!used(Abilities::BLINK) && CApplication::get().getEventManager().IsKeyDown[SDLK_e]) {
       Abilities.push_back(new CPlayerAbilityBlink(*this));
    }
 }
@@ -182,10 +182,6 @@ void CElementPlayer::incrementSeeds() {
    }
 }
 
-bool CElementPlayer::isLeafShieldOn() {
-   return usedLeafShield;
-}
-
-bool CElementPlayer::isBlinkOn() {
-   return usedBlink;
+std::map<Abilities::EAbilityType, bool> &CElementPlayer::getAbilityStatus() {
+   return usedAbility;
 }
