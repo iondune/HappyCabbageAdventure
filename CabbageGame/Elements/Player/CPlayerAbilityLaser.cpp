@@ -1,10 +1,10 @@
 #include "CPlayerAbilityLaser.h"
 #include "CElementPlayer.h"
 #include "CPlayerView.h"
-float const CPlayerAbilityLaser::LASER_CHARGE_DURATION;
-float const CPlayerAbilityLaser::LASER_FIRING_DURATION;
-int const CPlayerAbilityLaser::LASER_CHARGE_PARTICLE_COUNT;
-int const CPlayerAbilityLaser::LASER_FIRING_PARTICLE_COUNT;
+float const CPlayerAbilityLaser::LASER_CHARGE_DURATION = 1.0f;
+float const CPlayerAbilityLaser::LASER_FIRING_DURATION = 1.2f;
+int const CPlayerAbilityLaser::LASER_CHARGE_PARTICLE_COUNT =  700;
+int const CPlayerAbilityLaser::LASER_FIRING_PARTICLE_COUNT = 1000;
 
 #include "CGameLevel.h"
 void CPlayerAbilityLaser::inUpdatePhysicsEngineObject(float time) {

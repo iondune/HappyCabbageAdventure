@@ -6,8 +6,8 @@
 
 class CPlayerAbilityShield : public CPlayerAbility {
    CParticleEngine *ParticleEngine;
-   static float const LEAF_SHIELD_DURATION = 60.0f;
-   static int const LEAF_SHIELD_PARTICLE_COUNT = 150;
+   static float const LEAF_SHIELD_DURATION;
+   static int const LEAF_SHIELD_PARTICLE_COUNT;
 
    public:
       void inUpdatePhysicsEngineObject(float);
