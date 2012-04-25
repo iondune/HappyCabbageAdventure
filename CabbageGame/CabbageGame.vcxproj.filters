@@ -74,6 +74,21 @@
     <ClInclude Include="Elements\Player\CPlayerView.h">
       <Filter>Elements\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Elements\Player\CPlayerAbility.h">
+      <Filter>Elements\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Player\CPlayerAbilityBlink.h">
+      <Filter>Elements\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Player\CPlayerAbilityLaser.h">
+      <Filter>Elements\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Player\CPlayerAbilityShield.h">
+      <Filter>Elements\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\ISquishable.h">
+      <Filter>Elements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CBiggerBlock.cpp" />
@@ -152,6 +167,21 @@
     </ClCompile>
     <ClCompile Include="wmlwriter_src\xmlwriter.cpp">
       <Filter>xml</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Player\CPlayerAbility.cpp">
+      <Filter>Elements\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Player\CPlayerAbilityBlink.cpp">
+      <Filter>Elements\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Player\CPlayerAbilityLaser.cpp">
+      <Filter>Elements\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Player\CPlayerAbilityShield.cpp">
+      <Filter>Elements\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\ISquishable.cpp">
+      <Filter>Elements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
