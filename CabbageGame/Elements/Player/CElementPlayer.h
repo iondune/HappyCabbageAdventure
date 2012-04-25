@@ -65,7 +65,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       std::vector<CPlayerAbility*> Abilities;
       void checkAbilityKeypress();
       void updateAbilities(float time);
-      std::map<Abilities::EAbilityType, bool> usedAbility;
+      std::map<Abilities::EAbilityType, int> usedAbility;
 
    public:
       CElementPlayer(SRect2 nArea);
@@ -81,12 +81,13 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
 
       virtual void writeXML(xmlwriter *);
 
-      std::map<Abilities::EAbilityType, bool> &getAbilityStatus();
+      std::map<Abilities::EAbilityType, int> &getAbilityStatus();
       bool used(Abilities::EAbilityType a);
 
       bool decrementHealth();
       void incrementHealth();
       void incrementSeeds();
+      CPlayerAbility *getAbility(Abilities::EAbilityType a);
 
       void setShaking(float, float);
 

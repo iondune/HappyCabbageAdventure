@@ -21,3 +21,7 @@ bool CPlayerAbility::isDead() {
 Abilities::EAbilityType CPlayerAbility::getType() {
    return Type;
 }
+
+void CPlayerAbility::checkKey(bool keyDown) {
+   
+}

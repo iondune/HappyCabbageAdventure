@@ -29,6 +29,7 @@ class CPlayerAbility {
       void updateTime(float);
       bool isDead();
       virtual void inOnCollision(CCollideable *Object);
+      virtual void checkKey(bool keyDown);
       CPlayerAbility(CElementPlayer &, Abilities::EAbilityType);
       Abilities::EAbilityType getType();
 };

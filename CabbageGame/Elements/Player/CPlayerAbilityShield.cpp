@@ -41,3 +41,15 @@ void CPlayerAbilityShield::inOnCollision(CCollideable * collider) {
 CPlayerAbilityShield::CPlayerAbilityShield(CElementPlayer & p) : CPlayerAbility(p, Abilities::SHIELD) {
    ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), LEAF_SHIELD_PARTICLE_COUNT, -1, LEAF_PARTICLE);
 }
+
+void CPlayerAbilityShield::checkKey(bool keyDown) {
+   if(!keyDown) {
+      ParticleEngine->deconstruct();
+      delete ParticleEngine;
+      Player.View->setVisible(true);
+      Player.View->setHurt(false);
+      Player.Recovering = 0.0f;
+      Dead = true;
+      return;
+   }
+}

@@ -42,13 +42,24 @@ bool CElementPlayer::used(Abilities::EAbilityType a) {
    return (usedAbility.find(a) != usedAbility.end());
 }
 
+//Only works for single-use abilities
+CPlayerAbility *CElementPlayer::getAbility(Abilities::EAbilityType a) {
+   if(usedAbility.find(a) == usedAbility.end())
+      return NULL;
+   else return Abilities[(*usedAbility.find(a)).second];
+}
+
 void CElementPlayer::checkAbilityKeypress() {
    usedAbility.clear();
    for(int i = 0; i < Abilities.size(); i++) {
-      usedAbility[Abilities[i]->getType()] = true;
+      usedAbility[Abilities[i]->getType()] = i;
    }
-   if(!used(Abilities::SHIELD) && CApplication::get().getEventManager().IsKeyDown[SDLK_r]) {
-      Abilities.push_back(new CPlayerAbilityShield(*this));
+   if(!used(Abilities::SHIELD)) {
+      if(CApplication::get().getEventManager().IsKeyDown[SDLK_r])
+         Abilities.push_back(new CPlayerAbilityShield(*this));
+   }
+   else {
+      getAbility(Abilities::SHIELD)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_r]);
    }
    if(!used(Abilities::BLINK) && CApplication::get().getEventManager().IsKeyDown[SDLK_e]) {
       Abilities.push_back(new CPlayerAbilityBlink(*this));
@@ -182,6 +193,6 @@ void CElementPlayer::incrementSeeds() {
    }
 }
 
-std::map<Abilities::EAbilityType, bool> &CElementPlayer::getAbilityStatus() {
+std::map<Abilities::EAbilityType, int> &CElementPlayer::getAbilityStatus() {
    return usedAbility;
 }
