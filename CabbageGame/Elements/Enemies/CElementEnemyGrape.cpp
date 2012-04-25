@@ -40,29 +40,16 @@ void CElementEnemyGrape::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   SceneObject->setTranslation(SVector3((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y+1))/2, 0));
    SceneObject->setScale(SVector3(1, 1, 1));
    SceneObject->setRotation(SVector3(-90, 0, 90));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
-/*
-void CElementEnemyGrape::OnCollision(CCollideable *Object) {
-   //Optional code: setImpulse to other object away from this object, lower their health?
-}
-*/
-                                                            
 //CGameplayElement has an attribute called ElapsedTime, which is updated by CGameplayElement's update function.
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyGrape::updatePhysicsEngineObject(float time) {
-   //TODO: Make some class singleton so we can get the player's location
-/*   if (Manager->getPlayerLocation().X < Area.getCenter().X && (Roll == None))
-      PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
-   else if (Manager->getPlayerLocation().X > Area.getCenter().X && (Roll == None))
-      PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
-*/
    shootTime += time;
 
    //TODO: Check the player is alive
@@ -76,13 +63,17 @@ void CElementEnemyGrape::updatePhysicsEngineObject(float time) {
 
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyGrape::updateSceneObject(float time) {
+   SVector2 playerPosition = Level.getPlayer().getArea().Position;
+
    shootTime += time;
 
+   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
+
    //TODO:  Determine if the grape should be facing left or right.
-   /*if (Manager->getPlayerLocation().X < Actor->getArea().getCenter().X)
+   if (playerPosition.X < Area.getCenter().X)
       SceneObject->setRotation(SVector3(-90, 0, 90));
    else
-      SceneObject->setRotation(SVector3(-90, 0, -90));*/
+      SceneObject->setRotation(SVector3(-90, 0, -90));
 
    //TODO:  Determine the player is alive.
    if (shootTime - 2.f > 0.f /*&& Manager->isPlayerAlive()*/) {
@@ -98,14 +89,20 @@ void CElementEnemyGrape::printInformation() {
 }
 
 void CElementEnemyGrape::ShootGrape() {
-   SVector2 pos = Area.Position;
+   SVector2 playerPosition = Level.getPlayer().getArea().Position;
+   float x, y;
 
-   //TODO: Compare player's position to grape's position to determine what direction to shoot the grape.
-   if (true/*Manager->getPlayerLocation().X < Actor->getArea().getCenter().X*/) //spawn to the left
-      //TODO:  Shoot projectile grape.  Need to determine if that will be an enemy or if a separate projectile abstract class will be made.
-      //CBadGuy::makeBadGuy(pos.X - w/2.f - .05f, pos.Y, w, h, pGrape, Manager, 0);
-      true;
-   else //spawn to the right
-      //TODO: See above
-      true;
+   if (playerPosition.X < Area.Position.X) {//spawn to the left
+      printf("Shooting projectile\n");
+      x = Area.Position.X - Area.Size.X/2.f - 2.05f;
+      y = Area.Position.Y + .5f;
+
+      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(x, y, Area.Size.X, Area.Size.Y), Enemies::GRAPE_PROJECTILE));
+   }
+   else {//spawn to the right
+      x = Area.Position.X - Area.Size.X/2.f + 2.05f;
+      y = Area.Position.Y + .5f;
+
+      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(x, y, Area.Size.X, Area.Size.Y), Enemies::GRAPE_PROJECTILE));
+   }
 }

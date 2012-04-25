@@ -4,6 +4,8 @@
 #include "CElementEnemyProjectile.h"
 
 class CElementEnemyProjectileGrape : public CElementEnemyProjectile {
+   private:
+      bool PlayerLeft;
 
    public:
       virtual void setupPhysicsEngineObject();
