@@ -8,10 +8,6 @@ class CElementEnemyProjectile : public CElementEnemy {
    public:
 
    protected:
-      CCollisionActor * PhysicsEngineObject; //Override CGameplayElement's but with type CCollisionActor
-      CMeshSceneObject * SceneObject; //Override CGameplayElement's but with type CMeshSceneObject
-
-      Enemies::EEnemyType Type;
 
    public:
       virtual void OnCollision(CCollideable *Object);

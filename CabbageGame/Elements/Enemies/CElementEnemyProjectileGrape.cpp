@@ -6,12 +6,89 @@ CElementEnemyProjectileGrape::CElementEnemyProjectileGrape(SRect2 nArea)
 : CElementEnemyProjectile(nArea, Enemies::GRAPE_PROJECTILE) {
 }
 
-void CElementEnemyProjectileGrape::updatePhysicsEngineObject(float time) {
-   return;
+
+void CElementEnemyProjectileGrape::setupPhysicsEngineObject() {
+   PhysicsEngineObject = Level.getPhysicsEngine().addActor();
+   PhysicsEngineObject->setArea(Area);
+
+      //Set actor attributes
+      PhysicsEngineObject->setControlFall(false);
+      PhysicsEngineObject->setFallAcceleration(0.0f);
+
+      PhysicsEngineObject->getAttributes().MaxWalk = 4.0f;
+      PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
+      PhysicsEngineObject->getAttributes().AirControl = 1.0f;
+      PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
+      PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_PKIWI;
+}
+
+void CElementEnemyProjectileGrape::setupSceneObject() {
+   SceneObject = new CMeshSceneObject();
+   CMesh *mesh;
+
+   int random = rand() % 3;
+
+   if (Level.getEnvironment() == 0) {
+      if (random == 0)
+         mesh = CMeshLoader::load3dsMesh("Base/grape1.3ds");
+      else if (random == 1)
+         mesh = CMeshLoader::load3dsMesh("Base/grape2.3ds");
+      else
+         mesh = CMeshLoader::load3dsMesh("Base/grape3.3ds");
+   }
+
+   else if (Level.getEnvironment() == 1) {
+      if (random == 0)
+         mesh = CMeshLoader::load3dsMesh("Base/grape1.3ds");
+      else if (random == 1)
+         mesh = CMeshLoader::load3dsMesh("Base/grape2.3ds");
+      else
+         mesh = CMeshLoader::load3dsMesh("Base/grape3.3ds");
+   }
+
+   else {
+      fprintf(stderr, "GrapeProjectile: Unrecognized environment.\n");
+   }
+
+
+   if (mesh) {
+      mesh->resizeMesh(SVector3(.5f));
+      mesh->centerMeshByExtents(SVector3(0));
+      mesh->calculateNormalsPerFace();
+   }
+
+   else
+      fprintf(stderr, "GrapeProjectile:  MESH DID NOT LOAD PROPERLY.\n");
+
+   SceneObject->setMesh(mesh);
+   SceneObject->setShader(ERP_DEFAULT, "Toon");
+   SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
+   SceneObject->setScale(SVector3(1, 1, 1));
+
+   if(Level.getPlayer().getArea().Position.X < Area.Position.X) {
+      SceneObject->setRotation(SVector3(-90, 0, -45));
+      PlayerLeft = true;
+   }
+   else {
+      SceneObject->setRotation(SVector3(-90, 0, 45));
+      PlayerLeft = false;
+   }
+
+   CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
 void CElementEnemyProjectileGrape::updateSceneObject(float time) {
-   return;
+   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
+}
+
+void CElementEnemyProjectileGrape::updatePhysicsEngineObject(float time) {
+   if (PlayerLeft) { //go left
+      PhysicsEngineObject->setVelocity(SVector2(-5.f, 0.f));
+   }
+   
+   else { //go right
+      PhysicsEngineObject->setVelocity(SVector2(5.f, 0.f));
+   }
 }
 
 void CElementEnemyProjectileGrape::printInformation() {

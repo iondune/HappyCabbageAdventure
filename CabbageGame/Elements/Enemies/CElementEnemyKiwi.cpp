@@ -127,7 +127,8 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyKiwi::updateSceneObject(float time) {
    rotateBird = -100.0f * SineValue;
-
+   
+   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
    SceneObject->setRotation(SVector3(-90 + rotateBird, 0, -90));
 
    //TODO:  Adjust Z-Collision?

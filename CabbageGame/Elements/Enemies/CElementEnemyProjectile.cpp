@@ -11,40 +11,27 @@ CElementEnemyProjectile::CElementEnemyProjectile(SRect2 nArea, Enemies::EEnemyTy
 
 //Re-write me to die on impact.
 void CElementEnemyProjectile::OnCollision(CCollideable *Object) {
-   if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
-      CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
-         
-      if(Level.getPlayer().decrementHealth()) {
-         if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
-            PlayerActor->setImpulse(SVector2(7.f, 2.8f), 0.1f);
-         else
-            PlayerActor->setImpulse(SVector2(-7.f, 2.8f), 0.1f);
+   if (!Dead) {
+      Level.removeEnemy(this);
+      removeFromEngines();
+      Dead = true;
 
-         Level.getPlayer().setShaking(1.0f, 3.0f);
-      }
-   }
-}
+      if (Object == Level.getPlayer().getPhysicsEngineObject()) {
+         CCollisionActor *PlayerActor = ((CCollisionActor *)Level.getPlayer().getPhysicsEngineObject());
 
-/*If you want to be able to kill projectiles by jumping on them, implement this code in OnCollision:
- 
-  if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {
-         Level.removeEnemy(this);
-         removeFromEngines();
-         Dead = true;
+         if (Level.getPlayer().decrementHealth()) {
+
+           if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
+              PlayerActor->setImpulse(SVector2(4.f, 2.f), 0.1f);
+           
+           else
+              PlayerActor->setImpulse(SVector2(-4.f, 2.f), 0.1f);
          
-         PlayerActor->setImpulse(SVector2(0.0f, 3.0f), 0.01f);
-         Level.getPlayer().setShaking(0.4f, 3.0f);
-      }
-      else {
-         if(Level.getPlayer().decrementHealth()) {
-            if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
-               PlayerActor->setImpulse(SVector2(7.f, 2.8f), 0.1f);
-            else
-               PlayerActor->setImpulse(SVector2(-7.f, 2.8f), 0.1f);
-            Level.getPlayer().setShaking(1.0f, 3.0f);
+           Level.getPlayer().setShaking(1.0f, 3.0f);
          }
-      }
-*/
+      }  
+   }  
+}
 
 void CElementEnemyProjectile::updatePhysicsEngineObject(float time) {
    return;
