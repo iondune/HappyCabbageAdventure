@@ -1,8 +1,8 @@
 #include "CPlayerAbilityShield.h"
 #include "CElementPlayer.h"
 #include "CPlayerView.h"
-float const CPlayerAbilityShield::LEAF_SHIELD_DURATION;
-int const CPlayerAbilityShield::LEAF_SHIELD_PARTICLE_COUNT;
+float const CPlayerAbilityShield::LEAF_SHIELD_DURATION = 60.0f;
+int const CPlayerAbilityShield::LEAF_SHIELD_PARTICLE_COUNT = 150;
 
 void CPlayerAbilityShield::inUpdatePhysicsEngineObject(float time) {
    if(Dead)

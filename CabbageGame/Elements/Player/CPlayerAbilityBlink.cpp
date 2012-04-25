@@ -1,7 +1,7 @@
 #include "CPlayerAbilityBlink.h"
 #include "CElementPlayer.h"
 #include "CPlayerView.h"
-float const CPlayerAbilityBlink::BLINK_DURATION;
+float const CPlayerAbilityBlink::BLINK_DURATION = 0.1f;
 //int const CPlayerAbilityBlink::BLINK_PARTICLE_COUNT;
 
 void CPlayerAbilityBlink::inUpdatePhysicsEngineObject(float time) {
