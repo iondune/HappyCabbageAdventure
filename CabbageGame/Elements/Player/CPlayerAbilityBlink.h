@@ -6,7 +6,7 @@
 
 class CPlayerAbilityBlink : public CPlayerAbility {
    //CParticleEngine *ParticleEngine;
-   static float const BLINK_DURATION = 0.6f;
+   static float const BLINK_DURATION = 0.01f;
    //static int const BLINK_PARTICLE_COUNT = 150;
 
    public:

@@ -122,8 +122,6 @@ void CElementEnemy::printInformation() {
 }
 
 void CElementEnemy::reactToAbility(Abilities::EAbilityType Ability) {
-   if(Type == Enemies::BLADE && Type == Enemies::FLAME)
-      return;
    SVector2 PlayerVelocity = ((CCollisionActor*)Level.getPlayer().getPhysicsEngineObject())->getVelocity();
    switch(Ability) {
       case Abilities::SHIELD:

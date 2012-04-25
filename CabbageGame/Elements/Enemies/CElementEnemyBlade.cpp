@@ -73,3 +73,7 @@ void CElementEnemyBlade::updateSceneObject(float time) {
 void CElementEnemyBlade::printInformation() {
    printf("CElementEnemyBlade; Area: [[%0.0f, %0.0f],[%0.0f, %0.0f]]\n", Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y);
 }
+
+void CElementEnemyBlade::reactToAbility(Abilities::EAbilityType Ability) {
+   return;
+}
