@@ -21,11 +21,11 @@ public:
 
 	virtual SVec2 performMovement(CollisionReal const TickTime);
 
-	float Speed;
+	CollisionReal Speed;
 
-	float InitialDirection;
+	CollisionReal InitialDirection;
 
-	float Range;
+	CollisionReal Range;
 
 	EElevatorType Style;
 

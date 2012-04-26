@@ -241,7 +241,7 @@ void CCollisionActor::updateVectors(CollisionReal const TickTime)
 	Area.Position += Movement;
 }
 
-void CCollisionActor::pushIfCollided(CCollisionObject * Object, SVec2 const & Movement)
+void CCollisionActor::pushIfCollided(CCollisionObject * Object, SVec2 const Movement)
 {
 	if (! collidesWith(Object) && Object != Standing)
 		return;

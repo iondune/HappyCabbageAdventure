@@ -27,7 +27,7 @@ SVec2 CCollisionElevator::performMovement(CollisionReal const TickTime)
 		break;
 
 	case ELT_CIRCULAR:
-		Movement.X = -InitialDirection * TickTime * sin(Timer) * Range;
+		Movement.X = InitialDirection * TickTime * cos(Timer) * Range;
 		Movement.Y = InitialDirection * TickTime * sin(Timer) * Range;
 		break;
 	}

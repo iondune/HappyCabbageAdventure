@@ -45,7 +45,7 @@ void CCollisionEngine::performTick(float const TickTime)
 
 	for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
 	{
-		SVector2f Movement = (* it)->performMovement(TickTime);
+		SVector2<float> Movement = (* it)->performMovement(TickTime);
 
 		for (ActorList::iterator jt = Actors.begin(); jt != Actors.end(); ++ jt)
 		{

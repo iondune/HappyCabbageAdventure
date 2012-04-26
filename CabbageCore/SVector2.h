@@ -141,7 +141,7 @@ public:
 
 	template <typename U>
 	SVector2(SVector2<U> const & vec)
-		: X(vec.X), Y(vec.Y), SVector2Reference(X, Y)
+		: X((T) vec.X), Y((T) vec.Y), SVector2Reference(X, Y)
 	{}
 	
 	template <typename U>

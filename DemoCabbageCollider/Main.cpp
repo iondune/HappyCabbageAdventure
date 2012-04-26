@@ -139,14 +139,14 @@ int main(int argc, char * argv[])
 
     Elevator = Engine->addElevator();
     Elevator->setArea(SArea(6, 1, 1, 1));
-	/*
+	
     Elevator = Engine->addElevator();
     Elevator->setArea(SArea(6, 2.5f, 1, 1));
 	Elevator->Style = ELT_VERTICAL;
 	
     Elevator = Engine->addElevator();
-    Elevator->setArea(SArea(10, 2.5f, 1, 1));
-	Elevator->Style = ELT_CIRCULAR;*/
+    Elevator->setArea(SArea(10, 0.5f, 1, 1));
+	Elevator->Style = ELT_CIRCULAR;
 
 	CCollisionActor * Derp = Engine->addActor();
 	Derp->setArea(SArea(4, 0, 1, 1));

@@ -128,7 +128,7 @@ protected:
 	bool updateCollision(CCollideable * Object, float const TickTime);
 	void onStanding(CCollideable * Object);
 
-	void pushIfCollided(CCollisionObject * Object, SVec2 const & Movement);
+	void pushIfCollided(CCollisionObject * Object, SVec2 const Movement);
 
 	bool Impulse;
 	CollisionReal ImpulseTimer;
