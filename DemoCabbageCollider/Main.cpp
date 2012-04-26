@@ -133,11 +133,20 @@ int main(int argc, char * argv[])
 	Block->setArea(SArea(-1, -1, 15, 0.9f));
 	Block->getMaterial().Friction = 0.4f;
 
-    CCollisionObject * Elevator = Engine->addElevator();
+    CCollisionElevator * Elevator = Engine->addElevator();
     Elevator->setArea(SArea(6, -3, 1, 1));
+	//Elevator->InitialDirection *= -1;
 
     Elevator = Engine->addElevator();
     Elevator->setArea(SArea(6, 1, 1, 1));
+	/*
+    Elevator = Engine->addElevator();
+    Elevator->setArea(SArea(6, 2.5f, 1, 1));
+	Elevator->Style = ELT_VERTICAL;
+	
+    Elevator = Engine->addElevator();
+    Elevator->setArea(SArea(10, 2.5f, 1, 1));
+	Elevator->Style = ELT_CIRCULAR;*/
 
 	CCollisionActor * Derp = Engine->addActor();
 	Derp->setArea(SArea(4, 0, 1, 1));
@@ -177,7 +186,7 @@ int main(int argc, char * argv[])
 
 		// Determine time since last draw
 		Time1 = SDL_GetTicks();
-		float Delta = (float) (Time1 - Time0) / 5000.f;
+		float Delta = (float) (Time1 - Time0) / 1000.f;
 		Time0 = Time1;
 
 		if (IsKeyDown[SDLK_d] && IsKeyDown[SDLK_a])

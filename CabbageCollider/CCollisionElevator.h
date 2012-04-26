@@ -3,6 +3,13 @@
 
 #include "CCollisionObject.h"
 
+enum EElevatorType
+{
+	ELT_HORIZONTAL,
+	ELT_VERTICAL,
+	ELT_CIRCULAR
+};
+
 class CCollisionElevator : public CCollisionObject
 {
 
@@ -19,6 +26,8 @@ public:
 	float InitialDirection;
 
 	float Range;
+
+	EElevatorType Style;
 
 };
 

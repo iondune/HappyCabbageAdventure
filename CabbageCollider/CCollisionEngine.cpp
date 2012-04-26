@@ -4,8 +4,8 @@
 
 bool CCollisionEngine::CanCollide(CCollideable *a, CCollideable *b)
 {
-	return (a->CollisionType & b->CollisionMask) ||
-		(b->CollisionType & a->CollisionMask);
+	return true;//(a->CollisionType & b->CollisionMask) ||
+		//(b->CollisionType & a->CollisionMask);
 }
 
 void CCollisionEngine::performTick(float const TickTime)
@@ -79,7 +79,7 @@ void CCollisionEngine::removeActor(CCollisionActor * Actor)
 
 void CCollisionEngine::updateAll(float const Elapsed)
 {
-	static int const TicksPerSecond = 1000;
+	static int const TicksPerSecond = 200;
 	Timer += std::min(Elapsed, 0.1f);
 
 	float const TimePerTick = 1.f / TicksPerSecond;

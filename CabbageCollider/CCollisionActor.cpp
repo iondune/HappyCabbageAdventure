@@ -105,7 +105,7 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 				{
 					// If new position is better or equal
 
-					std::cout << "Allowed collision movement (" << (i ? 'y' : 'x') << "): (" << Intersections[0] << " -> " << Intersections[1] << ")" << std::endl;
+					//std::cout << "Allowed collision movement (" << (i ? 'y' : 'x') << "): (" << Intersections[0] << " -> " << Intersections[1] << ")" << std::endl;
 					AllowedMovement = true;
 					Movement[i] = OriginalMovement;
 
@@ -247,6 +247,7 @@ void CCollisionActor::pushIfCollided(CCollisionObject * Object, SVec2 const & Mo
 		return;
 
 	Area.Position += Movement;
+	std::cout << Movement.X << ", " << Movement.Y << std::endl;
 
 	/*for (int i = 0; i < 2; ++ i)
 	{
