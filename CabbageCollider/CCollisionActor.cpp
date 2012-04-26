@@ -245,9 +245,19 @@ void CCollisionActor::pushIfCollided(CCollisionObject * Object, SVec2 const Move
 {
 	if (! collidesWith(Object) && Object != Standing)
 		return;
+	
+	if (Movement.X != 0 || Movement.Y != 0)
+	{
+		//std::cout << "Movement of " << Movement.X << ", " << Movement.Y << std::endl;
+		//std::cout << "Applied to " << Area.Position.X << ", " << Area.Position.Y << std::endl;
+	}
 
 	Area.Position += Movement;
-	//std::cout << Movement.X << ", " << Movement.Y << std::endl;
+
+	if (Movement.X != 0 || Movement.Y != 0)
+	{
+		//std::cout << "Is " << Area.Position.X << ", " << Area.Position.Y << std::endl;
+	}
 
 	/*for (int i = 0; i < 2; ++ i)
 	{

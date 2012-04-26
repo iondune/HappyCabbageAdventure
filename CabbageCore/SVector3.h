@@ -15,12 +15,19 @@ template <typename T>
 class SVector3Reference
 {
 
+	SVector3Reference();
+	SVector3Reference const operator = (SVector3Reference const &);
+
 public:
 
 	float & X, & Y, & Z;
 
 	SVector3Reference(float & x, float & y, float & z)
 		: X(x), Y(y), Z(z)
+	{}
+
+	SVector3Reference(SVector3Reference const & v)
+		: X(v.X), Y(v.Y), Z(v.Z)
 	{}
 
 	glm::vec3 const getGLMVector() const
@@ -200,7 +207,11 @@ public:
 	{}
 	
 	template <typename U>
-	SVector3(SVector3 const & vec)
+	SVector3(SVector3<U> const & vec)
+		: X(vec.X), Y(vec.Y), Z(vec.Z), SVector3Reference(X, Y, Z)
+	{}
+
+	SVector3(SVector3<T> const & vec)
 		: X(vec.X), Y(vec.Y), Z(vec.Z), SVector3Reference(X, Y, Z)
 	{}
 	

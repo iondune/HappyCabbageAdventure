@@ -11,12 +11,19 @@ template <typename T>
 class SVector2Reference
 {
 
+	SVector2Reference();
+	SVector2Reference const operator = (SVector2Reference const &);
+
 public:
 
 	T & X, & Y;
 
 	SVector2Reference(T & x, T & y)
 		: X(x), Y(y)
+	{}
+
+	SVector2Reference(SVector2Reference const & v)
+		: X(v.X), Y(v.Y)
 	{}
 
 	float const operator[] (int i) const
@@ -146,6 +153,10 @@ public:
 	
 	template <typename U>
 	SVector2(SVector2Reference<U> const & vec)
+		: X(vec.X), Y(vec.Y), SVector2Reference(X, Y)
+	{}
+	
+	SVector2(SVector2<T> const & vec)
 		: X(vec.X), Y(vec.Y), SVector2Reference(X, Y)
 	{}
 
