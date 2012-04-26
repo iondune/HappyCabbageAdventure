@@ -11,11 +11,14 @@ namespace Cabbage {
    class PlayerInformation {
       public:
          int Health;
+         int MaxHealth;
          int Energy;
+         int MaxEnergy;
          int Lives;
          int Seeds;
 
-         PlayerInformation() : Health(5), Energy(3), Lives(3), Seeds(0) {
+         PlayerInformation() : Health(5), MaxHealth(5), Energy(100), MaxEnergy(100),
+         Lives(3), Seeds(0) {
          }
    };
 

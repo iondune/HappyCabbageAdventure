@@ -9,6 +9,9 @@ class CPlayerAbilityShield : public CPlayerAbility {
    static float const LEAF_SHIELD_DURATION;
    static int const LEAF_SHIELD_PARTICLE_COUNT;
 
+   private:
+      float EnergyTime;
+
    public:
       void inUpdatePhysicsEngineObject(float);
       void inUpdateSceneObject(float);

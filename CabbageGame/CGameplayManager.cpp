@@ -53,5 +53,5 @@ void CGameplayManager::update(float time) {
    for(int i = 0; i < Elements.size(); i++) {
       Elements[i]->update(time);
    }
-   GUIManager->update();
+   GUIManager->update(time);
 }

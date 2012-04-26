@@ -1,7 +1,7 @@
 #include "CGameplayGUIManager.h"
 #include "CElementPlayer.h"
 
-void CGameplayGUIManager::update() {
+void CGameplayGUIManager::update(float time) {
    char buf[30];
    sprintf(buf, "%d", Stats.Lives);
    LivesText->setText(buf);
@@ -16,10 +16,31 @@ void CGameplayGUIManager::update() {
       else
          Health[i]->setVisible(false);
    }
+
+   float currentEnergyPercentage = (float)Stats.Energy / (float)Stats.MaxEnergy;
+
+   if (currentEnergyPercentage - .01f > tempEnergyPercentage)
+      tempEnergyPercentage += .4f * time;
+   else if (currentEnergyPercentage + .01f < tempEnergyPercentage)
+      tempEnergyPercentage -= .4f * time;
+   else if (tempEnergyPercentage < 0.00f)
+      tempEnergyPercentage = 0.00f;
+
+   if (tempEnergyPercentage + .01f > currentEnergyPercentage || tempEnergyPercentage - .01f < currentEnergyPercentage)
+      CabbageMeter->setSize(SVector2(MaxMeterSize * tempEnergyPercentage, .1f));
+
+   oldEnergyPercentage = currentEnergyPercentage;
+
+   printf("tempEnergyPercentage: %f\n", tempEnergyPercentage);
 }
 
 CGameplayGUIManager::CGameplayGUIManager(Cabbage::PlayerInformation & s) : Stats(s) {
-   CGUIImageWidget *CabbageFace, *CabbageEnergyBar, *CabbageMeter, *CabbageHurtFace, *Seed;
+   CGUIImageWidget *CabbageEnergyBar, *Seed;
+
+   oldEnergyPercentage = 0.0f;
+   tempEnergyPercentage = 0.0f;
+   MaxMeterSize = .47f;
+
    CabbageFace =  new CGUIImageWidget(CImageLoader::loadTGAImage("Base/cabbage.tga"), SVector2(.3f, .15f));
    CabbageFace->setPosition(SVector2(-.07f, .85f));
 
@@ -35,10 +56,10 @@ CGameplayGUIManager::CGameplayGUIManager(Cabbage::PlayerInformation & s) : Stats
       CApplication::get().getGUIEngine().addWidget(Health[i-1]);
    }
 
-   CabbageEnergyBar = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/EnergyBarTop.tga"), SVector2(.47f, .1f));
+   CabbageEnergyBar = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/EnergyBarTop.tga"), SVector2(MaxMeterSize, .1f));
    CabbageEnergyBar->setPosition(SVector2(.02f, .78f));
 
-   CabbageMeter = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/EnergyBarBottom.tga"), SVector2(.47f, .1f));
+   CabbageMeter = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/EnergyBarBottom.tga"), SVector2(MaxMeterSize, .1f));
    CabbageMeter->setPosition(SVector2(.02f, .78f));
 
    Seed = new CGUIImageWidget(CImageLoader::loadTGAImage("Base/seed.tga"), SVector2(.075f, .075f));
