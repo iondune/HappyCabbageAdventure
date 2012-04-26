@@ -10,6 +10,19 @@ void CGameplayGUIManager::update(float time) {
    sprintf(buff, "x%d", Stats.Seeds);
    seedText->setText(buff);
 
+   numFrames++;
+   timeTotal += time;
+   if(timeTotal >= 0.1f) {
+      float fps = numFrames / timeTotal;
+      sprintf(buf, "FPS: %0.0f", fps);
+      fpsText->setText(buf);
+      timeTotal = numFrames = 0;
+
+   }
+
+
+
+
    for(int i = 0; i < 5; i++) {
       if(i < Stats.Health)
          Health[i]->setVisible(true);
@@ -32,7 +45,7 @@ void CGameplayGUIManager::update(float time) {
    oldEnergyPercentage = currentEnergyPercentage;
 }
 
-CGameplayGUIManager::CGameplayGUIManager(Cabbage::PlayerInformation & s) : Stats(s) {
+CGameplayGUIManager::CGameplayGUIManager(Cabbage::PlayerInformation & s) : Stats(s), numFrames(0), timeTotal(0.0f) {
    CGUIImageWidget *CabbageEnergyBar, *Seed;
 
    oldEnergyPercentage = 0.0f;
@@ -69,11 +82,12 @@ CGameplayGUIManager::CGameplayGUIManager(Cabbage::PlayerInformation & s) : Stats
    CApplication::get().getGUIEngine().addWidget(CabbageHurtFace);
    CApplication::get().getGUIEngine().addWidget(Seed);
 
-   LivesText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
-   LivesText->setText("Lives: ");
-   LivesText->setVisible(true);
-   LivesText->setPosition(SVector2(0.13f, 0.87f));
-   LivesText->setColor(SColor(0.0f, 0.80f, 0.0f));
+   livesText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
+   livesText->setText("Lives: ");
+   livesText->setVisible(true);
+   livesText->setPosition(SVector2(0.13f, 0.87f));
+   livesText->setColor(SColor(0.0f, 0.80f, 0.0f));
+
 
    seedText = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
    seedText->setText("x ");
@@ -81,9 +95,17 @@ CGameplayGUIManager::CGameplayGUIManager(Cabbage::PlayerInformation & s) : Stats
    seedText->setPosition(SVector2(CApplication::getAspectRatio() - 0.08f, 0.92f));
    seedText->setColor(SColor(1.0f));
 
-   LivesText->addDropShadow();
-   seedText->addDropShadow();
+   fpsText = new CGUIFontWidget("WIFFLES_.TTF", 15.f);
+   fpsText->setText("FPS: ");
+   fpsText->setVisible(true);
+   fpsText->setPosition(SVector2(CApplication::getAspectRatio() - 0.1f, 0.98f));
+   fpsText->setColor(SColor(1.0f));
 
-   CApplication::get().getGUIEngine().addWidget(LivesText);
+
+   livesText->addDropShadow();
+   seedText->addDropShadow();
+   fpsText->addDropShadow();
+
+   CApplication::get().getGUIEngine().addWidget(livesText);
    CApplication::get().getGUIEngine().addWidget(seedText);
 }
