@@ -12,7 +12,6 @@ CElementEnemyProjectile::CElementEnemyProjectile(SRect2 nArea, Enemies::EEnemyTy
 //Re-write me to die on impact.
 void CElementEnemyProjectile::OnCollision(CCollideable *Object) {
    if (!Dead) {
-      Level.removeEnemy(this);
       removeFromGame();
       Dead = true;
 

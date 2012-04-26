@@ -53,6 +53,7 @@ class CGameplayElement : public IUpdater, public ICollisionResponder {
 
       //Function for debugging
       virtual void printInformation();
+      bool isDead();
 
       CCollideable *& getPhysicsEngineObject();
 };

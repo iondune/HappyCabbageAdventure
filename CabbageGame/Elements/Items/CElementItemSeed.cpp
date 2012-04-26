@@ -42,7 +42,6 @@ void CElementItemSeed::setupSceneObject() {
 void CElementItemSeed::OnCollision(CCollideable *Object) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject() && !Level.getPlayer().used(Abilities::SHIELD)) {
       Level.getPlayer().incrementSeeds();
-      Level.removeItem(this);
       removeFromGame();
       Dead = true;
    }

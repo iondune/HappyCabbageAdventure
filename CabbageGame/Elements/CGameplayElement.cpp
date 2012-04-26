@@ -52,17 +52,20 @@ CCollideable *& CGameplayElement::getPhysicsEngineObject() {
 void CGameplayElement::removeFromPhysicsEngine() {
    if(!Dead) {
       Level.getPhysicsEngine().remove(PhysicsEngineObject);
+      printf("Removed from PE\n");
    }
 }
 
 void CGameplayElement::removeFromSceneManager() {
    if(!Dead) {
       CApplication::get().getSceneManager().removeSceneObject(SceneObject);
+      printf("Removed from SM\n");
    }
 }
 
 void CGameplayElement::removeFromGame() {
    if(!Dead) {
+      printf("Removed from game\n");
       removeFromPhysicsEngine();
       removeFromSceneManager();
       if(ParticleEngine) {
@@ -71,11 +74,14 @@ void CGameplayElement::removeFromGame() {
          ParticleEngine = NULL;
       }
       Dead = true;
-      Level.removeObject(this);
    }
 }
 
 void CGameplayElement::reactToAbility(Abilities::EAbilityType ability) {
    //Default behavior to react to abilities:
    return;
+}
+
+bool CGameplayElement::isDead() {
+   return Dead;
 }
