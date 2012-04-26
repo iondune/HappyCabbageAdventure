@@ -6,12 +6,14 @@
 
 class CGameplayGUIManager {
    Cabbage::PlayerInformation & Stats;
-   CGUIFontWidget *LivesText, *seedText;
+   CGUIFontWidget *livesText, *seedText, *fpsText;
    CGUIImageWidget *Health[5], *CabbageFace, *CabbageMeter, *CabbageHurtFace;
 
    private:
    float MaxMeterSize;
    float currentEnergyPerecentage, oldEnergyPercentage, tempEnergyPercentage;
+   int numFrames;
+   float timeTotal;
 
    public:
       void update(float);

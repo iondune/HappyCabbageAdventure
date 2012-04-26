@@ -4,7 +4,7 @@ OBJECTS=$(SOURCES:%.cpp=%.o)
 CABBAGE= -L../lib/ -lCabbageFramework -lStateGame -lCabbageGame -lCabbageGUI -lCabbageParticles -lCabbageScene -lCabbageCore -lCabbageCollider
 INCLUDE=-I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI `sdl-config --cflags` `freetype-config --cflags` -I../irrxml-1.2/src/ -I./Elements/ -I. -I../CabbageGame -I../StateGame -I../CabbageGame/Elements -I../CabbageGame/Elements/Blocks
 LIBFILES=../lib/libCabbageParticles.a ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCabbageCore.a ../lib/libCabbageGame.a ../lib/libStateGame.a ../lib/libCabbageCore.a ../lib/libCabbageGUI.a
-CC=g++ -g
+CC=g++ -O1 -s
 COMPILER_VERSION= -std=c++0x 
 
 #Chris Code.  Adding check for 32 or 64 bit

@@ -1,6 +1,6 @@
 FILES = CDecorManager.cpp CGameLevel.cpp CGameplayManager.cpp CGameLevelLoader.cpp CBiggerBlock.cpp $(wildcard irrxml-1.2/src/*.cpp) $(wildcard wmlwriter_src/*.cpp) CGameplayGUIManager.cpp
 ELEMENTS := $(wildcard ./Elements/*.cpp) $(wildcard ./Elements/*/*.cpp)
-CC=g++ -g
+CC=g++ -O1 -s
 
 OFILES = $(FILES:%.cpp=%.o) $(ELEMENTS:%.cpp=%.o)
 ELEMENTSHEADER=$(shell find Elements -type d | awk 'BEGIN{}{print "-I./"$$1}')
