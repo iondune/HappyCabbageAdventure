@@ -180,6 +180,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
 	if (useCache)
 		LoadedLevels[levelName] = newLevel;
    newLevel->toggleLoaded();
+
    return *newLevel;
 }
 

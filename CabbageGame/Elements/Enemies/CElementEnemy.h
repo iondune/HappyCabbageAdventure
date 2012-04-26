@@ -2,6 +2,7 @@
 #define ____CELEMENTENEMY_HEADER_
 #include "../CGameplayElement.h"
 #include "CElementPlayer.h"
+#include "sound.h"
 
 namespace Enemies {
    enum EEnemyType {

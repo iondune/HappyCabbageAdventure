@@ -7,6 +7,7 @@
 //Generic enemy, for usage in the LWIB, I guess.
 CElementEnemyProjectile::CElementEnemyProjectile(SRect2 nArea, Enemies::EEnemyType type)
 : CElementEnemy(nArea, type) {
+   Mix_PlayChannel(-1, Level.projectile, 0);
 }
 
 //Re-write me to die on impact.

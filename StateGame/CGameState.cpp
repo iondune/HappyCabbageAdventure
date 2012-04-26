@@ -13,6 +13,8 @@ void CGameState::begin() {
    DecorManager = new CDecorManager(*Level);
 
    Level->printInformation();
+
+   Level->setupSoundtrack();
 }
 
 void CGameState::OnRenderStart(float const Elapsed) {

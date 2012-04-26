@@ -81,6 +81,10 @@ int CGameLevel::getXmlCount() {
    return XmlCount;
 }
 
+Mix_Music* CGameLevel::getSoundtrack() {
+   return Soundtrack;
+}
+
 std::vector<CBiggerBlock*> & CGameLevel::getConsolidatedBlocks() {
    return blocksFinal;
 }
@@ -130,4 +134,42 @@ void CGameLevel::addItem(CElementItem* Item) {
    Item->setupObjects();
    Items.push_back(Item);
    Elements.push_back(Item);
+}
+
+void CGameLevel::setupSoundtrack() {
+/*   int audio_rate = 22050;
+   Uint16 audio_format = AUDIO_S16;
+   int audio_channels = 2;
+   int audio_buffers = 4096;*/
+   std::string temp;
+
+   if(Mix_OpenAudio(22050, AUDIO_S16, 2, 4096))
+      printf("Could not open audio!\n");
+
+   std::string MusicDirectory = "../Media/Music/";
+
+
+   //Pre-load pointers
+   temp = MusicDirectory + "SMW.wav";
+   Soundtrack = Mix_LoadMUS(temp.c_str());
+
+   if (!Soundtrack)
+         fprintf(stderr, "Soundtrack, Mix_LoadMUS: %s\n", Mix_GetError());
+
+   Mix_PlayMusic(Soundtrack, -1);
+
+   //Load Enemy Sounds
+   if(Mix_OpenAudio(22050, AUDIO_S16, 2, 2048))
+         fprintf(stderr, "Could not open audio!\n");
+
+      temp = MusicDirectory + "hitEnemy.wav";
+      dmgEnemy = Mix_LoadWAV(temp.c_str());
+
+      if (!dmgEnemy) {
+         printf("Mix_LoadWAV: %s\n", Mix_GetError());
+         exit(1);
+      }
+
+      temp = MusicDirectory + "smb2_cherry.wav";
+      projectile = Mix_LoadWAV(temp.c_str());
 }

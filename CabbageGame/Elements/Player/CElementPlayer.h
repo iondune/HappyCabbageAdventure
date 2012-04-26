@@ -5,6 +5,7 @@
 #include "CEventManager.h"
 #include "../ISquishable.h"
 #include "CPlayerAbility.h"
+#include "sound.h"
 
 namespace Cabbage {
    //Information kept between levels
@@ -68,6 +69,14 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       SVector2 Scale;
       SVector3 ShakeFactor;
 
+      //Sound Variables
+      Mix_Chunk *takeDmg;
+      Mix_Chunk *jump;
+      Mix_Chunk *chargeLaser1;
+      Mix_Chunk *chargeLaser2;
+      Mix_Chunk *fireLaser;
+      bool PlayJump;
+
       std::vector<CPlayerAbility*> Abilities;
       void checkAbilityKeypress();
       void updateAbilities(float time);
@@ -96,6 +105,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       CPlayerAbility *getAbility(Abilities::EAbilityType a);
 
       void setShaking(float, float);
+      void setupSoundEffects();
 
       //Keyboard event functions
       void OnKeyboardEvent(SKeyboardEvent const & Event);

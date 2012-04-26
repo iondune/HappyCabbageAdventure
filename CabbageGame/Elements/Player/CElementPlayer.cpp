@@ -4,8 +4,8 @@
 
 CElementPlayer::CElementPlayer(SRect2 nArea)
 : CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f), Shaking(0.0f), ShakeFactor(SVector3(0.0f)),
-  ISquishable(2.0f, 2.0f), AllowMovement(true) {
-
+  ISquishable(2.0f, 2.0f), AllowMovement(true), PlayJump(true) {
+   setupSoundEffects();
 }
 
 #include "CEventManager.h"
@@ -35,6 +35,14 @@ void CElementPlayer::updatePlayerAction() {
    if(CApplication::get().getEventManager().IsKeyDown[SDLK_SPACE]) {
       Action = Jumping;
       PhysicsEngineObject->setJumping(true);
+
+      //Check if jumping should be enabled.
+      if (PhysicsEngineObject->getVelocity().Y == 0.f)
+               PlayJump = true;
+      if (PlayJump) {
+         Mix_PlayChannel(-1, jump, 0);
+         PlayJump = false;
+      }
    }
    else {
       PhysicsEngineObject->setJumping(false);
@@ -132,7 +140,6 @@ void CElementPlayer::updateSceneObject(float time) {
    Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
 
    SceneObject->setScale(SVector3(Scale.X, Scale.X, Scale.Y));
-
 }
 
 Cabbage::PlayerInformation & CElementPlayer::getStats() {
@@ -186,6 +193,7 @@ bool CElementPlayer::decrementHealth() {
       View->removeLeaf();
       View->setHurt(true);
       Recovering = 1.0f;
+      Mix_PlayChannel(-1, takeDmg, 0);
       return true;
    }
    return false;
@@ -213,4 +221,33 @@ void CElementPlayer::incrementSeeds() {
 
 std::map<Abilities::EAbilityType, int> &CElementPlayer::getAbilityStatus() {
    return usedAbility;
+}
+
+void CElementPlayer::setupSoundEffects() {
+
+   string MusicDirectory = "../Media/Music/";
+   string temp;
+
+   if(Mix_OpenAudio(22050, AUDIO_S16, 2, 2048))
+      fprintf(stderr, "Could not open audio!\n");
+
+   temp = MusicDirectory + "jump.wav";
+   jump = Mix_LoadWAV(temp.c_str());
+
+   if (!jump) {
+      printf("Mix_LoadWAV: %s\n", Mix_GetError());
+      exit(1);
+   }
+
+   temp = MusicDirectory + "takeDmg.wav";
+   takeDmg = Mix_LoadWAV(temp.c_str());
+
+   temp = MusicDirectory + "chargeLaser1.wav";
+   chargeLaser1 = Mix_LoadWAV(temp.c_str());
+
+   temp = MusicDirectory + "chargeLaser2.wav";
+   chargeLaser2 = Mix_LoadWAV(temp.c_str());
+
+   temp = MusicDirectory + "fireLaser3.wav";
+   fireLaser = Mix_LoadWAV(temp.c_str());
 }

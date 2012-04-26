@@ -30,8 +30,6 @@ void CGameplayGUIManager::update(float time) {
       CabbageMeter->setSize(SVector2(MaxMeterSize * tempEnergyPercentage, .1f));
 
    oldEnergyPercentage = currentEnergyPercentage;
-
-   printf("tempEnergyPercentage: %f\n", tempEnergyPercentage);
 }
 
 CGameplayGUIManager::CGameplayGUIManager(Cabbage::PlayerInformation & s) : Stats(s) {

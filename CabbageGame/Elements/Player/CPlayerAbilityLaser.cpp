@@ -95,6 +95,7 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
       }
    }
    else if(LaserState == FIRING) {
+      Mix_PlayChannel(-1, Player.fireLaser, 0);
       Player.Recovering = 5.0f;
       Player.View->setVisible(true);
       Player.View->setHurt(false);

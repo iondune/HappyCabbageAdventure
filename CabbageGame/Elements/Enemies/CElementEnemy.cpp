@@ -89,6 +89,7 @@ void CElementEnemy::OnCollision(CCollideable *Object) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
       CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
       if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {
+         Mix_PlayChannel(-1, Level.dmgEnemy, 0);
          dieWithSeeds();
          PlayerActor->setImpulse(SVector2(0.0f, 3.0f), 0.01f);
          Level.getPlayer().setShaking(0.4f, 3.0f);
@@ -136,3 +137,22 @@ void CElementEnemy::reactToAbility(Abilities::EAbilityType Ability) {
          break;
    }
 }
+
+/*void CElementEnemy::setupSoundEffects() {
+   string MusicDirectory = "../Media/Music/";
+   string temp;
+
+   if(Mix_OpenAudio(22050, AUDIO_S16, 2, 2048))
+      fprintf(stderr, "Could not open audio!\n");
+
+   temp = MusicDirectory + "hitEnemy.wav";
+   Level.dmgEnemy = Mix_LoadWAV(temp.c_str());
+
+   if (!Level.dmgEnemy) {
+      printf("Mix_LoadWAV: %s\n", Mix_GetError());
+      exit(1);
+   }
+
+   temp = MusicDirectory + "smb2_cherry.wav";
+   Level.projectile = Mix_LoadWAV(temp.c_str());
+}*/

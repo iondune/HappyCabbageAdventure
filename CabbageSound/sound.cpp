@@ -1,4 +1,4 @@
-#include "sound.h"
+/*#include "sound.h"
 #include <SDL/SDL.h>
 
 //Used to run current soundtrack
@@ -137,3 +137,4 @@ void changeSoundtrack(char* changeTo) {
 
    musicOn = true;
 }
+*/

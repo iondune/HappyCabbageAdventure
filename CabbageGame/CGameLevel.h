@@ -12,13 +12,20 @@ class CElementBlockFlag;
 #include "CDecorManager.h" //For CGroundBlock
 #include "CBiggerBlock.h"
 #include "CGameLevelLoader.h"
+#include "sound.h"
 
 class CGameLevel {
    friend CGameLevel & CGameLevelLoader::loadLevel(std::string, bool);
+
+   public:
+      Mix_Chunk *dmgEnemy;
+      Mix_Chunk *projectile;
+
    private:
       bool night, Loaded, Render;
       int env, numBlocks;
       int XmlCount;
+      Mix_Music *Soundtrack;
 
       std::vector<CGameplayElement*> Elements;
       std::vector<CElementBlock*> Blocks;
@@ -61,12 +68,15 @@ class CGameLevel {
       int getEnvironment();
       int getEnv();
       int  getXmlCount();
+      Mix_Music* getSoundtrack();
 
       CElementPlayer & getPlayer();
       CCollisionEngine & getPhysicsEngine();
       void setPhysicsEngine(CCollisionEngine *p);
 
       void printInformation();
+
+      void setupSoundtrack();
 
       void removeEnemy(CElementEnemy *Enemy);
       void addEnemy(CElementEnemy *Enemy);
