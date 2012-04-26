@@ -45,13 +45,25 @@ void CPlayerAbilityLaser::inOnCollision(CCollideable * collider) {
 }
 
 CPlayerAbilityLaser::CPlayerAbilityLaser(CElementPlayer & p) : CPlayerAbility(p, Abilities::LASER), LaserState(CHARGING), TemporaryTimeVariable(0.0f) {
-   ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), LASER_CHARGE_PARTICLE_COUNT, LASER_CHARGE_DURATION, LASER_CHARGING_PARTICLE);
+   EnergyUsed = 33;
+
+   if (Player.Stats.Energy >= EnergyUsed)
+      ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), LASER_CHARGE_PARTICLE_COUNT, LASER_CHARGE_DURATION, LASER_CHARGING_PARTICLE);
+   else
+      Dead = true;
 }
 
 void CPlayerAbilityLaser::checkKey(bool keyDown) {
    if(Dead)
       return;
    if(LaserState == CHARGING) {
+      if (Player.Stats.Energy < EnergyUsed) {
+         Player.AllowMovement = true;
+         ParticleEngine->deconstruct();
+         delete ParticleEngine;
+         Dead = true;
+         return;
+      }
       Player.AllowMovement = false;
       if(!keyDown) {
          Player.AllowMovement = true;
@@ -61,6 +73,7 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
          return;
       }
       if(TemporaryTimeVariable >= LASER_CHARGE_DURATION) {
+         Player.Stats.Energy -= EnergyUsed;
          Player.AllowMovement = true;
          ParticleEngine->deconstruct();
          delete ParticleEngine;
