@@ -26,6 +26,11 @@ class CElementEnemy : public CGameplayElement {
 
       Enemies::EEnemyType Type;
       void dieWithSeeds();
+      void deathAnimation();
+
+      float TempTime;
+
+      bool AnimatingDeath;
 
    public:
       virtual void OnCollision(CCollideable *Object);

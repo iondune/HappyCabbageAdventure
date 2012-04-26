@@ -68,6 +68,7 @@ void CElementEnemyKiwi::OnCollision(CCollideable *Object) {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
+   return;
    //TODO: Make some class singleton so we can get the player's location
    //TODO:  Clean up KIWI z-axis code
    if (true/*Manager->isPlayerAlive()*/)

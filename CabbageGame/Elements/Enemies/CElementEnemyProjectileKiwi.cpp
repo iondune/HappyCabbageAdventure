@@ -3,7 +3,8 @@
 
 //Generic enemy, for usage in the LWIB, I guess.
 CElementEnemyProjectileKiwi::CElementEnemyProjectileKiwi(SRect2 nArea)
-: CElementEnemyProjectile(nArea, Enemies::GRAPE_PROJECTILE) {
+: CElementEnemyProjectile(nArea, Enemies::KIWI_PROJECTILE) {
+   printf("New kiwi projectile\n");
 }
 
 void CElementEnemyProjectileKiwi::updatePhysicsEngineObject(float time) {

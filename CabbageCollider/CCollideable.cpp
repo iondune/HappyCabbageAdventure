@@ -23,8 +23,8 @@ void CCollideable::setElement(CGameplayElement * e) {
    Element = e;
 }
 
-CGameplayElement &CCollideable::getElement() {
-   return *Element;
+CGameplayElement *CCollideable::getElement() {
+   return Element;
 }
 
 SRect2 const & CCollideable::getArea() const

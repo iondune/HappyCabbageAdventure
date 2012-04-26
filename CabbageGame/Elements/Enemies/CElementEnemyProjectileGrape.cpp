@@ -11,15 +11,15 @@ void CElementEnemyProjectileGrape::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
    PhysicsEngineObject->setArea(Area);
 
-      //Set actor attributes
-      PhysicsEngineObject->setControlFall(false);
-      PhysicsEngineObject->setFallAcceleration(0.0f);
+   //Set actor attributes
+   PhysicsEngineObject->setControlFall(false);
+   PhysicsEngineObject->setFallAcceleration(0.0f);
 
-      PhysicsEngineObject->getAttributes().MaxWalk = 4.0f;
-      PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
-      PhysicsEngineObject->getAttributes().AirControl = 1.0f;
-      PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
-      PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_PKIWI;
+   PhysicsEngineObject->getAttributes().MaxWalk = 4.0f;
+   PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
+   PhysicsEngineObject->getAttributes().AirControl = 1.0f;
+   PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
+   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_PKIWI;
 }
 
 void CElementEnemyProjectileGrape::setupSceneObject() {

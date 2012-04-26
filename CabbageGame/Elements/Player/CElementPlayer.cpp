@@ -66,6 +66,8 @@ CPlayerAbility *CElementPlayer::getAbility(Abilities::EAbilityType a) {
 
 void CElementPlayer::checkAbilityKeypress() {
    AllowMovement = true;
+   if(Stats.Energy <= 0)
+      return;
    usedAbility.clear();
    for(int i = 0; i < Abilities.size(); i++) {
       usedAbility[Abilities[i]->getType()] = i;
