@@ -33,8 +33,7 @@ void CLWIBState::BlocksInit( void ) {
 }
 
 struct quickndirty {
-   CMeshSceneObject *r;
-   CPlaceable *p;
+   CGameplayElement *r;
    bool o;
    int mapX,mapY;
 } typedef qd;
@@ -101,7 +100,7 @@ void CLWIBState::begin()
    DiffuseTextureBright = CShaderLoader::loadShader("DiffuseTextureBright");
 
    DeferredDiffuse = CShaderLoader::loadShader("Deferred/Diffuse");
-   DeferredTexture = CShaderLoader::loadShader("Deferred/Textured");
+   DeferredTexture = CShaderLoader::loadShader("Deferred/Textured");
    
    float const LightBrightness = 1.0f;
    Application.getSceneManager().Lights.push_back(new CLight()); 

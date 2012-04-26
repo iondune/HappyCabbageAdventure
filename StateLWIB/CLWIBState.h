@@ -6,14 +6,13 @@
 #include "header.h"
 #include "../CabbageFramework/CabbageFramework.h"
 #include "../StateMainMenu/CMainMenuState.h"
-#include "CPlaceable.h"
-#include "CBlock.h"
-#include "CCabbage.h"
-#include "CFlag.h"
-#include "CPItem.h"
-#include "CPFriends.h"
-#include "../Base/irrxml-1.2/src/irrXML.h"
-#include "wmlwriter_src/xmlwriter.h"
+#include "../CabbageGame/Elements/Enemies/CElementEnemy.h"
+#include "../CabbageGame/Elements/Blocks/CElementBlock.h"
+#include "../CabbageGame/Elements/Player/CElementPlayer.h"
+#include "../CabbageGame/Elements/Items/CElementItem.h"
+#include "../CabbageGame/Elements/CGameplayElement.h"
+#include "../CabbageGame/irrxml-1.2/src/irrXML.h"
+#include "../CabbageGame/wmlwriter_src/xmlwriter.h"
 #include "../CabbageGUI/CabbageGUI.h"
 
 #define TREE_Y_OFFSET 2.1
@@ -62,8 +61,7 @@ class CLWIBState : public CState<CLWIBState>
    
 
    public:
-   std::vector<CPlaceable*> placeables, redoPlaceables;
-   std::vector<CMeshSceneObject*> blocks, redo;
+   std::vector<CGameplayElement*> placeables, redoPlaceables, blocks, redo;
    CLWIBState();
    void begin();
    CPerspectiveCamera *Camera;
