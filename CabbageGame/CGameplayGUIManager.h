@@ -11,7 +11,7 @@ class CGameplayGUIManager {
 
    private:
    float MaxMeterSize;
-   float currentEnergyPerecentage, oldEnergyPercentage, tempEnergyPercentage;
+   float currentEnergyPercentage, oldEnergyPercentage, tempEnergyPercentage;
    int numFrames;
    float timeTotal;
 

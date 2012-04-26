@@ -46,8 +46,8 @@ void CGameplayGUIManager::update(float time) {
 CGameplayGUIManager::CGameplayGUIManager(Cabbage::PlayerInformation & s) : Stats(s), numFrames(0), timeTotal(0.0f) {
    CGUIImageWidget *CabbageEnergyBar, *Seed;
 
-   oldEnergyPercentage = 0.0f;
-   tempEnergyPercentage = 0.0f;
+   oldEnergyPercentage = (float)Stats.Energy / (float)Stats.MaxEnergy;
+   tempEnergyPercentage = (float)Stats.Energy / (float)Stats.MaxEnergy;
    MaxMeterSize = .47f;
 
    CabbageFace =  new CGUIImageWidget(CImageLoader::loadTGAImage("Base/cabbage.tga"), SVector2(.3f, .15f));

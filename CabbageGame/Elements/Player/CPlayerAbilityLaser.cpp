@@ -34,7 +34,10 @@ void CPlayerAbilityLaser::inUpdateSceneObject(float time) {
       return;
    if(ParticleEngine) {
       //Update the particles
-      ParticleEngine->setCenterPos(SVector3(Player.getArea().getCenter(), 0.0f));
+      if(LaserState == CHARGED)
+         ParticleEngine->setCenterPos(SVector3(Player.getArea().Position, 0.0f));
+      else
+         ParticleEngine->setCenterPos(SVector3(Player.getArea().getCenter(), 0.0f));
       ParticleEngine->step(time);
    }
    if(LaserState == FIRING)
@@ -78,13 +81,15 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
          Player.AllowMovement = true;
          ParticleEngine->deconstruct();
          delete ParticleEngine;
-         ParticleEngine = NULL;
+         ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), 100, -1, FLAME_PARTICLE);
          LaserState = CHARGED;
          return;
       }
    }
    else if(LaserState == CHARGED) {
       if(!keyDown) {
+         ParticleEngine->deconstruct();
+         delete ParticleEngine;
          Player.AllowMovement = false;
          ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), LASER_FIRING_PARTICLE_COUNT, LASER_FIRING_DURATION, LASER_FIRING_PARTICLE);
          ParticleEngine->setLookRight(Player.Direction == CElementPlayer::Right);
