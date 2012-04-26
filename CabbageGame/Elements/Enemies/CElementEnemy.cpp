@@ -59,7 +59,7 @@ void CElementEnemy::writeXML(xmlwriter *l) {
     tagValue << "CEnemy";
     eType << Type;
     //put code for type
-    // 1: apple 2: orange
+    // 0: apple 1: orange
     l->AddAtributes("type ", eType.str());
     l->AddAtributes("width ", widthValue.str());
     l->AddAtributes("height ", heightValue.str());
@@ -70,9 +70,8 @@ void CElementEnemy::writeXML(xmlwriter *l) {
 }
 
 void CElementEnemy::dieWithSeeds() {
-   Level.removeEnemy(this);
-   removeFromEngines();
-   Dead = true;
+   if(Dead)
+      return;
    Area.Position.Y += 0.3f;
    for(int i = 0; i < rand()%7 + 3; i++) {
       CElementItem *seed;
@@ -83,6 +82,11 @@ void CElementEnemy::dieWithSeeds() {
 
       ((CCollisionActor *)seed->getPhysicsEngineObject())->setImpulse(SVector2(rand1*8.f - 4.f, rand2*4.5f + 1.0f), 0.01f);
    }
+   Area.Position.Y -= 0.3f;
+   TempTime = 0.0f;
+   removeFromPhysicsEngine();
+   ParticleEngine = new CParticleEngine(SceneObject->getTranslation(), 20, 4, BURST_PARTICLE);
+   ParticleEngine->UsePhysics(&Level.getPhysicsEngine());
 }
 
 void CElementEnemy::OnCollision(CCollideable *Object) {
@@ -111,6 +115,10 @@ void CElementEnemy::updatePhysicsEngineObject(float time) {
 }
 
 void CElementEnemy::updateSceneObject(float time) {
+   if(ParticleEngine) {
+      ParticleEngine->step(time);
+      ParticleEngine->setCenterPos(SVector3(Area.getCenter(), 0.0f));
+   }
    return;
 }
 
@@ -130,7 +138,8 @@ void CElementEnemy::reactToAbility(Abilities::EAbilityType Ability) {
          //dieWithSeeds();
          break;
       case Abilities::LASER:
-         dieWithSeeds();
+         if(!Dead)
+            dieWithSeeds();
          break;
       default:
          break;

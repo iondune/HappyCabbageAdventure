@@ -12,8 +12,7 @@ CElementEnemyProjectile::CElementEnemyProjectile(SRect2 nArea, Enemies::EEnemyTy
 //Re-write me to die on impact.
 void CElementEnemyProjectile::OnCollision(CCollideable *Object) {
    if (!Dead) {
-      Level.removeEnemy(this);
-      removeFromEngines();
+      removeFromGame();
       Dead = true;
 
       if (Object == Level.getPlayer().getPhysicsEngineObject()) {
@@ -43,4 +42,13 @@ void CElementEnemyProjectile::updateSceneObject(float time) {
 
 void CElementEnemyProjectile::printInformation() {
    printf("CElementEnemyProjectile; Area: [[%0.0f, %0.0f],[%0.0f, %0.0f]]; Type: %d\n", Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y, Type);
+}
+
+void CElementEnemyProjectile::reactToAbility(Abilities::EAbilityType Type) {
+   switch(Type) {
+   case Abilities::SHIELD:
+   case Abilities::LASER:
+      removeFromGame();
+      break;
+   }
 }

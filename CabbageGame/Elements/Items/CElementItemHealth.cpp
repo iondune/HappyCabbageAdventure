@@ -41,10 +41,9 @@ void CElementItemHealth::setupSceneObject() {
 void CElementItemHealth::OnCollision(CCollideable *Object) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
       Level.getPlayer().incrementHealth();
-      Level.removeItem(this);
       Area.Position.Y = 5.0f;
       Level.addItem(CItemLoader::LoadItem(Area, Items::HEALTH));
-      removeFromEngines();
+      removeFromGame();
       Dead = true;
    }
 }

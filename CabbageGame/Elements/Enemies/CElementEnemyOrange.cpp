@@ -94,6 +94,12 @@ void CElementEnemyOrange::updateSceneObject(float time) {
    }
 
    SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
+   if(ParticleEngine) {
+      SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.Position.Y, 0));
+      SceneObject->setRotation(SVector3(-90, 0, 0));
+      SceneObject->setScale(SVector3(1.0f, 1.0f, 0.3f));
+      return;
+   }
 
    Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
 

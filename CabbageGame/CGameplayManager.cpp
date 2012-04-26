@@ -50,8 +50,23 @@ CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(
 void CGameplayManager::update(float time) {
    //CApplication::get().getSceneManager().getActiveCamera()->update(time);
    PhysicsEngine->update(time);
+   /*
+   std::vector<CCollisionActor*> Actors = PhysicsEngine->getActors();
+   for(int i = 0; i < Actors.size(); i++) {
+      Actors[i]->getElement().printInformation();
+   }
+   */
+   
+   std::vector<CGameplayElement *> KillList;
    for(int i = 0; i < Elements.size(); i++) {
       Elements[i]->update(time);
+      if(Elements[i]->isDead())
+         KillList.push_back(Elements[i]);
    }
    GUIManager->update(time);
+   for(int i = 0; i < KillList.size(); i++) {
+      KillList[i]->removeFromGame();
+      Level.removeObject(KillList[i]);
+      delete KillList[i];
+   }
 }

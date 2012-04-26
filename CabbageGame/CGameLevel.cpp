@@ -131,3 +131,12 @@ void CGameLevel::addItem(CElementItem* Item) {
    Items.push_back(Item);
    Elements.push_back(Item);
 }
+
+void CGameLevel::removeObject(CGameplayElement* Object) {
+   Elements.erase(std::remove(Elements.begin(), Elements.end(), Object), Elements.end());
+   Blocks.erase(std::remove(Blocks.begin(), Blocks.end(), Object), Blocks.end());
+   Enemies.erase(std::remove(Enemies.begin(), Enemies.end(), Object), Enemies.end());
+   Items.erase(std::remove(Items.begin(), Items.end(), Object), Items.end());
+   Flags.erase(std::remove(Flags.begin(), Flags.end(), Object), Flags.end());
+   Elevators.erase(std::remove(Elevators.begin(), Elevators.end(), Object), Elevators.end());
+}
