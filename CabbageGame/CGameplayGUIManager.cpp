@@ -4,7 +4,7 @@
 void CGameplayGUIManager::update(float time) {
    char buf[30];
    sprintf(buf, "%d", Stats.Lives);
-   LivesText->setText(buf);
+   livesText->setText(buf);
 
    char buff[30];
    sprintf(buff, "x%d", Stats.Seeds);
@@ -108,4 +108,5 @@ CGameplayGUIManager::CGameplayGUIManager(Cabbage::PlayerInformation & s) : Stats
 
    CApplication::get().getGUIEngine().addWidget(livesText);
    CApplication::get().getGUIEngine().addWidget(seedText);
+   CApplication::get().getGUIEngine().addWidget(fpsText);
 }

@@ -136,11 +136,18 @@ void CGameLevel::addItem(CElementItem* Item) {
    Elements.push_back(Item);
 }
 
+void CGameLevel::removeObject(CGameplayElement* Object) {
+   Elements.erase(std::remove(Elements.begin(), Elements.end(), Object), Elements.end());
+   Blocks.erase(std::remove(Blocks.begin(), Blocks.end(), Object), Blocks.end());
+   Enemies.erase(std::remove(Enemies.begin(), Enemies.end(), Object), Enemies.end());
+   Items.erase(std::remove(Items.begin(), Items.end(), Object), Items.end());
+   Flags.erase(std::remove(Flags.begin(), Flags.end(), Object), Flags.end());
+   Elevators.erase(std::remove(Elevators.begin(), Elevators.end(), Object), Elevators.end());
+
+}
+
+
 void CGameLevel::setupSoundtrack() {
-/*   int audio_rate = 22050;
-   Uint16 audio_format = AUDIO_S16;
-   int audio_channels = 2;
-   int audio_buffers = 4096;*/
    std::string temp;
 
    if(Mix_OpenAudio(22050, AUDIO_S16, 2, 4096))
