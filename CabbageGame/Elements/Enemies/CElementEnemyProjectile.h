@@ -17,6 +17,7 @@ class CElementEnemyProjectile : public CElementEnemy {
 
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);
+      void reactToAbility(Abilities::EAbilityType Type);
 
       CElementEnemyProjectile(SRect2 nArea, Enemies::EEnemyType type);
 

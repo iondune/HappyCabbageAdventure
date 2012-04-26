@@ -3,7 +3,7 @@ SOURCES=CLWIBState.cpp Materials.cpp ./wmlwriter_src/xmlwriter.cpp CBlock.cpp CE
 OBJECTS=$(SOURCES:%.cpp=%.o)
 COMPILER_VERSION=-std=c++0x
 INCLUDE = -I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI
-CC=g++ -O1 -s 
+CC=g++ -g 
 
 all: lib 
 lib: ../lib/libCLWIB.a $(OBJECTS)

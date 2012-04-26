@@ -44,7 +44,7 @@ void CElementItemHealth::OnCollision(CCollideable *Object) {
       Level.removeItem(this);
       Area.Position.Y = 5.0f;
       Level.addItem(CItemLoader::LoadItem(Area, Items::HEALTH));
-      removeFromEngines();
+      removeFromGame();
       Dead = true;
    }
 }

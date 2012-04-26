@@ -6,7 +6,9 @@
 #include "CCollisionEngine.h"
 #include "CabbageScene.h"
 #include "Player/CPlayerAbility.h"
+#include "CParticleEngine.h"
 
+class CParticleEngine;
 class CElementPlayer;
 class CGameLevel;
 #include "./wmlwriter_src/xmlwriter.h"
@@ -18,6 +20,7 @@ class CGameplayElement : public IUpdater, public ICollisionResponder {
       CCollideable *& PhysicsEngineObject;
       //A top-level object in the scene manager. Subclasses may create new pointers of a more specific subclass.
       ISceneObject *& SceneObject;
+      CParticleEngine *ParticleEngine;
       //If CGameLevelLoader isn't being used to load a level, this value will be wrong when created.
       CGameLevel & Level;
       SRect2 Area;
@@ -39,7 +42,9 @@ class CGameplayElement : public IUpdater, public ICollisionResponder {
       //Functions for CLWIBState
       virtual void writeXML(xmlwriter *)=0;
 
-      virtual void removeFromEngines();
+      virtual void removeFromPhysicsEngine();
+      virtual void removeFromSceneManager();
+      virtual void removeFromGame();
       virtual void reactToAbility(Abilities::EAbilityType ability); 
 
       //Constructor

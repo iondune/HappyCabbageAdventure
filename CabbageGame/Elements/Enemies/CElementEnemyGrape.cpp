@@ -71,12 +71,13 @@ void CElementEnemyGrape::updateSceneObject(float time) {
 
    SceneObject->setRotation(SVector3(-90, 0, 90));
 
-   if (shootTime - 2.f > 0.f /*&& Manager->isPlayerAlive()*/) {
-      shootTime = 0.f;
-
-      //Fire Grape Projectile
-      ShootGrape();
+   if(ParticleEngine) {
+      SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.Position.Y, 0));
+      SceneObject->setRotation(SVector3(-90, 0, 90));
+      SceneObject->setScale(SVector3(1.0f, 1.0f, 0.3f));
+      return;
    }
+
 }
 
 void CElementEnemyGrape::printInformation() {

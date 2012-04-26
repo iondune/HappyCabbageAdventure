@@ -1,5 +1,5 @@
 FILES = CParticle.cpp CParticleEngine.cpp CPLeaf.cpp CPCube.cpp CParticleObject.cpp CPFlame.cpp CPDeath.cpp CPLaser.cpp CPLaser2.cpp CPHurt.cpp CPBurst.cpp CPhysicsParticle.cpp CPDust.cpp CPStar.cpp
-CC=g++ -O1 -s
+CC=g++ -g
 
 OFILES = $(FILES:%.cpp=%.o)
 

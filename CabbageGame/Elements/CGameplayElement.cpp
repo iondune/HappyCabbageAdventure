@@ -2,7 +2,7 @@
 #include "CGameLevel.h"
 
 CGameplayElement::CGameplayElement(CCollideable *& c, ISceneObject *& s, SRect2 a) :
-SceneObject(s), PhysicsEngineObject(c), Level(CGameLevelLoader::getLatestLevel()), Area(a), Dead(true)
+SceneObject(s), PhysicsEngineObject(c), Level(CGameLevelLoader::getLatestLevel()), Area(a), Dead(true), ParticleEngine(NULL)
 {
 }
 
@@ -13,12 +13,20 @@ SRect2 & CGameplayElement::getArea() {
 void CGameplayElement::update(float time) {
    ElapsedTime += time;
    if(!Dead) {
-      if(Level.isLoaded()) {
+      if(Level.isLoaded() && !ParticleEngine) {
          Area = PhysicsEngineObject->getArea();
          updatePhysicsEngineObject(time);
       }
-      if(Level.shouldRender())
+      if(Level.shouldRender()) {
          updateSceneObject(time);
+      }
+   }
+   if(ParticleEngine) {
+      ParticleEngine->step(time);
+      //ParticleEngine->setCenterPos(time);
+      if(ParticleEngine->dead) {
+         removeFromGame();
+      }
    }
 }
 
@@ -37,16 +45,33 @@ void CGameplayElement::printInformation() {
    printf("CGameplayElement; Area: [[%0.0f, %0.0f],[%0.0f, %0.0f]]\n", Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y);
 }
 
-
 CCollideable *& CGameplayElement::getPhysicsEngineObject() {
    return PhysicsEngineObject;
 }
 
-void CGameplayElement::removeFromEngines() {
+void CGameplayElement::removeFromPhysicsEngine() {
    if(!Dead) {
       Level.getPhysicsEngine().remove(PhysicsEngineObject);
+   }
+}
+
+void CGameplayElement::removeFromSceneManager() {
+   if(!Dead) {
       CApplication::get().getSceneManager().removeSceneObject(SceneObject);
+   }
+}
+
+void CGameplayElement::removeFromGame() {
+   if(!Dead) {
+      removeFromPhysicsEngine();
+      removeFromSceneManager();
+      if(ParticleEngine) {
+         ParticleEngine->deconstruct();
+         delete ParticleEngine;
+         ParticleEngine = NULL;
+      }
       Dead = true;
+      Level.removeObject(this);
    }
 }
 

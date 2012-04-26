@@ -20,6 +20,7 @@ class CGameLevel {
       int env, numBlocks;
       int XmlCount;
 
+      std::vector<CGameplayElement*> ToDelete;
       std::vector<CGameplayElement*> Elements;
       std::vector<CElementBlock*> Blocks;
       std::vector<CGroundBlock*> GroundBlocks;
@@ -72,6 +73,7 @@ class CGameLevel {
       void addEnemy(CElementEnemy *Enemy);
       void removeItem(CElementItem* Item);
       void addItem(CElementItem* Item);
+      void removeObject(CGameplayElement *Object);
 };
 
 #endif

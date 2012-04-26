@@ -89,6 +89,12 @@ void CElementEnemyApple::updatePhysicsEngineObject(float time) {
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyApple::updateSceneObject(float time) {
    SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
+   if(ParticleEngine) {
+      SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.Position.Y, 0));
+      SceneObject->setRotation(SVector3(-90, 0, 0));
+      SceneObject->setScale(SVector3(1.0f, 1.0f, 0.3f));
+      return;
+   }
 
    switch(Roll) {
    case Left:
