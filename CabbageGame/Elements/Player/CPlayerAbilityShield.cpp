@@ -17,7 +17,7 @@ void CPlayerAbilityShield::inUpdatePhysicsEngineObject(float time) {
 void CPlayerAbilityShield::inUpdateSceneObject(float time) {
    if(Dead)
       return;
-   if(ElapsedTime >= LEAF_SHIELD_DURATION) {
+   if(ElapsedTime >= LEAF_SHIELD_DURATION || Player.Stats.Energy <= 0) {
       ParticleEngine->deconstruct();
       delete ParticleEngine;
       Player.View->setVisible(true);

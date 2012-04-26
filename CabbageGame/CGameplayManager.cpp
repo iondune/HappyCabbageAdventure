@@ -58,8 +58,17 @@ void CGameplayManager::update(float time) {
    */
    
    std::vector<CGameplayElement *> KillList;
+   static float const UpdateWidth = 30.0f;
+   static float const UpdateHeight = 30.0f;
+   SRect2 UpdateArea = Level.getPlayer().getArea();
+   UpdateArea.Position.X -= UpdateWidth/2.0f;
+   UpdateArea.Position.Y -= UpdateHeight/2.0f;
+   UpdateArea.Size.X = UpdateWidth;
+   UpdateArea.Size.Y = UpdateHeight;
+
    for(int i = 0; i < Elements.size(); i++) {
-      Elements[i]->update(time);
+      if(UpdateArea.intersects(Elements[i]->getArea()))
+         Elements[i]->update(time);
       if(Elements[i]->isDead())
          KillList.push_back(Elements[i]);
    }

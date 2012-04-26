@@ -59,19 +59,8 @@ void CCollisionEngine::performTick( float const TickTime )
 	}
 
    for(unsigned int i = 0; i < KillList.size(); i++) {
-      CCollideable *Object = KillList[i];
-      for (ActorList::iterator it = Actors.begin(); it != Actors.end(); ++ it)
-         if (* it == Object)
-         {
-            Actors.erase(it);
-            return;
-         }
-      for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
-         if (* it == Object )
-         {
-            Objects.erase(it);
-            return;
-         }
+      Objects.erase(std::remove(Objects.begin(), Objects.end(), KillList[i]), Objects.end());
+      Actors.erase(std::remove(Actors.begin(), Actors.end(), KillList[i]), Actors.end());
    }
    KillList.clear();
    for(unsigned int i = 0; i < AddList.size(); i++) {
@@ -89,12 +78,7 @@ void CCollisionEngine::removeAll()
 
 void CCollisionEngine::removeObject( CCollisionObject * Object )
 {
-	for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
-		if (* it == Object )
-		{
-			Objects.erase(it);
-			return;
-		}
+   KillList.push_back(Object);
 }
 
 CCollisionEngine::CCollisionEngine() : Timer(0.f)
@@ -114,12 +98,7 @@ void CCollisionEngine::remove(CCollideable * Object) {
 
 void CCollisionEngine::removeActor( CCollisionActor * Actor )
 {
-	for (ActorList::iterator it = Actors.begin(); it != Actors.end(); ++ it)
-		if (* it == Actor)
-		{
-			Actors.erase(it);
-			return;
-		}
+   KillList.push_back(Actor);
 }
 
 void CCollisionEngine::update(float const Elapsed) {
