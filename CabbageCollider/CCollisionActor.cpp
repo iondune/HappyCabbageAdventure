@@ -247,7 +247,7 @@ void CCollisionActor::pushIfCollided(CCollisionObject * Object, SVec2 const Move
 		return;
 
 	Area.Position += Movement;
-	std::cout << Movement.X << ", " << Movement.Y << std::endl;
+	//std::cout << Movement.X << ", " << Movement.Y << std::endl;
 
 	/*for (int i = 0; i < 2; ++ i)
 	{
