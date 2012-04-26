@@ -7,7 +7,8 @@ CPlayerAbility::CPlayerAbility(CElementPlayer & p, Abilities::EAbilityType a) : 
 
 //Default behavior: call React on enemies that collide with the cabbage while the ability is running.
 void CPlayerAbility::inOnCollision(CCollideable *Object) {
-   Object->getElement().reactToAbility(Type);
+   if(Object->getElement())
+      Object->getElement()->reactToAbility(Type);
 }
 
 void CPlayerAbility::updateTime(float time) {

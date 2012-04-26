@@ -23,7 +23,7 @@ void CCollideable::setElement(CGameplayElement * e) {
    Element = e;
 }
 
-CGameplayElement &CCollideable::getElement() {
+CGameplayElement *CCollideable::getElement() {
    return *Element;
 }
 

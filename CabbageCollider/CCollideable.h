@@ -75,7 +75,7 @@ public:
 	float getDepth();
    void setCollisionResponder( ICollisionResponder * collisionResponder );
    void setElement(CGameplayElement * e);
-   CGameplayElement &getElement();
+   CGameplayElement *getElement();
 };
 
 class ICollisionResponder

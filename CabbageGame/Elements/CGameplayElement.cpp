@@ -52,20 +52,17 @@ CCollideable *& CGameplayElement::getPhysicsEngineObject() {
 void CGameplayElement::removeFromPhysicsEngine() {
    if(!Dead) {
       Level.getPhysicsEngine().remove(PhysicsEngineObject);
-      printf("Removed from PE\n");
    }
 }
 
 void CGameplayElement::removeFromSceneManager() {
    if(!Dead) {
       CApplication::get().getSceneManager().removeSceneObject(SceneObject);
-      printf("Removed from SM\n");
    }
 }
 
 void CGameplayElement::removeFromGame() {
    if(!Dead) {
-      printf("Removed from game\n");
       removeFromPhysicsEngine();
       removeFromSceneManager();
       if(ParticleEngine) {

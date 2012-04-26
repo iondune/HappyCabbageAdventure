@@ -22,7 +22,8 @@ void CPlayerAbilityLaser::inUpdatePhysicsEngineObject(float time) {
       }
       std::vector<CCollideable*> InRange = Player.Level.getPhysicsEngine().getAllInBound(FiringRange);
       for(int i = 0; i < InRange.size(); i++) {
-         InRange[i]->getElement().reactToAbility(Abilities::LASER);
+         if(InRange[i]->getElement())
+            InRange[i]->getElement()->reactToAbility(Abilities::LASER);
       }
    }
    return;

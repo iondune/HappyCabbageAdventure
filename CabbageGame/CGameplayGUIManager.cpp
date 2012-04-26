@@ -31,7 +31,7 @@ void CGameplayGUIManager::update(float time) {
 
    oldEnergyPercentage = currentEnergyPercentage;
 
-   printf("tempEnergyPercentage: %f\n", tempEnergyPercentage);
+   //printf("tempEnergyPercentage: %f\n", tempEnergyPercentage);
 }
 
 CGameplayGUIManager::CGameplayGUIManager(Cabbage::PlayerInformation & s) : Stats(s) {
