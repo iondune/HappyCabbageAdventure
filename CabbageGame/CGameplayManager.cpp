@@ -9,7 +9,6 @@
 
 CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(level.getElements()) {
    PhysicsEngine = new CCollisionEngine();
-   level.setPhysicsEngine(PhysicsEngine);
 
    CPerspectiveCamera *Camera = new CPerspectiveCamera(CApplication::getAspectRatio(), 0.01f, 100.0f, 60.0f);
    Camera->setPosition(SVector3(0, 0, 20));
@@ -29,8 +28,10 @@ CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(
       level.getElements()[i]->setupObjects();
    }
    //Add consolidated blocks
-   for(int i = 0; i < level.getConsolidatedBlocks().size(); i++) {
-      level.getConsolidatedBlocks()[i]->addToEngine(PhysicsEngine);
+   if(Level.isLoaded()) {
+      for(int i = 0; i < level.getConsolidatedBlocks().size(); i++) {
+         level.getConsolidatedBlocks()[i]->addToEngine(PhysicsEngine);
+      }
    }
 #ifdef DEBUG_PRINTFS
    for(int i = 0; i < level.getElements().size(); i++) {
@@ -48,8 +49,8 @@ CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(
 }
 
 void CGameplayManager::update(float time) {
-   //CApplication::get().getSceneManager().getActiveCamera()->update(time);
-   PhysicsEngine->update(time);
+   if(Level.isLoaded())
+      PhysicsEngine->update(time);
    /*
    std::vector<CCollisionActor*> Actors = PhysicsEngine->getActors();
    for(int i = 0; i < Actors.size(); i++) {
