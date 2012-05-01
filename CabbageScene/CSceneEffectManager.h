@@ -52,6 +52,9 @@ protected:
 	CFrameBufferObject * ScratchTarget1;
 	CTexture * ScratchTexture1;
 
+	CTexture * HeatOffsetTexture;
+	CShader * HeatCopy;
+
 public:
 
 	CSceneEffectManager(CSceneManager * sceneManager);
