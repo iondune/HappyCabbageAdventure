@@ -75,13 +75,18 @@ CSceneEffectManager::CSceneEffectManager(CSceneManager * sceneManager)
 	BlurVertical = CShaderLoader::loadShader("FBO/QuadCopyUV.glsl", "BlurV.frag");
 	BlurHorizontal = CShaderLoader::loadShader("FBO/QuadCopyUV.glsl", "BlurH.frag");
 	QuadCopy = CShaderLoader::loadShader("FBO/QuadCopy");
+	HeatCopy = CShaderLoader::loadShader("FBO/QuadCopyUV.glsl", "FBO/HeatCopy.frag");
 
 	White = CTextureLoader::loadTexture("Colors/White.bmp");
 	Black = CTextureLoader::loadTexture("Colors/Black.bmp");
 	Magenta = CTextureLoader::loadTexture("Colors/Magenta.bmp");
+	HeatOffsetTexture = CTextureLoader::loadTexture("HeatOffset.bmp");
 
 	ScratchTarget1 = new CFrameBufferObject();
-	ScratchTexture1 = new CTexture(SceneManager->getScreenSize(), true);
+	STextureCreationFlags Flags;
+	Flags.Filter = GL_LINEAR;
+	Flags.MipMaps = true;
+	ScratchTexture1 = new CTexture(SceneManager->getScreenSize(), true, Flags);
 	ScratchTarget1->attach(ScratchTexture1, GL_COLOR_ATTACHMENT0);
 
 	BloomResultTarget = new CFrameBufferObject();
@@ -94,6 +99,8 @@ CSceneEffectManager::CSceneEffectManager(CSceneManager * sceneManager)
 
 	RenderPasses.push_back(DefaultPass);
 }
+
+#include <CApplication.h>
 
 void CSceneEffectManager::apply()
 {
@@ -162,11 +169,17 @@ void CSceneEffectManager::apply()
 
 		BlendPass.doPass();
 
+		static float Timer = 0.f;
+
+		Timer += CApplication::get().getElapsedTime();
+
 		// Copy results back into scene
 		SPostProcessPass FinalPass;
 		FinalPass.Textures["uTexColor"] = ScratchTexture1;
+		FinalPass.Textures["uHeatOffset"] = HeatOffsetTexture;
+		FinalPass.Floats["uTimer"] = Timer * 0.04f;
 		FinalPass.Target = SceneManager->getSceneFrameBuffer();
-		FinalPass.Shader = QuadCopy;
+		FinalPass.Shader = HeatCopy;
 
 		FinalPass.doPass();
 	}
