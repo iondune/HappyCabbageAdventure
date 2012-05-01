@@ -47,8 +47,9 @@
       ;$(SolutionDir)\CabbageCore;
       ;$(SolutionDir)\CabbageFramework;
       ;$(SolutionDir)\CabbageScene;
+      ;$(SolutionDir)\CabbageSound;
       ;$(SolutionDir)\CabbageGUI;
-      ;$(SolutionDir)\CabbageParticle;
+      ;$(SolutionDir)\CabbageParticles;
       ;$(SolutionDir)\CabbageGame;
       ;$(SolutionDir)\CabbageGame\Elements;
       ;$(SolutionDir)\CabbageGame\Elements\Blocks;
