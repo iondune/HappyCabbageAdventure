@@ -5,7 +5,7 @@ CC=g++ -O1 -s
 OFILES = $(FILES:%.cpp=%.o) $(ELEMENTS:%.cpp=%.o)
 ELEMENTSHEADER=$(shell find Elements -type d | awk 'BEGIN{}{print "-I./"$$1}')
 DIRS=$(shell find . -type d | sed -e '/sdlmixer/d' -e '/todo/d' -e '/old/d' -e 's/\.\/*//' -e '/.dependencies/d' | awk 'BEGIN {} {print ".dependencies/"$$1} END{}')
-DIRECTORIES = -I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI -I. $(ELEMENTSHEADER)
+DIRECTORIES = -I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI -I. $(ELEMENTSHEADER) `sdl-config --cflags`
 all: ../lib/libCabbageGame.a
 
 ../lib/libCabbageGame.a: $(DIRS) $(OFILES)
