@@ -80,12 +80,13 @@ CSceneEffectManager::CSceneEffectManager(CSceneManager * sceneManager)
 	White = CTextureLoader::loadTexture("Colors/White.bmp");
 	Black = CTextureLoader::loadTexture("Colors/Black.bmp");
 	Magenta = CTextureLoader::loadTexture("Colors/Magenta.bmp");
-	HeatOffsetTexture = CTextureLoader::loadTexture("HeatOffset.bmp");
-
-	ScratchTarget1 = new CFrameBufferObject();
+	CImage * HeatOffsetTextureImage = CTextureLoader::loadImage("HeatOffset.bmp");
 	STextureCreationFlags Flags;
 	Flags.Filter = GL_LINEAR;
 	Flags.MipMaps = true;
+	HeatOffsetTexture = new CTexture(HeatOffsetTextureImage, Flags);
+
+	ScratchTarget1 = new CFrameBufferObject();
 	ScratchTexture1 = new CTexture(SceneManager->getScreenSize(), true, Flags);
 	ScratchTarget1->attach(ScratchTexture1, GL_COLOR_ATTACHMENT0);
 
