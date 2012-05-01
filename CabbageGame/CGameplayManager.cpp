@@ -9,6 +9,7 @@
 
 CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(level.getElements()) {
    PhysicsEngine = new CCollisionEngine();
+   level.setPhysicsEngine(PhysicsEngine);
 
    CPerspectiveCamera *Camera = new CPerspectiveCamera(CApplication::getAspectRatio(), 0.01f, 100.0f, 60.0f);
    Camera->setPosition(SVector3(0, 0, 20));
