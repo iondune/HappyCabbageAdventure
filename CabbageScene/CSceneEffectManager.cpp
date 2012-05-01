@@ -83,7 +83,9 @@ CSceneEffectManager::CSceneEffectManager(CSceneManager * sceneManager)
 	CImage * HeatOffsetTextureImage = CTextureLoader::loadImage("HeatOffset.bmp");
 	STextureCreationFlags Flags;
 	Flags.Filter = GL_LINEAR;
-	Flags.MipMaps = true;
+	Flags.MipMaps = false;
+	Flags.Wrap = GL_MIRRORED_REPEAT;
+
 	HeatOffsetTexture = new CTexture(HeatOffsetTextureImage, Flags);
 
 	ScratchTarget1 = new CFrameBufferObject();
