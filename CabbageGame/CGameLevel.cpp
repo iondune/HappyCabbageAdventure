@@ -12,6 +12,10 @@ bool CGameLevel::isLoaded() {
    return Loaded;
 }
 
+void CGameLevel::setLoaded(bool b) {
+   Loaded = b;
+}
+
 void CGameLevel::setNoRender() {
    Render = false;
 }

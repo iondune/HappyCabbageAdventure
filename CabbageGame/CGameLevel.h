@@ -65,6 +65,7 @@ class CGameLevel {
 
       CGameLevel();
       bool isLoaded();
+      void setLoaded(bool);
       bool isNight();
       int getEnvironment();
       int getEnv();

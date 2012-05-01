@@ -426,18 +426,18 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
             //3 is the number of static blocks created before the user can add in new blocks (ie unremovable)
             if(blocks.size() > 3 && placeables.size() > 0) {
                 Application.getSceneManager().removeSceneObject(blocks.back());
-                CPlaceable *m_block = placeables.back();
+                CGameplayElement *m_block = placeables.back();
                 redo.push_back(blocks.back());
                 redoPlaceables.push_back(placeables.back());
 
                 int i,j;
-                for(i = 0; i < m_block->w; i++) {
-                    for(j = 0; j < m_block->h; j++) {
-                        blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].o = false;
-                        blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].r = NULL;
-                        blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].p = NULL;
-                        blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapX = -1;
-                        blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapY = -1;
+                for(i = 0; i < m_block->getArea().Size.X; i++) {
+                    for(j = 0; j < m_block->getArea().Size.Y; j++) {
+                        blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = false;
+                        blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = NULL;
+                        blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].p = NULL;
+                        blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = -1;
+                        blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = -1;
                     }
                 }
 
@@ -448,20 +448,20 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
         if(Event.Key == SDLK_r) {
             if(redo.size() > 0 && redoPlaceables.size() > 0) {
                 Application.getSceneManager().addSceneObject(redo.back());
-                CPlaceable *m_block = redoPlaceables.back();
+                CGameplayElement *m_block = redoPlaceables.back();
                 CMeshSceneObject *m_r = redo.back();
                 blocks.push_back(redo.back());
                 placeables.push_back(redoPlaceables.back());
 
                 int i,j;
-                for(i = 0; i < m_block->w; i++) {
-                    for(j = 0; j < m_block->h; j++) {
-                        blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].o = true;
-                        blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].p = m_block;
-                        blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].r = m_r;
+                for(i = 0; i < m_block->getArea().Size.X; i++) {
+                    for(j = 0; j < m_block->getArea().Size.Y; j++) {
+                        blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = true;
+                        blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].p = m_block;
+                        blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = m_r;
 
-                        blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapX = (int)m_block->x+25;
-                        blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapY = (int)(m_block->y-0.5+25);
+                        blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = (int)m_block->getArea().Position.X+25;
+                        blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = (int)(m_block->getArea().Position.Y-0.5+25);
                     }
                 }
 
@@ -656,17 +656,17 @@ void CLWIBState::loadWorld() {
     while(blocks.size() > 3 && placeables.size() > 0 ) {
         Application.getSceneManager().removeSceneObject(blocks.back());
         blocks.pop_back();
-        CPlaceable *m_block = placeables.back();
+        CGameplayElement *m_block = placeables.back();
         placeables.pop_back();
 
         int i,j;
-        for(i = 0; i < m_block->w; i++) {
-            for(j = 0; j < m_block->h; j++) {
-                blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].o = false;
-                blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].r = NULL;
-                blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].p = NULL;
-                blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapX = -1;
-                blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapY = -1;
+        for(i = 0; i < m_block->getArea().Size.X; i++) {
+            for(j = 0; j < m_block->getArea().Size.Y; j++) {
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = false;
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = NULL;
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].p = NULL;
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = -1;
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = -1;
             }
         }
     }
@@ -757,7 +757,7 @@ void CLWIBState::printXML() {
     worldlist->Createtag(tag.str());
     worldlist->CloseLasttag();
 
-    std::vector<CPlaceable*>::iterator it;
+    std::vector<CGameplayElement*>::iterator it;
     for(it=placeables.begin();it<placeables.end();it++) {
        (*it)->writeXML(worldlist);
     }
@@ -1723,18 +1723,18 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     if (widget == undoTile) {
         if(blocks.size() > 3 && placeables.size() > 0) {
             Application.getSceneManager().removeSceneObject(blocks.back());
-            CPlaceable *m_block = placeables.back();
+            CGameplayElement *m_block = placeables.back();
             redo.push_back(blocks.back());
             redoPlaceables.push_back(placeables.back());
 
             int i,j;
-            for(i = 0; i < m_block->w; i++) {
-                for(j = 0; j < m_block->h; j++) {
-                    blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].o = false;
-                    blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].r = NULL;
-                    blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].p = NULL;
-                    blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapX = -1;
-                    blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapY = -1;
+            for(i = 0; i < m_block->getArea().Size.X; i++) {
+                for(j = 0; j < m_block->getArea().Size.Y; j++) {
+                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = false;
+                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = NULL;
+                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].p = NULL;
+                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = -1;
+                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = -1;
                 }
             }
 
@@ -1745,20 +1745,20 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     if (widget == redoTile) {
         if(redo.size() > 0 && redoPlaceables.size() > 0) {
             Application.getSceneManager().addSceneObject(redo.back());
-            CPlaceable *m_block = redoPlaceables.back();
+            CGameplayElement *m_block = redoPlaceables.back();
             CMeshSceneObject *m_r = redo.back();
             blocks.push_back(redo.back());
             placeables.push_back(redoPlaceables.back());
 
             int i,j;
-            for(i = 0; i < m_block->w; i++) {
-                for(j = 0; j < m_block->h; j++) {
-                    blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].o = true;
-                    blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].p = m_block;
-                    blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].r = m_r;
+            for(i = 0; i < m_block->getArea().Size.X; i++) {
+                for(j = 0; j < m_block->getArea().Size.Y; j++) {
+                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = true;
+                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].p = m_block;
+                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = m_r;
 
-                    blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapX = (int)m_block->x+25;
-                    blockMap[(int)m_block->x+25+i][(int)(m_block->y-0.5+25)+j].mapY = (int)(m_block->y-0.5+25);
+                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = (int)m_block->getArea().Position.X+25;
+                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = (int)(m_block->getArea().Position.Y-0.5+25);
                 }
             }
 
