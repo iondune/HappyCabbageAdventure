@@ -24,9 +24,9 @@ void main()
     OffsetColor.g = max(OffsetColor.g, 0.0);
     OffsetColor.b = max(OffsetColor.b, 0.0);
     */
-    gl_FragColor = OffsetColor;
+    //gl_FragColor = OffsetColor;
     
-    /*float Interp = 0.4;
+    float Interp = 0.4;
     vec4 BlurColor = vec4(max(MainColor.r, OffsetColor.r), max(MainColor.g, OffsetColor.g), max(MainColor.b, OffsetColor.b), 1.0);
-    gl_FragColor = MainColor * Interp + BlurColor * (1.0 - Interp);*/
+    gl_FragColor = MainColor * Interp + BlurColor * (1.0 - Interp);
 }
