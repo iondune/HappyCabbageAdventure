@@ -96,12 +96,21 @@ void CElementEnemy::dieWithSeeds() {
 void CElementEnemy::OnCollision(CCollideable *Object) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
       CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
+
+      //Check if damage was taken by a jump.
       if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {
-         Mix_PlayChannel(-1, Level.dmgEnemy, 0);
-         dieWithSeeds();
+         takeDamage(1);
          PlayerActor->setImpulse(SVector2(0.0f, 3.0f), 0.01f);
-         Level.getPlayer().setShaking(0.4f, 3.0f);
+
+         //The enemy was killed.
+         if (CurHealth <= 0) {
+            Mix_PlayChannel(-1, Level.dmgEnemy, 0);
+            dieWithSeeds();
+            Level.getPlayer().setShaking(0.4f, 3.0f);
+         }
       }
+
+      //Did the player run into them?
       else {
          if(Level.getPlayer().decrementHealth()) {
             if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
