@@ -27,13 +27,5 @@
 </CBlock>
 <CCabbage X ="-25" Y ="0" height ="1" width ="1" isMoving ="0">
 </CCabbage>
-<CPFriends x ="-23" y ="4" type ="1">
-</CPFriends>
-<CPFriends x ="-21" y ="4" type ="1">
-</CPFriends>
-<CPFriends x ="-19" y ="4" type ="1">
-</CPFriends>
-<CPFriends x ="-17" y ="4" type ="1">
-</CPFriends>
-<CPFriends x ="-16" y ="4" type ="1">
-</CPFriends>
+<CEnemy X ="-20" Y ="8" height ="3" width ="3" type ="8">
+</CEnemy>
