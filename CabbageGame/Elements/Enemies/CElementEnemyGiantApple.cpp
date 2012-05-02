@@ -4,6 +4,8 @@
 CElementEnemyGiantApple::CElementEnemyGiantApple(SRect2 nArea) :
    CElementEnemy(nArea, Enemies::GIANT_APPLE), ISquishable(nArea.Size.X, nArea.Size.Y) {
 
+   MaxHealth = 3;
+   CurHealth = MaxHealth;
 }
 
 void CElementEnemyGiantApple::setupPhysicsEngineObject() {
