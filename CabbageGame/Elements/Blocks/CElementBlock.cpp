@@ -60,8 +60,19 @@ void CElementBlock::setupSceneObject() {
    CMeshSceneObject *tempBlock = new CMeshSceneObject();
    CMesh *mesh;
 
-   mesh = CMeshLoader::createCubeMesh();
-   mesh->calculateNormalsPerVertex();
+   mesh = CMeshLoader::load3dsMesh("Base/cuberock.3ds");
+
+   if(mesh) {
+         mesh->resizeMesh(SVector3(1));
+         mesh->centerMeshByExtents(SVector3(0));
+         mesh->calculateNormalsPerFace();
+         //mesh->calculateNormalsPerVertex();
+   }
+
+   else {
+      fprintf(stderr, "COULD NOT LOAD BLOCK MESH.\n");
+   }
+
    tempBlock->setMesh(mesh);
    if (Level.getEnvironment() == 0) {
       switch(Texture) {
