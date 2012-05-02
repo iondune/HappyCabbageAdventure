@@ -97,17 +97,9 @@ void CElementEnemy::OnCollision(CCollideable *Object) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
       CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
 
-      //Check if damage was taken by a jump.
+      //Check if jumped on top of enemy.
       if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {
          takeDamage(1);
-         PlayerActor->setImpulse(SVector2(0.0f, 3.0f), 0.01f);
-         Mix_PlayChannel(-1, Level.dmgEnemy, 0);
-
-         //The enemy was killed.
-         if (CurHealth <= 0) {
-            dieWithSeeds();
-            Level.getPlayer().setShaking(0.4f, 3.0f);
-         }
       }
 
       //Did the player run into them?
@@ -153,7 +145,7 @@ void CElementEnemy::reactToAbility(Abilities::EAbilityType Ability) {
          break;
       case Abilities::LASER:
          if(!Dead)
-            dieWithSeeds();
+            takeDamage(3);
          break;
       default:
          break;
@@ -173,6 +165,18 @@ int CElementEnemy::heal(int amount) {
 
 int CElementEnemy::takeDamage(int amount) {
    CurHealth = std::max(0, CurHealth - amount);
+
+   CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
+
+   PlayerActor->setImpulse(SVector2(0.0f, 9.0f), 0.01f);
+   Mix_PlayChannel(-1, Level.dmgEnemy, 0);
+
+   //The enemy was killed.
+   if (CurHealth <= 0) {
+      dieWithSeeds();
+      Level.getPlayer().setShaking(0.4f, 3.0f);
+      PlayerActor->setImpulse(SVector2(0.0f, 3.0f), 0.01f);
+   }
 
    return CurHealth;
 }
