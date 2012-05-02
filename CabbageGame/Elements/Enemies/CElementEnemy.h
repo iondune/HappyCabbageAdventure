@@ -36,6 +36,8 @@ class CElementEnemy : public CGameplayElement {
 
       bool AnimatingDeath;
 
+      int MaxHealth, CurHealth;
+
    public:
       virtual void OnCollision(CCollideable *Object);
       virtual void writeXML(xmlwriter *l);
@@ -50,6 +52,10 @@ class CElementEnemy : public CGameplayElement {
       Enemies::EEnemyType getEnemyType();
 
       CElementEnemy(SRect2 nArea, Enemies::EEnemyType type);
+
+      virtual int getHealth();
+      virtual int takeDamage(int amount);
+      virtual int heal(int amount);
 
       virtual void printInformation();
 };

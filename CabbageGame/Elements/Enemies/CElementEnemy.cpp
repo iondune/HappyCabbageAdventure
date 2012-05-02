@@ -14,7 +14,7 @@
 
 //Generic enemy, for usage in the LWIB, I guess.
 CElementEnemy::CElementEnemy(SRect2 nArea, Enemies::EEnemyType type)
-: CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), PhysicsEngineObject(NULL), SceneObject(NULL), Type(type) {
+: CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), PhysicsEngineObject(NULL), SceneObject(NULL), Type(type), MaxHealth(1), CurHealth(MaxHealth) {
 }
 
 //Enemy created by factory
@@ -151,21 +151,20 @@ void CElementEnemy::reactToAbility(Abilities::EAbilityType Ability) {
    }
 }
 
-/*void CElementEnemy::setupSoundEffects() {
-   string MusicDirectory = "../Media/Music/";
-   string temp;
+int CElementEnemy::getHealth() {
+   return CurHealth;
+}
 
-   if(Mix_OpenAudio(22050, AUDIO_S16, 2, 2048))
-      fprintf(stderr, "Could not open audio!\n");
+int CElementEnemy::heal(int amount) {
 
-   temp = MusicDirectory + "hitEnemy.wav";
-   Level.dmgEnemy = Mix_LoadWAV(temp.c_str());
+   CurHealth = std::min(MaxHealth, CurHealth + amount);
 
-   if (!Level.dmgEnemy) {
-      printf("Mix_LoadWAV: %s\n", Mix_GetError());
-      exit(1);
-   }
+   return CurHealth;
+}
 
-   temp = MusicDirectory + "smb2_cherry.wav";
-   Level.projectile = Mix_LoadWAV(temp.c_str());
-}*/
+int CElementEnemy::takeDamage(int amount) {
+   CurHealth = std::max(0, CurHealth - amount);
+
+   return CurHealth;
+}
+
