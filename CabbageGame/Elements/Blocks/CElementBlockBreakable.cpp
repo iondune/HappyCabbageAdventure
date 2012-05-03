@@ -1,35 +1,27 @@
-#include "CElementBlockFlag.h"
+#include "CElementBlockBreakable.h"
+#include "Player/CPlayerAbility.h"
 #include "CGameLevel.h"
 #include "CElementPlayer.h"
 
-CElementBlockFlag::CElementBlockFlag(SRect2 nArea, FlagRole role)
-: CElementBlock(nArea, 1, 0), Role(role) {
+CElementBlockBreakable::CElementBlockBreakable(SRect2 nArea)
+: CElementBlock(nArea, 1, 0) {
 }
 
-CElementBlockFlag::CElementBlockFlag(SRect2 nArea, int role)
-: CElementBlock(nArea, 1, 0), Role((FlagRole)role) {
-}
-
-void CElementBlockFlag::OnCollision(CCollideable *Object) {
+void CElementBlockBreakable::OnCollision(CCollideable *Object) {
 	if (Object == Level.getPlayer().getPhysicsEngineObject()) {
-		Level.getPhysicsEngine().removeObject(PhysicsEngineObject);
-		Level.getPlayer().setVictoryFlag(true);
-		Level.getPlayer().setAllowMovement(false);
 	}
    return;
 }
 
-void CElementBlockFlag::writeXML(xmlwriter *l) {
-   std::stringstream xValue, yValue, widthValue, heightValue, tagValue, isMovingValue, secretFlag;
+void CElementBlockBreakable::writeXML(xmlwriter *l) {
+   std::stringstream xValue, yValue, widthValue, heightValue, tagValue, isMovingValue, secretBreakable;
    xValue << Area.Position.X;
    yValue << Area.Position.Y;
    widthValue << Area.Size.X;
    heightValue << Area.Size.Y;
-   secretFlag << Role;
 
-   tagValue << "CFlag";
+   tagValue << "CBreakable";
 
-   l->AddAtributes("secret ", secretFlag.str());
    l->AddAtributes("width ", widthValue.str());
    l->AddAtributes("height ", heightValue.str());
    l->AddAtributes("Y ", yValue.str());
@@ -38,68 +30,63 @@ void CElementBlockFlag::writeXML(xmlwriter *l) {
    l->CloseLasttag();
 }
 
-void CElementBlockFlag::setupPhysicsEngineObject() {
+void CElementBlockBreakable::explode() {
+   if(Dead)
+      return;
+   removeFromPhysicsEngine();
+   removeFromSceneManager();
+   ParticleEngine = new CParticleEngine(SceneObject->getTranslation(), 200, 4, BURST_PARTICLE);
+   ParticleEngine->UsePhysics(&Level.getPhysicsEngine());
+}
+
+void CElementBlockBreakable::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addObject();
    PhysicsEngineObject->setArea(Area);
 }
 
-void CElementBlockFlag::setupSceneObject() {
-   CMesh *mesh = CMeshLoader::load3dsMesh("Base/flag2.3ds");
+void CElementBlockBreakable::setupSceneObject() {
+   CMeshSceneObject *tempBlock = new CMeshSceneObject();
+   CMesh *mesh;
+
+   mesh = CMeshLoader::load3dsMesh("Base/breakableblock2.3ds");
+
    if(mesh) {
-      mesh->centerMeshByExtents(SVector3(0));
-      mesh->calculateNormalsPerFace();
+         mesh->resizeMesh(SVector3(1));
+         mesh->centerMeshByExtents(SVector3(0));
+         mesh->calculateNormalsPerFace();
+         //mesh->calculateNormalsPerVertex();
    }
-   else
-      printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
-
-
-   CMesh *eMesh = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_5.3ds");
-   if(eMesh) {
-      eMesh->centerMeshByExtents(SVector3(0));
-      eMesh->calculateNormalsPerFace();
+   else {
+      fprintf(stderr, "COULD NOT LOAD BLOCK MESH.\n");
    }
-   else
-      printf("ENSIGNIA MESH DID NOT LOAD PROPERLY!\n");
 
+   tempBlock->setMesh(mesh);
+   tempBlock->setTexture("ModelImages/breakableblock2_brown.bmp");
 
-   SceneObject = new CMeshSceneObject();
-   SceneObject->setMesh(mesh);
-   SceneObject->setRotation(SVector3(-90,0,0));
-   SceneObject->setScale(SVector3(.0150f, .00025f,.0016f));
-   SceneObject->setTexture(CImageLoader::loadTexture("Base/white.bmp", true));
-   SceneObject->setShader(ERP_DEFAULT, "Toon");
-   SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
+   tempBlock->setShader(ERP_DEFAULT, CShaderLoader::loadShader("ToonTexture"));
+   tempBlock->setShader(ERP_DEFERRED_OBJECTS, CShaderLoader::loadShader("Deferred/Textured"));
 
-   Area.Position.Y += Area.Size.Y/2.f;
-   SceneObject->setTranslation(SVector3(Area.Position, 1.0f));
+   tempBlock->setTranslation(SVector3((Area.Position.X+(Area.Position.X+Area.Size.X))/2, (Area.Position.Y+(Area.Position.Y+Area.Size.Y))/2, 0));
+   tempBlock->setScale(SVector3(Area.Size.X, Area.Size.Y, Area.Size.X));
 
-   /*CMeshSceneObject *flagObject = new CMeshSceneObject();
-   flagObject->setMesh(mesh);
-   flagObject->setRotation(SVector3(-90,0,0));
-   flagObject->setScale(SVector3(.0150f, .00025f,.0016f));
-   flagObject->setTexture(CImageLoader::loadTexture("Base/white.bmp", true));
-   flagObject->setShader(ERP_DEFAULT, "Toon");
-   flagObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
+   SVector3 rots(rand()%3*90-90,rand()%3*90-90,rand()%3*90-90);
+   tempBlock->setRotation(rots);
 
-   CMeshSceneObject *ensigniaObject = new CMeshSceneObject();
-   ensigniaObject->setMesh(eMesh);
-   ensigniaObject->setTranslation(SVector3(0.0f, 3.0f, 0.0f));
-   ensigniaObject->setRotation(SVector3(-90,0,0));
-   ensigniaObject->setScale(SVector3(4.0f, 4.0f,4.0f));
-   ensigniaObject->setShader(ERP_DEFAULT, "Toon");
-   ensigniaObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-
-   SceneObject->addChild(ensigniaObject);
-   SceneObject->addChild(flagObject);*/
-
-
-   CApplication::get().getSceneManager().addSceneObject(SceneObject);
+   SceneObject = tempBlock;
+   CApplication::get().getSceneManager().addSceneObject(tempBlock);
 }
 
-void CElementBlockFlag::printInformation() {
-   printf("CElementBlockFlag; Area: [[%0.0f, %0.0f],[%0.0f, %0.0f]]; Role: %d\n", Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y, Role);
+void CElementBlockBreakable::printInformation() {
+   printf("CElementBlockBreakable; Area: [[%0.0f, %0.0f],[%0.0f, %0.0f]]\n", Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y);
 }
 
-CElementBlockFlag::FlagRole CElementBlockFlag::getRole() {
-   return Role;
+void CElementBlockBreakable::reactToAbility(Abilities::EAbilityType Ability) {
+   switch(Ability) {
+      case Abilities::LASER:
+         if(!Dead)
+            explode();
+         break;
+      default:
+         break;
+   }
 }
