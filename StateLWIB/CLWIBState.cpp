@@ -1176,7 +1176,7 @@ void CLWIBState::changeTiles() {
         tileOne->setImage(apple);
         tileTwo->setImage(orange);
         tileThree->setImage(kiwi);
-        tileFour->setImage(fire);
+        tileFour->setImage(grape);
         tileFive->setImage(fire);
         tileSix->setImage(blade);
 
@@ -1639,6 +1639,7 @@ void CLWIBState::prepHud() {
     blade = new CTexture(CImageLoader::loadImage("ModelImages/trap1_gray.bmp"));
     cabbageImage = new CTexture(CImageLoader::loadImage("ModelImages/cabbage_gray.bmp"));
     fire = new CTexture(CImageLoader::loadImage("ModelImages/flame.bmp"));
+    grape = new CTexture(CImageLoader::loadImage("ModelImages/grapes_gray.bmp"));
     leaf = new CTexture(CImageLoader::loadImage("ModelImages/leaf_gray.bmp"));
     heart = new CTexture(CImageLoader::loadImage("ModelImages/water_energy_gray.bmp"));
     flagImg = new CTexture(CImageLoader::loadImage("ModelImages/flag_gray.bmp"));
