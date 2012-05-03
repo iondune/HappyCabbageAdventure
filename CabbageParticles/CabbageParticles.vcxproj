@@ -94,6 +94,7 @@
     <ClCompile Include="CPhysicsParticle.cpp" />
     <ClCompile Include="CPLaser.cpp" />
     <ClCompile Include="CPLaser2.cpp" />
+    <ClCompile Include="CPLaserCharged.cpp" />
     <ClCompile Include="CPLeaf.cpp" />
     <ClCompile Include="CPStar.cpp" />
   </ItemGroup>
@@ -110,6 +111,7 @@
     <ClInclude Include="CPhysicsParticle.h" />
     <ClInclude Include="CPLaser.h" />
     <ClInclude Include="CPLaser2.h" />
+    <ClInclude Include="CPLaserCharged.h" />
     <ClInclude Include="CPLeaf.h" />
   </ItemGroup>
   <ItemGroup>

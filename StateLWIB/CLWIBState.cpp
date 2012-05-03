@@ -52,8 +52,6 @@ void initBlockMap() {
          blockMap[i][j].r = NULL;
          blockMap[i][j].mapX = -1;
          blockMap[i][j].mapY = -1;
-         blockMap[i][j].mapW = 1;
-         blockMap[i][j].mapZ = 1;
       }
 }
 //Initalizer fxn
@@ -984,10 +982,10 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
 void CLWIBState::removeObject() {
     if (placeables.size() > 0) {
         CGameplayElement *m_block = placeables.back();
-        printf("placeable x is %d\n",m_block->getArea().Size.Y);
+        printf("placeable x is %f placeable y is %f\n",m_block->getArea().Size.X,m_block->getArea().Size.Y);
         int i,j;
-        for(i = 0; i <m_block->getArea().Position.X; i++) {
-            for(j = 0; j <1 m_block->getArea().Size.Y; j++) {
+        for(i = 0; i <m_block->getArea().Size.X; i++) {
+            for(j = 0; j <m_block->getArea().Size.Y; j++) {
                 blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = false;
                 blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = NULL;
                 blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = -1;
