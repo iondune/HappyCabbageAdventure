@@ -108,6 +108,8 @@
     <ClInclude Include="CGameplayGUIManager.h" />
     <ClInclude Include="CGameplayManager.h" />
     <ClInclude Include="Elements\Blocks\CElementBlock.h" />
+    <ClInclude Include="Elements\Blocks\CElementBlockBreakable.h" />
+    <ClInclude Include="Elements\Blocks\CElementBlockDeath.h" />
     <ClInclude Include="Elements\Blocks\CElementBlockElevator.h" />
     <ClInclude Include="Elements\Blocks\CElementBlockFlag.h" />
     <ClInclude Include="Elements\CGameplayElement.h" />
@@ -151,6 +153,8 @@
     <ClCompile Include="CGameplayManager.cpp" />
     <ClCompile Include="Driver.cpp" />
     <ClCompile Include="Elements\Blocks\CElementBlock.cpp" />
+    <ClCompile Include="Elements\Blocks\CElementBlockBreakable.cpp" />
+    <ClCompile Include="Elements\Blocks\CElementBlockDeath.cpp" />
     <ClCompile Include="Elements\Blocks\CElementBlockElevator.cpp" />
     <ClCompile Include="Elements\Blocks\CElementBlockFlag.cpp" />
     <ClCompile Include="Elements\CGameplayElement.cpp" />
