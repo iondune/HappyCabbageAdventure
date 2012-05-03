@@ -42,6 +42,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
    friend class CPlayerAbilityShield;
    friend class CPlayerAbilityBlink;
    friend class CPlayerAbilityLaser;
+   friend class CPlayerAbilityDash;
    public:
       enum EDirection {
          Left = 0,

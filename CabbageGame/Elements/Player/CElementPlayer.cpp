@@ -4,7 +4,7 @@
 
 CElementPlayer::CElementPlayer(SRect2 nArea)
 : CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f), Shaking(0.0f), ShakeFactor(SVector3(0.0f)),
-  ISquishable(2.0f, 2.0f), AllowMovement(true), PlayJump(true), Victory(false), VictoryTime(0.0f) {
+  ISquishable(2.0f, 2.0f), AllowMovement(true), PlayJump(true), Victory(false), VictoryTime(0.0f), ShakeFactorFactor(1000.0f) {
    setupSoundEffects();
 }
 
@@ -135,6 +135,7 @@ void CElementPlayer::updateSceneObject(float time) {
          ShakeFactor = SVector3((float)rand()/(float)RAND_MAX * 0.3f - 0.15f, (float)rand()/(float)RAND_MAX * 0.3f - 0.15f, 0) / ShakeFactorFactor;
       if(Shaking <= 0.0f) {
          ShakeFactor = SVector3(0.0f);
+         ShakeFactorFactor = 1000.0f;
       }
    }
 
@@ -224,8 +225,10 @@ void CElementPlayer::incrementHealth() {
 }
 
 void CElementPlayer::setShaking(float time, float factor) {
-   Shaking = time;
-   ShakeFactorFactor = factor;
+   if(time > Shaking)
+      Shaking = time;
+   if(factor < ShakeFactorFactor)
+      ShakeFactorFactor = factor;
 }
 
 void CElementPlayer::incrementSeeds() {
