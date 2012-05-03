@@ -3,9 +3,9 @@
 
 
 #include <sstream>
-CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2 & nArea, SVector3 & sf, CCollisionActor* peo) :
+CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2 & nArea, SVector3 & sf, CCollisionActor* peo, bool uC) :
    SceneObject(obj), CabbageIndex(CurHealth - 1), Direction(dir), Action(act), Hurt(false), Area(nArea), ShakeFactor(sf),
-   ySineValue(0.0f), PhysicsEngineObject(peo) {
+   ySineValue(0.0f), PhysicsEngineObject(peo), UseCamera(uC) {
 
    SceneObject->setCullingEnabled(false);
 
@@ -179,6 +179,8 @@ T CubicInterpolate(
 
 void CPlayerView::updateCameraPosition(float const ElapsedTime)
 {
+   if(!UseCamera)
+      return;
 	TargetCameraPosition = SVector2(Area.getCenter().X + (Direction == CElementPlayer::Right ? 1.75f : -1.75f), Area.getCenter().Y + 1.3f);
 
 	if (TargetCameraPosition != CurrentCameraPosition)
