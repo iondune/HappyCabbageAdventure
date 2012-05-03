@@ -30,6 +30,10 @@ class CPlayerView {
 
       SVector3 & ShakeFactor;
 
+	  SVector3 CurrentCameraPosition, TargetCameraPosition;
+
+	  void updateCameraPosition(float const ElapsedTime);
+
    public:
       void setCabbageScale(SVector3);
       void setCutoffPoint(SRect2 left, SRect2 right);

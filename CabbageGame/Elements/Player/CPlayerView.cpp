@@ -143,8 +143,41 @@ void CPlayerView::setCutoffPoint(SRect2 left, SRect2 right) {
    }
 }
 
+void CPlayerView::updateCameraPosition(float const ElapsedTime)
+{
+	TargetCameraPosition = SVector3(Area.getCenter().X, Area.getCenter().Y + 1.3f, 10) + ShakeFactor;
+
+	if (Direction == CElementPlayer::Right)
+		TargetCameraPosition.X += 1.75f;
+	else
+		TargetCameraPosition.X -= 1.75f;
+
+	if (TargetCameraPosition != CurrentCameraPosition)
+	{
+		SVector3 MoveDirection = TargetCameraPosition - CurrentCameraPosition;
+		
+		static float const MoveSpeed = 2.5f;
+		float const MoveDistance = MoveDirection.length();
+		float const MoveThisFrame = MoveSpeed * ElapsedTime * MoveDistance;
+
+		MoveDirection.normalize();
+		MoveDirection *= MoveThisFrame;
+
+		if (MoveDirection.length() > MoveDistance)
+		{
+			CurrentCameraPosition = TargetCameraPosition;
+		}
+		else
+		{
+			CurrentCameraPosition += MoveDirection;
+		}
+	}
+
+	CApplication::get().getSceneManager().getActiveCamera()->setPosition(CurrentCameraPosition);
+}
+
 void CPlayerView::updateView(float time) {
-   CApplication::get().getSceneManager().getActiveCamera()->setPosition(SVector3(Area.getCenter().X, Area.getCenter().Y + 1.3f, 10) + ShakeFactor);
+   updateCameraPosition(time);
 
    ShadowLeft->setTranslation(SVector3(Area.getCenter().X, yLeftShadow + 0.01, 0));
    LeftShadowStartValue = 0.f;

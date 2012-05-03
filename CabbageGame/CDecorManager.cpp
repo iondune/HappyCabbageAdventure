@@ -30,10 +30,10 @@ ISceneObject *CDecorManager::SetupObject(float x, float y, float z, float scale,
       render->setTexture(CImageLoader::loadTexture("Base/cactus.bmp", true));
       render->setShader(ERP_DEFERRED_OBJECTS, DeferredToonTexture);
 
-      render->setRotation(SVector3(-90, 0, rand()%179 - 90));
+      render->setRotation(SVector3(-90, 0, rand()%179 - 90.f));
    }
    else if (model == cactus2Mesh || model == cactusBush2Mesh) {
-      render->setRotation(SVector3(-90, 0, rand()%179 - 90));
+      render->setRotation(SVector3(-90, 0, rand()%179 - 90.f));
    }
 
    CApplication::get().getSceneManager().addImmobileSceneObject(render, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
@@ -59,7 +59,7 @@ CDecorManager::CDecorManager(CGameLevel & level) {
    int drawTree = rand()%2 + 1;
    int NumTreeTypes = 2;
    int NumFlowerTypes = 2;
-   for(int i = 0; i < groundBlocks.size(); i++) {
+   for(unsigned int i = 0; i < groundBlocks.size(); i++) {
       curBlock = groundBlocks[i];
       if (env == 0)
          GenerateForestPlants(curBlock);
@@ -85,7 +85,7 @@ void CDecorManager::GenerateDesertPlants(CGroundBlock* block, bool genTree) {
    int numForeground, numBackground;
    int plantType;
    float randScale, randDepth, randDist;
-   float div, yVal = y + h;
+   float yVal = y + h;
 
    if (w > 0.5f && w < 1.5f)  //If block size roughly 1, don't draw any trees
       numForeground = numBackground = 0;
@@ -97,7 +97,7 @@ void CDecorManager::GenerateDesertPlants(CGroundBlock* block, bool genTree) {
    //Draw Tree in background
    if (genTree) {
       plantType = rand()%3;
-      randDist = w * .1 + (rand() / (float)RAND_MAX) * .7 * w;  //.1, .7 to make sure doesn't overlap with other randomly drawn cacti
+      randDist = w * 0.1f + (rand() / (float)RAND_MAX) * 0.7f * w;  //.1, .7 to make sure doesn't overlap with other randomly drawn cacti
       if (plantType < 2)
          SetupObject(x + randDist, yVal + 1.5f, -d/2.0f + .4f, 5.5f, cactus2Mesh);
       else if (plantType == 2)
@@ -115,10 +115,10 @@ void CDecorManager::GenerateDesertPlants(CGroundBlock* block, bool genTree) {
       randDepth = (float) randDepth*.25f;
 
       if (n == 0) {
-         randDist = (rand() / (float)RAND_MAX) * .4 * w;
+         randDist = (rand() / (float)RAND_MAX) * 0.4f * w;
       }
       else {
-         randDist = w * .5 + (rand() / (float)RAND_MAX) * .4 * w;
+         randDist = w * 0.5f + (rand() / (float)RAND_MAX) * 0.4f * w;
       }
 
       if (plantType == 0)
@@ -136,13 +136,13 @@ void CDecorManager::GenerateDesertPlants(CGroundBlock* block, bool genTree) {
       randScale = randScale * .025f;
 
       randDepth = (float) (rand()%2);
-      randDepth = (float) randDepth*.25f;
+      randDepth = (float) randDepth*0.25f;
 
       if (n == 0) {
-         randDist = w * .1 + (rand() / (float)RAND_MAX) * .4 * w;
+         randDist = w * 0.1f + (rand() / (float)RAND_MAX) * 0.4f * w;
       }
       else {
-         randDist += w * .4 + (rand() / (float)RAND_MAX) * .1 * w;
+         randDist += w * 0.4f + (rand() / (float)RAND_MAX) * 0.1f * w;
       }
 
       if (plantType == 0) {
@@ -225,7 +225,7 @@ void CDecorManager::GenerateForestPlants(CGroundBlock* block) {
       randDepth = randDepth*0.25f;
 
       if (random == 0 || random == 1)
-         SetupObject(x + n + 0.5f, randScale/2.0 + .1f, d/2.0f - 0.6f, 0.4f + randScale, whiteFlwrMesh);
+         SetupObject(x + n + 0.5f, randScale/2.0f + 0.1f, d/2.0f - 0.6f, 0.4f + randScale, whiteFlwrMesh);
       else if (random == 2 || random == 3 || random == 4) {
          if (subrand == 0)
             SetupObject(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, blueFlwrMesh);
@@ -440,7 +440,7 @@ void CDecorManager::SetupClouds() {
    tempBlock->setTexture(tex);
    tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
-   tempBlock->setTranslation(SVector3(85/*75*/, 13, -4.9));
+   tempBlock->setTranslation(SVector3(85/*75*/, 13, -4.9f));
    tempBlock->setScale(SVector3(250, -50, 1));
    tempBlock->setVisible(true);
 
