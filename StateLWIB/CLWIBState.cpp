@@ -35,7 +35,7 @@ void CLWIBState::BlocksInit( void ) {
 struct quickndirty {
    CGameplayElement *r;
    bool o;
-   int mapX,mapY,mapW,mapH;
+   int mapX,mapY;
 } typedef qd;
 
 void initBlockMap();
@@ -59,15 +59,11 @@ void CLWIBState::begin()
 {
 
    clickDown = 0;
-   
+   uniType = 0;
    flagFlag = 0;
    cabbageFlag = 0; // for cabbage
    xCabbage = 0; // for cabbage
    yCabbage = 0;// for cabbage
-   textureType = 0;
-   enemyType = 0;
-   itemType = 0;
-   secretFlag = 0;
    friendType = 0;
    dayNight = 0;
    env = 0;
@@ -138,7 +134,8 @@ void CLWIBState::OnRenderStart(float const Elapsed)
 
    stepCamera(Application.getElapsedTime());
    float x=round(eye.X + previewBlockMouseX),y= round(eye.Y + previewBlockMouseY);
-   //PreviewBlock->setTranslation(SVector3(x+(float)blockWidth/2,y+(float)blockHeight/2, 0));
+    //PreviewBlock->
+        //setTranslation(SVector3(x+(float)blockWidth/2,y+(float)blockHeight/2, 0));
 
    if(clickDown) { //over hud
      // PreviewBlock->setVisible(false);
@@ -183,58 +180,92 @@ void CLWIBState::OnRenderStart(float const Elapsed)
        block1->setText("Placing Block");
        if (cDown == 0) {
            block3->setVisible(false);
-           if (textureType == 0) {
+           if (uniType == 0) {
                block2->setText("Placing grass block");
+               //PreviewBlock = new CElementBlock(SRect2(x,y,blockWidth,blockHeight),blockDepth,uniType);
            }
-           if (textureType == 1) {
+           if (uniType == 1) {
                block2->setText("Placing dirt block");
+               //PreviewBlock = new CElementBlock(SRect2(x,y,blockWidth,blockHeight),blockDepth,uniType);
            }
-           if (textureType == 2) {
+           if (uniType == 2) {
                block2->setText("Placing rock block");
+               //PreviewBlock = new CElementBlock(SRect2(x,y,blockWidth,blockHeight),blockDepth,uniType);
            }
 
-           if (textureType == -5) {
+           if (uniType == -5) {
                block2->setText("Placing ground block");
+               //PreviewBlock = new CElementBlock(SRect2(x,y,blockWidth,blockHeight),blockDepth,uniType);
            }
+           if (uniType >= 3)
+               uniType = 0;
        }
        if (cDown == 1) {
-           block3->setVisible(true);
+           //block3->setVisible(true);
            block2->setText("changing block width\n");
        }
        if (cDown == 2) {
-           block3->setVisible(true);
+           //block3->setVisible(true);
            block2->setText("changing block height\n");
        }
        if (cDown == 3) {
-           block3->setVisible(true);
+           //block3->setVisible(true);
            block2->setText("changing block depth\n");
+       }
+       if (cDown == 4) {
+          block2->setText("adding breakableBlocks");
+          //PreviewBlock = new CElementBlockBreakable(SRect2(x,y,blockWidth,blockHeight));
+       }
+       if (cDown == 5){
+          block2->setText("adding deathBlocks");
+          //PreviewBlock = new CElementBlockDeath(SRect2(x,y,blockWidth,blockHeight),blockDepth,uniType, 1.0f,1.0f);
        }
    }
    if (twoDown && !showHelp && !tDown && !oneDown && !threeDown&& !fourDown) {
        block3->setVisible(false);
        block2->setVisible(true);
        block1->setText("Placing enemy");
-       if (enemyType == 0) {
+       if (uniType == 0) {
            block2->setText("Placing Apple\n");
        }
-       if (enemyType == 1) {
+       if (uniType == 1) {
+           block2->setText("Placing Orange\n");
            //PreviewEnemy->setScale(SVector3(1,1,1));
        }
-       if (enemyType == 2) {
+       if (uniType == 2) {
            block2->setText("Placing Kiwi\n");
        }
 
-       if (enemyType == 3) {
+       if (uniType == 3) {
            block2->setText("Placing Grape\n");
        }
 
-       if (enemyType == 4) {
+       if (uniType == 4) {
            block2->setText("Placing Flame\n");
        }
 
-       if (enemyType == 5) {
+       if (uniType == 5) {
            block2->setText("Placing Blade\n");
        }
+       
+       if (uniType == 6) {
+           block2->setText("Placing Giant Apple\n");
+       }
+       
+       if (uniType == 7) {
+           block2->setText("Placing Pear\n");
+       }
+       
+       if (uniType == 8) {
+           block2->setText("Placing Banana\n");
+       }
+       
+       if (uniType == 9) {
+           block2->setText("Placing cherry\n");
+       }
+       
+       if (uniType >= 10)
+           uniType = 0;
    }
    if (oneDown && !showHelp && !tDown && !twoDown && !threeDown&& !fourDown) {
        block3->setVisible(false);
@@ -251,27 +282,31 @@ void CLWIBState::OnRenderStart(float const Elapsed)
        block3->setVisible(false);
        block2->setVisible(true);
        block1->setText("Insert flag");
-       if (secretFlag == 0)
+       if (uniType == 0)
            block2->setText("regular flag");
-       if (secretFlag == 1)
+       if (uniType == 1)
            block2->setText("secret flag");
+       if (uniType >= 2)
+           uniType = 0;
    }
    if (!threeDown && !showHelp && !tDown && !twoDown && !oneDown && fourDown) {
         block3->setVisible(false);
         block2->setVisible(true);
         block1->setText("Insert item");
-        if (itemType == 0)  {// health
+        if (uniType == 0)  {// health
             block2->setText("Adding Health");
         }
-        else if (itemType == 1) { // energy
+        else if (uniType == 1) { // energy
             block2->setText("Adding Energy");
         }
-        else if (itemType == 2) {// life
+        else if (uniType == 2) {// life
             block2->setText("Adding life");
         }
-        else if (itemType == 3) { // powerup 
+        else if (uniType == 3) { // powerup 
             block2->setText("Adding Seeds");
         }
+        else if (uniType >=4)
+            uniType = 0;
    }
    if (sixDown) {
         block3->setVisible(true);
@@ -303,7 +338,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    }
    pickInsert();
    changeTiles();
-
+   //PreviewBlock->setupObjects();
    for (int i = 0 ; i < placeables.size(); i++)
        placeables[i]->update(Elapsed);
 
@@ -388,7 +423,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
         }
         if(Event.Key == SDLK_c){
             if (!oneDown && !twoDown && !threeDown && !tDown) {
-                if(cDown <= 3)
+                if(cDown <= 5)
                     cDown++;
                 else
                     cDown = 0;
@@ -413,48 +448,48 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 else
                     friendType = 0;
             } else if (twoDown) {
-                if (enemyType < 6) //temp constraint
-                    enemyType++;
+                if (uniType < 9) //temp constraint
+                    uniType++;
                 else
-                    enemyType = 0;
+                    uniType = 0;
             } else if (threeDown){ 
-                if (secretFlag < 1)
-                    secretFlag++;
+                if (uniType < 1)
+                    uniType++;
                 else
-                    secretFlag = 0;
+                    uniType = 0;
             } else if (fourDown) {
-                if (itemType < 3) 
-                    itemType++;
+                if (uniType < 3) 
+                    uniType++;
                 else
-                    itemType = 0;
+                    uniType = 0;
             } else if (!oneDown && !threeDown && !tDown && !fourDown){
                 if (cDown == 0) { 
-                    if (textureType < 2  && textureType >= 0 && textureType != 2)
-                        textureType++;
-                    else if (textureType == 2) {
-                        textureType = -5;
+                    if (uniType < 2  && uniType >= 0 && uniType != 2)
+                        uniType++;
+                    else if (uniType == 2) {
+                        uniType = -5;
                         blockWidth = 5;
                         blockHeight = 5;
                         blockDepth = 5;
                     }
-                    else if (textureType == -5) {
-                        textureType = 0;
+                    else if (uniType == -5) {
+                        uniType = 0;
                         blockWidth = 1;
                         blockHeight = 1;
                         blockDepth = 1;
                     }
                 }
             
-                if (cDown == 1&& textureType != 2) {
-                    if(blockWidth < 10 && textureType != -5)
+                if (cDown == 1&& uniType != 2) {
+                    if(blockWidth < 10 && uniType != -5)
                         blockWidth++;
                 }
-                if (cDown == 2&& textureType != 2) {
-                    if(blockHeight < 10 && textureType != -5)
+                if (cDown == 2&& uniType != 2) {
+                    if(blockHeight < 10 && uniType != -5)
                         blockHeight++;
                 }
-                if (cDown == 3&& textureType != 2) {
-                    if(blockDepth < 6 && textureType != -5)
+                if (cDown == 3&& uniType != 2) {
+                    if(blockDepth < 6 && uniType != -5)
                         blockDepth++;
                 }
             }
@@ -466,47 +501,47 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 else
                     friendType = 1;
             } else if (twoDown) {
-                if (enemyType != 0) 
-                    enemyType--;
+                if (uniType != 0) 
+                    uniType--;
                 else
-                    enemyType = 5;
+                    uniType = 9;
             } else if (threeDown) {
-                if (secretFlag == 1)
-                    secretFlag--;
+                if (uniType == 1)
+                    uniType--;
                 else
-                    secretFlag = 1;
+                    uniType = 1;
             } else if (fourDown) {
-                if (itemType != 0)
-                    itemType--;
+                if (uniType != 0)
+                    uniType--;
                 else
-                    itemType = 3;
+                    uniType = 5;
             } else if (!oneDown && !threeDown && !tDown){
                 if (cDown == 0) {
-                    if (textureType != 0 && textureType > 0)   
-                        textureType--;
-                    else if (textureType == 0) {
-                        textureType = -5;
+                    if (uniType != 0 && uniType > 0)   
+                        uniType--;
+                    else if (uniType == 0) {
+                        uniType = -5;
                         blockWidth = 5;
                         blockHeight = 5;
                         blockDepth = 5;
                     }
-                    else if (textureType == -5) {
-                        textureType = 2;
+                    else if (uniType == -5) {
+                        uniType = 2;
                         blockWidth = 1;
                         blockHeight = 1;
                         blockDepth = 1;
                     }
                 }
-                if(cDown == 1&& textureType != 2) {
-                    if(blockWidth > 1 && textureType != -5) 
+                if(cDown == 1&& uniType != 2) {
+                    if(blockWidth > 1 && uniType != -5) 
                         blockWidth--;
                 }
-                if(cDown == 2&& textureType != 2) {
-                    if(blockHeight > 1 && textureType != -5)
+                if(cDown == 2&& uniType != 2) {
+                    if(blockHeight > 1 && uniType != -5)
                         blockHeight--;
                 }
-                if(cDown == 3&& textureType != 2) {
-                    if(blockDepth > 1 && textureType != -5)
+                if(cDown == 3&& uniType != 2) {
+                    if(blockDepth > 1 && uniType != -5)
                         blockDepth--;
                 }
             }
@@ -614,6 +649,15 @@ void CLWIBState::loadWorld() {
                 y = xml->getAttributeValueAsInt(1);
                 t = xml->getAttributeValueAsInt(2);
                 //PrepFriends(x,y,t);
+           }
+           if (!strcmp("CBreakable", xml->getNodeName())) {
+                x = xml->getAttributeValueAsInt(0);
+                y = xml->getAttributeValueAsInt(1);
+                h = xml->getAttributeValueAsInt(2);
+                w = xml->getAttributeValueAsInt(3);
+                cDown = 4;
+               PrepBlock((float)x,(float)y,w,h,0,0,0);
+               cDown = 0;
            }
            if (!strcmp("envVar", xml->getNodeName()))
            {
@@ -728,6 +772,14 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
    }
    printf("Placed enemy starting at %0.2f, %0.2f\n", x, y);
    CGameplayElement *tempPlaceable;
+   if (type == 6)
+        type = 8;
+   else if(type == 7)
+        type = 9;
+   else if(type == 8)
+        type = 10;
+   else if (type == 9)
+        type = 12;
    placeables.push_back(tempPlaceable = CEnemyLoader::LoadEnemy(SRect2(x, y, 1, 1),(Enemies::EEnemyType) type));
    tempPlaceable->setupObjects(); 
 
@@ -840,7 +892,12 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
    printf("Placed block starting at %0.2f, %0.2f, %d, %d, %d\n", x, y, h,d,t);
    
    CGameplayElement *tempPlaceable;
-   placeables.push_back(tempPlaceable = new CElementBlock(SRect2(x,y,w,h),d,t));
+   if (cDown == 4)
+       placeables.push_back(tempPlaceable = new CElementBlockBreakable(SRect2(x,y,w,h)));
+   //else if (cDown == 5)
+       //placeables.push_back(tempPlaceable = new CElementBlockDeath(SRect2(x,y,w,h),d,t,1.0f,1.0f));
+   else
+       placeables.push_back(tempPlaceable = new CElementBlock(SRect2(x,y,w,h),d,t));
 
    for(i = 0; i < w; i++) {
       for(j = 0; j < h; j++) {
@@ -890,11 +947,11 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
       if(Event.Pressed && Event.Type.Value == SMouseEvent::EType::Click) {
          mouseDown = 1;
          if(!tDown && twoDown && !oneDown && !threeDown && !fourDown) {
-            PrepEnemy(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY),enemyType);
+            PrepEnemy(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY),uniType);
             printf("Here1\n");
          }
          if(!tDown && !twoDown && !oneDown && threeDown&& !fourDown) {
-            PrepFlag(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), secretFlag);
+            PrepFlag(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), uniType);
             printf("Here2\n");
          }
          if(!tDown && oneDown && !threeDown && !twoDown&& !fourDown) {
@@ -906,11 +963,11 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          }
          else if (!tDown && !oneDown && !threeDown &&!twoDown && !fourDown) {
             printf("Here4\n");
-            PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,textureType,mDown);
+            PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,uniType,mDown);
          }
          else if (!tDown && !oneDown && !threeDown &&!twoDown && fourDown) {
             printf("Here5\n");
-            PrepItem(round(eye.X + previewBlockMouseX),round(eye.Y + previewBlockMouseY),itemType);
+            PrepItem(round(eye.X + previewBlockMouseX),round(eye.Y + previewBlockMouseY),uniType);
          }
          //else { //Delete item
          if (tDown && !oneDown && !threeDown && !twoDown && !fourDown) {
@@ -972,7 +1029,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
             }*/
          }
          if(!threeDown && !tDown && !twoDown && !oneDown && !fourDown && mouseDown) {
-            PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth, textureType,mDown);
+            PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth, uniType,mDown);
          }
          lastMouseOveredBlock = m_qd;
       }
@@ -1266,72 +1323,72 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     }
     if (widget == tileOne) {
         if (change == 0) {
-            if (textureType == -5) {
+            if (uniType == -5) {
                 blockWidth = 1;
                 blockHeight = 1;
                 blockDepth = 1;
               //  PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
             }
-            textureType = 0;
+            uniType = 0;
             cDown = 0;
         }
         if (change == 2) {
-            enemyType = 0;
+            uniType = 0;
         }
         if (change == 3) {
-            secretFlag = 0;
+            uniType = 0;
         }
         if (change == 4) {
-            itemType = 0;
+            uniType = 0;
         }
         if (change == 6)
             dayNight = 0;
     }
     if (widget == tileTwo) {
         if (change == 0) {
-            if (textureType == -5) {
+            if (uniType == -5) {
                 blockWidth = 1;
                 blockHeight = 1;
                 blockDepth = 1;
             //    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
             }
-            textureType = 1;
+            uniType = 1;
             cDown = 0;
         }
         if (change == 2) {
-            enemyType = 1;
+            uniType = 1;
         }
         if (change == 3) {
-            secretFlag = 1;
+            uniType = 1;
         }
         if (change == 4) {
-            itemType =1; 
+            uniType =1; 
         }
         if (change == 6)
             dayNight = 1;
     }
     if (widget == tileThree) {
         if (change == 0) {
-            if (textureType == -5) {
+            if (uniType == -5) {
                 blockWidth = 1;
                 blockHeight = 1;
                 blockDepth = 1;
 //                PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
             }
-            textureType = 2;
+            uniType = 2;
             cDown = 0;
         }
         if (change == 2) {
-            enemyType = 2;
+            uniType = 2;
         }
         if (change == 4)
-            itemType = 2;
+            uniType = 2;
         if (change == 6)
             env = 0;
     }
     if (widget == tileFour) {
         if (change == 0) {
-            textureType = -5;
+            uniType = -5;
             blockWidth = 5;
             blockHeight = 5;
             blockDepth = 5;
@@ -1339,54 +1396,54 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             cDown = 0;
         }
         if (change == 2) {
-            enemyType = 3;
+            uniType = 3;
         }
         if (change == 4)
-            itemType = 3;
+            uniType = 3;
         if (change == 6)
             env = 1;
     }
     if (widget == tileFive) {
         if (change == 0) {
-            if (blockWidth > 1 && textureType != -5)
+            if (blockWidth > 1 && uniType != -5)
                 blockWidth--;
 //            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             cDown = 1;
         }
         if (change == 2) {
-            enemyType = 4;
+            uniType = 4;
         }
         if (change == 6)
             env = 2;
     }
     if (widget == tileSix) {
         if (change == 0) {
-            if (blockWidth < 10 && textureType != -5)
+            if (blockWidth < 10 && uniType != -5)
                 blockWidth++;
 //            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             cDown = 1;
 
         }
         if (change == 2) {
-            enemyType = 5;
+            uniType = 5;
         }
         if (change == 6)
             env = 3;
     }
     if (widget == tileSeven) {
         if (change == 0) {
-            if (blockHeight > 1 && textureType != -5)
+            if (blockHeight > 1 && uniType != -5)
                 blockHeight--;
 //            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             cDown = 2;
         }
         if (change == 2) {
-            enemyType = 6;
+            uniType = 6;
         }
     }
     if (widget == tileEight) {
         if (change == 0) {
-            if (blockHeight < 10 && textureType != -5)
+            if (blockHeight < 10 && uniType != -5)
                 blockHeight++;
 //            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             cDown = 2;
@@ -1396,7 +1453,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     }
     if (widget == tileNine) {
         if (change == 0) {
-            if (blockDepth > 1 && textureType != -5)
+            if (blockDepth > 1 && uniType != -5)
                 blockDepth--;
 //            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             cDown = 3;
@@ -1406,7 +1463,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     }
     if (widget == tileTen) {
         if (change == 0) {
-            if (blockDepth < 5 && textureType != -5)
+            if (blockDepth < 5 && uniType != -5)
                 blockDepth++;
 //            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             cDown = 3;
@@ -1692,7 +1749,7 @@ void CLWIBState::stepCamera(float delta) {
       look.Y -= delta*factor;
    }
    if(!tDown && !twoDown && !oneDown && !twoDown && !threeDown && !fourDown && mouseDown) {
-      PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,textureType,mDown);
+      PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,uniType,mDown);
    }
 }
 

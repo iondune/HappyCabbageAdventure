@@ -9,6 +9,8 @@
 #include "../CabbageGame/Elements/Enemies/CElementEnemy.h"
 #include "../CabbageGame/Elements/Blocks/CElementBlock.h"
 #include "../CabbageGame/Elements/Player/CElementPlayer.h"
+#include "../CabbageGame/Elements/Blocks/CElementBlockBreakable.h"
+#include "../CabbageGame/Elements/Blocks/CElementBlockDeath.h"
 #include "../CabbageGame/Elements/Items/CElementItem.h"
 #include "../CabbageGame/Elements/CGameplayElement.h"
 #include "../CabbageGame/irrxml-1.2/src/irrXML.h"
@@ -41,6 +43,7 @@ class CLWIBState : public CState<CLWIBState>
    int dayNight, env; 
    bool showHelp;
    int enemyType, textureType, itemType, friendType;
+   int uniType;
    int WindowWidth, WindowHeight;
    //stuff for textures
    CTexture *grass,*dirt,*rock,*ground,*cabbageImage,*apple,*orange,*kiwi,*fire,*blade, *alien;
@@ -62,7 +65,7 @@ class CLWIBState : public CState<CLWIBState>
    CMesh *seedMesh;
    float xp2w(int oldX);
    float yp2w(int oldY);
-   //CGameplayElement *PreviewBlock, *PreviewEnemy, *PreviewCabbage, *PreviewGround, *PreviewFlag, *PreviewItem;
+   CGameplayElement *PreviewBlock;// *PreviewEnemy, *PreviewCabbage, *PreviewGround, *PreviewFlag, *PreviewItem;
 
    public:
    std::vector<CGameplayElement*> placeables, redoPlaceables;
