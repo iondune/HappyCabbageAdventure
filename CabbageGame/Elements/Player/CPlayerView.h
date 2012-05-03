@@ -27,6 +27,7 @@ class CPlayerView {
       float LeftShadowCutoffValue, LeftShadowStartValue, RightShadowCutoffValue, RightShadowStartValue;
       float yLeftShadow, yRightShadow, cutOffPoint;
       float ySineValue;
+      CPointLightSceneObject *Light;
 
       SVector3 & ShakeFactor;
 

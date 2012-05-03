@@ -1,6 +1,8 @@
 #include "CDecorManager.h"
 #include "CGameLevel.h"
 
+#include "CParticleEngine.h"
+
 CGroundBlock::CGroundBlock(float nx, float ny, float nw, float nh, float nd) : x(nx), y(ny), w(nw), h(nh), d(nd) {
 }
 
@@ -41,6 +43,8 @@ ISceneObject *CDecorManager::SetupObject(float x, float y, float z, float scale,
 }
 
 void CDecorManager::update(float f) {
+   if(StarEngine)
+      StarEngine->step(f);
 
 }
 
@@ -51,8 +55,18 @@ CDecorManager::CDecorManager(CGameLevel & level) {
    PrepShaders();
    PrepMeshes();
    SetupSky();
-   if(night)
+   StarEngine = NULL;
+   if(night) {
+      StarEngine = new CParticleEngine(SVector3(-30.0f, 15.0f, 0.0f), 100, -1, STAR_PARTICLE);
       SetupClouds();
+      for (int x = -5; x < 200; ++ x)
+         for (int y = -0; y < 2; ++ y)
+         {
+            CPointLightSceneObject * point = new CPointLightSceneObject(1.5f, x % 2 ? SColor(1, 0, 0) : SColor(0, 1, 1));
+            point->setTranslation(SVector3(x * 3.f, y * 3.f, 0.f));
+            CApplication::get().getSceneManager().addSceneObject(point);
+         }
+   }
    oldFern = false;
 
    CGroundBlock *curBlock;
