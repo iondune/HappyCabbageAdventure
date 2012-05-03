@@ -1,8 +1,9 @@
 ROOT_CABBAGE_DIR=../
-SOURCES=CLWIBState.cpp Materials.cpp ./wmlwriter_src/xmlwriter.cpp CBlock.cpp CEnemy.cpp CCabbage.cpp CFlag.cpp CPItem.cpp CPFriends.cpp
+SOURCES=CLWIBState.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o)
 COMPILER_VERSION=-std=c++0x
-INCLUDE = -I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI
+ELEMENTSHEADER=$(shell find ../CabbageGame/Elements -type d | awk 'BEGIN{}{print "-I./"$$1}')
+INCLUDE = -I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI -I../CabbageGame -I ../CabbageGame/wmlwriter_src/ $(ELEMENTSHEADER)
 CC=g++ -O1 -s 
 
 all: lib 
