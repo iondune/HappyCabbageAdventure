@@ -35,7 +35,7 @@ void CLWIBState::BlocksInit( void ) {
 struct quickndirty {
    CGameplayElement *r;
    bool o;
-   int mapX,mapY;
+   int mapX,mapY,mapW,mapH;
 } typedef qd;
 
 void initBlockMap();
@@ -52,6 +52,8 @@ void initBlockMap() {
          blockMap[i][j].r = NULL;
          blockMap[i][j].mapX = -1;
          blockMap[i][j].mapY = -1;
+         blockMap[i][j].mapW = 1;
+         blockMap[i][j].mapZ = 1;
       }
 }
 //Initalizer fxn
@@ -355,20 +357,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
             //printf("Angle: %d\n", ANGLE(overView, backwardsView));
         }
         if(Event.Key == SDLK_u) {
-            //3 is the number of static blocks created before the user can add in new blocks (ie unremovable)
-            /*CGameplayElement *m_block = placeables.back();
 
-            int i,j;
-            for(i = 0; i < m_block->getArea().Position.X; i++) {
-                for(j = 0; j < m_block->getArea().Size.Y; j++) {
-                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = false;
-                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = NULL;
-                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = -1;
-                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = -1;
-                }
-            }
-            placeables.back()->removeFromGame();
-            placeables.pop_back();*/
             removeObject();
         }
         if(Event.Key == SDLK_r) {
@@ -449,31 +438,26 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                         blockWidth = 5;
                         blockHeight = 5;
                         blockDepth = 5;
-                      //  PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                     }
                     else if (textureType == -5) {
                         textureType = 0;
                         blockWidth = 1;
                         blockHeight = 1;
                         blockDepth = 1;
-                      //  PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                     }
                 }
             
                 if (cDown == 1&& textureType != 2) {
                     if(blockWidth < 10 && textureType != -5)
                         blockWidth++;
-                   // PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                 }
                 if (cDown == 2&& textureType != 2) {
                     if(blockHeight < 10 && textureType != -5)
                         blockHeight++;
-                    //PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                 }
                 if (cDown == 3&& textureType != 2) {
                     if(blockDepth < 6 && textureType != -5)
                         blockDepth++;
-                    //PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                 }
             }
         } 
@@ -507,30 +491,25 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                         blockWidth = 5;
                         blockHeight = 5;
                         blockDepth = 5;
-                //        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                     }
                     else if (textureType == -5) {
                         textureType = 2;
                         blockWidth = 1;
                         blockHeight = 1;
                         blockDepth = 1;
-                     //   PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                     }
                 }
                 if(cDown == 1&& textureType != 2) {
                     if(blockWidth > 1 && textureType != -5) 
                         blockWidth--;
-                //    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                 }
                 if(cDown == 2&& textureType != 2) {
                     if(blockHeight > 1 && textureType != -5)
                         blockHeight--;
-                //    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                 }
                 if(cDown == 3&& textureType != 2) {
                     if(blockDepth > 1 && textureType != -5)
                         blockDepth--;
-                 //   PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                 }
             }
 
@@ -578,21 +557,6 @@ void CLWIBState::loadWorld() {
     std::string name;
     //float spd, rng;
     while(placeables.size() > 0 ) {
-        //Application.getSceneManager().removeSceneObject(placeables.back());
-        
-       /* CGameplayElement *m_block = placeables.back();
-        placeables.pop_back();
-
-        int i,j;
-        for(i = 0; i < m_block->getArea().Position.X; i++) {
-            for(j = 0; j < m_block->getArea().Size.Y; j++) {
-                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = false;
-                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = NULL;
-                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = -1;
-                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = -1;
-            }
-        }
-        placeables.back()->removeFromGame();*/
         removeObject();
     }
     cout << "Enter the name of the file you want to load: ";
@@ -1020,10 +984,10 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
 void CLWIBState::removeObject() {
     if (placeables.size() > 0) {
         CGameplayElement *m_block = placeables.back();
-        printf("placeable x is %d\n",m_block->getArea().Position.X);
+        printf("placeable x is %d\n",m_block->getArea().Size.Y);
         int i,j;
-        for(i = 0; i < m_block->getArea().Position.X; i++) {
-            for(j = 0; j < m_block->getArea().Size.Y; j++) {
+        for(i = 0; i <m_block->getArea().Position.X; i++) {
+            for(j = 0; j <1 m_block->getArea().Size.Y; j++) {
                 blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = false;
                 blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = NULL;
                 blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = -1;
