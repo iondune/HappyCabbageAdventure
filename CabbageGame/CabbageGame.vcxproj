@@ -58,6 +58,7 @@
       ;$(SolutionDir)\CabbageGame\Elements\Items;
       ;$(SolutionDir)\CabbageGame\Elements\Player;
       ;$(SolutionDir)\CabbageCollider;
+      ;$(SolutionDir)\StateOverworld;
       ;$(IncludePath);
     </IncludePath>
     <LibraryPath>
@@ -121,6 +122,7 @@
     <ClInclude Include="Elements\Enemies\CElementEnemyOrange.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyPear.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyProjectile.h" />
+    <ClInclude Include="Elements\Enemies\CElementEnemyProjectileCherry.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyProjectileGrape.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyProjectileKiwi.h" />
     <ClInclude Include="Elements\ISquishable.h" />
@@ -163,6 +165,7 @@
     <ClCompile Include="Elements\Enemies\CElementEnemyOrange.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyPear.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyProjectile.cpp" />
+    <ClCompile Include="Elements\Enemies\CElementEnemyProjectileCherry.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyProjectileGrape.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyProjectileKiwi.cpp" />
     <ClCompile Include="Elements\ISquishable.cpp" />
