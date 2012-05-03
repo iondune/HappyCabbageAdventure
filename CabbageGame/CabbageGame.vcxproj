@@ -132,6 +132,7 @@
     <ClInclude Include="Elements\Player\CElementPlayer.h" />
     <ClInclude Include="Elements\Player\CPlayerAbility.h" />
     <ClInclude Include="Elements\Player\CPlayerAbilityBlink.h" />
+    <ClInclude Include="Elements\Player\CPlayerAbilityDash.h" />
     <ClInclude Include="Elements\Player\CPlayerAbilityLaser.h" />
     <ClInclude Include="Elements\Player\CPlayerAbilityShield.h" />
     <ClInclude Include="Elements\Player\CPlayerView.h" />
@@ -173,6 +174,7 @@
     <ClCompile Include="Elements\Player\CElementPlayer.cpp" />
     <ClCompile Include="Elements\Player\CPlayerAbility.cpp" />
     <ClCompile Include="Elements\Player\CPlayerAbilityBlink.cpp" />
+    <ClCompile Include="Elements\Player\CPlayerAbilityDash.cpp" />
     <ClCompile Include="Elements\Player\CPlayerAbilityLaser.cpp" />
     <ClCompile Include="Elements\Player\CPlayerAbilityShield.cpp" />
     <ClCompile Include="Elements\Player\CPlayerView.cpp" />
