@@ -3,9 +3,9 @@
 #include "CPlayerView.h"
 #include "CElementPlayer.h"
 
-CElementPlayer::CElementPlayer(SRect2 nArea)
+CElementPlayer::CElementPlayer(SRect2 nArea, bool useCamera)
 : CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f), Shaking(0.0f), ShakeFactor(SVector3(0.0f)),
-  ISquishable(2.0f, 2.0f), AllowMovement(true), PlayJump(true), Victory(false), VictoryTime(0.0f), ShakeFactorFactor(1000.0f), MoveKeyDelay(0.0f) {
+  ISquishable(2.0f, 2.0f), AllowMovement(true), PlayJump(true), Victory(false), VictoryTime(0.0f), ShakeFactorFactor(1000.0f), MoveKeyDelay(0.0f), UseCamera(useCamera) {
    setupSoundEffects();
 }
 
@@ -235,7 +235,7 @@ void CElementPlayer::setupPhysicsEngineObject() {
 
 void CElementPlayer::setupSceneObject() {
    SceneObject = new ISceneObject();
-   View = new CPlayerView(SceneObject, Direction, Action, Stats.Health, Area, ShakeFactor, PhysicsEngineObject);
+   View = new CPlayerView(SceneObject, Direction, Action, Stats.Health, Area, ShakeFactor, PhysicsEngineObject, UseCamera);
 }
 
 bool CElementPlayer::decrementHealth() {

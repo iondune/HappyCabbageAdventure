@@ -993,7 +993,7 @@ void CLWIBState::PrepCabbage(float x, float y) {
     //CMeshSceneObject *tempCabbage;
     CGameplayElement *tempPlaceable;
     //blocks.push_back(tempCabbage = new CMeshSceneObject());
-    placeables.push_back(tempPlaceable = new CElementPlayer(SRect2(x, y, 1, 1)));
+    placeables.push_back(tempPlaceable = new CElementPlayer(SRect2(x, y, 1, 1), false));
     tempPlaceable->setupObjects();  
 
 
@@ -1617,6 +1617,8 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     }
     if (widget == load ) {
         loadWorld();
+   for (int i = 0 ; i < placeables.size(); i++)
+       placeables[i]->removeFromGame();
     }
     if (widget == undoTile) {
         if(blocks.size() > 3 && placeables.size() > 0) {
