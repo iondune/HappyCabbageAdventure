@@ -12,6 +12,9 @@ void CElementEnemyKiwi::setupPhysicsEngineObject() {
    PhysicsEngineObject->setArea(Area);
 
    //Set actor attributes
+   PhysicsEngineObject->setControlFall(false);
+   PhysicsEngineObject->setFallAcceleration(0.0f);
+
    PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_KIWI;
    PhysicsEngineObject->getAttributes().MaxWalk = 3.0f;
    PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
@@ -60,7 +63,6 @@ void CElementEnemyKiwi::setupSceneObject() {
 
 /*
 void CElementEnemyKiwi::OnCollision(CCollideable *Object) {
-   //Optional code: setImpulse to other object away from this object, lower their health?
 }
 */
                                                             
@@ -68,7 +70,6 @@ void CElementEnemyKiwi::OnCollision(CCollideable *Object) {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
-   return;
    //TODO: Make some class singleton so we can get the player's location
    //TODO:  Clean up KIWI z-axis code
    if (true/*Manager->isPlayerAlive()*/)
@@ -89,11 +90,8 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
          }
       }*/
 
-      Area.Position.Y -= SineValue;
       SineValue = 0.6f*sin(Area.Position.X - OldX);
       Area.Position.Y += SineValue;
-
-      PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
 
       SVector2 vel = PhysicsEngineObject->getVelocity();
       PhysicsEngineObject->setVelocity(SVector2(vel.X, vel.Y > 0 ? vel.Y - 1.0f*time : 0));
