@@ -65,7 +65,7 @@ class CLWIBState : public CState<CLWIBState>
    //CGameplayElement *PreviewBlock, *PreviewEnemy, *PreviewCabbage, *PreviewGround, *PreviewFlag, *PreviewItem;
 
    public:
-   std::vector<CGameplayElement*> placeables, redoPlaceables, blocks, redo;
+   std::vector<CGameplayElement*> placeables, redoPlaceables;
    CLWIBState();
    void begin();
    CPerspectiveCamera *Camera;
@@ -95,6 +95,7 @@ class CLWIBState : public CState<CLWIBState>
    void prepHud();
    void stepCamera(float delta);
    void changeTiles();
+   void removeObject();
    void OnWidgetClick(CGUIWidget * Widget);
    void OnWidgetHover(CGUIWidget * Widget);
    void OnWidgetUnHover(CGUIWidget * Widget);

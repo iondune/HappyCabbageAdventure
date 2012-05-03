@@ -356,25 +356,20 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
         }
         if(Event.Key == SDLK_u) {
             //3 is the number of static blocks created before the user can add in new blocks (ie unremovable)
-            if(blocks.size() > 3 && placeables.size() > 0) {
-                //Application.getSceneManager().removeSceneObject(blocks.back());
-                //CGameplayElement *m_block = placeables.back();
-                redo.push_back(blocks.back());
-                redoPlaceables.push_back(placeables.back());
+            /*CGameplayElement *m_block = placeables.back();
 
-                /*int i,j;
-                for(i = 0; i < m_block->getArea().Position.X; i++) {
-                    for(j = 0; j < m_block->getArea().Position.Y; j++) {
-                        blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = false;
-                        blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = NULL;
-                        blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = -1;
-                        blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = -1;
-                    }
+            int i,j;
+            for(i = 0; i < m_block->getArea().Position.X; i++) {
+                for(j = 0; j < m_block->getArea().Size.Y; j++) {
+                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = false;
+                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = NULL;
+                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = -1;
+                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = -1;
                 }
-
-                placeables.pop_back();
-                blocks.pop_back();*/
             }
+            placeables.back()->removeFromGame();
+            placeables.pop_back();*/
+            removeObject();
         }
         if(Event.Key == SDLK_r) {
             /*if(redo.size() > 0 && redoPlaceables.size() > 0) {
@@ -585,7 +580,7 @@ void CLWIBState::loadWorld() {
     while(placeables.size() > 0 ) {
         //Application.getSceneManager().removeSceneObject(placeables.back());
         
-        CGameplayElement *m_block = placeables.back();
+       /* CGameplayElement *m_block = placeables.back();
         placeables.pop_back();
 
         int i,j;
@@ -597,7 +592,8 @@ void CLWIBState::loadWorld() {
                 blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = -1;
             }
         }
-        placeables.back()->removeFromGame();
+        placeables.back()->removeFromGame();*/
+        removeObject();
     }
     cout << "Enter the name of the file you want to load: ";
     cin >> name;
@@ -701,8 +697,6 @@ void CLWIBState::end()
    //our_font.clean();
    placeables.clear();
    redoPlaceables.clear();
-   blocks.clear();
-   redo.clear();
    Application.getSceneManager().removeAllSceneObjects();
 }
 
@@ -737,7 +731,6 @@ void CLWIBState::PrepItem(float x, float y, int item) {
    blockMap[(int)x+25][(int)(y-0.5+25)].r = tempPlaceable;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
-   redo.clear();
    redoPlaceables.clear();
 
 }
@@ -760,7 +753,6 @@ void CLWIBState::PrepFlag(float x, float y, int t) {
    blockMap[(int)x+25][(int)(y-0.5+25)].r = tempPlaceable;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
-   redo.clear();
    redoPlaceables.clear();
 
 }
@@ -781,7 +773,6 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
    blockMap[(int)x+25][(int)(y-0.5+25)].r = tempPlaceable;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
-   redo.clear();
    redoPlaceables.clear();
 }
 
@@ -862,7 +853,6 @@ void CLWIBState::PrepCabbage(float x, float y) {
     lastCabbage = blockMap[(int)x+25][(int)(y-0.5+25)];
     //Application.getSceneManager().addSceneObject(tempCabbage);
     cabbageFlag = 1;
-    redo.clear();
     redoPlaceables.clear();
 }
 
@@ -1020,6 +1010,24 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
    }
 }
 
+void CLWIBState::removeObject() {
+    if (placeables.size() > 0) {
+        CGameplayElement *m_block = placeables.back();
+        printf("placeable x is %d\n",m_block->getArea().Position.X);
+        int i,j;
+        for(i = 0; i < m_block->getArea().Position.X; i++) {
+            for(j = 0; j < m_block->getArea().Size.Y; j++) {
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = false;
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = NULL;
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = -1;
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = -1;
+                printf("here\n");
+            }
+        }
+        placeables.back()->removeFromGame();
+        placeables.pop_back();
+    }
+}
 void CLWIBState::prepText() {
     
     SColor FontColor(1.0f, 1.0f, 1.0f);
@@ -1444,10 +1452,9 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         loadWorld();
     }
     if (widget == undoTile) {
-        if(blocks.size() > 3 && placeables.size() > 0) {
+        if( placeables.size() > 0) {
             //Application.getSceneManager().removeSceneObject(blocks.back());
             CGameplayElement *m_block = placeables.back();
-            redo.push_back(blocks.back());
             redoPlaceables.push_back(placeables.back());
 
             int i,j;
@@ -1461,15 +1468,13 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             }
 
             placeables.pop_back();
-            blocks.pop_back();
         }
     }
     if (widget == redoTile) {
-        if(redo.size() > 0 && redoPlaceables.size() > 0) {
+        if(redoPlaceables.size() > 0) {
             //Application.getSceneManager().addSceneObject(redo.back());
             CGameplayElement *m_block = redoPlaceables.back();
 //            CMeshSceneObject *m_r = redo.back();
-            blocks.push_back(redo.back());
             placeables.push_back(redoPlaceables.back());
 
             int i,j;
@@ -1483,7 +1488,6 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
                 }
             }
 
-            redo.pop_back();
             redoPlaceables.pop_back();
         }
     }
