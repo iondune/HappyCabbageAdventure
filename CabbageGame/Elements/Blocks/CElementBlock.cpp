@@ -7,6 +7,13 @@ CElementBlock::CElementBlock(SRect2 nArea, int depth, int texture)
 }
 
 void CElementBlock::update(float time) {
+   if(ParticleEngine) {
+      ParticleEngine->step(time);
+      //ParticleEngine->setCenterPos(time);
+      if(ParticleEngine->dead) {
+         removeFromGame();
+      }
+   }
 }
 
 void CElementBlock::updatePhysicsEngineObject(float time) {

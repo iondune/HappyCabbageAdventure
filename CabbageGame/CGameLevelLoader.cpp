@@ -3,6 +3,7 @@
 #include "CGameLevel.h"
 #include "CElementBlock.h"
 #include "CElementBlockFlag.h"
+#include "CElementBlockBreakable.h"
 #include "CElementBlockElevator.h"
 #include "CElementEnemy.h"
 #include "CElementPlayer.h"
@@ -87,6 +88,16 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
                   for(; curW > 0; curW--)
                      blocksY.push_back(new CBiggerBlock((float)x + (w - curW), (float)y, 1.0f, (float)h, (float)d));
             }
+         }
+         if(!strcmp("CBreakable", xml->getNodeName())) {
+            x = xml->getAttributeValueAsInt(0);
+            y = xml->getAttributeValueAsInt(1);
+            h = xml->getAttributeValueAsInt(2);
+            w = xml->getAttributeValueAsInt(3);
+
+            CElementBlockBreakable * ptr2;
+            newLevel->Elements.push_back(ptr2 = new CElementBlockBreakable(SRect2((float)x, (float)y, (float)w, (float)h)));
+            newLevel->BreakableBlocks.push_back(ptr2);
          }
          if(!strcmp("CEnemy", xml->getNodeName()))
          {

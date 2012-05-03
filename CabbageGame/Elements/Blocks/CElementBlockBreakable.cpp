@@ -30,6 +30,15 @@ void CElementBlockBreakable::writeXML(xmlwriter *l) {
    l->CloseLasttag();
 }
 
+void CElementBlockBreakable::explode() {
+   if(Dead)
+      return;
+   removeFromPhysicsEngine();
+   removeFromSceneManager();
+   ParticleEngine = new CParticleEngine(SceneObject->getTranslation(), 200, 4, BURST_PARTICLE);
+   ParticleEngine->UsePhysics(&Level.getPhysicsEngine());
+}
+
 void CElementBlockBreakable::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addObject();
    PhysicsEngineObject->setArea(Area);
@@ -74,7 +83,7 @@ void CElementBlockBreakable::reactToAbility(Abilities::EAbilityType Ability) {
    switch(Ability) {
       case Abilities::LASER:
          if(!Dead)
-            this->removeFromGame();
+            explode();
          break;
       default:
          break;

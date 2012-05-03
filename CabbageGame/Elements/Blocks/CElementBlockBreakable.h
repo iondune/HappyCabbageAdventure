@@ -7,6 +7,7 @@
 
 class CElementBlockBreakable : public CElementBlock {
    private:
+      void explode();
 
    public:
       virtual void OnCollision(CCollideable *Object);
