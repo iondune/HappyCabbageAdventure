@@ -1,4 +1,5 @@
 #include "CElementBlock.h"
+#include "Player/CPlayerAbility.h"
 #include "CGameLevel.h"
 
 CElementBlock::CElementBlock(SRect2 nArea, int depth, int texture)
@@ -149,4 +150,9 @@ void CElementBlock::setupSceneObject() {
 
 void CElementBlock::printInformation() {
    printf("CElementBlock; Area: [[%0.0f, %0.0f],[%0.0f, %0.0f]]; Depth: %d; Texture: %d\n", Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y, Depth, Texture);
+}
+
+void CElementBlock::reactToAbility(Abilities::EAbilityType ability) {
+   //Default behavior to react to abilities:
+   return;
 }
