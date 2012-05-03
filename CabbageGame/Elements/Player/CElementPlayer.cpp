@@ -313,6 +313,7 @@ void CElementPlayer::setAllowMovement(bool value) {
 	AllowMovement = value;
 }
 
+#include "COverworldState.h"
 void CElementPlayer::playLevelVictory(float time) {
    SVector3 curRotation = View->getCabbageSceneObject().getRotation();
    SVector2 curLocation = SVector2 (Area.getCenter().X - .5f, Area.getCenter().Y - .5f);
@@ -395,11 +396,11 @@ void CElementPlayer::playLevelVictory(float time) {
 
    }
 
-   /*else if(VictoryTime >= 7.3f)
+   else if(VictoryTime >= 7.3f)
    {
       COverworldState::get().levelCompleted = true;
-      Application.getStateManager().setState(new CFadeOutState(& COverworldState::get()));
-   }*/
+      CApplication::get().getStateManager().setState(new CFadeOutState(& COverworldState::get()));
+   }
 
    //Translate the camera unless we're launching off.
    else {
@@ -411,4 +412,3 @@ void CElementPlayer::playLevelVictory(float time) {
 
    VictoryTime += time;
 }
-
