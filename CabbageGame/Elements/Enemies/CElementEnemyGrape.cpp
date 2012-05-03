@@ -28,6 +28,10 @@ void CElementEnemyGrape::setupSceneObject() {
       mesh = CMeshLoader::load3dsMesh("Base/grape_bunch.3ds");
    }
 
+   //LevelEditor has no environment
+   else
+      mesh = CMeshLoader::load3dsMesh("Base/grape_bunch.3ds");
+
    if(mesh) {
       mesh->resizeMesh(SVector3(2));
       mesh->centerMeshByExtents(SVector3(0));

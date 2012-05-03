@@ -29,6 +29,9 @@ void CElementEnemyGiantApple::setupSceneObject() {
    else if (Level.getEnvironment() == 1) {
       mesh = CMeshLoader::load3dsMesh("Base/desertapple.3ds");
    }
+   //LevelEditor has no environment
+   else
+      mesh = CMeshLoader::load3dsMesh("Base/appleEnemy.3ds");
 
    if(mesh) {
       mesh->resizeMesh(SVector3(1));

@@ -28,6 +28,9 @@ void CElementEnemyCherry::setupSceneObject() {
    else if (Level.getEnvironment() == 1) {
       mesh = CMeshLoader::load3dsMesh("Base/cherries.3ds");
    }
+   //LevelEditor has no environment
+   else
+      mesh = CMeshLoader::load3dsMesh("Base/cherries.3ds");
 
    if(mesh) {
       mesh->resizeMesh(SVector3(1));

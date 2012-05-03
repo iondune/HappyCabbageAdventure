@@ -29,6 +29,9 @@ void CElementEnemyOrange::setupSceneObject() {
       mesh = CMeshLoader::load3dsMesh("Base/orange.3ds");
    else if (Level.getEnvironment() == 1)
       mesh = CMeshLoader::load3dsMesh("Base/desertorange.3ds");
+   //LevelEditor has no environment
+   else
+      mesh = CMeshLoader::load3dsMesh("Base/orange.3ds");
 
    if(mesh) {
       mesh->resizeMesh(SVector3(1));
