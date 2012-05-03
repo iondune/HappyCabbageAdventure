@@ -975,7 +975,8 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
              if(lastMouseOveredBlock.o) {
                  printf("clicked on removing\n");
                  //Application.getSceneManager().removeSceneObject(lastMouseOveredBlock.r);
-                 //placeables.erase(std::remove(placeables.begin(), placeables.end(), lastMouseOveredBlock.p), placeables.end());
+                 lastMouseOveredBlock.r->removeFromGame();
+                 placeables.erase(std::remove(placeables.begin(), placeables.end(), lastMouseOveredBlock.r), placeables.end());
                  //blocks.erase(std::remove(blocks.begin(), blocks.end(), lastMouseOveredBlock.r), blocks.end());
                  //redoPlaceables.push_back(lastMouseOveredBlock.p);
                  //redo.push_back(lastMouseOveredBlock.r);
