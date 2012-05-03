@@ -1,6 +1,7 @@
 #include "CElementPlayer.h"
 #include "CGameLevel.h"
 #include "CPlayerView.h"
+#include "CElementPlayer.h"
 
 CElementPlayer::CElementPlayer(SRect2 nArea)
 : CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f), Shaking(0.0f), ShakeFactor(SVector3(0.0f)),
@@ -262,7 +263,7 @@ void CElementPlayer::incrementHealth() {
 
 void CElementPlayer::setHealth(int amount) {
    amount = std::min(Stats.MaxHealth, amount);
-   Stats.CurHealth = std::max(0, amount);
+   Stats.Health = std::max(0, amount);
 }
 
 void CElementPlayer::incrementLives() {

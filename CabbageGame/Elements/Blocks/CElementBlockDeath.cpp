@@ -1,5 +1,6 @@
 #include "CElementBlockDeath.h"
 #include "CGameLevel.h"
+#include "CElementPlayer.h"
 
 CElementBlockDeath::CElementBlockDeath(SRect2 nArea, int D, int T, float R, float S)
 : CElementBlock(nArea, D, T), Range(R), Speed(S) {
@@ -36,15 +37,6 @@ void CElementBlockDeath::writeXML(xmlwriter *l) {
    l->AddAtributes("X ", xValue.str());
    l->Createtag(tagValue.str());
    l->CloseLasttag();
-}
-
-void CElementBlockDeath::setupPhysicsEngineObject() {
-   CDeath *Ele;
-   PhysicsEngineObject = Ele = Level.getPhysicsEngine().addDeath();
-   PhysicsEngineObject->setArea(Area);
-
-   Ele->Range = Range;
-   Ele->Speed = Speed;
 }
 
 void CElementBlockDeath::updateSceneObject(float time) {
