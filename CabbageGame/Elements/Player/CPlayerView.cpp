@@ -177,31 +177,15 @@ void CPlayerView::updateCameraPosition(float const ElapsedTime)
 
 	if (TargetCameraPosition != CurrentCameraPosition)
 	{
-		SVector2 const MoveDirection = TargetCameraPosition - CurrentCameraPosition;
-		
-		static SVector2 const MoveSpeed = SVector2(0.25f, 0.35f);
-		SVector2 const AccelerationThisFrame = MoveSpeed * MoveDirection;
-		SVector2 const VelocityThisFrame = AccelerationThisFrame * ElapsedTime;
+		float const DistanceToGo = TargetCameraPosition.getDistanceFrom(CurrentCameraPosition);
+        float const MoveVelocity = max(2.f * DistanceToGo + 0.2f, 1.f * DistanceToGo * DistanceToGo);
+        float const Movement = MoveVelocity * ElapsedTime;
+        
+        if (DistanceToGo > Movement)
+                CurrentCameraPosition = TargetCameraPosition.getInterpolated(CurrentCameraPosition, Movement/DistanceToGo);
+        else
+                CurrentCameraPosition = TargetCameraPosition;
 
-		CameraVelocity += VelocityThisFrame;
-
-		if (CameraVelocity.dotProduct(VelocityThisFrame) > 1.0f)
-		{
-			CameraVelocity.normalize();
-			CameraVelocity *= VelocityThisFrame.length();
-		}
-
-		SVector2 const MoveThisFrame = CameraVelocity * ElapsedTime;
-
-		if (MoveThisFrame.length() > MoveDirection.length())
-		{
-			CurrentCameraPosition = TargetCameraPosition;
-			CameraVelocity.reset();
-		}
-		else
-		{
-			CurrentCameraPosition += MoveThisFrame;
-		}
 	}
 
 	CApplication::get().getSceneManager().getActiveCamera()->setPosition(SVector3(CurrentCameraPosition, 10) + ShakeFactor);

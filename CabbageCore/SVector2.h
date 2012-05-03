@@ -57,6 +57,10 @@ public:
 		return sqrtf(X*X + Y*Y);
 	}
 
+	float getDistanceFrom(SVector2Reference const & v) const;
+
+	SVector2 getInterpolated(SVector2Reference const & v, float const d);
+
 	SVector2 operator + (SVector2Reference const & v) const;
 
 	SVector2 operator - (SVector2Reference const & v) const;
