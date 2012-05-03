@@ -38,6 +38,11 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
             cPtr->setAppearRate(2);
             cPtr->useCenterPos = 1;
             break;
+         case LASER_CHARGED_PARTICLE:
+            particles.push_back(cPtr = new CPLaserCharged());
+            cPtr->setAppearRate(2.3f);
+            cPtr->useCenterPos = 1;
+            break;
          case LASER_CHARGING_PARTICLE:
             particles.push_back(cPtr = new CPLaser());
             cPtr->setAppearRate(0.8f);
@@ -123,6 +128,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
             }
             sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 15);
             break;
+         case LASER_CHARGED_PARTICLE:
          case LASER_CHARGING_PARTICLE:
             temp = (float)rand()/(float)RAND_MAX*0.3f + 0.3f;
             if(rand() % 4 == 0) {
@@ -201,6 +207,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
    case DEATH_PARTICLE:
       textureToUse = "Base/particleStar.bmp";
       break;
+   case LASER_CHARGED_PARTICLE:
    case LASER_CHARGING_PARTICLE:
       textureToUse = "Base/particle2.bmp";
       break;

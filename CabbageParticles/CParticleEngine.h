@@ -13,6 +13,7 @@
 #include "CPBurst.h"
 #include "CPDust.h"
 #include "CPStar.h"
+#include "CPLaserCharged.h"
 #include "CParticleObject.h"
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
@@ -30,6 +31,7 @@
 #define BURST_PARTICLE 7
 #define DUST_PARTICLE 8
 #define STAR_PARTICLE 9
+#define LASER_CHARGED_PARTICLE 10
 
 class CParticleEngine {
    std::vector<CParticle*> particles;
