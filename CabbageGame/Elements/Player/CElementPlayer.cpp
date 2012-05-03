@@ -69,7 +69,7 @@ void CElementPlayer::checkAbilityKeypress() {
    if(Stats.Energy <= 0)
       return;
    usedAbility.clear();
-   for(int i = 0; i < Abilities.size(); i++) {
+   for(unsigned int i = 0; i < Abilities.size(); i++) {
       usedAbility[Abilities[i]->getType()] = i;
    }
    /* Shield */
@@ -97,7 +97,7 @@ void CElementPlayer::checkAbilityKeypress() {
 
 void CElementPlayer::updateAbilities(float time) {
    std::vector<CPlayerAbility *> AbilityKillList;
-   for(int i = 0; i < Abilities.size(); i++) {
+   for(unsigned int i = 0; i < Abilities.size(); i++) {
       Abilities[i]->updateTime(time);
       Abilities[i]->inUpdatePhysicsEngineObject(time);
       Abilities[i]->inUpdateSceneObject(time);
@@ -105,7 +105,7 @@ void CElementPlayer::updateAbilities(float time) {
          AbilityKillList.push_back(Abilities[i]);
       }
    }
-   for(int i = 0; i < AbilityKillList.size(); i++) {
+   for(unsigned int i = 0; i < AbilityKillList.size(); i++) {
       Abilities.erase(std::remove(Abilities.begin(), Abilities.end(), AbilityKillList[i]), Abilities.end());
       delete AbilityKillList[i];
    }
@@ -149,7 +149,7 @@ Cabbage::PlayerInformation & CElementPlayer::getStats() {
 }
 
 void CElementPlayer::OnCollision(CCollideable *Object) {
-   for(int i = 0; i < Abilities.size(); i++) {
+   for(unsigned int i = 0; i < Abilities.size(); i++) {
       Abilities[i]->inOnCollision(Object);
    }
    return;
