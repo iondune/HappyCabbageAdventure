@@ -12,8 +12,8 @@ class CElementBlock : public CGameplayElement {
    public:
       virtual void OnCollision(CCollideable *Object);
 
-      virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
+      virtual void setupPhysicsEngineObject();
 
       virtual void update(float);
       virtual void updatePhysicsEngineObject(float);

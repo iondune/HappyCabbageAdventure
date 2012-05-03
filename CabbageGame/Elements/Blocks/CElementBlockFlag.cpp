@@ -52,6 +52,8 @@ void CElementBlockFlag::setupSceneObject() {
    else
       printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
 
+   Area.Position.Y += Area.Size.Y;
+
    SceneObject = new CMeshSceneObject();
    SceneObject->setMesh(mesh);
    SceneObject->setTranslation(SVector3(Area.Position, 1.0f));
