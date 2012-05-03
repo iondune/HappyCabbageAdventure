@@ -99,6 +99,7 @@ class CLWIBState : public CState<CLWIBState>
    void stepCamera(float delta);
    void changeTiles();
    void removeObject();
+   void undoObjects();
    void OnWidgetClick(CGUIWidget * Widget);
    void OnWidgetHover(CGUIWidget * Widget);
    void OnWidgetUnHover(CGUIWidget * Widget);

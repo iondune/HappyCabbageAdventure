@@ -390,30 +390,10 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
             //printf("Angle: %d\n", ANGLE(overView, backwardsView));
         }
         if(Event.Key == SDLK_u) {
-
             removeObject();
         }
         if(Event.Key == SDLK_r) {
-            /*if(redo.size() > 0 && redoPlaceables.size() > 0) {
-                //Application.getSceneManager().addSceneObject(redo.back());
-                CGameplayElement *m_block = redoPlaceables.back();
-                blocks.push_back(redo.back());
-                placeables.push_back(redoPlaceables.back());
-
-                int i,j;
-                for(i = 0; i < m_block->getArea().Position.X; i++) {
-                    for(j = 0; j < m_block->getArea().Size.Y; j++) {
-                        blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = true;
-                        blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = m_r;
-
-                        blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = (int)m_block->getArea().Position.X+25;
-                        blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = (int)(m_block->getArea().Position.Y-0.5+25);
-                    }
-                }
-
-                redo.pop_back();
-                redoPlaceables.pop_back();
-            }*/
+            undoObjects();
         }
         if(Event.Key == SDLK_t){
             change = 5;
@@ -974,7 +954,6 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
             printf("Here6\n");
              if(lastMouseOveredBlock.o) {
                  printf("clicked on removing\n");
-                 //Application.getSceneManager().removeSceneObject(lastMouseOveredBlock.r);
                  lastMouseOveredBlock.r->removeFromGame();
                  placeables.erase(std::remove(placeables.begin(), placeables.end(), lastMouseOveredBlock.r), placeables.end());
                  //blocks.erase(std::remove(blocks.begin(), blocks.end(), lastMouseOveredBlock.r), blocks.end());
@@ -1051,8 +1030,29 @@ void CLWIBState::removeObject() {
                 printf("here\n");
             }
         }
+        redoPlaceables.push_back(m_block);
         placeables.back()->removeFromGame();
         placeables.pop_back();
+    }
+}
+
+void CLWIBState::undoObjects() {
+    if(redoPlaceables.size() > 0) {
+        CGameplayElement *m_block = redoPlaceables.back();
+        //printf("placeable x is %f placeable y is %f\n",m_block->getArea().Size.X,m_block->getArea().Size.Y);
+        int i,j;
+        for(i = 0; i <m_block->getArea().Size.X; i++) {
+            for(j = 0; j <m_block->getArea().Size.Y; j++) {
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = true;
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = m_block;
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = m_block->getArea().Position.X+25;
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = m_block->getArea().Position.Y+25;
+                printf("here\n");
+            }
+        }
+        placeables.push_back(m_block);
+        redoPlaceables.pop_back();
+        m_block->setupObjects();
     }
 }
 void CLWIBState::prepText() {
