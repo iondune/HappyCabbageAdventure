@@ -18,6 +18,10 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
    CabbageSceneObject->addChild(NormalCabbage);
    NormalCabbage->setCullingEnabled(false);
 
+   Light = new CPointLightSceneObject(4.f);
+   CApplication::get().getSceneManager().addSceneObject(Light);
+   CApplication::get().getSceneManager().addSceneObject(new CDirectionalLightSceneObject(SVector3(0, -1, 0), SColor(0.3, 0.4, 0.7)));
+
    for(int i = 1; i <= 5; i++) {
       std::ostringstream fileName;
       fileName << "Base/cabbage/cabbage_" << i << ".3ds";
@@ -98,6 +102,8 @@ void CPlayerView::updateShadow(float time) {
    ShadowRight->setTranslation(SVector3(Area.getCenter().X, yRightShadow + 0.01, 0));
    RightShadowStartValue = cutOffPoint;
    RightShadowCutoffValue = 1.0f;
+
+   Light->setTranslation(CabbageSceneObject->getTranslation());
 }
 
 void CPlayerView::addLeaf() {

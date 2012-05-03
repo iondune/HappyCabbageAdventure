@@ -13,10 +13,12 @@ CElementPlayer::CElementPlayer(SRect2 nArea)
 #include "CPlayerAbilityDash.h"
 
 void CElementPlayer::updatePlayerAction() {
+   if(Victory)
+      return;
    if(!AllowMovement) {
-      /*Action = Standing;
+      Action = Standing;
       PhysicsEngineObject->setJumping(false);
-      PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);*/
+      PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
       return;
    }
    if(CApplication::get().getEventManager().IsKeyDown[SDLK_a]) {
