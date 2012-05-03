@@ -61,13 +61,6 @@ void CElementEnemyKiwi::setupSceneObject() {
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
-/*
-void CElementEnemyKiwi::OnCollision(CCollideable *Object) {
-}
-*/
-                                                            
-//CGameplayElement has an attribute called ElapsedTime, which is updated by CGameplayElement's update function.
-
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
    //TODO: Make some class singleton so we can get the player's location
@@ -97,7 +90,7 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
       PhysicsEngineObject->setVelocity(SVector2(vel.X, vel.Y > 0 ? vel.Y - 1.0f*time : 0));
 
       //TODO: Check player direction
-      if(true/*Direction == 0*/)
+      if(Direction == 0)
          PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
       else
          PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
@@ -148,12 +141,19 @@ void CElementEnemyKiwi::printInformation() {
 }
 
 void CElementEnemyKiwi::DropBomb() {
-   SVector2 pos = Area.Position;
+
+   float yLocation = Area.Position.Y - Area.Size.Y/2.f - .5f;
+
+   //CBadGuy::makeBadGuy(pos.X + w/2.f - .05f, pos.Y - .5f, w, h, pKiwi, Manager, 0);
 
    //TODO:  Need to determine if projectiles are an enemy or a separate abstract class.
    //TODO:  Determine the direction of the player with respect to the Kiwi.
-   /*if (Direction == 0)
-      CBadGuy::makeBadGuy(pos.X + w/2.f - .05f, pos.Y - .5f, w, h, pKiwi, Manager, 0);
-   else
-      CBadGuy::makeBadGuy(pos.X - w/2.f - .05f, pos.Y - .5f, w, h, pKiwi, Manager, 0);*/
+   if (Direction == 0) {
+      float xLocation = Area.Position.X - Area.Size.X/2.f - .05f;
+      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(xLocation, yLocation, Area.Size.X, Area.Size.Y), Enemies::KIWI_PROJECTILE));
+   }
+   else {
+      float xLocation = Area.Position.X - Area.Size.X/2.f - .05f;
+      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(xLocation, yLocation, Area.Size.X, Area.Size.Y), Enemies::KIWI_PROJECTILE));
+   }
 }
