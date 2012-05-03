@@ -7,10 +7,15 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
    SceneObject(obj), CabbageIndex(CurHealth - 1), Direction(dir), Action(act), Hurt(false), Area(nArea), ShakeFactor(sf),
    ySineValue(0.0f), PhysicsEngineObject(peo) {
 
+   SceneObject->setCullingEnabled(false);
+
+   CabbageSceneObject = new ISceneObject();
+   SceneObject->addChild(CabbageSceneObject);
+   CabbageSceneObject->setCullingEnabled(false);
+
    //Normal cabbage meshes and renderables
    ISceneObject *NormalCabbage = new ISceneObject();
-   SceneObject->addChild(NormalCabbage);
-   SceneObject->setCullingEnabled(false);
+   CabbageSceneObject->addChild(NormalCabbage);
    NormalCabbage->setCullingEnabled(false);
 
    for(int i = 1; i <= 5; i++) {
@@ -36,7 +41,7 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
 
    //Hurt cabbage meshes and renderables
    ISceneObject *HurtCabbage = new ISceneObject();
-   SceneObject->addChild(HurtCabbage);
+   CabbageSceneObject->addChild(HurtCabbage);
    HurtCabbage->setCullingEnabled(false);
 
    for(int i = 1; i <= 5; i++) {
@@ -81,6 +86,10 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 } 
 
+void CPlayerView::setCabbageScale(SVector3 sc) {
+   CabbageSceneObject->setScale(sc);
+}
+
 void CPlayerView::addLeaf() {
    if(CabbageIndex + 1 == NUM_CABBAGE_MESH_STATES)
       return;
@@ -107,18 +116,53 @@ void CPlayerView::removeLeaf() {
    }
 }
 
+
+void CPlayerView::setShadowHeights(float l, float r) {
+   yLeftShadow = l;
+   yRightShadow = r;
+}
+
+void CPlayerView::setCutoffPoint(SRect2 left, SRect2 right) {
+   ShadowLeft->setVisible(left.Size.X != 0.0f);
+   ShadowRight->setVisible(right.Size.X != 0.0f);
+   bool equal = false;
+
+   if(left.otherCorner().Y > right.otherCorner().Y) {
+      cutOffPoint = left.Position.X + left.Size.X;
+   }
+   else if(left.otherCorner().Y < right.otherCorner().Y) {
+      cutOffPoint = right.Position.X;
+   }
+   else {
+      equal = true;
+      cutOffPoint = 0.0f;
+   }
+   float oldCutOff = cutOffPoint;
+   if(!equal) {
+      cutOffPoint = (cutOffPoint - (Area.getCenter().X - Area.Size.X/2.f))/Area.Size.X;
+   }
+}
+
 void CPlayerView::updateView(float time) {
    CApplication::get().getSceneManager().getActiveCamera()->setPosition(SVector3(Area.getCenter().X, Area.getCenter().Y + 1.3f, 10) + ShakeFactor);
 
+   ShadowLeft->setTranslation(SVector3(Area.getCenter().X, yLeftShadow + 0.01, 0));
+   LeftShadowStartValue = 0.f;
+   LeftShadowCutoffValue = cutOffPoint;
+
+   ShadowRight->setTranslation(SVector3(Area.getCenter().X, yRightShadow + 0.01, 0));
+   RightShadowStartValue = cutOffPoint;
+   RightShadowCutoffValue = 1.0f;
+
    float rotateX = 15*sin(ySineValue/2)-90.f;
 
-   SceneObject->setRotation(SVector3(rotateX, 0, Direction == CElementPlayer::Right ? 80.0f : 0.0f));
+   CabbageSceneObject->setRotation(SVector3(rotateX, 0, Direction == CElementPlayer::Right ? 80.0f : 0.0f));
 
    translateCabbage(time);
 
    float ySineAmount = 0.065f*sin(ySineValue);
 
-   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y + ySineAmount, 0));
+   CabbageSceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y + ySineAmount, 0));
 }
 
 void CPlayerView::setHurt(bool b) {
