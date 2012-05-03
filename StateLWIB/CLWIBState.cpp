@@ -993,7 +993,7 @@ void CLWIBState::PrepCabbage(float x, float y) {
     //CMeshSceneObject *tempCabbage;
     CGameplayElement *tempPlaceable;
     //blocks.push_back(tempCabbage = new CMeshSceneObject());
-    placeables.push_back(tempPlaceable = new CElementPlayer(SRect2(x, y, 1, 1)));
+    placeables.push_back(tempPlaceable = new CElementPlayer(SRect2(x, y, 1, 1), false));
     tempPlaceable->setupObjects();  
 
 

@@ -78,7 +78,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       Mix_Chunk *chargeLaser1;
       Mix_Chunk *chargeLaser2;
       Mix_Chunk *fireLaser;
-      bool PlayJump;
+      bool PlayJump, UseCamera;
 
       std::vector<CPlayerAbility*> Abilities;
       void checkAbilityKeypress();
@@ -86,7 +86,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       std::map<Abilities::EAbilityType, int> usedAbility;
 
    public:
-      CElementPlayer(SRect2 nArea);
+      CElementPlayer(SRect2 nArea, bool useCamera = true);
 
       //CGameplayElement functions
       virtual void OnCollision(CCollideable *Object);
