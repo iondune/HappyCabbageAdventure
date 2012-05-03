@@ -48,7 +48,7 @@ void CElementBlockBreakable::setupSceneObject() {
    CMeshSceneObject *tempBlock = new CMeshSceneObject();
    CMesh *mesh;
 
-   mesh = CMeshLoader::load3dsMesh("Base/cuberock.3ds");
+   mesh = CMeshLoader::load3dsMesh("Base/breakableblock2.3ds");
 
    if(mesh) {
          mesh->resizeMesh(SVector3(1));
@@ -61,15 +61,16 @@ void CElementBlockBreakable::setupSceneObject() {
    }
 
    tempBlock->setMesh(mesh);
-   tempBlock->setTexture("Base/dirt.bmp");
+   tempBlock->setTexture("ModelImages/breakableblock2_brown.bmp");
 
    tempBlock->setShader(ERP_DEFAULT, CShaderLoader::loadShader("ToonTexture"));
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, CShaderLoader::loadShader("Deferred/Textured"));
 
    tempBlock->setTranslation(SVector3((Area.Position.X+(Area.Position.X+Area.Size.X))/2, (Area.Position.Y+(Area.Position.Y+Area.Size.Y))/2, 0));
-   tempBlock->setScale(SVector3(Area.Size.X, Area.Size.Y, (float) Depth));
+   tempBlock->setScale(SVector3(Area.Size.X, Area.Size.Y, Area.Size.X));
 
-   tempBlock->setRotation(SVector3(0, 0, 0));
+   SVector3 rots(rand()%3*90-90,rand()%3*90-90,rand()%3*90-90);
+   tempBlock->setRotation(rots);
 
    SceneObject = tempBlock;
    CApplication::get().getSceneManager().addSceneObject(tempBlock);

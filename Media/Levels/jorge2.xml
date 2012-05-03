@@ -9,7 +9,11 @@
 </CBlock>
 <CBlock X ="-9" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CBreakable X="-4" Y="3" height="2" width = "2">
+<CBreakable X="-12" Y="0" height="1" width = "1">
+</CBreakable>
+<CBreakable X="-11" Y="1" height="1" width = "1">
+</CBreakable>
+<CBreakable X="-10" Y="2" height="2" width = "2">
 </CBreakable>
 <CBlock X ="-4" Y ="-5" height ="5" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>

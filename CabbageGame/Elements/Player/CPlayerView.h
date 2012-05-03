@@ -20,7 +20,7 @@ class CPlayerView {
       CMeshSceneObject *NormalCabbageRenderables[NUM_CABBAGE_MESH_STATES];
 
       //Attributes relating to the player
-      bool Hurt;
+      bool Hurt, UseCamera;
       CElementPlayer::EDirection & Direction;
       CElementPlayer::EAction & Action;
       SRect2 & Area;
@@ -47,7 +47,7 @@ class CPlayerView {
       void updateView(float time);
       void translateCabbage(float time);
       ISceneObject & getCabbageSceneObject();
-      CPlayerView(ISceneObject *, CElementPlayer::EDirection &, CElementPlayer::EAction &, int, SRect2 &, SVector3 & sf, CCollisionActor *);
+      CPlayerView(ISceneObject *, CElementPlayer::EDirection &, CElementPlayer::EAction &, int, SRect2 &, SVector3 & sf, CCollisionActor *, bool uC);
 };
 
 #endif
