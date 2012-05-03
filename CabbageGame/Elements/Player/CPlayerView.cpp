@@ -90,6 +90,16 @@ void CPlayerView::setCabbageScale(SVector3 sc) {
    CabbageSceneObject->setScale(sc);
 }
 
+void CPlayerView::updateShadow(float time = 0) {
+   ShadowLeft->setTranslation(SVector3(Area.getCenter().X, yLeftShadow + 0.01, 0));
+   LeftShadowStartValue = 0.f;
+   LeftShadowCutoffValue = cutOffPoint;
+
+   ShadowRight->setTranslation(SVector3(Area.getCenter().X, yRightShadow + 0.01, 0));
+   RightShadowStartValue = cutOffPoint;
+   RightShadowCutoffValue = 1.0f;
+}
+
 void CPlayerView::addLeaf() {
    if(CabbageIndex + 1 == NUM_CABBAGE_MESH_STATES)
       return;
@@ -179,13 +189,7 @@ void CPlayerView::updateCameraPosition(float const ElapsedTime)
 void CPlayerView::updateView(float time) {
    updateCameraPosition(time);
 
-   ShadowLeft->setTranslation(SVector3(Area.getCenter().X, yLeftShadow + 0.01, 0));
-   LeftShadowStartValue = 0.f;
-   LeftShadowCutoffValue = cutOffPoint;
-
-   ShadowRight->setTranslation(SVector3(Area.getCenter().X, yRightShadow + 0.01, 0));
-   RightShadowStartValue = cutOffPoint;
-   RightShadowCutoffValue = 1.0f;
+   updateShadow(time);
 
    float rotateX = 15*sin(ySineValue/2)-90.f;
 

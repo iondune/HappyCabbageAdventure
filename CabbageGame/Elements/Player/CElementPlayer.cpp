@@ -373,6 +373,7 @@ void CElementPlayer::playLevelVictory(float time) {
    }
 
    View->getCabbageSceneObject().setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
+   View->updateShadow();
 
    VictoryTime += time;
 }

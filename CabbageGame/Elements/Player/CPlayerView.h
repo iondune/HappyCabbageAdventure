@@ -35,6 +35,7 @@ class CPlayerView {
 	  void updateCameraPosition(float const ElapsedTime);
 
    public:
+      void updateShadow(float time = 0);
       void setCabbageScale(SVector3);
       void setCutoffPoint(SRect2 left, SRect2 right);
       void setShadowHeights(float, float);
