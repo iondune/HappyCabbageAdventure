@@ -85,6 +85,7 @@ class CGameLevel {
       void removeItem(CElementItem* Item);
       void addItem(CElementItem* Item);
       void removeObject(CGameplayElement *Object);
+      void addObject(CGameplayElement *Object);
 };
 
 #endif
