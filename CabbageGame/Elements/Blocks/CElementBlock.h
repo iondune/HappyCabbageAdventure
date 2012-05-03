@@ -18,6 +18,7 @@ class CElementBlock : public CGameplayElement {
       virtual void update(float);
       virtual void updatePhysicsEngineObject(float);
       virtual void updateSceneObject(float);
+      virtual void reactToAbility(Abilities::EAbilityType ability); 
 
       virtual void writeXML(xmlwriter *);
       CElementBlock(SRect2 nArea, int depth, int texture);
