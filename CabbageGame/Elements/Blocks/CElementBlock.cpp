@@ -56,6 +56,7 @@ void CElementBlock::setupPhysicsEngineObject() {
     */
    //Point of this is so any functions (superclass) that use the physics engine object pointer won't break
    PhysicsEngineObject = Level.getPhysicsEngine().addObject();
+   PhysicsEngineObject->setArea(Area);
    /*
    PhysicsEngineObject->setCollisionResponder(NULL);
    PhysicsEngineObject->setArea(Area);
