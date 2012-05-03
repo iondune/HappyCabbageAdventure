@@ -361,7 +361,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 redo.push_back(blocks.back());
                 redoPlaceables.push_back(placeables.back());
 
-                int i,j;
+                /*int i,j;
                 for(i = 0; i < m_block->getArea().Position.X; i++) {
                     for(j = 0; j < m_block->getArea().Position.Y; j++) {
                         blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = false;
@@ -372,11 +372,11 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 }
 
                 placeables.pop_back();
-                blocks.pop_back();
+                blocks.pop_back();*/
             }
         }
         if(Event.Key == SDLK_r) {
-            if(redo.size() > 0 && redoPlaceables.size() > 0) {
+            /*if(redo.size() > 0 && redoPlaceables.size() > 0) {
                 //Application.getSceneManager().addSceneObject(redo.back());
                 CGameplayElement *m_block = redoPlaceables.back();
                 blocks.push_back(redo.back());
@@ -395,7 +395,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
                 redo.pop_back();
                 redoPlaceables.pop_back();
-            }
+            }*/
         }
         if(Event.Key == SDLK_t){
             change = 5;
@@ -453,31 +453,31 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                         blockWidth = 5;
                         blockHeight = 5;
                         blockDepth = 5;
-                        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                      //  PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                     }
                     else if (textureType == -5) {
                         textureType = 0;
                         blockWidth = 1;
                         blockHeight = 1;
                         blockDepth = 1;
-                        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                      //  PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                     }
                 }
             
                 if (cDown == 1&& textureType != 2) {
                     if(blockWidth < 10 && textureType != -5)
                         blockWidth++;
-                    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                   // PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                 }
                 if (cDown == 2&& textureType != 2) {
                     if(blockHeight < 10 && textureType != -5)
                         blockHeight++;
-                    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                    //PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                 }
                 if (cDown == 3&& textureType != 2) {
                     if(blockDepth < 6 && textureType != -5)
                         blockDepth++;
-                    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                    //PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                 }
             }
         } 
@@ -511,30 +511,30 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                         blockWidth = 5;
                         blockHeight = 5;
                         blockDepth = 5;
-                        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                //        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                     }
                     else if (textureType == -5) {
                         textureType = 2;
                         blockWidth = 1;
                         blockHeight = 1;
                         blockDepth = 1;
-                        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                     //   PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                     }
                 }
                 if(cDown == 1&& textureType != 2) {
                     if(blockWidth > 1 && textureType != -5) 
                         blockWidth--;
-                    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                //    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                 }
                 if(cDown == 2&& textureType != 2) {
                     if(blockHeight > 1 && textureType != -5)
                         blockHeight--;
-                    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                //    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                 }
                 if(cDown == 3&& textureType != 2) {
                     if(blockDepth > 1 && textureType != -5)
                         blockDepth--;
-                    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+                 //   PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
                 }
             }
 
@@ -653,7 +653,7 @@ void CLWIBState::loadWorld() {
                 x = xml->getAttributeValueAsInt(0);
                 y = xml->getAttributeValueAsInt(1);
                 t = xml->getAttributeValueAsInt(2);
-                PrepFriends(x,y,t);
+                //PrepFriends(x,y,t);
            }
            if (!strcmp("envVar", xml->getNodeName()))
            {
@@ -811,13 +811,13 @@ void CLWIBState::PrepPreviews() {
    PreviewItem->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
    PreviewItem->setRotation(SVector3(-90, 0, 0));
    PreviewItem->setScale(SVector3(1, 1, 1));
-   */
+   
    CApplication::get().getSceneManager().addSceneObject(PreviewItem);
    CApplication::get().getSceneManager().addSceneObject(PreviewBlock);
    CApplication::get().getSceneManager().addSceneObject(PreviewFlag);
    CApplication::get().getSceneManager().addSceneObject(PreviewEnemy);
    CApplication::get().getSceneManager().addSceneObject(PreviewCabbage);
-   PreviewEnemy->setVisible(false);
+   PreviewEnemy->setVisible(false);*/
 }
 
 
@@ -833,25 +833,25 @@ void CLWIBState::PrepItem(float x, float y, int item) {
 
    printf("Placed item starting at %0.2f, %0.2f\n", x, y);
    //CMeshSceneObject *tempItem;
-   CGameplayElement *tempPlaceable;
+   CElementItem *tempPlaceable;
    //blocks.push_back(tempItem = new CMeshSceneObject());
-   placeables.push_back(tempPlaceable = new CElementItem(SRect2(x, y, 1, 1) item));
-   gameWorld->addObject(tempPlaceable);
-   /*if (item == 0)
-       tempItem->setMesh(health);
+   if (item == 0)
+       tempPlaceable = CItemLoader::LoadItem(SRect2(x, y, 1, 1), (Items::EItemType)item);
    if (item == 1)
-       tempItem->setMesh(energy);
+       tempPlaceable = CItemLoader::LoadItem(SRect2(x, y, 1, 1),(Items::EItemType) item);
    if (item == 2)
-       tempItem->setMesh(lifeMesh);
+       tempPlaceable = CItemLoader::LoadItem(SRect2(x, y, 1, 1),(Items::EItemType) item);
    if (item == 3)
-       tempItem->setMesh(seedMesh);
-   tempItem->setShader(ERP_DEFAULT, Diffuse);
+       tempPlaceable = CItemLoader::LoadItem(SRect2(x, y, 1, 1),(Items::EItemType) item);
+   gameWorld->addObject(tempPlaceable);
+   placeables.push_back(tempPlaceable);
+   /*tempItem->setShader(ERP_DEFAULT, Diffuse);
    tempItem->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
    tempItem->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
    tempItem->setRotation(SVector3(-90, 0, 0));
    tempItem->setScale(SVector3(0.5, 0.5, 0.5));*/
    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
-   blockMap[(int)x+25][(int)(y-0.5+25)].r = tempItem;
+   blockMap[(int)x+25][(int)(y-0.5+25)].r = tempPlaceable;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
    //Application.getSceneManager().addSceneObject(tempItem);
@@ -859,7 +859,7 @@ void CLWIBState::PrepItem(float x, float y, int item) {
    redoPlaceables.clear();
 
 }
-
+#include "../CabbageGame/Elements/Blocks/CElementBlockFlag.h"
 void CLWIBState::PrepFlag(float x, float y, int t) {
 
    if(x < -25 || y < -25 || x >= 500 || y >= 75)
@@ -882,7 +882,7 @@ void CLWIBState::PrepFlag(float x, float y, int t) {
    tempFlag->setRotation(SVector3(-90, 0, 0));
    tempFlag->setScale(SVector3(0.5, 0.5, 0.5));*/
    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
-   blockMap[(int)x+25][(int)(y-0.5+25)].r = tempFlag;
+   blockMap[(int)x+25][(int)(y-0.5+25)].r = tempPlaceable;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
    //Application.getSceneManager().addSceneObject(tempFlag);
@@ -902,28 +902,29 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
   // CMeshSceneObject *tempEnemy;
    CGameplayElement *tempPlaceable;
   // blocks.push_back(tempEnemy = new CMeshSceneObject());
-   placeables.push_back(tempPlaceable = new CElementEnemy(SRect2(x, y, 1, 1), type));
-   gameWorld->addObject(tempPlaceable);
+   placeables.push_back(tempPlaceable = CEnemyLoader::LoadEnemy(SRect2(x, y, 1, 1),(Enemies::EEnemyType) type));
+   gameWorld->addObject(tempPlaceable); 
    /*if (type == 0)
-        tempEnemy->setMesh(appleMesh);
+        tempPlaceable
    if (type == 1)
-        tempEnemy->setMesh(orangeMesh);
+        tempPlaceable->setMesh(orangeMesh);
    if (type == 2)
-        tempEnemy->setMesh(kiwiMesh);
+        tempPlaceable->setMesh(kiwiMesh);
    if (type == 3) 
-        tempEnemy->setMesh(cubeMesh);
+        tempPlaceable->setMesh(cubeMesh);
    if (type == 4)
-        tempEnemy->setMesh(flameMesh); //flameMesh doesn't work.  Why?
+        tempPlaceable->setMesh(flameMesh); //flameMesh doesn't work.  Why?
    if (type == 5) {
-        tempEnemy->setMesh(bladeMesh);
+        tempPlaceable->setMesh(bladeMesh);
    }
+
    tempEnemy->setShader(ERP_DEFAULT, Diffuse);
    tempEnemy->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
    tempEnemy->setTranslation(SVector3((x+(x+1))/2, (y+(y+1))/2, 0));
    tempEnemy->setRotation(SVector3(-90, 0, 0));
    tempEnemy->setScale(SVector3(1, 1, 1));*/
    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
-   blockMap[(int)x+25][(int)(y-0.5+25)].r = tempEnemy;
+   blockMap[(int)x+25][(int)(y-0.5+25)].r = tempPlaceable;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
    //Application.getSceneManager().addSceneObject(tempEnemy);
@@ -972,7 +973,7 @@ void CLWIBState::PrepCabbage(float x, float y) {
         return;
     }
 
-    if (cabbageFlag == 1) {
+    /*if (cabbageFlag == 1) {
         blockMap[(int)xCabbage+25][(int)(yCabbage-0.5+25)].o = false;
         blockMap[(int)xCabbage+25][(int)(yCabbage-0.5+25)].r = NULL;
         blockMap[(int)xCabbage+25][(int)(yCabbage-0.5+25)].mapX = -1;
@@ -981,13 +982,13 @@ void CLWIBState::PrepCabbage(float x, float y) {
         placeables.erase(std::remove(placeables.begin(), placeables.end(), lastCabbage.p), placeables.end());
         blocks.erase(std::remove(blocks.begin(), blocks.end(), lastCabbage.r), blocks.end());
         //Application.getSceneManager().removeSceneObject(lastCabbage.r);
-    } 
+    } */
 
     printf("Placed cabbage starting at %0.2f, %0.2f\n", x, y);
     //CMeshSceneObject *tempCabbage;
     CGameplayElement *tempPlaceable;
     //blocks.push_back(tempCabbage = new CMeshSceneObject());
-    placeables.push_back(tempPlaceable = new CElementPlayer(SRect2(x, y, 1, 1));
+    placeables.push_back(tempPlaceable = new CElementPlayer(SRect2(x, y, 1, 1)));
     gameWorld->addObject(tempPlaceable);
     /*tempCabbage->setMesh(cabbageMesh);
     tempCabbage->setShader(ERP_DEFAULT, Diffuse);
@@ -996,7 +997,7 @@ void CLWIBState::PrepCabbage(float x, float y) {
     tempCabbage->setRotation(SVector3(-90, 0, 90));
     tempCabbage->setScale(SVector3(0.5, 0.5, 0.5));*/
     blockMap[(int)x+25][(int)(y-0.5f+25)].o = true;
-    blockMap[(int)x+25][(int)(y-0.5f+25)].r = tempCabbage;
+    blockMap[(int)x+25][(int)(y-0.5f+25)].r = tempPlaceable;
     blockMap[(int)x+25][(int)(y-0.5f+25)].mapX = (int)x+25;
     blockMap[(int)x+25][(int)(y-0.5f+25)].mapY = (int)(y-0.5f+25);
     xCabbage = (int) x, yCabbage = (int) y;
@@ -1029,8 +1030,8 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
 
    printf("Placed block starting at %0.2f, %0.2f\n", x, y);
    
-   CGameplayElement *tempBlock;
-   blocks.push_back(tempBlock = new CElementBlock(SRect2(x,y,w,h),d,t));
+   CGameplayElement *tempPlaceable;
+   blocks.push_back(tempPlaceable = new CElementBlock(SRect2(x,y,w,h),d,t));
    gameWorld->addObject(tempPlaceable);
    //tempBlock->setMesh(cubeMesh);
    /*if (t == 0)
@@ -1050,7 +1051,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
    for(i = 0; i < w; i++) {
       for(j = 0; j < h; j++) {
          blockMap[(int)x+25+i][(int)(y-0.5+25)+j].o = true;
-         blockMap[(int)x+25+i][(int)(y-0.5+25)+j].r = tempBlock;
+         blockMap[(int)x+25+i][(int)(y-0.5+25)+j].r = tempPlaceable;
          blockMap[(int)x+25+i][(int)(y-0.5+25)+j].mapX = (int)x+25;
          blockMap[(int)x+25+i][(int)(y-0.5+25)+j].mapY = (int)(y-0.5+25);
       }
@@ -1059,11 +1060,11 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
    //Application.getSceneManager().addSceneObject(tempBlock);
    redo.clear();
    redoPlaceables.clear();
-   if(moving) {
+   /*if(moving) {
       tempPlaceable->isMovingPlatform = 1;
       tempPlaceable->Range = 2;
       tempPlaceable->Speed = 1;
-   }
+   }*/
 }
 
 
@@ -1110,8 +1111,8 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          if(!tDown && oneDown && !threeDown && !twoDown&& !fourDown) {
              if (friendType == 0)
                 PrepCabbage(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
-             else if (friendType == 1)
-                PrepFriends(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), friendType);
+             /*else if (friendType == 1)
+                PrepFriends(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), friendType);*/
          }
          else if (!tDown && !oneDown && !threeDown &&!twoDown && !fourDown) {
             PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,textureType,mDown);
@@ -1124,10 +1125,10 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
              if(lastMouseOveredBlock.o) {
                  printf("clicked on removing\n");
                  //Application.getSceneManager().removeSceneObject(lastMouseOveredBlock.r);
-                 placeables.erase(std::remove(placeables.begin(), placeables.end(), lastMouseOveredBlock.p), placeables.end());
-                 blocks.erase(std::remove(blocks.begin(), blocks.end(), lastMouseOveredBlock.r), blocks.end());
-                 redoPlaceables.push_back(lastMouseOveredBlock.p);
-                 redo.push_back(lastMouseOveredBlock.r);
+                 //placeables.erase(std::remove(placeables.begin(), placeables.end(), lastMouseOveredBlock.p), placeables.end());
+                 //blocks.erase(std::remove(blocks.begin(), blocks.end(), lastMouseOveredBlock.r), blocks.end());
+                 //redoPlaceables.push_back(lastMouseOveredBlock.p);
+                 //redo.push_back(lastMouseOveredBlock.r);
                  int x = lastMouseOveredBlock.mapX;
                  int y = lastMouseOveredBlock.mapY;
 
@@ -1166,7 +1167,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          CShader *tempShader;
          m_qd = blockMap[(int)x+25][(int)(y-0.5+25)];
          tempShader = CShaderLoader::loadShader("DiffuseTexture");
-         if(tDown) {
+         /*if(tDown) {
             if(m_qd.o && m_qd.r != lastMouseOveredBlock.r) {
 
                 tempShader = m_qd.r->getShader(); 
@@ -1175,7 +1176,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
             if(lastMouseOveredBlock.o && m_qd.r != lastMouseOveredBlock.r) {
                 lastMouseOveredBlock.r->setShader(ERP_DEFAULT, tempShader);
             }
-         }
+         }*/
          if(!threeDown && !tDown && !twoDown && !oneDown && !fourDown && mouseDown) {
             PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth, textureType,mDown);
          }
@@ -1457,7 +1458,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
                 blockWidth = 1;
                 blockHeight = 1;
                 blockDepth = 1;
-                PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
+              //  PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
             }
             textureType = 0;
             cDown = 0;
@@ -1480,7 +1481,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
                 blockWidth = 1;
                 blockHeight = 1;
                 blockDepth = 1;
-                PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
+            //    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
             }
             textureType = 1;
             cDown = 0;
@@ -1503,7 +1504,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
                 blockWidth = 1;
                 blockHeight = 1;
                 blockDepth = 1;
-                PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
+//                PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
             }
             textureType = 2;
             cDown = 0;
@@ -1522,7 +1523,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             blockWidth = 5;
             blockHeight = 5;
             blockDepth = 5;
-            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
+//            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
             cDown = 0;
         }
         if (change == 2) {
@@ -1537,7 +1538,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 0) {
             if (blockWidth > 1 && textureType != -5)
                 blockWidth--;
-            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+//            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             cDown = 1;
         }
         if (change == 2) {
@@ -1550,7 +1551,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 0) {
             if (blockWidth < 10 && textureType != -5)
                 blockWidth++;
-            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+//            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             cDown = 1;
 
         }
@@ -1564,7 +1565,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 0) {
             if (blockHeight > 1 && textureType != -5)
                 blockHeight--;
-            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+//            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             cDown = 2;
         }
         if (change == 2) {
@@ -1575,7 +1576,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 0) {
             if (blockHeight < 10 && textureType != -5)
                 blockHeight++;
-            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+//            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             cDown = 2;
         }
         if (change == 1) {
@@ -1585,7 +1586,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 0) {
             if (blockDepth > 1 && textureType != -5)
                 blockDepth--;
-            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+//            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             cDown = 3;
         }
         if (change == 1) {
@@ -1595,7 +1596,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 0) {
             if (blockDepth < 5 && textureType != -5)
                 blockDepth++;
-            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+//            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             cDown = 3;
         }
         if (change == 1) {
@@ -1632,7 +1633,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if(redo.size() > 0 && redoPlaceables.size() > 0) {
             //Application.getSceneManager().addSceneObject(redo.back());
             CGameplayElement *m_block = redoPlaceables.back();
-            CMeshSceneObject *m_r = redo.back();
+//            CMeshSceneObject *m_r = redo.back();
             blocks.push_back(redo.back());
             placeables.push_back(redoPlaceables.back());
 
@@ -1640,7 +1641,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             for(i = 0; i < m_block->getArea().Position.X; i++) {
                 for(j = 0; j < m_block->getArea().Size.Y; j++) {
                     blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = true;
-                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = m_r;
+                 //   blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = m_r;
 
                     blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = (int)m_block->getArea().Position.X+25;
                     blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = (int)(m_block->getArea().Position.Y-0.5+25);
