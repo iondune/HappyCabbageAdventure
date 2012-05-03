@@ -97,7 +97,7 @@ void CDecorManager::GenerateDesertPlants(CGroundBlock* block, bool genTree) {
    //Draw Tree in background
    if (genTree) {
       plantType = rand()%3;
-      randDist = w * .1 + (rand() / (float)RAND_MAX) * 0.7f * w;  //.1, .7 to make sure doesn't overlap with other randomly drawn cacti
+      randDist = w * 0.1f + (rand() / (float)RAND_MAX) * 0.7f * w;  //.1, .7 to make sure doesn't overlap with other randomly drawn cacti
       if (plantType < 2)
          SetupObject(x + randDist, yVal + 1.5f, -d/2.0f + .4f, 5.5f, cactus2Mesh);
       else if (plantType == 2)
@@ -225,7 +225,7 @@ void CDecorManager::GenerateForestPlants(CGroundBlock* block) {
       randDepth = randDepth*0.25f;
 
       if (random == 0 || random == 1)
-         SetupObject(x + n + 0.5f, randScale/2.0 + 0.1f, d/2.0f - 0.6f, 0.4f + randScale, whiteFlwrMesh);
+         SetupObject(x + n + 0.5f, randScale/2.0f + 0.1f, d/2.0f - 0.6f, 0.4f + randScale, whiteFlwrMesh);
       else if (random == 2 || random == 3 || random == 4) {
          if (subrand == 0)
             SetupObject(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, blueFlwrMesh);
