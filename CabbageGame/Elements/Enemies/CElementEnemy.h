@@ -6,18 +6,19 @@
 
 namespace Enemies {
    enum EEnemyType {
-      APPLE					= 0,
-      ORANGE				= 1,
-      KIWI					= 2,
-      GRAPE					= 3,
-      FLAME					= 4,
-      BLADE					= 5,
-      KIWI_PROJECTILE	= 6,
-      GRAPE_PROJECTILE	= 7,
-      GIANT_APPLE       = 8,
-      PEAR              = 9,
-      BANNANA           = 10,
-      BANNANA_PROJECTILE = 11
+      APPLE					 = 0,
+      ORANGE				 = 1,
+      KIWI					 = 2,
+      GRAPE					 = 3,
+      FLAME					 = 4,
+      BLADE					 = 5,
+      KIWI_PROJECTILE	 = 6,
+      GRAPE_PROJECTILE	 = 7,
+      GIANT_APPLE        = 8,
+      PEAR               = 9,
+      BANNANA            = 10,
+      BANNANA_PROJECTILE = 11,
+      CHERRY             = 12
    };
 }
 
