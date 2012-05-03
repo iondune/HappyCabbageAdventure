@@ -57,8 +57,9 @@ void initBlockMap() {
 //Initalizer fxn
 void CLWIBState::begin()
 {
-    gameWorld = new CGameLevel();
-    //worldDriver = new CGameplayManager();
+    //gameWorld = new CGameLevel();
+    
+    //worldDriver = new CGameplayManager(*gameWorld);
    //printf("asdf\n");
    clickDown = 0;
    
@@ -126,6 +127,8 @@ void CLWIBState::begin()
 //Runs at very start of display
 void CLWIBState::OnRenderStart(float const Elapsed)
 {
+   //gameWorld->update(Elapsed);
+   // worldDriver->update(Elapsed);
    glViewport(0, 0, WindowWidth, WindowHeight);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -306,10 +309,14 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    //drawSubWindow();
    pickInsert();
    changeTiles();
-   //Application.getSceneManager().drawAll();
+
+   for (int i = 0 ; i < placeables.size(); i++)
+       placeables[i]->update(Elapsed);
+
+   Application.getSceneManager().drawAll();
 
    Application.getGUIEngine().drawAll(); 
-   //Application.getSceneManager().endDraw();
+   Application.getSceneManager().endDraw();
    SDL_GL_SwapBuffers();
 }
 
@@ -701,7 +708,7 @@ void CLWIBState::end()
    redoPlaceables.clear();
    blocks.clear();
    redo.clear();
-  // //Application.getSceneManager().removeAllSceneObjects();
+   Application.getSceneManager().removeAllSceneObjects();
 }
 
 void CLWIBState::PrepPreviews() {
@@ -843,7 +850,7 @@ void CLWIBState::PrepItem(float x, float y, int item) {
        tempPlaceable = CItemLoader::LoadItem(SRect2(x, y, 1, 1),(Items::EItemType) item);
    if (item == 3)
        tempPlaceable = CItemLoader::LoadItem(SRect2(x, y, 1, 1),(Items::EItemType) item);
-   gameWorld->addObject(tempPlaceable);
+   //gameWorld->addObject(tempPlaceable);
    placeables.push_back(tempPlaceable);
    /*tempItem->setShader(ERP_DEFAULT, Diffuse);
    tempItem->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
@@ -874,7 +881,7 @@ void CLWIBState::PrepFlag(float x, float y, int t) {
    CGameplayElement *tempPlaceable;
    //blocks.push_back(tempFlag = new CMeshSceneObject());
    placeables.push_back(tempPlaceable = new CElementBlockFlag(SRect2(x, y, 1, 1),t));//add flag
-   gameWorld->addObject(tempPlaceable);
+   //gameWorld->addObject(tempPlaceable);
    /*tempFlag->setMesh(flagMesh);
    tempFlag->setShader(ERP_DEFAULT, Diffuse);
    tempFlag->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
@@ -903,7 +910,8 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
    CGameplayElement *tempPlaceable;
   // blocks.push_back(tempEnemy = new CMeshSceneObject());
    placeables.push_back(tempPlaceable = CEnemyLoader::LoadEnemy(SRect2(x, y, 1, 1),(Enemies::EEnemyType) type));
-   gameWorld->addObject(tempPlaceable); 
+   //gameWorld->addObject(tempPlaceable); 
+
    /*if (type == 0)
         tempPlaceable
    if (type == 1)
@@ -989,7 +997,8 @@ void CLWIBState::PrepCabbage(float x, float y) {
     CGameplayElement *tempPlaceable;
     //blocks.push_back(tempCabbage = new CMeshSceneObject());
     placeables.push_back(tempPlaceable = new CElementPlayer(SRect2(x, y, 1, 1)));
-    gameWorld->addObject(tempPlaceable);
+    //gameWorld->addObject(tempPlaceable);
+    
     /*tempCabbage->setMesh(cabbageMesh);
     tempCabbage->setShader(ERP_DEFAULT, Diffuse);
     tempCabbage->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
@@ -1028,11 +1037,11 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
    if(!ret)
       return;
 
-   printf("Placed block starting at %0.2f, %0.2f\n", x, y);
+   printf("Placed block starting at %0.2f, %0.2f, %d, %d, %d\n", x, y, h,d,t);
    
    CGameplayElement *tempPlaceable;
-   blocks.push_back(tempPlaceable = new CElementBlock(SRect2(x,y,w,h),d,t));
-   gameWorld->addObject(tempPlaceable);
+   placeables.push_back(tempPlaceable = new CElementBlock(SRect2(x,y,w,h),d,t));
+   //gameWorld->addObject(tempPlaceable);
    //tempBlock->setMesh(cubeMesh);
    /*if (t == 0)
         tempBlock->setTexture("Base/grass.bmp");
@@ -1056,11 +1065,12 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
          blockMap[(int)x+25+i][(int)(y-0.5+25)+j].mapY = (int)(y-0.5+25);
       }
    }
+   tempPlaceable->setupObjects();
    //tempBlock->setRotation(SVector3(0, 0, 0));
    //Application.getSceneManager().addSceneObject(tempBlock);
-   redo.clear();
+   /*redo.clear();
    redoPlaceables.clear();
-   /*if(moving) {
+   if(moving) {
       tempPlaceable->isMovingPlatform = 1;
       tempPlaceable->Range = 2;
       tempPlaceable->Speed = 1;
