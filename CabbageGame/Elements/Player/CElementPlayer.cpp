@@ -52,6 +52,7 @@ void CElementPlayer::updatePlayerAction() {
 #include "CPlayerAbilityShield.h"
 #include "CPlayerAbilityBlink.h"
 #include "CPlayerAbilityLaser.h"
+#include "CPlayerAbilityDash.h"
 
 bool CElementPlayer::used(Abilities::EAbilityType a) {
    return (usedAbility.find(a) != usedAbility.end());
@@ -81,6 +82,15 @@ void CElementPlayer::checkAbilityKeypress() {
    }
    else {
       getAbility(Abilities::SHIELD)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_k]);
+   }
+   /* Dash */
+   if(!used(Abilities::DASH)) {
+      if(CApplication::get().getEventManager().IsKeyDown[SDLK_v]) {
+         Abilities.push_back(new CPlayerAbilityDash(*this));
+      }
+   }
+   else {
+      getAbility(Abilities::DASH)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_v]);
    }
    /* Laser */
    if(!used(Abilities::LASER)) {
