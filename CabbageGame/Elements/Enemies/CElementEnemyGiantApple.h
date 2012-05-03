@@ -3,7 +3,7 @@
 
 #include "CElementEnemy.h"
 
-class CElementEnemyGiantApple : public CElementEnemy, public ISquishable
+class CElementEnemyGiantApple : public CElementEnemy, ISquishable
 {
    private:
       float ScaleMult;

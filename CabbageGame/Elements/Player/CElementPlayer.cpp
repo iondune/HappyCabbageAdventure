@@ -4,7 +4,7 @@
 
 CElementPlayer::CElementPlayer(SRect2 nArea)
 : CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f), Shaking(0.0f), ShakeFactor(SVector3(0.0f)),
-  ISquishable(2.0f, 2.0f), AllowMovement(true), PlayJump(true) {
+  ISquishable(2.0f, 2.0f), AllowMovement(true), PlayJump(true), Victory(false), VictoryTime(0.0f) {
    setupSoundEffects();
 }
 
@@ -13,9 +13,9 @@ CElementPlayer::CElementPlayer(SRect2 nArea)
 
 void CElementPlayer::updatePlayerAction() {
    if(!AllowMovement) {
-      Action = Standing;
+      /*Action = Standing;
       PhysicsEngineObject->setJumping(false);
-      PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
+      PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);*/
       return;
    }
    if(CApplication::get().getEventManager().IsKeyDown[SDLK_a]) {
@@ -65,7 +65,8 @@ CPlayerAbility *CElementPlayer::getAbility(Abilities::EAbilityType a) {
 }
 
 void CElementPlayer::checkAbilityKeypress() {
-   AllowMovement = true;
+   if (!Victory)
+      AllowMovement = true;
    if(Stats.Energy <= 0)
       return;
    usedAbility.clear();
@@ -137,11 +138,17 @@ void CElementPlayer::updateSceneObject(float time) {
       }
    }
    updateAbilities(time);
-   View->updateView(time);
 
-   Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
+   if (Victory)
+      playLevelVictory(time);
+   else {
+      View->updateView(time);
+
+      Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
+   }
 
    SceneObject->setScale(SVector3(Scale.X, Scale.X, Scale.Y));
+
 }
 
 Cabbage::PlayerInformation & CElementPlayer::getStats() {
@@ -175,7 +182,7 @@ void CElementPlayer::writeXML(xmlwriter *l) {
 void CElementPlayer::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
    PhysicsEngineObject->setArea(Area);
-   PhysicsEngineObject->getAttributes().MaxWalk = 7.5f;
+   PhysicsEngineObject->getAttributes().MaxWalk = 3.5f;
    PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_PLAYER;
    PhysicsEngineObject->CollideableLevel |= INTERACTOR_SUPERACTORS;
    PhysicsEngineObject->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
@@ -253,3 +260,112 @@ void CElementPlayer::setupSoundEffects() {
    temp = MusicDirectory + "fireLaser3.wav";
    fireLaser = Mix_LoadWAV(temp.c_str());
 }
+
+void CElementPlayer::setVictoryFlag(bool value) {
+	Victory = value;
+}
+
+void CElementPlayer::setAllowMovement(bool value) {
+	AllowMovement = value;
+}
+
+void CElementPlayer::playLevelVictory(float time) {
+   SVector3 curRotation = SceneObject->getRotation();
+   SVector2 curLocation = SVector2 (Area.getCenter().X - .5f, Area.getCenter().Y - .5f);
+
+   printf("curRotation: %f\n", curRotation.X);
+
+   if (VictoryTime > .00f && VictoryTime < .07f) {
+      Action = Standing;
+      PhysicsEngineObject->setJumping(false);
+      PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
+   }
+
+   if (VictoryTime > .05f && VictoryTime < .07f) {
+      Direction = Right;
+      Action = Walking;
+      PhysicsEngineObject->setJumping(true);
+      PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
+   }
+   else if (VictoryTime > .07f && VictoryTime < .12f) {
+      PhysicsEngineObject->setJumping(false);
+   }
+   else if (VictoryTime > .72f && VictoryTime < .76f) {
+      Action = Jumping;
+      PhysicsEngineObject->setJumping(true);
+   }
+   //Fireworks.  Ignoring for now. I can do that.  : D
+   /*else if (VictoryTime > .76f && VictoryTime < 1.f) {
+      if (!f1) {
+         SVector3 flagPosition = renderFlag->getTranslation();
+
+         f1 = new CParticleEngine(SVector3(flagPosition.X, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);  //Would like to change these later so not leaves. Fine for now
+         f2 = new CParticleEngine(SVector3(flagPosition.X + 4.f, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);
+         f3 = new CParticleEngine(SVector3(flagPosition.X + 8.f, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);
+      }
+   }*/
+   else if (VictoryTime > 1.f && VictoryTime < 1.2f) {
+      Action = Walking;
+      PhysicsEngineObject->setJumping(false);
+   }
+   else if (VictoryTime > 1.5f && VictoryTime < 2.5f) {
+      Action = Jumping;
+      PhysicsEngineObject->setJumping(true);
+      SceneObject->setRotation(SVector3(curRotation.X + 720.f*time, 0.f, 80.f));
+   }
+   else if (VictoryTime > 2.5f && VictoryTime < 2.9f) {
+      Action = Standing;
+      PhysicsEngineObject->setJumping(false);
+      PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
+   }
+
+   else if (VictoryTime > 2.9f && VictoryTime < 3.9f) {
+      Action = Jumping;
+      PhysicsEngineObject->setJumping(true);
+
+      SceneObject->setRotation(SVector3(curRotation.X - 360.f*time, 0.f, 80.f));
+      PhysicsEngineObject->setArea(SRect2(Area.Position.X - 3.f*time, Area.Position.Y, 1.f, 1.f));
+   }
+
+   else if (VictoryTime > 3.8f && VictoryTime < 3.9f) {
+      Action = Standing;
+      PhysicsEngineObject->setJumping(false);
+   }
+   else if (VictoryTime > 3.9f && VictoryTime < 4.9f) {
+      SceneObject->setRotation(SVector3(curRotation.X, 0.f, curRotation.Z - 765.f*time));
+      PhysicsEngineObject->setArea(SRect2(Area.Position.X - 3.f*time, Area.Position.Y, 1.f, 1.f));
+   }
+   else if (VictoryTime > 4.9f && VictoryTime < 6.4f) {
+      /*if (!glow) {
+         glow = new CParticleEngine(SVector3(Area.Position.X + 0.5f, Area.Position.Y - 0.25f, 0), 400, 2.f, LASER_CHARGING_PARTICLE);
+      }*/
+      Action = Standing;
+      PhysicsEngineObject->setJumping(false);
+
+      Scale.Y -= 0.4f*time;
+   }
+
+   if (VictoryTime > 6.9f && VictoryTime < 7.3f) {
+      Scale.Y += 1.2f*time;
+      Scale.X -= 1.8f*time;
+
+      PhysicsEngineObject->setImpulse(SVector2(0.f, 30.f), 0.01f);
+
+   }
+
+   /*else if(VictoryTime >= 7.3f)
+   {
+      COverworldState::get().levelCompleted = true;
+      Application.getStateManager().setState(new CFadeOutState(& COverworldState::get()));
+   }*/
+
+   //Translate the camera unless we're launching off.
+   else {
+      CApplication::get().getSceneManager().getActiveCamera()->setPosition(SVector3(Area.getCenter().X, Area.getCenter().Y + 1.3f, 10) + ShakeFactor);
+   }
+
+   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
+
+   VictoryTime += time;
+}
+
