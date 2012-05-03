@@ -1,6 +1,7 @@
 #include "COverworldState.h"
 #include "../CabbageSound/sound.h"
 
+
 COverworldState::COverworldState()
 : Application (CApplication::get())
 {}
@@ -235,7 +236,7 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
          printf("Look coords: %0.2f %0.2f %0.2f\n", look.X, look.Y, look.Z);
       }
       if(Event.Key == SDLK_SPACE && transitionTimer == 0.0f) {
-         CGameState::get().levelName = levels[curNode].name;
+         CGameState::get().LevelName = levels[curNode].name;
          Application.getStateManager().setState(new CFadeOutState(& CGameState::get()));
          spaceDown = 1;
       }

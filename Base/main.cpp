@@ -1,7 +1,7 @@
 //#include "CGameState.h"
-//#include "../StateMainMenu/CMainMenuState.h"
+#include "../StateMainMenu/CMainMenuState.h"
 //#include "../StateOverworld/COverworldState.h"
-#include "../StateGame/CGameState.h"
+//#include "../StateGame/CGameState.h"
 
 #ifdef _WIN32
 #pragma comment(lib, "freetype.lib")
@@ -37,8 +37,8 @@ int main(int argc, char * argv[])
    else
       CGameState::get().LevelName = "jorge1.xml";
 
-   StateManager.setState(& CGameState::get());
-   //StateManager.setState(& COverworldState::get());
+   //StateManager.setState(& CGameState::get());
+   StateManager.setState(& CMainMenuState::get());
 
    Application.run();
 

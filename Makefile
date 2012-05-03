@@ -1,6 +1,7 @@
 OBJECT_FILES=`find | grep '\.o$$' | sed "/sdlmixer/d"`
 
-all: build-Sound build-CabbageFramework build-CabbageParticles build-CabbageScene build-CabbageCore build-CabbageCollider build-base build-CabbageGUI build-CabbageGame build-StateGame
+all: build-Sound build-CabbageFramework build-CabbageParticles build-CabbageScene build-CabbageCore build-CabbageCollider build-base build-CabbageGUI build-CabbageGame build-StateGame build-CLWIB build-MainMenu build-Overworld
+
 #build-MeshLoaderDemo build-CabbageColliderDemo
 
 build-StateGame:
@@ -12,14 +13,14 @@ build-CabbageGame:
 build-Sound:
 	cd ./CabbageSound && make -j
 
-#build-CLWIB:
-#	cd ./StateLWIB && make -j lib
+build-CLWIB:
+	cd ./StateLWIB && make -j lib
 
-#build-MainMenu:
-#	cd ./StateMainMenu && make -j
+build-MainMenu:
+	cd ./StateMainMenu && make -j
 	
-#build-Overworld:
-#	cd ./StateOverworld && make -j
+build-Overworld:
+	cd ./StateOverworld && make -j
 	
 build-CabbageScene:
 	cd ./CabbageScene && make -j
