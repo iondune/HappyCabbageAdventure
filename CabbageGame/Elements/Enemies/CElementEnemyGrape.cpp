@@ -57,7 +57,7 @@ void CElementEnemyGrape::updatePhysicsEngineObject(float time) {
    shootTime += time;
 
    //TODO: Check the player is alive
-   if (shootTime - 2.f > 0.f) {
+   if (shootTime >= 1.5f) {
       shootTime = 0.f;
 
       //fire projectile
@@ -68,8 +68,6 @@ void CElementEnemyGrape::updatePhysicsEngineObject(float time) {
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyGrape::updateSceneObject(float time) {
    SVector2 playerPosition = Level.getPlayer().getArea().Position;
-
-   shootTime += time;
 
    SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y + .2f, 0));
 

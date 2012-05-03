@@ -1,4 +1,5 @@
 #include "CLWIBState.h"
+
 /* These are here because someone doesn't use extern, or put prototypes in their header files */
 #include <cmath>
 
@@ -111,6 +112,7 @@ void CLWIBState::begin()
    PrepPreviews();
    prepText();
    prepHud();
+
    printf("END OF BEGIN\n");
 
 }
@@ -893,6 +895,26 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
 
 
 void CLWIBState::PrepSky() {
+
+   CMeshSceneObject *tempBlock;
+
+   CMesh* quad = CMeshLoader::load3dsMesh("Base/Quad.3ds");
+   quad->centerMeshByExtents(SVector3(0.0f));
+   quad->linearizeIndices();
+   quad->calculateNormalsPerFace();
+
+   tempBlock = new CMeshSceneObject();
+   tempBlock->setMesh(quad);
+
+   tempBlock->setTexture(CImageLoader::loadTexture("Base/sky.bmp", true));
+
+   tempBlock->setShader(ERP_DEFAULT, "DiffuseTextureBright");
+   tempBlock->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Textured");
+   tempBlock->setTranslation(SVector3(85/*75*/, 13, -5.0));
+   tempBlock->setScale(SVector3(250, 1, 50));
+   tempBlock->setRotation(SVector3(90.0f, 0.0f, 0.0f));
+
+   CApplication::get().getSceneManager().addSceneObject(tempBlock);
 
   /* CMeshSceneObject *tempBlock;
    blocks.push_back(tempBlock = new CMeshSceneObject());

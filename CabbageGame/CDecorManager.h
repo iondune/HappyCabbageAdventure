@@ -16,6 +16,7 @@ class CGroundBlock {
    public:
       float x, y, w, h, d;
       CGroundBlock(float nx, float ny, float nw, float nh, float nd);
+      void SetupSky();
 };
 
 class CDecorManager : public IUpdater {
