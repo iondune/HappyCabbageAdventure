@@ -57,10 +57,7 @@ void initBlockMap() {
 //Initalizer fxn
 void CLWIBState::begin()
 {
-    //gameWorld = new CGameLevel();
-    
-    //worldDriver = new CGameplayManager(*gameWorld);
-   //printf("asdf\n");
+
    clickDown = 0;
    
    flagFlag = 0;
@@ -105,11 +102,10 @@ void CLWIBState::begin()
    Camera->recalculateViewMatrix();
    Application.getSceneManager().setActiveCamera(Camera);
 
-
    float const LightBrightness = 1.0f;
-   //Application.getSceneManager().Lights.push_back(new CLight()); 
-   //Application.getSceneManager().Lights.back()->Color = SVector3(LightBrightness);
-   //Application.getSceneManager().Lights.back()->Position = SVector3(-5.f, 200.f, 500.f);
+   Application.getSceneManager().Lights.push_back(new CLight()); 
+   Application.getSceneManager().Lights.back()->Color = SVector3(LightBrightness);
+   Application.getSceneManager().Lights.back()->Position = SVector3(-5.f, 200.f, 500.f);
    //Load the meshes into VBOs
 
    srand((unsigned int) time(0));
@@ -127,8 +123,7 @@ void CLWIBState::begin()
 //Runs at very start of display
 void CLWIBState::OnRenderStart(float const Elapsed)
 {
-   //gameWorld->update(Elapsed);
-   // worldDriver->update(Elapsed);
+
    glViewport(0, 0, WindowWidth, WindowHeight);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -828,7 +823,6 @@ void CLWIBState::PrepPreviews() {
 }
 
 
-
 void CLWIBState::PrepItem(float x, float y, int item) {
 
    if(x < -25 || y < -25 || x >= 500 || y >= 75)
@@ -852,6 +846,7 @@ void CLWIBState::PrepItem(float x, float y, int item) {
        tempPlaceable = CItemLoader::LoadItem(SRect2(x, y, 1, 1),(Items::EItemType) item);
    //gameWorld->addObject(tempPlaceable);
    placeables.push_back(tempPlaceable);
+   tempPlaceable->setupObjects();
    /*tempItem->setShader(ERP_DEFAULT, Diffuse);
    tempItem->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
    tempItem->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
@@ -881,6 +876,7 @@ void CLWIBState::PrepFlag(float x, float y, int t) {
    CGameplayElement *tempPlaceable;
    //blocks.push_back(tempFlag = new CMeshSceneObject());
    placeables.push_back(tempPlaceable = new CElementBlockFlag(SRect2(x, y, 1, 1),t));//add flag
+   tempPlaceable->setupObjects();
    //gameWorld->addObject(tempPlaceable);
    /*tempFlag->setMesh(flagMesh);
    tempFlag->setShader(ERP_DEFAULT, Diffuse);
@@ -910,6 +906,7 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
    CGameplayElement *tempPlaceable;
   // blocks.push_back(tempEnemy = new CMeshSceneObject());
    placeables.push_back(tempPlaceable = CEnemyLoader::LoadEnemy(SRect2(x, y, 1, 1),(Enemies::EEnemyType) type));
+   tempPlaceable->setupObjects(); 
    //gameWorld->addObject(tempPlaceable); 
 
    /*if (type == 0)
@@ -997,6 +994,9 @@ void CLWIBState::PrepCabbage(float x, float y) {
     CGameplayElement *tempPlaceable;
     //blocks.push_back(tempCabbage = new CMeshSceneObject());
     placeables.push_back(tempPlaceable = new CElementPlayer(SRect2(x, y, 1, 1)));
+    tempPlaceable->setupObjects();  
+
+
     //gameWorld->addObject(tempPlaceable);
     
     /*tempCabbage->setMesh(cabbageMesh);
@@ -1080,7 +1080,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
 
 void CLWIBState::PrepSky() {
 
-   /*CMeshSceneObject *tempBlock;
+  /* CMeshSceneObject *tempBlock;
    blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
    tempBlock->setTexture("Base/sky.bmp");
@@ -1088,8 +1088,8 @@ void CLWIBState::PrepSky() {
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
    tempBlock->setTranslation(SVector3(85, 13, -5));
    tempBlock->setScale(SVector3(250, -50, 1));
-   tempBlock->setCullingEnabled(false);*/
-   //Application.getSceneManager().addSceneObject(tempBlock);
+   tempBlock->setCullingEnabled(false);
+   Application.getSceneManager().addSceneObject(tempBlock);*/
 }
 
 
