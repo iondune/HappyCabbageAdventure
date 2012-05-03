@@ -40,7 +40,7 @@ build-MeshLoaderDemo: build-CabbageScene
 build-CabbageColliderDemo: build-CabbageCollider build-CabbageScene
 	cd ./DemoCabbageCollider && make -j
 
-build-base: build-StateGame build-CabbageGame build-CabbageCollider build-CabbageCore build-CabbageScene build-CabbageFramework build-CabbageParticles build-CabbageGUI
+build-base: build-StateGame build-CabbageGame build-CabbageCollider build-CabbageCore build-CabbageScene build-CabbageFramework build-CabbageParticles build-CabbageGUI build-CLWIB build-MainMenu build-Overworld
 	cd ./Base && make -j
 
 build-CabbageFramework:
