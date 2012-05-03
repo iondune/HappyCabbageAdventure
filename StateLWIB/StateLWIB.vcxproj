@@ -49,15 +49,24 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <IncludePath>
-        ;$(VisualStudioDir)\Projects\glew-1.7.0\include;
-        ;$(VisualStudioDir)\Projects\SDL-1.2.15\include;
-        ;$(VisualStudioDir)\Projects\freetype-2.4.8\include;
-        ;$(SolutionDir)\CabbageCore;
-        ;$(SolutionDir)\CabbageFramework;
-        ;$(SolutionDir)\CabbageScene;
-        ;$(SolutionDir)\CabbageGUI;
-        ;$(SolutionDir)\CabbageCollider;
-        ;$(IncludePath);
+      ;$(VisualStudioDir)\Projects\glew-1.7.0\include;
+      ;$(VisualStudioDir)\Projects\SDL-1.2.15\include;
+      ;$(VisualStudioDir)\Projects\freetype-2.4.2\include;
+      ;$(SolutionDir)\CabbageCore;
+      ;$(SolutionDir)\CabbageFramework;
+      ;$(SolutionDir)\CabbageScene;
+      ;$(SolutionDir)\CabbageSound;
+      ;$(SolutionDir)\CabbageGUI;
+      ;$(SolutionDir)\CabbageParticles;
+      ;$(SolutionDir)\CabbageGame;
+      ;$(SolutionDir)\CabbageGame\Elements;
+      ;$(SolutionDir)\CabbageGame\Elements\Blocks;
+      ;$(SolutionDir)\CabbageGame\Elements\Enemies;
+      ;$(SolutionDir)\CabbageGame\Elements\Friends;
+      ;$(SolutionDir)\CabbageGame\Elements\Items;
+      ;$(SolutionDir)\CabbageGame\Elements\Player;
+      ;$(SolutionDir)\CabbageCollider;
+      ;$(IncludePath);
     </IncludePath>
     <LibraryPath>
         ;$(VisualStudioDir)\Projects\glew-1.7.0\lib;
