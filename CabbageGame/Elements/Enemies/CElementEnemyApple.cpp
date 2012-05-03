@@ -14,6 +14,10 @@ void CElementEnemyApple::setupPhysicsEngineObject() {
    //Set actor attributes
    PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
    PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_APPLE;
+   if(!Level.isLoaded()) {
+      Level.getPhysicsEngine().remove(PhysicsEngineObject);
+      Level.getPhysicsEngine().update(0.01f);
+   }
 }
 
 void CElementEnemyApple::setupSceneObject() {
