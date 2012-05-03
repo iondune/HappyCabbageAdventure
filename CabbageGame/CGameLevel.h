@@ -2,6 +2,7 @@
 #define ______CGAMELEVEL_OMG_HEADER
 
 class CGameplayElement;
+class CElementBlockBreakable;
 class CElementBlock;
 class CElementEnemy;
 class CElementPlayer;
@@ -30,6 +31,7 @@ class CGameLevel {
       std::vector<CGameplayElement*> ToDelete;
       std::vector<CGameplayElement*> Elements;
       std::vector<CElementBlock*> Blocks;
+      std::vector<CElementBlockBreakable*> BreakableBlocks;
       std::vector<CGroundBlock*> GroundBlocks;
       std::vector<CBiggerBlock*> blocksFinal;
       std::vector<CElementEnemy*> Enemies;
