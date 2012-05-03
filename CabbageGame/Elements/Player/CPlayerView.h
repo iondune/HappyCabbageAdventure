@@ -27,6 +27,10 @@ class CPlayerView {
       float ySineValue;
       SVector3 & ShakeFactor;
 
+	  SVector3 CurrentCameraPosition, TargetCameraPosition;
+
+	  void updateCameraPosition(float const ElapsedTime);
+
    public:
       void addLeaf();
       void removeLeaf();
