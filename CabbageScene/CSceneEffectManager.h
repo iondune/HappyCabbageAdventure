@@ -11,7 +11,8 @@ enum ESceneEffect
 {
 	ESE_SSAO = 1,
 	ESE_SSAO_BLUR = 2,
-	ESE_BLOOM = 4
+	ESE_BLOOM = 4,
+	ESE_HEAT_WAVE = 8
 };
 
 class CSceneManager;
