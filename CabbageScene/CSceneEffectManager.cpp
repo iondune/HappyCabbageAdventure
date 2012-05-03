@@ -179,10 +179,18 @@ void CSceneEffectManager::apply()
 		// Copy results back into scene
 		SPostProcessPass FinalPass;
 		FinalPass.Textures["uTexColor"] = ScratchTexture1;
-		FinalPass.Textures["uHeatOffset"] = HeatOffsetTexture;
-		FinalPass.Floats["uTimer"] = Timer * 0.04f;
 		FinalPass.Target = SceneManager->getSceneFrameBuffer();
-		FinalPass.Shader = HeatCopy;
+		if (isEffectEnabled(ESE_HEAT_WAVE))
+		{
+			FinalPass.Textures["uHeatOffset"] = HeatOffsetTexture;
+			FinalPass.Floats["uTimer"] = Timer * 0.04f;
+			FinalPass.Target = SceneManager->getSceneFrameBuffer();
+			FinalPass.Shader = HeatCopy;
+		}
+		else
+		{
+			FinalPass.Shader = QuadCopy;
+		}
 
 		FinalPass.doPass();
 	}
