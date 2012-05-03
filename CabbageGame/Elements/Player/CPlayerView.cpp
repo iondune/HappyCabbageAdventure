@@ -90,7 +90,7 @@ void CPlayerView::setCabbageScale(SVector3 sc) {
    CabbageSceneObject->setScale(sc);
 }
 
-void CPlayerView::updateShadow(float time = 0) {
+void CPlayerView::updateShadow(float time) {
    ShadowLeft->setTranslation(SVector3(Area.getCenter().X, yLeftShadow + 0.01, 0));
    LeftShadowStartValue = 0.f;
    LeftShadowCutoffValue = cutOffPoint;
