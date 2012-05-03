@@ -55,6 +55,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
 
    private:
       CCollisionActor * PhysicsEngineObject; //Override CGameplayElement's but with type CObject
+      CParticleEngine *glow;
       ISceneObject * SceneObject; //Override CGameplayElement's. This will contain the cabbage and its shadow 
       CPlayerView *View;
 
@@ -62,10 +63,10 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       EDirection Direction;
       EAction Action; 
 
-      bool AllowMovement;
+      bool AllowMovement, Victory;
 
       void updatePlayerAction();
-      float Recovering, Shaking, ShakeFactorFactor;
+      float Recovering, Shaking, ShakeFactorFactor, VictoryTime;
       SVector2 Scale;
       SVector3 ShakeFactor;
 
@@ -106,6 +107,11 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
 
       void setShaking(float, float);
       void setupSoundEffects();
+
+      void playLevelVictory(float time);
+      void setVictoryFlag(bool value);
+
+      void setAllowMovement(bool value);
 
       //Keyboard event functions
       void OnKeyboardEvent(SKeyboardEvent const & Event);

@@ -232,3 +232,7 @@ void CPlayerView::translateCabbage(float time) {
    else
       ySineValue = 0.f;
 }
+
+ISceneObject & CPlayerView::getCabbageSceneObject() {
+   return *CabbageSceneObject;
+}

@@ -44,6 +44,7 @@ class CPlayerView {
       void setVisible(bool);
       void updateView(float time);
       void translateCabbage(float time);
+      ISceneObject & getCabbageSceneObject();
       CPlayerView(ISceneObject *, CElementPlayer::EDirection &, CElementPlayer::EAction &, int, SRect2 &, SVector3 & sf, CCollisionActor *);
 };
 
