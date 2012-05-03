@@ -52,18 +52,48 @@ void CElementBlockFlag::setupSceneObject() {
    else
       printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
 
-   Area.Position.Y += Area.Size.Y/2.f;
+
+   CMesh *eMesh = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_5.3ds");
+   if(eMesh) {
+      eMesh->centerMeshByExtents(SVector3(0));
+      eMesh->calculateNormalsPerFace();
+   }
+   else
+      printf("ENSIGNIA MESH DID NOT LOAD PROPERLY!\n");
+
 
    SceneObject = new CMeshSceneObject();
    SceneObject->setMesh(mesh);
-   SceneObject->setTranslation(SVector3(Area.Position, 1.0f));
    SceneObject->setRotation(SVector3(-90,0,0));
    SceneObject->setScale(SVector3(.0150f, .00025f,.0016f));
    SceneObject->setTexture(CImageLoader::loadTexture("Base/white.bmp", true));
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
 
-   CApplication::get().getSceneManager().addImmobileSceneObject(SceneObject, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
+   Area.Position.Y += Area.Size.Y/2.f;
+   SceneObject->setTranslation(SVector3(Area.Position, 1.0f));
+
+   /*CMeshSceneObject *flagObject = new CMeshSceneObject();
+   flagObject->setMesh(mesh);
+   flagObject->setRotation(SVector3(-90,0,0));
+   flagObject->setScale(SVector3(.0150f, .00025f,.0016f));
+   flagObject->setTexture(CImageLoader::loadTexture("Base/white.bmp", true));
+   flagObject->setShader(ERP_DEFAULT, "Toon");
+   flagObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
+
+   CMeshSceneObject *ensigniaObject = new CMeshSceneObject();
+   ensigniaObject->setMesh(eMesh);
+   ensigniaObject->setTranslation(SVector3(0.0f, 3.0f, 0.0f));
+   ensigniaObject->setRotation(SVector3(-90,0,0));
+   ensigniaObject->setScale(SVector3(4.0f, 4.0f,4.0f));
+   ensigniaObject->setShader(ERP_DEFAULT, "Toon");
+   ensigniaObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
+
+   SceneObject->addChild(ensigniaObject);
+   SceneObject->addChild(flagObject);*/
+
+
+   CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
 void CElementBlockFlag::printInformation() {
