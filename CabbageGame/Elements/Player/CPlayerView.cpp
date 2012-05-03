@@ -153,6 +153,24 @@ void CPlayerView::setCutoffPoint(SRect2 left, SRect2 right) {
    }
 }
 
+template <typename T>
+T CubicInterpolate(
+   T y0, T y1,
+   T y2, T y3,
+   float mu)
+{
+   T a0,a1,a2,a3,
+   float mu2;
+
+   mu2 = mu*mu;
+   a0 = y3 - y2 - y0 + y1;
+   a1 = y0 - y1 - a0;
+   a2 = y2 - y0;
+   a3 = y1;
+
+   return (a0*mu*mu2+a1*mu2+a2*mu+a3);
+}
+
 void CPlayerView::updateCameraPosition(float const ElapsedTime)
 {
 	TargetCameraPosition = SVector2(Area.getCenter().X + (Direction == CElementPlayer::Right ? 1.75f : -1.75f), Area.getCenter().Y + 1.3f);
