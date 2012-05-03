@@ -1176,9 +1176,13 @@ void CLWIBState::changeTiles() {
         tileOne->setImage(apple);
         tileTwo->setImage(orange);
         tileThree->setImage(kiwi);
-        tileFour->setImage(fire);
+        tileFour->setImage(grape);
         tileFive->setImage(fire);
         tileSix->setImage(blade);
+        tileSeven->setImage(apple);
+        tileEight->setImage(pear);
+        tileNine->setImage(banana);
+        tileTen->setImage(cherry);
 
         if (!Application.getGUIEngine().isWidgetIn(tileOne))
             Application.getGUIEngine().addWidget(tileOne);
@@ -1193,14 +1197,14 @@ void CLWIBState::changeTiles() {
         if (!Application.getGUIEngine().isWidgetIn(tileSix))
             Application.getGUIEngine().addWidget(tileSix);
         
-        if (Application.getGUIEngine().isWidgetIn(tileSeven))
-            Application.getGUIEngine().removeWidget(tileSeven);
-        if (Application.getGUIEngine().isWidgetIn(tileEight))
-            Application.getGUIEngine().removeWidget(tileEight);
-        if (Application.getGUIEngine().isWidgetIn(tileNine))
-            Application.getGUIEngine().removeWidget(tileNine);
-        if (Application.getGUIEngine().isWidgetIn(tileTen))
-            Application.getGUIEngine().removeWidget(tileTen);
+        if (!Application.getGUIEngine().isWidgetIn(tileSeven))
+            Application.getGUIEngine().addWidget(tileSeven);
+        if (!Application.getGUIEngine().isWidgetIn(tileEight))
+            Application.getGUIEngine().addWidget(tileEight);
+        if (!Application.getGUIEngine().isWidgetIn(tileNine))
+            Application.getGUIEngine().addWidget(tileNine);
+        if (!Application.getGUIEngine().isWidgetIn(tileTen))
+            Application.getGUIEngine().addWidget(tileTen);
     }
     if (change == 3) { // flag
    
@@ -1483,7 +1487,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     if (widget == undoTile) {
         if( placeables.size() > 0) {
             //Application.getSceneManager().removeSceneObject(blocks.back());
-            CGameplayElement *m_block = placeables.back();
+            /*CGameplayElement *m_block = placeables.back();
             redoPlaceables.push_back(placeables.back());
 
             int i,j;
@@ -1496,14 +1500,15 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
                 }
             }
 
-            placeables.pop_back();
+            placeables.pop_back();*/
+            undoObjects();
         }
     }
     if (widget == redoTile) {
-        if(redoPlaceables.size() > 0) {
+        /*if(redoPlaceables.size() > 0) {
             //Application.getSceneManager().addSceneObject(redo.back());
             CGameplayElement *m_block = redoPlaceables.back();
-//            CMeshSceneObject *m_r = redo.back();
+            CMeshSceneObject *m_r = redo.back();
             placeables.push_back(redoPlaceables.back());
 
             int i,j;
@@ -1518,7 +1523,8 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             }
 
             redoPlaceables.pop_back();
-        }
+        }*/
+
     }
 }
 
@@ -1628,6 +1634,10 @@ void CLWIBState::prepHud() {
     blockIn = new CTexture(CImageLoader::loadImage("ModelImages/blockDepth.bmp"));
     blockOut = new CTexture(CImageLoader::loadImage("ModelImages/blockDepth2.bmp"));
 
+    grape = new CTexture(CImageLoader::loadImage("ModelImages/grapes_gray.bmp"));
+    banana = new CTexture(CImageLoader::loadImage("ModelImages/banana_gray.bmp"));
+    pear = new CTexture(CImageLoader::loadImage("ModelImages/pear_gray.bmp"));
+    cherry = new CTexture(CImageLoader::loadImage("ModelImages/cherries_gray.bmp"));
     grass = new CTexture(CImageLoader::loadImage("Base/grass.bmp"));
     dirt = new CTexture(CImageLoader::loadImage("Base/dirt.bmp"));
     rock = new CTexture(CImageLoader::loadImage("Base/rock.bmp"));
