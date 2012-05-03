@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <cstdlib>
 
 const float RoundingError32 = 0.00001f;
 
@@ -20,7 +21,7 @@ static void waitForUser()
 
 static float frand()
 {
-	return std::rand() / (float) RAND_MAX;
+	return (float)rand() / (float) RAND_MAX;
 }
 
 #endif

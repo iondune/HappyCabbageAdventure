@@ -159,7 +159,7 @@ T CubicInterpolate(
    T y2, T y3,
    float mu)
 {
-   T a0,a1,a2,a3,
+   T a0,a1,a2,a3;
    float mu2;
 
    mu2 = mu*mu;
