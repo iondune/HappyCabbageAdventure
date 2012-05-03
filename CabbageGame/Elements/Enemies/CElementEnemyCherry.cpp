@@ -55,7 +55,18 @@ void CElementEnemyCherry::setupSceneObject() {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyCherry::updatePhysicsEngineObject(float time) {
-   //PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
+   if (BombTime >= 3.0f) {
+         BombTime = 0.0f;
+
+         SRect2 projectileArea = Area;
+         projectileArea.Position.Y += .3f;
+         projectileArea.Position.X -= 1.0f;
+
+         Level.addEnemy(new CElementEnemyProjectileCherry(projectileArea, -2.0f));
+
+         projectileArea.Position.X += 2.0f;
+         Level.addEnemy(new CElementEnemyProjectileCherry(projectileArea, 2.0f));
+      }
 }
 
 //This is where the renderable would be updated for the more complex enemies
@@ -69,19 +80,6 @@ void CElementEnemyCherry::updateSceneObject(float time) {
    }
 
    BombTime += time;
-
-   if (BombTime >= 3.0f) {
-      BombTime = 0.0f;
-
-      SRect2 projectileArea = Area;
-      projectileArea.Position.Y += .3f;
-      projectileArea.Position.X -= 1.0f;
-
-      Level.addEnemy(new CElementEnemyProjectileCherry(projectileArea, -2.0f));
-
-      projectileArea.Position.X += 2.0f;
-      Level.addEnemy(new CElementEnemyProjectileCherry(projectileArea, 2.0f));
-   }
 }
 
 void CElementEnemyCherry::printInformation() {
