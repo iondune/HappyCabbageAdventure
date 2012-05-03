@@ -2,6 +2,7 @@
 #define ___CDECORMANAGER______INCLUDE_FILE_H_STUFF
 
 #include "IUpdater.h"
+class CParticleEngine;
 
 #include "CabbageScene.h"
 #include "CApplication.h"
@@ -21,6 +22,7 @@ class CDecorManager : public IUpdater {
    private:
       int env;
       bool oldFern, night;
+      CParticleEngine *StarEngine;
 
       //These functions setup and add things to the scene manager
       ISceneObject *SetupObject(float,float,float,float,CMesh*);
