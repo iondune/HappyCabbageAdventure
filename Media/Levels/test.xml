@@ -27,5 +27,5 @@
 </CBlock>
 <CCabbage X ="-25" Y ="0" height ="1" width ="1" isMoving ="0">
 </CCabbage>
-<CEnemy X ="-20" Y ="8" height ="3" width ="3" type ="8">
+<CEnemy X ="-20" Y ="8" height ="1" width ="1" type ="12">
 </CEnemy>
