@@ -20,7 +20,7 @@ void CElementEnemyBlade::setupPhysicsEngineObject() {
 void CElementEnemyBlade::setupSceneObject() {
    /* Set up the renderable */
    SceneObject = new CMeshSceneObject();
-   CMesh *mesh = CMeshLoader::load3dsMesh("Base/trap1.3ds");
+   CMesh *mesh = CMeshLoader::load3dsMesh("Base/newspinningknife.3ds");
    if(mesh) {
       mesh->resizeMesh(SVector3(1));
       mesh->centerMeshByExtents(SVector3(0));
