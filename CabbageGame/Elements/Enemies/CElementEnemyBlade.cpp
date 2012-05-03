@@ -23,7 +23,7 @@ void CElementEnemyBlade::setupSceneObject() {
    CMesh *mesh = CMeshLoader::load3dsMesh("Base/newspinningknife.3ds");
    if(mesh) {
       mesh->resizeMesh(SVector3(0.5));
-      mesh->centerMeshByExtents(SVector3(0.11649, 0, 0));
+      mesh->centerMeshByExtents(SVector3(0.11649f, 0, 0));
       mesh->calculateNormalsPerFace();
    }
 
