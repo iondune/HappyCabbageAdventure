@@ -49,6 +49,17 @@
         ;$(SolutionDir)\CabbageScene;
         ;$(SolutionDir)\CabbageGUI;
         ;$(SolutionDir)\CabbageCollider;
+        ;$(SolutionDir)\CabbageSound;
+      ;$(SolutionDir)\CabbageGame;
+      ;$(SolutionDir)\CabbageGame\Elements;
+      ;$(SolutionDir)\CabbageGame\Elements\Blocks;
+      ;$(SolutionDir)\CabbageGame\Elements\Enemies;
+      ;$(SolutionDir)\CabbageGame\Elements\Friends;
+      ;$(SolutionDir)\CabbageGame\Elements\Items;
+      ;$(SolutionDir)\CabbageGame\Elements\Player;
+        ;$(SolutionDir)\CabbageParticles;
+        ;$(SolutionDir)\StateGame;
+        ;$(SolutionDir)\StateMainMenu;
         ;$(IncludePath);
     </IncludePath>
     <LibraryPath>

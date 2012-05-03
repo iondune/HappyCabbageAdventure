@@ -113,11 +113,13 @@
     <ClInclude Include="Elements\Enemies\CElementEnemy.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyApple.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyBlade.h" />
+    <ClInclude Include="Elements\Enemies\CElementEnemyCherry.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyFlame.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyGiantApple.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyGrape.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyKiwi.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyOrange.h" />
+    <ClInclude Include="Elements\Enemies\CElementEnemyPear.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyProjectile.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyProjectileGrape.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyProjectileKiwi.h" />
@@ -152,11 +154,13 @@
     <ClCompile Include="Elements\Enemies\CElementEnemy.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyApple.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyBlade.cpp" />
+    <ClCompile Include="Elements\Enemies\CElementEnemyCherry.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyFlame.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyGiantApple.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyGrape.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyKiwi.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyOrange.cpp" />
+    <ClCompile Include="Elements\Enemies\CElementEnemyPear.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyProjectile.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyProjectileGrape.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyProjectileKiwi.cpp" />

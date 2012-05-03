@@ -92,6 +92,12 @@
     <ClInclude Include="Elements\Enemies\CElementEnemyGiantApple.h">
       <Filter>Elements\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="Elements\Enemies\CElementEnemyCherry.h">
+      <Filter>Elements\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Enemies\CElementEnemyPear.h">
+      <Filter>Elements\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CBiggerBlock.cpp" />
@@ -187,6 +193,12 @@
       <Filter>Elements</Filter>
     </ClCompile>
     <ClCompile Include="Elements\Enemies\CElementEnemyGiantApple.cpp">
+      <Filter>Elements\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Enemies\CElementEnemyCherry.cpp">
+      <Filter>Elements\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Enemies\CElementEnemyPear.cpp">
       <Filter>Elements\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
