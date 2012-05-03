@@ -94,12 +94,21 @@ CPlayerAbility *CElementPlayer::getAbility(Abilities::EAbilityType a) {
 void CElementPlayer::checkAbilityKeypress() {
    if (!Victory)
       AllowMovement = true;
-   if(Stats.Energy <= 0)
-      return;
    usedAbility.clear();
    for(unsigned int i = 0; i < Abilities.size(); i++) {
       usedAbility[Abilities[i]->getType()] = i;
    }
+   /* Laser */
+   if(!used(Abilities::LASER)) {
+      if(CApplication::get().getEventManager().IsKeyDown[SDLK_l]) {
+         Abilities.push_back(new CPlayerAbilityLaser(*this));
+      }
+   }
+   else {
+      getAbility(Abilities::LASER)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_l]);
+   }
+   if(Stats.Energy <= 0)
+      return;
    /* Shield */
    if(!used(Abilities::SHIELD)) {
       if(CApplication::get().getEventManager().IsKeyDown[SDLK_k]) {
@@ -114,15 +123,6 @@ void CElementPlayer::checkAbilityKeypress() {
    }
    else {
       getAbility(Abilities::DASH)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_a] || CApplication::get().getEventManager().IsKeyDown[SDLK_d]);
-   }
-   /* Laser */
-   if(!used(Abilities::LASER)) {
-      if(CApplication::get().getEventManager().IsKeyDown[SDLK_l]) {
-         Abilities.push_back(new CPlayerAbilityLaser(*this));
-      }
-   }
-   else {
-      getAbility(Abilities::LASER)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_l]);
    }
    if(!used(Abilities::BLINK) && CApplication::get().getEventManager().IsKeyDown[SDLK_e]) {
       Abilities.push_back(new CPlayerAbilityBlink(*this));
