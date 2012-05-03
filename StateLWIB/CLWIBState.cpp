@@ -1450,6 +1450,8 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     }
     if (widget == load ) {
         loadWorld();
+   for (int i = 0 ; i < placeables.size(); i++)
+       placeables[i]->removeFromGame();
     }
     if (widget == undoTile) {
         if( placeables.size() > 0) {

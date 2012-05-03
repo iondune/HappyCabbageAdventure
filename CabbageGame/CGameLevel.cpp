@@ -3,6 +3,7 @@
 #include "CGameplayElement.h"
 #include "CElementBlock.h"
 #include "CElementBlockElevator.h"
+#include "CElementBlockBreakable.h"
 #include "CElementEnemy.h"
 #include "CElementPlayer.h"
 #include "CElementItem.h"
@@ -104,6 +105,7 @@ void CGameLevel::printInformation() {
    std::cout << "   This level takes place in environment " << env << (night?" at night.":" during the day.") << std::endl; 
    std::cout << "   The starting location is at [" << PlayerElement->getArea().Position.X << ", " << PlayerElement->getArea().Position.Y << "]." << std::endl; 
    std::cout << "   Blocks: " << Blocks.size() << " (" << GroundBlocks.size() << " of them are ground blocks). The total was consolidated into " << blocksFinal.size() << " physics engine objects." << std::endl; 
+   std::cout << "   Breakable Blocks: " << BreakableBlocks.size() << std::endl; 
    std::cout << "   Enemies: " << Enemies.size() << std::endl; 
    std::cout << "   Items: " << Items.size() << std::endl; 
    std::cout << "   Flags: " << Flags.size() << std::endl; 
