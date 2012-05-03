@@ -1455,6 +1455,8 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         }
         if (change == 1) {
         }
+        if (change == 2)
+            uniType = 7;
     }
     if (widget == tileNine) {
         if (change == 0) {
@@ -1465,6 +1467,8 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         }
         if (change == 1) {
         }
+        if (change == 2)
+            uniType = 8;
     }
     if (widget == tileTen) {
         if (change == 0) {
@@ -1475,6 +1479,8 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         }
         if (change == 1) {
         }
+        if (change == 2)
+            uniType = 9;
     }
     if (widget == save ) {
         printXML();
