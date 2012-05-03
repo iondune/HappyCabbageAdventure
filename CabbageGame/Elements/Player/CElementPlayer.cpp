@@ -4,12 +4,13 @@
 
 CElementPlayer::CElementPlayer(SRect2 nArea)
 : CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f), Shaking(0.0f), ShakeFactor(SVector3(0.0f)),
-  ISquishable(2.0f, 2.0f), AllowMovement(true), PlayJump(true), Victory(false), VictoryTime(0.0f), ShakeFactorFactor(1000.0f) {
+  ISquishable(2.0f, 2.0f), AllowMovement(true), PlayJump(true), Victory(false), VictoryTime(0.0f), ShakeFactorFactor(1000.0f), MoveKeyDelay(0.0f) {
    setupSoundEffects();
 }
 
 #include "CEventManager.h"
 #include "CApplication.h"
+#include "CPlayerAbilityDash.h"
 
 void CElementPlayer::updatePlayerAction() {
    if(!AllowMovement) {
@@ -19,17 +20,41 @@ void CElementPlayer::updatePlayerAction() {
       return;
    }
    if(CApplication::get().getEventManager().IsKeyDown[SDLK_a]) {
+      if(Action == Standing) {
+         if(MoveKeyDelay > 0.0f) {
+            if(!used(Abilities::DASH)) {
+               Abilities.push_back(new CPlayerAbilityDash(*this));
+            }
+         }
+         else
+            MoveKeyDelay = 0.3f;
+      }
+      else if(MoveKeyDelay <= 0.0f) {
+         MoveKeyDelay = 0.0f;
+      }
       Direction = Left;
       Action = Walking;
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
    }
    else if(CApplication::get().getEventManager().IsKeyDown[SDLK_d]) {
+      if(Action == Standing) {
+         if(MoveKeyDelay > 0.0f) {
+            if(!used(Abilities::DASH)) {
+               Abilities.push_back(new CPlayerAbilityDash(*this));
+            }
+         }
+         else
+            MoveKeyDelay = 0.3f;
+      }
+      else if(MoveKeyDelay <= 0.0f) {
+         MoveKeyDelay = 0.0f;
+      }
       Direction = Right;
       Action = Walking;
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
    }
    else {
-      Action = Walking;
+      Action = Standing;
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
    }
    if(CApplication::get().getEventManager().IsKeyDown[SDLK_SPACE]) {
@@ -82,6 +107,12 @@ void CElementPlayer::checkAbilityKeypress() {
    else {
       getAbility(Abilities::SHIELD)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_k]);
    }
+   /* Dash */
+   if(!used(Abilities::DASH)) {
+   }
+   else {
+      getAbility(Abilities::DASH)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_a] || CApplication::get().getEventManager().IsKeyDown[SDLK_d]);
+   }
    /* Laser */
    if(!used(Abilities::LASER)) {
       if(CApplication::get().getEventManager().IsKeyDown[SDLK_l]) {
@@ -97,6 +128,8 @@ void CElementPlayer::checkAbilityKeypress() {
 }
 
 void CElementPlayer::updateAbilities(float time) {
+   if(MoveKeyDelay > 0.0f)
+      MoveKeyDelay -= time;
    std::vector<CPlayerAbility *> AbilityKillList;
    for(unsigned int i = 0; i < Abilities.size(); i++) {
       Abilities[i]->updateTime(time);

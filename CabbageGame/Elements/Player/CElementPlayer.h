@@ -68,6 +68,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
 
       void updatePlayerAction();
       float Recovering, Shaking, ShakeFactorFactor, VictoryTime;
+      float MoveKeyDelay;
       SVector2 Scale;
       SVector3 ShakeFactor;
 
