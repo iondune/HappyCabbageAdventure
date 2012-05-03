@@ -136,12 +136,23 @@ void CElementPlayer::updateSceneObject(float time) {
          ShakeFactor = SVector3(0.0f);
       }
    }
+
+   SVector2 leftOfPlayer = SVector2(Area.Position.X, Area.getCenter().Y);
+   SVector2 rightOfPlayer = SVector2(Area.Position.X + Area.Size.X, Area.getCenter().Y);
+   CCollisionObject *l, *r;
+   l = Level.getPhysicsEngine().getObjectBelow(leftOfPlayer);
+   r = Level.getPhysicsEngine().getObjectBelow(rightOfPlayer);
+
+   View->setShadowHeights(Level.getPhysicsEngine().getHeightBelow(leftOfPlayer), Level.getPhysicsEngine().getHeightBelow(rightOfPlayer));
+   // If the cabbage is hanging over an edge, there might not be an object below it, so this check is necessary
+   View->setCutoffPoint(l?l->getArea():SRect2(-50.0f, -50.0f, 0.0f, 0.0f),r?r->getArea():SRect2(-50.0f, -50.0f, 0.0f, 0.0f));
+
    updateAbilities(time);
    View->updateView(time);
 
    Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
 
-   SceneObject->setScale(SVector3(Scale.X, Scale.X, Scale.Y));
+   View->setCabbageScale(SVector3(Scale.X, Scale.X, Scale.Y));
 }
 
 Cabbage::PlayerInformation & CElementPlayer::getStats() {
