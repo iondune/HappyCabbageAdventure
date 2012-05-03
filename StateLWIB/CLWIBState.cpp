@@ -140,7 +140,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
 
    stepCamera(Application.getElapsedTime());
    float x=round(eye.X + previewBlockMouseX),y= round(eye.Y + previewBlockMouseY);
-   PreviewBlock->setTranslation(SVector3(x+(float)blockWidth/2,y+(float)blockHeight/2, 0));
+   //PreviewBlock->setTranslation(SVector3(x+(float)blockWidth/2,y+(float)blockHeight/2, 0));
 
    if(clickDown) { //over hud
      // PreviewBlock->setVisible(false);
@@ -163,8 +163,6 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    else { // default blocks
      // PreviewBlock->setVisible(true);
    }
-
-
 
    //Draw Text
    if (!showHelp)
@@ -838,6 +836,7 @@ void CLWIBState::PrepItem(float x, float y, int item) {
    CGameplayElement *tempPlaceable;
    //blocks.push_back(tempItem = new CMeshSceneObject());
    placeables.push_back(tempPlaceable = new CElementItem(SRect2(x, y, 1, 1) item));
+   gameWorld->addObject(tempPlaceable);
    /*if (item == 0)
        tempItem->setMesh(health);
    if (item == 1)
@@ -856,7 +855,6 @@ void CLWIBState::PrepItem(float x, float y, int item) {
    blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
    //Application.getSceneManager().addSceneObject(tempItem);
-   tempPlaceable.setupObjects();
    redo.clear();
    redoPlaceables.clear();
 
@@ -876,6 +874,7 @@ void CLWIBState::PrepFlag(float x, float y, int t) {
    CGameplayElement *tempPlaceable;
    //blocks.push_back(tempFlag = new CMeshSceneObject());
    placeables.push_back(tempPlaceable = new CElementBlockFlag(SRect2(x, y, 1, 1),t));//add flag
+   gameWorld->addObject(tempPlaceable);
    /*tempFlag->setMesh(flagMesh);
    tempFlag->setShader(ERP_DEFAULT, Diffuse);
    tempFlag->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
@@ -904,6 +903,7 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
    CGameplayElement *tempPlaceable;
   // blocks.push_back(tempEnemy = new CMeshSceneObject());
    placeables.push_back(tempPlaceable = new CElementEnemy(SRect2(x, y, 1, 1), type));
+   gameWorld->addObject(tempPlaceable);
    /*if (type == 0)
         tempEnemy->setMesh(appleMesh);
    if (type == 1)
@@ -988,6 +988,7 @@ void CLWIBState::PrepCabbage(float x, float y) {
     CGameplayElement *tempPlaceable;
     //blocks.push_back(tempCabbage = new CMeshSceneObject());
     placeables.push_back(tempPlaceable = new CElementPlayer(SRect2(x, y, 1, 1));
+    gameWorld->addObject(tempPlaceable);
     /*tempCabbage->setMesh(cabbageMesh);
     tempCabbage->setShader(ERP_DEFAULT, Diffuse);
     tempCabbage->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
@@ -1030,6 +1031,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
    
    CGameplayElement *tempBlock;
    blocks.push_back(tempBlock = new CElementBlock(SRect2(x,y,w,h),d,t));
+   gameWorld->addObject(tempPlaceable);
    //tempBlock->setMesh(cubeMesh);
    /*if (t == 0)
         tempBlock->setTexture("Base/grass.bmp");
@@ -1067,7 +1069,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
 
 void CLWIBState::PrepSky() {
 
-   CMeshSceneObject *tempBlock;
+   /*CMeshSceneObject *tempBlock;
    blocks.push_back(tempBlock = new CMeshSceneObject());
    tempBlock->setMesh(cubeMesh);
    tempBlock->setTexture("Base/sky.bmp");
@@ -1075,7 +1077,7 @@ void CLWIBState::PrepSky() {
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
    tempBlock->setTranslation(SVector3(85, 13, -5));
    tempBlock->setScale(SVector3(250, -50, 1));
-   tempBlock->setCullingEnabled(false);
+   tempBlock->setCullingEnabled(false);*/
    //Application.getSceneManager().addSceneObject(tempBlock);
 }
 

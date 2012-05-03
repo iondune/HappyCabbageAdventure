@@ -62,7 +62,7 @@ class CLWIBState : public CState<CLWIBState>
    CMesh *seedMesh;
    float xp2w(int oldX);
    float yp2w(int oldY);
-   CGameplayElement *PreviewBlock, *PreviewEnemy, *PreviewCabbage, *PreviewGround, *PreviewFlag, *PreviewItem;
+   //CGameplayElement *PreviewBlock, *PreviewEnemy, *PreviewCabbage, *PreviewGround, *PreviewFlag, *PreviewItem;
 
    public:
    std::vector<CGameplayElement*> placeables, redoPlaceables, blocks, redo;
