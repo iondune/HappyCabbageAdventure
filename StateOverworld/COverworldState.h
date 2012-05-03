@@ -6,7 +6,8 @@
 
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
-//#include "../Base/CGameState.h"
+#include "CGameState.h"
+#include "CMainMenuState.h"
 
 //#include "../MainMenu/CMainMenuState.h"
 
@@ -21,7 +22,7 @@ class COverworldState : public CState<COverworldState>
   struct SomeLevel
   {
     SVector3 loc;
-    const char * name;
+    char const * name;
     bool completed;
   };
 

@@ -4,6 +4,8 @@
 #include <cmath>
 #include <stdio.h>
 
+#include "Utils.h"
+
 class SVector2;
 
 class SVector2Reference
@@ -54,6 +56,10 @@ public:
 	{
 		return sqrtf(X*X + Y*Y);
 	}
+
+	float getDistanceFrom(SVector2Reference const & v) const;
+
+	SVector2 getInterpolated(SVector2Reference const & v, float const d);
 
 	SVector2 operator + (SVector2Reference const & v) const;
 
@@ -122,6 +128,29 @@ public:
 
 		return * this;
 	}
+
+	void normalize()
+    {
+        float const len = length();
+
+        X /= len;
+        Y /= len;
+    }
+
+	bool const operator == (SVector2Reference const & v) const
+    {
+        return equals(v);
+    }
+
+	bool const operator != (SVector2Reference const & v) const
+    {
+        return ! equals(v);
+    }
+
+	bool const equals(SVector2Reference const & v, float const Epsilon = RoundingError32) const
+    {
+        return ::equals(X, v.X, Epsilon) && ::equals(Y, v.Y, Epsilon);
+    }
 
 };
 

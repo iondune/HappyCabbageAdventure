@@ -116,10 +116,11 @@ void CMainMenuState::begin()
    Application.getSceneManager().Lights.back()->Position = SVector3(0.f, 0.f, -1.f);
 
    //Sound Setup
-   soundInit();
-   setupSoundtrack("BeginningAnew.wav");
+   //CHRIS LOOK HERE
+   //soundInit();
+   //setupSoundtrack("BeginningAnew.wav");
    //DOES NOT WORK ON LINUX BECAUSE CAN'T RUN MP3
-   startSoundtrack();
+   //startSoundtrack();
 
    printf("Got here?\n");
    setupTextures();
@@ -276,11 +277,11 @@ void CMainMenuState::OnWidgetClick(CGUIWidget * Widget)
    if(Widget == StartGame) {
       COverworldState::get().newGame = true;
       CApplication::get().getStateManager().setState(new CFadeOutState(& COverworldState::get(), 0.3f));
-      CGameplayManager::setLives(3);
-      printf("NumLives: %d\n", CGameplayManager::getNumLives());
+      //CGameplayManager::setLives(3);
+      //printf("NumLives: %d\n", CGameplayManager::getNumLives());
    }
    else if(Widget == StartEditor) {
-      stopSoundtrack();
+      //stopSoundtrack();
       CApplication::get().getStateManager().setState(new CFadeOutState(& CLWIBState::get(), 0.3f));
    }
    else if(Widget == ExitGame) {

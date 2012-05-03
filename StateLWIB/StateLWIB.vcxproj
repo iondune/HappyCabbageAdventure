@@ -66,6 +66,8 @@
       ;$(SolutionDir)\CabbageGame\Elements\Items;
       ;$(SolutionDir)\CabbageGame\Elements\Player;
       ;$(SolutionDir)\CabbageCollider;
+      ;$(SolutionDir)\StateGame;
+      ;$(SolutionDir)\StateMainMenu;
       ;$(IncludePath);
     </IncludePath>
     <LibraryPath>

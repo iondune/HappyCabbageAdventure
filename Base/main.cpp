@@ -1,7 +1,7 @@
 //#include "CGameState.h"
-//#include "../StateMainMenu/CMainMenuState.h"
+#include "../StateMainMenu/CMainMenuState.h"
 //#include "../StateOverworld/COverworldState.h"
-#include "../StateGame/CGameState.h"
+//#include "../StateGame/CGameState.h"
 
 #ifdef _WIN32
 #pragma comment(lib, "freetype.lib")
@@ -16,8 +16,10 @@
 #pragma comment(lib, "CabbageGame.lib")
 #pragma comment(lib, "CabbageGUI.lib")
 #pragma comment(lib, "CabbageFramework.lib")
-//#pragma comment(lib, "StateMainMenu.lib")
+#pragma comment(lib, "StateMainMenu.lib")
 #pragma comment(lib, "StateGame.lib")
+#pragma comment(lib, "StateOverworld.lib")
+#pragma comment(lib, "StateLWIB.lib")
 #pragma comment(lib, "OpenGL32.lib")
 #pragma comment(lib, "glu32.lib")
 
@@ -37,8 +39,8 @@ int main(int argc, char * argv[])
    else
       CGameState::get().LevelName = "jorge1.xml";
 
-   StateManager.setState(& CGameState::get());
-   //StateManager.setState(& COverworldState::get());
+   //StateManager.setState(& CGameState::get());
+   StateManager.setState(& CMainMenuState::get());
 
    Application.run();
 

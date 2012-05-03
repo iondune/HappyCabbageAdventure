@@ -153,37 +153,42 @@ void CPlayerView::setCutoffPoint(SRect2 left, SRect2 right) {
    }
 }
 
+template <typename T>
+T CubicInterpolate(
+   T y0, T y1,
+   T y2, T y3,
+   float mu)
+{
+   T a0,a1,a2,a3;
+   float mu2;
+
+   mu2 = mu*mu;
+   a0 = y3 - y2 - y0 + y1;
+   a1 = y0 - y1 - a0;
+   a2 = y2 - y0;
+   a3 = y1;
+
+   return (a0*mu*mu2+a1*mu2+a2*mu+a3);
+}
+
 void CPlayerView::updateCameraPosition(float const ElapsedTime)
 {
-	TargetCameraPosition = SVector3(Area.getCenter().X, Area.getCenter().Y + 1.3f, 10) + ShakeFactor;
-
-	if (Direction == CElementPlayer::Right)
-		TargetCameraPosition.X += 1.75f;
-	else
-		TargetCameraPosition.X -= 1.75f;
+	TargetCameraPosition = SVector2(Area.getCenter().X + (Direction == CElementPlayer::Right ? 1.75f : -1.75f), Area.getCenter().Y + 1.3f);
 
 	if (TargetCameraPosition != CurrentCameraPosition)
 	{
-		SVector3 MoveDirection = TargetCameraPosition - CurrentCameraPosition;
-		
-		static float const MoveSpeed = 2.5f;
-		float const MoveDistance = MoveDirection.length();
-		float const MoveThisFrame = MoveSpeed * ElapsedTime * MoveDistance;
+		float const DistanceToGo = TargetCameraPosition.getDistanceFrom(CurrentCameraPosition);
+        float const MoveVelocity = max(2.f * DistanceToGo + 0.2f, 1.f * DistanceToGo * DistanceToGo);
+        float const Movement = MoveVelocity * ElapsedTime;
+        
+        if (DistanceToGo > Movement)
+                CurrentCameraPosition = TargetCameraPosition.getInterpolated(CurrentCameraPosition, Movement/DistanceToGo);
+        else
+                CurrentCameraPosition = TargetCameraPosition;
 
-		MoveDirection.normalize();
-		MoveDirection *= MoveThisFrame;
-
-		if (MoveDirection.length() > MoveDistance)
-		{
-			CurrentCameraPosition = TargetCameraPosition;
-		}
-		else
-		{
-			CurrentCameraPosition += MoveDirection;
-		}
 	}
 
-	CApplication::get().getSceneManager().getActiveCamera()->setPosition(CurrentCameraPosition);
+	CApplication::get().getSceneManager().getActiveCamera()->setPosition(SVector3(CurrentCameraPosition, 10) + ShakeFactor);
 }
 
 void CPlayerView::updateView(float time) {

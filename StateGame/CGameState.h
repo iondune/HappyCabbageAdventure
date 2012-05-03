@@ -13,7 +13,7 @@ class CGameState : public CState<CGameState> {
       CDecorManager *DecorManager;
       CGameLevel *Level;
    public:
-      char * LevelName;
+      char const * LevelName;
       CGameState();
       void begin();
       void OnRenderStart(float const Elapsed);

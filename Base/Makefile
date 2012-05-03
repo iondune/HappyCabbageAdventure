@@ -1,8 +1,10 @@
 ROOT_CABBAGE_DIR=../
 SOURCES=main.cpp
 OBJECTS=$(SOURCES:%.cpp=%.o)
-CABBAGE= -L../lib/ -lCabbageFramework -lStateGame -lCabbageGame -lCabbageGUI -lCabbageParticles -lCabbageScene -lCabbageCore -lCabbageCollider
-INCLUDE=-I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI `sdl-config --cflags` `freetype-config --cflags` -I../irrxml-1.2/src/ -I./Elements/ -I. -I../CabbageGame -I../StateGame -I../CabbageGame/Elements -I../CabbageGame/Elements/Blocks
+CABBAGE= -L../lib/ ../StateMainMenu/CMainMenuState.o -lOverworldState -lCabbageFramework -lStateGame -lCLWIB -lCabbageGame -lCabbageGUI -lCabbageParticles -lCabbageScene -lCabbageCore -lCabbageCollider
+ELEMENTSHEADER=$(shell find ../CabbageGame/Elements -type d | awk 'BEGIN{}{print "-I./"$$1}')
+INCLUDE = -I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI -I../CabbageGame -I ../CabbageGame/wmlwriter_src/ $(ELEMENTSHEADER) -I../StateLWIB/ `sdl-config --cflags` -I../StateGame -I../StateMainMenu
+#INCLUDE = -I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI `sdl-config --cflags` `freetype-config --cflags` -I../irrxml-1.2/src/ -I./Elements/ -I. -I../CabbageGame -I../StateGame -I../CabbageGame/Elements -I../CabbageGame/Elements/Blocks -I../StateMainMenu
 LIBFILES=../lib/libCabbageParticles.a ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCabbageCore.a ../lib/libCabbageGame.a ../lib/libStateGame.a ../lib/libCabbageCore.a ../lib/libCabbageGUI.a
 CC=g++ -O1 -s
 COMPILER_VERSION= -std=c++0x 
