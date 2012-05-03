@@ -301,7 +301,6 @@ void CLWIBState::OnRenderStart(float const Elapsed)
        block2->setText("");
        block3->setText("");
    }
-   //drawSubWindow();
    pickInsert();
    changeTiles();
 
@@ -583,9 +582,9 @@ void CLWIBState::loadWorld() {
     int moving, range, speed;
     std::string name;
     //float spd, rng;
-    while(blocks.size() > 3 && placeables.size() > 0 ) {
-        //Application.getSceneManager().removeSceneObject(blocks.back());
-        blocks.pop_back();
+    while(placeables.size() > 0 ) {
+        //Application.getSceneManager().removeSceneObject(placeables.back());
+        
         CGameplayElement *m_block = placeables.back();
         placeables.pop_back();
 
@@ -598,6 +597,7 @@ void CLWIBState::loadWorld() {
                 blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = -1;
             }
         }
+        placeables.back()->removeFromGame();
     }
     cout << "Enter the name of the file you want to load: ";
     cin >> name;
@@ -707,119 +707,7 @@ void CLWIBState::end()
 }
 
 void CLWIBState::PrepPreviews() {
-   /*blocks.push_back(PreviewBlock = new CMeshSceneObject());
-   PreviewBlock->setMesh(cubeMesh);
-   PreviewBlock->setTexture("Colors/White.bmp");
-   PreviewBlock->setShader(ERP_DEFAULT, DiffuseTexture);
-   PreviewBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
-   PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
-
-   blocks.push_back(PreviewFlag = new CMeshSceneObject());
-   blocks.push_back(PreviewCabbage = new CMeshSceneObject());
-   blocks.push_back(PreviewItem = new CMeshSceneObject());
-   blocks.push_back(PreviewEnemy = new CMeshSceneObject());
-   lifeMesh = CMeshLoader::load3dsMesh("Base/crappycabbage2.3ds");
-   seedMesh = CMeshLoader::load3dsMesh("Base/seed.3DS");
-   flameMesh = CMeshLoader::load3dsMesh("Base/rabbit.3DS");
-   appleMesh = CMeshLoader::load3dsMesh("Base/appleEnemy.3ds");
-   orangeMesh = CMeshLoader::load3dsMesh("Base/orange.3ds");
-   kiwiMesh = CMeshLoader::load3dsMesh("Base/killerkiwi.3ds");
-   cabbageMesh = CMeshLoader::load3dsMesh("Base/crappycabbage.3ds");
-   bladeMesh = CMeshLoader::load3dsMesh("Base/trap1.3ds");
-   flagMesh = CMeshLoader::load3dsMesh("Base/flag.3ds");
-   health = CMeshLoader::load3dsMesh("Base/healthboost.3ds");
-   energy = CMeshLoader::load3dsMesh("Base/water_energy.3ds");
-
-   //PreviewCabbage->setMesh(appleMesh);
-   if(lifeMesh) {
-       lifeMesh->resizeMesh(SVector3(1));
-       lifeMesh->centerMeshByExtents(SVector3(0));
-       lifeMesh->calculateNormalsPerFace();
-   }
-   if(seedMesh) {
-       seedMesh->resizeMesh(SVector3(1));
-       seedMesh->centerMeshByExtents(SVector3(0));
-       seedMesh->calculateNormalsPerFace();
-   }
-   if(appleMesh) {
-      appleMesh->resizeMesh(SVector3(1));
-      appleMesh->centerMeshByExtents(SVector3(0));
-      appleMesh->calculateNormalsPerFace();
-   }
-
-   if(orangeMesh) {
-         orangeMesh->resizeMesh(SVector3(1));
-         orangeMesh->centerMeshByExtents(SVector3(0));
-         orangeMesh->calculateNormalsPerFace();
-    }
-
-   if(kiwiMesh) {
-         kiwiMesh->resizeMesh(SVector3(1));
-         kiwiMesh->centerMeshByExtents(SVector3(0));
-         kiwiMesh->calculateNormalsPerFace();
-    }
-   if(bladeMesh) {
-      bladeMesh->resizeMesh(SVector3(2));
-      bladeMesh->centerMeshByExtents(SVector3(0));
-      bladeMesh->calculateNormalsPerFace();
-   }
-
-   if (flameMesh) {
-      flameMesh->resizeMesh(SVector3(1));
-      flameMesh->centerMeshByExtents(SVector3(0));
-      flameMesh->calculateNormalsPerFace();
-   }
-
-   if (cabbageMesh) {
-      cabbageMesh->resizeMesh(SVector3(2));
-      cabbageMesh->centerMeshByExtents(SVector3(0));
-      cabbageMesh->calculateNormalsPerVertex();
-   }
-   if (flagMesh) {
-      flagMesh->resizeMesh(SVector3(1));
-      flagMesh->centerMeshByExtents(SVector3(0));
-      flagMesh->calculateNormalsPerVertex();
-   }
-   if (health) {
-   health->resizeMesh(SVector3(1));
-      health->centerMeshByExtents(SVector3(0));
-      health->calculateNormalsPerFace();
-   }
-   if (energy) {
-   energy->resizeMesh(SVector3(1));
-      energy->centerMeshByExtents(SVector3(0));
-      energy->calculateNormalsPerFace();
-   }
-   PreviewFlag->setMesh(flagMesh);
-   PreviewFlag->setShader(ERP_DEFAULT, Diffuse);
-   PreviewFlag->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
-   PreviewFlag->setRotation(SVector3(-90, 0, 0));
-   PreviewFlag->setScale(SVector3(0.5,0.5, 0.5));
-   //
-   PreviewCabbage->setMesh(cabbageMesh);
-   PreviewCabbage->setShader(ERP_DEFAULT, Diffuse);
-   PreviewCabbage->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
-   PreviewCabbage->setRotation(SVector3(0, 0, 0));
-   PreviewCabbage->setScale(SVector3(.0150f, .00025f,.0016f));
-   //
-   
-   PreviewEnemy->setShader(ERP_DEFAULT, Diffuse);
-   PreviewEnemy->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
-   PreviewEnemy->setRotation(SVector3(-90, 0, 0));
-   PreviewBlock->setScale(SVector3(1, 1, 1));
-   //
-   PreviewItem->setMesh(health);
-   PreviewItem->setShader(ERP_DEFAULT, Diffuse);
-   PreviewItem->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
-   PreviewItem->setRotation(SVector3(-90, 0, 0));
-   PreviewItem->setScale(SVector3(1, 1, 1));
-   
-   CApplication::get().getSceneManager().addSceneObject(PreviewItem);
-   CApplication::get().getSceneManager().addSceneObject(PreviewBlock);
-   CApplication::get().getSceneManager().addSceneObject(PreviewFlag);
-   CApplication::get().getSceneManager().addSceneObject(PreviewEnemy);
-   CApplication::get().getSceneManager().addSceneObject(PreviewCabbage);
-   PreviewEnemy->setVisible(false);*/
+ 
 }
 
 
@@ -833,9 +721,7 @@ void CLWIBState::PrepItem(float x, float y, int item) {
    }
 
    printf("Placed item starting at %0.2f, %0.2f\n", x, y);
-   //CMeshSceneObject *tempItem;
    CElementItem *tempPlaceable;
-   //blocks.push_back(tempItem = new CMeshSceneObject());
    if (item == 0)
        tempPlaceable = CItemLoader::LoadItem(SRect2(x, y, 1, 1), (Items::EItemType)item);
    if (item == 1)
@@ -844,19 +730,13 @@ void CLWIBState::PrepItem(float x, float y, int item) {
        tempPlaceable = CItemLoader::LoadItem(SRect2(x, y, 1, 1),(Items::EItemType) item);
    if (item == 3)
        tempPlaceable = CItemLoader::LoadItem(SRect2(x, y, 1, 1),(Items::EItemType) item);
-   //gameWorld->addObject(tempPlaceable);
    placeables.push_back(tempPlaceable);
    tempPlaceable->setupObjects();
-   /*tempItem->setShader(ERP_DEFAULT, Diffuse);
-   tempItem->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
-   tempItem->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
-   tempItem->setRotation(SVector3(-90, 0, 0));
-   tempItem->setScale(SVector3(0.5, 0.5, 0.5));*/
+ 
    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
    blockMap[(int)x+25][(int)(y-0.5+25)].r = tempPlaceable;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
-   //Application.getSceneManager().addSceneObject(tempItem);
    redo.clear();
    redoPlaceables.clear();
 
@@ -872,23 +752,14 @@ void CLWIBState::PrepFlag(float x, float y, int t) {
    }
 
    printf("Placed flag starting at %0.2f, %0.2f\n", x, y);
-   //CMeshSceneObject *tempFlag;
    CGameplayElement *tempPlaceable;
-   //blocks.push_back(tempFlag = new CMeshSceneObject());
    placeables.push_back(tempPlaceable = new CElementBlockFlag(SRect2(x, y, 1, 1),t));//add flag
    tempPlaceable->setupObjects();
-   //gameWorld->addObject(tempPlaceable);
-   /*tempFlag->setMesh(flagMesh);
-   tempFlag->setShader(ERP_DEFAULT, Diffuse);
-   tempFlag->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
-   tempFlag->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
-   tempFlag->setRotation(SVector3(-90, 0, 0));
-   tempFlag->setScale(SVector3(0.5, 0.5, 0.5));*/
+
    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
    blockMap[(int)x+25][(int)(y-0.5+25)].r = tempPlaceable;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
-   //Application.getSceneManager().addSceneObject(tempFlag);
    redo.clear();
    redoPlaceables.clear();
 
@@ -902,37 +773,14 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
       return;
    }
    printf("Placed enemy starting at %0.2f, %0.2f\n", x, y);
-  // CMeshSceneObject *tempEnemy;
    CGameplayElement *tempPlaceable;
-  // blocks.push_back(tempEnemy = new CMeshSceneObject());
    placeables.push_back(tempPlaceable = CEnemyLoader::LoadEnemy(SRect2(x, y, 1, 1),(Enemies::EEnemyType) type));
    tempPlaceable->setupObjects(); 
-   //gameWorld->addObject(tempPlaceable); 
 
-   /*if (type == 0)
-        tempPlaceable
-   if (type == 1)
-        tempPlaceable->setMesh(orangeMesh);
-   if (type == 2)
-        tempPlaceable->setMesh(kiwiMesh);
-   if (type == 3) 
-        tempPlaceable->setMesh(cubeMesh);
-   if (type == 4)
-        tempPlaceable->setMesh(flameMesh); //flameMesh doesn't work.  Why?
-   if (type == 5) {
-        tempPlaceable->setMesh(bladeMesh);
-   }
-
-   tempEnemy->setShader(ERP_DEFAULT, Diffuse);
-   tempEnemy->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
-   tempEnemy->setTranslation(SVector3((x+(x+1))/2, (y+(y+1))/2, 0));
-   tempEnemy->setRotation(SVector3(-90, 0, 0));
-   tempEnemy->setScale(SVector3(1, 1, 1));*/
    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
    blockMap[(int)x+25][(int)(y-0.5+25)].r = tempPlaceable;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
-   //Application.getSceneManager().addSceneObject(tempEnemy);
    redo.clear();
    redoPlaceables.clear();
 }
@@ -1041,22 +889,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
    
    CGameplayElement *tempPlaceable;
    placeables.push_back(tempPlaceable = new CElementBlock(SRect2(x,y,w,h),d,t));
-   //gameWorld->addObject(tempPlaceable);
-   //tempBlock->setMesh(cubeMesh);
-   /*if (t == 0)
-        tempBlock->setTexture("Base/grass.bmp");
-   else if (t == 1)
-        tempBlock->setTexture("Base/dirt.bmp");
-   else if (t == 2)
-        tempBlock->setTexture("Base/rock.bmp");
-   else if (t == -5)
-        tempBlock->setTexture("Base/GrassyGrass.bmp");
-   else
-       printf("texture doesn't exist\n");
-   tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
-   tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
-   tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
-   tempBlock->setScale(SVector3((float) w, (float) h, (float) d));*/
+
    for(i = 0; i < w; i++) {
       for(j = 0; j < h; j++) {
          blockMap[(int)x+25+i][(int)(y-0.5+25)+j].o = true;
@@ -1066,15 +899,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
       }
    }
    tempPlaceable->setupObjects();
-   //tempBlock->setRotation(SVector3(0, 0, 0));
-   //Application.getSceneManager().addSceneObject(tempBlock);
-   /*redo.clear();
-   redoPlaceables.clear();
-   if(moving) {
-      tempPlaceable->isMovingPlatform = 1;
-      tempPlaceable->Range = 2;
-      tempPlaceable->Speed = 1;
-   }*/
+
 }
 
 
@@ -1177,16 +1002,16 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          CShader *tempShader;
          m_qd = blockMap[(int)x+25][(int)(y-0.5+25)];
          tempShader = CShaderLoader::loadShader("DiffuseTexture");
-         /*if(tDown) {
-            if(m_qd.o && m_qd.r != lastMouseOveredBlock.r) {
+         if(tDown) {
+            /*if(m_qd.o && m_qd.r != lastMouseOveredBlock.r) {
 
                 tempShader = m_qd.r->getShader(); 
                 m_qd.r->setShader(ERP_DEFAULT, DiffuseTextureBright);
             }
             if(lastMouseOveredBlock.o && m_qd.r != lastMouseOveredBlock.r) {
                 lastMouseOveredBlock.r->setShader(ERP_DEFAULT, tempShader);
-            }
-         }*/
+            }*/
+         }
          if(!threeDown && !tDown && !twoDown && !oneDown && !fourDown && mouseDown) {
             PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth, textureType,mDown);
          }
