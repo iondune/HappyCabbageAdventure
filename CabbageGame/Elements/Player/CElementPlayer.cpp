@@ -237,6 +237,7 @@ void CElementPlayer::setupSceneObject() {
 
 bool CElementPlayer::decrementHealth() {
    if(Stats.Health <= 0) {
+      //decrementLives();
       return false; //Lose state
    }
    if(Recovering == 0.0f) {
@@ -255,6 +256,24 @@ void CElementPlayer::incrementHealth() {
       Stats.Health++; 
       View->addLeaf();
    }
+}
+
+void CElementPlayer::incrementLives() {
+   Stats.Lives++;
+}
+
+void CElementPlayer::decrementLives() {
+   if (Stats.Lives > 1) {
+      Stats.Lives--;
+   }
+
+   else {
+      /*Death code here*/
+   }
+}
+
+void CElementPlayer::changeEnergy(int amount) {
+   Stats.Energy = std::min(Stats.Energy + amount, Stats.MaxEnergy);
 }
 
 void CElementPlayer::setShaking(float time, float factor) {

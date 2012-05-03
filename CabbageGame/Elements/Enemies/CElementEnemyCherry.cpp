@@ -67,7 +67,7 @@ void CElementEnemyCherry::updateSceneObject(float time) {
 
    BombTime += time;
 
-   if (BombTime >= 1.50f) {
+   if (BombTime >= 3.0f) {
       BombTime = 0.0f;
 
       SRect2 projectileArea = Area;

@@ -33,6 +33,7 @@ class CElementEnemy : public CGameplayElement {
       Enemies::EEnemyType Type;
       void dieWithSeeds();
       void deathAnimation();
+      void dropItem();
 
       float TempTime;
 

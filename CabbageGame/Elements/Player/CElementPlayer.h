@@ -104,6 +104,9 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
 
       bool decrementHealth();
       void incrementHealth();
+      void incrementLives();
+      void decrementLives();
+      void changeEnergy(int amount);
       void incrementSeeds();
       CPlayerAbility *getAbility(Abilities::EAbilityType a);
 

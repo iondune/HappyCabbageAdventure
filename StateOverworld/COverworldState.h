@@ -6,10 +6,10 @@
 
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
-#include "CGameState.h"
-#include "CMainMenuState.h"
+#include "../StateGame/CGameState.h"
+//#include "CMainMenuState.h"
 
-//#include "../MainMenu/CMainMenuState.h"
+#include "../StateMainMenu/CMainMenuState.h"
 
 #define NUM_LEVELS 7
 #define NUM_CAMERAS 3

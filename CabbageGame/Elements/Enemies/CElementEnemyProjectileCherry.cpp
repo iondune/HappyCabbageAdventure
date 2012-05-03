@@ -52,7 +52,6 @@ void CElementEnemyProjectileCherry::setupSceneObject() {
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
    SceneObject->setScale(SVector3(1, 1, 1));
 
-   SceneObject->setTranslation(SVector3(Area.Position.X, Area.Position.Y + 3.f, 0));
    SceneObject->setRotation(SVector3(-90.0, 0.0, 0.0));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);

@@ -14,6 +14,8 @@
 #include "CElementEnemyProjectileCherry.h"
 
 #include "CElementItemSeed.h"
+#include "CElementItemLife.h"
+#include "CElementItemEnergy.h"
 
 //Generic enemy, for usage in the LWIB, I guess.
 CElementEnemy::CElementEnemy(SRect2 nArea, Enemies::EEnemyType type)
@@ -104,6 +106,26 @@ void CElementEnemy::dieWithSeeds() {
    ParticleEngine->UsePhysics(&Level.getPhysicsEngine());
 }
 
+void CElementEnemy::dropItem() {
+   int random = rand() % 3;
+   CElementItem *item;
+
+   //Drop health
+   if (random == 0) {
+      Level.addItem(item = CItemLoader::LoadItem(Area, Items::HEALTH));
+   }
+
+   //Drop energy
+   else if (random > 0) {
+      Level.addItem(item = CItemLoader::LoadItem(Area, Items::ENERGY));
+   }
+
+   float rand1 = (float)rand()/(float)RAND_MAX;
+   float rand2 = (float)rand()/(float)RAND_MAX;
+
+   ((CCollisionActor *)item->getPhysicsEngineObject())->setImpulse(SVector2(rand1*8.f - 4.f, rand2*4.5f + 1.0f), 0.01f);
+}
+
 void CElementEnemy::OnCollision(CCollideable *Object) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
       CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
@@ -187,6 +209,9 @@ int CElementEnemy::takeDamage(int amount) {
       dieWithSeeds();
       Level.getPlayer().setShaking(0.4f, 3.0f);
       PlayerActor->setImpulse(SVector2(0.0f, 3.0f), 0.01f);
+
+      if (rand()%3 == 0)
+         dropItem();
    }
 
    return CurHealth;

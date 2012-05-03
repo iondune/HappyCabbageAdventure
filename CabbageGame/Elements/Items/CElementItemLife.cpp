@@ -41,7 +41,11 @@ void CElementItemLife::setupSceneObject() {
 }
 
 void CElementItemLife::OnCollision(CCollideable *Object) {
-   //Optional code: setImpulse to other object away from this object, lower their health?
+   if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject() && !Level.getPlayer().used(Abilities::SHIELD)) {
+         Level.getPlayer().incrementLives();
+         removeFromGame();
+         Dead = true;
+      }
 }
                                                             
 //CGameplayElement has an attribute called ElapsedTime, which is updated by CGameplayElement's update function.
