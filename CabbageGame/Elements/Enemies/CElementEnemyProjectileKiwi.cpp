@@ -55,7 +55,6 @@ void CElementEnemyProjectileKiwi::setupSceneObject() {
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
    SceneObject->setScale(SVector3(1, 1, 1));
 
-
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 

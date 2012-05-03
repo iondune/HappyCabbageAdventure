@@ -24,10 +24,6 @@ void CElementEnemyKiwi::setupPhysicsEngineObject() {
 
    //TODO:  Is this still needed?
    PhysicsEngineObject->getAttributes().Reacts = 0;
-
-   //TODO:  What should be done with:
-   /*Actor->CollideableLevel = INTERACTOR_SUPERNONCOLLIDERS;
-   Actor->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS;*/
 }
 
 void CElementEnemyKiwi::setupSceneObject() {
@@ -142,18 +138,15 @@ void CElementEnemyKiwi::printInformation() {
 
 void CElementEnemyKiwi::DropBomb() {
 
-   float yLocation = Area.Position.Y - Area.Size.Y/2.f - .5f;
-
-   //CBadGuy::makeBadGuy(pos.X + w/2.f - .05f, pos.Y - .5f, w, h, pKiwi, Manager, 0);
+   float xLocation = Area.getCenter().X;
+   float yLocation = Area.getCenter().Y - 2.2f * Area.Size.Y;
 
    //TODO:  Need to determine if projectiles are an enemy or a separate abstract class.
    //TODO:  Determine the direction of the player with respect to the Kiwi.
    if (Direction == 0) {
-      float xLocation = Area.Position.X - Area.Size.X/2.f - .05f;
       Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(xLocation, yLocation, Area.Size.X, Area.Size.Y), Enemies::KIWI_PROJECTILE));
    }
    else {
-      float xLocation = Area.Position.X - Area.Size.X/2.f - .05f;
       Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(xLocation, yLocation, Area.Size.X, Area.Size.Y), Enemies::KIWI_PROJECTILE));
    }
 }
