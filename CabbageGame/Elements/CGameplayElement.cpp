@@ -31,10 +31,14 @@ void CGameplayElement::update(float time) {
 }
 
 void CGameplayElement::setupObjects() {
+   setupPhysicsEngineObject();
    if(Level.isLoaded()) {
-      setupPhysicsEngineObject();
       PhysicsEngineObject->setCollisionResponder(this);
       PhysicsEngineObject->setElement(this);
+   }
+   else {
+      Level.getPhysicsEngine().remove(PhysicsEngineObject);
+      Level.getPhysicsEngine().update(0.01f);
    }
    if(Level.shouldRender())
       setupSceneObject();
