@@ -4,15 +4,66 @@
 //Generic enemy, for usage in the LWIB, I guess.
 CElementEnemyProjectileKiwi::CElementEnemyProjectileKiwi(SRect2 nArea)
 : CElementEnemyProjectile(nArea, Enemies::KIWI_PROJECTILE) {
-   printf("New kiwi projectile\n");
+
+}
+
+void CElementEnemyProjectileKiwi::setupPhysicsEngineObject() {
+   PhysicsEngineObject = Level.getPhysicsEngine().addActor();
+   PhysicsEngineObject->setArea(Area);
+
+   //Set actor attributes
+   PhysicsEngineObject->setControlFall(false);
+   PhysicsEngineObject->setFallAcceleration(0.0f);
+
+   PhysicsEngineObject->getAttributes().MaxWalk = 4.0f;
+   PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
+   PhysicsEngineObject->getAttributes().AirControl = 1.0f;
+   PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
+   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_PKIWI;
+
+   PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
+   PhysicsEngineObject->setVelocity(SVector2(0.f, -6.f));
+}
+
+void CElementEnemyProjectileKiwi::setupSceneObject() {
+   SceneObject = new CMeshSceneObject();
+   CMesh *mesh;
+
+   if (Level.getEnvironment() == 0) {
+      mesh = CMeshLoader::load3dsMesh("Base/kiwi_seed.3ds");
+   }
+
+   else if (Level.getEnvironment() == 1) {
+      mesh = CMeshLoader::load3dsMesh("Base/kiwi_seed.3ds");
+   }
+
+   else {
+      fprintf(stderr, "KiwiProjectile: Unrecognized environment.\n");
+   }
+
+   if (mesh) {
+      mesh->resizeMesh(SVector3(.4f));
+      mesh->centerMeshByExtents(SVector3(0));
+      mesh->calculateNormalsPerFace();
+   }
+
+   else
+      fprintf(stderr, "KiwiProjectile:  MESH DID NOT LOAD PROPERLY.\n");
+
+   SceneObject->setMesh(mesh);
+   SceneObject->setShader(ERP_DEFAULT, "Toon");
+   SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
+   SceneObject->setScale(SVector3(1, 1, 1));
+
+   CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
 void CElementEnemyProjectileKiwi::updatePhysicsEngineObject(float time) {
-   return;
+   PhysicsEngineObject->setVelocity(SVector2(0.f, -6.f));
 }
 
 void CElementEnemyProjectileKiwi::updateSceneObject(float time) {
-   return;
+   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
 }
 
 void CElementEnemyProjectileKiwi::printInformation() {

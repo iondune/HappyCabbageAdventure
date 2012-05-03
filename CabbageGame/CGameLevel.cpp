@@ -24,7 +24,7 @@ bool CGameLevel::shouldRender() {
    return Render;
 }
 
-CGameLevel::CGameLevel() : Loaded(false), Render(true), XmlCount(0), PlayerElement(NULL) {
+CGameLevel::CGameLevel() : Loaded(false), Render(true), XmlCount(0), PlayerElement(NULL), PhysicsEngine(NULL) {
 
 }
 
@@ -113,6 +113,8 @@ void CGameLevel::printInformation() {
 }
 
 CCollisionEngine & CGameLevel::getPhysicsEngine() {
+   if(PhysicsEngine == NULL)
+      PhysicsEngine = new CCollisionEngine();
    return *PhysicsEngine;
 }
 

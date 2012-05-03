@@ -24,10 +24,6 @@ void CElementEnemyKiwi::setupPhysicsEngineObject() {
 
    //TODO:  Is this still needed?
    PhysicsEngineObject->getAttributes().Reacts = 0;
-
-   //TODO:  What should be done with:
-   /*Actor->CollideableLevel = INTERACTOR_SUPERNONCOLLIDERS;
-   Actor->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS;*/
 }
 
 void CElementEnemyKiwi::setupSceneObject() {
@@ -61,13 +57,6 @@ void CElementEnemyKiwi::setupSceneObject() {
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
-/*
-void CElementEnemyKiwi::OnCollision(CCollideable *Object) {
-}
-*/
-                                                            
-//CGameplayElement has an attribute called ElapsedTime, which is updated by CGameplayElement's update function.
-
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
    //TODO: Make some class singleton so we can get the player's location
@@ -97,7 +86,7 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
       PhysicsEngineObject->setVelocity(SVector2(vel.X, vel.Y > 0 ? vel.Y - 1.0f*time : 0));
 
       //TODO: Check player direction
-      if(true/*Direction == 0*/)
+      if(Direction == 0)
          PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
       else
          PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
@@ -148,12 +137,16 @@ void CElementEnemyKiwi::printInformation() {
 }
 
 void CElementEnemyKiwi::DropBomb() {
-   SVector2 pos = Area.Position;
+
+   float xLocation = Area.getCenter().X;
+   float yLocation = Area.getCenter().Y - 2.2f * Area.Size.Y;
 
    //TODO:  Need to determine if projectiles are an enemy or a separate abstract class.
    //TODO:  Determine the direction of the player with respect to the Kiwi.
-   /*if (Direction == 0)
-      CBadGuy::makeBadGuy(pos.X + w/2.f - .05f, pos.Y - .5f, w, h, pKiwi, Manager, 0);
-   else
-      CBadGuy::makeBadGuy(pos.X - w/2.f - .05f, pos.Y - .5f, w, h, pKiwi, Manager, 0);*/
+   if (Direction == 0) {
+      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(xLocation, yLocation, Area.Size.X, Area.Size.Y), Enemies::KIWI_PROJECTILE));
+   }
+   else {
+      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(xLocation, yLocation, Area.Size.X, Area.Size.Y), Enemies::KIWI_PROJECTILE));
+   }
 }

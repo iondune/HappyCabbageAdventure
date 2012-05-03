@@ -260,6 +260,11 @@ void CElementPlayer::incrementHealth() {
    }
 }
 
+void CElementPlayer::setHealth(int amount) {
+   amount = std::min(Stats.MaxHealth, amount);
+   Stats.CurHealth = std::max(0, amount);
+}
+
 void CElementPlayer::incrementLives() {
    Stats.Lives++;
 }
