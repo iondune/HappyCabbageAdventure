@@ -929,24 +929,30 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          mouseDown = 1;
          if(!tDown && twoDown && !oneDown && !threeDown && !fourDown) {
             PrepEnemy(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY),enemyType);
+            printf("Here1\n");
          }
          if(!tDown && !twoDown && !oneDown && threeDown&& !fourDown) {
             PrepFlag(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), secretFlag);
+            printf("Here2\n");
          }
          if(!tDown && oneDown && !threeDown && !twoDown&& !fourDown) {
+            printf("Here3\n");
              if (friendType == 0)
                 PrepCabbage(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
              /*else if (friendType == 1)
                 PrepFriends(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), friendType);*/
          }
          else if (!tDown && !oneDown && !threeDown &&!twoDown && !fourDown) {
+            printf("Here4\n");
             PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,textureType,mDown);
          }
          else if (!tDown && !oneDown && !threeDown &&!twoDown && fourDown) {
+            printf("Here5\n");
             PrepItem(round(eye.X + previewBlockMouseX),round(eye.Y + previewBlockMouseY),itemType);
          }
          //else { //Delete item
          if (tDown && !oneDown && !threeDown && !twoDown && !fourDown) {
+            printf("Here6\n");
              if(lastMouseOveredBlock.o) {
                  printf("clicked on removing\n");
                  //Application.getSceneManager().removeSceneObject(lastMouseOveredBlock.r);
@@ -969,6 +975,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
                  }
                  lastMouseOveredBlock = blockMap[x][y];
              }
+            printf("Here7\n");
          }
          //}
 
