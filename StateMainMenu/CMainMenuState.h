@@ -15,11 +15,11 @@
 #include "../CabbageFramework/CabbageFramework.h"
 #include "../CabbageScene/CabbageScene.h"
 #include "../StateLWIB/CLWIBState.h"
-#include "../Base/CGameState.h"
+//#include "../Base/CGameState.h"
 #include "../StateOverworld/COverworldState.h"
 #include "../CabbageSound/sound.h"
 #include "../CabbageGUI/CabbageGUI.h"
-#include "../Base/CGameplayManager.h"
+//#include "../Base/CGameplayManager.h"
 
 
 
