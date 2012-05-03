@@ -103,7 +103,7 @@ void CLWIBState::begin()
    Camera->setPosition(eye);
    Camera->setLookDirection(look - eye);
    Camera->recalculateViewMatrix();
-   //Application.getSceneManager().setActiveCamera(Camera);
+   Application.getSceneManager().setActiveCamera(Camera);
 
 
    float const LightBrightness = 1.0f;
