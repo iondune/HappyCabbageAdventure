@@ -49,6 +49,7 @@ class CLWIBState : public CState<CLWIBState>
    CTexture *grass,*dirt,*rock,*ground,*cabbageImage,*apple,*orange,*kiwi,*fire,*blade, *alien, *grape;
    CTexture *leaf, *heart;
    CTexture *blockRight, *blockLeft, *blockUp, *blockDown, *blockIn, *blockOut, *flagImg;
+   CTexture *grape, *banana, *pear, *cherry;
    // GUIImageWidget
    CGUIFontWidget *block1, *block2, *block3;
    CGUIFontWidget *help;
@@ -59,10 +60,7 @@ class CLWIBState : public CState<CLWIBState>
    CGUIImageWidget *tileFive, *tileSix, *tileSeven, *tileEight, *tileNine, *tileTen;
    CGUIImageWidget *save, *load, *undoTile, *redoTile;
     //CMESH stuff
-   CMesh *cubeMesh, *appleMesh, *orangeMesh, *kiwiMesh, *cabbageMesh, *groundMesh, *bladeMesh, *flagMesh;
-   CMesh *health, *energy, *lifeMesh;
-   CMesh *flameMesh;
-   CMesh *seedMesh;
+
    float xp2w(int oldX);
    float yp2w(int oldY);
    CGameplayElement *PreviewBlock;// *PreviewEnemy, *PreviewCabbage, *PreviewGround, *PreviewFlag, *PreviewItem;
