@@ -150,6 +150,11 @@ void CGameLevel::removeObject(CGameplayElement* Object) {
 
 }
 
+void CGameLevel::addObject(CGameplayElement* Object) {
+    Object->setupObjects();
+    Elements.push_back(Object);
+}
+
 
 void CGameLevel::setupSoundtrack() {
    std::string temp;

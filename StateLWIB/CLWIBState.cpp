@@ -19,14 +19,14 @@ void PrepPreviews();
 
 float previewBlockMouseX, previewBlockMouseY; 
 float lastBlockPlacedLocationX, lastBlockPlacedLocationY;
-CMeshSceneObject *PreviewBlock, *PreviewEnemy, *PreviewCabbage, *PreviewGround, *PreviewFlag, *PreviewItem;
+
 
 CLWIBState::CLWIBState()
 : Application (CApplication::get())
 {}
 
 void CLWIBState::BlocksInit( void ) {
-   PrepGrass(-25, -1, 1, 1);
+  // PrepGrass(-25, -1, 1, 1);
    PrepSky();
 
    SRect2 area;
@@ -44,10 +44,21 @@ void initBlockMap();
 //Heightoffset = 0.5
 qd blockMap[500][100]; //225, 100
 
-
+void initBlockMap() {
+   int i,j;
+   for(i=0; i<500; i++)
+      for(j=0; j<100; j++) {
+         blockMap[i][j].o = false;
+         blockMap[i][j].r = NULL;
+         blockMap[i][j].mapX = -1;
+         blockMap[i][j].mapY = -1;
+      }
+}
 //Initalizer fxn
 void CLWIBState::begin()
 {
+    gameWorld = new CGameLevel();
+    //worldDriver = new CGameplayManager();
    //printf("asdf\n");
    clickDown = 0;
    
@@ -64,8 +75,6 @@ void CLWIBState::begin()
    env = 0;
    change = 0; //this determines
    aDown = dDown = spaceDown = wDown = sDown = gDown = fDown = tDown = eDown = mDown = oneDown = twoDown = threeDown = cDown = 0;
-   cubeMesh = CMeshLoader::createCubeMesh();
-   cubeMesh->calculateNormalsPerFace();
 
    showHelp = false;
    blockCycle = 0;
@@ -93,19 +102,13 @@ void CLWIBState::begin()
    Camera->setPosition(eye);
    Camera->setLookDirection(look - eye);
    Camera->recalculateViewMatrix();
-   Application.getSceneManager().setActiveCamera(Camera);
+   //Application.getSceneManager().setActiveCamera(Camera);
 
-   Diffuse = CShaderLoader::loadShader("Diffuse");
-   DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture");
-   DiffuseTextureBright = CShaderLoader::loadShader("DiffuseTextureBright");
 
-   DeferredDiffuse = CShaderLoader::loadShader("Deferred/Diffuse");
-   DeferredTexture = CShaderLoader::loadShader("Deferred/Textured");
-   
    float const LightBrightness = 1.0f;
-   Application.getSceneManager().Lights.push_back(new CLight()); 
-   Application.getSceneManager().Lights.back()->Color = SVector3(LightBrightness);
-   Application.getSceneManager().Lights.back()->Position = SVector3(-5.f, 200.f, 500.f);
+   //Application.getSceneManager().Lights.push_back(new CLight()); 
+   //Application.getSceneManager().Lights.back()->Color = SVector3(LightBrightness);
+   //Application.getSceneManager().Lights.back()->Position = SVector3(-5.f, 200.f, 500.f);
    //Load the meshes into VBOs
 
    srand((unsigned int) time(0));
@@ -138,63 +141,30 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    stepCamera(Application.getElapsedTime());
    float x=round(eye.X + previewBlockMouseX),y= round(eye.Y + previewBlockMouseY);
    PreviewBlock->setTranslation(SVector3(x+(float)blockWidth/2,y+(float)blockHeight/2, 0));
-   PreviewEnemy->setTranslation(SVector3(x+0.5f,y+0.5f, 0));
-   PreviewCabbage->setTranslation(SVector3(x+0.5f,y+0.5f, 0));
-   PreviewFlag->setTranslation(SVector3(x+0.5f,y+0.5f, 0));
-   PreviewItem->setTranslation(SVector3(x+0.5f,y+0.5f, 0));
+
    if(clickDown) { //over hud
-      PreviewItem->setVisible(false);
-      PreviewFlag->setVisible(false);
-      PreviewCabbage->setVisible(false); 
-      PreviewBlock->setVisible(false);
-      PreviewEnemy->setVisible(false);
+     // PreviewBlock->setVisible(false);
    }
    else if(tDown) { // remove mode
-      PreviewItem->setVisible(false);
-      PreviewFlag->setVisible(false);
-      PreviewCabbage->setVisible(false); 
-      PreviewBlock->setVisible(false);
-      PreviewEnemy->setVisible(false);
+     // PreviewBlock->setVisible(false);
    }
    else if(twoDown) { // prep enemy
-      PreviewItem->setVisible(false);
-      PreviewFlag->setVisible(false);
-      PreviewCabbage->setVisible(false); 
-      PreviewEnemy->setVisible(true);
-      PreviewBlock->setVisible(false);
+     // PreviewBlock->setVisible(false);
    }
    else if(oneDown) { // preview cabbage and friends
-      PreviewItem->setVisible(false);
-      PreviewFlag->setVisible(false);
-      PreviewCabbage->setVisible(true); 
-      PreviewEnemy->setVisible(false);
-      PreviewBlock->setVisible(true);
+     // PreviewBlock->setVisible(true);
    }
    else if(threeDown) { // prep flag
-      PreviewItem->setVisible(false);
-      PreviewFlag->setVisible(true);
-      PreviewCabbage->setVisible(false); 
-      PreviewEnemy->setVisible(false);
-      PreviewBlock->setVisible(false);
-    
+    //  PreviewBlock->setVisible(false);
    }
    else if(fourDown) { // items
-      PreviewItem->setVisible(true);
-      PreviewFlag->setVisible(false);
-      PreviewCabbage->setVisible(false); 
-      PreviewBlock->setVisible(false);
-      PreviewEnemy->setVisible(false);
+   //   PreviewBlock->setVisible(false);
    }
    else { // default blocks
-      PreviewItem->setVisible(false);
-      PreviewFlag->setVisible(false);
-      PreviewCabbage->setVisible(false); 
-      PreviewBlock->setVisible(true);
-      PreviewEnemy->setVisible(false);
+     // PreviewBlock->setVisible(true);
    }
 
 
-   //Application.getSceneManager().drawAll();
 
    //Draw Text
    if (!showHelp)
@@ -250,36 +220,24 @@ void CLWIBState::OnRenderStart(float const Elapsed)
        block1->setText("Placing enemy");
        if (enemyType == 0) {
            block2->setText("Placing Apple\n");
-           PreviewEnemy->setMesh(appleMesh);
-           PreviewEnemy->setScale(SVector3(1,1,1));
        }
        if (enemyType == 1) {
-           block2->setText("Placing Orange\n");
-           PreviewEnemy->setMesh(orangeMesh);
-           PreviewEnemy->setScale(SVector3(1,1,1));
+           //PreviewEnemy->setScale(SVector3(1,1,1));
        }
        if (enemyType == 2) {
            block2->setText("Placing Kiwi\n");
-           PreviewEnemy->setMesh(kiwiMesh);
-           PreviewEnemy->setScale(SVector3(1,1,1));
        }
 
        if (enemyType == 3) {
            block2->setText("Placing Grape\n");
-           PreviewEnemy->setMesh(cubeMesh);
-           PreviewEnemy->setScale(SVector3(1,1,1));
        }
 
        if (enemyType == 4) {
            block2->setText("Placing Flame\n");
-           PreviewEnemy->setMesh(cubeMesh);
-           PreviewEnemy->setScale(SVector3(1,1,1));
        }
 
        if (enemyType == 5) {
            block2->setText("Placing Blade\n");
-           PreviewEnemy->setMesh(bladeMesh);
-           PreviewEnemy->setScale(SVector3(1,1,1));
        }
    }
    if (oneDown && !showHelp && !tDown && !twoDown && !threeDown&& !fourDown) {
@@ -287,14 +245,11 @@ void CLWIBState::OnRenderStart(float const Elapsed)
        block2->setVisible(false);
        if (friendType == 0) {
            block1->setText("Insert Cabbage");
-           PreviewCabbage->setMesh(cabbageMesh);
        } else if (friendType == 1) {
            block1->setText("Insert derp");
-           PreviewCabbage->setMesh(cabbageMesh);
        } else 
            printf("error friend not here");
 
-       PreviewCabbage->setMesh(cabbageMesh);
    }
    if (threeDown && !showHelp && !tDown && !twoDown && !oneDown&& !fourDown) {
        block3->setVisible(false);
@@ -304,7 +259,6 @@ void CLWIBState::OnRenderStart(float const Elapsed)
            block2->setText("regular flag");
        if (secretFlag == 1)
            block2->setText("secret flag");
-       PreviewCabbage->setMesh(flagMesh);
    }
    if (!threeDown && !showHelp && !tDown && !twoDown && !oneDown && fourDown) {
         block3->setVisible(false);
@@ -312,19 +266,15 @@ void CLWIBState::OnRenderStart(float const Elapsed)
         block1->setText("Insert item");
         if (itemType == 0)  {// health
             block2->setText("Adding Health");
-            PreviewItem->setMesh(health);
         }
         else if (itemType == 1) { // energy
             block2->setText("Adding Energy");
-            PreviewItem->setMesh(energy);
         }
         else if (itemType == 2) {// life
             block2->setText("Adding life");
-            PreviewItem->setMesh(lifeMesh);
         }
         else if (itemType == 3) { // powerup 
             block2->setText("Adding Seeds");
-            PreviewItem->setMesh(seedMesh);
         }
    }
    if (sixDown) {
@@ -358,29 +308,12 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    //drawSubWindow();
    pickInsert();
    changeTiles();
-   Application.getSceneManager().drawAll();
+   //Application.getSceneManager().drawAll();
 
    Application.getGUIEngine().drawAll(); 
-   Application.getSceneManager().endDraw();
+   //Application.getSceneManager().endDraw();
    SDL_GL_SwapBuffers();
 }
-
-void CLWIBState::drawSubWindow() {
-   glViewport(WindowWidth-400, WindowHeight-200, 400, 200);
-   glScissor(WindowWidth-400, WindowHeight-200, 400, 200);
-
-   glEnable(GL_SCISSOR_TEST);
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   glDisable(GL_SCISSOR_TEST);
-
-   Camera->setPosition(SVector3(eye.X, eye.Y + 5, 20));
-   Camera->setLookDirection(SVector3(0,0,-1));
-   Camera->recalculateViewMatrix();
-   Camera->setProjection(60.f, 2, 0.01f, 100.f);
-
-   Application.getSceneManager().drawAll();
-}
-
 
 //Sends event every time key pressed (also when held)
 void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
@@ -425,17 +358,16 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
         if(Event.Key == SDLK_u) {
             //3 is the number of static blocks created before the user can add in new blocks (ie unremovable)
             if(blocks.size() > 3 && placeables.size() > 0) {
-                Application.getSceneManager().removeSceneObject(blocks.back());
-                CGameplayElement *m_block = placeables.back();
+                //Application.getSceneManager().removeSceneObject(blocks.back());
+                //CGameplayElement *m_block = placeables.back();
                 redo.push_back(blocks.back());
                 redoPlaceables.push_back(placeables.back());
 
                 int i,j;
-                for(i = 0; i < m_block->getArea().Size.X; i++) {
-                    for(j = 0; j < m_block->getArea().Size.Y; j++) {
+                for(i = 0; i < m_block->getArea().Position.X; i++) {
+                    for(j = 0; j < m_block->getArea().Position.Y; j++) {
                         blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = false;
                         blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = NULL;
-                        blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].p = NULL;
                         blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = -1;
                         blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = -1;
                     }
@@ -447,17 +379,15 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
         }
         if(Event.Key == SDLK_r) {
             if(redo.size() > 0 && redoPlaceables.size() > 0) {
-                Application.getSceneManager().addSceneObject(redo.back());
+                //Application.getSceneManager().addSceneObject(redo.back());
                 CGameplayElement *m_block = redoPlaceables.back();
-                CMeshSceneObject *m_r = redo.back();
                 blocks.push_back(redo.back());
                 placeables.push_back(redoPlaceables.back());
 
                 int i,j;
-                for(i = 0; i < m_block->getArea().Size.X; i++) {
+                for(i = 0; i < m_block->getArea().Position.X; i++) {
                     for(j = 0; j < m_block->getArea().Size.Y; j++) {
                         blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = true;
-                        blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].p = m_block;
                         blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = m_r;
 
                         blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = (int)m_block->getArea().Position.X+25;
@@ -654,17 +584,16 @@ void CLWIBState::loadWorld() {
     std::string name;
     //float spd, rng;
     while(blocks.size() > 3 && placeables.size() > 0 ) {
-        Application.getSceneManager().removeSceneObject(blocks.back());
+        //Application.getSceneManager().removeSceneObject(blocks.back());
         blocks.pop_back();
         CGameplayElement *m_block = placeables.back();
         placeables.pop_back();
 
         int i,j;
-        for(i = 0; i < m_block->getArea().Size.X; i++) {
+        for(i = 0; i < m_block->getArea().Position.X; i++) {
             for(j = 0; j < m_block->getArea().Size.Y; j++) {
                 blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = false;
                 blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = NULL;
-                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].p = NULL;
                 blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = -1;
                 blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = -1;
             }
@@ -774,11 +703,11 @@ void CLWIBState::end()
    redoPlaceables.clear();
    blocks.clear();
    redo.clear();
-   Application.getSceneManager().removeAllSceneObjects();
+  // //Application.getSceneManager().removeAllSceneObjects();
 }
 
 void CLWIBState::PrepPreviews() {
-   blocks.push_back(PreviewBlock = new CMeshSceneObject());
+   /*blocks.push_back(PreviewBlock = new CMeshSceneObject());
    PreviewBlock->setMesh(cubeMesh);
    PreviewBlock->setTexture("Colors/White.bmp");
    PreviewBlock->setShader(ERP_DEFAULT, DiffuseTexture);
@@ -884,7 +813,7 @@ void CLWIBState::PrepPreviews() {
    PreviewItem->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
    PreviewItem->setRotation(SVector3(-90, 0, 0));
    PreviewItem->setScale(SVector3(1, 1, 1));
-
+   */
    CApplication::get().getSceneManager().addSceneObject(PreviewItem);
    CApplication::get().getSceneManager().addSceneObject(PreviewBlock);
    CApplication::get().getSceneManager().addSceneObject(PreviewFlag);
@@ -893,17 +822,7 @@ void CLWIBState::PrepPreviews() {
    PreviewEnemy->setVisible(false);
 }
 
-void initBlockMap() {
-   int i,j;
-   for(i=0; i<225; i++)
-      for(j=0; j<100; j++) {
-         blockMap[i][j].o = false;
-         blockMap[i][j].p = NULL;
-         blockMap[i][j].r = NULL;
-         blockMap[i][j].mapX = -1;
-         blockMap[i][j].mapY = -1;
-      }
-}
+
 
 void CLWIBState::PrepItem(float x, float y, int item) {
 
@@ -915,11 +834,11 @@ void CLWIBState::PrepItem(float x, float y, int item) {
    }
 
    printf("Placed item starting at %0.2f, %0.2f\n", x, y);
-   CMeshSceneObject *tempItem;
-   CPItem *tempPlaceable;
-   blocks.push_back(tempItem = new CMeshSceneObject());
-   placeables.push_back(tempPlaceable = new CPItem(x, y, item));
-   if (item == 0)
+   //CMeshSceneObject *tempItem;
+   CGameplayElement *tempPlaceable;
+   //blocks.push_back(tempItem = new CMeshSceneObject());
+   placeables.push_back(tempPlaceable = new CElementItem(SRect2(x, y, 1, 1) item));
+   /*if (item == 0)
        tempItem->setMesh(health);
    if (item == 1)
        tempItem->setMesh(energy);
@@ -931,13 +850,13 @@ void CLWIBState::PrepItem(float x, float y, int item) {
    tempItem->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
    tempItem->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
    tempItem->setRotation(SVector3(-90, 0, 0));
-   tempItem->setScale(SVector3(0.5, 0.5, 0.5));
+   tempItem->setScale(SVector3(0.5, 0.5, 0.5));*/
    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
    blockMap[(int)x+25][(int)(y-0.5+25)].r = tempItem;
-   blockMap[(int)x+25][(int)(y-0.5+25)].p = tempPlaceable;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
-   Application.getSceneManager().addSceneObject(tempItem);
+   //Application.getSceneManager().addSceneObject(tempItem);
+   tempPlaceable.setupObjects();
    redo.clear();
    redoPlaceables.clear();
 
@@ -953,22 +872,21 @@ void CLWIBState::PrepFlag(float x, float y, int t) {
    }
 
    printf("Placed flag starting at %0.2f, %0.2f\n", x, y);
-   CMeshSceneObject *tempFlag;
-   CFlag *tempPlaceable;
-   blocks.push_back(tempFlag = new CMeshSceneObject());
-   placeables.push_back(tempPlaceable = new CFlag(x, y, 1, 1,t));//add flag
-   tempFlag->setMesh(flagMesh);
+   //CMeshSceneObject *tempFlag;
+   CGameplayElement *tempPlaceable;
+   //blocks.push_back(tempFlag = new CMeshSceneObject());
+   placeables.push_back(tempPlaceable = new CElementBlockFlag(SRect2(x, y, 1, 1),t));//add flag
+   /*tempFlag->setMesh(flagMesh);
    tempFlag->setShader(ERP_DEFAULT, Diffuse);
    tempFlag->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
    tempFlag->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
    tempFlag->setRotation(SVector3(-90, 0, 0));
-   tempFlag->setScale(SVector3(0.5, 0.5, 0.5));
+   tempFlag->setScale(SVector3(0.5, 0.5, 0.5));*/
    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
    blockMap[(int)x+25][(int)(y-0.5+25)].r = tempFlag;
-   blockMap[(int)x+25][(int)(y-0.5+25)].p = tempPlaceable;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
-   Application.getSceneManager().addSceneObject(tempFlag);
+   //Application.getSceneManager().addSceneObject(tempFlag);
    redo.clear();
    redoPlaceables.clear();
 
@@ -981,14 +899,12 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
       printf("Blockmap space occupied. Did not place enemy\n");
       return;
    }
-
-
    printf("Placed enemy starting at %0.2f, %0.2f\n", x, y);
-   CMeshSceneObject *tempEnemy;
-   CEnemy *tempPlaceable;
-   blocks.push_back(tempEnemy = new CMeshSceneObject());
-   placeables.push_back(tempPlaceable = new CEnemy(x, y, 1, 1, type, env));
-   if (type == 0)
+  // CMeshSceneObject *tempEnemy;
+   CGameplayElement *tempPlaceable;
+  // blocks.push_back(tempEnemy = new CMeshSceneObject());
+   placeables.push_back(tempPlaceable = new CElementEnemy(SRect2(x, y, 1, 1), type));
+   /*if (type == 0)
         tempEnemy->setMesh(appleMesh);
    if (type == 1)
         tempEnemy->setMesh(orangeMesh);
@@ -1005,18 +921,17 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
    tempEnemy->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
    tempEnemy->setTranslation(SVector3((x+(x+1))/2, (y+(y+1))/2, 0));
    tempEnemy->setRotation(SVector3(-90, 0, 0));
-   tempEnemy->setScale(SVector3(1, 1, 1));
+   tempEnemy->setScale(SVector3(1, 1, 1));*/
    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
    blockMap[(int)x+25][(int)(y-0.5+25)].r = tempEnemy;
-   blockMap[(int)x+25][(int)(y-0.5+25)].p = tempPlaceable;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
-   Application.getSceneManager().addSceneObject(tempEnemy);
+   //Application.getSceneManager().addSceneObject(tempEnemy);
    redo.clear();
    redoPlaceables.clear();
 }
 
-void CLWIBState::PrepFriends(int x, int y, int t) {
+/*void CLWIBState::PrepFriends(int x, int y, int t) {
     if(x < -25 || y < -25 || x >= 500 || y >= 75)
         return;
     if(blockMap[(int)x+25][(int)(y-0.5+25)].o) {
@@ -1025,7 +940,7 @@ void CLWIBState::PrepFriends(int x, int y, int t) {
     }
     printf("Placed friend starting at %0.2f, %0.2f\n", x, y);
     CMeshSceneObject *tempFriends;
-    CPFriends *tempPlaceable;
+    CGameplayElement *tempPlaceable;
     blocks.push_back(tempFriends = new CMeshSceneObject());
     placeables.push_back(tempPlaceable = new CPFriends(x, y, t));
     if (t == 0)
@@ -1038,13 +953,12 @@ void CLWIBState::PrepFriends(int x, int y, int t) {
     tempFriends->setScale(SVector3(1, 1, 1));
     blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
     blockMap[(int)x+25][(int)(y-0.5+25)].r = tempFriends;
-    blockMap[(int)x+25][(int)(y-0.5+25)].p = tempPlaceable;
     blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
     blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
-    Application.getSceneManager().addSceneObject(tempFriends);
+    //Application.getSceneManager().addSceneObject(tempFriends);
     redo.clear();
     redoPlaceables.clear();
-}
+}*/
 
 
 qd lastCabbage = blockMap[0][0];
@@ -1061,35 +975,33 @@ void CLWIBState::PrepCabbage(float x, float y) {
     if (cabbageFlag == 1) {
         blockMap[(int)xCabbage+25][(int)(yCabbage-0.5+25)].o = false;
         blockMap[(int)xCabbage+25][(int)(yCabbage-0.5+25)].r = NULL;
-        blockMap[(int)xCabbage+25][(int)(yCabbage-0.5+25)].p = NULL;
         blockMap[(int)xCabbage+25][(int)(yCabbage-0.5+25)].mapX = -1;
         blockMap[(int)xCabbage+25][(int)(yCabbage-0.5+25)].mapY = -1;
         printf("tempx = %d, tempy =  %d\n",xCabbage ,yCabbage);
         placeables.erase(std::remove(placeables.begin(), placeables.end(), lastCabbage.p), placeables.end());
         blocks.erase(std::remove(blocks.begin(), blocks.end(), lastCabbage.r), blocks.end());
-        Application.getSceneManager().removeSceneObject(lastCabbage.r);
+        //Application.getSceneManager().removeSceneObject(lastCabbage.r);
     } 
 
     printf("Placed cabbage starting at %0.2f, %0.2f\n", x, y);
-    CMeshSceneObject *tempCabbage;
-    CCabbage *tempPlaceable;
-    blocks.push_back(tempCabbage = new CMeshSceneObject());
-    placeables.push_back(tempPlaceable = new CCabbage(x, y, 1, 1));
-    tempCabbage->setMesh(cabbageMesh);
+    //CMeshSceneObject *tempCabbage;
+    CGameplayElement *tempPlaceable;
+    //blocks.push_back(tempCabbage = new CMeshSceneObject());
+    placeables.push_back(tempPlaceable = new CElementPlayer(SRect2(x, y, 1, 1));
+    /*tempCabbage->setMesh(cabbageMesh);
     tempCabbage->setShader(ERP_DEFAULT, Diffuse);
     tempCabbage->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
     tempCabbage->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
     tempCabbage->setRotation(SVector3(-90, 0, 90));
-    tempCabbage->setScale(SVector3(0.5, 0.5, 0.5));
+    tempCabbage->setScale(SVector3(0.5, 0.5, 0.5));*/
     blockMap[(int)x+25][(int)(y-0.5f+25)].o = true;
     blockMap[(int)x+25][(int)(y-0.5f+25)].r = tempCabbage;
-    blockMap[(int)x+25][(int)(y-0.5f+25)].p = tempPlaceable;
     blockMap[(int)x+25][(int)(y-0.5f+25)].mapX = (int)x+25;
     blockMap[(int)x+25][(int)(y-0.5f+25)].mapY = (int)(y-0.5f+25);
     xCabbage = (int) x, yCabbage = (int) y;
 
     lastCabbage = blockMap[(int)x+25][(int)(y-0.5+25)];
-    Application.getSceneManager().addSceneObject(tempCabbage);
+    //Application.getSceneManager().addSceneObject(tempCabbage);
     cabbageFlag = 1;
     redo.clear();
     redoPlaceables.clear();
@@ -1115,12 +1027,11 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
       return;
 
    printf("Placed block starting at %0.2f, %0.2f\n", x, y);
-   CMeshSceneObject *tempBlock;
-   CBlock *tempPlaceable;
-   blocks.push_back(tempBlock = new CMeshSceneObject());
-   placeables.push_back(tempPlaceable = new CBlock(x, y, w, h, d, t, moving, env));
-   tempBlock->setMesh(cubeMesh);
-   if (t == 0)
+   
+   CGameplayElement *tempBlock;
+   blocks.push_back(tempBlock = new CElementBlock(SRect2(x,y,w,h),d,t));
+   //tempBlock->setMesh(cubeMesh);
+   /*if (t == 0)
         tempBlock->setTexture("Base/grass.bmp");
    else if (t == 1)
         tempBlock->setTexture("Base/dirt.bmp");
@@ -1133,18 +1044,17 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
    tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
    tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
-   tempBlock->setScale(SVector3((float) w, (float) h, (float) d));
+   tempBlock->setScale(SVector3((float) w, (float) h, (float) d));*/
    for(i = 0; i < w; i++) {
       for(j = 0; j < h; j++) {
          blockMap[(int)x+25+i][(int)(y-0.5+25)+j].o = true;
          blockMap[(int)x+25+i][(int)(y-0.5+25)+j].r = tempBlock;
-         blockMap[(int)x+25+i][(int)(y-0.5+25)+j].p = tempPlaceable;
          blockMap[(int)x+25+i][(int)(y-0.5+25)+j].mapX = (int)x+25;
          blockMap[(int)x+25+i][(int)(y-0.5+25)+j].mapY = (int)(y-0.5+25);
       }
    }
-   tempBlock->setRotation(SVector3(0, 0, 0));
-   Application.getSceneManager().addSceneObject(tempBlock);
+   //tempBlock->setRotation(SVector3(0, 0, 0));
+   //Application.getSceneManager().addSceneObject(tempBlock);
    redo.clear();
    redoPlaceables.clear();
    if(moving) {
@@ -1154,30 +1064,6 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
    }
 }
 
-void CLWIBState::PrepGrass(float x, float y, float w, float h) {
-   CMeshSceneObject *tempBlock;
-   // block
-   blocks.push_back(tempBlock = new CMeshSceneObject());
-   tempBlock->setMesh(cubeMesh);
-
-   tempBlock->setTexture("Base/sky.bmp");
-   tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
-   tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
-   tempBlock->setTranslation(SVector3((x+(x+w))/2, (y+(y+h))/2, 0));
-   tempBlock->setScale(SVector3(w, h, .5));
-   Application.getSceneManager().addSceneObject(tempBlock);
-   CMeshSceneObject *tempyBlock;
-   blocks.push_back(tempyBlock = new CMeshSceneObject());
-   tempyBlock->setMesh(cubeMesh);
-
-   tempyBlock->setTexture("Base/sky.bmp");
-   tempyBlock->setShader(ERP_DEFAULT, DiffuseTexture);
-   tempyBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
-   tempyBlock->setTranslation(SVector3(172, (y+(y+h))/2, 0));
-   tempyBlock->setScale(SVector3(w, h, .5));
-   Application.getSceneManager().addSceneObject(tempyBlock);
-
-}
 
 void CLWIBState::PrepSky() {
 
@@ -1190,7 +1076,7 @@ void CLWIBState::PrepSky() {
    tempBlock->setTranslation(SVector3(85, 13, -5));
    tempBlock->setScale(SVector3(250, -50, 1));
    tempBlock->setCullingEnabled(false);
-   Application.getSceneManager().addSceneObject(tempBlock);
+   //Application.getSceneManager().addSceneObject(tempBlock);
 }
 
 
@@ -1235,7 +1121,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          if (tDown && !oneDown && !threeDown && !twoDown && !fourDown) {
              if(lastMouseOveredBlock.o) {
                  printf("clicked on removing\n");
-                 Application.getSceneManager().removeSceneObject(lastMouseOveredBlock.r);
+                 //Application.getSceneManager().removeSceneObject(lastMouseOveredBlock.r);
                  placeables.erase(std::remove(placeables.begin(), placeables.end(), lastMouseOveredBlock.p), placeables.end());
                  blocks.erase(std::remove(blocks.begin(), blocks.end(), lastMouseOveredBlock.r), blocks.end());
                  redoPlaceables.push_back(lastMouseOveredBlock.p);
@@ -1244,11 +1130,10 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
                  int y = lastMouseOveredBlock.mapY;
 
                  int i,j;
-                 for(i = 0; i < lastMouseOveredBlock.p->w; i++) {
-                     for(j = 0; j < lastMouseOveredBlock.p->h; j++) {
+                 for(i = 0; i < lastMouseOveredBlock.r->getArea().Size.X; i++) {
+                     for(j = 0; j < lastMouseOveredBlock.r->getArea().Size.Y; j++) {
                          blockMap[x+i][y+j].o = false;
                          blockMap[x+i][y+j].r = NULL;
-                         blockMap[x+i][y+j].p = NULL;
                          blockMap[x+i][y+j].mapX = -1;
                          blockMap[x+i][y+j].mapY = -1;
                          printf("removed object at %d , %d\n",x,y);
@@ -1722,17 +1607,16 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     }
     if (widget == undoTile) {
         if(blocks.size() > 3 && placeables.size() > 0) {
-            Application.getSceneManager().removeSceneObject(blocks.back());
+            //Application.getSceneManager().removeSceneObject(blocks.back());
             CGameplayElement *m_block = placeables.back();
             redo.push_back(blocks.back());
             redoPlaceables.push_back(placeables.back());
 
             int i,j;
-            for(i = 0; i < m_block->getArea().Size.X; i++) {
+            for(i = 0; i < m_block->getArea().Position.X; i++) {
                 for(j = 0; j < m_block->getArea().Size.Y; j++) {
                     blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = false;
                     blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = NULL;
-                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].p = NULL;
                     blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = -1;
                     blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = -1;
                 }
@@ -1744,17 +1628,16 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     }
     if (widget == redoTile) {
         if(redo.size() > 0 && redoPlaceables.size() > 0) {
-            Application.getSceneManager().addSceneObject(redo.back());
+            //Application.getSceneManager().addSceneObject(redo.back());
             CGameplayElement *m_block = redoPlaceables.back();
             CMeshSceneObject *m_r = redo.back();
             blocks.push_back(redo.back());
             placeables.push_back(redoPlaceables.back());
 
             int i,j;
-            for(i = 0; i < m_block->getArea().Size.X; i++) {
+            for(i = 0; i < m_block->getArea().Position.X; i++) {
                 for(j = 0; j < m_block->getArea().Size.Y; j++) {
                     blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = true;
-                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].p = m_block;
                     blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = m_r;
 
                     blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = (int)m_block->getArea().Position.X+25;
@@ -1779,7 +1662,7 @@ void CLWIBState::pickInsert()
         fourDown = 0;
         sixDown = 0;
 
-        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+        //PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     if (change == 1) {
         oneDown = 1;
@@ -1791,7 +1674,7 @@ void CLWIBState::pickInsert()
         blockWidth = 1;
         blockHeight = 1;
         blockDepth = 1;
-        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+       // PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     if (change == 2) {
         twoDown = 1; //enemy
@@ -1803,7 +1686,7 @@ void CLWIBState::pickInsert()
         blockWidth = 1;
         blockHeight = 1;
         blockDepth = 1;
-        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+       // PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     if (change == 3) {
         threeDown = 1;
@@ -1815,7 +1698,7 @@ void CLWIBState::pickInsert()
         blockWidth = 1;
         blockHeight = 1;
         blockDepth = 1;
-        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+      //  PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     if (change == 4) {
         fourDown = 1;
@@ -1827,7 +1710,7 @@ void CLWIBState::pickInsert()
         blockWidth = 1;
         blockHeight = 1;
         blockDepth = 1;
-        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+      //  PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     if (change == 5) {
         fourDown = 0;
@@ -1839,7 +1722,7 @@ void CLWIBState::pickInsert()
         blockWidth = 1;
         blockHeight = 1;
         blockDepth = 1;
-        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+       // PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     if (change == 6) {
         fourDown = 0;;
@@ -1851,7 +1734,7 @@ void CLWIBState::pickInsert()
         blockWidth = 1;
         blockHeight = 1;
         blockDepth = 1;
-        PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+       // PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     
 }

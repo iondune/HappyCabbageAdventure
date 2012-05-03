@@ -13,6 +13,8 @@
 #include "../CabbageGame/Elements/CGameplayElement.h"
 #include "../CabbageGame/irrxml-1.2/src/irrXML.h"
 #include "../CabbageGame/wmlwriter_src/xmlwriter.h"
+#include "../CabbageGame/CGameLevel.h"
+#include "../CabbageGame/CGameplayManager.h"
 #include "../CabbageGUI/CabbageGUI.h"
 
 #define TREE_Y_OFFSET 2.1
@@ -25,6 +27,8 @@ class CLWIBState : public CState<CLWIBState>
    private:
 
    //Boolean integers for keypressing
+   CGameplayManager *worldDriver;
+   CGameLevel *gameWorld;
    int aDown , dDown , spaceDown , wDown , sDown , gDown , fDown , tDown, eDown, mDown, cDown;
    int oneDown, twoDown, threeDown, fourDown, sixDown, clickDown;
    int cabbageFlag;
@@ -58,7 +62,7 @@ class CLWIBState : public CState<CLWIBState>
    CMesh *seedMesh;
    float xp2w(int oldX);
    float yp2w(int oldY);
-   
+   CGameplayElement *PreviewBlock, *PreviewEnemy, *PreviewCabbage, *PreviewGround, *PreviewFlag, *PreviewItem;
 
    public:
    std::vector<CGameplayElement*> placeables, redoPlaceables, blocks, redo;
@@ -66,11 +70,6 @@ class CLWIBState : public CState<CLWIBState>
    void begin();
    CPerspectiveCamera *Camera;
    SVector3 eye, look;
-
-   CShader *DiffuseTexture, *DiffuseTextureBright, *Diffuse,
-	   * DeferredDiffuse, *DeferredTexture;
-
-
 
    int blockWidth, blockHeight,blockDepth;
    void OnRenderStart(float const Elapsed);
@@ -84,8 +83,7 @@ class CLWIBState : public CState<CLWIBState>
    void PrepCabbage(float x, float y);
    void PrepFlag(float X ,float y, int t);
    void PrepItem(float x, float y, int type);
-   void PrepGrass(float x, float y, float w, float h);
-   void PrepFriends(int x, int y, int t);
+  //void PrepFriends(int x, int y, int t);
    void PrepPreviews();
 
    void PrepSky();

@@ -6,7 +6,8 @@
 
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
-#include "../Base/CGameState.h"
+//#include "../Base/CGameState.h"
+
 //#include "../MainMenu/CMainMenuState.h"
 
 #define NUM_LEVELS 7
