@@ -53,6 +53,9 @@
     <ClCompile Include="CPStar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CPLaserCharged.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CParticle.h">
@@ -92,6 +95,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CPLaser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CPLaserCharged.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
