@@ -6,7 +6,6 @@
 
 class CPlayerAbilityDash : public CPlayerAbility {
    CParticleEngine *ParticleEngine;
-   static float const DASH_DURATION;
    static int const DASH_PARTICLE_COUNT;
 
    private:
