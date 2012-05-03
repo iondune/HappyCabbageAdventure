@@ -281,8 +281,6 @@ void CElementPlayer::playLevelVictory(float time) {
    SVector3 curRotation = View->getCabbageSceneObject().getRotation();
    SVector2 curLocation = SVector2 (Area.getCenter().X - .5f, Area.getCenter().Y - .5f);
 
-   printf("curRotation: %f\n", curRotation.X);
-
    if (VictoryTime > .00f && VictoryTime < .07f) {
       Action = Standing;
       PhysicsEngineObject->setJumping(false);
@@ -319,7 +317,7 @@ void CElementPlayer::playLevelVictory(float time) {
    else if (VictoryTime > 1.5f && VictoryTime < 2.5f) {
       Action = Jumping;
       PhysicsEngineObject->setJumping(true);
-      View->getCabbageSceneObject().setRotation(SVector3(curRotation.X + 720.f*time, 0.f, 80.f));
+      View->getCabbageSceneObject().setRotation(SVector3(curRotation.X, curRotation.Y + 720.f*time, 80.0f));
    }
    else if (VictoryTime > 2.5f && VictoryTime < 2.9f) {
       Action = Standing;
@@ -331,7 +329,7 @@ void CElementPlayer::playLevelVictory(float time) {
       Action = Jumping;
       PhysicsEngineObject->setJumping(true);
 
-      View->getCabbageSceneObject().setRotation(SVector3(curRotation.X - 360.f*time, 0.f, 80.f));
+      View->getCabbageSceneObject().setRotation(SVector3(curRotation.X, curRotation.Y - 360.f*time, 80.f));
       PhysicsEngineObject->setArea(SRect2(Area.Position.X - 3.f*time, Area.Position.Y, 1.f, 1.f));
    }
 
