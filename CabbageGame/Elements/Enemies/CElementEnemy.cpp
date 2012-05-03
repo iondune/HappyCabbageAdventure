@@ -11,6 +11,7 @@
 #include "CElementEnemyGiantApple.h"
 #include "CElementEnemyPear.h"
 #include "CElementEnemyCherry.h"
+#include "CElementEnemyProjectileCherry.h"
 
 #include "CElementItemSeed.h"
 
@@ -54,6 +55,9 @@ CElementEnemy *CEnemyLoader::LoadEnemy(SRect2 nArea, Enemies::EEnemyType type) {
       break;
    case Enemies::CHERRY:
       return new CElementEnemyCherry(nArea);
+      break;
+   case Enemies::CHERRY_PROJECTILE:
+      return new CElementEnemyProjectileCherry(nArea, 0.0f);
    default:
       fprintf(stderr, "Error: unknown enemy type %d\n", type);
       exit(1);

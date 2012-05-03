@@ -18,7 +18,8 @@ namespace Enemies {
       PEAR               = 9,
       BANNANA            = 10,
       BANNANA_PROJECTILE = 11,
-      CHERRY             = 12
+      CHERRY             = 12,
+      CHERRY_PROJECTILE  = 13
    };
 }
 

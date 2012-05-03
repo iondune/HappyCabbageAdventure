@@ -1,8 +1,9 @@
 #include "CElementEnemyCherry.h"
+#include "CElementEnemyProjectileCherry.h"
 #include "CGameLevel.h"
 
 CElementEnemyCherry::CElementEnemyCherry(SRect2 nArea) :
-   CElementEnemy(nArea, Enemies::CHERRY), ISquishable(nArea.Size.X, nArea.Size.Y) {
+   CElementEnemy(nArea, Enemies::CHERRY), BombTime(0.0f) {
 
 }
 
@@ -64,19 +65,19 @@ void CElementEnemyCherry::updateSceneObject(float time) {
       return;
    }
 
-   Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
+   BombTime += time;
 
-   if (PhysicsEngineObject->getVelocity().Y < .01f && PhysicsEngineObject->getVelocity().Y > -.01f) {
-      if(PhysicsEngineObject->getVelocity().X < -0.01f)
-         SceneObject->setScale(SVector3(-Scale.X,Scale.X,Scale.Y));
-      else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-         SceneObject->setScale(SVector3(Scale.X,Scale.X,Scale.Y));
-   }
-   else {
-      if(PhysicsEngineObject->getVelocity().X < -0.01f)
-         SceneObject->setScale(SVector3(-1,1,1));
-      else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-         SceneObject->setScale(SVector3(1,1,1));
+   if (BombTime >= 1.50f) {
+      BombTime = 0.0f;
+
+      SRect2 projectileArea = Area;
+      projectileArea.Position.Y += .3f;
+      projectileArea.Position.X -= 1.0f;
+
+      Level.addEnemy(new CElementEnemyProjectileCherry(projectileArea, -2.0f));
+
+      projectileArea.Position.X += 2.0f;
+      Level.addEnemy(new CElementEnemyProjectileCherry(projectileArea, 2.0f));
    }
 }
 

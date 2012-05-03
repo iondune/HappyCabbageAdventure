@@ -3,10 +3,11 @@
 
 #include "CElementEnemy.h"
 
-class CElementEnemyCherry : public CElementEnemy, public ISquishable
+class CElementEnemyCherry : public CElementEnemy
 {
    private:
       SVector2 Scale;
+      float BombTime;
 
    public:
       CElementEnemyCherry(SRect2 nArea);
