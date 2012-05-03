@@ -114,6 +114,7 @@
     <ClInclude Include="Elements\Enemies\CElementEnemyApple.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyBlade.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyFlame.h" />
+    <ClInclude Include="Elements\Enemies\CElementEnemyGiantApple.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyGrape.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyKiwi.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyOrange.h" />
@@ -152,6 +153,7 @@
     <ClCompile Include="Elements\Enemies\CElementEnemyApple.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyBlade.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyFlame.cpp" />
+    <ClCompile Include="Elements\Enemies\CElementEnemyGiantApple.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyGrape.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyKiwi.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyOrange.cpp" />

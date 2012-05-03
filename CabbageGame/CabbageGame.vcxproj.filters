@@ -89,6 +89,9 @@
     <ClInclude Include="Elements\ISquishable.h">
       <Filter>Elements</Filter>
     </ClInclude>
+    <ClInclude Include="Elements\Enemies\CElementEnemyGiantApple.h">
+      <Filter>Elements\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CBiggerBlock.cpp" />
@@ -182,6 +185,9 @@
     </ClCompile>
     <ClCompile Include="Elements\ISquishable.cpp">
       <Filter>Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Enemies\CElementEnemyGiantApple.cpp">
+      <Filter>Elements\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
