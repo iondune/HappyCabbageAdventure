@@ -107,7 +107,7 @@ void CGameLevel::printInformation() {
    std::cout << "   Enemies: " << Enemies.size() << std::endl; 
    std::cout << "   Items: " << Items.size() << std::endl; 
    std::cout << "   Flags: " << Flags.size() << std::endl; 
-   for(int i = 0; i < Flags.size(); i++) {
+   for(unsigned int i = 0; i < Flags.size(); i++) {
       std::cout << "      Flag " << i << " is located at [" << Flags[i]->getArea().Position.X << ", " << Flags[i]->getArea().Position.Y << "], and has a role value of " << Flags[i]->getRole() << std::endl; 
    }
 }
@@ -148,6 +148,11 @@ void CGameLevel::removeObject(CGameplayElement* Object) {
    Flags.erase(std::remove(Flags.begin(), Flags.end(), Object), Flags.end());
    Elevators.erase(std::remove(Elevators.begin(), Elevators.end(), Object), Elevators.end());
 
+}
+
+void CGameLevel::addObject(CGameplayElement* Object) {
+    Object->setupObjects();
+    Elements.push_back(Object);
 }
 
 

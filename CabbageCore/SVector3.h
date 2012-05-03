@@ -155,7 +155,12 @@ public:
 
     bool const operator == (SVector3Reference const & v) const
     {
-        return (::equals(X, v.X) && ::equals(Y, v.Y) && ::equals(Z, v.Z));
+        return equals(v);
+    }
+
+	bool const operator != (SVector3Reference const & v) const
+    {
+        return ! equals(v);
     }
 
 	bool const equals(SVector3Reference const & v, float const Epsilon = RoundingError32) const

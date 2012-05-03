@@ -11,6 +11,7 @@ class CPlayerView {
       ISceneObject *SceneObject; //Contains the next 4 things listed here
       CCollisionActor *PhysicsEngineObject;
 
+      ISceneObject *CabbageSceneObject;
       ISceneObject *NormalCabbageContainer, *HurtCabbageContainer; //Contain all of the cabbage meshes
       CMeshSceneObject *ShadowLeft, *ShadowRight;
 
@@ -24,16 +25,26 @@ class CPlayerView {
       CElementPlayer::EAction & Action;
       SRect2 & Area;
       float LeftShadowCutoffValue, LeftShadowStartValue, RightShadowCutoffValue, RightShadowStartValue;
+      float yLeftShadow, yRightShadow, cutOffPoint;
       float ySineValue;
+
       SVector3 & ShakeFactor;
 
+	  SVector3 CurrentCameraPosition, TargetCameraPosition;
+
+	  void updateCameraPosition(float const ElapsedTime);
+
    public:
+      void setCabbageScale(SVector3);
+      void setCutoffPoint(SRect2 left, SRect2 right);
+      void setShadowHeights(float, float);
       void addLeaf();
       void removeLeaf();
       void setHurt(bool);
       void setVisible(bool);
       void updateView(float time);
       void translateCabbage(float time);
+      ISceneObject & getCabbageSceneObject();
       CPlayerView(ISceneObject *, CElementPlayer::EDirection &, CElementPlayer::EAction &, int, SRect2 &, SVector3 & sf, CCollisionActor *);
 };
 

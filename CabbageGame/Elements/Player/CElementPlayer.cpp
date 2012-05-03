@@ -70,7 +70,7 @@ void CElementPlayer::checkAbilityKeypress() {
    if(Stats.Energy <= 0)
       return;
    usedAbility.clear();
-   for(int i = 0; i < Abilities.size(); i++) {
+   for(unsigned int i = 0; i < Abilities.size(); i++) {
       usedAbility[Abilities[i]->getType()] = i;
    }
    /* Shield */
@@ -98,7 +98,7 @@ void CElementPlayer::checkAbilityKeypress() {
 
 void CElementPlayer::updateAbilities(float time) {
    std::vector<CPlayerAbility *> AbilityKillList;
-   for(int i = 0; i < Abilities.size(); i++) {
+   for(unsigned int i = 0; i < Abilities.size(); i++) {
       Abilities[i]->updateTime(time);
       Abilities[i]->inUpdatePhysicsEngineObject(time);
       Abilities[i]->inUpdateSceneObject(time);
@@ -106,7 +106,7 @@ void CElementPlayer::updateAbilities(float time) {
          AbilityKillList.push_back(Abilities[i]);
       }
    }
-   for(int i = 0; i < AbilityKillList.size(); i++) {
+   for(unsigned int i = 0; i < AbilityKillList.size(); i++) {
       Abilities.erase(std::remove(Abilities.begin(), Abilities.end(), AbilityKillList[i]), Abilities.end());
       delete AbilityKillList[i];
    }
@@ -137,17 +137,25 @@ void CElementPlayer::updateSceneObject(float time) {
          ShakeFactor = SVector3(0.0f);
       }
    }
-   updateAbilities(time);
 
+   SVector2 leftOfPlayer = SVector2(Area.Position.X, Area.getCenter().Y);
+   SVector2 rightOfPlayer = SVector2(Area.Position.X + Area.Size.X, Area.getCenter().Y);
+   CCollisionObject *l, *r;
+   l = Level.getPhysicsEngine().getObjectBelow(leftOfPlayer);
+   r = Level.getPhysicsEngine().getObjectBelow(rightOfPlayer);
+
+   View->setShadowHeights(Level.getPhysicsEngine().getHeightBelow(leftOfPlayer), Level.getPhysicsEngine().getHeightBelow(rightOfPlayer));
+   // If the cabbage is hanging over an edge, there might not be an object below it, so this check is necessary
+   View->setCutoffPoint(l?l->getArea():SRect2(-50.0f, -50.0f, 0.0f, 0.0f),r?r->getArea():SRect2(-50.0f, -50.0f, 0.0f, 0.0f));
+
+   updateAbilities(time);
    if (Victory)
       playLevelVictory(time);
    else {
       View->updateView(time);
-
       Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
+      View->setCabbageScale(SVector3(Scale.X, Scale.X, Scale.Y));
    }
-
-   SceneObject->setScale(SVector3(Scale.X, Scale.X, Scale.Y));
 
 }
 
@@ -156,7 +164,7 @@ Cabbage::PlayerInformation & CElementPlayer::getStats() {
 }
 
 void CElementPlayer::OnCollision(CCollideable *Object) {
-   for(int i = 0; i < Abilities.size(); i++) {
+   for(unsigned int i = 0; i < Abilities.size(); i++) {
       Abilities[i]->inOnCollision(Object);
    }
    return;
@@ -270,7 +278,7 @@ void CElementPlayer::setAllowMovement(bool value) {
 }
 
 void CElementPlayer::playLevelVictory(float time) {
-   SVector3 curRotation = SceneObject->getRotation();
+   SVector3 curRotation = View->getCabbageSceneObject().getRotation();
    SVector2 curLocation = SVector2 (Area.getCenter().X - .5f, Area.getCenter().Y - .5f);
 
    printf("curRotation: %f\n", curRotation.X);
@@ -311,7 +319,7 @@ void CElementPlayer::playLevelVictory(float time) {
    else if (VictoryTime > 1.5f && VictoryTime < 2.5f) {
       Action = Jumping;
       PhysicsEngineObject->setJumping(true);
-      SceneObject->setRotation(SVector3(curRotation.X + 720.f*time, 0.f, 80.f));
+      View->getCabbageSceneObject().setRotation(SVector3(curRotation.X + 720.f*time, 0.f, 80.f));
    }
    else if (VictoryTime > 2.5f && VictoryTime < 2.9f) {
       Action = Standing;
@@ -323,7 +331,7 @@ void CElementPlayer::playLevelVictory(float time) {
       Action = Jumping;
       PhysicsEngineObject->setJumping(true);
 
-      SceneObject->setRotation(SVector3(curRotation.X - 360.f*time, 0.f, 80.f));
+      View->getCabbageSceneObject().setRotation(SVector3(curRotation.X - 360.f*time, 0.f, 80.f));
       PhysicsEngineObject->setArea(SRect2(Area.Position.X - 3.f*time, Area.Position.Y, 1.f, 1.f));
    }
 
@@ -332,7 +340,7 @@ void CElementPlayer::playLevelVictory(float time) {
       PhysicsEngineObject->setJumping(false);
    }
    else if (VictoryTime > 3.9f && VictoryTime < 4.9f) {
-      SceneObject->setRotation(SVector3(curRotation.X, 0.f, curRotation.Z - 765.f*time));
+      View->getCabbageSceneObject().setRotation(SVector3(curRotation.X, 0.f, curRotation.Z - 765.f*time));
       PhysicsEngineObject->setArea(SRect2(Area.Position.X - 3.f*time, Area.Position.Y, 1.f, 1.f));
    }
    else if (VictoryTime > 4.9f && VictoryTime < 6.4f) {
@@ -364,7 +372,7 @@ void CElementPlayer::playLevelVictory(float time) {
       CApplication::get().getSceneManager().getActiveCamera()->setPosition(SVector3(Area.getCenter().X, Area.getCenter().Y + 1.3f, 10) + ShakeFactor);
    }
 
-   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
+   View->getCabbageSceneObject().setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
 
    VictoryTime += time;
 }

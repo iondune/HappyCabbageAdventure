@@ -10,7 +10,7 @@ void CBiggerBlock::addToEngine(CCollisionEngine *Engine) {
    block->setCollisionResponder(NULL);
    block->setArea(SRect2(x, y, w, h));
    block->setDepth(z);
-   block->setElement(new CElementBlock(SRect2(x, y, w, h), z, 3));
+   block->setElement(new CElementBlock(SRect2(x, y, w, h), (int) z, 3));
 }
 
 bool sortXY (CBiggerBlock* a, CBiggerBlock* b) {
