@@ -36,3 +36,16 @@ void CGameState::end() {
 CGameLevel & CGameState::getCurrentLevel() {
    return *Level;
 }
+
+#include "../StateOverworld/COverworldState.h"
+void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
+{
+   if(Event.Pressed ){
+      if(Event.Key == SDLK_ESCAPE) {
+         COverworldState::get().levelCompleted = false;
+         CApplication::get().getStateManager().setState(new CFadeOutState(& COverworldState::get()));
+      }
+   }
+   else  {
+   }
+}

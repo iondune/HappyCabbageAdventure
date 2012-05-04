@@ -19,6 +19,7 @@ class CGameState : public CState<CGameState> {
       void OnRenderStart(float const Elapsed);
       void OnRenderEnd(float const Elapsed);
       void end();
+      void OnKeyboardEvent(SKeyboardEvent const & Event);
       CGameLevel & getCurrentLevel();
 };
 #endif
