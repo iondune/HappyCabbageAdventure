@@ -272,10 +272,12 @@ void CMainMenuState::OnWidgetHover(CGUIWidget * Widget)
 void CMainMenuState::OnWidgetUnHover(CGUIWidget * Widget)
 {}
 
+#include "../CabbageGame/CabbageGameInformation.h"
 void CMainMenuState::OnWidgetClick(CGUIWidget * Widget)
 {
    if(Widget == StartGame) {
       COverworldState::get().newGame = true;
+      COverworldState::get().Stats = Cabbage::PlayerInformation();
       CApplication::get().getStateManager().setState(new CFadeOutState(& COverworldState::get(), 0.3f));
       //CGameplayManager::setLives(3);
       //printf("NumLives: %d\n", CGameplayManager::getNumLives());

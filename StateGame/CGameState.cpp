@@ -8,6 +8,7 @@ CGameState::CGameState() {
 void CGameState::begin() {
    printf("Here in begin\n");
    Level = &CGameLevelLoader::loadLevel(LevelName);
+   Level->setPlayerInformation(Stats);
 
    GameplayManager = new CGameplayManager(*Level);
    DecorManager = new CDecorManager(*Level);
@@ -30,7 +31,8 @@ void CGameState::OnRenderEnd(float const Elapsed) {
 }
 
 void CGameState::end() {
-
+   CApplication::get().getSceneManager().setDeferred(false);
+   CApplication::get().getSceneManager().removeAllSceneObjects();
 }
 
 CGameLevel & CGameState::getCurrentLevel() {
@@ -38,11 +40,13 @@ CGameLevel & CGameState::getCurrentLevel() {
 }
 
 #include "../StateOverworld/COverworldState.h"
+#include "../CabbageGame/Elements/Player/CElementPlayer.h"
 void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
    if(Event.Pressed ){
       if(Event.Key == SDLK_ESCAPE) {
          COverworldState::get().levelCompleted = false;
+         COverworldState::get().NewStats = Level->getPlayer().getStats();
          CApplication::get().getStateManager().setState(new CFadeOutState(& COverworldState::get()));
       }
    }

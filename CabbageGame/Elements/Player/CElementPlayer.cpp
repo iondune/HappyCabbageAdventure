@@ -2,6 +2,7 @@
 #include "CGameLevel.h"
 #include "CPlayerView.h"
 #include "CElementPlayer.h"
+#include "CPlayerAbility.h"
 
 CElementPlayer::CElementPlayer(SRect2 nArea, bool useCamera)
 : CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f), Shaking(0.0f), ShakeFactor(SVector3(0.0f)),
@@ -445,6 +446,7 @@ void CElementPlayer::playLevelVictory(float time) {
    else if(VictoryTime >= 7.3f)
    {
       COverworldState::get().levelCompleted = true;
+      COverworldState::get().Stats = Stats;
       CApplication::get().getStateManager().setState(new CFadeOutState(& COverworldState::get()));
    }
 

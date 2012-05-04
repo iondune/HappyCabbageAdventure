@@ -195,3 +195,8 @@ void CGameLevel::setupSoundtrack() {
       temp = MusicDirectory + "smb2_cherry.wav";
       projectile = Mix_LoadWAV(temp.c_str());
 }
+
+void CGameLevel::setPlayerInformation(Cabbage::PlayerInformation info) {
+   if(PlayerElement)
+      PlayerElement->setStats(info);
+}

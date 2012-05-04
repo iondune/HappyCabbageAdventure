@@ -14,6 +14,7 @@ class CElementBlockFlag;
 #include "CBiggerBlock.h"
 #include "CGameLevelLoader.h"
 #include "sound.h"
+#include "CabbageGameInformation.h"
 
 class CGameLevel {
    friend CGameLevel & CGameLevelLoader::loadLevel(std::string, bool);
@@ -75,6 +76,7 @@ class CGameLevel {
       Mix_Music* getSoundtrack();
 
       CElementPlayer & getPlayer();
+      void setPlayerInformation(Cabbage::PlayerInformation info);
       CCollisionEngine & getPhysicsEngine();
       void setPhysicsEngine(CCollisionEngine *p);
 
