@@ -146,6 +146,8 @@ void CElementEnemyOrange::updateSceneObject(float time) {
       SceneObject->setScale(SVector3(-Scale.X,Scale.X,Scale.Y));
    else if(PhysicsEngineObject->getVelocity().X > 0.01f)
       SceneObject->setScale(SVector3(Scale.X,Scale.X,Scale.Y));
+   else
+      SceneObject->setScale(SVector3(1.0f));
 }
 
 void CElementEnemyOrange::printInformation() {

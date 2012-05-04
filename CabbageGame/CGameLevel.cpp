@@ -25,7 +25,7 @@ bool CGameLevel::shouldRender() {
    return Render;
 }
 
-CGameLevel::CGameLevel() : Loaded(false), Render(true), XmlCount(0), PlayerElement(NULL), PhysicsEngine(NULL) {
+CGameLevel::CGameLevel() : Loaded(false), Render(true), XmlCount(0), PlayerElement(NULL), PhysicsEngine(NULL), night(false), env(0), numBlocks(0) {
 
 }
 
