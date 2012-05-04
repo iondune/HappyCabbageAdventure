@@ -1,4 +1,5 @@
 OBJECT_FILES=`find | grep '\.o$$' | sed "/sdlmixer/d"`
+CABBAGE_GAME_DEPENDENCY_FILES=./CabbageGame/.dependencies
 
 all: build-Sound build-CabbageFramework build-CabbageParticles build-CabbageScene build-CabbageCore build-CabbageCollider build-base build-CabbageGUI build-CabbageGame build-StateGame build-CLWIB build-MainMenu build-Overworld
 
@@ -51,6 +52,7 @@ build-CabbageParticles:
 	
 clean:
 	rm -f $(OBJECT_FILES)
+	rm -rf $(CABBAGE_GAME_DEPENDENCY_FILES)
 	rm -f Base/cabbage DemoCabbageCollider/CabbageColliderDemo DemoMeshLoader/MeshLoaderDemo
 	rm -f lib/libCLWIB.a lib/libCabbageCollider.a lib/libCabbageFramework.a lib/libCabbageParticles.a lib/libCabbageScene.a lib/libCabbageSound.a lib/libOverworldState.a lib/libCabbageGUI.a lib/libCabbageCore.a lib/libCabbageGame.a lib/libStateGame.a
 
