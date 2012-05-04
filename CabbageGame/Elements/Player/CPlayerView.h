@@ -31,7 +31,7 @@ class CPlayerView {
 
       SVector3 & ShakeFactor;
 
-	  SVector2 CurrentCameraPosition, TargetCameraPosition, CameraVelocity;
+	  SVector2 CurrentCameraPosition, TargetCameraPosition;
 
 	  void updateCameraPosition(float const ElapsedTime);
 
