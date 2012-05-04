@@ -20,7 +20,42 @@ void CElementEnemyOrange::setupPhysicsEngineObject() {
    PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
    PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_ORANGE;
 }
+void CElementEnemyOrange::setupSceneObject() {
+   SceneObject = new CMeshSceneObject();
+   CMesh *mesh;
 
+   if (Level.getEnvironment() == 0) {
+      mesh = CMeshLoader::load3dsMesh("Base/orange.3ds");
+   }
+
+   else if (Level.getEnvironment() == 1) {
+      mesh = CMeshLoader::load3dsMesh("Base/desertorange.3ds");
+   }
+   //LevelEditor has no environment
+   else
+      mesh = CMeshLoader::load3dsMesh("Base/orange.3ds");
+
+   if(mesh) {
+      mesh->resizeMesh(SVector3(1));
+      mesh->centerMeshByExtents(SVector3(0));
+      mesh->calculateNormalsPerFace();
+   }
+
+   else
+      printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
+
+   SceneObject->setMesh(mesh);
+   SceneObject->setTexture("Base/orange.bmp");
+   SceneObject->setShader(ERP_DEFAULT, "Toon");
+   SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
+   SceneObject->setTranslation(SVector3((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y-1))/2, 0));
+   SceneObject->setScale(SVector3(Area.Size.X, Area.Size.X, Area.Size.Y));
+   SceneObject->setRotation(SVector3(-90, 0, 0));
+
+   CApplication::get().getSceneManager().addSceneObject(SceneObject);
+}
+
+/*
 void CElementEnemyOrange::setupSceneObject() {
    SceneObject = new CMeshSceneObject();
    CMesh *mesh;
@@ -53,6 +88,7 @@ void CElementEnemyOrange::setupSceneObject() {
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
+*/
 
 /*
 void CElementEnemyOrange::OnCollision(CCollideable *Object) {

@@ -762,8 +762,9 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
         type = 10;
    else if (type == 9)
         type = 12;
-   placeables.push_back(tempPlaceable = CEnemyLoader::LoadEnemy(SRect2(x, y, 1, 1),(Enemies::EEnemyType) type));
+   placeables.push_back(tempPlaceable = CEnemyLoader::LoadEnemy(SRect2(x, y, (float)1, (float)1),(Enemies::EEnemyType) type));
    tempPlaceable->setupObjects(); 
+   tempPlaceable->printInformation();
 
    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
    blockMap[(int)x+25][(int)(y-0.5+25)].r = tempPlaceable;
