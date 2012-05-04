@@ -17,9 +17,16 @@ namespace Cabbage {
          int MaxEnergy;
          int Lives;
          int Seeds;
+         std::set<Abilities::EAbilityType> AvailableAbilities;
+         bool canUseAbility(Abilities::EAbilityType type) {
+            return (AvailableAbilities.find(type) != AvailableAbilities.end());
+         }
 
          PlayerInformation() : Health(5), MaxHealth(5), Energy(100), MaxEnergy(100),
          Lives(3), Seeds(0) {
+            //Available abilities by default
+            AvailableAbilities.insert(Abilities::LASER);
+            AvailableAbilities.insert(Abilities::SHIELD);
          }
    };
 
@@ -122,6 +129,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       //Keyboard event functions
       void OnKeyboardEvent(SKeyboardEvent const & Event);
       Cabbage::PlayerInformation & getStats();
+      void setCanUseAbility(Abilities::EAbilityType t);
+      void setStats(Cabbage::PlayerInformation st);
 };
-
 #endif

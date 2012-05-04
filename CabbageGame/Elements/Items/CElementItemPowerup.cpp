@@ -72,6 +72,7 @@ void CElementItemPowerup::writeXML(xmlwriter *l) {
 
 void CElementItemPowerup::OnCollision(CCollideable *Object) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
+      Level.getPlayer().setCanUseAbility(Type);
       removeFromGame();
       Dead = true;
    }

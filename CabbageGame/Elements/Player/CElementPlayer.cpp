@@ -13,6 +13,14 @@ CElementPlayer::CElementPlayer(SRect2 nArea, bool useCamera)
 #include "CApplication.h"
 #include "CPlayerAbilityDash.h"
 
+void CElementPlayer::setCanUseAbility(Abilities::EAbilityType t) {
+   Stats.AvailableAbilities.insert(t);
+}
+
+void CElementPlayer::setStats(Cabbage::PlayerInformation st) {
+   Stats = st;
+}
+
 void CElementPlayer::updatePlayerAction() {
    if(Victory)
       return;
@@ -23,34 +31,38 @@ void CElementPlayer::updatePlayerAction() {
       return;
    }
    if(CApplication::get().getEventManager().IsKeyDown[SDLK_a]) {
-      if(Action == Standing) {
-         if(MoveKeyDelay > 0.0f) {
-            if(!used(Abilities::DASH)) {
-               Abilities.push_back(new CPlayerAbilityDash(*this));
+      if(Stats.canUseAbility(Abilities::DASH)) {
+         if(Action == Standing) {
+            if(MoveKeyDelay > 0.0f) {
+               if(!used(Abilities::DASH)) {
+                  Abilities.push_back(new CPlayerAbilityDash(*this));
+               }
             }
+            else
+               MoveKeyDelay = 0.3f;
          }
-         else
-            MoveKeyDelay = 0.3f;
-      }
-      else if(MoveKeyDelay <= 0.0f) {
-         MoveKeyDelay = 0.0f;
+         else if(MoveKeyDelay <= 0.0f) {
+            MoveKeyDelay = 0.0f;
+         }
       }
       Direction = Left;
       Action = Walking;
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
    }
    else if(CApplication::get().getEventManager().IsKeyDown[SDLK_d]) {
-      if(Action == Standing) {
-         if(MoveKeyDelay > 0.0f) {
-            if(!used(Abilities::DASH)) {
-               Abilities.push_back(new CPlayerAbilityDash(*this));
+      if(Stats.canUseAbility(Abilities::DASH)) {
+         if(Action == Standing) {
+            if(MoveKeyDelay > 0.0f) {
+               if(!used(Abilities::DASH)) {
+                  Abilities.push_back(new CPlayerAbilityDash(*this));
+               }
             }
+            else
+               MoveKeyDelay = 0.3f;
          }
-         else
-            MoveKeyDelay = 0.3f;
-      }
-      else if(MoveKeyDelay <= 0.0f) {
-         MoveKeyDelay = 0.0f;
+         else if(MoveKeyDelay <= 0.0f) {
+            MoveKeyDelay = 0.0f;
+         }
       }
       Direction = Right;
       Action = Walking;
@@ -85,6 +97,7 @@ bool CElementPlayer::used(Abilities::EAbilityType a) {
    return (usedAbility.find(a) != usedAbility.end());
 }
 
+
 //Only works for single-use abilities
 CPlayerAbility *CElementPlayer::getAbility(Abilities::EAbilityType a) {
    if(usedAbility.find(a) == usedAbility.end())
@@ -100,33 +113,39 @@ void CElementPlayer::checkAbilityKeypress() {
       usedAbility[Abilities[i]->getType()] = i;
    }
    /* Laser */
-   if(!used(Abilities::LASER)) {
-      if(CApplication::get().getEventManager().IsKeyDown[SDLK_l]) {
-         Abilities.push_back(new CPlayerAbilityLaser(*this));
+   if(Stats.canUseAbility(Abilities::LASER)) {
+      if(!used(Abilities::LASER)) {
+         if(CApplication::get().getEventManager().IsKeyDown[SDLK_l]) {
+            Abilities.push_back(new CPlayerAbilityLaser(*this));
+         }
+      }
+      else {
+         getAbility(Abilities::LASER)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_l]);
       }
    }
-   else {
-      getAbility(Abilities::LASER)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_l]);
-   }
-   if(Stats.Energy <= 0)
-      return;
    /* Shield */
-   if(!used(Abilities::SHIELD)) {
-      if(CApplication::get().getEventManager().IsKeyDown[SDLK_k]) {
-         Abilities.push_back(new CPlayerAbilityShield(*this));
+   if(Stats.canUseAbility(Abilities::SHIELD) && Stats.Energy > 0) {
+      if(!used(Abilities::SHIELD)) {
+         if(CApplication::get().getEventManager().IsKeyDown[SDLK_k]) {
+            Abilities.push_back(new CPlayerAbilityShield(*this));
+         }
       }
-   }
-   else {
-      getAbility(Abilities::SHIELD)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_k]);
+      else {
+         getAbility(Abilities::SHIELD)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_k]);
+      }
    }
    /* Dash */
-   if(!used(Abilities::DASH)) {
+   if(Stats.canUseAbility(Abilities::DASH)) {
+      if(!used(Abilities::DASH)) {
+      }
+      else {
+         getAbility(Abilities::DASH)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_a] || CApplication::get().getEventManager().IsKeyDown[SDLK_d]);
+      }
    }
-   else {
-      getAbility(Abilities::DASH)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_a] || CApplication::get().getEventManager().IsKeyDown[SDLK_d]);
-   }
-   if(!used(Abilities::BLINK) && CApplication::get().getEventManager().IsKeyDown[SDLK_e]) {
-      Abilities.push_back(new CPlayerAbilityBlink(*this));
+   if(Stats.canUseAbility(Abilities::BLINK)) {
+      if(!used(Abilities::BLINK) && CApplication::get().getEventManager().IsKeyDown[SDLK_e]) {
+         Abilities.push_back(new CPlayerAbilityBlink(*this));
+      }
    }
 }
 
