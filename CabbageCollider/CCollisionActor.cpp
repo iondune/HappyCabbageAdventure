@@ -136,10 +136,21 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 
 void CCollisionActor::onStanding(CCollideable * Object)
 {
+	// Keep reference to object being stood on
 	Standing = Object;
+
+	// Cancel gravity acceleration
 	FallAcceleration = 0;
+
+	// Stop downwards movement (from impulse, etc.)
 	Velocity.Y = std::max(Velocity.Y, (CollisionReal) 0);
-	Area.Position.Y = Object->getArea().otherCorner().Y;
+
+
+	// Adjust to surface below
+	static float const MaxStandingAdjustThreshold = 0.1f;
+
+	if (abs(Area.Position.Y - Object->getArea().otherCorner().Y) < MaxStandingAdjustThreshold)
+		Area.Position.Y = Object->getArea().otherCorner().Y;
 }
 
 bool CCollisionActor::collidesWith(CCollisionObject * Object) const
