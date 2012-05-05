@@ -153,11 +153,6 @@ void CCollisionActor::onStanding(CCollideable * Object)
 		Area.Position.Y = Object->getArea().otherCorner().Y;
 }
 
-bool CCollisionActor::collidesWith(CCollisionObject * Object) const
-{
-	return Area.intersects(Object->getArea());
-}
-
 bool CCollisionActor::isAbove(CCollisionObject * Object, float & height) const
 {
 	if (Area.getCenter().Y < Object->getArea().otherCorner().Y)

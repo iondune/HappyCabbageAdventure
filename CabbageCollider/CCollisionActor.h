@@ -144,7 +144,6 @@ public:
 	SVec2 LastPosition, Movement;
 	int checkCollision(CCollideable * Object, CollisionReal const TickTime);
 	float Gravity;
-	bool collidesWith(CCollisionObject * Object) const;
 	bool isAbove(CCollisionObject * Object, float & height) const;
 
 	//! See Standing

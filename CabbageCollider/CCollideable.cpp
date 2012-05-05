@@ -75,12 +75,17 @@ void CCollideable::setCollisionMask(unsigned int const mask)
 	CollisionMask = mask;
 }
 
-unsigned int const CCollideable::getCollisionType() const
+int const CCollideable::getCollisionType() const
 {
 	return CollisionType;
 }
 
-unsigned int const CCollideable::getCollisionMask() const
+int const CCollideable::getCollisionMask() const
 {
 	return CollisionMask;
+}
+
+bool const CCollideable::collidesWith(CCollideable * Object) const
+{
+	return Area.intersects(Object->getArea());
 }

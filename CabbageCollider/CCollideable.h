@@ -58,8 +58,8 @@ protected:
 
 	float VisualDepth;
 
-	unsigned int CollisionType;
-	unsigned int CollisionMask;
+	int CollisionType;
+	int CollisionMask;
 
 public:
 
@@ -79,8 +79,10 @@ public:
 	void setCollisionType(unsigned int const type);
 	void setCollisionMask(unsigned int const mask);
 
-	unsigned int const getCollisionType() const;
-	unsigned int const getCollisionMask() const;
+	int const getCollisionType() const;
+	int const getCollisionMask() const;
+
+	bool const collidesWith(CCollideable * Object) const;
 
 };
 
