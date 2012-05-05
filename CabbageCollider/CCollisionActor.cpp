@@ -167,14 +167,26 @@ bool CCollisionActor::getControlFall()
 
 void CCollisionActor::updateVectors(CollisionReal const TickTime)
 {
-	AllowedMovement = false;
+	// Manage jumping action
+	if (Jumping || Standing) // Can't start jumping unless we are standing
+	{
+		if (! Jumping && WantsToJump)
+			JumpTimer = Attributes.JumpLength; // Start jumping
 
+		Jumping = WantsToJump;
+	}
+
+	// zero-gravity hack (FIX)
 	if (ControlFall)
 		FallAcceleration -= Gravity * TickTime;
 
-	CollisionReal MaxVelocity = Attributes.MaxWalk * (Standing ? 1.f : Attributes.AirSpeedFactor);
-	bool Moving = false;
 
+	// Walking/Running movement update
+
+	// Determine maximum walking velocity
+	CollisionReal MaxVelocity = Attributes.MaxWalk * (Standing ? 1.f : Attributes.AirSpeedFactor);
+
+	bool Moving = false;
 	if (Action == EActionType::MoveLeft)
 	{
 		if (Velocity.X > -MaxVelocity)
@@ -199,6 +211,7 @@ void CCollisionActor::updateVectors(CollisionReal const TickTime)
 	{
 	}
 
+	// Friction when not moving
 	if (! Moving)
 	{
 		if (Standing)
@@ -208,6 +221,7 @@ void CCollisionActor::updateVectors(CollisionReal const TickTime)
 	}
 
 
+	// Perform jump
 	if (Jumping)
 	{
 		if (JumpTimer > 0)
@@ -220,6 +234,7 @@ void CCollisionActor::updateVectors(CollisionReal const TickTime)
 			Jumping = false;
 	}
 
+	// Perform impulse
 	if (Impulse)
 	{
 		if (ImpulseTimer > 0)
@@ -232,11 +247,18 @@ void CCollisionActor::updateVectors(CollisionReal const TickTime)
 			Impulse = false;
 	}
 
+	// Add velocity from gravity
 	Velocity.Y += FallAcceleration * TickTime;
 
+	// Keep track of whether a collision-movement was allowed
+	AllowedMovement = false;
+	// Keep track of whether actor is standing on a surface
 	Standing = false;
 
+	// Keep track of last position for movement reversal
 	LastPosition = Area.Position;
+
+	// Perform test movement
 	Movement = Velocity * TickTime;
 	Area.Position += Movement;
 }
@@ -246,30 +268,7 @@ void CCollisionActor::pushIfCollided(CCollisionObject * Object, SVec2 const Move
 	if (! collidesWith(Object) && Object != Standing)
 		return;
 	
-	if (Movement.X != 0 || Movement.Y != 0)
-	{
-		//std::cout << "Movement of " << Movement.X << ", " << Movement.Y << std::endl;
-		//std::cout << "Applied to " << Area.Position.X << ", " << Area.Position.Y << std::endl;
-	}
-
 	Area.Position += Movement;
-
-	if (Movement.X != 0 || Movement.Y != 0)
-	{
-		//std::cout << "Is " << Area.Position.X << ", " << Area.Position.Y << std::endl;
-	}
-
-	/*for (int i = 0; i < 2; ++ i)
-	{
-	if (Movement[i] > 0)
-	{
-	Area.Position[i] += Object->getArea().otherCorner()[i] - Area.Position[i];
-	}
-	else if (Movement[i] < 0)
-	{
-	Area.Position[i] -= Area.otherCorner()[i] - Object->getArea().Position[i];
-	}
-	}*/
 }
 
 bool const CCollisionActor::isStanding() const
@@ -302,29 +301,19 @@ void CCollisionActor::setAction(EActionType const & action)
 	Action = action;
 }
 
-bool CCollisionActor::isJumping()
+bool const CCollisionActor::isJumping() const
 {
 	return Jumping;
 }
 
-CCollisionActor::EActionType CCollisionActor::getAction() {
+CCollisionActor::EActionType const CCollisionActor::getAction() const
+{
 	return Action;
 }
 
 void CCollisionActor::setJumping(bool const jumping)
 {
-	if (! Jumping && ! Standing)
-		return; // Can't start jumping unless we are standing
-
-	if (! Jumping && jumping)
-		JumpTimer = Attributes.JumpLength; // Start jumping
-
-	Jumping = jumping;
-	/*if (Standing && ! Jumping)
-	{
-	JumpTimer = Attributes.JumpLength;
-	Jumping = true;
-	}*/
+	WantsToJump = jumping;
 }
 
 void CCollisionActor::setControlFall(bool const fall)

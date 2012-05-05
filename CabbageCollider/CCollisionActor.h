@@ -116,6 +116,7 @@ protected:
 
 	//! True while this object is in the middle of a jump
 	bool Jumping;
+	bool WantsToJump;
 
 	//! ?
 	bool ControlFall;
@@ -161,10 +162,10 @@ public:
 
 	// Action control
 	void setAction(EActionType const & action);
-	EActionType getAction();
+	EActionType const getAction() const;
 
 	//! see Jumping
-	bool isJumping();
+	bool const isJumping() const;
 	//! Used to set jumping action
 	void setJumping(bool const jumping);
 
