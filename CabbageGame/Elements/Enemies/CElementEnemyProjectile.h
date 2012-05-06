@@ -4,10 +4,17 @@
 #include "CElementPlayer.h"
 #include "CElementEnemy.h"
 
+namespace Projectile {
+   enum EDirection {
+      LEFT, RIGHT
+   };
+}
+
 class CElementEnemyProjectile : public CElementEnemy {
    public:
 
    protected:
+      Projectile::EDirection Direction;
 
    public:
       virtual void OnCollision(CCollideable *Object);
@@ -18,6 +25,8 @@ class CElementEnemyProjectile : public CElementEnemy {
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);
       void reactToAbility(Abilities::EAbilityType Type);
+
+      void setDirection (Projectile::EDirection direction);
 
       CElementEnemyProjectile(SRect2 nArea, Enemies::EEnemyType type);
 

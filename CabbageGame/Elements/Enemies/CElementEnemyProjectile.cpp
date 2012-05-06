@@ -53,3 +53,7 @@ void CElementEnemyProjectile::reactToAbility(Abilities::EAbilityType Type) {
       break;
    }
 }
+
+void CElementEnemyProjectile::setDirection(Projectile::EDirection direction) {
+   Direction = direction;
+}
