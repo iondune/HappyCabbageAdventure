@@ -27,5 +27,15 @@
 </CBlock>
 <CCabbage X ="-25" Y ="0" height ="1" width ="1" isMoving ="0">
 </CCabbage>
-<CEnemy X ="-20" Y ="8" height ="1" width ="1" type ="14">
+<CEnemy X ="-20" Y ="8" height ="1" width ="1" type ="14"><CBlock X ="-26" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-27" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-28" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-29" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-30" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-31" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-32" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-33" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-34" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-35" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
+<CBlock X ="-36" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CEnemy>
