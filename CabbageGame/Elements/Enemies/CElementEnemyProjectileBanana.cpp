@@ -79,11 +79,11 @@ void CElementEnemyProjectileBanana::updatePhysicsEngineObject(float time) {
    printf("SinValue: %f\n", SinValue);
 
    if (Direction == Projectile::LEFT) { //go left
-      PhysicsEngineObject->setVelocity(SVector2(-5.0f*cos(CosValue), 2.50f*sin(SinValue)));
+      PhysicsEngineObject->setVelocity(SVector2(-5.0f*cos(CosValue), 2.5f*sin(SinValue)));
    }
    
    else { //go right
-      PhysicsEngineObject->setVelocity(SVector2(5.f*cos(CosValue), 2.50f*sin(SinValue)));
+      PhysicsEngineObject->setVelocity(SVector2(5.f*cos(CosValue), 2.5f*sin(SinValue)));
    }
 
    SinValue += time;
