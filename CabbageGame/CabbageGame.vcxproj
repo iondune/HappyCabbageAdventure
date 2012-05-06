@@ -132,6 +132,7 @@
     <ClInclude Include="Elements\Items\CElementItemEnergy.h" />
     <ClInclude Include="Elements\Items\CElementItemHealth.h" />
     <ClInclude Include="Elements\Items\CElementItemLife.h" />
+    <ClInclude Include="Elements\Items\CElementItemPowerup.h" />
     <ClInclude Include="Elements\Items\CElementItemSeed.h" />
     <ClInclude Include="Elements\Player\CElementPlayer.h" />
     <ClInclude Include="Elements\Player\CPlayerAbility.h" />
@@ -177,6 +178,7 @@
     <ClCompile Include="Elements\Items\CElementItemEnergy.cpp" />
     <ClCompile Include="Elements\Items\CElementItemHealth.cpp" />
     <ClCompile Include="Elements\Items\CElementItemLife.cpp" />
+    <ClCompile Include="Elements\Items\CElementItemPowerup.cpp" />
     <ClCompile Include="Elements\Items\CElementItemSeed.cpp" />
     <ClCompile Include="Elements\Player\CElementPlayer.cpp" />
     <ClCompile Include="Elements\Player\CPlayerAbility.cpp" />

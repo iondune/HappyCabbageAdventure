@@ -25,7 +25,7 @@ bool CGameLevel::shouldRender() {
    return Render;
 }
 
-CGameLevel::CGameLevel() : Loaded(false), Render(true), XmlCount(0), PlayerElement(NULL), PhysicsEngine(NULL) {
+CGameLevel::CGameLevel() : Loaded(false), Render(true), XmlCount(0), PlayerElement(NULL), PhysicsEngine(NULL), night(false), env(0), numBlocks(0) {
 
 }
 
@@ -95,6 +95,8 @@ std::vector<CBiggerBlock*> & CGameLevel::getConsolidatedBlocks() {
 }
 
 CElementPlayer & CGameLevel::getPlayer() {
+   if(PlayerElement == NULL)
+      PlayerElement = new CElementPlayer(SRect2(-100, 0, 1, 1));
    return *PlayerElement;
 }
 
@@ -192,4 +194,9 @@ void CGameLevel::setupSoundtrack() {
 
       temp = MusicDirectory + "smb2_cherry.wav";
       projectile = Mix_LoadWAV(temp.c_str());
+}
+
+void CGameLevel::setPlayerInformation(Cabbage::PlayerInformation info) {
+   if(PlayerElement)
+      PlayerElement->setStats(info);
 }

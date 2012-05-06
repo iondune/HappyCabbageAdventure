@@ -34,11 +34,6 @@ int main(int argc, char * argv[])
    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
    CStateManager & StateManager = Application.getStateManager();
-   if(argc > 1)
-      CGameState::get().LevelName = argv[1];
-   else
-      CGameState::get().LevelName = "jorge1.xml";
-
    //StateManager.setState(& CGameState::get());
    StateManager.setState(& CMainMenuState::get());
 

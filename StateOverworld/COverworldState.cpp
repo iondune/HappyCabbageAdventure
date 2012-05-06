@@ -1,5 +1,7 @@
 #include "COverworldState.h"
 #include "../CabbageSound/sound.h"
+#include "CGameState.h"
+#include "CMainMenuState.h"
 
 
 COverworldState::COverworldState()
@@ -37,12 +39,17 @@ void COverworldState::begin()
    {
       printf("Completed level %d\n", curNode);
       levels[curNode].completed = true;
-
    }
    else if(!levelCompleted)
    {
       printf("Level failed\n");
-
+      if(NewStats.Lives <= 0) {
+         printf("Game over\n");
+      }
+      else {
+         Stats.Lives = NewStats.Lives;
+         Stats.Seeds = NewStats.Seeds;
+      }
    }
 
    //testFun();
@@ -237,6 +244,9 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_SPACE && transitionTimer == 0.0f) {
          CGameState::get().LevelName = levels[curNode].name;
+         CGameState::get().Stats = Stats; 
+         Stats.Health = Stats.MaxHealth;
+         Stats.Energy = Stats.MaxEnergy;
          Application.getStateManager().setState(new CFadeOutState(& CGameState::get()));
          spaceDown = 1;
       }

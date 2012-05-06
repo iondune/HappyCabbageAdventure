@@ -6,10 +6,7 @@
 
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
-#include "../StateGame/CGameState.h"
-//#include "CMainMenuState.h"
-
-#include "../StateMainMenu/CMainMenuState.h"
+#include "../CabbageGame/CabbageGameInformation.h"
 
 #define NUM_LEVELS 7
 #define NUM_CAMERAS 3
@@ -69,6 +66,7 @@ class COverworldState : public CState<COverworldState>
 
    public:
 
+   Cabbage::PlayerInformation Stats, NewStats;
    bool newGame,levelCompleted;
 
    ICamera *Camera;
@@ -94,6 +92,5 @@ class COverworldState : public CState<COverworldState>
    void superInterpolator(SVector3 & curr, SVector3 & change, float delta, float transLength);
    void shiftSetter(SVector3 & curr, SVector3 & change, SVector3 & target);
    float angleMaker(SVector3 start, SVector3 toPoint);
-   
 };
 #endif

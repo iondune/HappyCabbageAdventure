@@ -8,6 +8,7 @@
 #include "CElementEnemy.h"
 #include "CElementPlayer.h"
 #include "CElementItem.h"
+#include "CElementItemPowerup.h"
 #include "CGameplayElement.h"
 
 std::map<std::string, CGameLevel*> CGameLevelLoader::LoadedLevels;
@@ -90,6 +91,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             }
          }
          if(!strcmp("CBreakable", xml->getNodeName())) {
+            newLevel->incrementXmlCount();
             x = xml->getAttributeValueAsInt(0);
             y = xml->getAttributeValueAsInt(1);
             h = xml->getAttributeValueAsInt(2);
@@ -156,6 +158,17 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             else
                printf("Not yet implemented: CElementItem type %d\n", t);
          }
+         if(!strcmp("CPItemPowerup",xml->getNodeName()))
+         {
+            newLevel->incrementXmlCount();
+            //CPItem * stuff;
+            x = xml->getAttributeValueAsInt(0);
+            y = xml->getAttributeValueAsInt(1);
+            t = xml->getAttributeValueAsInt(2);
+            CElementItem *myItem = new CElementItemPowerup(SRect2((float)x, (float)y, 1.0f, 1.0f), t);
+            newLevel->Items.push_back(myItem);
+            newLevel->Elements.push_back(myItem);
+         }
          if(!strcmp("CPFriends",xml->getNodeName()))
          {
             newLevel->incrementXmlCount();
@@ -172,6 +185,9 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
          {
              newLevel->env = env = xml->getAttributeValueAsInt(0);
              newLevel->night = xml->getAttributeValueAsInt(1);
+
+			 if (newLevel->getEnvironment() == 1 && ! newLevel->isNight())
+				 CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_HEAT_WAVE, true);
          }
          break;
       }

@@ -1,4 +1,5 @@
 #include "CLWIBState.h"
+
 /* These are here because someone doesn't use extern, or put prototypes in their header files */
 #include <cmath>
 
@@ -111,6 +112,7 @@ void CLWIBState::begin()
    PrepPreviews();
    prepText();
    prepHud();
+
    printf("END OF BEGIN\n");
 
 }
@@ -760,14 +762,15 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
         type = 10;
    else if (type == 9)
         type = 12;
-   placeables.push_back(tempPlaceable = CEnemyLoader::LoadEnemy(SRect2(x, y, 1, 1),(Enemies::EEnemyType) type));
+   placeables.push_back(tempPlaceable = CEnemyLoader::LoadEnemy(SRect2(x, y, (float)1, (float)1),(Enemies::EEnemyType) type));
    tempPlaceable->setupObjects(); 
+   tempPlaceable->printInformation();
 
    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
    blockMap[(int)x+25][(int)(y-0.5+25)].r = tempPlaceable;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
-   redoPlaceables.clear();
+   //redoPlaceables.clear();
 }
 
 /*void CLWIBState::PrepFriends(int x, int y, int t) {
@@ -893,6 +896,26 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
 
 
 void CLWIBState::PrepSky() {
+
+   CMeshSceneObject *tempBlock;
+
+   CMesh* quad = CMeshLoader::load3dsMesh("Base/Quad.3ds");
+   quad->centerMeshByExtents(SVector3(0.0f));
+   quad->linearizeIndices();
+   quad->calculateNormalsPerFace();
+
+   tempBlock = new CMeshSceneObject();
+   tempBlock->setMesh(quad);
+
+   tempBlock->setTexture(CImageLoader::loadTexture("Base/sky.bmp", true));
+
+   tempBlock->setShader(ERP_DEFAULT, "DiffuseTextureBright");
+   tempBlock->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Textured");
+   tempBlock->setTranslation(SVector3(85/*75*/, 13, -5.0));
+   tempBlock->setScale(SVector3(250, 1, 50));
+   tempBlock->setRotation(SVector3(90.0f, 0.0f, 0.0f));
+
+   CApplication::get().getSceneManager().addSceneObject(tempBlock);
 
   /* CMeshSceneObject *tempBlock;
    blocks.push_back(tempBlock = new CMeshSceneObject());
@@ -1179,6 +1202,10 @@ void CLWIBState::changeTiles() {
         tileFour->setImage(grape);
         tileFive->setImage(fire);
         tileSix->setImage(blade);
+        tileSeven->setImage(apple);
+        tileEight->setImage(pear);
+        tileNine->setImage(banana);
+        tileTen->setImage(cherry);
 
         if (!Application.getGUIEngine().isWidgetIn(tileOne))
             Application.getGUIEngine().addWidget(tileOne);
@@ -1193,14 +1220,14 @@ void CLWIBState::changeTiles() {
         if (!Application.getGUIEngine().isWidgetIn(tileSix))
             Application.getGUIEngine().addWidget(tileSix);
         
-        if (Application.getGUIEngine().isWidgetIn(tileSeven))
-            Application.getGUIEngine().removeWidget(tileSeven);
-        if (Application.getGUIEngine().isWidgetIn(tileEight))
-            Application.getGUIEngine().removeWidget(tileEight);
-        if (Application.getGUIEngine().isWidgetIn(tileNine))
-            Application.getGUIEngine().removeWidget(tileNine);
-        if (Application.getGUIEngine().isWidgetIn(tileTen))
-            Application.getGUIEngine().removeWidget(tileTen);
+        if (!Application.getGUIEngine().isWidgetIn(tileSeven))
+            Application.getGUIEngine().addWidget(tileSeven);
+        if (!Application.getGUIEngine().isWidgetIn(tileEight))
+            Application.getGUIEngine().addWidget(tileEight);
+        if (!Application.getGUIEngine().isWidgetIn(tileNine))
+            Application.getGUIEngine().addWidget(tileNine);
+        if (!Application.getGUIEngine().isWidgetIn(tileTen))
+            Application.getGUIEngine().addWidget(tileTen);
     }
     if (change == 3) { // flag
    
@@ -1451,6 +1478,8 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         }
         if (change == 1) {
         }
+        if (change == 2)
+            uniType = 7;
     }
     if (widget == tileNine) {
         if (change == 0) {
@@ -1461,6 +1490,8 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         }
         if (change == 1) {
         }
+        if (change == 2)
+            uniType = 8;
     }
     if (widget == tileTen) {
         if (change == 0) {
@@ -1471,6 +1502,8 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         }
         if (change == 1) {
         }
+        if (change == 2)
+            uniType = 9;
     }
     if (widget == save ) {
         printXML();
@@ -1483,7 +1516,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     if (widget == undoTile) {
         if( placeables.size() > 0) {
             //Application.getSceneManager().removeSceneObject(blocks.back());
-            CGameplayElement *m_block = placeables.back();
+            /*CGameplayElement *m_block = placeables.back();
             redoPlaceables.push_back(placeables.back());
 
             int i,j;
@@ -1496,14 +1529,15 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
                 }
             }
 
-            placeables.pop_back();
+            placeables.pop_back();*/
+            undoObjects();
         }
     }
     if (widget == redoTile) {
-        if(redoPlaceables.size() > 0) {
+        /*if(redoPlaceables.size() > 0) {
             //Application.getSceneManager().addSceneObject(redo.back());
             CGameplayElement *m_block = redoPlaceables.back();
-//            CMeshSceneObject *m_r = redo.back();
+            CMeshSceneObject *m_r = redo.back();
             placeables.push_back(redoPlaceables.back());
 
             int i,j;
@@ -1518,7 +1552,8 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             }
 
             redoPlaceables.pop_back();
-        }
+        }*/
+
     }
 }
 
@@ -1628,6 +1663,10 @@ void CLWIBState::prepHud() {
     blockIn = new CTexture(CImageLoader::loadImage("ModelImages/blockDepth.bmp"));
     blockOut = new CTexture(CImageLoader::loadImage("ModelImages/blockDepth2.bmp"));
 
+    grape = new CTexture(CImageLoader::loadImage("ModelImages/grapes_gray.bmp"));
+    banana = new CTexture(CImageLoader::loadImage("ModelImages/banana_gray.bmp"));
+    pear = new CTexture(CImageLoader::loadImage("ModelImages/pear_gray.bmp"));
+    cherry = new CTexture(CImageLoader::loadImage("ModelImages/cherries_gray.bmp"));
     grass = new CTexture(CImageLoader::loadImage("Base/grass.bmp"));
     dirt = new CTexture(CImageLoader::loadImage("Base/dirt.bmp"));
     rock = new CTexture(CImageLoader::loadImage("Base/rock.bmp"));

@@ -4,36 +4,10 @@
 #include "../CGameplayElement.h"
 #include "CEventManager.h"
 #include "../ISquishable.h"
-#include "CPlayerAbility.h"
 #include "sound.h"
+class CPlayerAbility;
 
-namespace Cabbage {
-   //Information kept between levels
-   class PlayerInformation {
-      public:
-         int Health;
-         int MaxHealth;
-         int Energy;
-         int MaxEnergy;
-         int Lives;
-         int Seeds;
-
-         PlayerInformation() : Health(5), MaxHealth(5), Energy(100), MaxEnergy(100),
-         Lives(3), Seeds(0) {
-         }
-   };
-
-   //Information kept in the Overworld
-   class LevelInformation {
-      public:
-         int LevelsCompleted;
-         int LastLevelEntered;
-
-         LevelInformation() : LevelsCompleted(0), LastLevelEntered(0) {
-
-         }
-   };
-}
+#include "CabbageGameInformation.h"
 
 class CPlayerView;
 
@@ -122,6 +96,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       //Keyboard event functions
       void OnKeyboardEvent(SKeyboardEvent const & Event);
       Cabbage::PlayerInformation & getStats();
+      void setCanUseAbility(Abilities::EAbilityType t);
+      void setStats(Cabbage::PlayerInformation st);
 };
-
 #endif

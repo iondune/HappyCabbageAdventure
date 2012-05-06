@@ -6,14 +6,7 @@
 class CElementPlayer;
 class CCollideable;
 
-namespace Abilities {
-   enum EAbilityType {
-      SHIELD = 0,
-      LASER = 1,
-      DASH = 2,
-      BLINK = 3
-   };
-}
+#include "CabbageGameInformation.h"
 
 class CPlayerAbility {
    protected:
