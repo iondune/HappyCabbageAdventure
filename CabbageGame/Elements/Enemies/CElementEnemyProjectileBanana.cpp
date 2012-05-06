@@ -65,12 +65,12 @@ void CElementEnemyProjectileBanana::updateSceneObject(float time) {
    SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
 
    if (Direction == Projectile::LEFT) {
-      Rotation.Y+=2.0f;
+      Rotation.Y+=2.4f;
       SceneObject->setRotation(Rotation);
    }
 
    else {
-      Rotation.Y-=2.0f;
+      Rotation.Y-=2.4f;
       SceneObject->setRotation(Rotation);
    }
 }
