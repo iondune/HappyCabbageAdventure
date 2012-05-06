@@ -113,6 +113,12 @@
     <ClInclude Include="Elements\Items\CElementItemPowerup.h">
       <Filter>Elements\Items</Filter>
     </ClInclude>
+    <ClInclude Include="Elements\Enemies\CElementEnemyBanana.h">
+      <Filter>Elements\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Elements\Enemies\CElementEnemyProjectileBanana.h">
+      <Filter>Elements\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CBiggerBlock.cpp" />
@@ -230,6 +236,12 @@
     </ClCompile>
     <ClCompile Include="Elements\Items\CElementItemPowerup.cpp">
       <Filter>Elements\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Enemies\CElementEnemyBanana.cpp">
+      <Filter>Elements\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Enemies\CElementEnemyProjectileBanana.cpp">
+      <Filter>Elements\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

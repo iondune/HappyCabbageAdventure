@@ -16,12 +16,11 @@ namespace Enemies {
       GRAPE_PROJECTILE	 = 7,
       GIANT_APPLE        = 8,
       PEAR               = 9,
-      BANNANA            = 10,
-      BANNANA_PROJECTILE = 11,
+      BANANA            = 10,
+      BANANA_PROJECTILE = 11,
       CHERRY             = 12,
-      CHERRY_PROJECTILE  = 13,
-      BANANA             = 14,
-      BANANA_PROJECTILE  = 15
+      CHERRY_PROJECTILE  = 13
+
    };
 }
 
