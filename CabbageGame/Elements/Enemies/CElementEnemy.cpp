@@ -13,6 +13,7 @@
 #include "CElementEnemyPear.h"
 #include "CElementEnemyCherry.h"
 #include "CElementEnemyProjectileCherry.h"
+#include "CElementEnemyBanana.h"
 
 #include "CElementItemSeed.h"
 #include "CElementItemLife.h"
@@ -61,6 +62,9 @@ CElementEnemy *CEnemyLoader::LoadEnemy(SRect2 nArea, Enemies::EEnemyType type) {
       break;
    case Enemies::CHERRY_PROJECTILE:
       return new CElementEnemyProjectileCherry(nArea, 0.0f);
+      break;
+   case Enemies::BANANA:
+      return new CElementEnemyBanana(nArea);
    default:
       fprintf(stderr, "Error: unknown enemy type %d\n", type);
       exit(1);
@@ -204,11 +208,11 @@ int CElementEnemy::takeDamage(int amount) {
 
    PlayerActor->setImpulse(SVector2(0.0f, 9.0f), 0.01f);
    Mix_PlayChannel(-1, Level.dmgEnemy, 0);
+   Level.getPlayer().setShaking(0.4f, 3.0f);
 
    //The enemy was killed.
    if (CurHealth <= 0) {
       dieWithSeeds();
-      Level.getPlayer().setShaking(0.4f, 3.0f);
       PlayerActor->setImpulse(SVector2(0.0f, 3.0f), 0.01f);
 
       if (rand()%3 == 0)
