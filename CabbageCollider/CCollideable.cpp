@@ -14,7 +14,7 @@ CCollideable::SMaterial::SMaterial()
 {}
 
 CCollideable::CCollideable()
-	: CollisionType(1), CollisionMask(-1), VisualDepth(0.f)
+	: TypeId(1), CollisionMask(-1), DetectionMask(-1), VisualDepth(0.f)
 {}
 
 CCollideable::~CCollideable()
@@ -65,19 +65,24 @@ float const CCollideable::getVisualDepth() const
 	return VisualDepth;
 }
 
-void CCollideable::setCollisionType(unsigned int const type)
+void CCollideable::setTypeId(int const type)
 {
-	CollisionType = type;
+	TypeId = type;
 }
 
-void CCollideable::setCollisionMask(unsigned int const mask)
+void CCollideable::setCollisionMask(int const mask)
 {
 	CollisionMask = mask;
 }
 
-int const CCollideable::getCollisionType() const
+void CCollideable::setDetectionMask(int const mask)
 {
-	return CollisionType;
+	DetectionMask = mask;
+}
+
+int const CCollideable::getTypeId() const
+{
+	return TypeId;
 }
 
 int const CCollideable::getCollisionMask() const
@@ -85,7 +90,24 @@ int const CCollideable::getCollisionMask() const
 	return CollisionMask;
 }
 
+int const CCollideable::getDetectionMask() const
+{
+	return DetectionMask;
+}
+
 bool const CCollideable::collidesWith(CCollideable * Object) const
 {
 	return Area.intersects(Object->getArea());
+}
+
+bool const CCollideable::canCollideWith(CCollideable * Object) const
+{
+	return (TypeId & Object->CollisionMask) ||
+		(Object->TypeId & CollisionMask);
+}
+
+bool const CCollideable::canDetectWith(CCollideable * Object) const
+{
+	return (TypeId & Object->DetectionMask) ||
+		(Object->TypeId & DetectionMask);
 }

@@ -26,41 +26,30 @@ private:
 	ObjectList Objects;
 	ActorList Actors;
 
-	bool CanCollide(CCollideable *a, CCollideable *b);
-
 	void performTick(float const TickTime);
 
 	float Timer;
 
 public:
 
-	void removeAll();
-
-	void removeObject(CCollisionObject * Object);
-
-
 	CCollisionEngine();
-
 	~CCollisionEngine();
 
+	void removeAll();
+	void removeObject(CCollisionObject * Object);
 	void removeActor(CCollisionActor * Actor);
 
 	void updateAll(float const Elapsed);
 
 	CCollisionObject* const getObjectBelow(SVector2f pos);
-
 	float const getHeightBelow(SVector2f pos);
-
 	float const getHeightBelow(CCollisionActor * Actor);
 
 	CCollisionObject * addObject();
-
 	CCollisionElevator * addElevator();
-
 	CCollisionActor * addActor();
 
 	ObjectList const & getObjects() const;
-
 	ActorList const & getActors() const;
 
 };

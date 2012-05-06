@@ -58,8 +58,10 @@ protected:
 
 	float VisualDepth;
 
-	int CollisionType;
+	int TypeId;
+
 	int CollisionMask;
+	int DetectionMask;
 
 public:
 
@@ -76,13 +78,17 @@ public:
 	void setVisualDepth(float const depth);
 	float const getVisualDepth() const;
 
-	void setCollisionType(unsigned int const type);
-	void setCollisionMask(unsigned int const mask);
+	void setTypeId(int const type);
+	void setCollisionMask(int const mask);
+	void setDetectionMask(int const mask);
 
-	int const getCollisionType() const;
+	int const getTypeId() const;
 	int const getCollisionMask() const;
+	int const getDetectionMask() const;
 
 	bool const collidesWith(CCollideable * Object) const;
+	bool const canCollideWith(CCollideable * Object) const;
+	bool const canDetectWith(CCollideable * Object) const;
 
 };
 

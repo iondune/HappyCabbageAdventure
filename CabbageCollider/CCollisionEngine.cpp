@@ -2,12 +2,6 @@
 
 #include <algorithm>
 
-bool CCollisionEngine::CanCollide(CCollideable *a, CCollideable *b)
-{
-	return true;//(a->CollisionType & b->CollisionMask) ||
-		//(b->CollisionType & a->CollisionMask);
-}
-
 void CCollisionEngine::performTick(float const TickTime)
 {
 	for (ActorList::iterator it = Actors.begin(); it != Actors.end(); ++ it)
@@ -18,7 +12,7 @@ void CCollisionEngine::performTick(float const TickTime)
 
 		for (ObjectList::iterator jt = Objects.begin(); jt != Objects.end(); ++ jt)
 		{
-			if(CanCollide((*it), (*jt)))
+			if ((*it)->canCollideWith(* jt))
 			{
 				bool Alighted = (* it)->updateCollision(* jt, TickTime);
 				if (Alighted)
@@ -28,7 +22,7 @@ void CCollisionEngine::performTick(float const TickTime)
 
 		for (ActorList::iterator jt = Actors.begin(); jt != Actors.end(); ++ jt)
 		{
-			if(CanCollide((*it), (*jt)))
+			if ((*it)->canCollideWith(* jt))
 			{
 				if (* it != * jt)
 				{
@@ -142,7 +136,7 @@ float const CCollisionEngine::getHeightBelow( CCollisionActor * Actor )
 
 	for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
 	{
-		if (CanCollide(*it, Actor) && Actor->isAbove(* it, checkHeight))
+		if ((* it)->canCollideWith(Actor) && Actor->isAbove(* it, checkHeight))
 			if (checkHeight > height)
 				height = checkHeight;
 	}

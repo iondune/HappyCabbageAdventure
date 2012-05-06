@@ -45,7 +45,7 @@ bool const CCollisionActor::EActionType::operator == (Domain const value)
 CCollisionActor::CCollisionActor()
 	: Standing(0), JumpTimer(0.f), FallAcceleration(0), Impulse(false), ControlFall(true) 
 {
-	CollisionType = INTERACTOR_ACTORS;
+	TypeId = INTERACTOR_ACTORS;
 	CollisionMask = INTERACTOR_BLOCKS | INTERACTOR_ACTORS;
 
 	Gravity = (CollisionReal) 100.0;
@@ -331,7 +331,7 @@ bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTim
 {
 	//int CollisionType = ignoreCollision(Object, TickTime);
 
-	CollisionType = checkCollision(Object, TickTime);
+	int CollisionType = checkCollision(Object, TickTime);
 
 	if (CollisionType & ECollisionType::Up)
 	{

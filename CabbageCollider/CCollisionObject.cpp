@@ -3,7 +3,7 @@
 
 CCollisionObject::CCollisionObject()
 {
-	CollisionType = INTERACTOR_BLOCKS; 
+	TypeId = INTERACTOR_BLOCKS; 
 	CollisionMask = INTERACTOR_ALL;
 }
 

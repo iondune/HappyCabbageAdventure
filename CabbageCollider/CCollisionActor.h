@@ -123,27 +123,58 @@ protected:
 
 	CCollisionActor();
 
-	// Update functions, used by engine
+	//////////////////////////////////////
+	// Update functions, used by engine //
+	//////////////////////////////////////
+
+	//! Updates the movement vectors of this actor
+	//! Called once per tick
 	void updateVectors(CollisionReal const TickTime);
 
+	//! Peforms a collision check between this actor and a collideable object
+	//! Returns true if a standing event occured
 	bool updateCollision(CCollideable * Object, float const TickTime);
+
+	//! Performs a discrete collision check between this actor and a collideable object
+	//! Called by updateCollision
+	//! Returns the direction collisions that occured, if any
+	//! Adjusts movement to prevent collision
+	int checkCollision(CCollideable * Object, CollisionReal const TickTime);
+
+	//! Called by updateCollision when a downwards collision occurs
 	void onStanding(CCollideable * Object);
 
+	//! Moves this object if a moveable Object caused a collision and push
 	void pushIfCollided(CCollisionObject * Object, SVec2 const Movement);
 
+	//! ?
 	bool Impulse;
+
+	//! ?
 	CollisionReal ImpulseTimer;
+
+	//! ?
 	SVec2 ImpulseVelocity;
 
+	//! For debugging purposes, is true when the last update tick used an "allowed collision" movement
 	bool AllowedMovement;
+
+	//! Position held by this actor during last tick
+	SVec2 LastPosition;
+
+	//! Movement of this actor during current tick
+	SVec2 Movement;
 
 public:
 
+	//! Destructor
 	~CCollisionActor();
 
-	SVec2 LastPosition, Movement;
-	int checkCollision(CCollideable * Object, CollisionReal const TickTime);
+
+	//! ?
 	float Gravity;
+
+	//! Checks if this actor is directly above an object, and if so, returns the height between them
 	bool isAbove(CCollisionObject * Object, float & height) const;
 
 	//! See Standing
@@ -176,6 +207,7 @@ public:
 	//! see FallAcceleration
 	float getFallAcceleration();
 
+	//! For debugging purposes, draws this actor onto the screen using FFP OpenGL
 	virtual void draw();
 
 	void setImpulse(SVec2 const & velocity, CollisionReal const duration = 0.3f);
