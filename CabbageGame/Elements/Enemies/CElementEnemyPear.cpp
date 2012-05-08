@@ -45,7 +45,7 @@ void CElementEnemyPear::setupSceneObject() {
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
    SceneObject->setTranslation(SVector3((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y-1))/2, 0));
    SceneObject->setScale(SVector3(Area.Size.X, Area.Size.X, Area.Size.Y));
-   SceneObject->setRotation(SVector3(-90, 0, 0));
+   SceneObject->setRotation(SVector3(-90, 0, 20));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }

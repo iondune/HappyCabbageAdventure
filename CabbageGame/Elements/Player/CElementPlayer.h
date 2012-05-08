@@ -98,5 +98,6 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       Cabbage::PlayerInformation & getStats();
       void setCanUseAbility(Abilities::EAbilityType t);
       void setStats(Cabbage::PlayerInformation st);
+      EAction getAction();
 };
 #endif

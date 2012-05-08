@@ -360,6 +360,10 @@ void CElementPlayer::setAllowMovement(bool value) {
 	AllowMovement = value;
 }
 
+CElementPlayer::EAction CElementPlayer::getAction() {
+   return Action;
+}
+
 #include "COverworldState.h"
 void CElementPlayer::playLevelVictory(float time) {
    SVector3 curRotation = View->getCabbageSceneObject().getRotation();

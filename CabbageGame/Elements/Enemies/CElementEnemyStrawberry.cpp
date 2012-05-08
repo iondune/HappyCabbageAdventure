@@ -12,7 +12,9 @@ void CElementEnemyStrawberry::setupPhysicsEngineObject() {
    PhysicsEngineObject->setArea(Area);
 
    //Set actor attributes
-   PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
+   PhysicsEngineObject->getAttributes().MaxWalk = 4.5f;
+   PhysicsEngineObject->getAttributes().WalkAccel = 10.0f;
+   //PhysicsEngineObject->getAttributes().JumpLength = .5f;
 }
 
 void CElementEnemyStrawberry::setupSceneObject() {
@@ -44,7 +46,7 @@ void CElementEnemyStrawberry::setupSceneObject() {
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
    SceneObject->setTranslation(SVector3((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y-1))/2, 0));
    SceneObject->setScale(SVector3(Area.Size.X, Area.Size.X, Area.Size.Y));
-   SceneObject->setRotation(SVector3(-90, 0, 0));
+   SceneObject->setRotation(SVector3(-90, 0, -30));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
@@ -53,7 +55,16 @@ void CElementEnemyStrawberry::setupSceneObject() {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyStrawberry::updatePhysicsEngineObject(float time) {
-   PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
+   SVector2 PlayerPosition = Level.getPlayer().getArea().Position;
+
+   if (PlayerPosition.X < Area.getCenter().X - 3.f)
+      PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
+   else if (PlayerPosition.X > Area.getCenter().X + 3.f)
+      PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
+   else {
+      PhysicsEngineObject->setJumping(true);
+      PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
+   }
 }
 
 //This is where the renderable would be updated for the more complex enemies
