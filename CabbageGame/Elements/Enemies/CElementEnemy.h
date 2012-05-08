@@ -19,7 +19,10 @@ namespace Enemies {
       BANANA            = 10,
       BANANA_PROJECTILE = 11,
       CHERRY             = 12,
-      CHERRY_PROJECTILE  = 13
+      CHERRY_PROJECTILE  = 13,
+      PINEAPPLE          = 14,
+      POMEGRANITE        = 15,
+      STRAWBERRY         = 16
 
    };
 }
