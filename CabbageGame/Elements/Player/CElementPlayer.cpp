@@ -260,9 +260,10 @@ void CElementPlayer::setupSceneObject() {
 
 bool CElementPlayer::decrementHealth() {
    if(Stats.Health <= 0) {
-      //decrementLives();
-      return false; //Lose state
+      decrementLives();
+      return false;
    }
+
    if(Recovering == 0.0f) {
       Stats.Health--; 
       View->removeLeaf();
@@ -271,8 +272,6 @@ bool CElementPlayer::decrementHealth() {
       Mix_PlayChannel(-1, takeDmg, 0);
       return true;
    }
-   return false;
-   //Else lose state
 }
 void CElementPlayer::incrementHealth() {
    if(Stats.Health < 5) {
@@ -291,12 +290,19 @@ void CElementPlayer::incrementLives() {
 }
 
 void CElementPlayer::decrementLives() {
+   Mix_PlayMusic(deathMusic, 1);
+
    if (Stats.Lives > 1) {
       Stats.Lives--;
+      //restart level somehow.
    }
 
    else {
-      /*Death code here*/
+      //Exit to Overworld and give one more life.
+      incrementLives();
+      /*COverworldState::get().levelCompleted = false;
+      COverworldState::get().NewStats = Level->getPlayer().getStats();
+      CApplication::get().getStateManager().setState(new CFadeOutState(& COverworldState::get()));*/
    }
 }
 
@@ -349,6 +355,9 @@ void CElementPlayer::setupSoundEffects() {
    temp = MusicDirectory + "victory.wav";
    victoryMusic = Mix_LoadMUS(temp.c_str());
 
+   temp = MusicDirectory + "death.wav";
+   deathMusic = Mix_LoadMUS(temp.c_str());
+
    if (!victoryMusic) {
       printf("Mix_LoadWAV: %s\n", Mix_GetError());
       exit(1);
@@ -375,7 +384,6 @@ void CElementPlayer::playLevelVictory(float time) {
    //Start Victory Music
    if (VictoryTime == 0.0f) {
       Mix_PlayMusic(victoryMusic, 1);
-      printf("Switching to victory music.\n");
    }
 
    if (VictoryTime > .00f && VictoryTime < .07f) {
