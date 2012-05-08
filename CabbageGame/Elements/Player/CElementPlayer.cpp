@@ -334,11 +334,6 @@ void CElementPlayer::setupSoundEffects() {
    temp = MusicDirectory + "jump.wav";
    jump = Mix_LoadWAV(temp.c_str());
 
-   if (!jump) {
-      printf("Mix_LoadWAV: %s\n", Mix_GetError());
-      exit(1);
-   }
-
    temp = MusicDirectory + "takeDmg.wav";
    takeDmg = Mix_LoadWAV(temp.c_str());
 
@@ -350,6 +345,14 @@ void CElementPlayer::setupSoundEffects() {
 
    temp = MusicDirectory + "fireLaser3.wav";
    fireLaser = Mix_LoadWAV(temp.c_str());
+
+   temp = MusicDirectory + "victory.wav";
+   victoryMusic = Mix_LoadMUS(temp.c_str());
+
+   if (!victoryMusic) {
+      printf("Mix_LoadWAV: %s\n", Mix_GetError());
+      exit(1);
+   }
 }
 
 void CElementPlayer::setVictoryFlag(bool value) {
@@ -368,6 +371,12 @@ CElementPlayer::EAction CElementPlayer::getAction() {
 void CElementPlayer::playLevelVictory(float time) {
    SVector3 curRotation = View->getCabbageSceneObject().getRotation();
    SVector2 curLocation = SVector2 (Area.getCenter().X - .5f, Area.getCenter().Y - .5f);
+
+   //Start Victory Music
+   if (VictoryTime == 0.0f) {
+      Mix_PlayMusic(victoryMusic, 1);
+      printf("Switching to victory music.\n");
+   }
 
    if (VictoryTime > .00f && VictoryTime < .07f) {
       Action = Standing;

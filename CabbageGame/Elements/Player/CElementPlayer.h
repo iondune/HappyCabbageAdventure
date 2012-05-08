@@ -52,6 +52,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       Mix_Chunk *chargeLaser1;
       Mix_Chunk *chargeLaser2;
       Mix_Chunk *fireLaser;
+      Mix_Music *victoryMusic;
       bool PlayJump, UseCamera;
 
       std::vector<CPlayerAbility*> Abilities;
