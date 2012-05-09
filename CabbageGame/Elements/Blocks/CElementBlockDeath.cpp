@@ -26,7 +26,7 @@ void CElementBlockDeath::writeXML(xmlwriter *l) {
    speedValue << 1;
 
 
-   tagValue << "CBlock";
+   tagValue << "DeathBlock";
 
    l->AddAtributes("isMoving ", speedValue.str());
    l->AddAtributes("texture ", textureType.str());

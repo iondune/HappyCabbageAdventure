@@ -137,29 +137,6 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    stepCamera(Application.getElapsedTime());
    float x=round(eye.X + previewBlockMouseX),y= round(eye.Y + previewBlockMouseY);
     //PreviewBlock->
-        //setTranslation(SVector3(x+(float)blockWidth/2,y+(float)blockHeight/2, 0));
-
-   if(clickDown) { //over hud
-     // PreviewBlock->setVisible(false);
-   }
-   else if(tDown) { // remove mode
-     // PreviewBlock->setVisible(false);
-   }
-   else if(twoDown) { // prep enemy
-     // PreviewBlock->setVisible(false);
-   }
-   else if(oneDown) { // preview cabbage and friends
-     // PreviewBlock->setVisible(true);
-   }
-   else if(threeDown) { // prep flag
-    //  PreviewBlock->setVisible(false);
-   }
-   else if(fourDown) { // items
-   //   PreviewBlock->setVisible(false);
-   }
-   else { // default blocks
-     // PreviewBlock->setVisible(true);
-   }
 
    //Draw Text
    if (!showHelp)
@@ -817,33 +794,21 @@ void CLWIBState::PrepCabbage(float x, float y) {
         return;
     }
 
-    /*if (cabbageFlag == 1) {
+    if (cabbageFlag == 1) {
         blockMap[(int)xCabbage+25][(int)(yCabbage-0.5+25)].o = false;
         blockMap[(int)xCabbage+25][(int)(yCabbage-0.5+25)].r = NULL;
         blockMap[(int)xCabbage+25][(int)(yCabbage-0.5+25)].mapX = -1;
         blockMap[(int)xCabbage+25][(int)(yCabbage-0.5+25)].mapY = -1;
         printf("tempx = %d, tempy =  %d\n",xCabbage ,yCabbage);
-        placeables.erase(std::remove(placeables.begin(), placeables.end(), lastCabbage.p), placeables.end());
-        blocks.erase(std::remove(blocks.begin(), blocks.end(), lastCabbage.r), blocks.end());
-        //Application.getSceneManager().removeSceneObject(lastCabbage.r);
-    } */
+        placeables.erase(std::remove(placeables.begin(), placeables.end(), lastCabbage.r), placeables.end());
+        lastCabbage.r->removeFromGame();
+    }
 
     printf("Placed cabbage starting at %0.2f, %0.2f\n", x, y);
-    //CMeshSceneObject *tempCabbage;
     CGameplayElement *tempPlaceable;
-    //blocks.push_back(tempCabbage = new CMeshSceneObject());
     placeables.push_back(tempPlaceable = new CElementPlayer(SRect2(x, y, 1, 1), false));
     tempPlaceable->setupObjects();  
 
-
-    //gameWorld->addObject(tempPlaceable);
-    
-    /*tempCabbage->setMesh(cabbageMesh);
-    tempCabbage->setShader(ERP_DEFAULT, Diffuse);
-    tempCabbage->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
-    tempCabbage->setTranslation(SVector3((x+(x + 1))/2, (y+(y + 1))/2, 0));
-    tempCabbage->setRotation(SVector3(-90, 0, 90));
-    tempCabbage->setScale(SVector3(0.5, 0.5, 0.5));*/
     blockMap[(int)x+25][(int)(y-0.5f+25)].o = true;
     blockMap[(int)x+25][(int)(y-0.5f+25)].r = tempPlaceable;
     blockMap[(int)x+25][(int)(y-0.5f+25)].mapX = (int)x+25;
@@ -851,9 +816,7 @@ void CLWIBState::PrepCabbage(float x, float y) {
     xCabbage = (int) x, yCabbage = (int) y;
 
     lastCabbage = blockMap[(int)x+25][(int)(y-0.5+25)];
-    //Application.getSceneManager().addSceneObject(tempCabbage);
     cabbageFlag = 1;
-    redoPlaceables.clear();
 }
 
 void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int moving) {
