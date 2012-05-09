@@ -13,6 +13,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
    particleType = pT;
    currentDuration = 0.f;
    dead = 0;
+   Visible = true;
 
    CParticle *cPtr;
    for(int i = 0; i < numParticles; i++) {
@@ -296,4 +297,12 @@ void CParticleEngine::deconstruct() {
       CApplication::get().getSceneManager().removeSceneObject(myObj);
       dead = 1;
    }
+}
+
+void CParticleEngine::setVisible(bool visible) {
+   myObj->setVisible(visible);
+}
+
+bool CParticleEngine::isVisible() {
+   return myObj->isVisible();
 }

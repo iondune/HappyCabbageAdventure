@@ -16,6 +16,7 @@
 #include "../CabbageGame/irrxml-1.2/src/irrXML.h"
 #include "../CabbageGame/wmlwriter_src/xmlwriter.h"
 #include "../CabbageGame/CGameLevel.h"
+#include "../CabbageGame/Elements/Blocks/CElementBlockFlag.h"
 #include "../CabbageGame/CGameplayManager.h"
 #include "../CabbageGUI/CabbageGUI.h"
 
