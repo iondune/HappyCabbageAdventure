@@ -25,7 +25,7 @@ class CElementEnemyPomegranite : public CElementEnemy, ISquishable
 
       virtual void printInformation();
 
-      void DeconstructFlame();
+      void HideFlame();
 };
 
 #endif
