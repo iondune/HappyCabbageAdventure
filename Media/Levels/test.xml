@@ -75,7 +75,7 @@
 </CBlock>
 <CBlock X ="-14" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
 </CBlock>
-<CEnemy X ="-16" Y ="1" height ="1" width ="1" type ="9">
+<CEnemy X ="-16" Y ="1" height ="1" width ="1" type ="15">
 </CEnemy>
 <CCabbage X ="-20" Y ="1" height ="1" width ="1">
 </CCabbage>
