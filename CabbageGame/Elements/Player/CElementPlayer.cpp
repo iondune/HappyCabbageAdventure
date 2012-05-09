@@ -294,7 +294,7 @@ void CElementPlayer::incrementLives() {
 }
 
 #include "COverworldState.h"
-#include "CGameState.h"
+#include "../../StateGame/CGameState.h"
 void CElementPlayer::decrementLives() {
    Mix_PlayMusic(deathMusic, 1);
 
