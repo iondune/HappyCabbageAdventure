@@ -55,5 +55,7 @@ class CParticleEngine {
       void setLookRight(int pf);
       void step(float const elapsedTime);
       void deconstruct();
+      void setVisible(bool visible);
+      bool isVisible();
 };
 #endif
