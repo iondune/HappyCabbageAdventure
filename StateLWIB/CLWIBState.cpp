@@ -571,9 +571,11 @@ void CLWIBState::loadWorld() {
     int moving, range, speed;
     std::string name;
     //float spd, rng;
-    while(placeables.size() > 0 ) {
-        removeObject();
-    }
+    initBlockMap();
+    placeables.clear();
+    Application.getSceneManager().removeAllSceneObjects();
+    BlocksInit();
+    
     cout << "Enter the name of the file you want to load: ";
     cin >> name;
     irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader(name.c_str());
@@ -1045,6 +1047,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
 }
 
 void CLWIBState::removeObject() {
+    printf("placeable.size() is %d\n", placeables.size());
     if (placeables.size() > 0) {
         CGameplayElement *m_block = placeables.back();
         printf("placeable x is %f placeable y is %f\n",m_block->getArea().Size.X,m_block->getArea().Size.Y);
@@ -1515,8 +1518,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     }
     if (widget == load ) {
         loadWorld();
-   for (int i = 0 ; i < placeables.size(); i++)
-       placeables[i]->removeFromGame();
+        cDown = 0;
     }
     if (widget == undoTile) {
         if( placeables.size() > 0) {
