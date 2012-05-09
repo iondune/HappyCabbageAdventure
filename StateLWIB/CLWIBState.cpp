@@ -109,7 +109,8 @@ void CLWIBState::begin()
    //Load the meshes into VBOs
 
    srand((unsigned int) time(0));
-
+   PreviewBlock = new CElementBlock(SRect2(1,1,1,1),1,1);
+   PreviewBlock->setupObjects();
    //Initialize Fxns
    BlocksInit();
    
@@ -139,7 +140,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
 
    stepCamera(Application.getElapsedTime());
    float x=round(eye.X + previewBlockMouseX),y= round(eye.Y + previewBlockMouseY);
-   //PrepPreviews(x,y);
+   PrepPreviews(x,y, Elapsed);
     //PreviewBlock->
 
    //Draw Text
@@ -681,7 +682,7 @@ void CLWIBState::end()
    Application.getSceneManager().removeAllSceneObjects();
 }
 
-void CLWIBState::PrepPreviews(int x , int y) {
+void CLWIBState::PrepPreviews(int x , int y, float t) {
     /*for (int i = 0; i < 4 ; i++) { // blocks
         
     }
@@ -691,8 +692,8 @@ void CLWIBState::PrepPreviews(int x , int y) {
     for (int i = 0; i < 17; i++) {// enemies
     
     }*/
-    PreviewBlock = new CElementBlock(SRect2(x,y,1,1),1,1);
-    PreviewBlock->setupObjects();
+    PreviewBlock->setArea
+    PreviewBlock->update(t);
 
 }
 
