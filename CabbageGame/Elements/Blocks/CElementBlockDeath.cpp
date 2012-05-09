@@ -42,6 +42,11 @@ void CElementBlockDeath::writeXML(xmlwriter *l) {
 void CElementBlockDeath::setupSceneObject() {
 }
 
+void CElementBlockBreakable::setupPhysicsEngineObject() {
+   PhysicsEngineObject = Level.getPhysicsEngine().addObject();
+   PhysicsEngineObject->setArea(Area);
+}
+
 void CElementBlockDeath::printInformation() {
    printf("CElementBlockDeath; Area: [[%0.0f, %0.0f],[%0.0f, %0.0f]]\n", Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y);
 }
