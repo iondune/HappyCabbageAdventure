@@ -2,7 +2,7 @@
 #include "CGameLevel.h"
 
 CElementEnemyPear::CElementEnemyPear(SRect2 nArea) :
-   CElementEnemy(nArea, Enemies::PEAR), ISquishable(nArea.Size.X, nArea.Size.Y), OldPositionX(nArea.Position.X) {
+   CElementEnemy(nArea, Enemies::PEAR), ISquishable(nArea.Size.X, nArea.Size.Y), OldPositionX(nArea.Position.X), HitPlayer(false) {
    printf("Made a pear!\n");
 }
 
@@ -52,13 +52,34 @@ void CElementEnemyPear::setupSceneObject() {
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
-//CGameplayElement has an attribute called ElapsedTime, which is updated by CGameplayElement's update function.
+void CElementEnemyPear::OnCollision(CCollideable *Object) {
+   if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
+      CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
+      HitPlayer = true;
+
+      //Check if jumped on top of enemy.
+      if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {
+         takeDamage(1);
+      }
+
+      //Did the player run into them?
+      else {
+         if(Level.getPlayer().decrementHealth()) {
+            if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
+               PlayerActor->setImpulse(SVector2(7.f, 2.8f), 0.1f);
+            else
+               PlayerActor->setImpulse(SVector2(-7.f, 2.8f), 0.1f);
+            Level.getPlayer().setShaking(1.0f, 3.0f);
+         }
+      }
+   }
+}
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyPear::updatePhysicsEngineObject(float time) {
    float difference = Area.Position.X - OldPositionX;
 
-   if (difference < .001f && difference > -.001f) {
+   if (difference < .001f && difference > -.001f && !HitPlayer) {
       if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveLeft)
          PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
       else if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveRight)
@@ -66,6 +87,7 @@ void CElementEnemyPear::updatePhysicsEngineObject(float time) {
    }
 
    OldPositionX = Area.Position.X;
+   HitPlayer = false;
 }
 
 //This is where the renderable would be updated for the more complex enemies
