@@ -13,7 +13,6 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
    particleType = pT;
    currentDuration = 0.f;
    dead = 0;
-   Visible = true;
 
    CParticle *cPtr;
    for(int i = 0; i < numParticles; i++) {

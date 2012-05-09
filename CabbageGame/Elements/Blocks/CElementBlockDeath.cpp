@@ -39,14 +39,7 @@ void CElementBlockDeath::writeXML(xmlwriter *l) {
    l->CloseLasttag();
 }
 
-void CElementBlockDeath::updateSceneObject(float time) {
-   SceneObject->setTranslation(SVector3((Area.Position.X+(Area.Position.X+Area.Size.X))/2, (Area.Position.Y+(Area.Position.Y+Area.Size.Y))/2, 0));
-}
-
 void CElementBlockDeath::setupSceneObject() {
-   CElementBlock::setupSceneObject();
-   CApplication::get().getSceneManager().removeSceneObject(SceneObject);
-   CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
 void CElementBlockDeath::printInformation() {
