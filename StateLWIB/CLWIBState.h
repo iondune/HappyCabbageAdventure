@@ -39,6 +39,7 @@ class CLWIBState : public CState<CLWIBState>
    int secretFlag;
    int xCabbage;
    int yCabbage;
+   int blockFlag;
    int blockCycle;
    int change;
    int dayNight, env; 
@@ -64,10 +65,10 @@ class CLWIBState : public CState<CLWIBState>
 
    float xp2w(int oldX);
    float yp2w(int oldY);
-   CGameplayElement *PreviewBlock;// *PreviewEnemy, *PreviewCabbage, *PreviewGround, *PreviewFlag, *PreviewItem;
+   CGameplayElement *PreviewBlock;
 
    public:
-   std::vector<CGameplayElement*> placeables, redoPlaceables;
+   std::vector<CGameplayElement*> placeables, redoPlaceables;//, PreviewBlock;
    CLWIBState();
    void begin();
    CPerspectiveCamera *Camera;
@@ -86,7 +87,7 @@ class CLWIBState : public CState<CLWIBState>
    void PrepFlag(float X ,float y, int t);
    void PrepItem(float x, float y, int type);
   //void PrepFriends(int x, int y, int t);
-   void PrepPreviews();
+   void PrepPreviews(int x, int y);
 
    void PrepSky();
    void loadWorld();

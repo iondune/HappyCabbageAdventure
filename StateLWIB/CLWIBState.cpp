@@ -56,9 +56,12 @@ void initBlockMap() {
       }
 }
 //Initalizer fxn
+int pastX; int pastY;
 void CLWIBState::begin()
 {
-
+    pastX = 0;
+    pastY = 0;
+   blockFlag = 0; 
    clickDown = 0;
    uniType = 0;
    flagFlag = 0;
@@ -109,7 +112,7 @@ void CLWIBState::begin()
 
    //Initialize Fxns
    BlocksInit();
-   PrepPreviews();
+   
    prepText();
    prepHud();
 
@@ -136,6 +139,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
 
    stepCamera(Application.getElapsedTime());
    float x=round(eye.X + previewBlockMouseX),y= round(eye.Y + previewBlockMouseY);
+   PrepPreviews(x,y);
     //PreviewBlock->
 
    //Draw Text
@@ -677,8 +681,19 @@ void CLWIBState::end()
    Application.getSceneManager().removeAllSceneObjects();
 }
 
-void CLWIBState::PrepPreviews() {
- 
+void CLWIBState::PrepPreviews(int x , int y) {
+    /*for (int i = 0; i < 4 ; i++) { // blocks
+        
+    }
+    for (int i = 0; i < 5 ; i++) { // items
+    
+    }
+    for (int i = 0; i < 17; i++) {// enemies
+    
+    }*/
+    PreviewBlock = new CElementBlock(SRect2(x,y,1,1),1,1);
+    PreviewBlock->setupObjects();
+
 }
 
 
@@ -1007,9 +1022,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          if(oldx == x && oldy == y)
             return;
          qd m_qd;
-         CShader *tempShader;
          m_qd = blockMap[(int)x+25][(int)(y-0.5+25)];
-         tempShader = CShaderLoader::loadShader("DiffuseTexture");
          if(tDown) {
             /*if(m_qd.o && m_qd.r != lastMouseOveredBlock.r) {
 
