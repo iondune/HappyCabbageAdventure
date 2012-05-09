@@ -259,17 +259,17 @@ void CElementPlayer::setupSceneObject() {
 }
 
 bool CElementPlayer::decrementHealth() {
-   if(Stats.Health <= 1) {
-      Stats.Health = 0;
-      decrementLives();
-      return false;
-   }
-
    if(used(Abilities::SHIELD))
-      return false;
+         return false;
 
    if(Recovering == 0.0f) {
-      Stats.Health--; 
+      Stats.Health--;
+
+      if(Stats.Health <= 0) {
+         Stats.Health = 0;
+         decrementLives();
+         return false;
+      }
       View->removeLeaf();
       View->setHurt(true);
       Recovering = 1.0f;
