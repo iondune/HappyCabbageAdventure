@@ -6,6 +6,9 @@ CElementEnemyPomegranite::CElementEnemyPomegranite(SRect2 nArea) :
 
    MaxHealth = 1;
    CurHealth = MaxHealth;
+
+   particleEngine = new CParticleEngine(SVector3(Area.getCenter().X - nArea.Size.X, Area.getCenter().Y + nArea.Size.Y/2.f, 0), 100, -1, FLAME_PARTICLE);
+   particleEngine->setVisible(false);
 }
 
 void CElementEnemyPomegranite::setupPhysicsEngineObject() {
@@ -62,9 +65,12 @@ void CElementEnemyPomegranite::OnCollision(CCollideable *Object) {
       HitPlayer = true;
 
       //Check if jumped on top of enemy.
-      if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f && !particleEngine) {
-         if (particleEngine && CurHealth == 1)
-            HideFlame();
+      if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f && particleEngine->isVisible() == false) {
+         if (CurHealth == 1) {
+            particleEngine->deconstruct();
+            delete particleEngine;
+            particleEngine = NULL;
+         }
          takeDamage(1);
       }
 
@@ -95,14 +101,12 @@ void CElementEnemyPomegranite::updatePhysicsEngineObject(float time) {
    }
 
    if (FlameTimer >= 4.0f) {
-      if (particleEngine) {
+      if (particleEngine->isVisible()) {
          HideFlame();
       }
 
       else {
-         float xPos = Area.getCenter().X - Area.Size.X/2.0f;
-         float yPos = Area.getCenter().Y + .5f;
-         particleEngine = new CParticleEngine(SVector3(xPos, yPos, 0), 100, -1, FLAME_PARTICLE);
+         particleEngine->setVisible(true);
          PhysicsEngineObject->setArea(SRect2(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y + 1.0f));
       }
 
@@ -122,7 +126,7 @@ void CElementEnemyPomegranite::updateSceneObject(float time) {
       return;
    }
 
-   if (particleEngine) {
+   if (particleEngine->isVisible()) {
       float xPos = Area.getCenter().X - Area.Size.X/2.0f;
       float yPos = Area.getCenter().Y;
 
@@ -167,9 +171,7 @@ void CElementEnemyPomegranite::updateSceneObject(float time) {
 }
 
 void CElementEnemyPomegranite::HideFlame() {
-   particleEngine->deconstruct();
-   delete particleEngine;
-   particleEngine = NULL;
+   particleEngine->setVisible(false);
 
    PhysicsEngineObject->setArea(SRect2(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y - 1.0f));
 }

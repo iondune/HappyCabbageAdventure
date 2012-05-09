@@ -297,3 +297,11 @@ void CParticleEngine::deconstruct() {
       dead = 1;
    }
 }
+
+void CParticleEngine::setVisible(bool visible) {
+   myObj->setVisible(visible);
+}
+
+bool CParticleEngine::isVisible() {
+   return myObj->isVisible();
+}
