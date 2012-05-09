@@ -42,7 +42,7 @@ void CElementBlockDeath::writeXML(xmlwriter *l) {
 void CElementBlockDeath::setupSceneObject() {
 }
 
-void CElementBlockBreakable::setupPhysicsEngineObject() {
+void CElementBlockDeath::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addObject();
    PhysicsEngineObject->setArea(Area);
 }
