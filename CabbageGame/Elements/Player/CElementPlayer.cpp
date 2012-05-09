@@ -264,6 +264,9 @@ bool CElementPlayer::decrementHealth() {
       return false;
    }
 
+   if(used(Abilities::SHIELD))
+      return false;
+
    if(Recovering == 0.0f) {
       Stats.Health--; 
       View->removeLeaf();
