@@ -9,11 +9,5 @@ void main()
     
     vec4 FinalColor = texture2D(uLightPass, vTexCoord);
     
-    FinalColor *= ToonLevels;
-    FinalColor.x = round(FinalColor.x);
-    FinalColor.y = round(FinalColor.y);
-    FinalColor.z = round(FinalColor.z);
-    FinalColor /= ToonLevels;
-    
     gl_FragColor = texture2D(uSceneColor, vTexCoord) * FinalColor;
 }
