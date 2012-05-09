@@ -96,6 +96,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             y = xml->getAttributeValueAsInt(1);
             h = xml->getAttributeValueAsInt(2);
             w = xml->getAttributeValueAsInt(3);
+            printf("breakable blocks x y h w are %d %d %d %d\n",x ,y,h,w);
 
             CElementBlockBreakable * ptr2;
             newLevel->Elements.push_back(ptr2 = new CElementBlockBreakable(SRect2((float)x, (float)y, (float)w, (float)h)));

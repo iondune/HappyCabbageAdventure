@@ -638,7 +638,8 @@ void CLWIBState::loadWorld() {
                 h = xml->getAttributeValueAsInt(2);
                 w = xml->getAttributeValueAsInt(3);
                 cDown = 4;
-               PrepBlock((float)x,(float)y,w,h,0,0,0);
+                printf("cDown is %d", cDown);
+               PrepBlock((float)x,(float)y,w,h,1,0,0);
                cDown = 0;
            }
            if (!strcmp("envVar", xml->getNodeName()))
@@ -722,7 +723,7 @@ void CLWIBState::PrepItem(float x, float y, int item) {
    redoPlaceables.clear();
 
 }
-#include "../CabbageGame/Elements/Blocks/CElementBlockFlag.h"
+
 void CLWIBState::PrepFlag(float x, float y, int t) {
 
    if(x < -25 || y < -25 || x >= 500 || y >= 75)
@@ -875,8 +876,12 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
    printf("Placed block starting at %0.2f, %0.2f, %d, %d, %d\n", x, y, h,d,t);
    
    CGameplayElement *tempPlaceable;
+   printf("cDown before placing it %d\n",cDown);
    if (cDown == 4)
+   {
        placeables.push_back(tempPlaceable = new CElementBlockBreakable(SRect2(x,y,w,h)));
+       printf("making breakable blocks\n");
+   }
    //else if (cDown == 5)
        //placeables.push_back(tempPlaceable = new CElementBlockDeath(SRect2(x,y,w,h),d,t,1.0f,1.0f));
    else
