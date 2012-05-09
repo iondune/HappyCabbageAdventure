@@ -242,8 +242,17 @@ void CLWIBState::OnRenderStart(float const Elapsed)
        if (uniType == 9) {
            block2->setText("Placing cherry\n");
        }
+       if (uniType == 10) {
+          block2->setText("Placing pineapple\n");
+       }
+       if (uniType == 11) {
+          block2->setText("Placing pomegranite\n");
+       }
+       if (uniType == 12) {
+          block2->setText("Placing strawberry\n");
+       }
        
-       if (uniType >= 10)
+       if (uniType >= 13)
            uniType = 0;
    }
    if (oneDown && !showHelp && !tDown && !twoDown && !threeDown&& !fourDown) {
@@ -407,7 +416,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 else
                     friendType = 0;
             } else if (twoDown) {
-                if (uniType < 9) //temp constraint
+                if (uniType < 12) //temp constraint
                     uniType++;
                 else
                     uniType = 0;
@@ -463,7 +472,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 if (uniType != 0) 
                     uniType--;
                 else
-                    uniType = 9;
+                    uniType = 12;
             } else if (threeDown) {
                 if (uniType == 1)
                     uniType--;
@@ -726,7 +735,8 @@ void CLWIBState::PrepFlag(float x, float y, int t) {
 }
 
 void CLWIBState::PrepEnemy(float x, float y, int type) {
-   if(x < -25 || y < -25 || x >= 500 || y >= 75)
+    int h = 1, w = 1;
+    if(x < -25 || y < -25 || x >= 500 || y >= 75)
       return;
    if(blockMap[(int)x+25][(int)(y-0.5+25)].o) {
       printf("Blockmap space occupied. Did not place enemy\n");
@@ -734,15 +744,24 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
    }
    printf("Placed enemy starting at %0.2f, %0.2f\n", x, y);
    CGameplayElement *tempPlaceable;
-   if (type == 6)
+   if (type == 6){
         type = 8;
+         h = 3;
+        w = 3;
+   }
    else if(type == 7)
         type = 9;
-   else if(type == 8)
+   else if(type == 8) 
         type = 10;
    else if (type == 9)
         type = 12;
-   placeables.push_back(tempPlaceable = CEnemyLoader::LoadEnemy(SRect2(x, y, (float)1, (float)1),(Enemies::EEnemyType) type));
+   else if (type == 10)
+        type = 14;
+   else if (type == 11)
+        type = 15;
+   else if (type == 12)
+        type = 16;
+   placeables.push_back(tempPlaceable = CEnemyLoader::LoadEnemy(SRect2(x, y, (float)w, (float)h),(Enemies::EEnemyType) type));
    tempPlaceable->setupObjects(); 
    tempPlaceable->printInformation();
 
