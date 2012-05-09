@@ -139,7 +139,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
 
    stepCamera(Application.getElapsedTime());
    float x=round(eye.X + previewBlockMouseX),y= round(eye.Y + previewBlockMouseY);
-   PrepPreviews(x,y);
+   //PrepPreviews(x,y);
     //PreviewBlock->
 
    //Draw Text
