@@ -1,9 +1,9 @@
-#ifndef CELEMENTENEMYPomegranite_H_
-#define CELEMENTENEMYPomegranite_H_
+#ifndef CELEMENTENEMYPomegranate_H_
+#define CELEMENTENEMYPomegranate_H_
 
 #include "CElementEnemy.h"
 
-class CElementEnemyPomegranite : public CElementEnemy, ISquishable
+class CElementEnemyPomegranate : public CElementEnemy, ISquishable
 {
    private:
       CParticleEngine *particleEngine;
@@ -14,7 +14,7 @@ class CElementEnemyPomegranite : public CElementEnemy, ISquishable
 
 
    public:
-      CElementEnemyPomegranite(SRect2 nArea);
+      CElementEnemyPomegranate(SRect2 nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

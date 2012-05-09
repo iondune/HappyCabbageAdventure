@@ -1,8 +1,8 @@
-#include "CElementEnemyPomegranite.h"
+#include "CElementEnemyPomegranate.h"
 #include "CGameLevel.h"
 
-CElementEnemyPomegranite::CElementEnemyPomegranite(SRect2 nArea) :
-   CElementEnemy(nArea, Enemies::POMEGRANITE), ISquishable(nArea.Size.X, nArea.Size.Y), OldPositionX(nArea.Position.X), HitPlayer(false), FlameTimer(0.0f) {
+CElementEnemyPomegranate::CElementEnemyPomegranate(SRect2 nArea) :
+   CElementEnemy(nArea, Enemies::POMEGRANATE), ISquishable(nArea.Size.X, nArea.Size.Y), OldPositionX(nArea.Position.X), HitPlayer(false), FlameTimer(0.0f) {
 
    MaxHealth = 1;
    CurHealth = MaxHealth;
@@ -11,7 +11,7 @@ CElementEnemyPomegranite::CElementEnemyPomegranite(SRect2 nArea) :
    particleEngine->setVisible(false);
 }
 
-void CElementEnemyPomegranite::setupPhysicsEngineObject() {
+void CElementEnemyPomegranate::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
    PhysicsEngineObject->setArea(Area);
@@ -22,7 +22,7 @@ void CElementEnemyPomegranite::setupPhysicsEngineObject() {
    PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
 }
 
-void CElementEnemyPomegranite::setupSceneObject() {
+void CElementEnemyPomegranate::setupSceneObject() {
    SceneObject = new CMeshSceneObject();
    CMesh *mesh;
 
@@ -59,7 +59,7 @@ void CElementEnemyPomegranite::setupSceneObject() {
                                                             
 //CGameplayElement has an attribute called ElapsedTime, which is updated by CGameplayElement's update function.
 
-void CElementEnemyPomegranite::OnCollision(CCollideable *Object) {
+void CElementEnemyPomegranate::OnCollision(CCollideable *Object) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
       CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
       HitPlayer = true;
@@ -88,12 +88,12 @@ void CElementEnemyPomegranite::OnCollision(CCollideable *Object) {
 }
 
 //This is where the AI would be updated for more complex enemies
-void CElementEnemyPomegranite::updatePhysicsEngineObject(float time) {
+void CElementEnemyPomegranate::updatePhysicsEngineObject(float time) {
    float difference = Area.Position.X - OldPositionX;
 
    FlameTimer += time;
 
-   if (difference < .0001f && difference > - .0001f && !HitPlayer) {
+   if (fabs(difference) < 0.0001f && !HitPlayer) {
       if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveLeft)
          PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
       else if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveRight)
@@ -118,7 +118,7 @@ void CElementEnemyPomegranite::updatePhysicsEngineObject(float time) {
 }
 
 //This is where the renderable would be updated for the more complex enemies
-void CElementEnemyPomegranite::updateSceneObject(float time) {
+void CElementEnemyPomegranate::updateSceneObject(float time) {
    if(ParticleEngine) {
       SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.Position.Y, 0));
       SceneObject->setRotation(SVector3(-90, 0, 0));
@@ -170,12 +170,12 @@ void CElementEnemyPomegranite::updateSceneObject(float time) {
    }
 }
 
-void CElementEnemyPomegranite::HideFlame() {
+void CElementEnemyPomegranate::HideFlame() {
    particleEngine->setVisible(false);
 
    PhysicsEngineObject->setArea(SRect2(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y - 1.0f));
 }
 
-void CElementEnemyPomegranite::printInformation() {
+void CElementEnemyPomegranate::printInformation() {
    printf("CElementEnemyApple; Area: [[%0.0f, %0.0f],[%0.0f, %0.0f]]\n", Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y);
 }
