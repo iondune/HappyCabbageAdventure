@@ -62,8 +62,9 @@ void CElementEnemyPomegranite::OnCollision(CCollideable *Object) {
       HitPlayer = true;
 
       //Check if jumped on top of enemy.
-      if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {
-         DeconstructFlame();
+      if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f && !particleEngine) {
+         if (particleEngine && CurHealth == 1)
+            HideFlame();
          takeDamage(1);
       }
 
@@ -95,11 +96,14 @@ void CElementEnemyPomegranite::updatePhysicsEngineObject(float time) {
 
    if (FlameTimer >= 4.0f) {
       if (particleEngine) {
-         DeconstructFlame();
+         HideFlame();
       }
 
       else {
-         particleEngine = new CParticleEngine(SVector3(Area.Position.X + 2.0f, Area.Position.Y + 2.0f, 0), 100, -1, FLAME_PARTICLE);
+         float xPos = Area.getCenter().X - Area.Size.X/2.0f;
+         float yPos = Area.getCenter().Y + .5f;
+         particleEngine = new CParticleEngine(SVector3(xPos, yPos, 0), 100, -1, FLAME_PARTICLE);
+         PhysicsEngineObject->setArea(SRect2(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y + 1.0f));
       }
 
       FlameTimer = 0.0f;
@@ -111,7 +115,6 @@ void CElementEnemyPomegranite::updatePhysicsEngineObject(float time) {
 
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyPomegranite::updateSceneObject(float time) {
-   SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
    if(ParticleEngine) {
       SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.Position.Y, 0));
       SceneObject->setRotation(SVector3(-90, 0, 0));
@@ -120,8 +123,17 @@ void CElementEnemyPomegranite::updateSceneObject(float time) {
    }
 
    if (particleEngine) {
+      float xPos = Area.getCenter().X - Area.Size.X/2.0f;
+      float yPos = Area.getCenter().Y;
+
       particleEngine->step(time);
-      particleEngine->setCenterPos(SVector3(Area.getCenter().X - Area.Size.X/2.0f, Area.getCenter().Y + Area.Size.Y/2.0f, 0));
+      particleEngine->setCenterPos(SVector3(xPos, yPos, 0));
+
+      SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y - .5f, 0));
+   }
+
+   else {
+      SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
    }
 
    Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
@@ -154,10 +166,12 @@ void CElementEnemyPomegranite::updateSceneObject(float time) {
    }
 }
 
-void CElementEnemyPomegranite::DeconstructFlame() {
+void CElementEnemyPomegranite::HideFlame() {
    particleEngine->deconstruct();
    delete particleEngine;
    particleEngine = NULL;
+
+   PhysicsEngineObject->setArea(SRect2(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y - 1.0f));
 }
 
 void CElementEnemyPomegranite::printInformation() {
