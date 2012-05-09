@@ -18,7 +18,6 @@ class CElementBlockDeath : public CElementBlock {
 
       virtual void writeXML(xmlwriter *);
       virtual void update(float);
-      virtual void updateSceneObject(float);
 
       CElementBlockDeath(SRect2 nArea, int depth, int texture, float r, float s);
 
