@@ -1102,10 +1102,6 @@ void CLWIBState::OnWidgetUnHover(CGUIWidget *widget) {
 void CLWIBState::changeTiles() {
 
     if (change == 0) { // blocks
-       /* CTexture *grass = new CTexture(CImageLoader::loadImage("Base/grass.bmp"));
-        CTexture *dirt = new CTexture(CImageLoader::loadImage("Base/dirt.bmp"));
-        CTexture *rock = new CTexture(CImageLoader::loadImage("Base/rock.bmp"));
-        CTexture *ground = new CTexture(CImageLoader::loadImage("Base/GrassyGrass.bmp"));*/
         tileOne->setImage(grass);
         tileTwo->setImage(dirt);
         tileThree->setImage(rock);
@@ -1331,6 +1327,10 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             uniType = 0;
             cDown = 0;
         }
+        if (change == 1)
+        {
+            friendType = 0;
+        }
         if (change == 2) {
             uniType = 0;
         }
@@ -1352,6 +1352,9 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             }
             uniType = 1;
             cDown = 0;
+        }
+        if (change == 1){
+            friendType = 1;
         }
         if (change == 2) {
             uniType = 1;
