@@ -259,7 +259,8 @@ void CElementPlayer::setupSceneObject() {
 }
 
 bool CElementPlayer::decrementHealth() {
-   if(Stats.Health <= 0) {
+   if(Stats.Health <= 1) {
+      Stats.Health = 0;
       decrementLives();
       return false;
    }
@@ -292,20 +293,28 @@ void CElementPlayer::incrementLives() {
    Stats.Lives++;
 }
 
+#include "COverworldState.h"
+#include "CGameState.h"
 void CElementPlayer::decrementLives() {
    Mix_PlayMusic(deathMusic, 1);
 
    if (Stats.Lives > 1) {
       Stats.Lives--;
-      //restart level somehow.
+      Stats.Health = Stats.MaxHealth;
+      Stats.Energy = Stats.MaxEnergy;
+
    }
 
+   //Reset to overworld and set stats back to max values.
    else {
-      //Exit to Overworld and give one more life.
-      incrementLives();
-      /*COverworldState::get().levelCompleted = false;
-      COverworldState::get().NewStats = Level->getPlayer().getStats();
-      CApplication::get().getStateManager().setState(new CFadeOutState(& COverworldState::get()));*/
+      COverworldState::get().levelCompleted = false;
+
+      Cabbage::PlayerInformation newStats = COverworldState::get().Stats;
+      newStats.Health = Stats.MaxHealth;
+      newStats.Energy = Stats.MaxEnergy;
+      newStats.Lives = 3; //default number of lives
+
+      CApplication::get().getStateManager().setState(new CFadeOutState(& COverworldState::get()));  //What should I ACTUALLY PUT HERE?
    }
 }
 
@@ -379,7 +388,6 @@ CElementPlayer::EAction CElementPlayer::getAction() {
    return Action;
 }
 
-#include "COverworldState.h"
 void CElementPlayer::playLevelVictory(float time) {
    SVector3 curRotation = View->getCabbageSceneObject().getRotation();
    SVector2 curLocation = SVector2 (Area.getCenter().X - .5f, Area.getCenter().Y - .5f);

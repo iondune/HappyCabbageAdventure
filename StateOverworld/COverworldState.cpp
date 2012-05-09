@@ -249,7 +249,6 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
          CGameState::get().Stats = Stats; 
          Stats.Health = Stats.MaxHealth;
          Stats.Energy = Stats.MaxEnergy;
-         Application.getStateManager().setState(new CFadeOutState(& CGameState::get()));
          spaceDown = 1;
       }
       if(Event.Key == SDLK_ESCAPE) {
