@@ -93,7 +93,7 @@ void CElementEnemyPomegranite::updatePhysicsEngineObject(float time) {
 
    FlameTimer += time;
 
-   if (difference < .001f && difference > -.001f && !HitPlayer) {
+   if (difference < .001f && difference > - .0001f && !HitPlayer) {
       if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveLeft)
          PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
       else if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveRight)
