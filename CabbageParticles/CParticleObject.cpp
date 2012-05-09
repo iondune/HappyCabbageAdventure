@@ -20,7 +20,7 @@ void CMeshSceneObject::update()
 void CParticleObject::update() {
    ISceneObject::update();
 
-   if(updated)
+   if(updated || !this->isVisible())
       return;
 
    updated = true;
