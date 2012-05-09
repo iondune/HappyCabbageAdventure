@@ -3,7 +3,7 @@
 
 CElementEnemyPear::CElementEnemyPear(SRect2 nArea) :
    CElementEnemy(nArea, Enemies::PEAR), ISquishable(nArea.Size.X, nArea.Size.Y), OldPositionX(nArea.Position.X) {
-
+   printf("Made a pear!\n");
 }
 
 void CElementEnemyPear::setupPhysicsEngineObject() {
@@ -56,10 +56,9 @@ void CElementEnemyPear::setupSceneObject() {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyPear::updatePhysicsEngineObject(float time) {
-   if (OldPositionX != Area.Position.X)
-      return;
+   float difference = Area.Position.X - OldPositionX;
 
-   if (OldPositionX == Area.Position.X) {
+   if (difference < .001f && difference > -.001f) {
       if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveLeft)
          PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
       else if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveRight)
