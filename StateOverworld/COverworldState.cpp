@@ -39,6 +39,8 @@ void COverworldState::begin()
    {
       printf("Completed level %d\n", curNode);
       levels[curNode].completed = true;
+      Stats.Health = Stats.MaxHealth;
+      Stats.Energy = Stats.MaxEnergy;
    }
    else if(!levelCompleted)
    {
