@@ -2,7 +2,7 @@
 #include "CGameLevel.h"
 
 CElementEnemyPear::CElementEnemyPear(SRect2 nArea) :
-   CElementEnemy(nArea, Enemies::PEAR), ISquishable(nArea.Size.X, nArea.Size.Y) {
+   CElementEnemy(nArea, Enemies::PEAR), ISquishable(nArea.Size.X, nArea.Size.Y), OldPositionX(nArea.Position.X) {
 
 }
 
@@ -14,6 +14,8 @@ void CElementEnemyPear::setupPhysicsEngineObject() {
    //Set actor attributes
    PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
    PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_PEAR;
+
+   PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
 }
 
 void CElementEnemyPear::setupSceneObject() {
@@ -54,7 +56,17 @@ void CElementEnemyPear::setupSceneObject() {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyPear::updatePhysicsEngineObject(float time) {
-   PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
+   if (OldPositionX != Area.Position.X)
+      return;
+
+   if (OldPositionX == Area.Position.X) {
+      if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveLeft)
+         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
+      else if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveRight)
+         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
+   }
+
+   OldPositionX = Area.Position.X;
 }
 
 //This is where the renderable would be updated for the more complex enemies
