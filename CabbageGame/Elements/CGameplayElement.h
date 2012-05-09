@@ -50,6 +50,7 @@ class CGameplayElement : public IUpdater, public ICollisionResponder {
       //Constructor
       CGameplayElement(CCollideable *& c, ISceneObject *& s, SRect2 a);
       SRect2 & getArea();
+      void setArea(SRect2);
 
       //Function for debugging
       virtual void printInformation();

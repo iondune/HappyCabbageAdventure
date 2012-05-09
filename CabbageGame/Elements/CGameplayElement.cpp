@@ -10,6 +10,11 @@ SRect2 & CGameplayElement::getArea() {
    return Area;
 }
 
+void CGameplayElement::setArea(SRect2 r) {
+   Area = r;
+   PhysicsEngineObject->setArea(r);
+}
+
 void CGameplayElement::update(float time) {
    ElapsedTime += time;
    if(!Dead) {
