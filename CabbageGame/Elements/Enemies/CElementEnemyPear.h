@@ -7,6 +7,7 @@ class CElementEnemyPear : public CElementEnemy, public ISquishable
 {
    private:
       SVector2 Scale;
+      float OldPositionX;
 
    public:
       CElementEnemyPear(SRect2 nArea);
