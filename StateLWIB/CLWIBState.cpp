@@ -1143,6 +1143,7 @@ void CLWIBState::changeTiles() {
     if (change == 1) { // cabbage
     
         tileOne->setImage(cabbageImage);
+        tileTwo->setImage(derp);
         if (!Application.getGUIEngine().isWidgetIn(tileOne))
             Application.getGUIEngine().addWidget(tileOne);
         if (!Application.getGUIEngine().isWidgetIn(tileTwo))
@@ -1326,7 +1327,6 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
                 blockWidth = 1;
                 blockHeight = 1;
                 blockDepth = 1;
-              //  PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
             }
             uniType = 0;
             cDown = 0;
@@ -1349,7 +1349,6 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
                 blockWidth = 1;
                 blockHeight = 1;
                 blockDepth = 1;
-            //    PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
             }
             uniType = 1;
             cDown = 0;
@@ -1372,7 +1371,6 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
                 blockWidth = 1;
                 blockHeight = 1;
                 blockDepth = 1;
-//                PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
             }
             uniType = 2;
             cDown = 0;
@@ -1391,7 +1389,6 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             blockWidth = 5;
             blockHeight = 5;
             blockDepth = 5;
-//            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));            
             cDown = 0;
         }
         if (change == 2) {
@@ -1406,7 +1403,6 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 0) {
             if (blockWidth > 1 && uniType != -5)
                 blockWidth--;
-//            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             cDown = 1;
         }
         if (change == 2) {
@@ -1419,7 +1415,6 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 0) {
             if (blockWidth < 10 && uniType != -5)
                 blockWidth++;
-//            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             cDown = 1;
 
         }
@@ -1433,7 +1428,6 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 0) {
             if (blockHeight > 1 && uniType != -5)
                 blockHeight--;
-//            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             cDown = 2;
         }
         if (change == 2) {
@@ -1444,7 +1438,6 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 0) {
             if (blockHeight < 10 && uniType != -5)
                 blockHeight++;
-//            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             cDown = 2;
         }
         if (change == 1) {
@@ -1456,7 +1449,6 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 0) {
             if (blockDepth > 1 && uniType != -5)
                 blockDepth--;
-//            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             cDown = 3;
         }
         if (change == 1) {
@@ -1468,7 +1460,6 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 0) {
             if (blockDepth < 5 && uniType != -5)
                 blockDepth++;
-//            PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
             cDown = 3;
         }
         if (change == 1) {
@@ -1485,21 +1476,6 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     }
     if (widget == undoTile) {
         if( placeables.size() > 0) {
-            //Application.getSceneManager().removeSceneObject(blocks.back());
-            /*CGameplayElement *m_block = placeables.back();
-            redoPlaceables.push_back(placeables.back());
-
-            int i,j;
-            for(i = 0; i < m_block->getArea().Position.X; i++) {
-                for(j = 0; j < m_block->getArea().Size.Y; j++) {
-                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = false;
-                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = NULL;
-                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = -1;
-                    blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = -1;
-                }
-            }
-
-            placeables.pop_back();*/
             undoObjects();
         }
     }
@@ -1633,6 +1609,7 @@ void CLWIBState::prepHud() {
     blockIn = new CTexture(CImageLoader::loadImage("ModelImages/blockDepth.bmp"));
     blockOut = new CTexture(CImageLoader::loadImage("ModelImages/blockDepth2.bmp"));
 
+    derp = new CTexture(CImageLoader::loadImage("ModelImages/derp_gray.bmp"));
     grape = new CTexture(CImageLoader::loadImage("ModelImages/grapes_gray.bmp"));
     banana = new CTexture(CImageLoader::loadImage("ModelImages/banana_gray.bmp"));
     pear = new CTexture(CImageLoader::loadImage("ModelImages/pear_gray.bmp"));
@@ -1644,7 +1621,6 @@ void CLWIBState::prepHud() {
     apple = new CTexture(CImageLoader::loadImage("ModelImages/apple_gray.bmp"));
     orange = new CTexture(CImageLoader::loadImage("ModelImages/orange_gray.bmp"));
     kiwi = new CTexture(CImageLoader::loadImage("ModelImages/kiwi_gray.bmp"));
-   // fire = new CTexture(CImageLoader::loadImage("ModelImages/alien_gray.bmp"));
     blade = new CTexture(CImageLoader::loadImage("ModelImages/trap1_gray.bmp"));
     cabbageImage = new CTexture(CImageLoader::loadImage("ModelImages/cabbage_gray.bmp"));
     fire = new CTexture(CImageLoader::loadImage("ModelImages/flame.bmp"));

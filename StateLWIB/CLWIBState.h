@@ -48,7 +48,7 @@ class CLWIBState : public CState<CLWIBState>
    int WindowWidth, WindowHeight;
    //stuff for textures
    CTexture *grass,*dirt,*rock,*ground,*cabbageImage,*apple,*orange,*kiwi,*fire,*blade, *alien;
-   CTexture *leaf, *heart;
+   CTexture *leaf, *heart, *derp;
    CTexture *blockRight, *blockLeft, *blockUp, *blockDown, *blockIn, *blockOut, *flagImg;
    CTexture *grape, *banana, *pear, *cherry;
    // GUIImageWidget
