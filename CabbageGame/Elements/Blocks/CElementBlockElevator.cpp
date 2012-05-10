@@ -1,11 +1,11 @@
 #include "CElementBlockElevator.h"
 #include "CGameLevel.h"
 
-CElementBlockElevator::CElementBlockElevator(SRect2 nArea, int D, int T, float R, float S)
+CElementBlockElevator::CElementBlockElevator(SRect2f nArea, int D, int T, float R, float S)
 : CElementBlock(nArea, D, T), Range(R), Speed(S) {
 }
 
-void CElementBlockElevator::OnCollision(CCollideable *Object) {
+void CElementBlockElevator::OnCollision(const SCollisionEvent& Event) {
    return;
 }
 
@@ -38,7 +38,7 @@ void CElementBlockElevator::writeXML(xmlwriter *l) {
 }
 
 void CElementBlockElevator::setupPhysicsEngineObject() {
-   CElevator *Ele;
+   CCollisionElevator *Ele;
    PhysicsEngineObject = Ele = Level.getPhysicsEngine().addElevator();
    PhysicsEngineObject->setArea(Area);
 

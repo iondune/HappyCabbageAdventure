@@ -54,6 +54,11 @@ void CCollisionEngine::removeAll()
 	Actors.clear();
 }
 
+void CCollisionEngine::remove(CCollideable * Collideable)
+{
+	RemoveList.insert(Collideable);
+}
+
 void CCollisionEngine::removeCollideable(CCollideable * Collideable)
 {
 	RemoveList.insert(Collideable);
@@ -85,6 +90,10 @@ void CCollisionEngine::runLists()
 		Objects.insert(* it);
 
 	ObjectAddList.clear();
+}
+
+void CCollisionEngine::update(float const Elapsed) {
+   updateAll(Elapsed);
 }
 
 void CCollisionEngine::updateAll(float const Elapsed)

@@ -19,8 +19,8 @@ void CFDerp::loadMesh() {
     Renderable = new CMeshSceneObject();
     CMesh *mesh = CMeshLoader::load3dsMesh("Base/derp.3ds");
     if(mesh) {
-        mesh->resizeMesh(SVector3(1));
-        mesh->centerMeshByExtents(SVector3(0));
+        mesh->resizeMesh(SVector3f(1));
+        mesh->centerMeshByExtents(SVector3f(0));
         mesh->calculateNormalsPerFace();
     }
     else
@@ -29,8 +29,8 @@ void CFDerp::loadMesh() {
     Renderable->setMesh(mesh);
     Renderable->setShader(ERP_DEFAULT, "Toon");
     Renderable->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-    Renderable->setScale(SVector3(1.5f));
-    Renderable->setRotation(SVector3(-90, 0, -90));
+    Renderable->setScale(SVector3f(1.5f));
+    Renderable->setRotation(SVector3f(-90, 0, -90));
 
     CApplication::get().getSceneManager().addSceneObject(Renderable);
 }
@@ -39,10 +39,10 @@ void CFDerp::loadMesh() {
 //Adds actor to engine and preps engine
 void CFDerp::loadActor() {
    Actor = Manager->getEngine()->addActor();
-   Actor->setArea(SRect2(x, y, 1, 1));
+   Actor->setArea(SRect2f(x, y, 1, 1));
    Actor->setJumping(true);
 
-   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X, Actor->getArea().getCenter().Y + .2f, 0));
+   Renderable->setTranslation(SVector3f(Actor->getArea().getCenter().X, Actor->getArea().getCenter().Y + .2f, 0));
    //Set actor attributes
 }
 
@@ -53,7 +53,7 @@ void CFDerp::update(float const TickTime) {
 }
 
 void CFDerp::doRenderable() {
-   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X, Actor->getArea().getCenter().Y + .2f, 0));
+   Renderable->setTranslation(SVector3f(Actor->getArea().getCenter().X, Actor->getArea().getCenter().Y + .2f, 0));
    //printf("%0.2f, %0.2f\n", Actor->getArea().getCenter().X, Actor->getArea().getCenter().Y);
  Actor->setJumping(true);
 }

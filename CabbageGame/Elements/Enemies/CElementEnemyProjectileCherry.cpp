@@ -2,7 +2,7 @@
 #include "CGameLevel.h"
 
 //Generic enemy, for usage in the LWIB, I guess.
-CElementEnemyProjectileCherry::CElementEnemyProjectileCherry(SRect2 nArea, float xDirection)
+CElementEnemyProjectileCherry::CElementEnemyProjectileCherry(SRect2f nArea, float xDirection)
 : CElementEnemyProjectile(nArea, Enemies::CHERRY_PROJECTILE), XDir(xDirection), SetImpulse(true) {
    MaxHealth = 2;
    CurHealth = MaxHealth;
@@ -18,7 +18,6 @@ void CElementEnemyProjectileCherry::setupPhysicsEngineObject() {
    PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
    PhysicsEngineObject->getAttributes().AirControl = 1.0f;
    PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_PCHERRY;
 }
 
 void CElementEnemyProjectileCherry::setupSceneObject() {
@@ -69,7 +68,7 @@ void CElementEnemyProjectileCherry::updatePhysicsEngineObject(float time) {
       if (XDir < 0)
          xRandom = -xRandom;
 
-      PhysicsEngineObject->setImpulse(SVector2(XDir + xRandom, 2.f + yRandom), 0.02f);
+      PhysicsEngineObject->addImpulse(SVector2f(XDir + xRandom, 2.f + yRandom), 0.02f);
       SetImpulse = false;
    }
 }

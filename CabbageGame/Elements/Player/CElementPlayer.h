@@ -65,7 +65,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       CElementPlayer(SRect2f nArea, bool useCamera = true);
 
       //CGameplayElement functions
-      virtual void OnCollision(CCollideable *Object);
+      virtual void OnCollision(const SCollisionEvent& Event);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

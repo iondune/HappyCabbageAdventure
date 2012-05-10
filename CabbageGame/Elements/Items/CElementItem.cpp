@@ -48,7 +48,7 @@ void CElementItem::writeXML(xmlwriter *l) {
     l->CloseLasttag();
 }
 
-void CElementItem::OnCollision(CCollideable *Object) {
+void CElementItem::OnCollision(const SCollisionEvent& Event) {
    fprintf(stderr, "Error: collision on generic item type %d (perhaps the CElementItem::OnCollision function wasn't overridden?).\n", Type);
    exit(1);
 }
@@ -74,7 +74,7 @@ void CElementItem::reactToAbility(Abilities::EAbilityType Ability) {
    SVector2f PlayerVelocity = ((CCollisionActor*)Level.getPlayer().getPhysicsEngineObject())->getVelocity();
    switch(Ability) {
       case Abilities::SHIELD:
-         ((CCollisionActor*)PhysicsEngineObject)->addImpulse((PlayerVelocity + SVector2(0.0f, 2.5f)) * 3.0f);
+         ((CCollisionActor*)PhysicsEngineObject)->addImpulse((PlayerVelocity + SVector2f(0.0f, 2.5f)) * 3.0f);
          //dieWithSeeds();
          break;
       default:

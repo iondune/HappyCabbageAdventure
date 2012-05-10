@@ -31,24 +31,24 @@
 /* A somewhat arbitrary frequency range. The low end of this will
    sound terrible as no lowpass filtering is performed on most
    instruments before resampling. */
-#define MIN_OUTPUT_RATE 	4000
-#define MAX_OUTPUT_RATE 	65000
+#define MIN_OUTPUT_RATE    4000
+#define MAX_OUTPUT_RATE    65000
 
 /* In percent. */
-/* #define DEFAULT_AMPLIFICATION 	70 */
-/* #define DEFAULT_AMPLIFICATION 	50 */
-#define DEFAULT_AMPLIFICATION 	30
+/* #define DEFAULT_AMPLIFICATION    70 */
+/* #define DEFAULT_AMPLIFICATION    50 */
+#define DEFAULT_AMPLIFICATION    30
 
 /* Default sampling rate, default polyphony, and maximum polyphony.
    All but the last can be overridden from the command line. */
-#define DEFAULT_RATE	32000
-/* #define DEFAULT_VOICES	32 */
-/* #define MAX_VOICES	48 */
-#define DEFAULT_VOICES	256
-#define MAX_VOICES	256
-#define MAXCHAN		16
-/* #define MAXCHAN		64 */
-#define MAXNOTE		128
+#define DEFAULT_RATE   32000
+/* #define DEFAULT_VOICES   32 */
+/* #define MAX_VOICES   48 */
+#define DEFAULT_VOICES   256
+#define MAX_VOICES   256
+#define MAXCHAN      16
+/* #define MAXCHAN      64 */
+#define MAXNOTE      128
 
 /* 1000 here will give a control ratio of 22:1 with 22 kHz output.
    Higher CONTROLS_PER_SECOND values allow more accurate rendering
@@ -140,9 +140,9 @@ typedef char int8;
 
 #define XCHG_SHORT(x) ((((x)&0xFF)<<8) | (((x)>>8)&0xFF))
 # define XCHG_LONG(x) ((((x)&0xFF)<<24) | \
-		      (((x)&0xFF00)<<8) | \
-		      (((x)&0xFF0000)>>8) | \
-		      (((x)>>24)&0xFF))
+            (((x)&0xFF00)<<8) | \
+            (((x)&0xFF0000)>>8) | \
+            (((x)>>24)&0xFF))
 
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
 #define LE_SHORT(x) x
@@ -160,16 +160,16 @@ typedef char int8;
 
 /* You could specify a complete path, e.g. "/etc/timidity.cfg", and
    then specify the library directory in the configuration file. */
-#define CONFIG_FILE	"timidity.cfg"
+#define CONFIG_FILE   "timidity.cfg"
 #define CONFIG_FILE_ETC "/etc/timidity.cfg"
 
 #if defined(__WIN32__) || defined(__OS2__)
-#define DEFAULT_PATH	"C:\\TIMIDITY"
+#define DEFAULT_PATH   "C:\\TIMIDITY"
 #else
-#define DEFAULT_PATH	"/etc/timidity"
-#define DEFAULT_PATH1	"/usr/share/timidity"
-#define DEFAULT_PATH2	"/usr/local/share/timidity"
-#define DEFAULT_PATH3	"/usr/local/lib/timidity"
+#define DEFAULT_PATH   "/etc/timidity"
+#define DEFAULT_PATH1   "/usr/share/timidity"
+#define DEFAULT_PATH2   "/usr/local/share/timidity"
+#define DEFAULT_PATH3   "/usr/local/lib/timidity"
 #endif
 
 /* These affect general volume */

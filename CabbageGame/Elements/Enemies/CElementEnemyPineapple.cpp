@@ -1,7 +1,7 @@
 #include "CElementEnemyPineapple.h"
 #include "CGameLevel.h"
 
-CElementEnemyPineapple::CElementEnemyPineapple(SRect2 nArea) :
+CElementEnemyPineapple::CElementEnemyPineapple(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::PINEAPPLE), ISquishable(4.0f, 4.0f), HitPlayer(false), OldPositionX(nArea.Position.X) {
 
    MaxHealth = 4;
@@ -56,7 +56,7 @@ void CElementEnemyPineapple::setupSceneObject() {
                                                             
 //CGameplayElement has an attribute called ElapsedTime, which is updated by CGameplayElement's update function.
 
-void CElementEnemyPineapple::OnCollision(CCollideable *Object) {
+void CElementEnemyPineapple::OnCollision(const SCollisionEvent& Event) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
       CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
       HitPlayer = true;
@@ -70,9 +70,9 @@ void CElementEnemyPineapple::OnCollision(CCollideable *Object) {
       else {
          if(Level.getPlayer().decrementHealth()) {
             if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
-               PlayerActor->setImpulse(SVector2(7.f, 2.8f), 0.1f);
+               PlayerActor->addImpulse(SVector2f(7.f, 2.8f), 0.1f);
             else
-               PlayerActor->setImpulse(SVector2(-7.f, 2.8f), 0.1f);
+               PlayerActor->addImpulse(SVector2f(-7.f, 2.8f), 0.1f);
             Level.getPlayer().setShaking(1.0f, 3.0f);
          }
       }

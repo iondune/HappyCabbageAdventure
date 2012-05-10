@@ -2,11 +2,11 @@
 #include "CGameLevel.h"
 #include "CElementPlayer.h"
 
-CElementBlockDeath::CElementBlockDeath(SRect2 nArea, int D, int T, float R, float S)
+CElementBlockDeath::CElementBlockDeath(SRect2f nArea, int D, int T, float R, float S)
 : CElementBlock(nArea, D, T), Range(R), Speed(S) {
 }
 
-void CElementBlockDeath::OnCollision(CCollideable *Object) {
+void CElementBlockDeath::OnCollision(const SCollisionEvent& Event) {
    Level.getPlayer().setHealth(0);
    return;
 }

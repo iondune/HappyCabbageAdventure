@@ -8,7 +8,7 @@ class CElementItemHealth : public CElementItem
    private:
 
    public:
-      CElementItemHealth(SRect2 nArea);
+      CElementItemHealth(SRect2f nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
@@ -16,7 +16,7 @@ class CElementItemHealth : public CElementItem
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);
 
-      virtual void OnCollision(CCollideable *Object);
+      virtual void OnCollision(const SCollisionEvent& Event);
 
       virtual void printInformation();
 };

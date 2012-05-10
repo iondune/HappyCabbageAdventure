@@ -1,7 +1,7 @@
 #include "CElementEnemyPomegranate.h"
 #include "CGameLevel.h"
 
-CElementEnemyPomegranate::CElementEnemyPomegranate(SRect2 nArea) :
+CElementEnemyPomegranate::CElementEnemyPomegranate(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::POMEGRANATE), ISquishable(nArea.Size.X, nArea.Size.Y), OldPositionX(nArea.Position.X), HitPlayer(false), FlameTimer(0.0f) {
 
    MaxHealth = 1;
@@ -59,7 +59,7 @@ void CElementEnemyPomegranate::setupSceneObject() {
                                                             
 //CGameplayElement has an attribute called ElapsedTime, which is updated by CGameplayElement's update function.
 
-void CElementEnemyPomegranate::OnCollision(CCollideable *Object) {
+void CElementEnemyPomegranate::OnCollision(const SCollisionEvent& Event) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
       CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
       HitPlayer = true;
@@ -78,9 +78,9 @@ void CElementEnemyPomegranate::OnCollision(CCollideable *Object) {
       else {
          if(Level.getPlayer().decrementHealth()) {
             if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
-               PlayerActor->setImpulse(SVector2(7.f, 2.8f), 0.1f);
+               PlayerActor->addImpulse(SVector2f(7.f, 2.8f), 0.1f);
             else
-               PlayerActor->setImpulse(SVector2(-7.f, 2.8f), 0.1f);
+               PlayerActor->addImpulse(SVector2f(-7.f, 2.8f), 0.1f);
             Level.getPlayer().setShaking(1.0f, 3.0f);
          }
       }
@@ -107,7 +107,7 @@ void CElementEnemyPomegranate::updatePhysicsEngineObject(float time) {
 
       else {
          particleEngine->setVisible(true);
-         PhysicsEngineObject->setArea(SRect2(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y + 1.0f));
+         PhysicsEngineObject->setArea(SRect2f(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y + 1.0f));
       }
 
       FlameTimer = 0.0f;
@@ -173,7 +173,7 @@ void CElementEnemyPomegranate::updateSceneObject(float time) {
 void CElementEnemyPomegranate::HideFlame() {
    particleEngine->setVisible(false);
 
-   PhysicsEngineObject->setArea(SRect2(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y - 1.0f));
+   PhysicsEngineObject->setArea(SRect2f(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y - 1.0f));
 }
 
 void CElementEnemyPomegranate::printInformation() {
