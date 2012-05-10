@@ -2,9 +2,9 @@
 #include "CGameLevel.h"
 
 CElementEnemyPineapple::CElementEnemyPineapple(SRect2 nArea) :
-   CElementEnemy(nArea, Enemies::PINEAPPLE), ISquishable(nArea.Size.X, nArea.Size.Y) {
+   CElementEnemy(nArea, Enemies::PINEAPPLE), ISquishable(nArea.Size.X, nArea.Size.Y), HitPlayer(false), OldPositionX(nArea.Position.X) {
 
-   MaxHealth = 3;
+   MaxHealth = 4;
    CurHealth = MaxHealth;
 }
 
@@ -14,7 +14,9 @@ void CElementEnemyPineapple::setupPhysicsEngineObject() {
    PhysicsEngineObject->setArea(Area);
 
    //Set actor attributes
-   PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
+   PhysicsEngineObject->getAttributes().MaxWalk = 1.2f;
+
+   PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
 }
 
 void CElementEnemyPineapple::setupSceneObject() {
@@ -42,7 +44,7 @@ void CElementEnemyPineapple::setupSceneObject() {
       printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
 
    SceneObject->setMesh(mesh);
-   SceneObject->setRotation(SVector3(-90, 0, 0));
+   SceneObject->setRotation(SVector3(-90, 0, 180));
 
    Scale = Area.Size;
    SceneObject->setScale(SVector3(Scale.X, Scale.X, Scale.Y));
@@ -54,14 +56,42 @@ void CElementEnemyPineapple::setupSceneObject() {
                                                             
 //CGameplayElement has an attribute called ElapsedTime, which is updated by CGameplayElement's update function.
 
+void CElementEnemyPineapple::OnCollision(CCollideable *Object) {
+   if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
+      CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
+      HitPlayer = true;
+
+      //Check if jumped on top of enemy.
+      if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {
+         takeDamage(1);
+      }
+
+      //Did the player run into them?
+      else {
+         if(Level.getPlayer().decrementHealth()) {
+            if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
+               PlayerActor->setImpulse(SVector2(7.f, 2.8f), 0.1f);
+            else
+               PlayerActor->setImpulse(SVector2(-7.f, 2.8f), 0.1f);
+            Level.getPlayer().setShaking(1.0f, 3.0f);
+         }
+      }
+   }
+}
+
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyPineapple::updatePhysicsEngineObject(float time) {
-   SVector2 PlayerPosition = Level.getPlayer().getArea().Position;
-   //TODO: Make some class singleton so we can get the player's location
-   if (PlayerPosition.X < Area.getCenter().X)
-      PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
-   else if (PlayerPosition.X > Area.getCenter().X)
-      PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
+   float difference = Area.Position.X - OldPositionX;
+
+   if (difference < .00001f && difference > -.00001f && !HitPlayer) {
+      if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveLeft)
+         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
+      else if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveRight)
+         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
+   }
+
+   OldPositionX = Area.Position.X;
+   HitPlayer = false;
 }
 
 //This is where the renderable would be updated for the more complex enemies
@@ -70,25 +100,11 @@ void CElementEnemyPineapple::updateSceneObject(float time) {
    if(ParticleEngine) {
       SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.Position.Y, 0));
       SceneObject->setRotation(SVector3(-90, 0, 0));
-      SceneObject->setScale(SVector3(Scale.X, Scale.X, 0.3f));
+      SceneObject->setScale(SVector3(1.0f, 1.0f, 0.3f));
       return;
    }
 
    Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
-
-   if (ScaleMult > 1.1f)
-      PositiveScale = false;
-   else if (ScaleMult < .9f)
-      PositiveScale = true;
-
-   if (PositiveScale)
-      ScaleMult += .35f * time;
-   else
-      ScaleMult -= .35f * time;
-
-   ScaleMult = std::max(std::min(ScaleMult, 1.2f), 0.8f);
-
-   Scale.Y += ScaleMult - 1.0f;
 
    if (PhysicsEngineObject->getVelocity().Y < .01f && PhysicsEngineObject->getVelocity().Y > -.01f) {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)
@@ -96,11 +112,12 @@ void CElementEnemyPineapple::updateSceneObject(float time) {
       else if(PhysicsEngineObject->getVelocity().X > 0.01f)
          SceneObject->setScale(SVector3(Scale.X,Scale.X,Scale.Y));
    }
+
    else {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)
-         SceneObject->setScale(SVector3(-Scale.X,Scale.X,Scale.Y));
+         SceneObject->setScale(SVector3(-1,1,1));
       else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-         SceneObject->setScale(SVector3(Scale.X,Scale.X,Scale.Y));
+         SceneObject->setScale(SVector3(1,1,1));
    }
 }
 
