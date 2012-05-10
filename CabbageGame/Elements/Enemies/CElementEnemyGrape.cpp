@@ -1,7 +1,7 @@
 #include "CElementEnemyGrape.h"
 #include "CGameLevel.h"
 
-CElementEnemyGrape::CElementEnemyGrape(SRect2 nArea) :
+CElementEnemyGrape::CElementEnemyGrape(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::GRAPE), shootTime(0.f) {
 
 }
@@ -94,12 +94,12 @@ void CElementEnemyGrape::ShootGrape() {
       x = Area.Position.X - Area.Size.X/2.f - .5f;
       y = Area.Position.Y + .15f;
 
-      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(x, y, Area.Size.X, Area.Size.Y), Enemies::GRAPE_PROJECTILE));
+      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2f(x, y, Area.Size.X, Area.Size.Y), Enemies::GRAPE_PROJECTILE));
    }
    else {//spawn to the right
       x = Area.Position.X + Area.Size.X/2.f + .55f;
       y = Area.Position.Y + .15f;
 
-      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(x, y, Area.Size.X, Area.Size.Y), Enemies::GRAPE_PROJECTILE));
+      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2f(x, y, Area.Size.X, Area.Size.Y), Enemies::GRAPE_PROJECTILE));
    }
 }

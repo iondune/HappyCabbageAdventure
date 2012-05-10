@@ -3,7 +3,7 @@
 #include "CGameLevel.h"
 #include "CElementPlayer.h"
 
-CElementBlockBreakable::CElementBlockBreakable(SRect2 nArea)
+CElementBlockBreakable::CElementBlockBreakable(SRect2f nArea)
 : CElementBlock(nArea, 1, 0) {
 }
 

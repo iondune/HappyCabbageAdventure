@@ -3,7 +3,7 @@
 
 
 #include <sstream>
-CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2 & nArea, SVector3 & sf, CCollisionActor* peo, bool uC) :
+CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2f & nArea, SVector3 & sf, CCollisionActor* peo, bool uC) :
    SceneObject(obj), CabbageIndex(CurHealth - 1), Direction(dir), Action(act), Hurt(false), Area(nArea), ShakeFactor(sf),
    ySineValue(0.0f), PhysicsEngineObject(peo), UseCamera(uC) {
 
@@ -138,7 +138,7 @@ void CPlayerView::setShadowHeights(float l, float r) {
    yRightShadow = r;
 }
 
-void CPlayerView::setCutoffPoint(SRect2 left, SRect2 right) {
+void CPlayerView::setCutoffPoint(SRect2f left, SRect2f right) {
    ShadowLeft->setVisible(left.Size.X != 0.0f);
    ShadowRight->setVisible(right.Size.X != 0.0f);
    bool equal = false;
@@ -181,7 +181,7 @@ void CPlayerView::updateCameraPosition(float const ElapsedTime)
 {
    if(!UseCamera)
       return;
-	TargetCameraPosition = SVector2(Area.getCenter().X + (Direction == CElementPlayer::Right ? 1.75f : -1.75f), Area.getCenter().Y + 1.3f);
+	TargetCameraPosition = SVector2f(Area.getCenter().X + (Direction == CElementPlayer::Right ? 1.75f : -1.75f), Area.getCenter().Y + 1.3f);
 
 	if (TargetCameraPosition != CurrentCameraPosition)
 	{

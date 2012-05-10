@@ -1,7 +1,7 @@
 #include "CElementItemHealth.h"
 #include "CGameLevel.h"
 
-CElementItemHealth::CElementItemHealth(SRect2 nArea) :
+CElementItemHealth::CElementItemHealth(SRect2f nArea) :
    CElementItem(nArea, Items::HEALTH) {
 
 }

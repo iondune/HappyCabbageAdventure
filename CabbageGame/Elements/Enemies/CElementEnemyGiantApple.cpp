@@ -1,7 +1,7 @@
 #include "CElementEnemyGiantApple.h"
 #include "CGameLevel.h"
 
-CElementEnemyGiantApple::CElementEnemyGiantApple(SRect2 nArea) :
+CElementEnemyGiantApple::CElementEnemyGiantApple(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::GIANT_APPLE), ISquishable(nArea.Size.X, nArea.Size.Y) {
 
    MaxHealth = 3;

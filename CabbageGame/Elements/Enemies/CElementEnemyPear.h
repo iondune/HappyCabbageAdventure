@@ -11,7 +11,7 @@ class CElementEnemyPear : public CElementEnemy, public ISquishable
       bool HitPlayer;
 
    public:
-      CElementEnemyPear(SRect2 nArea);
+      CElementEnemyPear(SRect2f nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

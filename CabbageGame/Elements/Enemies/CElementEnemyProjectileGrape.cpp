@@ -2,7 +2,7 @@
 #include "CGameLevel.h"
 
 //Generic enemy, for usage in the LWIB, I guess.
-CElementEnemyProjectileGrape::CElementEnemyProjectileGrape(SRect2 nArea)
+CElementEnemyProjectileGrape::CElementEnemyProjectileGrape(SRect2f nArea)
 : CElementEnemyProjectile(nArea, Enemies::GRAPE_PROJECTILE) {
 }
 
@@ -83,11 +83,11 @@ void CElementEnemyProjectileGrape::updateSceneObject(float time) {
 
 void CElementEnemyProjectileGrape::updatePhysicsEngineObject(float time) {
    if (PlayerLeft) { //go left
-      PhysicsEngineObject->setVelocity(SVector2(-5.f, 0.f));
+      PhysicsEngineObject->setVelocity(SVector2f(-5.f, 0.f));
    }
    
    else { //go right
-      PhysicsEngineObject->setVelocity(SVector2(5.f, 0.f));
+      PhysicsEngineObject->setVelocity(SVector2f(5.f, 0.f));
    }
 }
 

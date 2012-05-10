@@ -70,24 +70,24 @@ public:
         // Setup camera
         float AspectRatio = (float)WindowWidth / (float)WindowHeight;
         Camera = new CCameraControl();//new CCamera(AspectRatio, 0.01f, 100.f, 60.f);
-        Camera->setPosition(SVector3(0, 0, 2));
-        Camera->setLookDirection(SVector3(0, 0, -1));
+        Camera->setPosition(SVector3f(0, 0, 2));
+        Camera->setLookDirection(SVector3f(0, 0, -1));
         CApplication::get().getSceneManager().setActiveCamera(Camera);
 
         // Setup scene
         CSceneManager & SceneManager = CApplication::get().getSceneManager();
 
         SceneManager.Lights.push_back(new CLight());
-        SceneManager.Lights.back()->Color = SVector3(0.5f, 0.2f, 0.2f);
-        SceneManager.Lights.back()->Position = SVector3(1.f, 2.f, 3.f);
+        SceneManager.Lights.back()->Color = SVector3f(0.5f, 0.2f, 0.2f);
+        SceneManager.Lights.back()->Position = SVector3f(1.f, 2.f, 3.f);
 
         SceneManager.Lights.push_back(new CLight());
-        SceneManager.Lights.back()->Color = SVector3(0.2f, 0.5f, 0.2f);
-        SceneManager.Lights.back()->Position = SVector3(-1.f, -2.f, -3.f);
+        SceneManager.Lights.back()->Color = SVector3f(0.2f, 0.5f, 0.2f);
+        SceneManager.Lights.back()->Position = SVector3f(-1.f, -2.f, -3.f);
 
         SceneManager.Lights.push_back(new CLight());
-        SceneManager.Lights.back()->Color = SVector3(0.2f, 0.2f, 0.5f);
-        SceneManager.Lights.back()->Position = SVector3(-3.f, 0.f, 0.f);
+        SceneManager.Lights.back()->Color = SVector3f(0.2f, 0.2f, 0.5f);
+        SceneManager.Lights.back()->Position = SVector3f(-3.f, 0.f, 0.f);
 
 
         // Attempt to load shader and attributes
@@ -105,16 +105,16 @@ public:
         if (MeshFace)
         {
             MeshFace->linearizeIndices();
-            MeshFace->resizeMesh(SVector3(1.5));
-            MeshFace->centerMeshByExtents(SVector3(0));
+            MeshFace->resizeMesh(SVector3f(1.5));
+            MeshFace->centerMeshByExtents(SVector3f(0));
             MeshFace->calculateNormalsPerFace();
         }
 
         MeshVertex = CMeshLoader::load3dsMesh("../Base/Models/crappycabbage2.3ds", false);
         if (MeshVertex)
         {
-            MeshVertex->resizeMesh(SVector3(1.5));
-            MeshVertex->centerMeshByExtents(SVector3(0));
+            MeshVertex->resizeMesh(SVector3f(1.5));
+            MeshVertex->centerMeshByExtents(SVector3f(0));
             MeshVertex->calculateNormalsPerVertex(true);
         }
 
@@ -130,33 +130,33 @@ public:
 		WingMan->setTexture("Base/GrassyGrass.bmp", 2);
 		WingMan->setTexture("Base/DirtyDirt.bmp", 3);
 		ISceneObject * Dummy = new ISceneObject();
-		Dummy->setTranslation(SVector3(1.5f,0,0));
+		Dummy->setTranslation(SVector3f(1.5f,0,0));
 		WingMan->setParent(Dummy);
 		Dummy->setParent(Renderable);
 
 		CMesh * Cube = CMeshLoader::createCubeMesh();
 		CMeshSceneObject * SkyBox = SceneManager.addMeshSceneObject(Cube, CShaderLoader::loadShader("DiffuseTexture"));
-		SkyBox->setScale(SVector3(20.f));
+		SkyBox->setScale(SVector3f(20.f));
 		SkyBox->setTexture("../../DemoMeshLoader/stars.bmp");
 		SkyBox->setCullingEnabled(false);
 
 		CApplication::get().getSceneManager().addSceneObject(Renderable);
 
-		Image = new CGUIImageWidget("../../DemoMeshLoader/spaceshiptexture.bmp", SVector2(0.2f, 0.2f));
+		Image = new CGUIImageWidget("../../DemoMeshLoader/spaceshiptexture.bmp", SVector2f(0.2f, 0.2f));
 		GUIEngine.addWidget(Image);
 
-		Image = new CGUIImageWidget(CImageLoader::loadTexture("Base/sky.bmp"), SVector2(0.2f, 0.2f));
-		Image->setPosition(SVector2(0.2f, 0.f));
+		Image = new CGUIImageWidget(CImageLoader::loadTexture("Base/sky.bmp"), SVector2f(0.2f, 0.2f));
+		Image->setPosition(SVector2f(0.2f, 0.f));
 		Image->setRotation(45.f);
 		GUIEngine.addWidget(Image);
 
-		Image = new CGUIImageWidget(CImageLoader::loadTexture("MainMenu/wood.tga"), SVector2(0.2f, 0.2f));
-		Image->setPosition(SVector2(0.4f, 0.f));
+		Image = new CGUIImageWidget(CImageLoader::loadTexture("MainMenu/wood.tga"), SVector2f(0.2f, 0.2f));
+		Image->setPosition(SVector2f(0.4f, 0.f));
 		GUIEngine.addWidget(Image);
 
 
 		Font = new CGUIFontWidget("Fonts/DejaVuSansMono.ttf", 36.f);
-		Font->setPosition(SVector2(0, 0.25f));
+		Font->setPosition(SVector2f(0, 0.25f));
 		Font->setText("Hello, world!");
 		Font->setColor(SColor(1, 1, 1));
 		GUIEngine.addWidget(Font);
@@ -178,32 +178,32 @@ public:
         {
         default:
         case 1:
-            mat.AmbientColor = SVector3(0.2f);
-            mat.DiffuseColor = SVector3(0.9f);
+            mat.AmbientColor = SVector3f(0.2f);
+            mat.DiffuseColor = SVector3f(0.9f);
             mat.Shininess = 10.f;
 			Renderable->setMaterial(mat);
             break;
         case 2:
-            mat.AmbientColor = SVector3(0.2f);
-            mat.DiffuseColor = SVector3(1.2f);
+            mat.AmbientColor = SVector3f(0.2f);
+            mat.DiffuseColor = SVector3f(1.2f);
             mat.Shininess = 200.f;
 			Renderable->setMaterial(mat);
             break;
         case 3:
-            mat.AmbientColor = SVector3(0.2f);
-            mat.DiffuseColor = SVector3(1.4f);
+            mat.AmbientColor = SVector3f(0.2f);
+            mat.DiffuseColor = SVector3f(1.4f);
             mat.Shininess = 3000.f;
 			Renderable->setMaterial(mat);
             break;
         case 4:
-            mat.AmbientColor = SVector3(0.2f);
-            mat.DiffuseColor = SVector3(1.4f);
+            mat.AmbientColor = SVector3f(0.2f);
+            mat.DiffuseColor = SVector3f(1.4f);
             mat.Shininess = 0.1f;
 			Renderable->setMaterial(mat);
             break;
 		case 5:
-            mat.AmbientColor = SVector3(0.2f);
-            mat.DiffuseColor = SVector3(1.4f);
+            mat.AmbientColor = SVector3f(0.2f);
+            mat.DiffuseColor = SVector3f(1.4f);
             mat.Shininess = 0.01f;
 			Renderable->setMaterial(mat);
             break;
@@ -224,7 +224,7 @@ public:
         Renderable->setScale(Scale);
         Renderable->setRotation(Rotation);
 
-		WingMan->setTranslation(SVector3(0, 0, 0.25f*sin(0.8f*Timer)));
+		WingMan->setTranslation(SVector3f(0, 0, 0.25f*sin(0.8f*Timer)));
 		
 		Image->setRotation(Image->getRotation() + 10.f * Elapsed);
 		Font->setRotation(Font->getRotation() + 17.f * Elapsed);
@@ -428,7 +428,7 @@ public:
 	                else if (Mode == 2)
 	                {
 		                float const scaleSpeed = 0.01f;
-                        Scale = SVector3(std::max(std::min(Scale.X + difX*scaleSpeed, 2.f), 0.1f));
+                        Scale = SVector3f(std::max(std::min(Scale.X + difX*scaleSpeed, 2.f), 0.1f));
 	                }
                 }
 

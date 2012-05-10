@@ -2,7 +2,7 @@
 #include "CGameLevel.h"
 
 //Generic enemy, for usage in the LWIB, I guess.
-CElementEnemyProjectileKiwi::CElementEnemyProjectileKiwi(SRect2 nArea)
+CElementEnemyProjectileKiwi::CElementEnemyProjectileKiwi(SRect2f nArea)
 : CElementEnemyProjectile(nArea, Enemies::KIWI_PROJECTILE) {
 
 }
@@ -22,7 +22,7 @@ void CElementEnemyProjectileKiwi::setupPhysicsEngineObject() {
    PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_PKIWI;
 
    PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
-   PhysicsEngineObject->setVelocity(SVector2(0.f, -6.f));
+   PhysicsEngineObject->setVelocity(SVector2f(0.f, -6.f));
 }
 
 void CElementEnemyProjectileKiwi::setupSceneObject() {
@@ -59,7 +59,7 @@ void CElementEnemyProjectileKiwi::setupSceneObject() {
 }
 
 void CElementEnemyProjectileKiwi::updatePhysicsEngineObject(float time) {
-   PhysicsEngineObject->setVelocity(SVector2(0.f, -6.f));
+   PhysicsEngineObject->setVelocity(SVector2f(0.f, -6.f));
 }
 
 void CElementEnemyProjectileKiwi::updateSceneObject(float time) {

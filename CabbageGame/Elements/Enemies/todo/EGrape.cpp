@@ -18,8 +18,8 @@ void EGrape::loadMesh() {
    Renderable = new CMeshSceneObject();
    CMesh *mesh = CMeshLoader::load3dsMesh("Base/grape_bunch.3ds");
    if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(1));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -29,9 +29,9 @@ void EGrape::loadMesh() {
    Renderable->setMesh(mesh);
    Renderable->setShader(ERP_DEFAULT, "Toon");
    Renderable->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y+1))/2, 0));
-   Renderable->setScale(SVector3(1, 1, 1));
-   Renderable->setRotation(SVector3(0, 0, 0));
+   Renderable->setTranslation(SVector3f((x+(x+1))/2, (y+(y+1))/2, 0));
+   Renderable->setScale(SVector3f(1, 1, 1));
+   Renderable->setRotation(SVector3f(0, 0, 0));
 
    CApplication::get().getSceneManager().addSceneObject(Renderable);
 }
@@ -39,7 +39,7 @@ void EGrape::loadMesh() {
 //Adds actor to engine and preps engine
 void EGrape::loadActor() {
    Actor = Manager->getEngine()->addActor();
-   Actor->setArea(SRect2(SVector2(x, y), SVector2(w, h)));
+   Actor->setArea(SRect2f(SVector2f(x, y), SVector2f(w, h)));
 
    //Set actor attributes
    Actor->getAttributes().MaxWalk = 2.2f;
@@ -63,9 +63,9 @@ void EGrape::update(float const TickTime) {
 void EGrape::doRenderable() {
    //Face the proper direction
    if (Manager->getPlayerLocation().X < Actor->getArea().getCenter().X)
-            Renderable->setRotation(SVector3(-90, 0, 90));
+            Renderable->setRotation(SVector3f(-90, 0, 90));
          else
-            Renderable->setRotation(SVector3(-90, 0, -90));
+            Renderable->setRotation(SVector3f(-90, 0, -90));
 }
 
 void EGrape::ThrowGrape() {

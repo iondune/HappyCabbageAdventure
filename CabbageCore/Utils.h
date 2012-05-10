@@ -24,6 +24,8 @@ static void waitForUser()
 	std::cin.get();
 }
 
+#include <cstdlib>
+
 static float frand()
 {
 	return std::rand() / (float) RAND_MAX;

@@ -19,8 +19,8 @@ void EBlade::loadMesh() {
    Renderable = new CMeshSceneObject();
    CMesh *mesh = CMeshLoader::load3dsMesh("Base/trap1.3ds");
    if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(1));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -31,8 +31,8 @@ void EBlade::loadMesh() {
    //Renderable->getMaterial().Texture = new CTexture(CImageLoader::loadImage("Textures/kiwi.bmp"));
    Renderable->setShader(ERP_DEFAULT, "Toon");
    Renderable->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   //Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
-   Renderable->setScale(SVector3(2, 2, 2));
+   //Renderable->setTranslation(SVector3f((x+(x+1))/2, (y+(y-1))/2, 0));
+   Renderable->setScale(SVector3f(2, 2, 2));
 
    CApplication::get().getSceneManager().addSceneObject(Renderable);
    //Blades weren't turning because I had the hierarchy skip updating for immobile objects.
@@ -47,7 +47,7 @@ void EBlade::loadActor() {
    Actor->setControlFall(false);
    Actor->setFallAcceleration(0.0f);
 
-   Actor->setArea(SRect2(SVector2(x, y-1.0f), SVector2(w, h)));
+   Actor->setArea(SRect2f(SVector2f(x, y-1.0f), SVector2f(w, h)));
 
    //Set actor attributes
    Actor->getAttributes().MaxWalk = 3.0f;
@@ -68,7 +68,7 @@ void EBlade::doRenderable() {
 
    BladeRotate -= 300.0f * Time;
 
-   Renderable->setRotation(SVector3(-90, 0, BladeRotate));
-   //Renderable->setScale(SVector3(2.0f));
-   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X, Actor->getArea().getCenter().Y, 0));
+   Renderable->setRotation(SVector3f(-90, 0, BladeRotate));
+   //Renderable->setScale(SVector3f(2.0f));
+   Renderable->setTranslation(SVector3f(Actor->getArea().getCenter().X, Actor->getArea().getCenter().Y, 0));
 }

@@ -1,7 +1,7 @@
 #include "CElementEnemyOrange.h"
 #include "CGameLevel.h"
 
-CElementEnemyOrange::CElementEnemyOrange(SRect2 nArea) :
+CElementEnemyOrange::CElementEnemyOrange(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::ORANGE), Jumped(true), ISquishable(1.0f, 1.0f) {
 
 }

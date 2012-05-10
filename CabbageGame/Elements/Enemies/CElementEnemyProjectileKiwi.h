@@ -12,7 +12,7 @@ class CElementEnemyProjectileKiwi : public CElementEnemyProjectile {
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);
 
-      CElementEnemyProjectileKiwi(SRect2 nArea);
+      CElementEnemyProjectileKiwi(SRect2f nArea);
 
       virtual void printInformation();
 };

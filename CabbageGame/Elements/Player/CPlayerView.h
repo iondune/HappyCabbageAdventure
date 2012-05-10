@@ -23,7 +23,7 @@ class CPlayerView {
       bool Hurt, UseCamera;
       CElementPlayer::EDirection & Direction;
       CElementPlayer::EAction & Action;
-      SRect2 & Area;
+      SRect2f & Area;
       float LeftShadowCutoffValue, LeftShadowStartValue, RightShadowCutoffValue, RightShadowStartValue;
       float yLeftShadow, yRightShadow, cutOffPoint;
       float ySineValue;
@@ -38,7 +38,7 @@ class CPlayerView {
    public:
       void updateShadow(float time = 0);
       void setCabbageScale(SVector3);
-      void setCutoffPoint(SRect2 left, SRect2 right);
+      void setCutoffPoint(SRect2f left, SRect2f right);
       void setShadowHeights(float, float);
       void addLeaf();
       void removeLeaf();
@@ -47,7 +47,7 @@ class CPlayerView {
       void updateView(float time);
       void translateCabbage(float time);
       ISceneObject & getCabbageSceneObject();
-      CPlayerView(ISceneObject *, CElementPlayer::EDirection &, CElementPlayer::EAction &, int, SRect2 &, SVector3 & sf, CCollisionActor *, bool uC);
+      CPlayerView(ISceneObject *, CElementPlayer::EDirection &, CElementPlayer::EAction &, int, SRect2f &, SVector3 & sf, CCollisionActor *, bool uC);
 };
 
 #endif

@@ -10,7 +10,7 @@ class CElementEnemyCherry : public CElementEnemy
       float BombTime;
 
    public:
-      CElementEnemyCherry(SRect2 nArea);
+      CElementEnemyCherry(SRect2f nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

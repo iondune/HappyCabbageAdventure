@@ -28,7 +28,7 @@ class CElementEnemyProjectile : public CElementEnemy {
 
       void setDirection (Projectile::EDirection direction);
 
-      CElementEnemyProjectile(SRect2 nArea, Enemies::EEnemyType type);
+      CElementEnemyProjectile(SRect2f nArea, Enemies::EEnemyType type);
 
       virtual void printInformation();
 };

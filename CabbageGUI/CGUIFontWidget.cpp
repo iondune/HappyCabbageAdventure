@@ -91,7 +91,7 @@ void CGUIFontWidget::addDropShadow(SColor const & Color) {
    DropShadow->setText(Text);
    DropShadow->setVisible(true);
 
-   DropShadow->setPosition(this->getPosition() + SVector2(0.0f, -0.002f));
+   DropShadow->setPosition(this->getPosition() + SVector2f(0.0f, -0.002f));
    DropShadow->setColor(Color);
    DropShadow->setVisible(Visible);
    CApplication::get().getGUIEngine().addWidget(DropShadow);
@@ -133,7 +133,7 @@ void CGUIFontWidget::setText(std::string const & text)
 	if (Renderer)
 	{
 		OGLFT::BBox BBox = Renderer->measure_nominal(text.c_str());
-		Box.Size = SVector2(BBox.x_max_ - BBox.x_min_, BBox.y_max_ - BBox.y_min_);
+		Box.Size = SVector2f(BBox.x_max_ - BBox.x_min_, BBox.y_max_ - BBox.y_min_);
 	}
 
    if(DropShadow)

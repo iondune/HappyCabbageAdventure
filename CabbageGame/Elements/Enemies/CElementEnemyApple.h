@@ -18,7 +18,7 @@ class CElementEnemyApple : public CElementEnemy, public ISquishable
       SVector2 Scale;
 
    public:
-      CElementEnemyApple(SRect2 nArea);
+      CElementEnemyApple(SRect2f nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

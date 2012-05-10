@@ -11,7 +11,7 @@ class CElementEnemyBanana : public CElementEnemy, ISquishable
       SVector2 Scale;
 
    public:
-      CElementEnemyBanana(SRect2 nArea);
+      CElementEnemyBanana(SRect2f nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
