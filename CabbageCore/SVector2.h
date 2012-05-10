@@ -136,6 +136,31 @@ public:
 		return * this;
 	}
 
+	bool const operator <= (SVector2Reference const & v) const
+	{
+		return (X < v.X && Y < v.Y);
+	}
+
+	bool const operator >= (SVector2Reference const & v) const
+	{
+		return (X > v.X && Y > v.Y);
+	}
+
+	bool const operator == (SVector2Reference const & v) const
+	{
+		return equals(v);
+	}
+
+	bool const operator != (SVector2Reference const & v) const
+	{
+		return ! equals(v);
+	}
+
+	bool const equals(SVector2Reference const & v, float const Epsilon = RoundingError32) const
+	{
+		return ::equals(X, v.X, Epsilon) && ::equals(Y, v.Y, Epsilon);
+	}
+
 };
 
 template <typename T>

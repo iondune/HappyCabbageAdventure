@@ -164,12 +164,17 @@ public:
 
 	bool const operator == (SVector3Reference const & v) const
 	{
-		return (::equals(X, v.X) && ::equals(Y, v.Y) && ::equals(Z, v.Z));
+		return equals(v);
+	}
+
+	bool const operator != (SVector3Reference const & v) const
+	{
+		return ! equals(v);
 	}
 
 	bool const equals(SVector3Reference const & v, float const Epsilon = RoundingError32) const
 	{
-		return (::equals(X, v.X, Epsilon) && ::equals(Y, v.Y, Epsilon) && ::equals(Z, v.Z, Epsilon));
+		return ::equals(X, v.X, Epsilon) && ::equals(Y, v.Y, Epsilon) && ::equals(Z, v.Z, Epsilon);
 	}
 
 	SVector2Reference<T> const xy() const
