@@ -43,7 +43,7 @@ bool const CCollisionActor::EActionType::operator == (Domain const value)
 
 
 CCollisionActor::CCollisionActor()
-	: Standing(0), JumpTimer(0.f), FallAcceleration(0), Impulse(false), ControlFall(true) 
+	: Standing(0), JumpTimer(0.f), FallAcceleration(0), ControlFall(true) 
 {
 	TypeId = INTERACTOR_ACTORS;
 	CollisionMask = INTERACTOR_BLOCKS | INTERACTOR_ACTORS;
@@ -60,73 +60,87 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 {
 	int Out = ECollisionType::None;
 
-	//float const BufferSize = 0.0001f;
-
-	Area.Position = LastPosition;
-
-	for (int i = 0; i < 2; ++ i)
+	if (canCollideWith(Object))
 	{
-		CollisionReal OriginalMovement = Movement[i];
+		Area.Position = LastPosition;
 
-		if (equals(Movement[i], (CollisionReal) 0.0))
-			continue;
-
-		Area.Position[i] = LastPosition[i] + Movement[i];
-
-		if (Area.intersects(Object->getArea()))
+		for (int i = 0; i < 2; ++ i)
 		{
-			if (Movement[i] > (CollisionReal) 0.0)
-			{
-				//TryMovement = 0.f;//std::max(Object->getArea().Position[i] - (LastPosition + Area.Size)[i], 0.f);
-				Out |= (i ? ECollisionType::Up : ECollisionType::Right);
-			}
-			else if (Movement[i] < (CollisionReal) 0.0)
-			{
-				//TryMovement = 0.f;//std::min(Object->getArea().otherCorner()[i] - LastPosition[i], 0.f);
-				Out |= (i ? ECollisionType::Down : ECollisionType::Left);
-			}
-			else
-			{
-				std::cout << "Null movement, undefined behavior." << std::endl;
-			}
+			CollisionReal OriginalMovement = Movement[i];
 
-			Movement[i] = (CollisionReal) 0.0;
-			Area.Position[i] = LastPosition[i];
+			if (equals(Movement[i], (CollisionReal) 0.0))
+				continue;
 
-			if (Area.intersects(Object->getArea())) // If still collision after revert...
+			Area.Position[i] = LastPosition[i] + Movement[i];
+
+			if (Area.intersects(Object->getArea()))
 			{
-				CollisionReal Intersections[2];
-				Intersections[0] = Area.getIntersection(Object->getArea()).getArea(); // 0 - old position
-
-				Area.Position[i] = LastPosition[i] + OriginalMovement;
-				Intersections[1] = Area.getIntersection(Object->getArea()).getArea(); // 1 - new position
-
-				if (Intersections[1] < Intersections[0] || equals(Intersections[0], Intersections[1]))
+				if (Movement[i] > (CollisionReal) 0.0)
 				{
-					// If new position is better or equal
-
-					//std::cout << "Allowed collision movement (" << (i ? 'y' : 'x') << "): (" << Intersections[0] << " -> " << Intersections[1] << ")" << std::endl;
-					AllowedMovement = true;
-					Movement[i] = OriginalMovement;
-
-					// Cancel collision output
-					if (OriginalMovement > (CollisionReal) 0.0)
-					{
-						Out ^= (i ? ECollisionType::Up : ECollisionType::Right);
-					}
-					else if (OriginalMovement < (CollisionReal) 0.f)
-					{
-						Out ^= (i ? ECollisionType::Down : ECollisionType::Left);
-					}
-					else
-					{
-						std::cout << "Null movement, undefined behavior." << std::endl;
-					}
+					//TryMovement = 0.f;//std::max(Object->getArea().Position[i] - (LastPosition + Area.Size)[i], 0.f);
+					Out |= (i ? ECollisionType::Up : ECollisionType::Right);
+				}
+				else if (Movement[i] < (CollisionReal) 0.0)
+				{
+					//TryMovement = 0.f;//std::min(Object->getArea().otherCorner()[i] - LastPosition[i], 0.f);
+					Out |= (i ? ECollisionType::Down : ECollisionType::Left);
 				}
 				else
 				{
-					Area.Position[i] = LastPosition[i];
+					std::cout << "Null movement, undefined behavior." << std::endl;
 				}
+
+				Movement[i] = (CollisionReal) 0.0;
+				Area.Position[i] = LastPosition[i];
+
+				if (Area.intersects(Object->getArea())) // If still collision after revert...
+				{
+					CollisionReal Intersections[2];
+					Intersections[0] = Area.getIntersection(Object->getArea()).getArea(); // 0 - old position
+
+					Area.Position[i] = LastPosition[i] + OriginalMovement;
+					Intersections[1] = Area.getIntersection(Object->getArea()).getArea(); // 1 - new position
+
+					if (Intersections[1] < Intersections[0] || equals(Intersections[0], Intersections[1]))
+					{
+						// If new position is better or equal
+
+						//std::cout << "Allowed collision movement (" << (i ? 'y' : 'x') << "): (" << Intersections[0] << " -> " << Intersections[1] << ")" << std::endl;
+						AllowedMovement = true;
+						Movement[i] = OriginalMovement;
+
+						// Cancel collision output
+						if (OriginalMovement > (CollisionReal) 0.0)
+						{
+							Out ^= (i ? ECollisionType::Up : ECollisionType::Right);
+						}
+						else if (OriginalMovement < (CollisionReal) 0.f)
+						{
+							Out ^= (i ? ECollisionType::Down : ECollisionType::Left);
+						}
+						else
+						{
+							std::cout << "Null movement, undefined behavior." << std::endl;
+						}
+					}
+					else
+					{
+						Area.Position[i] = LastPosition[i];
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < 2; ++ i)
+		{
+			if (Area.intersects(Object->getArea()))
+			{
+				if (Movement[i] > (CollisionReal) 0.0)
+					Out |= (i ? ECollisionType::Up : ECollisionType::Right);
+				else if (Movement[i] < (CollisionReal) 0.0)
+					Out |= (i ? ECollisionType::Down : ECollisionType::Left);
 			}
 		}
 	}
@@ -241,17 +255,8 @@ void CCollisionActor::updateVectors(CollisionReal const TickTime)
 	}
 
 	// Perform impulse
-	if (Impulse)
-	{
-		if (ImpulseTimer > 0)
-		{
-			Velocity = ImpulseVelocity;
-			ImpulseTimer -= TickTime;
-		}
-
-		if (ImpulseTimer <= 0)
-			Impulse = false;
-	}
+	Velocity += ImpulseVelocity;
+	ImpulseVelocity *= 0.7f;
 
 	// Add velocity from gravity
 	Velocity.Y += FallAcceleration * TickTime;
@@ -329,9 +334,17 @@ void CCollisionActor::setControlFall(bool const fall)
 
 bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTime)
 {
-	//int CollisionType = ignoreCollision(Object, TickTime);
-
 	int CollisionType = checkCollision(Object, TickTime);
+
+	if (CollisionType)
+	{
+		SCollisionEvent Event;
+		Event.This = this;
+		Event.Other = Object;
+		Event.Direction = (ECollisionType::Domain) CollisionType;
+
+		OnCollision.emit(Event);
+	}
 
 	if (CollisionType & ECollisionType::Up)
 	{
@@ -367,18 +380,10 @@ void CCollisionActor::draw()
 	glColor3f(1, 1, 1);
 }
 
-void CCollisionActor::setImpulse(SVec2 const & velocity, CollisionReal const duration)
+void CCollisionActor::addImpulse(SVec2 const & velocity)
 {
-	Impulse = true;
-	ImpulseTimer = duration;
-	ImpulseVelocity = velocity;
-}
-
-void CCollisionActor::addImpulse(SVec2 const & velocity) {
-	Impulse = true;
 	ImpulseVelocity += velocity;
 }
-
 
 void CCollisionActor::setFallAcceleration(CollisionReal speed)
 {

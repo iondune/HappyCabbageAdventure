@@ -12,7 +12,7 @@ void CCollisionEngine::performTick(float const TickTime)
 
 		for (ObjectList::iterator jt = Objects.begin(); jt != Objects.end(); ++ jt)
 		{
-			if ((*it)->canCollideWith(* jt))
+			if ((* it)->canCollideWith(* jt) || (* it)->canDetectWith(* jt))
 			{
 				bool Alighted = (* it)->updateCollision(* jt, TickTime);
 				if (Alighted)
@@ -22,7 +22,7 @@ void CCollisionEngine::performTick(float const TickTime)
 
 		for (ActorList::iterator jt = Actors.begin(); jt != Actors.end(); ++ jt)
 		{
-			if ((*it)->canCollideWith(* jt))
+			if ((* it)->canCollideWith(* jt) || (* it)->canDetectWith(* jt))
 			{
 				if (* it != * jt)
 				{

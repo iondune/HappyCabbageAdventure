@@ -43,15 +43,14 @@ CCollideable::SMaterial & CCollideable::getMaterial()
 void CCollideable::draw()
 {
 	glPushMatrix();
-	glTranslatef((float) Area.Position.X, (float) Area.Position.Y, 0);
+		glTranslatef((float) Area.Position.X, (float) Area.Position.Y, 0);
 
-	glBegin(GL_QUADS);
-	glVertex3f(0.f, 0.f, 0.f);
-	glVertex3f((float) Area.Size.X, 0.f, 0.f);
-	glVertex3f((float) Area.Size.X, (float) Area.Size.Y, 0.f);
-	glVertex3f(0.f, (float) Area.Size.Y, 0.f);
-	glEnd();
-
+		glBegin(GL_QUADS);
+			glVertex3f(0.f, 0.f, 0.f);
+			glVertex3f((float) Area.Size.X, 0.f, 0.f);
+			glVertex3f((float) Area.Size.X, (float) Area.Size.Y, 0.f);
+			glVertex3f(0.f, (float) Area.Size.Y, 0.f);
+		glEnd();
 	glPopMatrix();
 }
 

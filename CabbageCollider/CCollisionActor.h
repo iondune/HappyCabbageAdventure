@@ -148,12 +148,6 @@ protected:
 	void pushIfCollided(CCollisionObject * Object, SVec2 const Movement);
 
 	//! ?
-	bool Impulse;
-
-	//! ?
-	CollisionReal ImpulseTimer;
-
-	//! ?
 	SVec2 ImpulseVelocity;
 
 	//! For debugging purposes, is true when the last update tick used an "allowed collision" movement
@@ -210,8 +204,17 @@ public:
 	//! For debugging purposes, draws this actor onto the screen using FFP OpenGL
 	virtual void draw();
 
-	void setImpulse(SVec2 const & velocity, CollisionReal const duration = 0.3f);
 	void addImpulse(SVec2 const & velocity);
+
+	struct SCollisionEvent
+	{
+		CCollideable * This;
+		CCollideable * Other;
+
+		ECollisionType::Domain Direction;
+	};
+
+	sigslot::signal1<SCollisionEvent const &> OnCollision;
 
 };
 
