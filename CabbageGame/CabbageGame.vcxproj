@@ -125,7 +125,7 @@
     <ClInclude Include="Elements\Enemies\CElementEnemyOrange.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyPear.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyPineapple.h" />
-    <ClInclude Include="Elements\Enemies\CElementEnemyPomegranite.h" />
+    <ClInclude Include="Elements\Enemies\CElementEnemyPomegranate.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyProjectile.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyProjectileBanana.h" />
     <ClInclude Include="Elements\Enemies\CElementEnemyProjectileCherry.h" />
@@ -176,7 +176,7 @@
     <ClCompile Include="Elements\Enemies\CElementEnemyOrange.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyPear.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyPineapple.cpp" />
-    <ClCompile Include="Elements\Enemies\CElementEnemyPomegranite.cpp" />
+    <ClCompile Include="Elements\Enemies\CElementEnemyPomegranate.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyProjectile.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyProjectileBanana.cpp" />
     <ClCompile Include="Elements\Enemies\CElementEnemyProjectileCherry.cpp" />

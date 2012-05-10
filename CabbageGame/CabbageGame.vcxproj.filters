@@ -122,10 +122,10 @@
     <ClInclude Include="Elements\Enemies\CElementEnemyPineapple.h">
       <Filter>Elements\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Elements\Enemies\CElementEnemyPomegranite.h">
+    <ClInclude Include="Elements\Enemies\CElementEnemyStrawberry.h">
       <Filter>Elements\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Elements\Enemies\CElementEnemyStrawberry.h">
+    <ClInclude Include="Elements\Enemies\CElementEnemyPomegranate.h">
       <Filter>Elements\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
@@ -255,10 +255,10 @@
     <ClCompile Include="Elements\Enemies\CElementEnemyPineapple.cpp">
       <Filter>Elements\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Elements\Enemies\CElementEnemyPomegranite.cpp">
+    <ClCompile Include="Elements\Enemies\CElementEnemyStrawberry.cpp">
       <Filter>Elements\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Elements\Enemies\CElementEnemyStrawberry.cpp">
+    <ClCompile Include="Elements\Enemies\CElementEnemyPomegranate.cpp">
       <Filter>Elements\Enemies</Filter>
     </ClCompile>
   </ItemGroup>

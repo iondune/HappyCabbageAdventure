@@ -141,6 +141,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    stepCamera(Application.getElapsedTime());
    float x=round(eye.X + previewBlockMouseX),y= round(eye.Y + previewBlockMouseY);
    PrepPreviews(x,y, Elapsed);
+   printf("x and y are %lf, %lf \n", x, y);
     //PreviewBlock->
 
    //Draw Text
@@ -692,7 +693,9 @@ void CLWIBState::PrepPreviews(int x , int y, float t) {
     for (int i = 0; i < 17; i++) {// enemies
     
     }*/
-    PreviewBlock->setArea
+     //printf("x and y are %lf, %lf \n", x, y);
+    PreviewBlock->setArea(SRect2(x,y,1,1));
+    //printf("positino of block is x = %lf, y = %lf \n", PreviewBlock->getArea().Position.X, PreviewBlock->getArea().Position.Y); 
     PreviewBlock->update(t);
 
 }
