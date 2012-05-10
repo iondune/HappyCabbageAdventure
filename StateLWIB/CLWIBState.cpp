@@ -141,7 +141,6 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    stepCamera(Application.getElapsedTime());
    float x=round(eye.X + previewBlockMouseX),y= round(eye.Y + previewBlockMouseY);
    PrepPreviews(x,y, Elapsed);
-   printf("x and y are %lf, %lf \n", x, y);
     //PreviewBlock->
 
    //Draw Text
@@ -443,7 +442,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                     else if (uniType == 2) {
                         uniType = -5;
                         blockWidth = 5;
-                        blockHeight = 5;
+                        blockHeight = 2;
                         blockDepth = 5;
                     }
                     else if (uniType == -5) {
@@ -694,7 +693,6 @@ void CLWIBState::PrepPreviews(int x , int y, float t) {
     
     }*/
      //printf("x and y are %lf, %lf \n", x, y);
-    printf("%lf %lf\n", PreviewBlock->getArea().Position.X, PreviewBlock->getArea().Position.Y);
     PreviewBlock->setArea(SRect2(x,y,1,1));
     //printf("positino of block is x = %lf, y = %lf \n", PreviewBlock->getArea().Position.X, PreviewBlock->getArea().Position.Y); 
     PreviewBlock->update(t);
@@ -861,8 +859,8 @@ void CLWIBState::PrepCabbage(float x, float y) {
 void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int moving) {
    if(x < -25 || y < -25 || x >= 500 || y >= 75)
       return;
-   if(t == -5 && (int)y != -5)
-       return;
+   //if(t == -5 && (int)y != -5)
+   //    return;
    int i,j, ret=0;
    for(i=0;i<w;i++) {
       for(j=0;j<h;j++) {
@@ -1427,7 +1425,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 0) {
             uniType = -5;
             blockWidth = 5;
-            blockHeight = 5;
+            blockHeight = 2;
             blockDepth = 5;
             cDown = 0;
         }
