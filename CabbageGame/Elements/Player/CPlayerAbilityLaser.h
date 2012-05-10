@@ -23,7 +23,7 @@ class CPlayerAbilityLaser : public CPlayerAbility {
       CParticleEngine *ParticleEngine;
       ELaserState LaserState;
       float TemporaryTimeVariable;
-      SRect2 TemporaryArea;
+      SRect2f TemporaryArea;
 
    public:
       void inUpdatePhysicsEngineObject(float);

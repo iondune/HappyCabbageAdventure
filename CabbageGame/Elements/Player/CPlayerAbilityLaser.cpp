@@ -12,7 +12,7 @@ void CPlayerAbilityLaser::inUpdatePhysicsEngineObject(float time) {
       return;
    TemporaryTimeVariable += time;
    if(LaserState == FIRING) {
-      SRect2 FiringRange = Player.Area;
+      SRect2f FiringRange = Player.Area;
       if(Player.Direction == CElementPlayer::Right) {
          FiringRange.Size.X += 5.0f;
       }
@@ -107,7 +107,7 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
       Player.View->setVisible(true);
       Player.View->setHurt(false);
       Player.getPhysicsEngineObject()->setArea(TemporaryArea);
-      ((CCollisionActor *)Player.getPhysicsEngineObject())->setVelocity(SVector2(0.0f));
+      ((CCollisionActor *)Player.getPhysicsEngineObject())->setVelocity(SVector2f(0.0f));
       ((CCollisionActor *)Player.getPhysicsEngineObject())->setFallAcceleration(0.0f);
       Player.AllowMovement = false;
       if(TemporaryTimeVariable >= LASER_FIRING_DURATION) {
@@ -115,7 +115,7 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
          delete ParticleEngine;
          Dead = true;
          LaserState = FIRED;
-         ((CCollisionActor *)Player.getPhysicsEngineObject())->setImpulse(SVector2((Player.Direction == CElementPlayer::Right ? -1.0f : 1.0f)*15.0f, 0.0f), 0.1f);
+         ((CCollisionActor *)Player.getPhysicsEngineObject())->addImpulse(SVector2f((Player.Direction == CElementPlayer::Right ? -1.0f : 1.0f)*15.0f, 0.0f), 0.1f);
          Player.AllowMovement = true;
 
          Player.View->setVisible(true);

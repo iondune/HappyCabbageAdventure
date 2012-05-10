@@ -2,7 +2,7 @@
 #include "CGameLevel.h"
 #include "CElementPlayer.h"
 
-CElementBlockFlag::CElementBlockFlag(SRect2 nArea, FlagRole role)
+CElementBlockFlag::CElementBlockFlag(SRect2f nArea, FlagRole role)
 : CElementBlock(nArea, 1, 0), Role(role) {
 }
 
@@ -12,7 +12,7 @@ CElementBlockFlag::CElementBlockFlag(SRect2f nArea, int role)
 
 void CElementBlockFlag::OnCollision(CCollideable *Object) {
 	if (Object == Level.getPlayer().getPhysicsEngineObject()) {
-		Level.getPhysicsEngine().removeObject(PhysicsEngineObject);
+		Level.getPhysicsEngine().removeCollideable(PhysicsEngineObject);
 		Level.getPlayer().setVictoryFlag(true);
 		Level.getPlayer().setAllowMovement(false);
 	}

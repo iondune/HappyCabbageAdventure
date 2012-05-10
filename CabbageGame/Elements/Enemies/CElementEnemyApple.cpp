@@ -1,7 +1,7 @@
 #include "CElementEnemyApple.h"
 #include "CGameLevel.h"
 
-CElementEnemyApple::CElementEnemyApple(SRect2 nArea) :
+CElementEnemyApple::CElementEnemyApple(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::APPLE), PositiveScale(false), ScaleMult(0.0f), Roll(None), Rotate(0.0f), ISquishable(1.0f, 1.0f) {
 
 }
@@ -13,7 +13,6 @@ void CElementEnemyApple::setupPhysicsEngineObject() {
 
    //Set actor attributes
    PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_APPLE;
 }
 
 void CElementEnemyApple::setupSceneObject() {
@@ -54,7 +53,7 @@ void CElementEnemyApple::setupSceneObject() {
 void CElementEnemyApple::OnCollision(CCollideable *Object) {
    if(Object == Level.getPlayer().getPhysicsEngineObject())
       printf("Touched an apple\n");
-   //Optional code: setImpulse to other object away from this object, lower their health?
+   //Optional code: addImpulse to other object away from this object, lower their health?
 }
 */
                                                             
@@ -62,7 +61,7 @@ void CElementEnemyApple::OnCollision(CCollideable *Object) {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyApple::updatePhysicsEngineObject(float time) {
-   SVector2 PlayerPosition = Level.getPlayer().getArea().Position;
+   SVector2f PlayerPosition = Level.getPlayer().getArea().Position;
    //TODO: Make some class singleton so we can get the player's location
    if (PlayerPosition.X < Area.getCenter().X && (Roll == None))
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
@@ -85,7 +84,7 @@ void CElementEnemyApple::updatePhysicsEngineObject(float time) {
       Rotate = 0;
       Roll = None;
       PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
-      PhysicsEngineObject->setVelocity(SVector2(2.2f, 0.0f));
+      PhysicsEngineObject->setVelocity(SVector2f(2.2f, 0.0f));
    }
 }
 

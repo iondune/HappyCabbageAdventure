@@ -42,7 +42,7 @@ void CGUIWidget::setVisible(bool const visible)
 	Visible = visible;
 }
 
-SRect2 const & CGUIWidget::getBoundingBox() const
+SRect2f const & CGUIWidget::getBoundingBox() const
 {
 	return Box;
 }

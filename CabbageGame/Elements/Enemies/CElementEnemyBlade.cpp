@@ -1,7 +1,7 @@
 #include "CElementEnemyBlade.h"
 #include "CGameLevel.h"
 
-CElementEnemyBlade::CElementEnemyBlade(SRect2 nArea) :
+CElementEnemyBlade::CElementEnemyBlade(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::BLADE), BladeRotate(0.0f) {
 
 }
@@ -13,8 +13,7 @@ void CElementEnemyBlade::setupPhysicsEngineObject() {
    //Makes them immune to gravity
    PhysicsEngineObject->setControlFall(false);
    PhysicsEngineObject->setFallAcceleration(0.0f);
-   PhysicsEngineObject->setArea(SRect2(SVector2(Area.Position.X + .5f, Area.Position.Y - .25f), Area.Size));
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_FLAME;
+   PhysicsEngineObject->setArea(SRect2f(SVector2f(Area.Position.X + .5f, Area.Position.Y - .25f), Area.Size));
 }
 
 void CElementEnemyBlade::setupSceneObject() {
@@ -46,13 +45,13 @@ void CElementEnemyBlade::OnCollision(CCollideable *Object) {
          if(Level.getPlayer().decrementHealth()) {
             CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
             if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {
-               PlayerActor->setImpulse(SVector2(0.0f, bladeJumpFactor), 0.01f);
+               PlayerActor->addImpulse(SVector2f(0.0f, bladeJumpFactor), 0.01f);
             }
          }
       }
       else {
          //We can make enemies jump when they touch fire here too, once we have a pointer to the CElementEnemy*.
-         ((CCollisionActor *)Object)->setImpulse(SVector2(0.0f, bladeJumpFactor), 0.01f);
+         ((CCollisionActor *)Object)->addImpulse(SVector2f(0.0f, bladeJumpFactor), 0.01f);
       }
    }
 }

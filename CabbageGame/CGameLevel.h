@@ -88,7 +88,7 @@ class CGameLevel {
       void addEnemy(CElementEnemy *Enemy);
       void removeItem(CElementItem* Item);
       void addItem(CElementItem* Item);
-      void removeObject(CGameplayElement *Object);
+      void removeCollideable(CGameplayElement *Object);
       void addObject(CGameplayElement *Object);
 };
 

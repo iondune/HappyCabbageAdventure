@@ -9,7 +9,7 @@ class CElementEnemyBlade : public CElementEnemy
       float BladeRotate;
 
    public:
-      CElementEnemyBlade(SRect2 nArea);
+      CElementEnemyBlade(SRect2f nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

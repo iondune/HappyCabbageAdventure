@@ -198,41 +198,41 @@ public:
 	float X, Y, Z;
 
 	SVector3()
-		: X(0), Y(0), Z(0), SVector3Reference(X, Y, Z)
+		: X(0), Y(0), Z(0), SVector3Reference<T>(X, Y, Z)
 	{}
 
 	template <typename U>
 	SVector3(SVector3Reference<U> const & vec)
-		: X(vec.X), Y(vec.Y), Z(vec.Z), SVector3Reference(X, Y, Z)
+		: X(vec.X), Y(vec.Y), Z(vec.Z), SVector3Reference<T>(X, Y, Z)
 	{}
 	
 	template <typename U>
 	SVector3(SVector3<U> const & vec)
-		: X(vec.X), Y(vec.Y), Z(vec.Z), SVector3Reference(X, Y, Z)
+		: X(vec.X), Y(vec.Y), Z(vec.Z), SVector3Reference<T>(X, Y, Z)
 	{}
 
 	SVector3(SVector3<T> const & vec)
-		: X(vec.X), Y(vec.Y), Z(vec.Z), SVector3Reference(X, Y, Z)
+		: X(vec.X), Y(vec.Y), Z(vec.Z), SVector3Reference<T>(X, Y, Z)
 	{}
 	
 	template <typename U>
 	SVector3(SVector2<U> xy, T z)
-		: X(xy.X), Y(xy.Y), Z(z), SVector3Reference(X, Y, Z)
+		: X(xy.X), Y(xy.Y), Z(z), SVector3Reference<T>(X, Y, Z)
 	{}
 
 	SVector3(glm::vec3 const & vec)
-		: X(vec.x), Y(vec.y), Z(vec.z), SVector3Reference(X, Y, Z)
+		: X(vec.x), Y(vec.y), Z(vec.z), SVector3Reference<T>(X, Y, Z)
 	{}
 
 	SVector3(T in)
-		: X(in), Y(in), Z(in), SVector3Reference(X, Y, Z)
+		: X(in), Y(in), Z(in), SVector3Reference<T>(X, Y, Z)
 	{}
 
 	SVector3(T in_x, T in_y, T in_z)
-		: X(in_x), Y(in_y), Z(in_z), SVector3Reference(X, Y, Z)
+		: X(in_x), Y(in_y), Z(in_z), SVector3Reference<T>(X, Y, Z)
 	{}
 
-	SVector3 & operator = (SVector3Reference const & vec)
+	SVector3 & operator = (SVector3Reference<T> const & vec)
 	{
 		X = vec.X;
 		Y = vec.Y;

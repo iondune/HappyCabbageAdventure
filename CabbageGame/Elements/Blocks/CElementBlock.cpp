@@ -58,7 +58,7 @@ void CElementBlock::setupPhysicsEngineObject() {
     * Doing this in the consolidation phase in CGameState
     * Thus, there will be no physics engine object that this can refer to! TODO: Check if this is good enough or not
     CObject *engBlock = Engine->addObject();
-    engBlock->setArea(SRect2(x, y, Area.Size.X, Area.Size.Y));
+    engBlock->setArea(SRect2f(x, y, Area.Size.X, Area.Size.Y));
     */
    //Point of this is so any functions (superclass) that use the physics engine object pointer won't break
    PhysicsEngineObject = Level.getPhysicsEngine().addObject();
@@ -68,7 +68,7 @@ void CElementBlock::setupPhysicsEngineObject() {
    PhysicsEngineObject->setArea(Area);
    PhysicsEngineObject->setDepth(Depth);
    */
-   Level.getPhysicsEngine().removeObject(PhysicsEngineObject);
+   Level.getPhysicsEngine().removeCollideable(PhysicsEngineObject);
 }
 
 void CElementBlock::setupSceneObject() {

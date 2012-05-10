@@ -39,5 +39,5 @@ void CItem::makeItem(float x, float y, float w, float h, ItemType item, CGamepla
 }
 
 void CItem::doRenderable() {
-   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, 0));
+   Renderable->setTranslation(SVector3f(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, 0));
 }

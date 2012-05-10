@@ -66,7 +66,7 @@ public:
 	template <typename T>
 	void setArea(SRect2<T> const & area)
 	{
-		Area = SRect2<T>(area.Position, area.Size);
+		Area = SArea(area.Position, area.Size);
 	}
 
 	SMaterial const & getMaterial() const;

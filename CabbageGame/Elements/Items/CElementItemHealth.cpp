@@ -1,7 +1,7 @@
 #include "CElementItemHealth.h"
 #include "CGameLevel.h"
 
-CElementItemHealth::CElementItemHealth(SRect2 nArea) :
+CElementItemHealth::CElementItemHealth(SRect2f nArea) :
    CElementItem(nArea, Items::HEALTH) {
 
 }
@@ -12,7 +12,6 @@ void CElementItemHealth::setupPhysicsEngineObject() {
    PhysicsEngineObject->setArea(Area);
 
    //Set actor attributes
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_ITEM;
    PhysicsEngineObject->CollideableLevel = INTERACTOR_ITEMS;
    PhysicsEngineObject->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS;
 }
