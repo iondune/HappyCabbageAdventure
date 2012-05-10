@@ -64,6 +64,10 @@ public:
 		return sqrtf(X*X + Y*Y);
 	}
 
+	T getDistanceFrom(SVector2Reference const & v) const;
+
+	SVector2<T> getInterpolated(SVector2Reference<T> const & v, T const d);
+
 	SVector2<T> operator + (SVector2Reference<T> const & v) const;
 
 	SVector2<T> operator - (SVector2Reference<T> const & v) const;
@@ -185,6 +189,19 @@ public:
 	}
 
 };
+
+template <typename T>
+T SVector2Reference<T>::getDistanceFrom(SVector2Reference<T> const & v) const
+{
+	return (v - * this).length();
+}
+
+template <typename T>
+SVector2<T> SVector2Reference<T>::getInterpolated(SVector2Reference<T> const & v, T const d)
+{
+	T inv = (T) 1.0 - d;
+	return SVector2((v.X*inv + X*d), (v.Y*inv + Y*d));
+}
 
 template <typename T>
 SVector2<T> SVector2Reference<T>::operator + (SVector2Reference<T> const & v) const
