@@ -4,6 +4,8 @@
 #include <cmath>
 #include <stdio.h>
 
+#include "Utils.h"
+
 template <typename T>
 class SVector2;
 
