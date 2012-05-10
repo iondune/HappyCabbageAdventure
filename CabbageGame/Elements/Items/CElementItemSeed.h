@@ -8,7 +8,7 @@ class CElementItemSeed : public CElementItem
    private:
 
    public:
-      CElementItemSeed(SRect2 nArea);
+      CElementItemSeed(SRect2f nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

@@ -34,7 +34,7 @@ void loadLevel(std::string const & level)
 
     for (unsigned int i = 0; i < list.size(); i++)
     {
-        thing->addBlockObject(SVector2((float)list[i].topY, (float)list[i].topX), SVector2((float)list[i].width, (float)list[i].height), 0);
+        thing->addBlockObject(SVector2f((float)list[i].topY, (float)list[i].topX), SVector2f((float)list[i].width, (float)list[i].height), 0);
         //do stuff
     }
     for (unsigned int i = 0; i < character.size(); i++)
@@ -96,9 +96,9 @@ public:
         for (int i = 0; i < 3; i++)
             ray[i] = obj2[i] - obj[i];
 
-        Application.getSceneManager().getActiveCamera()->setPosition(SVector3(0, 0, -100.f));
+        Application.getSceneManager().getActiveCamera()->setPosition(SVector3f(0, 0, -100.f));
         Application.getSceneManager().getActiveCamera()->setProjection(80.f, float(800)/float(600), 0.1f, 1000.f);
-        Application.getSceneManager().getActiveCamera()->setLookDirection(SVector3(0, 0, 1.f));
+        Application.getSceneManager().getActiveCamera()->setLookDirection(SVector3f(0, 0, 1.f));
     }
 
     void end()

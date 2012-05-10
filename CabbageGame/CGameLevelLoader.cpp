@@ -72,11 +72,11 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
                range = (float) xml->getAttributeValueAsInt(7);
                speed = (float) xml->getAttributeValueAsInt(8);
                CElementBlockElevator * ptr2;
-               newLevel->Elevators.push_back(ptr2 = new CElementBlockElevator(SRect2((float)x, (float)y, (float)w, (float)h), d, t, range, speed));
+               newLevel->Elevators.push_back(ptr2 = new CElementBlockElevator(SRect2f((float)x, (float)y, (float)w, (float)h), d, t, range, speed));
                newLevel->Elements.push_back(ptr2);
             }
             else {
-               newLevel->Blocks.push_back(ptr = new CElementBlock(SRect2((float)x, (float)y, (float)w, (float)h), d, t));
+               newLevel->Blocks.push_back(ptr = new CElementBlock(SRect2f((float)x, (float)y, (float)w, (float)h), d, t));
                newLevel->Elements.push_back(ptr);
                //ptr->isMovingPlatform = 0;
                //numBlocks++;
@@ -99,7 +99,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             printf("breakable blocks x y h w are %d %d %d %d\n",x ,y,h,w);
 
             CElementBlockBreakable * ptr2;
-            newLevel->Elements.push_back(ptr2 = new CElementBlockBreakable(SRect2((float)x, (float)y, (float)w, (float)h)));
+            newLevel->Elements.push_back(ptr2 = new CElementBlockBreakable(SRect2f((float)x, (float)y, (float)w, (float)h)));
             newLevel->BreakableBlocks.push_back(ptr2);
          }
          if(!strcmp("CEnemy", xml->getNodeName()))
@@ -111,7 +111,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             h = xml->getAttributeValueAsInt(2);
             w = xml->getAttributeValueAsInt(3);
             t = xml->getAttributeValueAsInt(4);
-            CElementEnemy *myEnemy = CEnemyLoader::LoadEnemy(SRect2((float)x, (float)y, (float)w, (float)h), (Enemies::EEnemyType)t);
+            CElementEnemy *myEnemy = CEnemyLoader::LoadEnemy(SRect2f((float)x, (float)y, (float)w, (float)h), (Enemies::EEnemyType)t);
             if(myEnemy != NULL) {
                newLevel->Enemies.push_back(myEnemy);
                newLevel->Elements.push_back(myEnemy);
@@ -127,7 +127,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             h = xml->getAttributeValueAsInt(2);
             w = xml->getAttributeValueAsInt(3);
             t = xml->getAttributeValueAsInt(4);
-            CElementPlayer *player = new CElementPlayer(SRect2((float)x, (float)y, (float)h, (float)w));
+            CElementPlayer *player = new CElementPlayer(SRect2f((float)x, (float)y, (float)h, (float)w));
             newLevel->Elements.push_back(player);
             newLevel->PlayerElement = player;
          }
@@ -140,7 +140,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             w = xml->getAttributeValueAsInt(3);
             t = xml->getAttributeValueAsInt(4);
 
-            CElementBlockFlag *myFlag = new CElementBlockFlag(SRect2((float)x, (float)y, (float)w, (float)h), t);
+            CElementBlockFlag *myFlag = new CElementBlockFlag(SRect2f((float)x, (float)y, (float)w, (float)h), t);
             newLevel->Flags.push_back(myFlag);
             newLevel->Elements.push_back(myFlag);
          }
@@ -151,7 +151,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             x = xml->getAttributeValueAsInt(0);
             y = xml->getAttributeValueAsInt(1);
             t = xml->getAttributeValueAsInt(2);
-            CElementItem *myItem = CItemLoader::LoadItem(SRect2((float)x, (float)y, 1.0f, 1.0f), (Items::EItemType)t);
+            CElementItem *myItem = CItemLoader::LoadItem(SRect2f((float)x, (float)y, 1.0f, 1.0f), (Items::EItemType)t);
             if(myItem != NULL) {
                newLevel->Items.push_back(myItem);
                newLevel->Elements.push_back(myItem);
@@ -166,7 +166,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             x = xml->getAttributeValueAsInt(0);
             y = xml->getAttributeValueAsInt(1);
             t = xml->getAttributeValueAsInt(2);
-            CElementItem *myItem = new CElementItemPowerup(SRect2((float)x, (float)y, 1.0f, 1.0f), t);
+            CElementItem *myItem = new CElementItemPowerup(SRect2f((float)x, (float)y, 1.0f, 1.0f), t);
             newLevel->Items.push_back(myItem);
             newLevel->Elements.push_back(myItem);
          }

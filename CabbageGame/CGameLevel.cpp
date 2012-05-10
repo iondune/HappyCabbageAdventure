@@ -96,7 +96,7 @@ std::vector<CBiggerBlock*> & CGameLevel::getConsolidatedBlocks() {
 
 CElementPlayer & CGameLevel::getPlayer() {
    if(PlayerElement == NULL)
-      PlayerElement = new CElementPlayer(SRect2(-100, 0, 1, 1));
+      PlayerElement = new CElementPlayer(SRect2f(-100, 0, 1, 1));
    return *PlayerElement;
 }
 

@@ -28,8 +28,8 @@ void EKiwi::loadMesh() {
    Renderable = new CMeshSceneObject();
    CMesh *mesh = CMeshLoader::load3dsMesh("Base/killerkiwi.3ds");
    if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(1));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -40,9 +40,9 @@ void EKiwi::loadMesh() {
    //Renderable->getMaterial().Texture = new CTexture(CImageLoader::loadImage("Textures/kiwi.bmp"));
    Renderable->setShader(ERP_DEFAULT, "Toon");
    Renderable->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   //Renderable->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
-   Renderable->setScale(SVector3(1, 1, 1));
-   Renderable->setRotation(SVector3(-90, 0, -90));
+   //Renderable->setTranslation(SVector3f((x+(x+1))/2, (y+(y-1))/2, 0));
+   Renderable->setScale(SVector3f(1, 1, 1));
+   Renderable->setRotation(SVector3f(-90, 0, -90));
 
    CApplication::get().getSceneManager().addSceneObject(Renderable);
 }
@@ -55,7 +55,7 @@ void EKiwi::loadActor() {
    Actor->setControlFall(false);
    Actor->setFallAcceleration(0.0f);
 
-   Actor->setArea(SRect2(SVector2(x, y), SVector2(w, h)));
+   Actor->setArea(SRect2f(SVector2f(x, y), SVector2f(w, h)));
 
    //Set actor attributes
    Actor->getAttributes().MaxWalk = 3.0f;
@@ -99,13 +99,13 @@ void EKiwi::update(float const TickTime) {
       y -= oldSineValue;
       y += SineValue; 
 
-      Actor->setArea(SRect2(curX, y, w, h));
+      Actor->setArea(SRect2f(curX, y, w, h));
 
 
       Actor->setAction(CCollisionActor::EActionType::None);
 
       SVector2 vel = Actor->getVelocity();
-      Actor->setVelocity(SVector2(vel.X, vel.Y > 0 ? vel.Y - 1.0f*TickTime : 0));
+      Actor->setVelocity(SVector2f(vel.X, vel.Y > 0 ? vel.Y - 1.0f*TickTime : 0));
 
       if(Direction == 0)
          Actor->setAction(CCollisionActor::EActionType::MoveLeft);
@@ -140,14 +140,14 @@ void EKiwi::doRenderable() {
 
    rotateBird = -100.0f * SineValue;
 
-   Renderable->setRotation(SVector3(-90 + rotateBird, 0, -90));
+   Renderable->setRotation(SVector3f(-90 + rotateBird, 0, -90));
 
-   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, zTimer*0.9f*Depth*(1.0f/Z_SPEED)));
+   Renderable->setTranslation(SVector3f(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, zTimer*0.9f*Depth*(1.0f/Z_SPEED)));
 
    if(Actor->getVelocity().X < -0.01f)
-      Renderable->setScale(SVector3(-1,1,1)*(zTimer + 1.0f));
+      Renderable->setScale(SVector3f(-1,1,1)*(zTimer + 1.0f));
    else if(Actor->getVelocity().X > 0.01f)
-      Renderable->setScale(SVector3(1,1,1)*(zTimer + 1.0f));
+      Renderable->setScale(SVector3f(1,1,1)*(zTimer + 1.0f));
 
 }
 

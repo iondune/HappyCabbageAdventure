@@ -1,7 +1,7 @@
 #include "CElementEnemyStrawberry.h"
 #include "CGameLevel.h"
 
-CElementEnemyStrawberry::CElementEnemyStrawberry(SRect2 nArea) :
+CElementEnemyStrawberry::CElementEnemyStrawberry(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::STRAWBERRY), ISquishable(nArea.Size.X, nArea.Size.Y) {
 
 }

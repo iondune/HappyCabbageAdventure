@@ -2,7 +2,7 @@
 #include "CElementEnemyProjectile.h"
 #include "CGameLevel.h"
 
-CElementEnemyBanana::CElementEnemyBanana(SRect2 nArea) :
+CElementEnemyBanana::CElementEnemyBanana(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::BANANA), ISquishable(nArea.Size.X, nArea.Size.Y), ShootTime(0.0f) {
 }
 
@@ -72,14 +72,14 @@ void CElementEnemyBanana::updatePhysicsEngineObject(float time) {
 
       if (PlayerPosition.X < Area.Position.X) {
          x -= 1.2f;
-         projectile = CEnemyLoader::LoadEnemy(SRect2(x, y, Area.Size.X, Area.Size.Y), Enemies::BANANA_PROJECTILE);
+         projectile = CEnemyLoader::LoadEnemy(SRect2f(x, y, Area.Size.X, Area.Size.Y), Enemies::BANANA_PROJECTILE);
                   ((CElementEnemyProjectile *)projectile)->setDirection(Projectile::LEFT);
                   Level.addEnemy(projectile);
       }
 
       else {
          x += 1.2f;
-         projectile = CEnemyLoader::LoadEnemy(SRect2(x, y, Area.Size.X, Area.Size.Y), Enemies::BANANA_PROJECTILE);
+         projectile = CEnemyLoader::LoadEnemy(SRect2f(x, y, Area.Size.X, Area.Size.Y), Enemies::BANANA_PROJECTILE);
          ((CElementEnemyProjectile *)projectile)->setDirection(Projectile::RIGHT);
          Level.addEnemy(projectile);
       }

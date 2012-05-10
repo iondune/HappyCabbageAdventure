@@ -1,16 +1,16 @@
 #include "CGameplayElement.h"
 #include "CGameLevel.h"
 
-CGameplayElement::CGameplayElement(CCollideable *& c, ISceneObject *& s, SRect2 a) :
+CGameplayElement::CGameplayElement(CCollideable *& c, ISceneObject *& s, SRect2f a) :
 SceneObject(s), PhysicsEngineObject(c), Level(CGameLevelLoader::getLatestLevel()), Area(a), Dead(true), ParticleEngine(NULL)
 {
 }
 
-SRect2 & CGameplayElement::getArea() {
+SRect2f & CGameplayElement::getArea() {
    return Area;
 }
 
-void CGameplayElement::setArea(SRect2 r) {
+void CGameplayElement::setArea(SRect2f r) {
    Area = r;
    PhysicsEngineObject->setArea(r);
 }

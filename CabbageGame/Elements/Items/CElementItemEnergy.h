@@ -8,7 +8,7 @@ class CElementItemEnergy : public CElementItem
    private:
 
    public:
-      CElementItemEnergy(SRect2 nArea);
+      CElementItemEnergy(SRect2f nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

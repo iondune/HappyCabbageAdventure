@@ -62,7 +62,7 @@ void CGameplayManager::update(float time) {
    std::vector<CGameplayElement *> KillList;
    static float const UpdateWidth = 30.0f;
    static float const UpdateHeight = 30.0f;
-   SRect2 UpdateArea = Level.getPlayer().getArea();
+   SRect2f UpdateArea = Level.getPlayer().getArea();
    UpdateArea.Position.X -= UpdateWidth/2.0f;
    UpdateArea.Position.Y -= UpdateHeight/2.0f;
    UpdateArea.Size.X = UpdateWidth;

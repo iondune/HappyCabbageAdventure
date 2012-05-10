@@ -32,6 +32,6 @@ void CFlag::moveTo(float x,float y) {
 }
 
 CMeshSceneObject * CFlag::setupItem(CShader * shader, CShader * dShader, CCollisionEngine *Engine, CGameplayManager *GameplayManager){
-//    Engine->addActor()->setArea(SRect2(CPlaceable::x,y,(float)w,(float)h));
+//    Engine->addActor()->setArea(SRect2f(CPlaceable::x,y,(float)w,(float)h));
     return new CMeshSceneObject(); // not sure to really return here
 }

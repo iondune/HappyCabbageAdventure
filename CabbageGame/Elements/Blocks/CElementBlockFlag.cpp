@@ -2,7 +2,7 @@
 #include "CGameLevel.h"
 #include "CElementPlayer.h"
 
-CElementBlockFlag::CElementBlockFlag(SRect2 nArea, FlagRole role)
+CElementBlockFlag::CElementBlockFlag(SRect2f nArea, FlagRole role)
 : CElementBlock(nArea, 1, 0), Role(role) {
 }
 

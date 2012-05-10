@@ -1,7 +1,7 @@
 #include "CElementEnemyApple.h"
 #include "CGameLevel.h"
 
-CElementEnemyApple::CElementEnemyApple(SRect2 nArea) :
+CElementEnemyApple::CElementEnemyApple(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::APPLE), PositiveScale(false), ScaleMult(0.0f), Roll(None), Rotate(0.0f), ISquishable(1.0f, 1.0f) {
 
 }
@@ -85,7 +85,7 @@ void CElementEnemyApple::updatePhysicsEngineObject(float time) {
       Rotate = 0;
       Roll = None;
       PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
-      PhysicsEngineObject->setVelocity(SVector2(2.2f, 0.0f));
+      PhysicsEngineObject->setVelocity(SVector2f(2.2f, 0.0f));
    }
 }
 

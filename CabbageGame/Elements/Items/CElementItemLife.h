@@ -8,7 +8,7 @@ class CElementItemLife : public CElementItem
    private:
 
    public:
-      CElementItemLife(SRect2 nArea);
+      CElementItemLife(SRect2f nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

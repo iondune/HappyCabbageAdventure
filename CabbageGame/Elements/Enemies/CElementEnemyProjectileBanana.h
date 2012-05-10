@@ -16,7 +16,7 @@ class CElementEnemyProjectileBanana : public CElementEnemyProjectile {
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);
 
-      CElementEnemyProjectileBanana(SRect2 nArea);
+      CElementEnemyProjectileBanana(SRect2f nArea);
 
       virtual void printInformation();
 };

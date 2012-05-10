@@ -60,7 +60,7 @@ class CPlayerView {
          lookRight = 1;
          yScale = xScale = 2.0f;
          time = 0;
-         shakeFactor = SVector3(0.0f);
+         shakeFactor = SVector3f(0.0f);
          zCam = 0.0f;
          zCamTimer = 0.0f;
       }
@@ -91,7 +91,7 @@ class CPlayerView {
          Size = size;
       }
       float cutOffPoint;
-      void setCutoffPoint(SRect2 left, SRect2 right) {
+      void setCutoffPoint(SRect2f left, SRect2f right) {
          renderLeftShadow->setVisible(left.Size.X != 0.0f);
          renderRightShadow->setVisible(right.Size.X != 0.0f);
          bool equal = false;

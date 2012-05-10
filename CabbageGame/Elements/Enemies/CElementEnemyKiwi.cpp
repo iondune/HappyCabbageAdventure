@@ -1,7 +1,7 @@
 #include "CElementEnemyKiwi.h"
 #include "CGameLevel.h"
 
-CElementEnemyKiwi::CElementEnemyKiwi(SRect2 nArea, int direction) :
+CElementEnemyKiwi::CElementEnemyKiwi(SRect2f nArea, int direction) :
    CElementEnemy(nArea, Enemies::KIWI), Direction(direction), rotateBird(0.0f), SineValue(0.0f), OldX(Area.Position.X), bombDropped(false) {
 
 }
@@ -86,7 +86,7 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
       Area.Position.Y += SineValue;
 
       SVector2 vel = PhysicsEngineObject->getVelocity();
-      PhysicsEngineObject->setVelocity(SVector2(vel.X, vel.Y > 0 ? vel.Y - 1.0f*time : 0));
+      PhysicsEngineObject->setVelocity(SVector2f(vel.X, vel.Y > 0 ? vel.Y - 1.0f*time : 0));
 
       //TODO: Check player direction
       if(Direction == 0)
@@ -147,9 +147,9 @@ void CElementEnemyKiwi::DropBomb() {
    //TODO:  Need to determine if projectiles are an enemy or a separate abstract class.
    //TODO:  Determine the direction of the player with respect to the Kiwi.
    if (Direction == 0) {
-      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(xLocation, yLocation, Area.Size.X, Area.Size.Y), Enemies::KIWI_PROJECTILE));
+      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2f(xLocation, yLocation, Area.Size.X, Area.Size.Y), Enemies::KIWI_PROJECTILE));
    }
    else {
-      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(xLocation, yLocation, Area.Size.X, Area.Size.Y), Enemies::KIWI_PROJECTILE));
+      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2f(xLocation, yLocation, Area.Size.X, Area.Size.Y), Enemies::KIWI_PROJECTILE));
    }
 }

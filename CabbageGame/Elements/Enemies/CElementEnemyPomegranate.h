@@ -14,7 +14,7 @@ class CElementEnemyPomegranate : public CElementEnemy, ISquishable
 
 
    public:
-      CElementEnemyPomegranate(SRect2 nArea);
+      CElementEnemyPomegranate(SRect2f nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

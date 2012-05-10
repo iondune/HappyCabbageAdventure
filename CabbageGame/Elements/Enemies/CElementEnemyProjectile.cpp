@@ -5,7 +5,7 @@
 #include "CElementEnemyProjectileKiwi.h"
 
 //Generic enemy, for usage in the LWIB, I guess.
-CElementEnemyProjectile::CElementEnemyProjectile(SRect2 nArea, Enemies::EEnemyType type)
+CElementEnemyProjectile::CElementEnemyProjectile(SRect2f nArea, Enemies::EEnemyType type)
 : CElementEnemy(nArea, type) {
    Mix_PlayChannel(-1, Level.projectile, 0);
 }
@@ -22,10 +22,10 @@ void CElementEnemyProjectile::OnCollision(CCollideable *Object) {
          if (Level.getPlayer().decrementHealth()) {
 
            if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
-              PlayerActor->setImpulse(SVector2(4.f, 2.f), 0.1f);
+              PlayerActor->setImpulse(SVector2f(4.f, 2.f), 0.1f);
            
            else
-              PlayerActor->setImpulse(SVector2(-4.f, 2.f), 0.1f);
+              PlayerActor->setImpulse(SVector2f(-4.f, 2.f), 0.1f);
          
            Level.getPlayer().setShaking(1.0f, 3.0f);
          }

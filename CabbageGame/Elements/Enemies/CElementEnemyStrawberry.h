@@ -9,7 +9,7 @@ class CElementEnemyStrawberry : public CElementEnemy, public ISquishable
       SVector2 Scale;
 
    public:
-      CElementEnemyStrawberry(SRect2 nArea);
+      CElementEnemyStrawberry(SRect2f nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

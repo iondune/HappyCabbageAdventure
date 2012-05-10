@@ -1,7 +1,7 @@
 #include "CElementItemLife.h"
 #include "CGameLevel.h"
 
-CElementItemLife::CElementItemLife(SRect2 nArea) :
+CElementItemLife::CElementItemLife(SRect2f nArea) :
    CElementItem(nArea, Items::LIFE) {
 
 }
@@ -9,8 +9,8 @@ CElementItemLife::CElementItemLife(SRect2 nArea) :
 void CElementItemLife::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   Area.Position += SVector2(Area.Size.Y*0.4f);
-   Area.Size *= SVector2(0.8f);
+   Area.Position += SVector2f(Area.Size.Y*0.4f);
+   Area.Size *= SVector2f(0.8f);
    PhysicsEngineObject->setArea(Area);
 
    //Set actor attributes
@@ -57,7 +57,7 @@ void CElementItemLife::updatePhysicsEngineObject(float time) {
 
 //This is where the renderable would be updated for the more complex enemies
 void CElementItemLife::updateSceneObject(float time) {
-   SceneObject->setTranslation(SVector3f(PhysicsEngineObject->getArea().getCenter() + SVector2(0.0f, 0.1f), 0));
+   SceneObject->setTranslation(SVector3f(PhysicsEngineObject->getArea().getCenter() + SVector2f(0.0f, 0.1f), 0));
    SceneObject->setRotation(SVector3f(-90, 0, 90 + 140*ElapsedTime));
 }
 
