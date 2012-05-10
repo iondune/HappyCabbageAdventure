@@ -7,24 +7,6 @@
 
 class ICollisionResponder;
 
-class ECollisionType
-{
-
-public:
-
-	enum Domain
-	{
-		None = 0,
-		Up = 1,
-		Down = 2,
-		Left = 4,
-		Right = 8
-	};
-
-	Domain Value;
-
-};
-
 class CCollisionActor : public CCollideable
 {
 

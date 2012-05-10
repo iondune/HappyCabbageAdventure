@@ -20,6 +20,24 @@ typedef SRect2<CollisionReal> SArea;
 
 class CCollideable;
 
+class ECollisionType
+{
+
+public:
+
+	enum Domain
+	{
+		None = 0,
+		Up = 1,
+		Down = 2,
+		Left = 4,
+		Right = 8
+	};
+
+	Domain Value;
+
+};
+
 struct SCollisionEvent
 {
 	CCollideable * This;
@@ -27,6 +45,8 @@ struct SCollisionEvent
 
 	ECollisionType::Domain Direction;
 };
+
+class CGameplayElement;
 
 class CCollideable
 {
@@ -55,6 +75,8 @@ protected:
 
 	int CollisionMask;
 	int DetectionMask;
+
+	CGameplayElement * GameplayElement;
 
 public:
 
@@ -88,6 +110,16 @@ public:
 	bool const collidesWith(CCollideable * Object) const;
 	bool const canCollideWith(CCollideable * Object) const;
 	bool const canDetectWith(CCollideable * Object) const;
+
+	CGameplayElement * getGameplayElement()
+	{
+		return GameplayElement;
+	}
+
+	void setGameplayElement(CGameplayElement * Element)
+	{
+		GameplayElement = Element;
+	}
 
 	sigslot::signal1<SCollisionEvent const &> OnCollision;
 
