@@ -12,8 +12,8 @@ void CElementItemHealth::setupPhysicsEngineObject() {
    PhysicsEngineObject->setArea(Area);
 
    //Set actor attributes
-   PhysicsEngineObject->CollideableLevel = INTERACTOR_ITEMS;
-   PhysicsEngineObject->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS;
+   PhysicsEngineObject->setTypeId(INTERACTOR_ITEMS);
+   PhysicsEngineObject->setCollisionMask(PhysicsEngineObject->getCollisionMask() | INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS);
 }
 
 void CElementItemHealth::setupSceneObject() {
@@ -38,7 +38,7 @@ void CElementItemHealth::setupSceneObject() {
 }
 
 void CElementItemHealth::OnCollision(const SCollisionEvent& Event) {
-   if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject() && !Level.getPlayer().used(Abilities::SHIELD)) {
+   if(!Dead && Event.Other == Level.getPlayer().getPhysicsEngineObject() && !Level.getPlayer().used(Abilities::SHIELD)) {
          Level.getPlayer().incrementHealth();
          removeFromGame();
          Dead = true;

@@ -222,7 +222,7 @@ Cabbage::PlayerInformation & CElementPlayer::getStats() {
 
 void CElementPlayer::OnCollision(const SCollisionEvent& Event) {
    for(unsigned int i = 0; i < Abilities.size(); i++) {
-      Abilities[i]->inOnCollision(Event.Other);
+      Abilities[i]->inOnCollision(Event);
    }
    return;
 }

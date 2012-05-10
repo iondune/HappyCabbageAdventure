@@ -20,7 +20,7 @@ class CElementEnemyFlame : public CElementEnemy
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);
 
-      virtual void OnCollision(CCollideable*);
+      virtual void OnCollision(const SCollisionEvent& Event);
       void reactToAbility(Abilities::EAbilityType Ability);
 
       virtual void printInformation();

@@ -121,7 +121,7 @@ public:
 		GameplayElement = Element;
 	}
 
-	sigslot::signal1<SCollisionEvent const >& OnCollision;
+	sigslot::signal1<SCollisionEvent const &> OnCollision;
 
 };
 

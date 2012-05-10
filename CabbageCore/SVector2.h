@@ -227,7 +227,7 @@ template <typename T>
 SVector2<T> SVector2Reference<T>::getInterpolated(SVector2Reference<T> const & v, T const d)
 {
 	T inv = (T) 1.0 - d;
-	return SVector2((v.X*inv + X*d), (v.Y*inv + Y*d));
+	return SVector2<T>((v.X*inv + X*d), (v.Y*inv + Y*d));
 }
 
 template <typename T>

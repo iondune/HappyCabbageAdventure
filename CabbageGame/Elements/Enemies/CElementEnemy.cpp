@@ -149,7 +149,7 @@ void CElementEnemy::dropItem() {
 }
 
 void CElementEnemy::OnCollision(const SCollisionEvent& Event) {
-   if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
+   if(!Dead && Event.Other == Level.getPlayer().getPhysicsEngineObject()) {
       CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
 
       //Check if jumped on top of enemy.

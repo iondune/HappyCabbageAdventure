@@ -1630,7 +1630,7 @@ void CLWIBState::pickInsert()
 }
 void CLWIBState::prepHud() {
     // prepping hud wwidgest
-    SVector2 norm = SVector2f(.1f, .1f);
+    SVector2f norm = SVector2f(.1f, .1f);
     CTexture *imgLeft = new CTexture(CImageLoader::loadImage("ModelImages/leftArrowPic.bmp"));
     CTexture *imgright = new CTexture(CImageLoader::loadImage("ModelImages/rightArrowPic.bmp"));
     CTexture *saveImg = new CTexture(CImageLoader::loadImage("ModelImages/save.bmp"));

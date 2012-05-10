@@ -188,7 +188,7 @@ public:
 	//! For debugging purposes, draws this actor onto the screen using FFP OpenGL
 	virtual void draw();
 
-	void addImpulse(SVec2 const & velocity, float const Duration);
+	void addImpulse(SVec2 const & velocity, float const Duration = 0.01f);
 
 };
 

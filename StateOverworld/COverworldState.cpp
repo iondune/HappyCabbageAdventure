@@ -188,7 +188,7 @@ void COverworldState::OnRenderStart(float const Elapsed)
 
    step(Application.getElapsedTime());
    //stepCamera(Application.getElapsedTime());
-   SVector3 eyeRot = eye;
+   SVector3f eyeRot = eye;
    eyeRot.X += 0.2f*cos(camRotValue);
    eyeRot.Z += 0.2f*(sin(camRotValue) + 1);
    eyeRot.Y += 0.1f*(sin(camRotValue) + 1);
@@ -469,7 +469,7 @@ void COverworldState::PrepMeshes()
 
 }
 
-void COverworldState::levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor)
+void COverworldState::levelIcons(SVector3f loc, CMesh *levelIcon, int iconColor)
 {
 
    discRender = CApplication::get().getSceneManager().addMeshSceneObject(levelIcon, ToonTexture, DeferredTexture);
@@ -495,7 +495,7 @@ void COverworldState::levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor)
    discRender->setScale(SVector3f(0.1f));
 }
 
-void COverworldState::addMeshes(SVector3 loc, CMesh *newMesh, CTexture *texture)
+void COverworldState::addMeshes(SVector3f loc, CMesh *newMesh, CTexture *texture)
 {
    CMeshSceneObject *renderFlag = new CMeshSceneObject();
    renderFlag->setMesh(newMesh);
@@ -513,7 +513,7 @@ void COverworldState::addMeshes(SVector3 loc, CMesh *newMesh, CTexture *texture)
 }
 
 void COverworldState::bouncePlayer() {
-   SVector3 m_base = playerVector;
+   SVector3f m_base = playerVector;
    m_base.Y += 0.03f*(sin(stepValue*15)+1);
    playerRender->setTranslation(m_base);
 }
@@ -601,10 +601,10 @@ void COverworldState::movePlayer() {
    }
 }
 
-void COverworldState::superInterpolator(SVector3 & curr, SVector3 & change,
+void COverworldState::superInterpolator(SVector3f & curr, SVector3f & change,
       float delta, float transLength)
 {
-   SVector3 zeroV = SVector3f(0.0f, 0.0f, 0.0f);
+   SVector3f zeroV = SVector3f(0.0f, 0.0f, 0.0f);
 
    if(transitionTimer <= 0.0f)
    {
@@ -621,16 +621,16 @@ void COverworldState::superInterpolator(SVector3 & curr, SVector3 & change,
    }
 }
 
-void COverworldState::shiftSetter(SVector3 & curr, SVector3 & change, SVector3 & target)
+void COverworldState::shiftSetter(SVector3f & curr, SVector3f & change, SVector3f & target)
 {
    change = target - curr;
 }
 
-float COverworldState::angleMaker(SVector3 start, SVector3 toPoint)
+float COverworldState::angleMaker(SVector3f start, SVector3f toPoint)
 {
    //float asinxz, asinzx, acosxz, acoszx;
    float lookat = 0.f;
-   SVector3 temp = toPoint - start;
+   SVector3f temp = toPoint - start;
 
    temp.normalize();
    /*
@@ -649,7 +649,7 @@ float COverworldState::angleMaker(SVector3 start, SVector3 toPoint)
 }
 void COverworldState::testFun()
 {
-   SVector3 temp = cameraPos[1] -levels[2].loc;
+   SVector3f temp = cameraPos[1] -levels[2].loc;
    temp.normalize();
 
    printf("TEST %f\n", (atan2(temp.X,temp.Z) * RAD_TO_DEG));

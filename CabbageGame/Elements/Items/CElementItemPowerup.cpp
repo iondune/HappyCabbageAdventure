@@ -11,8 +11,8 @@ void CElementItemPowerup::setupPhysicsEngineObject() {
    PhysicsEngineObject->setArea(Area);
 
    //Set actor attributes
-   PhysicsEngineObject->CollideableLevel = INTERACTOR_ITEMS;
-   PhysicsEngineObject->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS;
+   PhysicsEngineObject->setTypeId(INTERACTOR_ITEMS);
+   PhysicsEngineObject->setCollisionMask(PhysicsEngineObject->getCollisionMask() | INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS);
 }
 
 void CElementItemPowerup::setupSceneObject() {
@@ -70,7 +70,7 @@ void CElementItemPowerup::writeXML(xmlwriter *l) {
 }
 
 void CElementItemPowerup::OnCollision(const SCollisionEvent& Event) {
-   if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
+   if(!Dead && Event.Other == Level.getPlayer().getPhysicsEngineObject()) {
       Level.getPlayer().setCanUseAbility(Type);
       removeFromGame();
       Dead = true;

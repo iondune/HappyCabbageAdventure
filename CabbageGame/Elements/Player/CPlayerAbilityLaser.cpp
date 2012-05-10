@@ -45,7 +45,7 @@ void CPlayerAbilityLaser::inUpdateSceneObject(float time) {
       Player.View->setVisible(true);
 }
 
-void CPlayerAbilityLaser::inOnCollision(CCollideable * collider) {
+void CPlayerAbilityLaser::inOnCollision(const SCollisionEvent& Event) {
    return;
 }
 

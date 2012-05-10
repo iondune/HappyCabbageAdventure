@@ -92,11 +92,10 @@ void CCollisionEngine::runLists()
 	ObjectAddList.clear();
 }
 
-/* NO!
 void CCollisionEngine::update(float const Elapsed)
 {
    updateAll(Elapsed);
-}*/
+}
 
 void CCollisionEngine::updateAll(float const Elapsed)
 {

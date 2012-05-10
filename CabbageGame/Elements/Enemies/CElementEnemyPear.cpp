@@ -52,7 +52,7 @@ void CElementEnemyPear::setupSceneObject() {
 }
 
 void CElementEnemyPear::OnCollision(const SCollisionEvent& Event) {
-   if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
+   if(!Dead && Event.Other == Level.getPlayer().getPhysicsEngineObject()) {
       CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
       HitPlayer = true;
 

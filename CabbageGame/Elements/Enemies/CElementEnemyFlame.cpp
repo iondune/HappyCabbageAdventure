@@ -34,7 +34,7 @@ void CElementEnemyFlame::OnCollision(const SCollisionEvent& Event) {
       }
       else {
          //We can make enemies jump when they touch fire here too, once we have a pointer to the CElementEnemy*.
-         ((CCollisionActor *)Object)->addImpulse(SVector2f(0.0f, flameJumpFactor), 0.01f);
+         ((CCollisionActor *)Event.Other)->addImpulse(SVector2f(0.0f, flameJumpFactor), 0.01f);
       }
    }
 }

@@ -2,6 +2,7 @@
 #define CPLAYERABILITY__HEADER
 
 #include "IUpdater.h"
+#include "CCollisionEngine.h"
 
 class CElementPlayer;
 class CCollideable;
