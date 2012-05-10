@@ -7,7 +7,7 @@
 
 #define DEBUG_PRINTFS
 
-CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(level.getElements()) {
+CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(level.getGameplayElements()) {
    PhysicsEngine = new CCollisionEngine();
    level.setPhysicsEngine(PhysicsEngine);
 
@@ -25,8 +25,8 @@ CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(
    CApplication::get().getSceneManager().setDeferred(level.isNight());
    //level.setNoRender();
    //Set up each object
-   for(int i = 0; i < level.getElements().size(); i++) {
-      level.getElements()[i]->setupObjects();
+   for(int i = 0; i < level.getGameplayElements().size(); i++) {
+      level.getGameplayElements()[i]->setupObjects();
    }
    //Add consolidated blocks
    if(Level.isLoaded()) {
@@ -35,9 +35,9 @@ CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(
       }
    }
 #ifdef DEBUG_PRINTFS
-   for(int i = 0; i < level.getElements().size(); i++) {
+   for(int i = 0; i < level.getGameplayElements().size(); i++) {
       printf("Element %d: ", i);
-      level.getElements()[i]->printInformation();
+      level.getGameplayElements()[i]->printInformation();
    }
    printf("Total number in physics engine after setup: %d (%d actors + %d objects).\n",
       PhysicsEngine->getActors().size() + PhysicsEngine->getObjects().size(),
@@ -55,7 +55,7 @@ void CGameplayManager::update(float time) {
    /*
    std::vector<CCollisionActor*> Actors = PhysicsEngine->getActors();
    for(int i = 0; i < Actors.size(); i++) {
-      Actors[i]->getElement().printInformation();
+      Actors[i]->getGameplayElement().printInformation();
    }
    */
    

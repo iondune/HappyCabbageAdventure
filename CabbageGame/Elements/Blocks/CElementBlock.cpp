@@ -66,7 +66,7 @@ void CElementBlock::setupPhysicsEngineObject() {
    /*
    PhysicsEngineObject->setCollisionResponder(NULL);
    PhysicsEngineObject->setArea(Area);
-   PhysicsEngineObject->setDepth(Depth);
+   PhysicsEngineObject->setVisualDepth(Depth);
    */
    Level.getPhysicsEngine().removeCollideable(PhysicsEngineObject);
 }

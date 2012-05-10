@@ -39,7 +39,7 @@ void CGameplayElement::setupObjects() {
    setupPhysicsEngineObject();
    if(Level.isLoaded()) {
       PhysicsEngineObject->setCollisionResponder(this);
-      PhysicsEngineObject->setElement(this);
+      PhysicsEngineObject->setGameplayElement(this);
    }
    else {
       Level.getPhysicsEngine().remove(PhysicsEngineObject);

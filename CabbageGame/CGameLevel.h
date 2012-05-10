@@ -50,7 +50,7 @@ class CGameLevel {
       CCollisionEngine *PhysicsEngine;
 
    public:
-      std::vector<CGameplayElement*> & getElements();
+      std::vector<CGameplayElement*> & getGameplayElements();
       std::vector<CElementBlock*> & getBlocks();
       std::vector<CGroundBlock*> & getGroundBlocks();
       std::vector<CBiggerBlock*> & getConsolidatedBlocks();
