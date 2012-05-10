@@ -20,6 +20,10 @@ void CElementBlock::updatePhysicsEngineObject(float time) {
 }
 
 void CElementBlock::updateSceneObject(float time) {
+   if(Texture != -5) {
+      SceneObject->setTranslation(SVector3((Area.Position.X+(Area.Position.X+Area.Size.X))/2, (Area.Position.Y+(Area.Position.Y+Area.Size.Y))/2, 0));
+      SceneObject->setScale(SVector3(Area.Size.X, Area.Size.Y, (float) Depth));
+   }
 }
 
 void CElementBlock::OnCollision(CCollideable *Object) {
