@@ -36,7 +36,7 @@ CCollisionActor::EActionType::EActionType(Domain const value)
 	: Value(value)
 {}
 
-bool const CCollisionActor::EActionType::operator == (Domain const value)
+bool const CCollisionActor::EActionType::operator == (Domain const value) const
 {
 	return Value == value;
 }
@@ -255,8 +255,18 @@ void CCollisionActor::updateVectors(CollisionReal const TickTime)
 	}
 
 	// Perform impulse
-	Velocity += ImpulseVelocity;
-	ImpulseVelocity *= 0.7f;
+
+	for (std::vector<std::pair<SVec2, float> >::iterator it = Impulses.begin(); it != Impulses.end();)
+	{
+		if (it->second > 0)
+        {
+			Velocity += it->first;
+            it->second -= (float) TickTime;
+        }
+
+        if (it->second <= 0)
+            it = Impulses.erase(it);
+	}
 
 	// Add velocity from gravity
 	Velocity.Y += FallAcceleration * TickTime;
@@ -382,7 +392,7 @@ void CCollisionActor::draw()
 
 void CCollisionActor::addImpulse(SVec2 const & velocity, float const Duration)
 {
-	Impulses.push_back(std::vector<SVec2, float>(velocity, Duration));
+	Impulses.push_back(std::pair<SVec2, float>(velocity, Duration));
 }
 
 void CCollisionActor::setFallAcceleration(CollisionReal speed)

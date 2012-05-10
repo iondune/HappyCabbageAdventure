@@ -3,6 +3,8 @@
 
 #include <SRect2.h>
 
+#include <vector>
+
 #include "CCollisionObject.h"
 
 class ICollisionResponder;
@@ -69,7 +71,7 @@ public:
 		EActionType();
 		EActionType(Domain const value);
 
-		bool const operator == (Domain const value);
+		bool const operator == (Domain const value) const;
 
 	};
 
