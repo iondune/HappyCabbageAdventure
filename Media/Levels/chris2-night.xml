@@ -17,19 +17,19 @@
 </CBreakable>
 <CBreakable X ="-25" Y ="3" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
-<CBreakable X ="-13" Y ="-5" height ="5" width ="2" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBreakable X ="-13" Y ="-5" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
-<CBreakable X ="-8" Y ="-5" height ="5" width ="2" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBreakable X ="-8" Y ="-5" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
 <CCabbage X ="-12" Y ="0" height ="1" width ="1" isMoving ="0">
 </CCabbage>
 <CPItem X ="-24" Y ="-1" texture ="0" isMoving ="0">
 </CPItem>
-<CBreakable X ="-3" Y ="-5" height ="5" width ="2" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBreakable X ="-3" Y ="-5" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
-<CBreakable X ="2" Y ="-5" height ="5" width ="2" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBreakable X ="2" Y ="-5" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
-<CBreakable X ="7" Y ="-5" height ="5" width ="2" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBreakable X ="7" Y ="-5" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
 <CBreakable X ="-8" Y ="0" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
@@ -115,7 +115,7 @@
 </CPItem>
 <CPItem X ="0" Y ="2" texture ="1" isMoving ="0">
 </CPItem>
-<CBreakable X ="12" Y ="-5" height ="5" width ="2" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBreakable X ="12" Y ="-5" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
 <CEnemy X ="15" Y ="0" height ="1" width ="1" type ="0">
 </CEnemy>
@@ -907,19 +907,19 @@
 </CEnemy>
 <CEnemy X ="99" Y ="5" height ="1" width ="1" type ="2">
 </CEnemy>
-<CBreakable X ="98" Y ="-5" height ="5" width ="2" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBreakable X ="98" Y ="-5" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
-<CBreakable X ="103" Y ="-5" height ="5" width ="2" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBreakable X ="103" Y ="-5" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
-<CBreakable X ="108" Y ="-5" height ="5" width ="2" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBreakable X ="108" Y ="-5" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
-<CBreakable X ="113" Y ="-5" height ="5" width ="2" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBreakable X ="113" Y ="-5" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
-<CBreakable X ="118" Y ="-5" height ="5" width ="2" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBreakable X ="118" Y ="-5" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
-<CBreakable X ="123" Y ="-5" height ="5" width ="2" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBreakable X ="123" Y ="-5" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
-<CBreakable X ="128" Y ="-5" height ="5" width ="2" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBreakable X ="128" Y ="-5" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
 <CEnemy X ="110" Y ="4" height ="1" width ="1" type ="2">
 </CEnemy>
@@ -1019,17 +1019,17 @@
 </CBreakable>
 <CFlag X ="135" Y ="8" height ="1" width ="1" secret ="0" isMoving ="0">
 </CFlag>
-<CBreakable X ="133" Y ="-5" height ="5" width ="2" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBreakable X ="133" Y ="-5" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
-<CBreakable X ="138" Y ="-5" height ="5" width ="2" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBreakable X ="138" Y ="-5" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
-<CBreakable X ="143" Y ="-5" height ="5" width ="2" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBreakable X ="143" Y ="-5" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
-<CBreakable X ="148" Y ="-5" height ="5" width ="2" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBreakable X ="148" Y ="-5" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
-<CBreakable X ="153" Y ="-5" height ="5" width ="2" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBreakable X ="153" Y ="-5" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
-<CBreakable X ="158" Y ="-5" height ="5" width ="2" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
+<CBreakable X ="158" Y ="-5" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
 <CBreakable X ="58" Y ="9" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBreakable>
