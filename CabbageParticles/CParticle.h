@@ -10,12 +10,12 @@
 class CParticle {
    float size;
    public:
-      SVector3 *centerPos;
+      SVector3f *centerPos;
       int* lookRight;
       float StartFactor, AppearRate, Duration, TotalDuration, Counter;
 
-      //SVector3 RotationSpeed;
-      SVector3 translate;
+      //SVector3f RotationSpeed;
+      SVector3f translate;
 
       int useCenterPos;
       void setLookRight(int*);

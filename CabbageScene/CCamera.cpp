@@ -14,22 +14,22 @@ void ICamera::recalculateViewMatrix()
     ViewMatrix = glm::lookAt(Position.getGLMVector(), (Position + LookDirection).getGLMVector(), glm::vec3(0, 1, 0));
 }
 
-SVector3 const & ICamera::getPosition() const
+SVector3f const & ICamera::getPosition() const
 {
     return Position;
 }
 
-SVector3 const & ICamera::getLookDirecton() const
+SVector3f const & ICamera::getLookDirecton() const
 {
     return LookDirection;
 }
 
-void ICamera::setPosition(SVector3 const & position)
+void ICamera::setPosition(SVector3f const & position)
 {
     Position = position;
 }
 
-void ICamera::setLookDirection(SVector3 const & lookDirection)
+void ICamera::setLookDirection(SVector3f const & lookDirection)
 {
     LookDirection = lookDirection;
 }

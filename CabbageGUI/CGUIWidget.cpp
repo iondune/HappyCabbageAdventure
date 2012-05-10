@@ -4,12 +4,12 @@ CGUIWidget::CGUIWidget()
 	: Rotation(0.f), Visible(true), Hovered(false)
 {}
 
-SVector2 const & CGUIWidget::getPosition() const
+SVector2f const & CGUIWidget::getPosition() const
 {
 	return Box.Position;
 }
 
-void CGUIWidget::setPosition(SVector2 const & position)
+void CGUIWidget::setPosition(SVector2f const & position)
 {
 	Box.Position = position;
 }

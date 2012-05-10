@@ -6,7 +6,7 @@ void CPHurt::setupRenderable() {
    velocity = ((*centerPos - position) - *centerPos) * SVector3(-0.3f, -1.4f, -0.7f); 
 }
 
-void CPHurt::setCenterPos(SVector3 *cPos) {
+void CPHurt::setCenterPos(SVector3f *cPos) {
    centerPos = cPos;
 }
 

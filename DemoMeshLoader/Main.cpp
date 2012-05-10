@@ -459,7 +459,7 @@ public:
     CScene * Scene;
 
     // Information about mesh
-    SVector3 Translation, Scale;
+    SVector3f Translation, Scale;
     glm::mat4 Rotation;
     int TriangleCount;
 

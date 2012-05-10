@@ -57,11 +57,11 @@ CGUIDialogWidget::CGUIDialogWidget(std::string const & DialogFileName) {
    Board->setVisible(false);
    Engine->addWidget(Board);
 
-   SVector2 bottomLeftOfBoard((aspectRatio - widthOfBoard)/2.0f, padding);
+   SVector2f bottomLeftOfBoard((aspectRatio - widthOfBoard)/2.0f, padding);
 
    int i;
    for(i = 0; i < 3; i++) {
-      SVector2 textPosition = bottomLeftOfBoard + SVector2(padding, (float)(2 - i)/(4.0f/heightOfBoard) + padding*1.5f);
+      SVector2f textPosition = bottomLeftOfBoard + SVector2(padding, (float)(2 - i)/(4.0f/heightOfBoard) + padding*1.5f);
       CGUIFontWidget *t = new CGUIFontWidget("WIFFLES_.TTF", 14.f/heightOfBoard);
       t->setVisible(false);
       t->setText("unset");
