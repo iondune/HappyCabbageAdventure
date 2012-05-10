@@ -90,6 +90,9 @@ void CCollisionEngine::runLists()
 void CCollisionEngine::updateAll(float const Elapsed)
 {
 	static int const TicksPerSecond = 200;
+
+	runLists();
+
 	Timer += std::min(Elapsed, 0.1f);
 
 	float const TimePerTick = 1.f / TicksPerSecond;
@@ -99,6 +102,8 @@ void CCollisionEngine::updateAll(float const Elapsed)
 		Timer -= TimePerTick;
 		performTick(TimePerTick);
 	}
+
+	runLists();
 }
 
 CCollisionObject* const CCollisionEngine::getObjectBelow(SVector2f pos)
