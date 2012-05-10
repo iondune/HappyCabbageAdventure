@@ -2,7 +2,7 @@
 #include "CGameLevel.h"
 
 CElementEnemyPineapple::CElementEnemyPineapple(SRect2 nArea) :
-   CElementEnemy(nArea, Enemies::PINEAPPLE), ISquishable(nArea.Size.X, nArea.Size.Y), HitPlayer(false), OldPositionX(nArea.Position.X) {
+   CElementEnemy(nArea, Enemies::PINEAPPLE), ISquishable(4.0f, 4.0f), HitPlayer(false), OldPositionX(nArea.Position.X) {
 
    MaxHealth = 4;
    CurHealth = MaxHealth;
@@ -24,15 +24,15 @@ void CElementEnemyPineapple::setupSceneObject() {
    CMesh *mesh;
 
    if (Level.getEnvironment() == 0) {
-      mesh = CMeshLoader::load3dsMesh("Base/pineapple.3ds");
+      mesh = CMeshLoader::load3dsMesh("Base/pineapple_stack.3ds");
    }
 
    else if (Level.getEnvironment() == 1) {
-      mesh = CMeshLoader::load3dsMesh("Base/pineapple.3ds");
+      mesh = CMeshLoader::load3dsMesh("Base/pineapple_stack.3ds");
    }
    //LevelEditor has no environment
    else
-      mesh = CMeshLoader::load3dsMesh("Base/pineapple.3ds");
+      mesh = CMeshLoader::load3dsMesh("Base/pineapple_stack.3ds");
 
    if(mesh) {
       mesh->resizeMesh(SVector3(1));
@@ -47,7 +47,7 @@ void CElementEnemyPineapple::setupSceneObject() {
    SceneObject->setRotation(SVector3(-90, 0, 180));
 
    Scale = Area.Size;
-   SceneObject->setScale(SVector3(Scale.X, Scale.X, Scale.Y));
+
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
 
@@ -106,6 +106,8 @@ void CElementEnemyPineapple::updateSceneObject(float time) {
 
    Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
 
+   printf("Scale: %f, %f\n", Scale.X, Scale.Y);
+
    if (PhysicsEngineObject->getVelocity().Y < .01f && PhysicsEngineObject->getVelocity().Y > -.01f) {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)
          SceneObject->setScale(SVector3(-Scale.X,Scale.X,Scale.Y));
@@ -115,9 +117,9 @@ void CElementEnemyPineapple::updateSceneObject(float time) {
 
    else {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)
-         SceneObject->setScale(SVector3(-1,1,1));
+         SceneObject->setScale(SVector3(-Scale.X,Scale.X,Scale.Y));
       else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-         SceneObject->setScale(SVector3(1,1,1));
+         SceneObject->setScale(SVector3(Scale.X,Scale.X,Scale.Y));
    }
 }
 

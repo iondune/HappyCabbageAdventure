@@ -103,7 +103,7 @@ void CElementBlock::setupSceneObject() {
       case -5:
          mesh = CMeshLoader::load3dsMesh("Base/levelBlock.3ds");
          if (mesh) {
-            mesh->resizeMesh(SVector3(1.0));
+            mesh->resizeMesh(SVector3(1));
             mesh->centerMeshByExtents(SVector3(0));
             mesh->calculateNormalsPerVertex();
          }
@@ -152,8 +152,8 @@ void CElementBlock::setupSceneObject() {
       tempBlock->setScale(SVector3(Area.Size.X, Area.Size.Y, (float) Depth));
    }
    else /* For ground blocks */{
-      tempBlock->setTranslation(SVector3((Area.Position.X+(Area.Position.X+Area.Size.X))/2, Area.Position.Y+.84f*Area.Size.Y, 0));
-      tempBlock->setScale(SVector3(Area.Size.X, (float) Depth, Area.Size.Y)); //Area.Size.X, Area.Size.Y, Depth
+      tempBlock->setTranslation(SVector3((Area.Position.X+(Area.Position.X+Area.Size.X))/2, Area.Position.Y+.6f*Area.Size.Y, 0));
+      tempBlock->setScale(SVector3(5.0f)); //Area.Size.X, Area.Size.Y, Depth
    }
 
    tempBlock->setRotation(SVector3(Texture==-5?-90.f:0, 0, 0));
