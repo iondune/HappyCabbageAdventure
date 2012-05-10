@@ -12,8 +12,8 @@ void CPDust::setEngine(CCollisionEngine *engine) {
    ready = 0;
    Engine = engine;
    Actor = Engine->addActor();
-   Actor->CollideableLevel = INTERACTOR_NONCOLLIDERS;
-   Actor->CanCollideWith = INTERACTOR_BLOCKS;
+   Actor->setTypeId(INTERACTOR_NONCOLLIDERS);
+   Actor->setCollisionMask(INTERACTOR_BLOCKS);
    Actor->getAttributes().AirSpeedFactor = 0.3f;
    Actor->getAttributes().AirStandingFriction = 0.81f;
    Actor->getAttributes().GroundStandingFriction = 0.81f;
