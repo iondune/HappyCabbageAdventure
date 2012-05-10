@@ -73,7 +73,7 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 
 			Area.Position[i] = LastPosition[i] + Movement[i];
 
-			if (Area.intersects(Object->getArea()))
+			if (Area.intersects(Object->getInternalArea()))
 			{
 				if (Movement[i] > (CollisionReal) 0.0)
 				{
@@ -93,13 +93,13 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 				Movement[i] = (CollisionReal) 0.0;
 				Area.Position[i] = LastPosition[i];
 
-				if (Area.intersects(Object->getArea())) // If still collision after revert...
+				if (Area.intersects(Object->getInternalArea())) // If still collision after revert...
 				{
 					CollisionReal Intersections[2];
-					Intersections[0] = Area.getIntersection(Object->getArea()).getArea(); // 0 - old position
+					Intersections[0] = Area.getIntersection(Object->getInternalArea()).getArea(); // 0 - old position
 
 					Area.Position[i] = LastPosition[i] + OriginalMovement;
-					Intersections[1] = Area.getIntersection(Object->getArea()).getArea(); // 1 - new position
+					Intersections[1] = Area.getIntersection(Object->getInternalArea()).getArea(); // 1 - new position
 
 					if (Intersections[1] < Intersections[0] || equals(Intersections[0], Intersections[1]))
 					{
@@ -135,7 +135,7 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 	{
 		for (int i = 0; i < 2; ++ i)
 		{
-			if (Area.intersects(Object->getArea()))
+			if (Area.intersects(Object->getInternalArea()))
 			{
 				if (Movement[i] > (CollisionReal) 0.0)
 					Out |= (i ? ECollisionType::Up : ECollisionType::Right);

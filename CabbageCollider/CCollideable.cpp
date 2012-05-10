@@ -20,14 +20,14 @@ CCollideable::CCollideable()
 CCollideable::~CCollideable()
 {}
 
-SArea const & CCollideable::getArea() const
+SArea const & CCollideable::getInternalArea() const
 {
 	return Area;
 }
 
-void CCollideable::setArea(SArea const & area)
+SRect2<float> const CCollideable::getArea() const
 {
-	Area = area;
+	return SRect2<float>(Area.Position, Area.Size);
 }
 
 CCollideable::SMaterial const & CCollideable::getMaterial() const
@@ -96,7 +96,7 @@ int const CCollideable::getDetectionMask() const
 
 bool const CCollideable::collidesWith(CCollideable * Object) const
 {
-	return Area.intersects(Object->getArea());
+	return Area.intersects(Object->getInternalArea());
 }
 
 bool const CCollideable::canCollideWith(CCollideable * Object) const

@@ -49,8 +49,14 @@ public:
 
 	virtual ~CCollideable();
 
-	SArea const & getArea() const;
-	void setArea(SArea const & area);
+	SArea const & getInternalArea() const;
+	SRect2<float> const getArea() const;
+
+	template <typename T>
+	void setArea(SRect2<T> const & area)
+	{
+		Area = SRect2<T>(area.Position, area.Size);
+	}
 
 	SMaterial const & getMaterial() const;
 	SMaterial & getMaterial();
