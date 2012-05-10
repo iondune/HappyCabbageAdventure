@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <envVar env="0" dayNight="0">
 </envVar>
-<CEnemy X ="-9" Y ="2" height ="1" width ="1" type ="15">
+<CEnemy X ="-13" Y ="2" height ="4" width ="1" type ="14">
 </CEnemy>
 <CBlock X ="-23" Y ="-0" height ="1" width ="1" depth ="1" texture ="0">
-</CBlock>
-<CBlock X ="-12" Y ="1" height ="1" width ="1" depth ="1" texture ="2">
-</CBlock>
-<CBlock X ="-6" Y ="1" height ="1" width ="1" depth ="1" texture ="2">
 </CBlock>
 <CBlock X ="-22" Y ="-0" height ="1" width ="1" depth ="1" texture ="0">
 </CBlock>
