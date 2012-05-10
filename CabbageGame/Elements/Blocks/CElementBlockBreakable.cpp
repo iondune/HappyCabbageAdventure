@@ -7,9 +7,9 @@ CElementBlockBreakable::CElementBlockBreakable(SRect2f nArea)
 : CElementBlock(nArea, 1, 0) {
 }
 
-void CElementBlockBreakable::OnCollision(CCollideable *Object) {
-	if (Object == Level.getPlayer().getPhysicsEngineObject()) {
-	}
+void CElementBlockBreakable::OnCollision(const SCollisionEvent& Event) {
+   if (Event.Other == Level.getPlayer().getPhysicsEngineObject()) {
+   }
    return;
 }
 

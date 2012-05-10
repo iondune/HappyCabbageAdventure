@@ -59,7 +59,7 @@ void CElementEnemyPomegranate::setupSceneObject() {
                                                             
 //CGameplayElement has an attribute called ElapsedTime, which is updated by CGameplayElement's update function.
 
-void CElementEnemyPomegranate::OnCollision(CCollideable *Object) {
+void CElementEnemyPomegranate::OnCollision(const SCollisionEvent& Event) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
       CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
       HitPlayer = true;

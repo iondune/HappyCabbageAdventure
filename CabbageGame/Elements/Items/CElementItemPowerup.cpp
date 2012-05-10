@@ -69,7 +69,7 @@ void CElementItemPowerup::writeXML(xmlwriter *l) {
     l->CloseLasttag();
 }
 
-void CElementItemPowerup::OnCollision(CCollideable *Object) {
+void CElementItemPowerup::OnCollision(const SCollisionEvent& Event) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
       Level.getPlayer().setCanUseAbility(Type);
       removeFromGame();

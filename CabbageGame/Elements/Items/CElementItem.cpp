@@ -48,7 +48,7 @@ void CElementItem::writeXML(xmlwriter *l) {
     l->CloseLasttag();
 }
 
-void CElementItem::OnCollision(CCollideable *Object) {
+void CElementItem::OnCollision(const SCollisionEvent& Event) {
    fprintf(stderr, "Error: collision on generic item type %d (perhaps the CElementItem::OnCollision function wasn't overridden?).\n", Type);
    exit(1);
 }

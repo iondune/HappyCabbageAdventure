@@ -220,9 +220,9 @@ Cabbage::PlayerInformation & CElementPlayer::getStats() {
    return Stats;
 }
 
-void CElementPlayer::OnCollision(CCollideable *Object) {
+void CElementPlayer::OnCollision(const SCollisionEvent& Event) {
    for(unsigned int i = 0; i < Abilities.size(); i++) {
-      Abilities[i]->inOnCollision(Object);
+      Abilities[i]->inOnCollision(Event.Other);
    }
    return;
 }
@@ -248,8 +248,8 @@ void CElementPlayer::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
    PhysicsEngineObject->setArea(Area);
    PhysicsEngineObject->getAttributes().MaxWalk = 3.5f;
-   PhysicsEngineObject->CollideableLevel |= INTERACTOR_SUPERACTORS;
-   PhysicsEngineObject->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
+   PhysicsEngineObject->setTypeId(PhysicsEngineObject->getTypeId() | INTERACTOR_SUPERACTORS);
+   PhysicsEngineObject->setCollisionMask(PhysicsEngineObject->getCollisionMask() | INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS);
 }
 
 void CElementPlayer::setupSceneObject() {
@@ -376,11 +376,11 @@ void CElementPlayer::setupSoundEffects() {
 }
 
 void CElementPlayer::setVictoryFlag(bool value) {
-	Victory = value;
+   Victory = value;
 }
 
 void CElementPlayer::setAllowMovement(bool value) {
-	AllowMovement = value;
+   AllowMovement = value;
 }
 
 CElementPlayer::EAction CElementPlayer::getAction() {

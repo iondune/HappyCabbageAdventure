@@ -28,7 +28,7 @@ void CElementBlock::updateSceneObject(float time) {
    }
 }
 
-void CElementBlock::OnCollision(CCollideable *Object) {
+void CElementBlock::OnCollision(const SCollisionEvent& Event) {
    return;
 }
 

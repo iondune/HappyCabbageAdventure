@@ -16,7 +16,7 @@ class CElementItemSeed : public CElementItem
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);
 
-      virtual void OnCollision(CCollideable *Object);
+      virtual void OnCollision(const SCollisionEvent& Event);
 
       virtual void printInformation();
 };

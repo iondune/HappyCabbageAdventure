@@ -181,11 +181,11 @@ void CPlayerView::updateCameraPosition(float const ElapsedTime)
 {
    if(!UseCamera)
       return;
-	TargetCameraPosition = SVector2f(Area.getCenter().X + (Direction == CElementPlayer::Right ? 1.75f : -1.75f), Area.getCenter().Y + 1.3f);
+   TargetCameraPosition = SVector2f(Area.getCenter().X + (Direction == CElementPlayer::Right ? 1.75f : -1.75f), Area.getCenter().Y + 1.3f);
 
-	if (TargetCameraPosition != CurrentCameraPosition)
-	{
-		float const DistanceToGo = TargetCameraPosition.getDistanceFrom(CurrentCameraPosition);
+   if (TargetCameraPosition != CurrentCameraPosition)
+   {
+      float const DistanceToGo = TargetCameraPosition.getDistanceFrom(CurrentCameraPosition);
         float const MoveVelocity = max(2.f * DistanceToGo + 0.2f, 1.f * DistanceToGo * DistanceToGo);
         float const Movement = MoveVelocity * ElapsedTime;
         
@@ -194,9 +194,9 @@ void CPlayerView::updateCameraPosition(float const ElapsedTime)
         else
                 CurrentCameraPosition = TargetCameraPosition;
 
-	}
+   }
 
-	CApplication::get().getSceneManager().getActiveCamera()->setPosition(SVector3f(CurrentCameraPosition, 10) + ShakeFactor);
+   CApplication::get().getSceneManager().getActiveCamera()->setPosition(SVector3f(CurrentCameraPosition, 10) + ShakeFactor);
 }
 
 void CPlayerView::updateView(float time) {

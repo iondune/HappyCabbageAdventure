@@ -38,10 +38,10 @@ void CElementEnemyBlade::setupSceneObject() {
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
-void CElementEnemyBlade::OnCollision(CCollideable *Object) {
+void CElementEnemyBlade::OnCollision(const SCollisionEvent& Event) {
    static float const bladeJumpFactor = 6.0f;
    if(!Dead) {
-      if(Object == Level.getPlayer().getPhysicsEngineObject()) {
+      if(Event.Other == Level.getPlayer().getPhysicsEngineObject()) {
          if(Level.getPlayer().decrementHealth()) {
             CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
             if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {

@@ -25,18 +25,18 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName) {
 }
 
 CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
-	if (useCache)
-	{
+   if (useCache)
+   {
       //We aren't using cache currently
       /*
-		std::map<std::string, CGameLevel *>::iterator it = LoadedLevels.find(levelName);
+      std::map<std::string, CGameLevel *>::iterator it = LoadedLevels.find(levelName);
 
-		if (it != LoadedLevels.end())
-		{
-			return *(it->second);
-		}
+      if (it != LoadedLevels.end())
+      {
+         return *(it->second);
+      }
       */
-	}
+   }
    CGameLevel *newLevel = LatestLevel = new CGameLevel();
    std::vector<CBiggerBlock*> blocksY;
    int x,y,w,d,h,t, moving, env = -1;
@@ -187,8 +187,8 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
              newLevel->env = env = xml->getAttributeValueAsInt(0);
              newLevel->night = xml->getAttributeValueAsInt(1);
 
-			 if (newLevel->getEnvironment() == 1 && ! newLevel->isNight())
-				 CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_HEAT_WAVE, true);
+          if (newLevel->getEnvironment() == 1 && ! newLevel->isNight())
+             CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_HEAT_WAVE, true);
          }
          break;
       }
@@ -205,8 +205,8 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
       exit(1);
    }
    newLevel->blocksFinal = CGameLevelLoader::consolidateBlocks(blocksY);
-	if (useCache)
-		LoadedLevels[levelName] = newLevel;
+   if (useCache)
+      LoadedLevels[levelName] = newLevel;
    newLevel->toggleLoaded();
 
    return *newLevel;

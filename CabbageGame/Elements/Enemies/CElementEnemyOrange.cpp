@@ -90,7 +90,7 @@ void CElementEnemyOrange::setupSceneObject() {
 */
 
 /*
-void CElementEnemyOrange::OnCollision(CCollideable *Object) {
+void CElementEnemyOrange::OnCollision(const SCollisionEvent& Event) {
    //Optional code: addImpulse to other object away from this object, lower their health?
 }
 */

@@ -51,7 +51,7 @@ void CElementEnemyPear::setupSceneObject() {
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
-void CElementEnemyPear::OnCollision(CCollideable *Object) {
+void CElementEnemyPear::OnCollision(const SCollisionEvent& Event) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
       CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
       HitPlayer = true;

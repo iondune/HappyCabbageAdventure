@@ -21,7 +21,7 @@ class CElementItemPowerup : public CElementItem
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);
 
-      virtual void OnCollision(CCollideable *Object);
+      virtual void OnCollision(const SCollisionEvent& Event);
       void writeXML(xmlwriter *l);
 
       virtual void printInformation();

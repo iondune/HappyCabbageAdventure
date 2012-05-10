@@ -5,11 +5,11 @@
 
 namespace Items {
    enum EItemType {
-      HEALTH			   = 0,
-      ENERGY				= 1,
-      LIFE					= 2,
-      SEED					= 3,
-      POWERUP				= 4
+      HEALTH            = 0,
+      ENERGY            = 1,
+      LIFE               = 2,
+      SEED               = 3,
+      POWERUP            = 4
    };
 }
 
@@ -23,7 +23,7 @@ class CElementItem : public CGameplayElement {
       Items::EItemType Type;
 
    public:
-      virtual void OnCollision(CCollideable *Object);
+      virtual void OnCollision(const SCollisionEvent& Event);
       virtual void writeXML(xmlwriter *l);
 
       virtual void setupPhysicsEngineObject()=0;

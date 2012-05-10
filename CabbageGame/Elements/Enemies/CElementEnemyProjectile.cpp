@@ -11,12 +11,12 @@ CElementEnemyProjectile::CElementEnemyProjectile(SRect2f nArea, Enemies::EEnemyT
 }
 
 //Re-write me to die on impact.
-void CElementEnemyProjectile::OnCollision(CCollideable *Object) {
+void CElementEnemyProjectile::OnCollision(const SCollisionEvent& Event) {
    if (!Dead) {
       removeFromGame();
       Dead = true;
 
-      if (Object == Level.getPlayer().getPhysicsEngineObject()) {
+      if (Event.Other == Level.getPlayer().getPhysicsEngineObject()) {
          CCollisionActor *PlayerActor = ((CCollisionActor *)Level.getPlayer().getPhysicsEngineObject());
 
          if (Level.getPlayer().decrementHealth()) {

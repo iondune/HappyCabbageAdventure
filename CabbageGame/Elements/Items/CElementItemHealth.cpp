@@ -37,7 +37,7 @@ void CElementItemHealth::setupSceneObject() {
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
-void CElementItemHealth::OnCollision(CCollideable *Object) {
+void CElementItemHealth::OnCollision(const SCollisionEvent& Event) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject() && !Level.getPlayer().used(Abilities::SHIELD)) {
          Level.getPlayer().incrementHealth();
          removeFromGame();

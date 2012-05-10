@@ -10,12 +10,12 @@ CElementBlockFlag::CElementBlockFlag(SRect2f nArea, int role)
 : CElementBlock(nArea, 1, 0), Role((FlagRole)role) {
 }
 
-void CElementBlockFlag::OnCollision(CCollideable *Object) {
-	if (Object == Level.getPlayer().getPhysicsEngineObject()) {
-		Level.getPhysicsEngine().removeCollideable(PhysicsEngineObject);
-		Level.getPlayer().setVictoryFlag(true);
-		Level.getPlayer().setAllowMovement(false);
-	}
+void CElementBlockFlag::OnCollision(const SCollisionEvent& Event) {
+   if (Event.Other == Level.getPlayer().getPhysicsEngineObject()) {
+      Level.getPhysicsEngine().removeCollideable(PhysicsEngineObject);
+      Level.getPlayer().setVictoryFlag(true);
+      Level.getPlayer().setAllowMovement(false);
+   }
    return;
 }
 

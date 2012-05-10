@@ -45,6 +45,7 @@ public:
 
 	void removeAll();
 	void removeCollideable(CCollideable * Collideable);
+	void remove(CCollideable * Collideable);
 
 	void updateAll(float const Elapsed);
 	void update(float const Elapsed);

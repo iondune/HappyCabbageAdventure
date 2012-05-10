@@ -17,7 +17,7 @@ class CElementEnemyProjectile : public CElementEnemy {
       Projectile::EDirection Direction;
 
    public:
-      virtual void OnCollision(CCollideable *Object);
+      virtual void OnCollision(const SCollisionEvent& Event);
 
       virtual void setupPhysicsEngineObject()=0;
       virtual void setupSceneObject()=0;

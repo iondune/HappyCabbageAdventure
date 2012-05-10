@@ -50,8 +50,8 @@ void CElementEnemyApple::setupSceneObject() {
 }
 
 /*
-void CElementEnemyApple::OnCollision(CCollideable *Object) {
-   if(Object == Level.getPlayer().getPhysicsEngineObject())
+void CElementEnemyApple::OnCollision(const SCollisionEvent& Event) {
+   if(Event.Other == Level.getPlayer().getPhysicsEngineObject())
       printf("Touched an apple\n");
    //Optional code: addImpulse to other object away from this object, lower their health?
 }

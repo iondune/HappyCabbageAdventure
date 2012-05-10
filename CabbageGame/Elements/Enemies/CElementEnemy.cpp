@@ -148,7 +148,7 @@ void CElementEnemy::dropItem() {
    ((CCollisionActor *)item->getPhysicsEngineObject())->addImpulse(SVector2f(rand1*8.f - 4.f, rand2*4.5f + 1.0f), 0.01f);
 }
 
-void CElementEnemy::OnCollision(CCollideable *Object) {
+void CElementEnemy::OnCollision(const SCollisionEvent& Event) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
       CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
 

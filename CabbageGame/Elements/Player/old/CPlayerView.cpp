@@ -27,14 +27,14 @@ void CPlayerView::setState(CPlayerView::State const value) {
    curState = value;
 
    if (CenterPosition.Y > LODActiviation)
-	{
-	    if (! CurrentLOD)
-		    CGameState::get().setLodLevel(CurrentLOD = 1);
-	}
+   {
+       if (! CurrentLOD)
+          CGameState::get().setLodLevel(CurrentLOD = 1);
+   }
    else
    {
-	   if (CurrentLOD)
-		   CGameState::get().setLodLevel(CurrentLOD = 0);
+      if (CurrentLOD)
+         CGameState::get().setLodLevel(CurrentLOD = 0);
    }
 //printf("vel %f, center %f, timer %f\n", Velocity.Y, CenterPosition.Y, zCamTimer);
    if(Velocity.Y == 0.00f  && zCamTimer <= 0.0f)
@@ -44,12 +44,12 @@ void CPlayerView::setState(CPlayerView::State const value) {
        float zfactor = (CenterPosition.Y - 3.0f) * 1.5f;
        //float zfactor = ((CenterPosition.Y > 10.0f ? 6.0f : CenterPosition.Y) - 3.0f) * 1.5f;
        zCamShift = (zfactor > 8.0f ? 8.0f :  zfactor) - zCam;
-	   
-	 }
+      
+    }
      else
      {
        zCamShift = -zCam;
-	   
+      
      }
 
      zCamTimer = CAM_TIMER;

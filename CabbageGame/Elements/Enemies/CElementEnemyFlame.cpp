@@ -21,10 +21,10 @@ void CElementEnemyFlame::setupSceneObject() {
    particleEngine = new CParticleEngine(SVector3f(Area.Position.X, Area.Position.Y, 0), 100, -1, FLAME_PARTICLE);
 }
 
-void CElementEnemyFlame::OnCollision(CCollideable *Object) {
+void CElementEnemyFlame::OnCollision(const SCollisionEvent& Event) {
    static float const flameJumpFactor = 8.0f;
    if(!Dead) {
-      if(Object == Level.getPlayer().getPhysicsEngineObject()) {
+      if(Event.Other == Level.getPlayer().getPhysicsEngineObject()) {
          if(Level.getPlayer().decrementHealth()) {
             CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
             if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {

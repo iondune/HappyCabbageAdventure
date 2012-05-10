@@ -39,7 +39,7 @@ void CElementItemLife::setupSceneObject() {
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
-void CElementItemLife::OnCollision(CCollideable *Object) {
+void CElementItemLife::OnCollision(const SCollisionEvent& Event) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject() && !Level.getPlayer().used(Abilities::SHIELD)) {
          Level.getPlayer().incrementLives();
          removeFromGame();

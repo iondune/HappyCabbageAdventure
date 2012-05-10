@@ -39,7 +39,7 @@ void CElementItemEnergy::setupSceneObject() {
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
-void CElementItemEnergy::OnCollision(CCollideable *Object) {
+void CElementItemEnergy::OnCollision(const SCollisionEvent& Event) {
    if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject() && !Level.getPlayer().used(Abilities::SHIELD)) {
       Level.getPlayer().changeEnergy(20);
       removeFromGame();

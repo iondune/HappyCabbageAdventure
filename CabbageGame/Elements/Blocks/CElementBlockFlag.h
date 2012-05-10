@@ -8,14 +8,14 @@
 class CElementBlockFlag : public CElementBlock {
    public:
       enum FlagRole {
-         NEXT			= 0,
-         SECRET		= 1
+         NEXT         = 0,
+         SECRET      = 1
       };
    private:
       FlagRole Role;
 
    public:
-      virtual void OnCollision(CCollideable *Object);
+      virtual void OnCollision(const SCollisionEvent& Event);
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
       virtual void writeXML(xmlwriter *);

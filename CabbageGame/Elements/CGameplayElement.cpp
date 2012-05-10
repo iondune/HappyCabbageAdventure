@@ -38,7 +38,7 @@ void CGameplayElement::update(float time) {
 void CGameplayElement::setupObjects() {
    setupPhysicsEngineObject();
    if(Level.isLoaded()) {
-      PhysicsEngineObject->setCollisionResponder(this);
+      PhysicsEngineObject->OnCollision.connect(this, &CGameplayElement::OnCollision);
       PhysicsEngineObject->setGameplayElement(this);
    }
    else {

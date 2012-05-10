@@ -54,6 +54,11 @@ void CCollisionEngine::removeAll()
 	Actors.clear();
 }
 
+void CCollisionEngine::remove(CCollideable * Collideable)
+{
+	RemoveList.insert(Collideable);
+}
+
 void CCollisionEngine::removeCollideable(CCollideable * Collideable)
 {
 	RemoveList.insert(Collideable);

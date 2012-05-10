@@ -51,10 +51,10 @@ class CPlayerView {
       SVector3f shakeFactor;
       int Charging;
 
-	  float LeftShadowStartValue, LeftShadowCutoffValue, RightShadowStartValue, RightShadowCutoffValue;
+     float LeftShadowStartValue, LeftShadowCutoffValue, RightShadowStartValue, RightShadowCutoffValue;
 
       CPlayerView()
-	  {
+     {
          ySineValue = 0;
          yRightShadow = yLeftShadow = 0;
          lookRight = 1;
