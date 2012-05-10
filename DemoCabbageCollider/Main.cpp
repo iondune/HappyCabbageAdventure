@@ -132,6 +132,9 @@ int main(int argc, char * argv[])
 	CCollisionObject * Block = Engine->addObject();
 	Block->setArea(SArea(-1, -1, 15, 0.9f));
 	Block->getMaterial().Friction = 0.4f;
+	Block = Engine->addObject();
+	Block->setArea(SArea(-6.5, -1, 5, 0.9f));
+	Block->getMaterial().Friction = 0.4f;
 
     CCollisionElevator * Elevator = Engine->addElevator();
     Elevator->setArea(SArea(6, -3, 1, 1));

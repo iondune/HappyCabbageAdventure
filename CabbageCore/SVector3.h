@@ -16,7 +16,7 @@ class SVector3Reference
 {
 
 	SVector3Reference();
-	SVector3Reference const operator = (SVector3Reference const &);
+	SVector3Reference & operator = (SVector3Reference const &);
 
 public:
 
@@ -177,17 +177,17 @@ public:
 		return ::equals(X, v.X, Epsilon) && ::equals(Y, v.Y, Epsilon) && ::equals(Z, v.Z, Epsilon);
 	}
 
-	SVector2Reference<T> const xy() const
+	SVector2Reference<T> const xy()
 	{
 		return SVector2Reference<T>(X, Y);
 	}
 
-	SVector2Reference<T> const xz() const
+	SVector2Reference<T> const xz()
 	{
 		return SVector2Reference<T>(X, Z);
 	}
 
-	SVector2Reference<T> const yz() const
+	SVector2Reference<T> const yz()
 	{
 		return SVector2Reference<T>(Y, Z);
 	}

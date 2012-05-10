@@ -9,7 +9,6 @@
 #pragma comment(lib, "SDL.lib")
 #pragma comment(lib, "SDLmain.lib")
 #pragma comment(lib, "SDL_mixer.lib")
-#pragma comment(lib, "CabbageCore.lib")
 #pragma comment(lib, "CabbageScene.lib")
 #pragma comment(lib, "CabbageParticles.lib")
 #pragma comment(lib, "CabbageCollider.lib")

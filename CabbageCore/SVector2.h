@@ -14,7 +14,7 @@ class SVector2Reference
 {
 
 	SVector2Reference();
-	SVector2Reference const operator = (SVector2Reference const &);
+	SVector2Reference & operator = (SVector2Reference const &);
 
 public:
 
