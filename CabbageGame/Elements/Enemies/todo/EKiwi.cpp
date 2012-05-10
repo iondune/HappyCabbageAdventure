@@ -64,12 +64,10 @@ void EKiwi::loadActor() {
    Actor->getAttributes().AirControl = 1.0f;
    Actor->getAttributes().AirSpeedFactor = 1.0f;
    Actor->getAttributes().Reacts = 0;
-   Actor->CollideableType = COLLIDEABLE_TYPE_KIWI;
    Actor->CollideableLevel = INTERACTOR_SUPERNONCOLLIDERS;
    Actor->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS;
 
 
-   printf("Actor collideable type: %d\n", Actor->CollideableType);
 }
 
 #define Z_SPEED 0.2f
@@ -104,7 +102,7 @@ void EKiwi::update(float const TickTime) {
 
       Actor->setAction(CCollisionActor::EActionType::None);
 
-      SVector2 vel = Actor->getVelocity();
+      SVector2f vel = Actor->getVelocity();
       Actor->setVelocity(SVector2f(vel.X, vel.Y > 0 ? vel.Y - 1.0f*TickTime : 0));
 
       if(Direction == 0)
@@ -152,7 +150,7 @@ void EKiwi::doRenderable() {
 }
 
 void EKiwi::DropBomb() {
-   SVector2 pos = Actor->getArea().Position;
+   SVector2f pos = Actor->getArea().Position;
 
    if (Direction == 0)
       CBadGuy::makeBadGuy(pos.X + w/2.f - .05f, pos.Y - .5f, w, h, pKiwi, Manager, 0);

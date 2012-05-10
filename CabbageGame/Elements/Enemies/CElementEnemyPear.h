@@ -6,7 +6,7 @@
 class CElementEnemyPear : public CElementEnemy, public ISquishable
 {
    private:
-      SVector2 Scale;
+      SVector2f Scale;
       float OldPositionX;
       bool HitPlayer;
 

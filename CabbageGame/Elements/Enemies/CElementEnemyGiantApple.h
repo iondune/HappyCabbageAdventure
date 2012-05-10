@@ -8,7 +8,7 @@ class CElementEnemyGiantApple : public CElementEnemy, ISquishable
    private:
       float ScaleMult;
       bool PositiveScale;
-      SVector2 Scale;
+      SVector2f Scale;
 
    public:
       CElementEnemyGiantApple(SRect2f nArea);

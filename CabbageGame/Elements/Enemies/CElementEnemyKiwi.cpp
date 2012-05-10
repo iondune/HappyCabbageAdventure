@@ -15,7 +15,6 @@ void CElementEnemyKiwi::setupPhysicsEngineObject() {
    PhysicsEngineObject->setControlFall(false);
    PhysicsEngineObject->setFallAcceleration(0.0f);
 
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_KIWI;
    PhysicsEngineObject->getAttributes().MaxWalk = 3.0f;
    PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
 
@@ -85,7 +84,7 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
       SineValue = 0.6f*sin(Area.Position.X - OldX);
       Area.Position.Y += SineValue;
 
-      SVector2 vel = PhysicsEngineObject->getVelocity();
+      SVector2f vel = PhysicsEngineObject->getVelocity();
       PhysicsEngineObject->setVelocity(SVector2f(vel.X, vel.Y > 0 ? vel.Y - 1.0f*time : 0));
 
       //TODO: Check player direction

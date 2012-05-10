@@ -9,7 +9,7 @@ class CElementEnemyPomegranate : public CElementEnemy, ISquishable
       CParticleEngine *particleEngine;
       float ScaleMult, FlameTimer;
       bool PositiveScale, HitPlayer;
-      SVector2 Scale;
+      SVector2f Scale;
       float OldPositionX;
 
 

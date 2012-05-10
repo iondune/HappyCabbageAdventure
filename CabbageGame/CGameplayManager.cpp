@@ -77,7 +77,7 @@ void CGameplayManager::update(float time) {
    GUIManager->update(time);
    for(int i = 0; i < KillList.size(); i++) {
       KillList[i]->removeFromGame();
-      Level.removeObject(KillList[i]);
+      Level.removeCollideable(KillList[i]);
       delete KillList[i];
    }
 }

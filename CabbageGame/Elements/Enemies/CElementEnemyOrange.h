@@ -8,7 +8,7 @@ class CElementEnemyOrange : public CElementEnemy, public ISquishable
 {
    private:
       bool Jumped;
-      SVector2 Scale;
+      SVector2f Scale;
 
    public:
       CElementEnemyOrange(SRect2f nArea);

@@ -43,7 +43,6 @@ void EGrape::loadActor() {
 
    //Set actor attributes
    Actor->getAttributes().MaxWalk = 2.2f;
-   Actor->CollideableType = COLLIDEABLE_TYPE_GRAPE;
 }
 
 //Updates AI's decision per frame
@@ -69,7 +68,7 @@ void EGrape::doRenderable() {
 }
 
 void EGrape::ThrowGrape() {
-   SVector2 pos = Actor->getArea().Position;
+   SVector2f pos = Actor->getArea().Position;
 
    printf("Firing a grape\n");
 

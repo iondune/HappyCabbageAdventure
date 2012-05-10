@@ -15,7 +15,6 @@ void CElementEnemyGiantApple::setupPhysicsEngineObject() {
 
    //Set actor attributes
    PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_APPLE;
 }
 
 void CElementEnemyGiantApple::setupSceneObject() {
@@ -57,7 +56,7 @@ void CElementEnemyGiantApple::setupSceneObject() {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyGiantApple::updatePhysicsEngineObject(float time) {
-   SVector2 PlayerPosition = Level.getPlayer().getArea().Position;
+   SVector2f PlayerPosition = Level.getPlayer().getArea().Position;
    //TODO: Make some class singleton so we can get the player's location
    if (PlayerPosition.X < Area.getCenter().X)
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);

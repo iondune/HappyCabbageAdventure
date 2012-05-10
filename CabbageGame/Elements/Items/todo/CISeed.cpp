@@ -43,7 +43,6 @@ void CIHealth::loadActor() {
    Actor->setArea(SRect2f(SVector2f(x, y), SVector2f(w, h)));
 
    //Set actor attributes
-   Actor->CollideableType = COLLIDEABLE_TYPE_ITEM;
    Actor->CollideableLevel = INTERACTOR_ITEMS;
    Actor->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS;
    Actor->getAttributes().Bounce = 3;
@@ -51,7 +50,7 @@ void CIHealth::loadActor() {
    float rand1 = (float)rand()/(float)RAND_MAX;
    float rand2 = (float)rand()/(float)RAND_MAX;
 
-   Actor->setImpulse(SVector2f(rand1*8.f - 4.f, rand2*4.5f + 1.0f), 0.01f);
+   Actor->addImpulse(SVector2f(rand1*8.f - 4.f, rand2*4.5f + 1.0f), 0.01f);
 }
 
 //Updates AI's decision per frame

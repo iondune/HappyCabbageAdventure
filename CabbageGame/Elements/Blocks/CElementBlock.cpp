@@ -68,7 +68,7 @@ void CElementBlock::setupPhysicsEngineObject() {
    PhysicsEngineObject->setArea(Area);
    PhysicsEngineObject->setDepth(Depth);
    */
-   Level.getPhysicsEngine().removeObject(PhysicsEngineObject);
+   Level.getPhysicsEngine().removeCollideable(PhysicsEngineObject);
 }
 
 void CElementBlock::setupSceneObject() {

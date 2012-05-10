@@ -14,7 +14,6 @@ void CElementEnemyCherry::setupPhysicsEngineObject() {
 
    //Set actor attributes
    PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_CHERRY;
 }
 
 void CElementEnemyCherry::setupSceneObject() {

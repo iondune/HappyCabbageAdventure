@@ -24,7 +24,7 @@ void CPDust::setupActor() {
    Actor->setArea(SRect2f(centerPos->X, centerPos->Y - 0.5f, 0.001f, 0.001f));
    float xvel;
    Actor->setVelocity(SVector2f(((*lookRight)?-1:1)*((float)rand()/(float)RAND_MAX*2.0f + 10.6f), 0.0f));
-   Actor->setImpulse(SVector2f(xvel = ((*lookRight)?-1:1)*((float)rand()/(float)RAND_MAX*2.0f + 2.00f),
+   Actor->addImpulse(SVector2f(xvel = ((*lookRight)?-1:1)*((float)rand()/(float)RAND_MAX*2.0f + 2.00f),
            (float)rand()/(float)RAND_MAX*1.4f + 1.8f), 0.16f);
    //printf("Dust XVel: %0.2f\n", xvel);
 }

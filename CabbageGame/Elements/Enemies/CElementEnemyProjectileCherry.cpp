@@ -18,7 +18,6 @@ void CElementEnemyProjectileCherry::setupPhysicsEngineObject() {
    PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
    PhysicsEngineObject->getAttributes().AirControl = 1.0f;
    PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_PCHERRY;
 }
 
 void CElementEnemyProjectileCherry::setupSceneObject() {
@@ -69,7 +68,7 @@ void CElementEnemyProjectileCherry::updatePhysicsEngineObject(float time) {
       if (XDir < 0)
          xRandom = -xRandom;
 
-      PhysicsEngineObject->setImpulse(SVector2f(XDir + xRandom, 2.f + yRandom), 0.02f);
+      PhysicsEngineObject->addImpulse(SVector2f(XDir + xRandom, 2.f + yRandom), 0.02f);
       SetImpulse = false;
    }
 }

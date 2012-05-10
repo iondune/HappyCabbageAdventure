@@ -6,7 +6,7 @@
 class CElementEnemyProjectileBanana : public CElementEnemyProjectile {
    private:
       bool PlayerLeft;
-      SVector3 Rotation;
+      SVector3f Rotation;
       float SinValue, CosValue;
 
    public:

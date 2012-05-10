@@ -6,7 +6,7 @@
 class CElementEnemyStrawberry : public CElementEnemy, public ISquishable
 {
    private:
-      SVector2 Scale;
+      SVector2f Scale;
 
    public:
       CElementEnemyStrawberry(SRect2f nArea);

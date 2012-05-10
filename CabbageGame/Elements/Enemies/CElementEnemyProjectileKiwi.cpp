@@ -19,7 +19,6 @@ void CElementEnemyProjectileKiwi::setupPhysicsEngineObject() {
    PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
    PhysicsEngineObject->getAttributes().AirControl = 1.0f;
    PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_PKIWI;
 
    PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
    PhysicsEngineObject->setVelocity(SVector2f(0.f, -6.f));

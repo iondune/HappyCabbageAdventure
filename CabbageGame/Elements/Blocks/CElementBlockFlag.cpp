@@ -12,7 +12,7 @@ CElementBlockFlag::CElementBlockFlag(SRect2f nArea, int role)
 
 void CElementBlockFlag::OnCollision(CCollideable *Object) {
 	if (Object == Level.getPlayer().getPhysicsEngineObject()) {
-		Level.getPhysicsEngine().removeObject(PhysicsEngineObject);
+		Level.getPhysicsEngine().removeCollideable(PhysicsEngineObject);
 		Level.getPlayer().setVictoryFlag(true);
 		Level.getPlayer().setAllowMovement(false);
 	}

@@ -78,9 +78,9 @@ void CElementEnemyPomegranate::OnCollision(CCollideable *Object) {
       else {
          if(Level.getPlayer().decrementHealth()) {
             if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
-               PlayerActor->setImpulse(SVector2f(7.f, 2.8f), 0.1f);
+               PlayerActor->addImpulse(SVector2f(7.f, 2.8f), 0.1f);
             else
-               PlayerActor->setImpulse(SVector2f(-7.f, 2.8f), 0.1f);
+               PlayerActor->addImpulse(SVector2f(-7.f, 2.8f), 0.1f);
             Level.getPlayer().setShaking(1.0f, 3.0f);
          }
       }

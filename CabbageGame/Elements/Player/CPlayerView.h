@@ -29,15 +29,15 @@ class CPlayerView {
       float ySineValue;
       CPointLightSceneObject *Light;
 
-      SVector3 & ShakeFactor;
+      SVector3f & ShakeFactor;
 
-	  SVector2 CurrentCameraPosition, TargetCameraPosition;
+	  SVector2f CurrentCameraPosition, TargetCameraPosition;
 
 	  void updateCameraPosition(float const ElapsedTime);
 
    public:
       void updateShadow(float time = 0);
-      void setCabbageScale(SVector3);
+      void setCabbageScale(SVector3f);
       void setCutoffPoint(SRect2f left, SRect2f right);
       void setShadowHeights(float, float);
       void addLeaf();
@@ -47,7 +47,7 @@ class CPlayerView {
       void updateView(float time);
       void translateCabbage(float time);
       ISceneObject & getCabbageSceneObject();
-      CPlayerView(ISceneObject *, CElementPlayer::EDirection &, CElementPlayer::EAction &, int, SRect2f &, SVector3 & sf, CCollisionActor *, bool uC);
+      CPlayerView(ISceneObject *, CElementPlayer::EDirection &, CElementPlayer::EAction &, int, SRect2f &, SVector3f & sf, CCollisionActor *, bool uC);
 };
 
 #endif

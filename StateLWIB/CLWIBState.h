@@ -98,7 +98,7 @@ class CLWIBState : public CState<CLWIBState>
    void prepHud();
    void stepCamera(float delta);
    void changeTiles();
-   void removeObject();
+   void removeCollideable();
    void undoObjects();
    void OnWidgetClick(CGUIWidget * Widget);
    void OnWidgetHover(CGUIWidget * Widget);

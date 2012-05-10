@@ -44,7 +44,6 @@ void CIHealth::loadActor() {
    Actor->setArea(SRect2f(SVector2f(x, y) + h*0.4f, SVector2f(w, h)*0.8f));
 
    //Set actor attributes
-   Actor->CollideableType = COLLIDEABLE_TYPE_ITEM;
    Actor->CollideableLevel = INTERACTOR_ITEMS;
    Actor->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS;
 }

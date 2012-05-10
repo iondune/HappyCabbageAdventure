@@ -6,7 +6,7 @@
 class CElementEnemyCherry : public CElementEnemy
 {
    private:
-      SVector2 Scale;
+      SVector2f Scale;
       float BombTime;
 
    public:

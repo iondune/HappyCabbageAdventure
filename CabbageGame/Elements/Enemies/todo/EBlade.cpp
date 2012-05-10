@@ -55,7 +55,6 @@ void EBlade::loadActor() {
 
    Actor->getAttributes().AirControl = 1.0f;
    Actor->getAttributes().AirSpeedFactor = 1.0f;
-   Actor->CollideableType = COLLIDEABLE_TYPE_FLAME;
 }
 
 

@@ -195,8 +195,8 @@ void CElementPlayer::updateSceneObject(float time) {
       }
    }
 
-   SVector2 leftOfPlayer = SVector2f(Area.Position.X, Area.getCenter().Y);
-   SVector2 rightOfPlayer = SVector2f(Area.Position.X + Area.Size.X, Area.getCenter().Y);
+   SVector2f leftOfPlayer = SVector2f(Area.Position.X, Area.getCenter().Y);
+   SVector2f rightOfPlayer = SVector2f(Area.Position.X + Area.Size.X, Area.getCenter().Y);
    CCollisionObject *l, *r;
    l = Level.getPhysicsEngine().getObjectBelow(leftOfPlayer);
    r = Level.getPhysicsEngine().getObjectBelow(rightOfPlayer);
@@ -248,7 +248,6 @@ void CElementPlayer::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
    PhysicsEngineObject->setArea(Area);
    PhysicsEngineObject->getAttributes().MaxWalk = 3.5f;
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_PLAYER;
    PhysicsEngineObject->CollideableLevel |= INTERACTOR_SUPERACTORS;
    PhysicsEngineObject->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
 }
@@ -389,8 +388,8 @@ CElementPlayer::EAction CElementPlayer::getAction() {
 }
 
 void CElementPlayer::playLevelVictory(float time) {
-   SVector3 curRotation = View->getCabbageSceneObject().getRotation();
-   SVector2 curLocation = SVector2 (Area.getCenter().X - .5f, Area.getCenter().Y - .5f);
+   SVector3f curRotation = View->getCabbageSceneObject().getRotation();
+   SVector2f curLocation = SVector2f (Area.getCenter().X - .5f, Area.getCenter().Y - .5f);
 
    //Start Victory Music
    if (VictoryTime == 0.0f) {
@@ -419,7 +418,7 @@ void CElementPlayer::playLevelVictory(float time) {
    //Fireworks.  Ignoring for now. I can do that.  : D
    /*else if (VictoryTime > .76f && VictoryTime < 1.f) {
       if (!f1) {
-         SVector3 flagPosition = renderFlag->getTranslation();
+         SVector3f flagPosition = renderFlag->getTranslation();
 
          f1 = new CParticleEngine(SVector3f(flagPosition.X, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);  //Would like to change these later so not leaves. Fine for now
          f2 = new CParticleEngine(SVector3f(flagPosition.X + 4.f, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);
@@ -471,7 +470,7 @@ void CElementPlayer::playLevelVictory(float time) {
       Scale.Y += 1.2f*time;
       Scale.X -= 1.8f*time;
 
-      PhysicsEngineObject->setImpulse(SVector2f(0.f, 30.f), 0.01f);
+      PhysicsEngineObject->addImpulse(SVector2f(0.f, 30.f), 0.01f);
 
    }
 

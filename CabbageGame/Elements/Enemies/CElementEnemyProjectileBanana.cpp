@@ -19,7 +19,6 @@ void CElementEnemyProjectileBanana::setupPhysicsEngineObject() {
    PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
    PhysicsEngineObject->getAttributes().AirControl = 1.0f;
    PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_PKIWI;
 }
 
 void CElementEnemyProjectileBanana::setupSceneObject() {

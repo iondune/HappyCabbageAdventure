@@ -55,7 +55,7 @@ void CElementEnemyStrawberry::setupSceneObject() {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyStrawberry::updatePhysicsEngineObject(float time) {
-   SVector2 PlayerPosition = Level.getPlayer().getArea().Position;
+   SVector2f PlayerPosition = Level.getPlayer().getArea().Position;
 
    if (PlayerPosition.X < Area.getCenter().X - 3.f)
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);

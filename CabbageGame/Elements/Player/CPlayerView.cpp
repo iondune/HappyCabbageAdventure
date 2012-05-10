@@ -3,7 +3,7 @@
 
 
 #include <sstream>
-CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2f & nArea, SVector3 & sf, CCollisionActor* peo, bool uC) :
+CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2f & nArea, SVector3f & sf, CCollisionActor* peo, bool uC) :
    SceneObject(obj), CabbageIndex(CurHealth - 1), Direction(dir), Action(act), Hurt(false), Area(nArea), ShakeFactor(sf),
    ySineValue(0.0f), PhysicsEngineObject(peo), UseCamera(uC) {
 
@@ -90,7 +90,7 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 } 
 
-void CPlayerView::setCabbageScale(SVector3 sc) {
+void CPlayerView::setCabbageScale(SVector3f sc) {
    CabbageSceneObject->setScale(sc);
 }
 

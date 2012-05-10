@@ -139,7 +139,7 @@ void CPlayerView::draw() {
 
    //Set player's current position
    if(!((recovering > 0 || godMode > 0) && (int)(recovering *100) % 2 != 0)) {
-      SVector3 rot = PlayerRenderable->getRotation();
+      SVector3f rot = PlayerRenderable->getRotation();
 
       if(!(Velocity.Y > 0.01f || Velocity.Y < -0.01f)) {
          rot.X = 15*sin(ySineValue/2)-90.f;
@@ -182,7 +182,7 @@ void CPlayerView::draw() {
 }
 
 void CPlayerView::establishCamera(ICamera *Camera, int angle, int shaking) {
-   SVector3 camPos, camLook;
+   SVector3f camPos, camLook;
 
 
    if(angle == 0) {

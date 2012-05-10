@@ -15,7 +15,7 @@ class CElementEnemyApple : public CElementEnemy, public ISquishable
       RollDirection Roll;
       float Rotate, ScaleMult;
       bool PositiveScale;
-      SVector2 Scale;
+      SVector2f Scale;
 
    public:
       CElementEnemyApple(SRect2f nArea);
