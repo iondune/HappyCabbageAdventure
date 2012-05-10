@@ -693,7 +693,7 @@ void CLWIBState::PrepPreviews(int x , int y, float t) {
     
     }*/
      //printf("x and y are %lf, %lf \n", x, y);
-    PreviewBlock->setArea(SRect2f(x,y,1,1));
+    PreviewBlock->setArea(SRect2f((float) x, (float) y, 1, 1));
     //printf("positino of block is x = %lf, y = %lf \n", PreviewBlock->getArea().Position.X, PreviewBlock->getArea().Position.Y); 
     PreviewBlock->update(t);
 
@@ -1072,10 +1072,10 @@ void CLWIBState::undoObjects() {
         int i,j;
         for(i = 0; i <m_block->getArea().Size.X; i++) {
             for(j = 0; j <m_block->getArea().Size.Y; j++) {
-                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = true;
-                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = m_block;
-                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = m_block->getArea().Position.X+25;
-                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = m_block->getArea().Position.Y+25;
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5f+25)+j].o = true;
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5f+25)+j].r = m_block;
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5f+25)+j].mapX = m_block->getArea().Position.X+25;
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5f+25)+j].mapY = m_block->getArea().Position.Y+25;
                 printf("here\n");
             }
         }
