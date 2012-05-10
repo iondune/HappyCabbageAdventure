@@ -1,7 +1,7 @@
 #include "CElementItemPowerup.h"
 #include "CGameLevel.h"
 
-CElementItemPowerup::CElementItemPowerup(SRect2 nArea, int t) :
+CElementItemPowerup::CElementItemPowerup(SRect2f nArea, int t) :
    CElementItem(nArea, Items::POWERUP), Type((Abilities::EAbilityType) t) {
 }
 
@@ -11,7 +11,6 @@ void CElementItemPowerup::setupPhysicsEngineObject() {
    PhysicsEngineObject->setArea(Area);
 
    //Set actor attributes
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_ITEM;
    PhysicsEngineObject->CollideableLevel = INTERACTOR_ITEMS;
    PhysicsEngineObject->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS;
 }

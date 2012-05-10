@@ -1,7 +1,7 @@
 #include "CElementEnemyOrange.h"
 #include "CGameLevel.h"
 
-CElementEnemyOrange::CElementEnemyOrange(SRect2 nArea) :
+CElementEnemyOrange::CElementEnemyOrange(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::ORANGE), Jumped(true), ISquishable(1.0f, 1.0f) {
 
 }
@@ -18,7 +18,6 @@ void CElementEnemyOrange::setupPhysicsEngineObject() {
    PhysicsEngineObject->getAttributes().JumpLength = .1f;
    PhysicsEngineObject->getAttributes().AirControl = 0.75f;
    PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_ORANGE;
 }
 void CElementEnemyOrange::setupSceneObject() {
    SceneObject = new CMeshSceneObject();
@@ -92,7 +91,7 @@ void CElementEnemyOrange::setupSceneObject() {
 
 /*
 void CElementEnemyOrange::OnCollision(CCollideable *Object) {
-   //Optional code: setImpulse to other object away from this object, lower their health?
+   //Optional code: addImpulse to other object away from this object, lower their health?
 }
 */
                                                             
@@ -100,7 +99,7 @@ void CElementEnemyOrange::OnCollision(CCollideable *Object) {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyOrange::updatePhysicsEngineObject(float time) {
-   SVector2 PlayerPosition = Level.getPlayer().getArea().Position;
+   SVector2f PlayerPosition = Level.getPlayer().getArea().Position;
    if (PlayerPosition.X < Area.getCenter().X)
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
    else

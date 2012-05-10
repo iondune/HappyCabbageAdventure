@@ -47,6 +47,7 @@ public:
 	void removeCollideable(CCollideable * Collideable);
 
 	void updateAll(float const Elapsed);
+	void update(float const Elapsed);
 
 	CCollisionObject* const getObjectBelow(SVector2f pos);
 	float const getHeightBelow(SVector2f pos);

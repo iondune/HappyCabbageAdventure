@@ -383,7 +383,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
             //printf("Angle: %d\n", ANGLE(overView, backwardsView));
         }
         if(Event.Key == SDLK_u) {
-            removeObject();
+            removeCollideable();
         }
         if(Event.Key == SDLK_r) {
             undoObjects();
@@ -1044,7 +1044,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
    }
 }
 
-void CLWIBState::removeObject() {
+void CLWIBState::removeCollideable() {
     printf("placeable.size() is %d\n", placeables.size());
     if (placeables.size() > 0) {
         CGameplayElement *m_block = placeables.back();

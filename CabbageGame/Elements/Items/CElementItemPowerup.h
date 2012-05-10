@@ -13,7 +13,7 @@ class CElementItemPowerup : public CElementItem
       CMeshSceneObject *Container;
 
    public:
-      CElementItemPowerup(SRect2 nArea, int t);
+      CElementItemPowerup(SRect2f nArea, int t);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

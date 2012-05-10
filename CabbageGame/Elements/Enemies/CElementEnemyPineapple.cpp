@@ -1,7 +1,7 @@
 #include "CElementEnemyPineapple.h"
 #include "CGameLevel.h"
 
-CElementEnemyPineapple::CElementEnemyPineapple(SRect2 nArea) :
+CElementEnemyPineapple::CElementEnemyPineapple(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::PINEAPPLE), ISquishable(4.0f, 4.0f), HitPlayer(false), OldPositionX(nArea.Position.X) {
 
    MaxHealth = 4;
@@ -70,9 +70,9 @@ void CElementEnemyPineapple::OnCollision(CCollideable *Object) {
       else {
          if(Level.getPlayer().decrementHealth()) {
             if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
-               PlayerActor->setImpulse(SVector2(7.f, 2.8f), 0.1f);
+               PlayerActor->addImpulse(SVector2f(7.f, 2.8f), 0.1f);
             else
-               PlayerActor->setImpulse(SVector2(-7.f, 2.8f), 0.1f);
+               PlayerActor->addImpulse(SVector2f(-7.f, 2.8f), 0.1f);
             Level.getPlayer().setShaking(1.0f, 3.0f);
          }
       }

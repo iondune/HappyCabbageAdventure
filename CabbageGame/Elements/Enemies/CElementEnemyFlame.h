@@ -12,7 +12,7 @@ class CElementEnemyFlame : public CElementEnemy
    CParticleEngine *particleEngine;
 
    public:
-      CElementEnemyFlame(SRect2 nArea);
+      CElementEnemyFlame(SRect2f nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

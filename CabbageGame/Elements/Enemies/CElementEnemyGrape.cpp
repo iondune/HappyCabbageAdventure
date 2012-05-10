@@ -1,7 +1,7 @@
 #include "CElementEnemyGrape.h"
 #include "CGameLevel.h"
 
-CElementEnemyGrape::CElementEnemyGrape(SRect2 nArea) :
+CElementEnemyGrape::CElementEnemyGrape(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::GRAPE), shootTime(0.f) {
 
 }
@@ -13,7 +13,6 @@ void CElementEnemyGrape::setupPhysicsEngineObject() {
 
    //Set actor attributes
    PhysicsEngineObject->getAttributes().MaxWalk = 0.0f;
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_GRAPE;
 }
 
 void CElementEnemyGrape::setupSceneObject() {
@@ -67,7 +66,7 @@ void CElementEnemyGrape::updatePhysicsEngineObject(float time) {
 
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyGrape::updateSceneObject(float time) {
-   SVector2 playerPosition = Level.getPlayer().getArea().Position;
+   SVector2f playerPosition = Level.getPlayer().getArea().Position;
 
    SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y + .2f, 0));
 
@@ -87,19 +86,19 @@ void CElementEnemyGrape::printInformation() {
 }
 
 void CElementEnemyGrape::ShootGrape() {
-   SVector2 playerPosition = Level.getPlayer().getArea().Position;
+   SVector2f playerPosition = Level.getPlayer().getArea().Position;
    float x, y;
 
    if (playerPosition.X < Area.Position.X) {//spawn to the left
       x = Area.Position.X - Area.Size.X/2.f - .5f;
       y = Area.Position.Y + .15f;
 
-      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(x, y, Area.Size.X, Area.Size.Y), Enemies::GRAPE_PROJECTILE));
+      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2f(x, y, Area.Size.X, Area.Size.Y), Enemies::GRAPE_PROJECTILE));
    }
    else {//spawn to the right
       x = Area.Position.X + Area.Size.X/2.f + .55f;
       y = Area.Position.Y + .15f;
 
-      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(x, y, Area.Size.X, Area.Size.Y), Enemies::GRAPE_PROJECTILE));
+      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2f(x, y, Area.Size.X, Area.Size.Y), Enemies::GRAPE_PROJECTILE));
    }
 }

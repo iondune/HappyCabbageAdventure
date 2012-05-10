@@ -2,7 +2,7 @@
 #include "CElementEnemyProjectileCherry.h"
 #include "CGameLevel.h"
 
-CElementEnemyCherry::CElementEnemyCherry(SRect2 nArea) :
+CElementEnemyCherry::CElementEnemyCherry(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::CHERRY), BombTime(0.0f) {
 
 }
@@ -14,7 +14,6 @@ void CElementEnemyCherry::setupPhysicsEngineObject() {
 
    //Set actor attributes
    PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_CHERRY;
 }
 
 void CElementEnemyCherry::setupSceneObject() {
@@ -58,7 +57,7 @@ void CElementEnemyCherry::updatePhysicsEngineObject(float time) {
    if (BombTime >= 3.0f) {
          BombTime = 0.0f;
 
-         SRect2 projectileArea = Area;
+         SRect2f projectileArea = Area;
          projectileArea.Position.Y += .3f;
          projectileArea.Position.X -= 1.0f;
 

@@ -1,7 +1,7 @@
 #include "CElementBlockElevator.h"
 #include "CGameLevel.h"
 
-CElementBlockElevator::CElementBlockElevator(SRect2 nArea, int D, int T, float R, float S)
+CElementBlockElevator::CElementBlockElevator(SRect2f nArea, int D, int T, float R, float S)
 : CElementBlock(nArea, D, T), Range(R), Speed(S) {
 }
 

@@ -5,7 +5,7 @@
 
 #include "../CabbageCore/glm/gtc/matrix_transform.hpp"
 CRenderable * CParticleObject::getParticlesRenderable() {return particlesRenderable;}
-void CParticleObject::setPositions(std::vector<SVector3*> vectorArr) {
+void CParticleObject::setPositions(std::vector<SVector3f*> vectorArr) {
    updated = false;
    positionsArr = vectorArr;
 }
@@ -76,7 +76,7 @@ void CParticleObject::setSizeFactor(float f) {
    sizeFactor = f;
 }
 
-void CParticleObject::setup(std::vector<SVector3*> vectorArr, std::vector<SVector3*> colorArr, std::vector<float> sizeArr, int num, const char* texturePath) {
+void CParticleObject::setup(std::vector<SVector3f*> vectorArr, std::vector<SVector3f*> colorArr, std::vector<float> sizeArr, int num, const char* texturePath) {
    updated = true;
    numParticles = num;
    particlesRenderable = new CRenderable(this);

@@ -8,7 +8,7 @@ class CElementItemHealth : public CElementItem
    private:
 
    public:
-      CElementItemHealth(SRect2 nArea);
+      CElementItemHealth(SRect2f nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

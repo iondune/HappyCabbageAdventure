@@ -2,7 +2,7 @@
 #include "CGameLevel.h"
 
 //Generic enemy, for usage in the LWIB, I guess.
-CElementEnemyProjectileBanana::CElementEnemyProjectileBanana(SRect2 nArea)
+CElementEnemyProjectileBanana::CElementEnemyProjectileBanana(SRect2f nArea)
 : CElementEnemyProjectile(nArea, Enemies::BANANA_PROJECTILE), SinValue(0.0f), CosValue(-1.0f) {
 }
 
@@ -19,7 +19,6 @@ void CElementEnemyProjectileBanana::setupPhysicsEngineObject() {
    PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
    PhysicsEngineObject->getAttributes().AirControl = 1.0f;
    PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_PKIWI;
 }
 
 void CElementEnemyProjectileBanana::setupSceneObject() {
@@ -79,11 +78,11 @@ void CElementEnemyProjectileBanana::updatePhysicsEngineObject(float time) {
    printf("SinValue: %f\n", SinValue);
 
    if (Direction == Projectile::LEFT) { //go left
-      PhysicsEngineObject->setVelocity(SVector2(-5.0f*cos(CosValue), 2.5f*sin(SinValue)));
+      PhysicsEngineObject->setVelocity(SVector2f(-5.0f*cos(CosValue), 2.5f*sin(SinValue)));
    }
    
    else { //go right
-      PhysicsEngineObject->setVelocity(SVector2(5.f*cos(CosValue), 2.5f*sin(SinValue)));
+      PhysicsEngineObject->setVelocity(SVector2f(5.f*cos(CosValue), 2.5f*sin(SinValue)));
    }
 
    SinValue += time;

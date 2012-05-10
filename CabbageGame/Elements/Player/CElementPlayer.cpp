@@ -4,7 +4,7 @@
 #include "CElementPlayer.h"
 #include "CPlayerAbility.h"
 
-CElementPlayer::CElementPlayer(SRect2 nArea, bool useCamera)
+CElementPlayer::CElementPlayer(SRect2f nArea, bool useCamera)
 : CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f), Shaking(0.0f), ShakeFactor(SVector3f(0.0f)),
   ISquishable(2.0f, 2.0f), AllowMovement(true), PlayJump(true), Victory(false), VictoryTime(0.0f), ShakeFactorFactor(1000.0f), MoveKeyDelay(0.0f), UseCamera(useCamera) {
    setupSoundEffects();
@@ -195,15 +195,15 @@ void CElementPlayer::updateSceneObject(float time) {
       }
    }
 
-   SVector2 leftOfPlayer = SVector2(Area.Position.X, Area.getCenter().Y);
-   SVector2 rightOfPlayer = SVector2(Area.Position.X + Area.Size.X, Area.getCenter().Y);
+   SVector2f leftOfPlayer = SVector2f(Area.Position.X, Area.getCenter().Y);
+   SVector2f rightOfPlayer = SVector2f(Area.Position.X + Area.Size.X, Area.getCenter().Y);
    CCollisionObject *l, *r;
    l = Level.getPhysicsEngine().getObjectBelow(leftOfPlayer);
    r = Level.getPhysicsEngine().getObjectBelow(rightOfPlayer);
 
    View->setShadowHeights(Level.getPhysicsEngine().getHeightBelow(leftOfPlayer), Level.getPhysicsEngine().getHeightBelow(rightOfPlayer));
    // If the cabbage is hanging over an edge, there might not be an object below it, so this check is necessary
-   View->setCutoffPoint(l?l->getArea():SRect2(-50.0f, -50.0f, 0.0f, 0.0f),r?r->getArea():SRect2(-50.0f, -50.0f, 0.0f, 0.0f));
+   View->setCutoffPoint(l?l->getArea():SRect2f(-50.0f, -50.0f, 0.0f, 0.0f),r?r->getArea():SRect2f(-50.0f, -50.0f, 0.0f, 0.0f));
 
    updateAbilities(time);
    if (Victory)
@@ -248,7 +248,6 @@ void CElementPlayer::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
    PhysicsEngineObject->setArea(Area);
    PhysicsEngineObject->getAttributes().MaxWalk = 3.5f;
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_PLAYER;
    PhysicsEngineObject->CollideableLevel |= INTERACTOR_SUPERACTORS;
    PhysicsEngineObject->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
 }
@@ -389,8 +388,8 @@ CElementPlayer::EAction CElementPlayer::getAction() {
 }
 
 void CElementPlayer::playLevelVictory(float time) {
-   SVector3 curRotation = View->getCabbageSceneObject().getRotation();
-   SVector2 curLocation = SVector2 (Area.getCenter().X - .5f, Area.getCenter().Y - .5f);
+   SVector3f curRotation = View->getCabbageSceneObject().getRotation();
+   SVector2f curLocation = SVector2f (Area.getCenter().X - .5f, Area.getCenter().Y - .5f);
 
    //Start Victory Music
    if (VictoryTime == 0.0f) {
@@ -419,7 +418,7 @@ void CElementPlayer::playLevelVictory(float time) {
    //Fireworks.  Ignoring for now. I can do that.  : D
    /*else if (VictoryTime > .76f && VictoryTime < 1.f) {
       if (!f1) {
-         SVector3 flagPosition = renderFlag->getTranslation();
+         SVector3f flagPosition = renderFlag->getTranslation();
 
          f1 = new CParticleEngine(SVector3f(flagPosition.X, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);  //Would like to change these later so not leaves. Fine for now
          f2 = new CParticleEngine(SVector3f(flagPosition.X + 4.f, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);
@@ -446,7 +445,7 @@ void CElementPlayer::playLevelVictory(float time) {
       PhysicsEngineObject->setJumping(true);
 
       View->getCabbageSceneObject().setRotation(SVector3f(curRotation.X, curRotation.Y - 360.f*time, 80.f));
-      PhysicsEngineObject->setArea(SRect2(Area.Position.X - 3.f*time, Area.Position.Y, 1.f, 1.f));
+      PhysicsEngineObject->setArea(SRect2f(Area.Position.X - 3.f*time, Area.Position.Y, 1.f, 1.f));
    }
 
    else if (VictoryTime > 3.8f && VictoryTime < 3.9f) {
@@ -455,7 +454,7 @@ void CElementPlayer::playLevelVictory(float time) {
    }
    else if (VictoryTime > 3.9f && VictoryTime < 4.9f) {
       View->getCabbageSceneObject().setRotation(SVector3f(curRotation.X, 0.f, curRotation.Z - 765.f*time));
-      PhysicsEngineObject->setArea(SRect2(Area.Position.X - 3.f*time, Area.Position.Y, 1.f, 1.f));
+      PhysicsEngineObject->setArea(SRect2f(Area.Position.X - 3.f*time, Area.Position.Y, 1.f, 1.f));
    }
    else if (VictoryTime > 4.9f && VictoryTime < 6.4f) {
       /*if (!glow) {
@@ -471,7 +470,7 @@ void CElementPlayer::playLevelVictory(float time) {
       Scale.Y += 1.2f*time;
       Scale.X -= 1.8f*time;
 
-      PhysicsEngineObject->setImpulse(SVector2(0.f, 30.f), 0.01f);
+      PhysicsEngineObject->addImpulse(SVector2f(0.f, 30.f), 0.01f);
 
    }
 
