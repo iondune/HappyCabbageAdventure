@@ -380,7 +380,7 @@ void CCollisionActor::draw()
 	glColor3f(1, 1, 1);
 }
 
-void CCollisionActor::addImpulse(SVec2 const & velocity)
+void CCollisionActor::addImpulse(SVec2 const & velocity, float const Duration)
 {
 	ImpulseVelocity += velocity;
 }
