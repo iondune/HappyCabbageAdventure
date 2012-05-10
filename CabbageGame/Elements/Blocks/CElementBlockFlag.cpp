@@ -38,6 +38,9 @@ void CElementBlockFlag::writeXML(xmlwriter *l) {
    l->CloseLasttag();
 }
 
+void CElementBlockFlag::update(float t) {
+}
+
 void CElementBlockFlag::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addObject();
    PhysicsEngineObject->setArea(Area);

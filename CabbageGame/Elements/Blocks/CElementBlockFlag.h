@@ -18,6 +18,7 @@ class CElementBlockFlag : public CElementBlock {
       virtual void OnCollision(CCollideable *Object);
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
+      virtual void update(float);
       virtual void writeXML(xmlwriter *);
 
       CElementBlockFlag(SRect2, FlagRole);
