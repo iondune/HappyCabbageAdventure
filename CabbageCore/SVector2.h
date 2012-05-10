@@ -143,29 +143,29 @@ public:
 	T X, Y;
 
 	SVector2()
-		: X(0), Y(0), SVector2Reference(X, Y)
+		: X(0), Y(0), SVector2Reference<T>(X, Y)
 	{}
 
 	template <typename U>
 	SVector2(SVector2<U> const & vec)
-		: X((T) vec.X), Y((T) vec.Y), SVector2Reference(X, Y)
+		: X((T) vec.X), Y((T) vec.Y), SVector2Reference<T>(X, Y)
 	{}
 	
 	template <typename U>
 	SVector2(SVector2Reference<U> const & vec)
-		: X(vec.X), Y(vec.Y), SVector2Reference(X, Y)
+		: X(vec.X), Y(vec.Y), SVector2Reference<T>(X, Y)
 	{}
 	
 	SVector2(SVector2<T> const & vec)
-		: X(vec.X), Y(vec.Y), SVector2Reference(X, Y)
+		: X(vec.X), Y(vec.Y), SVector2Reference<T>(X, Y)
 	{}
 
 	SVector2(T in)
-		: X(in), Y(in), SVector2Reference(X, Y)
+		: X(in), Y(in), SVector2Reference<T>(X, Y)
 	{}
 
 	SVector2(T in_x, T in_y)
-		: X(in_x), Y(in_y), SVector2Reference(X, Y)
+		: X(in_x), Y(in_y), SVector2Reference<T>(X, Y)
 	{}
 
 	SVector2<T> & operator = (SVector2Reference<T> const & vec)
