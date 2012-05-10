@@ -881,7 +881,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
    printf("cDown before placing it %d\n",cDown);
    if (cDown == 4)
    {
-       placeables.push_back(tempPlaceable = new CElementBlockBreakable(SRect2f(x,y,w,h)));
+       placeables.push_back(tempPlaceable = new CElementBlockBreakable(SRect2f(x, y, (float) w, (float) h)));
        printf("making breakable blocks\n");
    }
    else if (cDown == 5)
@@ -1074,8 +1074,8 @@ void CLWIBState::undoObjects() {
             for(j = 0; j <m_block->getArea().Size.Y; j++) {
                 blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5f+25)+j].o = true;
                 blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5f+25)+j].r = m_block;
-                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5f+25)+j].mapX = m_block->getArea().Position.X+25;
-                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5f+25)+j].mapY = m_block->getArea().Position.Y+25;
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5f+25)+j].mapX = (int) m_block->getArea().Position.X+25;
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5f+25)+j].mapY = (int) m_block->getArea().Position.Y+25;
                 printf("here\n");
             }
         }
