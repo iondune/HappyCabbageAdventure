@@ -33,7 +33,7 @@ void CPDust::updateMatrices(float timeElapsed) {
    if(Counter > 0) {
       Counter -= timeElapsed;
       if(ready) {
-         translate = SVector3((Actor->getArea().getCenter()), zFactor);
+         translate = SVector3f((Actor->getArea().getCenter()), zFactor);
       }
       if(Counter <= 0) {
          Duration = 0;
@@ -45,7 +45,7 @@ void CPDust::updateMatrices(float timeElapsed) {
       Duration += timeElapsed;
       if(Actor->getVelocity().X >= 0.0001f || Actor->getVelocity().X <= -0.0001f)
          zFactor += zVelocity * timeElapsed;
-      translate = SVector3((Actor->getArea().getCenter()) + SVector2(0.0f, 0.1f), zFactor);
+      translate = SVector3f((Actor->getArea().getCenter()) + SVector2(0.0f, 0.1f), zFactor);
 
       if(Duration > 1.3f) {
          Counter = (float)rand()/(float)RAND_MAX * 0.5f + 0.5f;

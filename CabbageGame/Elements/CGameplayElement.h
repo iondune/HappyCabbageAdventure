@@ -15,7 +15,7 @@ class CGameLevel;
 #include <sstream>
 #include <string>
 
-class CGameplayElement : public IUpdater, public ICollisionResponder {
+class CGameplayElement : public IUpdater, public sigslot::has_slots<> {
    protected:
       CCollideable *& PhysicsEngineObject;
       //A top-level object in the scene manager. Subclasses may create new pointers of a more specific subclass.

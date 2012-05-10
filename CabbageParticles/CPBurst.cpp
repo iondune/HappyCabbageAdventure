@@ -41,7 +41,7 @@ void CPBurst::updateMatrices(float timeElapsed) {
       if(Duration >= BlinkTime && BlinkFreq >= -0.8f) {
          BlinkFreq -= timeElapsed*1.0f;
       }
-      translate = SVector3(Actor->getArea().getCenter() + 0.1f, zFactor);
-      translate += SVector3(0.0f, BlinkFreq, 0.0f);
+      translate = SVector3f(Actor->getArea().getCenter() + 0.1f, zFactor);
+      translate += SVector3f(0.0f, BlinkFreq, 0.0f);
    }
 }

@@ -89,7 +89,7 @@ void CParticleObject::setup(std::vector<SVector3*> vectorArr, std::vector<SVecto
          SizeBuffer.push_back(sizeArr[i]);
       }
       CPointLightSceneObject *LightObj = new CPointLightSceneObject(sizeArr[i]/sizeFactor, *(colorArr[i]));
-      CDirectionalLightSceneObject *LightDObj = new CDirectionalLightSceneObject(SVector3(0, 0, 1), *(colorArr[i]));
+      CDirectionalLightSceneObject *LightDObj = new CDirectionalLightSceneObject(SVector3f(0, 0, 1), *(colorArr[i]));
       addChild(LightObj);
       //addChild(LightDObj);
       LightsArr.push_back(LightObj);
