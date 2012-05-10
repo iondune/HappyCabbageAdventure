@@ -7,7 +7,7 @@ class CPHurt : public CParticle {
    float tickValue;
    SVector3f position, velocity;
    void setupRenderable();
-   void setCenterPos(SVector3*);
+   void setCenterPos(SVector3f*);
    void updateMatrices(float);
 };
 

@@ -35,10 +35,10 @@ void CPlayerAbilityLaser::inUpdateSceneObject(float time) {
    if(ParticleEngine) {
       //Update the particles
       if(LaserState == CHARGED) {
-         ParticleEngine->setCenterPos(SVector3(Player.getArea().getCenter().X, Player.getArea().Position.Y, 0.0f));
+         ParticleEngine->setCenterPos(SVector3f(Player.getArea().getCenter().X, Player.getArea().Position.Y, 0.0f));
       }
       else
-         ParticleEngine->setCenterPos(SVector3(Player.getArea().getCenter(), 0.0f));
+         ParticleEngine->setCenterPos(SVector3f(Player.getArea().getCenter(), 0.0f));
       ParticleEngine->step(time);
    }
    if(LaserState == FIRING)
@@ -53,7 +53,7 @@ CPlayerAbilityLaser::CPlayerAbilityLaser(CElementPlayer & p) : CPlayerAbility(p,
    EnergyUsed = 33;
 
    if (Player.Stats.Energy >= EnergyUsed)
-      ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), LASER_CHARGE_PARTICLE_COUNT, LASER_CHARGE_DURATION, LASER_CHARGING_PARTICLE);
+      ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), LASER_CHARGE_PARTICLE_COUNT, LASER_CHARGE_DURATION, LASER_CHARGING_PARTICLE);
    else
       Dead = true;
 }
@@ -82,7 +82,7 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
          Player.AllowMovement = true;
          ParticleEngine->deconstruct();
          delete ParticleEngine;
-         ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), 20, -1, LASER_CHARGED_PARTICLE);
+         ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), 20, -1, LASER_CHARGED_PARTICLE);
          LaserState = CHARGED;
          return;
       }
@@ -92,7 +92,7 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
          ParticleEngine->deconstruct();
          delete ParticleEngine;
          Player.AllowMovement = false;
-         ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), LASER_FIRING_PARTICLE_COUNT, LASER_FIRING_DURATION, LASER_FIRING_PARTICLE);
+         ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), LASER_FIRING_PARTICLE_COUNT, LASER_FIRING_DURATION, LASER_FIRING_PARTICLE);
          ParticleEngine->setLookRight(Player.Direction == CElementPlayer::Right);
          LaserState = FIRING;
          TemporaryTimeVariable = 0;

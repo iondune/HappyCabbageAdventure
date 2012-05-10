@@ -42,8 +42,8 @@ void CElementEnemyKiwi::setupSceneObject() {
       mesh = CMeshLoader::load3dsMesh("Base/killerkiwi.3ds");
 
    if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(1));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -53,9 +53,9 @@ void CElementEnemyKiwi::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   SceneObject->setTranslation(SVector3((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y-1))/2, 0));
-   SceneObject->setScale(SVector3(1, 1, 1));
-   SceneObject->setRotation(SVector3(-90, 0, -90));
+   SceneObject->setTranslation(SVector3f((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y-1))/2, 0));
+   SceneObject->setScale(SVector3f(1, 1, 1));
+   SceneObject->setRotation(SVector3f(-90, 0, -90));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
@@ -119,20 +119,20 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
 void CElementEnemyKiwi::updateSceneObject(float time) {
    rotateBird = -100.0f * SineValue;
    
-   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
-   SceneObject->setRotation(SVector3(-90 + rotateBird, 0, -90));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, 0));
+   SceneObject->setRotation(SVector3f(-90 + rotateBird, 0, -90));
 
    //TODO:  Adjust Z-Collision?
-   //SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, zTimer*0.9f*Depth*(1.0f/Z_SPEED)));
+   //SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, zTimer*0.9f*Depth*(1.0f/Z_SPEED)));
 
    if(PhysicsEngineObject->getVelocity().X < -0.01f)
       //TODO: SEE ABOVE
-      //SceneObject->setScale(SVector3(-1,1,1)*(zTimer + 1.0f));
+      //SceneObject->setScale(SVector3f(-1,1,1)*(zTimer + 1.0f));
       true;
    else if(PhysicsEngineObject->getVelocity().X > 0.01f)
       //TODO:  SEE ABOVE
       true;
-      //SceneObject->setScale(SVector3(1,1,1)*(zTimer + 1.0f));
+      //SceneObject->setScale(SVector3f(1,1,1)*(zTimer + 1.0f));
 }
 
 void CElementEnemyKiwi::printInformation() {

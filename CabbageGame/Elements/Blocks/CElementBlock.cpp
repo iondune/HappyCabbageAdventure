@@ -2,7 +2,7 @@
 #include "Player/CPlayerAbility.h"
 #include "CGameLevel.h"
 
-CElementBlock::CElementBlock(SRect2 nArea, int depth, int texture)
+CElementBlock::CElementBlock(SRect2f nArea, int depth, int texture)
 : CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Depth(depth), Texture(texture) {
 }
 
@@ -23,8 +23,8 @@ void CElementBlock::updatePhysicsEngineObject(float time) {
 
 void CElementBlock::updateSceneObject(float time) {
    if(Texture != -5) {
-      SceneObject->setTranslation(SVector3((Area.Position.X+(Area.Position.X+Area.Size.X))/2, (Area.Position.Y+(Area.Position.Y+Area.Size.Y))/2, 0));
-      SceneObject->setScale(SVector3(Area.Size.X, Area.Size.Y, (float) Depth));
+      SceneObject->setTranslation(SVector3f((Area.Position.X+(Area.Position.X+Area.Size.X))/2, (Area.Position.Y+(Area.Position.Y+Area.Size.Y))/2, 0));
+      SceneObject->setScale(SVector3f(Area.Size.X, Area.Size.Y, (float) Depth));
    }
 }
 
@@ -78,8 +78,8 @@ void CElementBlock::setupSceneObject() {
    mesh = CMeshLoader::load3dsMesh("Base/cuberock.3ds");
 
    if(mesh) {
-         mesh->resizeMesh(SVector3(1));
-         mesh->centerMeshByExtents(SVector3(0));
+         mesh->resizeMesh(SVector3f(1));
+         mesh->centerMeshByExtents(SVector3f(0));
          mesh->calculateNormalsPerFace();
          //mesh->calculateNormalsPerVertex();
    }
@@ -103,8 +103,8 @@ void CElementBlock::setupSceneObject() {
       case -5:
          mesh = CMeshLoader::load3dsMesh("Base/levelBlock.3ds");
          if (mesh) {
-            mesh->resizeMesh(SVector3(1));
-            mesh->centerMeshByExtents(SVector3(0));
+            mesh->resizeMesh(SVector3f(1));
+            mesh->centerMeshByExtents(SVector3f(0));
             mesh->calculateNormalsPerVertex();
          }
          else {
@@ -124,8 +124,8 @@ void CElementBlock::setupSceneObject() {
       case -5:
          mesh = CMeshLoader::load3dsMesh("Base/levelBlock.3ds");
          if (mesh) {
-            mesh->resizeMesh(SVector3(1.0));
-            mesh->centerMeshByExtents(SVector3(0));
+            mesh->resizeMesh(SVector3f(1.0));
+            mesh->centerMeshByExtents(SVector3f(0));
             mesh->calculateNormalsPerVertex();
          }
          else {
@@ -148,15 +148,15 @@ void CElementBlock::setupSceneObject() {
    tempBlock->setShader(ERP_DEFAULT, CShaderLoader::loadShader("ToonTexture"));
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, CShaderLoader::loadShader("Deferred/Textured"));
    if(Texture != -5) {
-      tempBlock->setTranslation(SVector3((Area.Position.X+(Area.Position.X+Area.Size.X))/2, (Area.Position.Y+(Area.Position.Y+Area.Size.Y))/2, 0));
-      tempBlock->setScale(SVector3(Area.Size.X, Area.Size.Y, (float) Depth));
+      tempBlock->setTranslation(SVector3f((Area.Position.X+(Area.Position.X+Area.Size.X))/2, (Area.Position.Y+(Area.Position.Y+Area.Size.Y))/2, 0));
+      tempBlock->setScale(SVector3f(Area.Size.X, Area.Size.Y, (float) Depth));
    }
    else /* For ground blocks */{
-      tempBlock->setTranslation(SVector3((Area.Position.X+(Area.Position.X+Area.Size.X))/2, Area.Position.Y+.6f*Area.Size.Y, 0));
-      tempBlock->setScale(SVector3(5.0f)); //Area.Size.X, Area.Size.Y, Depth
+      tempBlock->setTranslation(SVector3f((Area.Position.X+(Area.Position.X+Area.Size.X))/2, Area.Position.Y+.6f*Area.Size.Y, 0));
+      tempBlock->setScale(SVector3f(5.0f)); //Area.Size.X, Area.Size.Y, Depth
    }
 
-   tempBlock->setRotation(SVector3(Texture==-5?-90.f:0, 0, 0));
+   tempBlock->setRotation(SVector3f(Texture==-5?-90.f:0, 0, 0));
 
    SceneObject = tempBlock;
    CApplication::get().getSceneManager().addImmobileSceneObject(tempBlock, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);

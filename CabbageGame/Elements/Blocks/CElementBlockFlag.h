@@ -20,8 +20,8 @@ class CElementBlockFlag : public CElementBlock {
       virtual void setupSceneObject();
       virtual void writeXML(xmlwriter *);
 
-      CElementBlockFlag(SRect2, FlagRole);
-      CElementBlockFlag(SRect2 nArea, int role); //So we don't need a block loader
+      CElementBlockFlag(SRect2f, FlagRole);
+      CElementBlockFlag(SRect2f nArea, int role); //So we don't need a block loader
 
       virtual void printInformation();
       CElementBlockFlag::FlagRole getRole();

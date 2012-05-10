@@ -22,8 +22,8 @@ void CElementEnemyBlade::setupSceneObject() {
    SceneObject = new CMeshSceneObject();
    CMesh *mesh = CMeshLoader::load3dsMesh("Base/newspinningknife.3ds");
    if(mesh) {
-      mesh->resizeMesh(SVector3(0.5));
-      mesh->centerMeshByExtents(SVector3(0.11649f, 0, 0));
+      mesh->resizeMesh(SVector3f(0.5));
+      mesh->centerMeshByExtents(SVector3f(0.11649f, 0, 0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -33,8 +33,8 @@ void CElementEnemyBlade::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   SceneObject->setTranslation(SVector3(PhysicsEngineObject->getArea().getCenter().X, PhysicsEngineObject->getArea().getCenter().Y, 0));
-   SceneObject->setScale(SVector3(2, 2, 2));
+   SceneObject->setTranslation(SVector3f(PhysicsEngineObject->getArea().getCenter().X, PhysicsEngineObject->getArea().getCenter().Y, 0));
+   SceneObject->setScale(SVector3f(2, 2, 2));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
@@ -67,7 +67,7 @@ void CElementEnemyBlade::updatePhysicsEngineObject(float time) {
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyBlade::updateSceneObject(float time) {
    BladeRotate -= 300.0f * time;
-   SceneObject->setRotation(SVector3(-90, 0, BladeRotate));
+   SceneObject->setRotation(SVector3f(-90, 0, BladeRotate));
 }
 
 void CElementEnemyBlade::printInformation() {

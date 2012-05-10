@@ -178,7 +178,7 @@ void CElementEnemy::updatePhysicsEngineObject(float time) {
 void CElementEnemy::updateSceneObject(float time) {
    if(ParticleEngine) {
       ParticleEngine->step(time);
-      ParticleEngine->setCenterPos(SVector3(Area.getCenter(), 0.0f));
+      ParticleEngine->setCenterPos(SVector3f(Area.getCenter(), 0.0f));
    }
    return;
 }

@@ -7,7 +7,7 @@ CElementEnemyPomegranate::CElementEnemyPomegranate(SRect2 nArea) :
    MaxHealth = 1;
    CurHealth = MaxHealth;
 
-   particleEngine = new CParticleEngine(SVector3(Area.getCenter().X - nArea.Size.X, Area.getCenter().Y + nArea.Size.Y/2.f, 0), 100, -1, FLAME_PARTICLE);
+   particleEngine = new CParticleEngine(SVector3f(Area.getCenter().X - nArea.Size.X, Area.getCenter().Y + nArea.Size.Y/2.f, 0), 100, -1, FLAME_PARTICLE);
    particleEngine->setVisible(false);
 }
 
@@ -38,8 +38,8 @@ void CElementEnemyPomegranate::setupSceneObject() {
       mesh = CMeshLoader::load3dsMesh("Base/pomegranate.3ds");
 
    if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(1));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -47,10 +47,10 @@ void CElementEnemyPomegranate::setupSceneObject() {
       printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
 
    SceneObject->setMesh(mesh);
-   SceneObject->setRotation(SVector3(-90, 0, 0));
+   SceneObject->setRotation(SVector3f(-90, 0, 0));
 
    Scale = Area.Size;
-   SceneObject->setScale(SVector3(Scale.X, Scale.X, Scale.Y));
+   SceneObject->setScale(SVector3f(Scale.X, Scale.X, Scale.Y));
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
 
@@ -120,9 +120,9 @@ void CElementEnemyPomegranate::updatePhysicsEngineObject(float time) {
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyPomegranate::updateSceneObject(float time) {
    if(ParticleEngine) {
-      SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.Position.Y, 0));
-      SceneObject->setRotation(SVector3(-90, 0, 0));
-      SceneObject->setScale(SVector3(Scale.X, Scale.X, 0.3f));
+      SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
+      SceneObject->setRotation(SVector3f(-90, 0, 0));
+      SceneObject->setScale(SVector3f(Scale.X, Scale.X, 0.3f));
       return;
    }
 
@@ -131,13 +131,13 @@ void CElementEnemyPomegranate::updateSceneObject(float time) {
       float yPos = Area.getCenter().Y;
 
       particleEngine->step(time);
-      particleEngine->setCenterPos(SVector3(xPos, yPos, 0));
+      particleEngine->setCenterPos(SVector3f(xPos, yPos, 0));
 
-      SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y - .5f, 0));
+      SceneObject->setTranslation(SVector3f(Area.getCenter().X,Area.getCenter().Y - .5f, 0));
    }
 
    else {
-      SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
+      SceneObject->setTranslation(SVector3f(Area.getCenter().X,Area.getCenter().Y, 0));
    }
 
    Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
@@ -158,15 +158,15 @@ void CElementEnemyPomegranate::updateSceneObject(float time) {
 
    if (PhysicsEngineObject->getVelocity().Y < .01f && PhysicsEngineObject->getVelocity().Y > -.01f) {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)
-         SceneObject->setScale(SVector3(-Scale.X,Scale.X,Scale.Y));
+         SceneObject->setScale(SVector3f(-Scale.X,Scale.X,Scale.Y));
       else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-         SceneObject->setScale(SVector3(Scale.X,Scale.X,Scale.Y));
+         SceneObject->setScale(SVector3f(Scale.X,Scale.X,Scale.Y));
    }
    else {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)
-         SceneObject->setScale(SVector3(-Scale.X,Scale.X,Scale.Y));
+         SceneObject->setScale(SVector3f(-Scale.X,Scale.X,Scale.Y));
       else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-         SceneObject->setScale(SVector3(Scale.X,Scale.X,Scale.Y));
+         SceneObject->setScale(SVector3f(Scale.X,Scale.X,Scale.Y));
    }
 }
 

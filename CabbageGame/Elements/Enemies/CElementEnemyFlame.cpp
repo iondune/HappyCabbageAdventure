@@ -19,7 +19,7 @@ void CElementEnemyFlame::setupPhysicsEngineObject() {
 }
 
 void CElementEnemyFlame::setupSceneObject() {
-   particleEngine = new CParticleEngine(SVector3(Area.Position.X, Area.Position.Y, 0), 100, -1, FLAME_PARTICLE);
+   particleEngine = new CParticleEngine(SVector3f(Area.Position.X, Area.Position.Y, 0), 100, -1, FLAME_PARTICLE);
 }
 
 void CElementEnemyFlame::OnCollision(CCollideable *Object) {

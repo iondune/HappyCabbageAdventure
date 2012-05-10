@@ -33,8 +33,8 @@ void CElementEnemyGrape::setupSceneObject() {
       mesh = CMeshLoader::load3dsMesh("Base/grape_bunch.3ds");
 
    if(mesh) {
-      mesh->resizeMesh(SVector3(2));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(2));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -44,8 +44,8 @@ void CElementEnemyGrape::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   SceneObject->setScale(SVector3(1, 1, 1));
-   SceneObject->setRotation(SVector3(-90, 0, 90));
+   SceneObject->setScale(SVector3f(1, 1, 1));
+   SceneObject->setRotation(SVector3f(-90, 0, 90));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
@@ -69,14 +69,14 @@ void CElementEnemyGrape::updatePhysicsEngineObject(float time) {
 void CElementEnemyGrape::updateSceneObject(float time) {
    SVector2 playerPosition = Level.getPlayer().getArea().Position;
 
-   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y + .2f, 0));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y + .2f, 0));
 
-   SceneObject->setRotation(SVector3(-90, 0, 90));
+   SceneObject->setRotation(SVector3f(-90, 0, 90));
 
    if(ParticleEngine) {
-      SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.Position.Y, 0));
-      SceneObject->setRotation(SVector3(-90, 0, 90));
-      SceneObject->setScale(SVector3(1.0f, 1.0f, 0.3f));
+      SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
+      SceneObject->setRotation(SVector3f(-90, 0, 90));
+      SceneObject->setScale(SVector3f(1.0f, 1.0f, 0.3f));
       return;
    }
 

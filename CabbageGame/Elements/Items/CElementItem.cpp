@@ -7,12 +7,12 @@
 #include "CElementItemSeed.h"
 
 //Generic item, for usage in the LWIB, I guess.
-CElementItem::CElementItem(SRect2 nArea, Items::EItemType type)
+CElementItem::CElementItem(SRect2f nArea, Items::EItemType type)
 : CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Type(type) {
 }
 
 //Item created by factory
-CElementItem *CItemLoader::LoadItem(SRect2 nArea, Items::EItemType type) {
+CElementItem *CItemLoader::LoadItem(SRect2f nArea, Items::EItemType type) {
    switch(type) {
    case Items::HEALTH:
       return new CElementItemHealth(nArea);
@@ -71,10 +71,10 @@ void CElementItem::printInformation() {
 }
 
 void CElementItem::reactToAbility(Abilities::EAbilityType Ability) {
-   SVector2 PlayerVelocity = ((CCollisionActor*)Level.getPlayer().getPhysicsEngineObject())->getVelocity();
+   SVector2f PlayerVelocity = ((CCollisionActor*)Level.getPlayer().getPhysicsEngineObject())->getVelocity();
    switch(Ability) {
       case Abilities::SHIELD:
-         ((CCollisionActor*)PhysicsEngineObject)->setImpulse((PlayerVelocity + SVector2(0.0f, 2.5f)) * 3.0f, 0.01f);
+         ((CCollisionActor*)PhysicsEngineObject)->addImpulse((PlayerVelocity + SVector2(0.0f, 2.5f)) * 3.0f);
          //dieWithSeeds();
          break;
       default:

@@ -22,7 +22,7 @@ void CPlayerAbilityDash::inUpdateSceneObject(float time) {
    }
    //Update the particles
    ParticleEngine->setLookRight(Player.Direction == CElementPlayer::Right);
-   ParticleEngine->setCenterPos(SVector3(Player.getArea().getCenter(), 0.0f));
+   ParticleEngine->setCenterPos(SVector3f(Player.getArea().getCenter(), 0.0f));
    ParticleEngine->step(time);
 
    //No energy cost for dash
@@ -41,7 +41,7 @@ void CPlayerAbilityDash::inOnCollision(CCollideable * collider) {
 */
 
 CPlayerAbilityDash::CPlayerAbilityDash(CElementPlayer & p) : CPlayerAbility(p, Abilities::DASH) {
-   ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), DASH_PARTICLE_COUNT, -1, DUST_PARTICLE);
+   ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), DASH_PARTICLE_COUNT, -1, DUST_PARTICLE);
    ParticleEngine->UsePhysics(&Player.Level.getPhysicsEngine());
    ((CCollisionActor*)Player.getPhysicsEngineObject())->getAttributes().MaxWalk = 7.5f;
 

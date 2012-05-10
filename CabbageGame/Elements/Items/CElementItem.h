@@ -35,13 +35,13 @@ class CElementItem : public CGameplayElement {
 
       Items::EItemType getItemType();
 
-      CElementItem(SRect2 nArea, Items::EItemType type);
+      CElementItem(SRect2f nArea, Items::EItemType type);
 
       virtual void printInformation();
 };
 
 class CItemLoader {
    public:
-      static CElementItem *LoadItem(SRect2 nArea, Items::EItemType type); 
+      static CElementItem *LoadItem(SRect2f nArea, Items::EItemType type); 
 };
 #endif

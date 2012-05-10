@@ -21,8 +21,8 @@ void CElementItemHealth::setupSceneObject() {
    SceneObject = new CMeshSceneObject();
    CMesh *mesh = CMeshLoader::load3dsMesh("Base/healthboost.3ds");
    if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(1));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
    else
@@ -31,9 +31,9 @@ void CElementItemHealth::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   //SceneObject->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2 + 10.6f, 0));
-   //SceneObject->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
-   SceneObject->setScale(SVector3(.8f));
+   //SceneObject->setTranslation(SVector3f((x+(x+1))/2, (y+(y-1))/2 + 10.6f, 0));
+   //SceneObject->setTranslation(SVector3f((x+(x+1))/2, (y+(y-1))/2, 0));
+   SceneObject->setScale(SVector3f(.8f));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
@@ -55,8 +55,8 @@ void CElementItemHealth::updatePhysicsEngineObject(float time) {
 
 //This is where the renderable would be updated for the more complex enemies
 void CElementItemHealth::updateSceneObject(float time) {
-   SceneObject->setTranslation(SVector3(PhysicsEngineObject->getArea().getCenter(), 0));
-   SceneObject->setRotation(SVector3(-90, 0, 90 + 140*ElapsedTime));
+   SceneObject->setTranslation(SVector3f(PhysicsEngineObject->getArea().getCenter(), 0));
+   SceneObject->setRotation(SVector3f(-90, 0, 90 + 140*ElapsedTime));
 }
 
 void CElementItemHealth::printInformation() {

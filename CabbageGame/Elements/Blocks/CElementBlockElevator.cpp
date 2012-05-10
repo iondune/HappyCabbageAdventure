@@ -47,7 +47,7 @@ void CElementBlockElevator::setupPhysicsEngineObject() {
 }
 
 void CElementBlockElevator::updateSceneObject(float time) {
-   SceneObject->setTranslation(SVector3((Area.Position.X+(Area.Position.X+Area.Size.X))/2, (Area.Position.Y+(Area.Position.Y+Area.Size.Y))/2, 0));
+   SceneObject->setTranslation(SVector3f((Area.Position.X+(Area.Position.X+Area.Size.X))/2, (Area.Position.Y+(Area.Position.Y+Area.Size.Y))/2, 0));
 }
 
 void CElementBlockElevator::setupSceneObject() {

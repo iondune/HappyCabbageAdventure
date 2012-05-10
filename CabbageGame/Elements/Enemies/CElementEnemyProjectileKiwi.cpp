@@ -42,8 +42,8 @@ void CElementEnemyProjectileKiwi::setupSceneObject() {
    }
 
    if (mesh) {
-      mesh->resizeMesh(SVector3(.4f));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(.4f));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -53,7 +53,7 @@ void CElementEnemyProjectileKiwi::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   SceneObject->setScale(SVector3(1, 1, 1));
+   SceneObject->setScale(SVector3f(1, 1, 1));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
@@ -63,7 +63,7 @@ void CElementEnemyProjectileKiwi::updatePhysicsEngineObject(float time) {
 }
 
 void CElementEnemyProjectileKiwi::updateSceneObject(float time) {
-   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, 0));
 }
 
 void CElementEnemyProjectileKiwi::printInformation() {

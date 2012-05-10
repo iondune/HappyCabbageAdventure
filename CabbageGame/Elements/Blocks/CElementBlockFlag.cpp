@@ -6,7 +6,7 @@ CElementBlockFlag::CElementBlockFlag(SRect2 nArea, FlagRole role)
 : CElementBlock(nArea, 1, 0), Role(role) {
 }
 
-CElementBlockFlag::CElementBlockFlag(SRect2 nArea, int role)
+CElementBlockFlag::CElementBlockFlag(SRect2f nArea, int role)
 : CElementBlock(nArea, 1, 0), Role((FlagRole)role) {
 }
 
@@ -46,7 +46,7 @@ void CElementBlockFlag::setupPhysicsEngineObject() {
 void CElementBlockFlag::setupSceneObject() {
    CMesh *mesh = CMeshLoader::load3dsMesh("Base/flag2.3ds");
    if(mesh) {
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
    else
@@ -55,7 +55,7 @@ void CElementBlockFlag::setupSceneObject() {
 
    CMesh *eMesh = CMeshLoader::load3dsMesh("Base/cabbage/cabbage_5.3ds");
    if(eMesh) {
-      eMesh->centerMeshByExtents(SVector3(0));
+      eMesh->centerMeshByExtents(SVector3f(0));
       eMesh->calculateNormalsPerFace();
    }
    else
@@ -64,28 +64,28 @@ void CElementBlockFlag::setupSceneObject() {
 
    SceneObject = new CMeshSceneObject();
    SceneObject->setMesh(mesh);
-   SceneObject->setRotation(SVector3(-90,0,0));
-   SceneObject->setScale(SVector3(.0150f, .00025f,.0016f));
+   SceneObject->setRotation(SVector3f(-90,0,0));
+   SceneObject->setScale(SVector3f(.0150f, .00025f,.0016f));
    SceneObject->setTexture(CImageLoader::loadTexture("Base/white.bmp", true));
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
 
    Area.Position.Y += Area.Size.Y/2.f;
-   SceneObject->setTranslation(SVector3(Area.Position, 1.0f));
+   SceneObject->setTranslation(SVector3f(Area.Position, 1.0f));
 
    /*CMeshSceneObject *flagObject = new CMeshSceneObject();
    flagObject->setMesh(mesh);
-   flagObject->setRotation(SVector3(-90,0,0));
-   flagObject->setScale(SVector3(.0150f, .00025f,.0016f));
+   flagObject->setRotation(SVector3f(-90,0,0));
+   flagObject->setScale(SVector3f(.0150f, .00025f,.0016f));
    flagObject->setTexture(CImageLoader::loadTexture("Base/white.bmp", true));
    flagObject->setShader(ERP_DEFAULT, "Toon");
    flagObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
 
    CMeshSceneObject *ensigniaObject = new CMeshSceneObject();
    ensigniaObject->setMesh(eMesh);
-   ensigniaObject->setTranslation(SVector3(0.0f, 3.0f, 0.0f));
-   ensigniaObject->setRotation(SVector3(-90,0,0));
-   ensigniaObject->setScale(SVector3(4.0f, 4.0f,4.0f));
+   ensigniaObject->setTranslation(SVector3f(0.0f, 3.0f, 0.0f));
+   ensigniaObject->setRotation(SVector3f(-90,0,0));
+   ensigniaObject->setScale(SVector3f(4.0f, 4.0f,4.0f));
    ensigniaObject->setShader(ERP_DEFAULT, "Toon");
    ensigniaObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
 

@@ -89,14 +89,14 @@ void CMainMenuState::setupMeshes()
   RenderLogo = CApplication::get().getSceneManager().addMeshSceneObject(LogoMesh, Toon, DeferredToon);
   RenderLogo->setTranslation(SVector3f(0.00, 0.07f, .2f));
   RenderLogo->setScale(SVector3f(.3f));
-  RenderLogo->setRotation(SVector3(75, 180, 0));
+  RenderLogo->setRotation(SVector3f(75, 180, 0));
 
 
 
   RenderBackground = CApplication::get().getSceneManager().addMeshSceneObject(CubeMesh, Texture, DeferredTexture);
   RenderBackground->setTranslation(SVector3f(.0f, .0f, .3f));
   RenderBackground->setRotation(SVector3f(0.f, 0.f, 180.f));
-  RenderBackground->setScale(SVector3(1.23f, .92f, .1f));
+  RenderBackground->setScale(SVector3f(1.23f, .92f, .1f));
   RenderBackground->setTexture(BackgroundTexture);
 }
 
@@ -112,8 +112,8 @@ void CMainMenuState::begin()
    Application.getSceneManager().setActiveCamera(Camera);
 
    Application.getSceneManager().Lights.push_back(new CLight());
-   Application.getSceneManager().Lights.back()->Color = SVector3(1.f);
-   Application.getSceneManager().Lights.back()->Position = SVector3(0.f, 0.f, -1.f);
+   Application.getSceneManager().Lights.back()->Color = SVector3f(1.f);
+   Application.getSceneManager().Lights.back()->Position = SVector3f(0.f, 0.f, -1.f);
 
    //Sound Setup
    //CHRIS LOOK HERE

@@ -58,7 +58,7 @@ class CElementEnemy : public CGameplayElement {
 
       Enemies::EEnemyType getEnemyType();
 
-      CElementEnemy(SRect2 nArea, Enemies::EEnemyType type);
+      CElementEnemy(SRect2f nArea, Enemies::EEnemyType type);
 
       virtual int getHealth();
       virtual int takeDamage(int amount);
@@ -69,6 +69,6 @@ class CElementEnemy : public CGameplayElement {
 
 class CEnemyLoader {
    public:
-      static CElementEnemy *LoadEnemy(SRect2 nArea, Enemies::EEnemyType type); 
+      static CElementEnemy *LoadEnemy(SRect2f nArea, Enemies::EEnemyType type); 
 };
 #endif

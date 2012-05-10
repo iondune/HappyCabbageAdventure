@@ -12,15 +12,15 @@ CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(
    level.setPhysicsEngine(PhysicsEngine);
 
    CPerspectiveCamera *Camera = new CPerspectiveCamera(CApplication::getAspectRatio(), 0.01f, 100.0f, 60.0f);
-   Camera->setPosition(SVector3(0, 0, 20));
-   Camera->setLookDirection(SVector3(0, 0, -1));
+   Camera->setPosition(SVector3f(0, 0, 20));
+   Camera->setLookDirection(SVector3f(0, 0, -1));
    CApplication::get().getSceneManager().setActiveCamera(Camera);
 
    CApplication::get().getSceneManager().Lights.clear();
 
    CApplication::get().getSceneManager().Lights.push_back(new CLight());
-   CApplication::get().getSceneManager().Lights.back()->Color = SVector3(0.4f);
-   CApplication::get().getSceneManager().Lights.back()->Position = SVector3(-5.f, 200.f, 500.f);
+   CApplication::get().getSceneManager().Lights.back()->Color = SVector3f(0.4f);
+   CApplication::get().getSceneManager().Lights.back()->Position = SVector3f(-5.f, 200.f, 500.f);
 
    CApplication::get().getSceneManager().setDeferred(level.isNight());
    //level.setNoRender();

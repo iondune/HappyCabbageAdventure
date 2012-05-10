@@ -23,7 +23,7 @@ class CGameplayElement : public IUpdater, public sigslot::has_slots<> {
       CParticleEngine *ParticleEngine;
       //If CGameLevelLoader isn't being used to load a level, this value will be wrong when created.
       CGameLevel & Level;
-      SRect2 Area;
+      SRect2f Area;
       float ElapsedTime;
       bool Dead;
 
@@ -48,9 +48,9 @@ class CGameplayElement : public IUpdater, public sigslot::has_slots<> {
       virtual void reactToAbility(Abilities::EAbilityType ability); 
 
       //Constructor
-      CGameplayElement(CCollideable *& c, ISceneObject *& s, SRect2 a);
-      SRect2 & getArea();
-      void setArea(SRect2);
+      CGameplayElement(CCollideable *& c, ISceneObject *& s, SRect2f a);
+      SRect2f & getArea();
+      void setArea(SRect2f);
 
       //Function for debugging
       virtual void printInformation();

@@ -21,7 +21,7 @@ class CElementBlock : public CGameplayElement {
       virtual void reactToAbility(Abilities::EAbilityType ability); 
 
       virtual void writeXML(xmlwriter *);
-      CElementBlock(SRect2 nArea, int depth, int texture);
+      CElementBlock(SRect2f nArea, int depth, int texture);
 
       virtual void printInformation();
 };

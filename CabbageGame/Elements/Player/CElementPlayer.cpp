@@ -5,7 +5,7 @@
 #include "CPlayerAbility.h"
 
 CElementPlayer::CElementPlayer(SRect2 nArea, bool useCamera)
-: CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f), Shaking(0.0f), ShakeFactor(SVector3(0.0f)),
+: CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f), Shaking(0.0f), ShakeFactor(SVector3f(0.0f)),
   ISquishable(2.0f, 2.0f), AllowMovement(true), PlayJump(true), Victory(false), VictoryTime(0.0f), ShakeFactorFactor(1000.0f), MoveKeyDelay(0.0f), UseCamera(useCamera) {
    setupSoundEffects();
 }
@@ -188,9 +188,9 @@ void CElementPlayer::updateSceneObject(float time) {
    if(Shaking > 0.0f) {
       Shaking -= time;
       if((int)((ElapsedTime - (int)ElapsedTime)*20.0f) % 2 == 0)
-         ShakeFactor = SVector3((float)rand()/(float)RAND_MAX * 0.3f - 0.15f, (float)rand()/(float)RAND_MAX * 0.3f - 0.15f, 0) / ShakeFactorFactor;
+         ShakeFactor = SVector3f((float)rand()/(float)RAND_MAX * 0.3f - 0.15f, (float)rand()/(float)RAND_MAX * 0.3f - 0.15f, 0) / ShakeFactorFactor;
       if(Shaking <= 0.0f) {
-         ShakeFactor = SVector3(0.0f);
+         ShakeFactor = SVector3f(0.0f);
          ShakeFactorFactor = 1000.0f;
       }
    }
@@ -211,7 +211,7 @@ void CElementPlayer::updateSceneObject(float time) {
    else {
       View->updateView(time);
       Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
-      View->setCabbageScale(SVector3(Scale.X, Scale.X, Scale.Y));
+      View->setCabbageScale(SVector3f(Scale.X, Scale.X, Scale.Y));
    }
 
 }
@@ -421,9 +421,9 @@ void CElementPlayer::playLevelVictory(float time) {
       if (!f1) {
          SVector3 flagPosition = renderFlag->getTranslation();
 
-         f1 = new CParticleEngine(SVector3(flagPosition.X, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);  //Would like to change these later so not leaves. Fine for now
-         f2 = new CParticleEngine(SVector3(flagPosition.X + 4.f, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);
-         f3 = new CParticleEngine(SVector3(flagPosition.X + 8.f, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);
+         f1 = new CParticleEngine(SVector3f(flagPosition.X, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);  //Would like to change these later so not leaves. Fine for now
+         f2 = new CParticleEngine(SVector3f(flagPosition.X + 4.f, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);
+         f3 = new CParticleEngine(SVector3f(flagPosition.X + 8.f, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);
       }
    }*/
    else if (VictoryTime > 1.f && VictoryTime < 1.2f) {
@@ -433,7 +433,7 @@ void CElementPlayer::playLevelVictory(float time) {
    else if (VictoryTime > 1.5f && VictoryTime < 2.5f) {
       Action = Jumping;
       PhysicsEngineObject->setJumping(true);
-      View->getCabbageSceneObject().setRotation(SVector3(curRotation.X, curRotation.Y + 720.f*time, 80.0f));
+      View->getCabbageSceneObject().setRotation(SVector3f(curRotation.X, curRotation.Y + 720.f*time, 80.0f));
    }
    else if (VictoryTime > 2.5f && VictoryTime < 2.9f) {
       Action = Standing;
@@ -445,7 +445,7 @@ void CElementPlayer::playLevelVictory(float time) {
       Action = Jumping;
       PhysicsEngineObject->setJumping(true);
 
-      View->getCabbageSceneObject().setRotation(SVector3(curRotation.X, curRotation.Y - 360.f*time, 80.f));
+      View->getCabbageSceneObject().setRotation(SVector3f(curRotation.X, curRotation.Y - 360.f*time, 80.f));
       PhysicsEngineObject->setArea(SRect2(Area.Position.X - 3.f*time, Area.Position.Y, 1.f, 1.f));
    }
 
@@ -454,12 +454,12 @@ void CElementPlayer::playLevelVictory(float time) {
       PhysicsEngineObject->setJumping(false);
    }
    else if (VictoryTime > 3.9f && VictoryTime < 4.9f) {
-      View->getCabbageSceneObject().setRotation(SVector3(curRotation.X, 0.f, curRotation.Z - 765.f*time));
+      View->getCabbageSceneObject().setRotation(SVector3f(curRotation.X, 0.f, curRotation.Z - 765.f*time));
       PhysicsEngineObject->setArea(SRect2(Area.Position.X - 3.f*time, Area.Position.Y, 1.f, 1.f));
    }
    else if (VictoryTime > 4.9f && VictoryTime < 6.4f) {
       /*if (!glow) {
-         glow = new CParticleEngine(SVector3(Area.Position.X + 0.5f, Area.Position.Y - 0.25f, 0), 400, 2.f, LASER_CHARGING_PARTICLE);
+         glow = new CParticleEngine(SVector3f(Area.Position.X + 0.5f, Area.Position.Y - 0.25f, 0), 400, 2.f, LASER_CHARGING_PARTICLE);
       }*/
       Action = Standing;
       PhysicsEngineObject->setJumping(false);
@@ -484,10 +484,10 @@ void CElementPlayer::playLevelVictory(float time) {
 
    //Translate the camera unless we're launching off.
    else {
-      CApplication::get().getSceneManager().getActiveCamera()->setPosition(SVector3(Area.getCenter().X, Area.getCenter().Y + 1.3f, 10) + ShakeFactor);
+      CApplication::get().getSceneManager().getActiveCamera()->setPosition(SVector3f(Area.getCenter().X, Area.getCenter().Y + 1.3f, 10) + ShakeFactor);
    }
 
-   View->getCabbageSceneObject().setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
+   View->getCabbageSceneObject().setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, 0));
    View->updateShadow();
 
    VictoryTime += time;

@@ -34,8 +34,8 @@ void CElementEnemyPear::setupSceneObject() {
       mesh = CMeshLoader::load3dsMesh("Base/pear.3ds");
 
    if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(1));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -45,9 +45,9 @@ void CElementEnemyPear::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   SceneObject->setTranslation(SVector3((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y-1))/2, 0));
-   SceneObject->setScale(SVector3(Area.Size.X, Area.Size.X, Area.Size.Y));
-   SceneObject->setRotation(SVector3(-90, 0, 20));
+   SceneObject->setTranslation(SVector3f((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y-1))/2, 0));
+   SceneObject->setScale(SVector3f(Area.Size.X, Area.Size.X, Area.Size.Y));
+   SceneObject->setRotation(SVector3f(-90, 0, 20));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
@@ -92,11 +92,11 @@ void CElementEnemyPear::updatePhysicsEngineObject(float time) {
 
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyPear::updateSceneObject(float time) {
-   SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X,Area.getCenter().Y, 0));
    if(ParticleEngine) {
-      SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.Position.Y, 0));
-      SceneObject->setRotation(SVector3(-90, 0, 0));
-      SceneObject->setScale(SVector3(1.0f, 1.0f, 0.3f));
+      SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
+      SceneObject->setRotation(SVector3f(-90, 0, 0));
+      SceneObject->setScale(SVector3f(1.0f, 1.0f, 0.3f));
       return;
    }
 
@@ -104,15 +104,15 @@ void CElementEnemyPear::updateSceneObject(float time) {
 
    if (PhysicsEngineObject->getVelocity().Y < .01f && PhysicsEngineObject->getVelocity().Y > -.01f) {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)
-         SceneObject->setScale(SVector3(-Scale.X,Scale.X,Scale.Y));
+         SceneObject->setScale(SVector3f(-Scale.X,Scale.X,Scale.Y));
       else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-         SceneObject->setScale(SVector3(Scale.X,Scale.X,Scale.Y));
+         SceneObject->setScale(SVector3f(Scale.X,Scale.X,Scale.Y));
    }
    else {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)
-         SceneObject->setScale(SVector3(-1,1,1));
+         SceneObject->setScale(SVector3f(-1,1,1));
       else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-         SceneObject->setScale(SVector3(1,1,1));
+         SceneObject->setScale(SVector3f(1,1,1));
    }
 }
 

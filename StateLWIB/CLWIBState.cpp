@@ -30,7 +30,7 @@ void CLWIBState::BlocksInit( void ) {
   // PrepGrass(-25, -1, 1, 1);
    PrepSky();
 
-   SRect2 area;
+   SRect2f area;
 }
 
 struct quickndirty {
@@ -94,8 +94,8 @@ void CLWIBState::begin()
 
    //Initialize Font
 
-   eye = SVector3(-19.f,0.f,10.f);
-   look = SVector3(-19.f,0.f,-1.f);
+   eye = SVector3f(-19.f,0.f,10.f);
+   look = SVector3f(-19.f,0.f,-1.f);
    Camera = new CPerspectiveCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
    Camera->setPosition(eye);
    Camera->setLookDirection(look - eye);
@@ -104,12 +104,12 @@ void CLWIBState::begin()
 
    float const LightBrightness = 1.0f;
    Application.getSceneManager().Lights.push_back(new CLight()); 
-   Application.getSceneManager().Lights.back()->Color = SVector3(LightBrightness);
-   Application.getSceneManager().Lights.back()->Position = SVector3(-5.f, 200.f, 500.f);
+   Application.getSceneManager().Lights.back()->Color = SVector3f(LightBrightness);
+   Application.getSceneManager().Lights.back()->Position = SVector3f(-5.f, 200.f, 500.f);
    //Load the meshes into VBOs
 
    srand((unsigned int) time(0));
-   PreviewBlock = new CElementBlock(SRect2(1,1,1,1),1,1);
+   PreviewBlock = new CElementBlock(SRect2f(1,1,1,1),1,1);
    PreviewBlock->setupObjects();
    //Initialize Fxns
    BlocksInit();
@@ -140,7 +140,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
 
    stepCamera(Application.getElapsedTime());
    float x=round(eye.X + previewBlockMouseX),y= round(eye.Y + previewBlockMouseY);
-   PrepPreviews(x,y, Elapsed);
+   PrepPreviews((int) x, (int) y, Elapsed);
     //PreviewBlock->
 
    //Draw Text
@@ -166,20 +166,20 @@ void CLWIBState::OnRenderStart(float const Elapsed)
            block3->setVisible(false);
            if (uniType == 0) {
                block2->setText("Placing grass block");
-               //PreviewBlock = new CElementBlock(SRect2(x,y,blockWidth,blockHeight),blockDepth,uniType);
+               //PreviewBlock = new CElementBlock(SRect2f(x,y,blockWidth,blockHeight),blockDepth,uniType);
            }
            if (uniType == 1) {
                block2->setText("Placing dirt block");
-               //PreviewBlock = new CElementBlock(SRect2(x,y,blockWidth,blockHeight),blockDepth,uniType);
+               //PreviewBlock = new CElementBlock(SRect2f(x,y,blockWidth,blockHeight),blockDepth,uniType);
            }
            if (uniType == 2) {
                block2->setText("Placing rock block");
-               //PreviewBlock = new CElementBlock(SRect2(x,y,blockWidth,blockHeight),blockDepth,uniType);
+               //PreviewBlock = new CElementBlock(SRect2f(x,y,blockWidth,blockHeight),blockDepth,uniType);
            }
 
            if (uniType == -5) {
                block2->setText("Placing ground block");
-               //PreviewBlock = new CElementBlock(SRect2(x,y,blockWidth,blockHeight),blockDepth,uniType);
+               //PreviewBlock = new CElementBlock(SRect2f(x,y,blockWidth,blockHeight),blockDepth,uniType);
            }
            if (uniType >= 3)
                uniType = 0;
@@ -198,11 +198,11 @@ void CLWIBState::OnRenderStart(float const Elapsed)
        }
        if (cDown == 4) {
           block2->setText("adding breakableBlocks");
-          //PreviewBlock = new CElementBlockBreakable(SRect2(x,y,blockWidth,blockHeight));
+          //PreviewBlock = new CElementBlockBreakable(SRect2f(x,y,blockWidth,blockHeight));
        }
        if (cDown == 5){
           block2->setText("adding deathBlocks");
-          //PreviewBlock = new CElementBlockDeath(SRect2(x,y,blockWidth,blockHeight),blockDepth,uniType, 1.0f,1.0f);
+          //PreviewBlock = new CElementBlockDeath(SRect2f(x,y,blockWidth,blockHeight),blockDepth,uniType, 1.0f,1.0f);
        }
    }
    if (twoDown && !showHelp && !tDown && !oneDown && !threeDown&& !fourDown) {
@@ -214,7 +214,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
        }
        if (uniType == 1) {
            block2->setText("Placing Orange\n");
-           //PreviewEnemy->setScale(SVector3(1,1,1));
+           //PreviewEnemy->setScale(SVector3f(1,1,1));
        }
        if (uniType == 2) {
            block2->setText("Placing Kiwi\n");
@@ -332,7 +332,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    pickInsert();
    changeTiles();
    //PreviewBlock->setupObjects();
-   for (int i = 0 ; i < placeables.size(); i++)
+   for (unsigned int i = 0 ; i < placeables.size(); i++)
        placeables[i]->update(Elapsed);
 
    Application.getSceneManager().drawAll();
@@ -693,7 +693,7 @@ void CLWIBState::PrepPreviews(int x , int y, float t) {
     
     }*/
      //printf("x and y are %lf, %lf \n", x, y);
-    PreviewBlock->setArea(SRect2(x,y,1,1));
+    PreviewBlock->setArea(SRect2f(x,y,1,1));
     //printf("positino of block is x = %lf, y = %lf \n", PreviewBlock->getArea().Position.X, PreviewBlock->getArea().Position.Y); 
     PreviewBlock->update(t);
 
@@ -712,13 +712,13 @@ void CLWIBState::PrepItem(float x, float y, int item) {
    printf("Placed item starting at %0.2f, %0.2f\n", x, y);
    CElementItem *tempPlaceable;
    if (item == 0)
-       tempPlaceable = CItemLoader::LoadItem(SRect2(x, y, 1, 1), (Items::EItemType)item);
+       tempPlaceable = CItemLoader::LoadItem(SRect2f(x, y, 1, 1), (Items::EItemType)item);
    if (item == 1)
-       tempPlaceable = CItemLoader::LoadItem(SRect2(x, y, 1, 1),(Items::EItemType) item);
+       tempPlaceable = CItemLoader::LoadItem(SRect2f(x, y, 1, 1),(Items::EItemType) item);
    if (item == 2)
-       tempPlaceable = CItemLoader::LoadItem(SRect2(x, y, 1, 1),(Items::EItemType) item);
+       tempPlaceable = CItemLoader::LoadItem(SRect2f(x, y, 1, 1),(Items::EItemType) item);
    if (item == 3)
-       tempPlaceable = CItemLoader::LoadItem(SRect2(x, y, 1, 1),(Items::EItemType) item);
+       tempPlaceable = CItemLoader::LoadItem(SRect2f(x, y, 1, 1),(Items::EItemType) item);
    placeables.push_back(tempPlaceable);
    tempPlaceable->setupObjects();
  
@@ -741,7 +741,7 @@ void CLWIBState::PrepFlag(float x, float y, int t) {
 
    printf("Placed flag starting at %0.2f, %0.2f\n", x, y);
    CGameplayElement *tempPlaceable;
-   placeables.push_back(tempPlaceable = new CElementBlockFlag(SRect2(x, y, 1, 1),t));//add flag
+   placeables.push_back(tempPlaceable = new CElementBlockFlag(SRect2f(x, y, 1, 1),t));//add flag
    tempPlaceable->setupObjects();
 
    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
@@ -779,7 +779,7 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
         type = 15;
    else if (type == 12)
         type = 16;
-   placeables.push_back(tempPlaceable = CEnemyLoader::LoadEnemy(SRect2(x, y, (float)w, (float)h),(Enemies::EEnemyType) type));
+   placeables.push_back(tempPlaceable = CEnemyLoader::LoadEnemy(SRect2f(x, y, (float)w, (float)h),(Enemies::EEnemyType) type));
    tempPlaceable->setupObjects(); 
    tempPlaceable->printInformation();
 
@@ -807,9 +807,9 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
 
     tempFriends->setShader(ERP_DEFAULT, Diffuse);
     tempFriends->setShader(ERP_DEFERRED_OBJECTS, DeferredDiffuse);
-    tempFriends->setTranslation(SVector3((x+(x+1))/2, (y+(y+1))/2, 0));
-    tempFriends->setRotation(SVector3(-90, 0, 0));
-    tempFriends->setScale(SVector3(1, 1, 1));
+    tempFriends->setTranslation(SVector3f((x+(x+1))/2, (y+(y+1))/2, 0));
+    tempFriends->setRotation(SVector3f(-90, 0, 0));
+    tempFriends->setScale(SVector3f(1, 1, 1));
     blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
     blockMap[(int)x+25][(int)(y-0.5+25)].r = tempFriends;
     blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
@@ -843,7 +843,7 @@ void CLWIBState::PrepCabbage(float x, float y) {
 
     printf("Placed cabbage starting at %0.2f, %0.2f\n", x, y);
     CGameplayElement *tempPlaceable;
-    placeables.push_back(tempPlaceable = new CElementPlayer(SRect2(x, y, 1, 1), false));
+    placeables.push_back(tempPlaceable = new CElementPlayer(SRect2f(x, y, 1, 1), false));
     tempPlaceable->setupObjects();  
 
     blockMap[(int)x+25][(int)(y-0.5f+25)].o = true;
@@ -881,13 +881,13 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
    printf("cDown before placing it %d\n",cDown);
    if (cDown == 4)
    {
-       placeables.push_back(tempPlaceable = new CElementBlockBreakable(SRect2(x,y,w,h)));
+       placeables.push_back(tempPlaceable = new CElementBlockBreakable(SRect2f(x,y,w,h)));
        printf("making breakable blocks\n");
    }
    else if (cDown == 5)
-       placeables.push_back(tempPlaceable = new CElementBlockDeath(SRect2(x,y,w,h),d,t,1.0f,1.0f));
+       placeables.push_back(tempPlaceable = new CElementBlockDeath(SRect2f(x,y,w,h),d,t,1.0f,1.0f));
    else
-       placeables.push_back(tempPlaceable = new CElementBlock(SRect2(x,y,w,h),d,t));
+       placeables.push_back(tempPlaceable = new CElementBlock(SRect2f(x,y,w,h),d,t));
 
    for(i = 0; i < w; i++) {
       for(j = 0; j < h; j++) {
@@ -907,7 +907,7 @@ void CLWIBState::PrepSky() {
    CMeshSceneObject *tempBlock;
 
    CMesh* quad = CMeshLoader::load3dsMesh("Base/Quad.3ds");
-   quad->centerMeshByExtents(SVector3(0.0f));
+   quad->centerMeshByExtents(SVector3f(0.0f));
    quad->linearizeIndices();
    quad->calculateNormalsPerFace();
 
@@ -918,9 +918,9 @@ void CLWIBState::PrepSky() {
 
    tempBlock->setShader(ERP_DEFAULT, "DiffuseTextureBright");
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Textured");
-   tempBlock->setTranslation(SVector3(85/*75*/, 13, -5.0));
-   tempBlock->setScale(SVector3(250, 1, 50));
-   tempBlock->setRotation(SVector3(90.0f, 0.0f, 0.0f));
+   tempBlock->setTranslation(SVector3f(85/*75*/, 13, -5.0));
+   tempBlock->setScale(SVector3f(250, 1, 50));
+   tempBlock->setRotation(SVector3f(90.0f, 0.0f, 0.0f));
 
    CApplication::get().getSceneManager().addSceneObject(tempBlock);
 
@@ -930,8 +930,8 @@ void CLWIBState::PrepSky() {
    tempBlock->setTexture("Base/sky.bmp");
    tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
-   tempBlock->setTranslation(SVector3(85, 13, -5));
-   tempBlock->setScale(SVector3(250, -50, 1));
+   tempBlock->setTranslation(SVector3f(85, 13, -5));
+   tempBlock->setScale(SVector3f(250, -50, 1));
    tempBlock->setCullingEnabled(false);
    Application.getSceneManager().addSceneObject(tempBlock);*/
 }
@@ -1089,25 +1089,25 @@ void CLWIBState::prepText() {
     SColor FontColor(1.0f, 1.0f, 1.0f);
     help = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
     help->setText("Press F1 for help\n");
-    help->setPosition(SVector2(.05f, .95f));
+    help->setPosition(SVector2f(.05f, .95f));
     help->setColor(FontColor);
     help->setVisible(true);
 
     block1 = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
     block1->setText("Inserting block\n");
-    block1->setPosition(SVector2(.05f, .9f));
+    block1->setPosition(SVector2f(.05f, .9f));
     block1->setColor(FontColor);
     block1->setVisible(true);
     
     block2 = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
     block2->setText("grassTexture\n");
-    block2->setPosition(SVector2(.05f, .85f));
+    block2->setPosition(SVector2f(.05f, .85f));
     block2->setColor(FontColor);
     block2->setVisible(true);
 
     block3 = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
     block3->setText("block width is\n");
-    block3->setPosition(SVector2(.05f, .80f));
+    block3->setPosition(SVector2f(.05f, .80f));
     block3->setColor(FontColor);
     block3->setVisible(true);
 
@@ -1552,7 +1552,7 @@ void CLWIBState::pickInsert()
         fourDown = 0;
         sixDown = 0;
 
-        //PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+        //PreviewBlock->setScale(SVector3f((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     if (change == 1) {
         oneDown = 1;
@@ -1564,7 +1564,7 @@ void CLWIBState::pickInsert()
         blockWidth = 1;
         blockHeight = 1;
         blockDepth = 1;
-       // PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+       // PreviewBlock->setScale(SVector3f((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     if (change == 2) {
         twoDown = 1; //enemy
@@ -1576,7 +1576,7 @@ void CLWIBState::pickInsert()
         blockWidth = 1;
         blockHeight = 1;
         blockDepth = 1;
-       // PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+       // PreviewBlock->setScale(SVector3f((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     if (change == 3) {
         threeDown = 1;
@@ -1588,7 +1588,7 @@ void CLWIBState::pickInsert()
         blockWidth = 1;
         blockHeight = 1;
         blockDepth = 1;
-      //  PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+      //  PreviewBlock->setScale(SVector3f((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     if (change == 4) {
         fourDown = 1;
@@ -1600,7 +1600,7 @@ void CLWIBState::pickInsert()
         blockWidth = 1;
         blockHeight = 1;
         blockDepth = 1;
-      //  PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+      //  PreviewBlock->setScale(SVector3f((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     if (change == 5) {
         fourDown = 0;
@@ -1612,7 +1612,7 @@ void CLWIBState::pickInsert()
         blockWidth = 1;
         blockHeight = 1;
         blockDepth = 1;
-       // PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+       // PreviewBlock->setScale(SVector3f((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     if (change == 6) {
         fourDown = 0;;
@@ -1624,13 +1624,13 @@ void CLWIBState::pickInsert()
         blockWidth = 1;
         blockHeight = 1;
         blockDepth = 1;
-       // PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
+       // PreviewBlock->setScale(SVector3f((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     
 }
 void CLWIBState::prepHud() {
     // prepping hud wwidgest
-    SVector2 norm = SVector2(.1f, .1f);
+    SVector2 norm = SVector2f(.1f, .1f);
     CTexture *imgLeft = new CTexture(CImageLoader::loadImage("ModelImages/leftArrowPic.bmp"));
     CTexture *imgright = new CTexture(CImageLoader::loadImage("ModelImages/rightArrowPic.bmp"));
     CTexture *saveImg = new CTexture(CImageLoader::loadImage("ModelImages/save.bmp"));
@@ -1668,55 +1668,55 @@ void CLWIBState::prepHud() {
     flagImg = new CTexture(CImageLoader::loadImage("ModelImages/flag_gray.bmp"));
     //arrows to cycle though the blocks, enemies, cabbage, flag etc.
     leftArrow = new CGUIImageWidget(imgLeft, norm);
-    leftArrow->setPosition(SVector2(1.05f, .85f));
+    leftArrow->setPosition(SVector2f(1.05f, .85f));
 
     rightArrow = new CGUIImageWidget(imgright, norm);
-    rightArrow->setPosition(SVector2(1.20f, .85f));
+    rightArrow->setPosition(SVector2f(1.20f, .85f));
     // cabbage button
     //cabbage = new CGUIImageWidget();
 
     save = new CGUIImageWidget(saveImg, norm);
-    save->setPosition(SVector2(.75f, .85f));
+    save->setPosition(SVector2f(.75f, .85f));
     load = new CGUIImageWidget(loadImg, norm);
-    load->setPosition(SVector2(.90f, .85f));
+    load->setPosition(SVector2f(.90f, .85f));
     //flag = new CGUIImageWidget();
     
     undoTile = new CGUIImageWidget(undoImg, norm);
-    undoTile->setPosition(SVector2(1.05f, .0f));
+    undoTile->setPosition(SVector2f(1.05f, .0f));
     redoTile = new CGUIImageWidget(redoImg, norm);
-    redoTile->setPosition(SVector2(1.20f, .0f));
+    redoTile->setPosition(SVector2f(1.20f, .0f));
     //blocks buttons
 
 
     tileOne = new CGUIImageWidget(grass,norm);
-    tileOne->setPosition(SVector2(1.05f, .73f));
+    tileOne->setPosition(SVector2f(1.05f, .73f));
 
     tileTwo = new CGUIImageWidget(dirt,norm);
-    tileTwo->setPosition(SVector2(1.20f, .73f));
+    tileTwo->setPosition(SVector2f(1.20f, .73f));
     
     tileThree = new CGUIImageWidget(rock,norm);
-    tileThree->setPosition(SVector2(1.05f, .58f));
+    tileThree->setPosition(SVector2f(1.05f, .58f));
     
     tileFour = new CGUIImageWidget(ground,norm);
-    tileFour->setPosition(SVector2(1.20f, .58f));
+    tileFour->setPosition(SVector2f(1.20f, .58f));
     
     tileFive = new CGUIImageWidget(ground,norm);
-    tileFive->setPosition(SVector2(1.05f, .43f));
+    tileFive->setPosition(SVector2f(1.05f, .43f));
    
     tileSix = new CGUIImageWidget(ground,norm);
-    tileSix->setPosition(SVector2(1.20f, .43f));
+    tileSix->setPosition(SVector2f(1.20f, .43f));
     
     tileSeven = new CGUIImageWidget(ground,norm);
-    tileSeven->setPosition(SVector2(1.05f, .28f));
+    tileSeven->setPosition(SVector2f(1.05f, .28f));
     
     tileEight = new CGUIImageWidget(ground,norm);
-    tileEight->setPosition(SVector2(1.20f, .28f));
+    tileEight->setPosition(SVector2f(1.20f, .28f));
     
     tileNine = new CGUIImageWidget(ground,norm);
-    tileNine->setPosition(SVector2(1.05f, .13f));
+    tileNine->setPosition(SVector2f(1.05f, .13f));
     
     tileTen = new CGUIImageWidget(ground,norm);
-    tileTen->setPosition(SVector2(1.20f, .13f));
+    tileTen->setPosition(SVector2f(1.20f, .13f));
     //adding widgets to game 
 
     Application.getGUIEngine().addWidget(undoTile);

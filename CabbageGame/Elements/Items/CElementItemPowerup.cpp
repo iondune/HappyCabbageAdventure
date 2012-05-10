@@ -24,8 +24,8 @@ void CElementItemPowerup::setupSceneObject() {
    Container = new CMeshSceneObject();
    CMesh *mesh = CMeshLoader::load3dsMesh("Base/container.3ds");
    if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(1));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
    else
@@ -39,8 +39,8 @@ void CElementItemPowerup::setupSceneObject() {
    InnerObject = new CMeshSceneObject();
    mesh = CMeshLoader::load3dsMesh("crappycabbageDos.3ds");
    if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(1));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
    else
@@ -49,7 +49,7 @@ void CElementItemPowerup::setupSceneObject() {
    InnerObject->setMesh(mesh);
    InnerObject->setShader(ERP_DEFAULT, "Toon");
    InnerObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   InnerObject->setScale(SVector3(0.3f));
+   InnerObject->setScale(SVector3f(0.3f));
    SceneObject->addChild(InnerObject);
 
    //SceneObject.addChild(Container);
@@ -85,11 +85,11 @@ void CElementItemPowerup::updatePhysicsEngineObject(float time) {
 
 //This is where the renderable would be updated for the more complex enemies
 void CElementItemPowerup::updateSceneObject(float time) {
-   Container->setTranslation(SVector3(PhysicsEngineObject->getArea().getCenter(), 0));
-   Container->setRotation(SVector3(-90, 0, 90 + 40*ElapsedTime));
+   Container->setTranslation(SVector3f(PhysicsEngineObject->getArea().getCenter(), 0));
+   Container->setRotation(SVector3f(-90, 0, 90 + 40*ElapsedTime));
 
-   InnerObject->setTranslation(SVector3(PhysicsEngineObject->getArea().getCenter(), 0));
-   InnerObject->setRotation(SVector3(-90, 0, 90 - 140*ElapsedTime));
+   InnerObject->setTranslation(SVector3f(PhysicsEngineObject->getArea().getCenter(), 0));
+   InnerObject->setRotation(SVector3f(-90, 0, 90 - 140*ElapsedTime));
 }
 
 void CElementItemPowerup::printInformation() {

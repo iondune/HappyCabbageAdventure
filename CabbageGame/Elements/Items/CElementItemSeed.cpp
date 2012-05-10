@@ -22,8 +22,8 @@ void CElementItemSeed::setupSceneObject() {
    SceneObject = new CMeshSceneObject();
    CMesh *mesh = CMeshLoader::load3dsMesh("Base/seed.3ds");
    if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(1));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
    else
@@ -32,9 +32,9 @@ void CElementItemSeed::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   //SceneObject->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2 + 10.6f, 0));
-   //SceneObject->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
-   SceneObject->setScale(SVector3(.3f));
+   //SceneObject->setTranslation(SVector3f((x+(x+1))/2, (y+(y-1))/2 + 10.6f, 0));
+   //SceneObject->setTranslation(SVector3f((x+(x+1))/2, (y+(y-1))/2, 0));
+   SceneObject->setScale(SVector3f(.3f));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
@@ -56,9 +56,9 @@ void CElementItemSeed::updatePhysicsEngineObject(float time) {
 
 //This is where the renderable would be updated for the more complex enemies
 void CElementItemSeed::updateSceneObject(float time) {
-   SceneObject->setTranslation(SVector3(PhysicsEngineObject->getArea().getCenter() + SVector2(0.0f, 0.1f), 0));
+   SceneObject->setTranslation(SVector3f(PhysicsEngineObject->getArea().getCenter() + SVector2(0.0f, 0.1f), 0));
    float Time = 140*ElapsedTime;
-   SceneObject->setRotation(SVector3(-90 + 2.f*Time, 0 + 1.f*Time, 90 + 4.f*Time));
+   SceneObject->setRotation(SVector3f(-90 + 2.f*Time, 0 + 1.f*Time, 90 + 4.f*Time));
 }
 
 void CElementItemSeed::printInformation() {
