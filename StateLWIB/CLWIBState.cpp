@@ -694,6 +694,7 @@ void CLWIBState::PrepPreviews(int x , int y, float t) {
     
     }*/
      //printf("x and y are %lf, %lf \n", x, y);
+    printf("%lf %lf\n", PreviewBlock->getArea().Position.X, PreviewBlock->getArea().Position.Y);
     PreviewBlock->setArea(SRect2(x,y,1,1));
     //printf("positino of block is x = %lf, y = %lf \n", PreviewBlock->getArea().Position.X, PreviewBlock->getArea().Position.Y); 
     PreviewBlock->update(t);

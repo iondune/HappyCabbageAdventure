@@ -14,6 +14,8 @@ void CElementBlock::update(float time) {
          removeFromGame();
       }
    }
+   else
+      updateSceneObject(time);
 }
 
 void CElementBlock::updatePhysicsEngineObject(float time) {
