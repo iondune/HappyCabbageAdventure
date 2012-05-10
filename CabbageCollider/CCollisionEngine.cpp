@@ -92,9 +92,11 @@ void CCollisionEngine::runLists()
 	ObjectAddList.clear();
 }
 
-void CCollisionEngine::update(float const Elapsed) {
+/* NO!
+void CCollisionEngine::update(float const Elapsed)
+{
    updateAll(Elapsed);
-}
+}*/
 
 void CCollisionEngine::updateAll(float const Elapsed)
 {
@@ -113,6 +115,23 @@ void CCollisionEngine::updateAll(float const Elapsed)
 	}
 
 	runLists();
+}
+
+std::vector<CCollideable *> const CCollisionEngine::getAllInBound(SRect2f const Bound) const
+{
+	std::vector<CCollideable *> toReturn;
+	for (ObjectList::iterator jt = Objects.begin(); jt != Objects.end(); ++ jt)
+	{
+		if (Bound.intersects((*jt)->getArea()))
+			toReturn.push_back((*jt));
+	}
+
+	for (ActorList::iterator jt = Actors.begin(); jt != Actors.end(); ++ jt)
+	{
+		if (Bound.intersects((*jt)->getArea()))
+			toReturn.push_back((*jt));
+	}
+	return toReturn;
 }
 
 CCollisionObject* const CCollisionEngine::getObjectBelow(SVector2f pos)

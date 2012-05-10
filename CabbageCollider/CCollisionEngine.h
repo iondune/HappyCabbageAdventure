@@ -48,7 +48,7 @@ public:
 	void remove(CCollideable * Collideable);
 
 	void updateAll(float const Elapsed);
-	void update(float const Elapsed);
+	// NO! void update(float const Elapsed);
 
 	CCollisionObject* const getObjectBelow(SVector2f pos);
 	float const getHeightBelow(SVector2f pos);
@@ -60,6 +60,8 @@ public:
 
 	ObjectList const & getObjects() const;
 	ActorList const & getActors() const;
+
+	std::vector<CCollideable *> const getAllInBound(SRect2f const Bound) const;
 
 };
 
