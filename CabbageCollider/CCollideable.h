@@ -17,6 +17,17 @@ typedef double CollisionReal;
 typedef SVector2<CollisionReal> SVec2;
 typedef SRect2<CollisionReal> SArea;
 
+
+class CCollideable;
+
+struct SCollisionEvent
+{
+	CCollideable * This;
+	CCollideable * Other;
+
+	ECollisionType::Domain Direction;
+};
+
 class CCollideable
 {
 
@@ -77,6 +88,8 @@ public:
 	bool const collidesWith(CCollideable * Object) const;
 	bool const canCollideWith(CCollideable * Object) const;
 	bool const canDetectWith(CCollideable * Object) const;
+
+	sigslot::signal1<SCollisionEvent const &> OnCollision;
 
 };
 

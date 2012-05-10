@@ -33,7 +33,7 @@ class CGameplayElement : public IUpdater, public sigslot::has_slots<> {
       void setupObjects();
       virtual void setupPhysicsEngineObject()=0;
       virtual void setupSceneObject()=0;
-      virtual void OnCollision(CCollideable *Object)=0;
+	  virtual void OnCollision(SCollisionEvent const &)=0;
 
       //Functions for subclasses
       virtual void updatePhysicsEngineObject(float)=0;

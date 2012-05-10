@@ -147,8 +147,8 @@ protected:
 	//! Moves this object if a moveable Object caused a collision and push
 	void pushIfCollided(CCollisionObject * Object, SVec2 const Movement);
 
-	//! ?
-	SVec2 ImpulseVelocity;
+	//! Impulse movement!
+	std::vector<std::pair<SVec2, float> > Impulses;
 
 	//! For debugging purposes, is true when the last update tick used an "allowed collision" movement
 	bool AllowedMovement;
@@ -205,16 +205,6 @@ public:
 	virtual void draw();
 
 	void addImpulse(SVec2 const & velocity, float const Duration);
-
-	struct SCollisionEvent
-	{
-		CCollideable * This;
-		CCollideable * Other;
-
-		ECollisionType::Domain Direction;
-	};
-
-	sigslot::signal1<SCollisionEvent const &> OnCollision;
 
 };
 

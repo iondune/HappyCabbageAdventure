@@ -382,7 +382,7 @@ void CCollisionActor::draw()
 
 void CCollisionActor::addImpulse(SVec2 const & velocity, float const Duration)
 {
-	ImpulseVelocity += velocity;
+	Impulses.push_back(std::vector<SVec2, float>(velocity, Duration));
 }
 
 void CCollisionActor::setFallAcceleration(CollisionReal speed)
