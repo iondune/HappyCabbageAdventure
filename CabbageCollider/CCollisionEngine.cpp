@@ -54,9 +54,9 @@ void CCollisionEngine::removeAll()
 	Actors.clear();
 }
 
-void CCollisionEngine::removeObject(CCollisionObject * Object)
+void CCollisionEngine::removeCollideable(CCollideable * Collideable)
 {
-	Objects.erase(std::remove(Objects.begin(), Objects.end(), Object), Objects.end());
+	RemoveList.insert(Collideable);
 }
 
 CCollisionEngine::CCollisionEngine()
@@ -66,9 +66,25 @@ CCollisionEngine::CCollisionEngine()
 CCollisionEngine::~CCollisionEngine()
 {}
 
-void CCollisionEngine::removeActor(CCollisionActor * Actor)
+void CCollisionEngine::runLists()
 {
-	Actors.erase(std::remove(Actors.begin(), Actors.end(), Actor), Actors.end());
+	for (CollideableList::iterator it = RemoveList.begin(); it != RemoveList.end(); ++ it)
+	{
+		Objects.erase((CCollisionObject *) * it);
+		Actors.erase((CCollisionActor *) * it);
+	}
+
+	RemoveList.clear();
+
+	for (ActorList::iterator it = ActorAddList.begin(); it != ActorAddList.end(); ++ it)
+		Actors.insert(* it);
+
+	ActorAddList.clear();
+
+	for (ObjectList::iterator it = ObjectAddList.begin(); it != ObjectAddList.end(); ++ it)
+		Objects.insert(* it);
+
+	ObjectAddList.clear();
 }
 
 void CCollisionEngine::updateAll(float const Elapsed)
@@ -147,22 +163,22 @@ float const CCollisionEngine::getHeightBelow( CCollisionActor * Actor )
 CCollisionObject * CCollisionEngine::addObject()
 {
 	CCollisionObject * a;
-	Objects.push_back(a = new CCollisionObject());
-	return Objects.back();
+	ObjectAddList.insert(a = new CCollisionObject());
+	return a;
 }
 
 CCollisionElevator * CCollisionEngine::addElevator()
 {
 	CCollisionElevator * cen;
-	Objects.push_back(cen = new CCollisionElevator());
+	ObjectAddList.insert(cen = new CCollisionElevator());
 	return cen;
 }
 
 CCollisionActor * CCollisionEngine::addActor()
 {
 	CCollisionActor *a;
-	Actors.push_back(a = new CCollisionActor());
-	return Actors.back();
+	ActorAddList.insert(a = new CCollisionActor());
+	return a;
 }
 
 CCollisionEngine::ObjectList const & CCollisionEngine::getObjects() const

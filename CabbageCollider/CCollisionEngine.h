@@ -2,6 +2,7 @@
 #define _CABBAGECOLLIDER_CENGINE_H_INCLUDED_
 
 #include <vector>
+#include <set>
 #include <limits>
 
 #include "CCollisionObject.h"
@@ -17,18 +18,25 @@ class CCollisionEngine
 {
 
 public:
-
-	typedef std::vector<CCollisionObject *> ObjectList;
-	typedef std::vector<CCollisionActor *> ActorList;
+	
+	typedef std::set<CCollideable *> CollideableList;
+	typedef std::set<CCollisionObject *> ObjectList;
+	typedef std::set<CCollisionActor *> ActorList;
 
 private:
 
 	ObjectList Objects;
 	ActorList Actors;
 
+	ActorList ActorAddList;
+	ObjectList ObjectAddList;
+	CollideableList RemoveList;
+
 	void performTick(float const TickTime);
 
 	float Timer;
+
+	void runLists();
 
 public:
 
@@ -36,8 +44,7 @@ public:
 	~CCollisionEngine();
 
 	void removeAll();
-	void removeObject(CCollisionObject * Object);
-	void removeActor(CCollisionActor * Actor);
+	void removeCollideable(CCollideable * Collideable);
 
 	void updateAll(float const Elapsed);
 
