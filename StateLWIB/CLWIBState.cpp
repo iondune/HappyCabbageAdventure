@@ -571,15 +571,15 @@ void CLWIBState::loadWorld() {
     cout << "Enter the name of the file you want to load: ";
     cin >> name;
     irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader(name.c_str());
-	while (xml && xml->read())
-	{
+    while (xml && xml->read())
+    {
         switch(xml->getNodeType())
         {
         case irr::io::EXN_TEXT:
-             break;
+            break;
         case irr::io::EXN_ELEMENT:
-           if(!strcmp("CBlock", xml->getNodeName()))
-           {
+            if(!strcmp("CBlock", xml->getNodeName()))
+            {
                 // id, X, Y, height, width / from 0,1,2 so on
                 x = xml->getAttributeValueAsInt(0);
                 y = xml->getAttributeValueAsInt(1);
@@ -592,56 +592,56 @@ void CLWIBState::loadWorld() {
                 speed = (int) xml->getAttributeValueAsFloat(8); //Speed
                 PrepBlock((float)x,(float)y,w,h,d,t,moving);
                 printf("texture is %d\n", t);
-           }
-           if(!strcmp("CEnemy", xml->getNodeName()))
-           {
-              x = xml->getAttributeValueAsInt(0);
-              y = xml->getAttributeValueAsInt(1);
-              t = xml->getAttributeValueAsInt(4);
-              PrepEnemy((float)x,(float)y,t);
-           }
-           if(!strcmp("CCabbage", xml->getNodeName()))
-           {
-              x = xml->getAttributeValueAsInt(0);
-              y = xml->getAttributeValueAsInt(1);
-              PrepCabbage((float)x,(float)y);
-           }
-           if(!strcmp("CFlag", xml->getNodeName()))
-           {
-              x = xml->getAttributeValueAsInt(0);
-              y = xml->getAttributeValueAsInt(1);
-              t = xml->getAttributeValueAsInt(4);
-              PrepFlag((float)x,(float)y,t);
-           }
-           if (!strcmp("CPItem", xml->getNodeName()))
-           {
+            }
+            if(!strcmp("CEnemy", xml->getNodeName()))
+            {
+                x = xml->getAttributeValueAsInt(0);
+                y = xml->getAttributeValueAsInt(1);
+                t = xml->getAttributeValueAsInt(4);
+                PrepEnemy((float)x,(float)y,t);
+            }
+            if(!strcmp("CCabbage", xml->getNodeName()))
+            {
+                x = xml->getAttributeValueAsInt(0);
+                y = xml->getAttributeValueAsInt(1);
+                PrepCabbage((float)x,(float)y);
+            }
+            if(!strcmp("CFlag", xml->getNodeName()))
+            {
+                x = xml->getAttributeValueAsInt(0);
+                y = xml->getAttributeValueAsInt(1);
+                t = xml->getAttributeValueAsInt(4);
+                PrepFlag((float)x,(float)y,t);
+            }
+            if (!strcmp("CPItem", xml->getNodeName()))
+            {
                 x = xml->getAttributeValueAsInt(0);
                 y = xml->getAttributeValueAsInt(1);
                 t = xml->getAttributeValueAsInt(2);
                 PrepItem((float)x, (float)y, t);
-           }
-           if (!strcmp("CPFriends", xml->getNodeName())) {
+            }
+            if (!strcmp("CPFriends", xml->getNodeName())) {
                 x = xml->getAttributeValueAsInt(0);
                 y = xml->getAttributeValueAsInt(1);
                 t = xml->getAttributeValueAsInt(2);
                 //PrepFriends(x,y,t);
-           }
-           if (!strcmp("CBreakable", xml->getNodeName())) {
+            }
+            if (!strcmp("CBreakable", xml->getNodeName())) {
                 x = xml->getAttributeValueAsInt(0);
                 y = xml->getAttributeValueAsInt(1);
                 h = xml->getAttributeValueAsInt(2);
                 w = xml->getAttributeValueAsInt(3);
                 cDown = 4;
                 printf("cDown is %d", cDown);
-               PrepBlock((float)x,(float)y,w,h,1,0,0);
-               cDown = 0;
-           }
-           if (!strcmp("envVar", xml->getNodeName()))
-           {
-               env= xml->getAttributeValueAsInt(0);
-               dayNight = xml->getAttributeValueAsInt(1);
-           }
-         break;
+                PrepBlock((float)x,(float)y,w,h,1,0,0);
+                cDown = 0;
+            }
+            if (!strcmp("envVar", xml->getNodeName()))
+            {
+                env= xml->getAttributeValueAsInt(0);
+                dayNight = xml->getAttributeValueAsInt(1);
+            }
+            break;
         }
     }
 }
@@ -1104,19 +1104,17 @@ void CLWIBState::prepText() {
 }
 
 void CLWIBState::OnWidgetHover(CGUIWidget *widget) {
-    //std::cout << "Widget hovered! " << widget << std::endl;
     if(widget) 
       clickDown = 1;
 }
 void CLWIBState::OnWidgetUnHover(CGUIWidget *widget) {
-    //std::cout << "Widget unhovered! " << Widget << std::endl;
     if (widget)
         clickDown = 0;
 }
 
 void CLWIBState::changeTiles() {
 
-    if (change == 0) { // blocks
+    if (change == 0) { // blocksi
         tileOne->setImage(grass);
         tileTwo->setImage(dirt);
         tileThree->setImage(rock);
@@ -1127,29 +1125,13 @@ void CLWIBState::changeTiles() {
         tileEight->setImage(blockUp);
         tileNine->setImage(blockIn);
         tileTen->setImage(blockOut);
-     
 
-        if (!Application.getGUIEngine().isWidgetIn(tileOne))
-            Application.getGUIEngine().addWidget(tileOne);
-        if (!Application.getGUIEngine().isWidgetIn(tileTwo))
-            Application.getGUIEngine().addWidget(tileTwo);
-        if (!Application.getGUIEngine().isWidgetIn(tileThree))
-            Application.getGUIEngine().addWidget(tileThree);
-        if (!Application.getGUIEngine().isWidgetIn(tileFour))
-            Application.getGUIEngine().addWidget(tileFour);
-
-        if (!Application.getGUIEngine().isWidgetIn(tileFive))
-            Application.getGUIEngine().addWidget(tileFive);
-        if (!Application.getGUIEngine().isWidgetIn(tileSix))
-            Application.getGUIEngine().addWidget(tileSix);
-        if (!Application.getGUIEngine().isWidgetIn(tileSeven))
-            Application.getGUIEngine().addWidget(tileSeven);
-        if (!Application.getGUIEngine().isWidgetIn(tileEight))
-            Application.getGUIEngine().addWidget(tileEight);
-        if (!Application.getGUIEngine().isWidgetIn(tileNine))
-            Application.getGUIEngine().addWidget(tileNine);
-        if (!Application.getGUIEngine().isWidgetIn(tileTen))
-            Application.getGUIEngine().addWidget(tileTen);
+        for (int i = 0; i < 10; i++)
+        {
+            if (!Application.getGUIEngine().isWidgetIn(tileArray[i]));
+                Application.getGUIEngine().addWidget(tileArray[i]);
+        }
+        
     }
     if (change == 1) { // cabbage
     
@@ -1476,7 +1458,11 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             uniType = 8;
     }
     if (widget == tileTen) {
-        if (change == 0) {
+        if (tileLoop < 2)
+            tileLoop++;
+        else
+            tileLoop = 0;
+        /*if (change == 0) {
             if (blockDepth < 5 && uniType != -5)
                 blockDepth++;
             cDown = 3;
@@ -1484,7 +1470,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 1) {
         }
         if (change == 2)
-            uniType = 9;
+            uniType = 9;*/
     }
     if (widget == save ) {
         printXML();
@@ -1532,7 +1518,6 @@ void CLWIBState::pickInsert()
         fourDown = 0;
         sixDown = 0;
 
-        //PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     if (change == 1) {
         oneDown = 1;
@@ -1544,7 +1529,6 @@ void CLWIBState::pickInsert()
         blockWidth = 1;
         blockHeight = 1;
         blockDepth = 1;
-       // PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     if (change == 2) {
         twoDown = 1; //enemy
@@ -1556,7 +1540,6 @@ void CLWIBState::pickInsert()
         blockWidth = 1;
         blockHeight = 1;
         blockDepth = 1;
-       // PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     if (change == 3) {
         threeDown = 1;
@@ -1568,7 +1551,6 @@ void CLWIBState::pickInsert()
         blockWidth = 1;
         blockHeight = 1;
         blockDepth = 1;
-      //  PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     if (change == 4) {
         fourDown = 1;
@@ -1580,7 +1562,6 @@ void CLWIBState::pickInsert()
         blockWidth = 1;
         blockHeight = 1;
         blockDepth = 1;
-      //  PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     if (change == 5) {
         fourDown = 0;
@@ -1592,7 +1573,6 @@ void CLWIBState::pickInsert()
         blockWidth = 1;
         blockHeight = 1;
         blockDepth = 1;
-       // PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     if (change == 6) {
         fourDown = 0;;
@@ -1604,7 +1584,6 @@ void CLWIBState::pickInsert()
         blockWidth = 1;
         blockHeight = 1;
         blockDepth = 1;
-       // PreviewBlock->setScale(SVector3((float) blockWidth, (float) blockHeight, (float) blockDepth));
     }
     
 }
@@ -1668,36 +1647,45 @@ void CLWIBState::prepHud() {
     redoTile->setPosition(SVector2(1.20f, .0f));
     //blocks buttons
 
-
     tileOne = new CGUIImageWidget(grass,norm);
     tileOne->setPosition(SVector2(1.05f, .73f));
+    tileArray.push_back(tileOne);
 
     tileTwo = new CGUIImageWidget(dirt,norm);
     tileTwo->setPosition(SVector2(1.20f, .73f));
+    tileArray.push_back(tileTwo);
     
     tileThree = new CGUIImageWidget(rock,norm);
     tileThree->setPosition(SVector2(1.05f, .58f));
+    tileArray.push_back(tileThree);
     
     tileFour = new CGUIImageWidget(ground,norm);
     tileFour->setPosition(SVector2(1.20f, .58f));
+    tileArray.push_back(tileFour);
     
     tileFive = new CGUIImageWidget(ground,norm);
     tileFive->setPosition(SVector2(1.05f, .43f));
+    tileArray.push_back(tileFive);
    
     tileSix = new CGUIImageWidget(ground,norm);
     tileSix->setPosition(SVector2(1.20f, .43f));
+    tileArray.push_back(tileSix);
     
     tileSeven = new CGUIImageWidget(ground,norm);
     tileSeven->setPosition(SVector2(1.05f, .28f));
+    tileArray.push_back(tileSeven);
     
     tileEight = new CGUIImageWidget(ground,norm);
     tileEight->setPosition(SVector2(1.20f, .28f));
+    tileArray.push_back(tileEight);
     
     tileNine = new CGUIImageWidget(ground,norm);
     tileNine->setPosition(SVector2(1.05f, .13f));
+    tileArray.push_back(tileNine);
     
     tileTen = new CGUIImageWidget(ground,norm);
     tileTen->setPosition(SVector2(1.20f, .13f));
+    tileArray.push_back(tileTen);
     //adding widgets to game 
 
     Application.getGUIEngine().addWidget(undoTile);

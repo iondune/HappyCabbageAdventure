@@ -42,6 +42,7 @@ class CLWIBState : public CState<CLWIBState>
    int blockFlag;
    int blockCycle;
    int change;
+   int tileLoop;
    int dayNight, env; 
    bool showHelp;
    int enemyType, textureType, itemType, friendType;
@@ -68,6 +69,7 @@ class CLWIBState : public CState<CLWIBState>
    CGameplayElement *PreviewBlock;
 
    public:
+   std::vector<CGUIImageWidget*> tileArray;
    std::vector<CGameplayElement*> placeables, redoPlaceables;//, PreviewBlock;
    CLWIBState();
    void begin();
