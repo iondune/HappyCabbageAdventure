@@ -121,7 +121,6 @@ void CLWIBState::begin()
 
 }
 
-
 //Runs at very start of display
 void CLWIBState::OnRenderStart(float const Elapsed)
 {
@@ -566,7 +565,9 @@ void CLWIBState::loadWorld() {
     placeables.clear();
     Application.getSceneManager().removeAllSceneObjects();
     BlocksInit();
-    
+
+    PreviewBlock = new CElementBlock(SRect2(1,1,1,1),1,1);
+    PreviewBlock->setupObjects();
     cout << "Enter the name of the file you want to load: ";
     cin >> name;
     irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader(name.c_str());
@@ -683,18 +684,8 @@ void CLWIBState::end()
 }
 
 void CLWIBState::PrepPreviews(int x , int y, float t) {
-    /*for (int i = 0; i < 4 ; i++) { // blocks
-        
-    }
-    for (int i = 0; i < 5 ; i++) { // items
-    
-    }
-    for (int i = 0; i < 17; i++) {// enemies
-    
-    }*/
-     //printf("x and y are %lf, %lf \n", x, y);
+
     PreviewBlock->setArea(SRect2(x,y,1,1));
-    //printf("positino of block is x = %lf, y = %lf \n", PreviewBlock->getArea().Position.X, PreviewBlock->getArea().Position.Y); 
     PreviewBlock->update(t);
 
 }
@@ -901,7 +892,6 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
 
 }
 
-
 void CLWIBState::PrepSky() {
 
    CMeshSceneObject *tempBlock;
@@ -924,16 +914,6 @@ void CLWIBState::PrepSky() {
 
    CApplication::get().getSceneManager().addSceneObject(tempBlock);
 
-  /* CMeshSceneObject *tempBlock;
-   blocks.push_back(tempBlock = new CMeshSceneObject());
-   tempBlock->setMesh(cubeMesh);
-   tempBlock->setTexture("Base/sky.bmp");
-   tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
-   tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
-   tempBlock->setTranslation(SVector3(85, 13, -5));
-   tempBlock->setScale(SVector3(250, -50, 1));
-   tempBlock->setCullingEnabled(false);
-   Application.getSceneManager().addSceneObject(tempBlock);*/
 }
 
 
@@ -1334,6 +1314,7 @@ void CLWIBState::changeTiles() {
     }
 
 }
+
 void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     
     if (widget == leftArrow) {
@@ -1541,7 +1522,6 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
     }
 }
 
-
 void CLWIBState::pickInsert()
 {
     if (change == 0) {
@@ -1628,6 +1608,7 @@ void CLWIBState::pickInsert()
     }
     
 }
+
 void CLWIBState::prepHud() {
     // prepping hud wwidgest
     SVector2 norm = SVector2(.1f, .1f);
@@ -1735,6 +1716,7 @@ void CLWIBState::prepHud() {
     Application.getGUIEngine().addWidget(leftArrow);
     Application.getGUIEngine().addWidget(rightArrow);
 }
+
 void CLWIBState::stepCamera(float delta) {
    float factor = 6;
    //D
