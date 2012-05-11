@@ -137,8 +137,6 @@ void CDecorManager::GenerateDesertPlants(CGroundBlock* block, bool genTree) {
 
       if (plantType == 0)
          SetupObject(x + randDist, yVal + 1.6f, d/2.0f - 0.6f, 5.5f, cactus2Mesh);
-      //else if (plantType < 3 && randScale > .5f)
-      //   SetupObject(x + randDist, yVal + randScale/4.5f, d/2.0f - 0.6f, randScale, cactusBushMesh);
       else if (plantType < 5 && randScale > .5f)
          SetupObject(x + randDist, yVal + randScale/4.5f, d/2.0f - 0.6f, randScale, cactusBush2Mesh);
    }
@@ -205,18 +203,18 @@ void CDecorManager::GenerateForestPlants(CGroundBlock* block) {
       randDepth = (float) randDepth*.25f;
 
       if (random == 0 || random == 1)
-         SetupObject(x + n + .5f, yVal - 1.f, -d/2.0f + 1.6f + randDepth, .7f, whiteFlwrMesh);
+         SetupObject(x + n + .5f, yVal + .2f, -d/2.0f + 1.6f + randDepth, .7f, whiteFlwrMesh);
       else if (random == 2 || random == 3 || random == 4) {
          if (subrand == 0)
-            SetupObject(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, yellowFlwrMesh);
+            SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, yellowFlwrMesh);
          else if (subrand == 1)
-            SetupObject(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, blueFlwrMesh);
+            SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, blueFlwrMesh);
          else if (subrand == 2)
-            SetupObject(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, whiteSunflwrMesh);
+            SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, whiteSunflwrMesh);
          else if (subrand == 3)
-            SetupObject(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, tealFlwrMesh);
+            SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, tealFlwrMesh);
          else if (subrand == 4)
-            SetupObject(x + n + .5f, yVal - 1.0f, -d/2.0f + 1.5f + randDepth, .7f + randScale, purpleFlwrMesh);
+            SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, purpleFlwrMesh);
       }
       else if (random == 5 && !oldFern) {
          SetupObject(x + n + .5f, yVal + .2f, -d/2.0f + 1.5f + randDepth, 1.f + randScale, fernMesh);
@@ -239,18 +237,18 @@ void CDecorManager::GenerateForestPlants(CGroundBlock* block) {
       randDepth = randDepth*0.25f;
 
       if (random == 0 || random == 1)
-         SetupObject(x + n + 0.5f, randScale/2.0f + 0.1f, d/2.0f - 0.6f, 0.4f + randScale, whiteFlwrMesh);
+         SetupObject(x + n + 0.5f, yVal + .2f, d/2.0f - 0.6f, 0.5f + randScale/2.0f, whiteFlwrMesh);
       else if (random == 2 || random == 3 || random == 4) {
          if (subrand == 0)
-            SetupObject(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, blueFlwrMesh);
+            SetupObject(x + n + 0.5f, yVal + .3f, d/2.0f - 0.6f, 0.4f + randScale, blueFlwrMesh);
          else if (subrand == 1)
-            SetupObject(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, tealFlwrMesh);
+            SetupObject(x + n + 0.5f, yVal + .3f, d/2.0f - 0.6f, 0.4f + randScale, tealFlwrMesh);
          else if (subrand == 2)
-            SetupObject(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, purpleFlwrMesh);
+            SetupObject(x + n + 0.5f, yVal + .3f, d/2.0f - 0.6f + .4f, 0.4f + randScale, purpleFlwrMesh);
          else if (subrand == 3)
-            SetupObject(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, yellowFlwrMesh);
+            SetupObject(x + n + 0.5f, yVal + .3f, d/2.0f - 0.6f, 0.4f + randScale, yellowFlwrMesh);
          else if (subrand == 3)
-            SetupObject(x + n + 0.5f, yVal - 1.0f, d/2.0f - 0.6f, 0.4f + randScale, whiteSunflwrMesh);
+            SetupObject(x + n + 0.5f, yVal + .3f, d/2.0f - 0.6f, 0.4f + randScale, whiteSunflwrMesh);
       }
       else if (random == 5 && !oldFern) {
          SetupObject(x + n + 0.5f, yVal + 0.2f, d/2.0f - 0.6f, 0.7f, fernMesh);
