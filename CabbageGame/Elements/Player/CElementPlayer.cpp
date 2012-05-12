@@ -269,12 +269,17 @@ bool CElementPlayer::decrementHealth() {
          decrementLives();
          return false;
       }
+
       View->removeLeaf();
       View->setHurt(true);
       Recovering = 1.0f;
+
       Mix_PlayChannel(-1, takeDmg, 0);
+
       return true;
    }
+
+   return false; // is this right? this control path didn't return before
 }
 void CElementPlayer::incrementHealth() {
    if(Stats.Health < 5) {
