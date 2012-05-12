@@ -58,6 +58,28 @@ void CElementEnemyProjectileKiwi::setupSceneObject() {
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
+void CElementEnemyProjectileKiwi::OnCollision(CCollideable *Object) {
+   if (!Dead && Object->CollideableType != COLLIDEABLE_TYPE_KIWI) {
+      removeFromGame();
+      Dead = true;
+
+      if (Object == Level.getPlayer().getPhysicsEngineObject()) {
+         CCollisionActor *PlayerActor = ((CCollisionActor *)Level.getPlayer().getPhysicsEngineObject());
+
+         if (Level.getPlayer().decrementHealth()) {
+
+           if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
+              PlayerActor->setImpulse(SVector2(4.f, 2.f), 0.1f);
+
+           else
+              PlayerActor->setImpulse(SVector2(-4.f, 2.f), 0.1f);
+
+           Level.getPlayer().setShaking(1.0f, 3.0f);
+         }
+      }
+   }
+}
+
 void CElementEnemyProjectileKiwi::updatePhysicsEngineObject(float time) {
    PhysicsEngineObject->setVelocity(SVector2(0.f, -6.f));
 }

@@ -12,6 +12,8 @@ class CElementEnemyProjectileKiwi : public CElementEnemyProjectile {
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);
 
+      virtual void OnCollision(CCollideable *Object);
+
       CElementEnemyProjectileKiwi(SRect2 nArea);
 
       virtual void printInformation();

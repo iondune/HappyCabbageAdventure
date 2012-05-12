@@ -6,7 +6,7 @@ ELEMENTSHEADER=$(shell find ../CabbageGame/Elements -type d | awk 'BEGIN{}{print
 INCLUDE = -I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI -I../CabbageGame -I ../CabbageGame/wmlwriter_src/ $(ELEMENTSHEADER) -I../StateLWIB/ `sdl-config --cflags` -I../StateGame -I../StateMainMenu
 #INCLUDE = -I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI `sdl-config --cflags` `freetype-config --cflags` -I../irrxml-1.2/src/ -I./Elements/ -I. -I../CabbageGame -I../StateGame -I../CabbageGame/Elements -I../CabbageGame/Elements/Blocks -I../StateMainMenu
 LIBFILES=../lib/libCabbageParticles.a ../lib/libCabbageCollider.a ../lib/libCabbageScene.a ../lib/libCabbageFramework.a ../lib/libCabbageCore.a ../lib/libCabbageGame.a ../lib/libStateGame.a ../lib/libCabbageCore.a ../lib/libCabbageGUI.a ../lib/libCLWIB.a ../lib/libOverworldState.a
-CC=g++ -g
+CC=g++ -O1 -s
 COMPILER_VERSION= -std=c++0x 
 
 #Chris Code.  Adding check for 32 or 64 bit
