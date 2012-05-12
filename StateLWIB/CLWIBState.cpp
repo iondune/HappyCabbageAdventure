@@ -1165,7 +1165,7 @@ void CLWIBState::changeTiles() {
 
         for (int i = 0; i < 10; i++)
         {
-            if (!Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            if (!Application.getGUIEngine().isWidgetIn(tileArray[i]))
                 Application.getGUIEngine().addWidget(tileArray[i]);
         }
 
@@ -1176,12 +1176,12 @@ void CLWIBState::changeTiles() {
         tileTwo->setImage(derp);
         for (int i = 0; i < 2; i++)
         {
-            if (!Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            if (!Application.getGUIEngine().isWidgetIn(tileArray[i]))
                 Application.getGUIEngine().addWidget(tileArray[i]);
         }
         for (int i = 2; i < 10; i++)
         {
-            if (Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            if (Application.getGUIEngine().isWidgetIn(tileArray[i]))
                 Application.getGUIEngine().removeWidget(tileArray[i]);
         }
     } 
@@ -1199,7 +1199,7 @@ void CLWIBState::changeTiles() {
         tileTen->setImage(cherry);
         for (int i = 0; i < 10; i++)
         {
-            if (!Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            if (!Application.getGUIEngine().isWidgetIn(tileArray[i]))
                 Application.getGUIEngine().addWidget(tileArray[i]);
         }
     }
@@ -1209,12 +1209,12 @@ void CLWIBState::changeTiles() {
         tileTwo->setImage(flagImg);
         for (int i = 0; i < 2; i++)
         {
-            if (!Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            if (!Application.getGUIEngine().isWidgetIn(tileArray[i]))
                 Application.getGUIEngine().addWidget(tileArray[i]);
         }
         for (int i = 2; i < 10; i++)
         {
-            if (Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            if (Application.getGUIEngine().isWidgetIn(tileArray[i]))
                 Application.getGUIEngine().removeWidget(tileArray[i]);
         }
     }
@@ -1225,12 +1225,12 @@ void CLWIBState::changeTiles() {
         tileFour->setImage(heart);
         for (int i = 0; i < 4; i++)
         {
-            if (!Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            if (!Application.getGUIEngine().isWidgetIn(tileArray[i]))
                 Application.getGUIEngine().addWidget(tileArray[i]);
         }
         for (int i = 4; i < 10; i++)
         {
-            if (Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            if (Application.getGUIEngine().isWidgetIn(tileArray[i]))
                 Application.getGUIEngine().removeWidget(tileArray[i]);
         }
 
@@ -1238,19 +1238,19 @@ void CLWIBState::changeTiles() {
     if (change == 5) {
         for (int i = 0; i < 10; i++)
         {
-            if (Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            if (Application.getGUIEngine().isWidgetIn(tileArray[i]))
                 Application.getGUIEngine().removeWidget(tileArray[i]);
         }
     }
     if (change == 6) {
         for (int i = 0; i < 6; i++)
         {
-            if (!Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            if (!Application.getGUIEngine().isWidgetIn(tileArray[i]))
                 Application.getGUIEngine().addWidget(tileArray[i]);
         }
         for (int i = 6; i < 10; i++)
         {
-            if (Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            if (Application.getGUIEngine().isWidgetIn(tileArray[i]))
                 Application.getGUIEngine().removeWidget(tileArray[i]);
         }
     }
