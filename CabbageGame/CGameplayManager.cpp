@@ -30,7 +30,7 @@ CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(
    }
    //Add consolidated blocks
    if(Level.isLoaded()) {
-      for(int i = 0; i < level.getConsolidatedBlocks().size(); i++) {
+      for(unsigned int i = 0; i < level.getConsolidatedBlocks().size(); i++) {
          level.getConsolidatedBlocks()[i]->addToEngine(PhysicsEngine);
       }
    }

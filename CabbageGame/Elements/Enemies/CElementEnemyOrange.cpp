@@ -119,9 +119,9 @@ void CElementEnemyOrange::updatePhysicsEngineObject(float time) {
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyOrange::updateSceneObject(float time) {
    if (PhysicsEngineObject->getVelocity().X < 0.0f)
-      SceneObject->setRotation(SVector3f(-90, PhysicsEngineObject->getVelocity().X*10.0f, -90));
+      SceneObject->setRotation(SVector3f(-90, (float) PhysicsEngineObject->getVelocity().X*10.0f, -90));
    else if (PhysicsEngineObject->getVelocity().X >= 0.0f)
-      SceneObject->setRotation(SVector3f(-90, PhysicsEngineObject->getVelocity().X*10.0f, 90));
+      SceneObject->setRotation(SVector3f(-90, (float) PhysicsEngineObject->getVelocity().X*10.0f, 90));
    else {
       /*
       if (PlayerPosition.X < Area.getCenter().X)

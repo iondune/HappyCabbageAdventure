@@ -181,7 +181,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             w = xml->getAttributeValueAsInt(3);
             d = xml->getAttributeValueAsInt(4);
             t = xml->getAttributeValueAsInt(5);
-            CGameplayElement *myItem = new CElementBlockDeath(SRect2f(x,y,w,h),d,t,1.0f,1.0f);
+            CGameplayElement *myItem = new CElementBlockDeath(SRect2f((float) x, (float) y, (float) w, (float) h), d, t, 1.0f, 1.0f);
 
             newLevel->Elements.push_back(myItem);
          }
