@@ -13,42 +13,27 @@ CCollideable::SMaterial::SMaterial()
 	: Friction(1.f), Elasticity(0.f)
 {}
 
-CCollideable::CCollideable() : CollideableType(COLLIDEABLE_TYPE_COLLIDEABLE), CollideableLevel(INTERACTOR_ALL), VisualDepth(0.0f), CollisionResponder(NULL), Element(NULL)
+CCollideable::CCollideable()
+	: TypeId(1), CollisionMask(-1), DetectionMask(-1), VisualDepth(0.f)
 {}
 
 CCollideable::~CCollideable()
 {}
 
-void CCollideable::setElement(CGameplayElement * e) {
-   Element = e;
-}
-
-CGameplayElement *CCollideable::getElement() {
-   return Element;
-}
-
-SRect2 const & CCollideable::getArea() const
+SArea const & CCollideable::getInternalArea() const
 {
 	return Area;
 }
 
-void CCollideable::setArea(SRect2 const & area)
+SRect2<float> const CCollideable::getArea() const
 {
-	Area = area;
+	return SRect2<float>(Area.Position, Area.Size);
 }
 
 CCollideable::SMaterial const & CCollideable::getMaterial() const
 {
 	return Material;
 }
-
-void CCollideable::setDepth(float f) {
-	VisualDepth = f;
-}
-float CCollideable::getDepth() {
-	return VisualDepth;
-}
-
 
 CCollideable::SMaterial & CCollideable::getMaterial()
 {
@@ -58,19 +43,70 @@ CCollideable::SMaterial & CCollideable::getMaterial()
 void CCollideable::draw()
 {
 	glPushMatrix();
-	glTranslatef(Area.Position.X, Area.Position.Y, 0);
+		glTranslatef((float) Area.Position.X, (float) Area.Position.Y, 0);
 
-	glBegin(GL_QUADS);
-	glVertex3f(0.f, 0.f, 0.f);
-	glVertex3f(Area.Size.X, 0.f, 0.f);
-	glVertex3f(Area.Size.X, Area.Size.Y, 0.f);
-	glVertex3f(0.f, Area.Size.Y, 0.f);
-	glEnd();
-
+		glBegin(GL_QUADS);
+			glVertex3f(0.f, 0.f, 0.f);
+			glVertex3f((float) Area.Size.X, 0.f, 0.f);
+			glVertex3f((float) Area.Size.X, (float) Area.Size.Y, 0.f);
+			glVertex3f(0.f, (float) Area.Size.Y, 0.f);
+		glEnd();
 	glPopMatrix();
 }
 
-void CCollideable::setCollisionResponder( ICollisionResponder * collisionResponder )
+void CCollideable::setVisualDepth(float const f)
 {
-	CollisionResponder = collisionResponder;
+	VisualDepth = f;
+}
+
+float const CCollideable::getVisualDepth() const
+{
+	return VisualDepth;
+}
+
+void CCollideable::setTypeId(int const type)
+{
+	TypeId = type;
+}
+
+void CCollideable::setCollisionMask(int const mask)
+{
+	CollisionMask = mask;
+}
+
+void CCollideable::setDetectionMask(int const mask)
+{
+	DetectionMask = mask;
+}
+
+int const CCollideable::getTypeId() const
+{
+	return TypeId;
+}
+
+int const CCollideable::getCollisionMask() const
+{
+	return CollisionMask;
+}
+
+int const CCollideable::getDetectionMask() const
+{
+	return DetectionMask;
+}
+
+bool const CCollideable::collidesWith(CCollideable * Object) const
+{
+	return Area.intersects(Object->getInternalArea());
+}
+
+bool const CCollideable::canCollideWith(CCollideable * Object) const
+{
+	return (TypeId & Object->CollisionMask) ||
+		(Object->TypeId & CollisionMask);
+}
+
+bool const CCollideable::canDetectWith(CCollideable * Object) const
+{
+	return (TypeId & Object->DetectionMask) ||
+		(Object->TypeId & DetectionMask);
 }

@@ -30,8 +30,8 @@ void PGrape::loadMesh() {
       mesh = CMeshLoader::load3dsMesh("Base/grape3.3ds");
 
    if(mesh) {
-      mesh->resizeMesh(SVector3(.5));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(.5));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -41,7 +41,7 @@ void PGrape::loadMesh() {
    Renderable->setMesh(mesh);
    Renderable->setShader(ERP_DEFAULT, "Toon");
    Renderable->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   Renderable->setScale(SVector3(1.0f, 1.0f, 1.0f));
+   Renderable->setScale(SVector3f(1.0f, 1.0f, 1.0f));
 
    CApplication::get().getSceneManager().addSceneObject(Renderable);
 }
@@ -54,7 +54,7 @@ void PGrape::loadActor() {
    Actor->setControlFall(false);
    Actor->setFallAcceleration(0.0f);
 
-   Actor->setArea(SRect2(SVector2(x, y), SVector2(w*.5f, h*.5f)));
+   Actor->setArea(SRect2f(SVector2f(x, y), SVector2f(w*.5f, h*.5f)));
 
    //Set actor attributes
    Actor->getAttributes().MaxWalk = 4.0f;
@@ -62,7 +62,6 @@ void PGrape::loadActor() {
 
    Actor->getAttributes().AirControl = 1.0f;
    Actor->getAttributes().AirSpeedFactor = 1.0f;
-   Actor->CollideableType = COLLIDEABLE_TYPE_PKIWI;
 
    Mix_PlayChannel(-1, dropKiwi, 0);
 }
@@ -75,12 +74,12 @@ void PGrape::update(float const TickTime) {
    if (Manager->isPlayerAlive())
    {
       if (!Direction) { //go left
-         Actor->setVelocity(SVector2(-5.f, 0.f));
-         Renderable->setRotation(SVector3(-90, 0, -45));
+         Actor->setVelocity(SVector2f(-5.f, 0.f));
+         Renderable->setRotation(SVector3f(-90, 0, -45));
       }
       else { //go right
-         Actor->setVelocity(SVector2(5.f, 0.f));
-         Renderable->setRotation(SVector3(-90, 0, 45));
+         Actor->setVelocity(SVector2f(5.f, 0.f));
+         Renderable->setRotation(SVector3f(-90, 0, 45));
       }
 
    }

@@ -58,7 +58,7 @@ public:
     void Rewind(void);
     void ResetSynchro(double time);
      void Skip(float seconds);
-		/* Michel Darricau from eProcess <mdarricau@eprocess.fr> conflict name in popcorn */
+      /* Michel Darricau from eProcess <mdarricau@eprocess.fr> conflict name in popcorn */
     MPEGstatus GetStatus(void);
 
     /* MPEG video actions */
@@ -96,8 +96,8 @@ protected:
     int _oh;            // original height of the movie
     int _w;             // mb aligned width of the movie
     int _h;             // mb aligned height of the movie
-    SDL_Rect _srcrect;	// source area
-    SDL_Rect _dstrect;	// display area
+    SDL_Rect _srcrect;   // source area
+    SDL_Rect _dstrect;   // display area
     SDL_Overlay *_image;// source image
     float _fps;         // frames per second
     SMPEG_Filter * _filter; // pointer to the current filter used

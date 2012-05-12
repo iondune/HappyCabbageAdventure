@@ -18,9 +18,9 @@
 #define CAM_TIMER 0.2f
 
 class CPlayerView {
-   SVector2 Size;
-   SVector2 CenterPosition;
-   SVector2 Velocity;
+   SVector2f Size;
+   SVector2f CenterPosition;
+   SVector2f Velocity;
    CMeshSceneObject *PlayerRenderable, *renderLeftShadow, *renderRightShadow;
    float recovering;
    private:
@@ -48,19 +48,19 @@ class CPlayerView {
       float xScale;
       float yScale;
       float time,timeChange;
-      SVector3 shakeFactor;
+      SVector3f shakeFactor;
       int Charging;
 
-	  float LeftShadowStartValue, LeftShadowCutoffValue, RightShadowStartValue, RightShadowCutoffValue;
+     float LeftShadowStartValue, LeftShadowCutoffValue, RightShadowStartValue, RightShadowCutoffValue;
 
       CPlayerView()
-	  {
+     {
          ySineValue = 0;
          yRightShadow = yLeftShadow = 0;
          lookRight = 1;
          yScale = xScale = 2.0f;
          time = 0;
-         shakeFactor = SVector3(0.0f);
+         shakeFactor = SVector3f(0.0f);
          zCam = 0.0f;
          zCamTimer = 0.0f;
       }
@@ -80,18 +80,18 @@ class CPlayerView {
          recovering = recovVal;
       }
       void setState(State const value);
-      void setVelocity(SVector2 vel) {
+      void setVelocity(SVector2f vel) {
          Velocity = vel;
       }
       void establishCamera(ICamera*,int,int);
-      void setMiddle(SVector2 middle) {
+      void setMiddle(SVector2f middle) {
          CenterPosition = middle;
       }
-      void setSize(SVector2 size) {
+      void setSize(SVector2f size) {
          Size = size;
       }
       float cutOffPoint;
-      void setCutoffPoint(SRect2 left, SRect2 right) {
+      void setCutoffPoint(SRect2f left, SRect2f right) {
          renderLeftShadow->setVisible(left.Size.X != 0.0f);
          renderRightShadow->setVisible(right.Size.X != 0.0f);
          bool equal = false;

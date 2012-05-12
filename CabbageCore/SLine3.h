@@ -8,21 +8,21 @@ class SLine3
 
 public:
 
-    SVector3 Start, End;
+    SVector3f Start, End;
 
     SLine3()
     {}
 
-    SLine3(SVector3 const & start, SVector3 const & end)
+    SLine3(SVector3f const & start, SVector3f const & end)
         : Start(start), End(end)
     {}
 
-    SVector3 const getMiddle() const
+    SVector3f const getMiddle() const
     {
         return (Start + End) / 2.f;;;
     }
 
-    SVector3 const getVector() const
+    SVector3f const getVector() const
     {
         return Start - End;
     }

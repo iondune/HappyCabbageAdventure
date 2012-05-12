@@ -1,7 +1,7 @@
 #include "CElementEnemyKiwi.h"
 #include "CGameLevel.h"
 
-CElementEnemyKiwi::CElementEnemyKiwi(SRect2 nArea, int direction) :
+CElementEnemyKiwi::CElementEnemyKiwi(SRect2f nArea, int direction) :
    CElementEnemy(nArea, Enemies::KIWI), Direction(direction), rotateBird(0.0f), SineValue(0.0f), OldX(Area.Position.X), bombDropped(false) {
 
 }
@@ -15,7 +15,6 @@ void CElementEnemyKiwi::setupPhysicsEngineObject() {
    PhysicsEngineObject->setControlFall(false);
    PhysicsEngineObject->setFallAcceleration(0.0f);
 
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_KIWI;
    PhysicsEngineObject->getAttributes().MaxWalk = 3.0f;
    PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
 
@@ -42,8 +41,8 @@ void CElementEnemyKiwi::setupSceneObject() {
       mesh = CMeshLoader::load3dsMesh("Base/killerkiwi.3ds");
 
    if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(1));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -53,9 +52,9 @@ void CElementEnemyKiwi::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   SceneObject->setTranslation(SVector3((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y-1))/2, 0));
-   SceneObject->setScale(SVector3(1, 1, 1));
-   SceneObject->setRotation(SVector3(-90, 0, -90));
+   SceneObject->setTranslation(SVector3f((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y-1))/2, 0));
+   SceneObject->setScale(SVector3f(1, 1, 1));
+   SceneObject->setRotation(SVector3f(-90, 0, -90));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
@@ -85,8 +84,8 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
       SineValue = 0.6f*sin(Area.Position.X - OldX);
       Area.Position.Y += SineValue;
 
-      SVector2 vel = PhysicsEngineObject->getVelocity();
-      PhysicsEngineObject->setVelocity(SVector2(vel.X, vel.Y > 0 ? vel.Y - 1.0f*time : 0));
+      SVector2f vel = PhysicsEngineObject->getVelocity();
+      PhysicsEngineObject->setVelocity(SVector2f(vel.X, vel.Y > 0 ? vel.Y - 1.0f*time : 0));
 
       //TODO: Check player direction
       if(Direction == 0)
@@ -119,20 +118,20 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
 void CElementEnemyKiwi::updateSceneObject(float time) {
    rotateBird = -100.0f * SineValue;
    
-   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
-   SceneObject->setRotation(SVector3(-90 + rotateBird, 0, -90));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, 0));
+   SceneObject->setRotation(SVector3f(-90 + rotateBird, 0, -90));
 
    //TODO:  Adjust Z-Collision?
-   //SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, zTimer*0.9f*Depth*(1.0f/Z_SPEED)));
+   //SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, zTimer*0.9f*Depth*(1.0f/Z_SPEED)));
 
    if(PhysicsEngineObject->getVelocity().X < -0.01f)
       //TODO: SEE ABOVE
-      //SceneObject->setScale(SVector3(-1,1,1)*(zTimer + 1.0f));
+      //SceneObject->setScale(SVector3f(-1,1,1)*(zTimer + 1.0f));
       true;
    else if(PhysicsEngineObject->getVelocity().X > 0.01f)
       //TODO:  SEE ABOVE
       true;
-      //SceneObject->setScale(SVector3(1,1,1)*(zTimer + 1.0f));
+      //SceneObject->setScale(SVector3f(1,1,1)*(zTimer + 1.0f));
 }
 
 void CElementEnemyKiwi::printInformation() {
@@ -147,9 +146,9 @@ void CElementEnemyKiwi::DropBomb() {
    //TODO:  Need to determine if projectiles are an enemy or a separate abstract class.
    //TODO:  Determine the direction of the player with respect to the Kiwi.
    if (Direction == 0) {
-      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(xLocation, yLocation, Area.Size.X, Area.Size.Y), Enemies::KIWI_PROJECTILE));
+      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2f(xLocation, yLocation, Area.Size.X, Area.Size.Y), Enemies::KIWI_PROJECTILE));
    }
    else {
-      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(xLocation, yLocation, Area.Size.X, Area.Size.Y), Enemies::KIWI_PROJECTILE));
+      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2f(xLocation, yLocation, Area.Size.X, Area.Size.Y), Enemies::KIWI_PROJECTILE));
    }
 }

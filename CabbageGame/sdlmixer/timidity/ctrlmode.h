@@ -13,7 +13,7 @@
 #define RC_QUIT 1
 #define RC_NEXT 2
 #define RC_PREVIOUS 3 /* Restart this song at beginning, or the previous
-			 song if we're less than a second into this one. */
+          song if we're less than a second into this one. */
 #define RC_FORWARD 4
 #define RC_BACK 5
 #define RC_JUMP 6
@@ -24,24 +24,24 @@
 #define RC_CONTINUE 10 /* Continue if paused */
 #define RC_REALLY_PREVIOUS 11 /* Really go to the previous song */
 #define RC_CHANGE_VOLUME 12
-#define RC_LOAD_FILE 13		/* Load a new midifile */
-#define RC_TUNE_END 14		/* The tune is over, play it again sam? */
+#define RC_LOAD_FILE 13      /* Load a new midifile */
+#define RC_TUNE_END 14      /* The tune is over, play it again sam? */
 
-#define CMSG_INFO	0
-#define CMSG_WARNING	1
-#define CMSG_ERROR	2
-#define CMSG_FATAL	3
-#define CMSG_TRACE	4
-#define CMSG_TIME	5
-#define CMSG_TOTAL	6
-#define CMSG_FILE	7
-#define CMSG_TEXT	8
+#define CMSG_INFO   0
+#define CMSG_WARNING   1
+#define CMSG_ERROR   2
+#define CMSG_FATAL   3
+#define CMSG_TRACE   4
+#define CMSG_TIME   5
+#define CMSG_TOTAL   6
+#define CMSG_FILE   7
+#define CMSG_TEXT   8
 
-#define VERB_NORMAL	0
-#define VERB_VERBOSE	1
-#define VERB_NOISY	2
-#define VERB_DEBUG	3
-#define VERB_DEBUG_SILLY	4
+#define VERB_NORMAL   0
+#define VERB_VERBOSE   1
+#define VERB_NOISY   2
+#define VERB_DEBUG   3
+#define VERB_DEBUG_SILLY   4
 
 typedef struct {
   char *id_name, id_character;

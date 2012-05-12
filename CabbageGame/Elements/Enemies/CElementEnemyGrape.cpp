@@ -1,7 +1,7 @@
 #include "CElementEnemyGrape.h"
 #include "CGameLevel.h"
 
-CElementEnemyGrape::CElementEnemyGrape(SRect2 nArea) :
+CElementEnemyGrape::CElementEnemyGrape(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::GRAPE), shootTime(0.f) {
 
 }
@@ -13,7 +13,6 @@ void CElementEnemyGrape::setupPhysicsEngineObject() {
 
    //Set actor attributes
    PhysicsEngineObject->getAttributes().MaxWalk = 0.0f;
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_GRAPE;
 }
 
 void CElementEnemyGrape::setupSceneObject() {
@@ -33,8 +32,8 @@ void CElementEnemyGrape::setupSceneObject() {
       mesh = CMeshLoader::load3dsMesh("Base/grape_bunch.3ds");
 
    if(mesh) {
-      mesh->resizeMesh(SVector3(2));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(2));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -44,8 +43,8 @@ void CElementEnemyGrape::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   SceneObject->setScale(SVector3(1, 1, 1));
-   SceneObject->setRotation(SVector3(-90, 0, 90));
+   SceneObject->setScale(SVector3f(1, 1, 1));
+   SceneObject->setRotation(SVector3f(-90, 0, 90));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
@@ -67,16 +66,16 @@ void CElementEnemyGrape::updatePhysicsEngineObject(float time) {
 
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyGrape::updateSceneObject(float time) {
-   SVector2 playerPosition = Level.getPlayer().getArea().Position;
+   SVector2f playerPosition = Level.getPlayer().getArea().Position;
 
-   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y + .2f, 0));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y + .2f, 0));
 
-   SceneObject->setRotation(SVector3(-90, 0, 90));
+   SceneObject->setRotation(SVector3f(-90, 0, 90));
 
    if(ParticleEngine) {
-      SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.Position.Y, 0));
-      SceneObject->setRotation(SVector3(-90, 0, 90));
-      SceneObject->setScale(SVector3(1.0f, 1.0f, 0.3f));
+      SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
+      SceneObject->setRotation(SVector3f(-90, 0, 90));
+      SceneObject->setScale(SVector3f(1.0f, 1.0f, 0.3f));
       return;
    }
 
@@ -87,19 +86,19 @@ void CElementEnemyGrape::printInformation() {
 }
 
 void CElementEnemyGrape::ShootGrape() {
-   SVector2 playerPosition = Level.getPlayer().getArea().Position;
+   SVector2f playerPosition = Level.getPlayer().getArea().Position;
    float x, y;
 
    if (playerPosition.X < Area.Position.X) {//spawn to the left
       x = Area.Position.X - Area.Size.X/2.f - .5f;
       y = Area.Position.Y + .15f;
 
-      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(x, y, Area.Size.X, Area.Size.Y), Enemies::GRAPE_PROJECTILE));
+      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2f(x, y, Area.Size.X, Area.Size.Y), Enemies::GRAPE_PROJECTILE));
    }
    else {//spawn to the right
       x = Area.Position.X + Area.Size.X/2.f + .55f;
       y = Area.Position.Y + .15f;
 
-      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(x, y, Area.Size.X, Area.Size.Y), Enemies::GRAPE_PROJECTILE));
+      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2f(x, y, Area.Size.X, Area.Size.Y), Enemies::GRAPE_PROJECTILE));
    }
 }
