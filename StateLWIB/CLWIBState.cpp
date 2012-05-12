@@ -1129,35 +1129,24 @@ void CLWIBState::changeTiles() {
         for (int i = 0; i < 10; i++)
         {
             if (!Application.getGUIEngine().isWidgetIn(tileArray[i]));
-                Application.getGUIEngine().addWidget(tileArray[i]);
+            Application.getGUIEngine().addWidget(tileArray[i]);
         }
-        
+
     }
     if (change == 1) { // cabbage
-    
+
         tileOne->setImage(cabbageImage);
         tileTwo->setImage(derp);
-        if (!Application.getGUIEngine().isWidgetIn(tileOne))
-            Application.getGUIEngine().addWidget(tileOne);
-        if (!Application.getGUIEngine().isWidgetIn(tileTwo))
-            Application.getGUIEngine().addWidget(tileTwo);
-
-        if (Application.getGUIEngine().isWidgetIn(tileThree))
-            Application.getGUIEngine().removeWidget(tileThree);
-        if (Application.getGUIEngine().isWidgetIn(tileFour))
-            Application.getGUIEngine().removeWidget(tileFour);
-        if (Application.getGUIEngine().isWidgetIn(tileFive))
-            Application.getGUIEngine().removeWidget(tileFive);
-        if (Application.getGUIEngine().isWidgetIn(tileSix))
-            Application.getGUIEngine().removeWidget(tileSix);
-        if (Application.getGUIEngine().isWidgetIn(tileSeven))
-            Application.getGUIEngine().removeWidget(tileSeven);
-        if (Application.getGUIEngine().isWidgetIn(tileEight))
-            Application.getGUIEngine().removeWidget(tileEight);
-        if (Application.getGUIEngine().isWidgetIn(tileNine))
-            Application.getGUIEngine().removeWidget(tileNine);
-        if (Application.getGUIEngine().isWidgetIn(tileTen))
-            Application.getGUIEngine().removeWidget(tileTen);
+        for (int i = 0; i < 2; i++)
+        {
+            if (!Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            Application.getGUIEngine().addWidget(tileArray[i]);
+        }
+        for (int i = 2; i < 10; i++)
+        {
+            if (Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            Application.getGUIEngine().removeWidget(tileArray[i]);
+        }
     } 
     if (change == 2) { // enemies
 
@@ -1171,128 +1160,67 @@ void CLWIBState::changeTiles() {
         tileEight->setImage(pear);
         tileNine->setImage(banana);
         tileTen->setImage(cherry);
-
-        if (!Application.getGUIEngine().isWidgetIn(tileOne))
-            Application.getGUIEngine().addWidget(tileOne);
-        if (!Application.getGUIEngine().isWidgetIn(tileTwo))
-            Application.getGUIEngine().addWidget(tileTwo);
-        if (!Application.getGUIEngine().isWidgetIn(tileThree))
-            Application.getGUIEngine().addWidget(tileThree);
-        if (!Application.getGUIEngine().isWidgetIn(tileFour))
-            Application.getGUIEngine().addWidget(tileFour);
-        if (!Application.getGUIEngine().isWidgetIn(tileFive))
-            Application.getGUIEngine().addWidget(tileFive);
-        if (!Application.getGUIEngine().isWidgetIn(tileSix))
-            Application.getGUIEngine().addWidget(tileSix);
-        
-        if (!Application.getGUIEngine().isWidgetIn(tileSeven))
-            Application.getGUIEngine().addWidget(tileSeven);
-        if (!Application.getGUIEngine().isWidgetIn(tileEight))
-            Application.getGUIEngine().addWidget(tileEight);
-        if (!Application.getGUIEngine().isWidgetIn(tileNine))
-            Application.getGUIEngine().addWidget(tileNine);
-        if (!Application.getGUIEngine().isWidgetIn(tileTen))
-            Application.getGUIEngine().addWidget(tileTen);
+        for (int i = 0; i < 6; i++)
+        {
+            if (!Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            Application.getGUIEngine().addWidget(tileArray[i]);
+        }
+        for (int i = 6; i < 10; i++)
+        {
+            if (Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            Application.getGUIEngine().removeWidget(tileArray[i]);
+        }
     }
     if (change == 3) { // flag
-   
+
         tileOne->setImage(flagImg);
         tileTwo->setImage(flagImg);
-        if (!Application.getGUIEngine().isWidgetIn(tileOne))
-            Application.getGUIEngine().addWidget(tileOne);
-        if (!Application.getGUIEngine().isWidgetIn(tileTwo))
-            Application.getGUIEngine().addWidget(tileTwo);
-
-        if (Application.getGUIEngine().isWidgetIn(tileThree))
-            Application.getGUIEngine().removeWidget(tileThree);
-        if (Application.getGUIEngine().isWidgetIn(tileFour))
-            Application.getGUIEngine().removeWidget(tileFour);
-        if (Application.getGUIEngine().isWidgetIn(tileFive))
-            Application.getGUIEngine().removeWidget(tileFive);
-        if (Application.getGUIEngine().isWidgetIn(tileSix))
-            Application.getGUIEngine().removeWidget(tileSix);
-        if (Application.getGUIEngine().isWidgetIn(tileSeven))
-            Application.getGUIEngine().removeWidget(tileSeven);
-        if (Application.getGUIEngine().isWidgetIn(tileEight))
-            Application.getGUIEngine().removeWidget(tileEight);
-        if (Application.getGUIEngine().isWidgetIn(tileNine))
-            Application.getGUIEngine().removeWidget(tileNine);
-        if (Application.getGUIEngine().isWidgetIn(tileTen))
-            Application.getGUIEngine().removeWidget(tileTen);
+        for (int i = 0; i < 2; i++)
+        {
+            if (!Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            Application.getGUIEngine().addWidget(tileArray[i]);
+        }
+        for (int i = 2; i < 10; i++)
+        {
+            if (Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            Application.getGUIEngine().removeWidget(tileArray[i]);
+        }
     }
     if (change == 4) { //items
         tileOne->setImage(leaf);
         tileTwo->setImage(heart);
         tileThree->setImage(heart);
         tileFour->setImage(heart);
-        if (!Application.getGUIEngine().isWidgetIn(tileOne))
-            Application.getGUIEngine().addWidget(tileOne);
-        if (!Application.getGUIEngine().isWidgetIn(tileTwo))
-            Application.getGUIEngine().addWidget(tileTwo);
-        if (!Application.getGUIEngine().isWidgetIn(tileThree))
-            Application.getGUIEngine().addWidget(tileThree);
-        if (!Application.getGUIEngine().isWidgetIn(tileFour))
-            Application.getGUIEngine().addWidget(tileFour);
+        for (int i = 0; i < 4; i++)
+        {
+            if (!Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            Application.getGUIEngine().addWidget(tileArray[i]);
+        }
+        for (int i = 4; i < 10; i++)
+        {
+            if (Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            Application.getGUIEngine().removeWidget(tileArray[i]);
+        }
 
-        if (Application.getGUIEngine().isWidgetIn(tileFive))
-            Application.getGUIEngine().removeWidget(tileFive);
-        if (Application.getGUIEngine().isWidgetIn(tileSix))
-            Application.getGUIEngine().removeWidget(tileSix);
-        if (Application.getGUIEngine().isWidgetIn(tileSeven))
-            Application.getGUIEngine().removeWidget(tileSeven);
-        if (Application.getGUIEngine().isWidgetIn(tileEight))
-            Application.getGUIEngine().removeWidget(tileEight);
-        if (Application.getGUIEngine().isWidgetIn(tileNine))
-            Application.getGUIEngine().removeWidget(tileNine);
-        if (Application.getGUIEngine().isWidgetIn(tileTen))
-            Application.getGUIEngine().removeWidget(tileTen);
     }
     if (change == 5) {
-
-        if (Application.getGUIEngine().isWidgetIn(tileOne))
-            Application.getGUIEngine().removeWidget(tileOne);
-        if (Application.getGUIEngine().isWidgetIn(tileTwo))
-            Application.getGUIEngine().removeWidget(tileTwo);
-        if (Application.getGUIEngine().isWidgetIn(tileThree))
-            Application.getGUIEngine().removeWidget(tileThree);
-        if (Application.getGUIEngine().isWidgetIn(tileFour))
-            Application.getGUIEngine().removeWidget(tileFour);
-        if (Application.getGUIEngine().isWidgetIn(tileFive))
-            Application.getGUIEngine().removeWidget(tileFive);
-        if (Application.getGUIEngine().isWidgetIn(tileSix))
-            Application.getGUIEngine().removeWidget(tileSix);
-        if (Application.getGUIEngine().isWidgetIn(tileSeven))
-            Application.getGUIEngine().removeWidget(tileSeven);
-        if (Application.getGUIEngine().isWidgetIn(tileEight))
-            Application.getGUIEngine().removeWidget(tileEight);
-        if (Application.getGUIEngine().isWidgetIn(tileNine))
-            Application.getGUIEngine().removeWidget(tileNine);
-        if (Application.getGUIEngine().isWidgetIn(tileTen))
-            Application.getGUIEngine().removeWidget(tileTen);
+        for (int i = 0; i < 10; i++)
+        {
+            if (Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            Application.getGUIEngine().removeWidget(tileArray[i]);
+        }
     }
     if (change == 6) {
-
-        if (!Application.getGUIEngine().isWidgetIn(tileOne))
-            Application.getGUIEngine().addWidget(tileOne);
-        if (!Application.getGUIEngine().isWidgetIn(tileTwo))
-            Application.getGUIEngine().addWidget(tileTwo);
-        if (!Application.getGUIEngine().isWidgetIn(tileThree))
-            Application.getGUIEngine().addWidget(tileThree);
-        if (!Application.getGUIEngine().isWidgetIn(tileFour))
-            Application.getGUIEngine().addWidget(tileFour);
-        if (!Application.getGUIEngine().isWidgetIn(tileFive))
-            Application.getGUIEngine().addWidget(tileFive);
-        if (!Application.getGUIEngine().isWidgetIn(tileSix))
-            Application.getGUIEngine().addWidget(tileSix);
-
-        if (Application.getGUIEngine().isWidgetIn(tileSeven))
-            Application.getGUIEngine().removeWidget(tileSeven);
-        if (Application.getGUIEngine().isWidgetIn(tileEight))
-            Application.getGUIEngine().removeWidget(tileEight);
-        if (Application.getGUIEngine().isWidgetIn(tileNine))
-            Application.getGUIEngine().removeWidget(tileNine);
-        if (Application.getGUIEngine().isWidgetIn(tileTen))
-            Application.getGUIEngine().removeWidget(tileTen);
+        for (int i = 0; i < 6; i++)
+        {
+            if (!Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            Application.getGUIEngine().addWidget(tileArray[i]);
+        }
+        for (int i = 6; i < 10; i++)
+        {
+            if (Application.getGUIEngine().isWidgetIn(tileArray[i]));
+            Application.getGUIEngine().removeWidget(tileArray[i]);
+        }
     }
 
 }
