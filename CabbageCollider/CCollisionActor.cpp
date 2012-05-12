@@ -62,46 +62,48 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 
 	if (canCollideWith(Object))
 	{
+		// Revert position
 		Area.Position = LastPosition;
 
+		// Side in each direction separately
 		for (int i = 0; i < 2; ++ i)
 		{
 			CollisionReal OriginalMovement = Movement[i];
 
+			// No movement - continue
 			if (equals(Movement[i], (CollisionReal) 0.0))
 				continue;
 
+			// Try this movement
 			Area.Position[i] = LastPosition[i] + Movement[i];
 
+			// If collision caused...
 			if (Area.intersects(Object->getInternalArea()))
 			{
+				// Determine direction
 				if (Movement[i] > (CollisionReal) 0.0)
-				{
-					//TryMovement = 0.f;//std::max(Object->getArea().Position[i] - (LastPosition + Area.Size)[i], 0.f);
 					Out |= (i ? ECollisionType::Up : ECollisionType::Right);
-				}
 				else if (Movement[i] < (CollisionReal) 0.0)
-				{
-					//TryMovement = 0.f;//std::min(Object->getArea().otherCorner()[i] - LastPosition[i], 0.f);
 					Out |= (i ? ECollisionType::Down : ECollisionType::Left);
-				}
 				else
-				{
 					std::cout << "Null movement, undefined behavior." << std::endl;
-				}
 
+				// Remove movement
 				Movement[i] = (CollisionReal) 0.0;
 				Area.Position[i] = LastPosition[i];
 
+				// If still collided... (persistent collision)
 				if (Area.intersects(Object->getInternalArea())) // If still collision after revert...
 				{
+					// Determine minimal intersection
 					CollisionReal Intersections[2];
 					Intersections[0] = Area.getIntersection(Object->getInternalArea()).getArea(); // 0 - old position
 
 					Area.Position[i] = LastPosition[i] + OriginalMovement;
 					Intersections[1] = Area.getIntersection(Object->getInternalArea()).getArea(); // 1 - new position
 
-					if (Intersections[1] < Intersections[0] || equals(Intersections[0], Intersections[1]))
+					// If movement causes a reduced intersection...
+					if (Intersections[1] < Intersections[0] && ! equals(Intersections[0], Intersections[1]))
 					{
 						// If new position is better or equal
 
@@ -111,22 +113,20 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 
 						// Cancel collision output
 						if (OriginalMovement > (CollisionReal) 0.0)
-						{
 							Out ^= (i ? ECollisionType::Up : ECollisionType::Right);
-						}
 						else if (OriginalMovement < (CollisionReal) 0.f)
-						{
 							Out ^= (i ? ECollisionType::Down : ECollisionType::Left);
-						}
 						else
-						{
 							std::cout << "Null movement, undefined behavior." << std::endl;
-						}
 					}
 					else
 					{
 						Area.Position[i] = LastPosition[i];
 					}
+				}
+				// Else, check whether it could have been a step up
+				else
+				{
 				}
 			}
 		}
