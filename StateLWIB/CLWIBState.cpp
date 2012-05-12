@@ -938,30 +938,24 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          mouseDown = 1;
          if(!tDown && twoDown && !oneDown && !threeDown && !fourDown) {
             PrepEnemy(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY),uniType);
-            printf("Here1\n");
          }
          if(!tDown && !twoDown && !oneDown && threeDown&& !fourDown) {
             PrepFlag(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), uniType);
-            printf("Here2\n");
          }
          if(!tDown && oneDown && !threeDown && !twoDown&& !fourDown) {
-            printf("Here3\n");
              if (friendType == 0)
                 PrepCabbage(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY));
              /*else if (friendType == 1)
                 PrepFriends(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), friendType);*/
          }
          else if (!tDown && !oneDown && !threeDown &&!twoDown && !fourDown) {
-            printf("Here4\n");
             PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth,uniType,mDown);
          }
          else if (!tDown && !oneDown && !threeDown &&!twoDown && fourDown) {
-            printf("Here5\n");
             PrepItem(round(eye.X + previewBlockMouseX),round(eye.Y + previewBlockMouseY),uniType);
          }
          //else { //Delete item
          if (tDown && !oneDown && !threeDown && !twoDown && !fourDown) {
-            printf("Here6\n");
              if(lastMouseOveredBlock.o) {
                  printf("clicked on removing\n");
                  lastMouseOveredBlock.r->removeFromGame();
@@ -1018,6 +1012,15 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
          }
          if(!threeDown && !tDown && !twoDown && !oneDown && !fourDown && mouseDown) {
             PrepBlock(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), blockWidth, blockHeight, blockDepth, uniType,mDown);
+         }
+         else if(twoDown && mouseDown) {
+            PrepEnemy(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY),uniType);
+         }
+         else if(threeDown && mouseDown) {
+            PrepFlag(round(eye.X + previewBlockMouseX), round(eye.Y + previewBlockMouseY), uniType);
+         }
+         else if (mouseDown && fourDown) {
+             PrepItem(round(eye.X + previewBlockMouseX),round(eye.Y + previewBlockMouseY),uniType);
          }
          lastMouseOveredBlock = m_qd;
       }
@@ -1160,15 +1163,10 @@ void CLWIBState::changeTiles() {
         tileEight->setImage(pear);
         tileNine->setImage(banana);
         tileTen->setImage(cherry);
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 10; i++)
         {
             if (!Application.getGUIEngine().isWidgetIn(tileArray[i]));
             Application.getGUIEngine().addWidget(tileArray[i]);
-        }
-        for (int i = 6; i < 10; i++)
-        {
-            if (Application.getGUIEngine().isWidgetIn(tileArray[i]));
-            Application.getGUIEngine().removeWidget(tileArray[i]);
         }
     }
     if (change == 3) { // flag
