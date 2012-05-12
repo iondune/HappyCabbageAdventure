@@ -141,7 +141,7 @@ extern DECLSPEC void SMPEG_scaleXY( SMPEG* mpeg, int width, int height );
 extern DECLSPEC void SMPEG_scale( SMPEG* mpeg, int scale );
 /* */
 #define SMPEG_double(mpeg, on) \
-	SMPEG_scale(mpeg, (on) ? 2 : 1)
+   SMPEG_scale(mpeg, (on) ? 2 : 1)
 
 /* Move the video display area within the destination surface */
 extern DECLSPEC void SMPEG_move( SMPEG* mpeg, int x, int y );

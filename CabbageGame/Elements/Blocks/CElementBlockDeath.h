@@ -11,7 +11,7 @@ class CElementBlockDeath : public CElementBlock {
       float Range, Speed;
 
    public:
-      virtual void OnCollision(CCollideable *Object);
+      virtual void OnCollision(const SCollisionEvent& Event);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
@@ -19,7 +19,7 @@ class CElementBlockDeath : public CElementBlock {
       virtual void writeXML(xmlwriter *);
       virtual void update(float);
 
-      CElementBlockDeath(SRect2 nArea, int depth, int texture, float r, float s);
+      CElementBlockDeath(SRect2f nArea, int depth, int texture, float r, float s);
 
       virtual void printInformation();
 };
