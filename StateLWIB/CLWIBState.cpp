@@ -16,7 +16,6 @@ static inline float round(float r)
 float x2w(int oldX);
 float yp2w(int oldY);
 void EngineInit();
-void PrepPreviews();
 
 float previewBlockMouseX, previewBlockMouseY; 
 float lastBlockPlacedLocationX, lastBlockPlacedLocationY;
@@ -561,13 +560,31 @@ void CLWIBState::loadWorld() {
     int moving, range, speed;
     std::string name;
     //float spd, rng;
-    initBlockMap();
-    placeables.clear();
-    Application.getSceneManager().removeAllSceneObjects();
-    BlocksInit();
+    //initBlockMap();
+    while (placeables.size() > 0)    
+    {
+        printf("the size of placeables is %d\n", placeables.size());
+        CGameplayElement *m_block = placeables.back();
+        int i,j;
+        for(i = 0; i <m_block->getArea().Size.X; i++) {
+            for(j = 0; j <m_block->getArea().Size.Y; j++) {
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = false;
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = NULL;
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = m_block->getArea().Position.X+25;
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = m_block->getArea().Position.Y+25;
+            }
+        }   
+        placeables.back()->removeFromSceneManager();
+        placeables.pop_back();
+    }
 
+    //placeables.clear();
+    //Application.getSceneManager().removeAllSceneObjects();
+
+    //BlocksInit();
     PreviewBlock = new CElementBlock(SRect2(1,1,1,1),1,1);
     PreviewBlock->setupObjects();
+
     cout << "Enter the name of the file you want to load: ";
     cin >> name;
     irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader(name.c_str());
@@ -633,7 +650,7 @@ void CLWIBState::loadWorld() {
                 w = xml->getAttributeValueAsInt(3);
                 cDown = 4;
                 printf("cDown is %d", cDown);
-                PrepBlock((float)x,(float)y,w,h,1,0,0);
+                PrepBlock((float)x,(float)y,w,h,1,1,1);
                 cDown = 0;
             }
             if(!strcmp("DeathBlock",xml->getNodeName()))
@@ -645,6 +662,7 @@ void CLWIBState::loadWorld() {
                 d = xml->getAttributeValueAsInt(4);
                 t = xml->getAttributeValueAsInt(5);
                 cDown = 5;
+                printf("deathblock x,y,h,w,d,t = %d, %d, %d, %d, %d, %d\n",x,y,h,w,d,t);
                 PrepBlock((float)x,(float)y,w,h,t,1,1);
                 cDown = 0;
             }
@@ -878,7 +896,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
    if(!ret)
       return;
 
-   printf("Placed block starting at %0.2f, %0.2f, %d, %d, %d\n", x, y, h,d,t);
+   printf("Placed block starting at %0.2f, %0.2f, %d, %d, %d\n", x, y, w,h,d);
    
    CGameplayElement *tempPlaceable;
    printf("cDown before placing it %d\n",cDown);
