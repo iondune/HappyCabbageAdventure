@@ -77,6 +77,8 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 			// Try this movement
 			Area.Position[i] = LastPosition[i] + Movement[i];
 
+			bool AllowedMovementForThisObject = false;
+
 			// If collision caused...
 			if (Area.intersects(Object->getInternalArea()))
 			{
@@ -109,6 +111,7 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 
 						//std::cout << "Allowed collision movement (" << (i ? 'y' : 'x') << "): (" << Intersections[0] << " -> " << Intersections[1] << ")" << std::endl;
 						AllowedMovement = true;
+						AllowedMovementForThisObject = true;
 						Movement[i] = OriginalMovement;
 
 						// Cancel collision output
@@ -124,9 +127,27 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 						Area.Position[i] = LastPosition[i];
 					}
 				}
-				// Else, check whether it could have been a step up
-				else
+				
+				// Also, check whether it could have been a step up
+				if (! AllowedMovementForThisObject && i == 0)
 				{
+					static CollisionReal const MaxStep = 0.2;
+
+					if (Area.Position.Y - Object->getArea().otherCorner().Y > - MaxStep)
+					{
+						std::cout << "Allowing step!" << std::endl;
+						AllowedMovement = true;
+						AllowedMovementForThisObject = true;
+						Movement[i] = OriginalMovement;
+
+						// Cancel collision output
+						if (OriginalMovement > (CollisionReal) 0.0)
+							Out ^= (i ? ECollisionType::Up : ECollisionType::Right);
+						else if (OriginalMovement < (CollisionReal) 0.f)
+							Out ^= (i ? ECollisionType::Down : ECollisionType::Left);
+						else
+							std::cout << "Null movement, undefined behavior." << std::endl;
+					}
 				}
 			}
 		}
