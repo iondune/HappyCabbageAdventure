@@ -37,7 +37,7 @@ void CPBurst::updateMatrices(float timeElapsed) {
    }
    else {
       Duration += timeElapsed;
-      zFactor += zVelocity * Actor->getVelocity().X * timeElapsed;
+      zFactor += zVelocity * (float) Actor->getVelocity().X * timeElapsed;
       if(Duration >= BlinkTime && BlinkFreq >= -0.8f) {
          BlinkFreq -= timeElapsed*1.0f;
       }

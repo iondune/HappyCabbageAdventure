@@ -1,3 +1,5 @@
+#define  _CRT_SECURE_NO_WARNINGS
+
 #include "CGameplayGUIManager.h"
 #include "CElementPlayer.h"
 
@@ -16,7 +18,7 @@ void CGameplayGUIManager::update(float time) {
       float fps = numFrames / timeTotal;
       sprintf(buf, "FPS: %0.0f", fps);
       fpsText->setText(buf);
-      timeTotal = numFrames = 0;
+      timeTotal = (float) (numFrames = 0);
 
    }
 
@@ -63,7 +65,7 @@ CGameplayGUIManager::CGameplayGUIManager(Cabbage::PlayerInformation & s) : Stats
       char buff[30];
       sprintf(buff, "Base/HealthCabbage%d.tga", i);
       Health[i-1] = new CGUIImageWidget(CImageLoader::loadTGAImage(buff), SVector2f(.1f, .1f));
-      Health[i-1]->setPosition(SVector2f(.11f + i*0.05, .86f));
+      Health[i-1]->setPosition(SVector2f(0.11f + i*0.05f, 0.86f));
       CApplication::get().getGUIEngine().addWidget(Health[i-1]);
    }
 

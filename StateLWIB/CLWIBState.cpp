@@ -573,8 +573,8 @@ void CLWIBState::loadWorld() {
             for(j = 0; j <m_block->getArea().Size.Y; j++) {
                 blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].o = false;
                 blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].r = NULL;
-                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = m_block->getArea().Position.X+25;
-                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = m_block->getArea().Position.Y+25;
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapX = (int) m_block->getArea().Position.X+25;
+                blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = (int) m_block->getArea().Position.Y+25;
             }
         }   
         placeables.back()->removeFromSceneManager();
@@ -910,9 +910,9 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
        printf("making breakable blocks\n");
    }
    else if (cDown == 5)
-       placeables.push_back(tempPlaceable = new CElementBlockDeath(SRect2f(x,y,w,h),d,t,1.0f,1.0f));
+       placeables.push_back(tempPlaceable = new CElementBlockDeath(SRect2f(x,y,(float) w, (float) h),d,t,1.0f,1.0f));
    else
-       placeables.push_back(tempPlaceable = new CElementBlock(SRect2f(x,y,w,h),d,t));
+       placeables.push_back(tempPlaceable = new CElementBlock(SRect2f(x,y,(float) w, (float) h),d,t));
 
    for(i = 0; i < w; i++) {
       for(j = 0; j < h; j++) {

@@ -181,7 +181,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             w = xml->getAttributeValueAsInt(3);
             d = xml->getAttributeValueAsInt(4);
             t = xml->getAttributeValueAsInt(5);
-            CGameplayElement *myItem = new CElementBlockDeath(SRect2(x,y,w,h),d,t,1.0f,1.0f);
+            CGameplayElement *myItem = new CElementBlockDeath(SRect2f(x,y,w,h),d,t,1.0f,1.0f);
 
             newLevel->Elements.push_back(myItem);
          }
@@ -200,7 +200,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
          if (!strcmp("envVar", xml->getNodeName()))
          {
              newLevel->env = env = xml->getAttributeValueAsInt(0);
-             newLevel->night = xml->getAttributeValueAsInt(1);
+             newLevel->night = xml->getAttributeValueAsInt(1) != 0;
 
           if (newLevel->getEnvironment() == 1 && ! newLevel->isNight())
              CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_HEAT_WAVE, true);

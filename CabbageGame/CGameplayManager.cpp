@@ -25,7 +25,7 @@ CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(
    CApplication::get().getSceneManager().setDeferred(level.isNight());
    //level.setNoRender();
    //Set up each object
-   for(int i = 0; i < level.getGameplayElements().size(); i++) {
+   for(unsigned int i = 0; i < level.getGameplayElements().size(); i++) {
       level.getGameplayElements()[i]->setupObjects();
    }
    //Add consolidated blocks
@@ -35,7 +35,7 @@ CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(
       }
    }
 #ifdef DEBUG_PRINTFS
-   for(int i = 0; i < level.getGameplayElements().size(); i++) {
+   for(unsigned int i = 0; i < level.getGameplayElements().size(); i++) {
       printf("Element %d: ", i);
       level.getGameplayElements()[i]->printInformation();
    }
@@ -68,14 +68,14 @@ void CGameplayManager::update(float time) {
    UpdateArea.Size.X = UpdateWidth;
    UpdateArea.Size.Y = UpdateHeight;
 
-   for(int i = 0; i < Elements.size(); i++) {
+   for(unsigned int i = 0; i < Elements.size(); i++) {
       if(UpdateArea.intersects(Elements[i]->getArea()))
          Elements[i]->update(time);
       if(Elements[i]->isDead())
          KillList.push_back(Elements[i]);
    }
    GUIManager->update(time);
-   for(int i = 0; i < KillList.size(); i++) {
+   for(unsigned int i = 0; i < KillList.size(); i++) {
       KillList[i]->removeFromGame();
       Level.removeCollideable(KillList[i]);
       delete KillList[i];
