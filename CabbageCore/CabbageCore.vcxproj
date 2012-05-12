@@ -67,6 +67,7 @@
     <ClInclude Include="CabbageCore.h" />
     <ClInclude Include="SBoundingBox3.h" />
     <ClInclude Include="SColor.h" />
+    <ClInclude Include="sigslot\sigslot.h" />
     <ClInclude Include="SLine3.h" />
     <ClInclude Include="SPosition2.h" />
     <ClInclude Include="SRect2.h" />

@@ -12,5 +12,13 @@
     <ClInclude Include="SBoundingBox3.h" />
     <ClInclude Include="STransformation3.h" />
     <ClInclude Include="SSize2.h" />
+    <ClInclude Include="sigslot\sigslot.h">
+      <Filter>sigslot</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="sigslot">
+      <UniqueIdentifier>{521faae6-9fa1-4f3a-8f9b-a619282e221e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
