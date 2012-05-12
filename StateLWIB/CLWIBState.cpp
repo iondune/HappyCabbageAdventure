@@ -344,6 +344,10 @@ void CLWIBState::OnRenderStart(float const Elapsed)
 void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
     if(Event.Pressed){
+        if (Event.Key == SDLK_q)
+        {
+            printf("there is %d amount of placeables in the array\n", placeables.size());
+        }
         if(Event.Key == SDLK_1){
             change = 1;
         }
@@ -560,7 +564,6 @@ void CLWIBState::loadWorld() {
     int moving, range, speed;
     std::string name;
     //float spd, rng;
-    //initBlockMap();
     while (placeables.size() > 0)    
     {
         printf("the size of placeables is %d\n", placeables.size());
@@ -577,13 +580,14 @@ void CLWIBState::loadWorld() {
         placeables.back()->removeFromSceneManager();
         placeables.pop_back();
     }
+    initBlockMap();
 
-    //placeables.clear();
-    //Application.getSceneManager().removeAllSceneObjects();
+    /*placeables.clear();
+    Application.getSceneManager().removeAllSceneObjects();
 
-    //BlocksInit();
+    BlocksInit();
     PreviewBlock = new CElementBlock(SRect2(1,1,1,1),1,1);
-    PreviewBlock->setupObjects();
+    PreviewBlock->setupObjects();*/
 
     cout << "Enter the name of the file you want to load: ";
     cin >> name;
