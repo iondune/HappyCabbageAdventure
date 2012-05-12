@@ -1,3 +1,5 @@
+#define  _CRT_SECURE_NO_WARNINGS
+
 // xmlwriter.cpp : Definiert den Einstiegspunkt für die Konsolenanwendung.
 //
 
