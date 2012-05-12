@@ -5,6 +5,7 @@
 #include "CElementBlockFlag.h"
 #include "CElementBlockBreakable.h"
 #include "CElementBlockElevator.h"
+#include "CElementBlockDeath.h"
 #include "CElementEnemy.h"
 #include "CElementPlayer.h"
 #include "CElementItem.h"
@@ -168,6 +169,20 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             t = xml->getAttributeValueAsInt(2);
             CElementItem *myItem = new CElementItemPowerup(SRect2((float)x, (float)y, 1.0f, 1.0f), t);
             newLevel->Items.push_back(myItem);
+            newLevel->Elements.push_back(myItem);
+         }
+         if(!strcmp("DeathBlock",xml->getNodeName()))
+         {
+            newLevel->incrementXmlCount();
+
+            x = xml->getAttributeValueAsInt(0);
+            y = xml->getAttributeValueAsInt(1);
+            h = xml->getAttributeValueAsInt(2);
+            w = xml->getAttributeValueAsInt(3);
+            d = xml->getAttributeValueAsInt(4);
+            t = xml->getAttributeValueAsInt(5);
+            CGameplayElement *myItem = new CElementBlockDeath(SRect2(x,y,w,h),d,t,1.0f,1.0f);
+
             newLevel->Elements.push_back(myItem);
          }
          if(!strcmp("CPFriends",xml->getNodeName()))

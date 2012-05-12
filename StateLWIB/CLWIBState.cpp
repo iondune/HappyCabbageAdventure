@@ -636,6 +636,18 @@ void CLWIBState::loadWorld() {
                 PrepBlock((float)x,(float)y,w,h,1,0,0);
                 cDown = 0;
             }
+            if(!strcmp("DeathBlock",xml->getNodeName()))
+            {
+                x = xml->getAttributeValueAsInt(0);
+                y = xml->getAttributeValueAsInt(1);
+                h = xml->getAttributeValueAsInt(2);
+                w = xml->getAttributeValueAsInt(3);
+                d = xml->getAttributeValueAsInt(4);
+                t = xml->getAttributeValueAsInt(5);
+                cDown = 5;
+                PrepBlock((float)x,(float)y,w,h,t,1,1);
+                cDown = 0;
+            }
             if (!strcmp("envVar", xml->getNodeName()))
             {
                 env= xml->getAttributeValueAsInt(0);
@@ -1068,7 +1080,7 @@ void CLWIBState::undoObjects() {
     }
 }
 void CLWIBState::prepText() {
-    
+
     SColor FontColor(1.0f, 1.0f, 1.0f);
     help = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
     help->setText("Press F1 for help\n");
@@ -1081,7 +1093,7 @@ void CLWIBState::prepText() {
     block1->setPosition(SVector2(.05f, .9f));
     block1->setColor(FontColor);
     block1->setVisible(true);
-    
+
     block2 = new CGUIFontWidget("WIFFLES_.TTF", 30.f);
     block2->setText("grassTexture\n");
     block2->setPosition(SVector2(.05f, .85f));
@@ -1103,12 +1115,12 @@ void CLWIBState::prepText() {
     Application.getGUIEngine().addWidget(block2);
     Application.getGUIEngine().addWidget(block3);
     Application.getGUIEngine().addWidget(help);
- 
+
 }
 
 void CLWIBState::OnWidgetHover(CGUIWidget *widget) {
     if(widget) 
-      clickDown = 1;
+        clickDown = 1;
 }
 void CLWIBState::OnWidgetUnHover(CGUIWidget *widget) {
     if (widget)
@@ -1132,7 +1144,7 @@ void CLWIBState::changeTiles() {
         for (int i = 0; i < 10; i++)
         {
             if (!Application.getGUIEngine().isWidgetIn(tileArray[i]));
-            Application.getGUIEngine().addWidget(tileArray[i]);
+                Application.getGUIEngine().addWidget(tileArray[i]);
         }
 
     }
@@ -1143,12 +1155,12 @@ void CLWIBState::changeTiles() {
         for (int i = 0; i < 2; i++)
         {
             if (!Application.getGUIEngine().isWidgetIn(tileArray[i]));
-            Application.getGUIEngine().addWidget(tileArray[i]);
+                Application.getGUIEngine().addWidget(tileArray[i]);
         }
         for (int i = 2; i < 10; i++)
         {
             if (Application.getGUIEngine().isWidgetIn(tileArray[i]));
-            Application.getGUIEngine().removeWidget(tileArray[i]);
+                Application.getGUIEngine().removeWidget(tileArray[i]);
         }
     } 
     if (change == 2) { // enemies
@@ -1166,7 +1178,7 @@ void CLWIBState::changeTiles() {
         for (int i = 0; i < 10; i++)
         {
             if (!Application.getGUIEngine().isWidgetIn(tileArray[i]));
-            Application.getGUIEngine().addWidget(tileArray[i]);
+                Application.getGUIEngine().addWidget(tileArray[i]);
         }
     }
     if (change == 3) { // flag
@@ -1176,12 +1188,12 @@ void CLWIBState::changeTiles() {
         for (int i = 0; i < 2; i++)
         {
             if (!Application.getGUIEngine().isWidgetIn(tileArray[i]));
-            Application.getGUIEngine().addWidget(tileArray[i]);
+                Application.getGUIEngine().addWidget(tileArray[i]);
         }
         for (int i = 2; i < 10; i++)
         {
             if (Application.getGUIEngine().isWidgetIn(tileArray[i]));
-            Application.getGUIEngine().removeWidget(tileArray[i]);
+                Application.getGUIEngine().removeWidget(tileArray[i]);
         }
     }
     if (change == 4) { //items
@@ -1192,12 +1204,12 @@ void CLWIBState::changeTiles() {
         for (int i = 0; i < 4; i++)
         {
             if (!Application.getGUIEngine().isWidgetIn(tileArray[i]));
-            Application.getGUIEngine().addWidget(tileArray[i]);
+                Application.getGUIEngine().addWidget(tileArray[i]);
         }
         for (int i = 4; i < 10; i++)
         {
             if (Application.getGUIEngine().isWidgetIn(tileArray[i]));
-            Application.getGUIEngine().removeWidget(tileArray[i]);
+                Application.getGUIEngine().removeWidget(tileArray[i]);
         }
 
     }
@@ -1205,19 +1217,19 @@ void CLWIBState::changeTiles() {
         for (int i = 0; i < 10; i++)
         {
             if (Application.getGUIEngine().isWidgetIn(tileArray[i]));
-            Application.getGUIEngine().removeWidget(tileArray[i]);
+                Application.getGUIEngine().removeWidget(tileArray[i]);
         }
     }
     if (change == 6) {
         for (int i = 0; i < 6; i++)
         {
             if (!Application.getGUIEngine().isWidgetIn(tileArray[i]));
-            Application.getGUIEngine().addWidget(tileArray[i]);
+                Application.getGUIEngine().addWidget(tileArray[i]);
         }
         for (int i = 6; i < 10; i++)
         {
             if (Application.getGUIEngine().isWidgetIn(tileArray[i]));
-            Application.getGUIEngine().removeWidget(tileArray[i]);
+                Application.getGUIEngine().removeWidget(tileArray[i]);
         }
     }
 
