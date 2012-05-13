@@ -2,7 +2,7 @@
 #include "CGameLevel.h"
 
 CElementEnemyStrawberry::CElementEnemyStrawberry(SRect2 nArea) :
-   CElementEnemy(nArea, Enemies::STRAWBERRY), ISquishable(nArea.Size.X, nArea.Size.Y) {
+   CElementEnemy(nArea, Enemies::STRAWBERRY), ISquishable(nArea.Size.X, nArea.Size.Y), HitPlayer(false), OldPositionX(nArea.Position.X) {
 
 }
 
@@ -55,16 +55,17 @@ void CElementEnemyStrawberry::setupSceneObject() {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyStrawberry::updatePhysicsEngineObject(float time) {
-   SVector2 PlayerPosition = Level.getPlayer().getArea().Position;
+   float difference = Area.Position.X - OldPositionX;
 
-   if (PlayerPosition.X < Area.getCenter().X - 3.f)
-      PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
-   else if (PlayerPosition.X > Area.getCenter().X + 3.f)
-      PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
-   else {
-      PhysicsEngineObject->setJumping(true);
-      PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
+   if (difference < .001f && difference > -.001f && !HitPlayer) {
+      if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveLeft)
+         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
+      else if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveRight)
+         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
    }
+
+   OldPositionX = Area.Position.X;
+   HitPlayer = false;
 }
 
 //This is where the renderable would be updated for the more complex enemies

@@ -140,10 +140,9 @@ void CElementEnemyKiwi::printInformation() {
 }
 
 void CElementEnemyKiwi::DropBomb() {
-   //CBadGuy::makeBadGuy(pos.X + w/2.f - .05f, pos.Y - .5f, w, h, pKiwi, Manager, 0);
 
    float xLocation = Area.Position.X + Area.Size.X - .05f;
    float yLocation = Area.getCenter().Y - Area.Size.Y - .5f;
 
-      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(xLocation, yLocation, .2f, .2f), Enemies::KIWI_PROJECTILE));
+   Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(xLocation, yLocation, .2f, .2f), Enemies::KIWI_PROJECTILE));
 }

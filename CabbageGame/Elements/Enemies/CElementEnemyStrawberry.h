@@ -7,6 +7,7 @@ class CElementEnemyStrawberry : public CElementEnemy, public ISquishable
 {
    private:
       SVector2 Scale;
+      float OldPositionX, HitPlayer;
 
    public:
       CElementEnemyStrawberry(SRect2 nArea);
