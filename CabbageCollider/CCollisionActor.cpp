@@ -135,7 +135,7 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 
 					if (Area.Position.Y - Object->getArea().otherCorner().Y > - MaxStep)
 					{
-						std::cout << "Allowing step!" << std::endl;
+						//std::cout << "Allowing step!" << std::endl;
 						AllowedMovement = true;
 						AllowedMovementForThisObject = true;
 						Movement[i] = OriginalMovement;
