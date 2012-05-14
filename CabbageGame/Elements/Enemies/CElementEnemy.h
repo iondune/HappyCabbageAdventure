@@ -22,7 +22,8 @@ namespace Enemies {
       CHERRY_PROJECTILE  = 13,
       PINEAPPLE          = 14,
       POMEGRANATE        = 15,
-      STRAWBERRY         = 16
+      STRAWBERRY         = 16,
+      LEMON
 
    };
 }

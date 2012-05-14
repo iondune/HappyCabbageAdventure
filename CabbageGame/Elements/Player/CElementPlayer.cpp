@@ -293,6 +293,26 @@ void CElementPlayer::setHealth(int amount) {
    Stats.Health = std::max(0, amount);
 }
 
+bool CElementPlayer::subtractHealth(int amount) {
+   if(used(Abilities::SHIELD))
+         return false;
+
+   if(Recovering == 0.0f) {
+      std::max(0, Stats.Health-= amount);
+
+      if(Stats.Health <= 0) {
+         Stats.Health = 0;
+         decrementLives();
+         return false;
+      }
+      View->removeLeaf();
+      View->setHurt(true);
+      Recovering = 1.0f;
+      Mix_PlayChannel(-1, takeDmg, 0);
+      return true;
+   }
+}
+
 void CElementPlayer::incrementLives() {
    Stats.Lives++;
 }

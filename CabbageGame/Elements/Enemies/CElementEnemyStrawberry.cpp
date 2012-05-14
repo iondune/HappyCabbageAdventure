@@ -2,19 +2,21 @@
 #include "CGameLevel.h"
 
 CElementEnemyStrawberry::CElementEnemyStrawberry(SRect2f nArea) :
-   CElementEnemy(nArea, Enemies::STRAWBERRY), ISquishable(nArea.Size.X, nArea.Size.Y) {
-
+   CElementEnemy(nArea, Enemies::STRAWBERRY), ISquishable(nArea.Size.X, nArea.Size.Y), HitPlayer(false), OldPositionX(nArea.Position.X), JumpTimer(3.0f), JumpNum(Strawberry::NO_JUMP) {
 }
 
 void CElementEnemyStrawberry::setupPhysicsEngineObject() {
-   /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
    PhysicsEngineObject->setArea(Area);
 
    //Set actor attributes
-   PhysicsEngineObject->getAttributes().MaxWalk = 4.5f;
-   PhysicsEngineObject->getAttributes().WalkAccel = 10.0f;
-   //PhysicsEngineObject->getAttributes().JumpLength = .5f;
+   PhysicsEngineObject->getAttributes().MaxWalk = 1.0f;//2.8f;
+   PhysicsEngineObject->getAttributes().JumpLength = .01f;
+   PhysicsEngineObject->getAttributes().JumpAccel = 7.0f;
+   PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
+   PhysicsEngineObject->getAttributes().AirControl = 0.75f;
+
+   PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
 }
 
 void CElementEnemyStrawberry::setupSceneObject() {
@@ -22,15 +24,15 @@ void CElementEnemyStrawberry::setupSceneObject() {
    CMesh *mesh;
 
    if (Level.getEnvironment() == 0) {
-      mesh = CMeshLoader::load3dsMesh("Base/Strawberry.3ds");
+      mesh = CMeshLoader::load3dsMesh("Base/strawberry.3ds");
    }
 
    else if (Level.getEnvironment() == 1) {
-      mesh = CMeshLoader::load3dsMesh("Base/Strawberry.3ds");
+      mesh = CMeshLoader::load3dsMesh("Base/strawberry.3ds");
    }
    //LevelEditor has no environment
    else
-      mesh = CMeshLoader::load3dsMesh("Base/Strawberry.3ds");
+      mesh = CMeshLoader::load3dsMesh("Base/strawberry.3ds");
 
    if(mesh) {
       mesh->resizeMesh(SVector3f(1));
@@ -51,20 +53,98 @@ void CElementEnemyStrawberry::setupSceneObject() {
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
-//CGameplayElement has an attribute called ElapsedTime, which is updated by CGameplayElement's update function.
+void CElementEnemyStrawberry::OnCollision(CCollideable *Object) {
+   if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
+      CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
+      HitPlayer = true;
+
+      //Check if jumped on top of enemy.
+      if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {
+         takeDamage(1);
+      }
+
+      //Did the player run into them?
+      else {
+         if(Level.getPlayer().decrementHealth()) {
+            if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
+               PlayerActor->setImpulse(SVector2(7.f, 2.8f), 0.1f);
+            else
+               PlayerActor->setImpulse(SVector2(-7.f, 2.8f), 0.1f);
+            Level.getPlayer().setShaking(1.0f, 3.0f);
+         }
+      }
+   }
+}
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyStrawberry::updatePhysicsEngineObject(float time) {
-   SVector2f PlayerPosition = Level.getPlayer().getArea().Position;
+   float difference = Area.Position.X - OldPositionX;
 
-   if (PlayerPosition.X < Area.getCenter().X - 3.f)
-      PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
-   else if (PlayerPosition.X > Area.getCenter().X + 3.f)
-      PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
-   else {
-      PhysicsEngineObject->setJumping(true);
-      PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
+   if (difference < .00001f && difference > -.00001f && !HitPlayer) {
+      if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveLeft)
+         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
+      else if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveRight)
+         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
    }
+
+   JumpTimer -= time;
+
+   if (JumpTimer <= 0.0f) {
+      if (JumpNum == Strawberry::NO_JUMP) {
+         JumpNum = Strawberry::FIRST_JUMP;
+
+         PhysicsEngineObject->getAttributes().JumpAccel = 3.5f;
+         PhysicsEngineObject->setJumping(true);
+         JumpTimer = .8f;
+      }
+
+      else if (JumpNum == Strawberry::FIRST_JUMP) {
+         JumpNum = Strawberry::SECOND_JUMP;
+
+         PhysicsEngineObject->setJumping(true);
+         JumpTimer = .8f;
+      }
+
+      else if (JumpNum == Strawberry::SECOND_JUMP) {
+         JumpNum = Strawberry::THIRD_JUMP;
+
+         PhysicsEngineObject->getAttributes().JumpAccel = 8.5f;
+         PhysicsEngineObject->setJumping(true);
+         JumpTimer = 2.0f;
+      }
+
+      else if (JumpNum == Strawberry::THIRD_JUMP) {
+         JumpNum = Strawberry::FOURTH_JUMP;
+
+         PhysicsEngineObject->getAttributes().JumpAccel = 5.5f;
+         PhysicsEngineObject->setJumping(true);
+         JumpTimer = 1.2f;
+      }
+      else if (JumpNum == Strawberry::FOURTH_JUMP) {
+         JumpNum = Strawberry::FIFTH_JUMP;
+
+         PhysicsEngineObject->getAttributes().JumpAccel = 7.0f;
+         PhysicsEngineObject->setJumping(true);
+         JumpTimer = .8f;
+      }
+      else if (JumpNum == Strawberry::FIFTH_JUMP) {
+         JumpNum = Strawberry::SIXTH_JUMP;
+
+         PhysicsEngineObject->getAttributes().JumpAccel = 9.0f;
+         PhysicsEngineObject->setJumping(true);
+         JumpTimer = 2.0f;
+      }
+      else if (JumpNum == Strawberry::SIXTH_JUMP) {
+         JumpNum = Strawberry::NO_JUMP;
+
+         PhysicsEngineObject->getAttributes().JumpAccel = 12.0f;
+         PhysicsEngineObject->setJumping(true);
+         JumpTimer = 6.0f;
+      }
+   }
+
+   OldPositionX = Area.Position.X;
+   HitPlayer = false;
 }
 
 //This is where the renderable would be updated for the more complex enemies

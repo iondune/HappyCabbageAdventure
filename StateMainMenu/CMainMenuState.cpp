@@ -122,7 +122,6 @@ void CMainMenuState::begin()
    //DOES NOT WORK ON LINUX BECAUSE CAN'T RUN MP3
    //startSoundtrack();
 
-   printf("Got here?\n");
    setupTextures();
    setupMeshes();
    setupButtons();

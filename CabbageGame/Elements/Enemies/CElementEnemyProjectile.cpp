@@ -10,7 +10,6 @@ CElementEnemyProjectile::CElementEnemyProjectile(SRect2f nArea, Enemies::EEnemyT
    Mix_PlayChannel(-1, Level.projectile, 0);
 }
 
-//Re-write me to die on impact.
 void CElementEnemyProjectile::OnCollision(const SCollisionEvent& Event) {
    if (!Dead) {
       removeFromGame();

@@ -9,7 +9,7 @@ CElementEnemyKiwi::CElementEnemyKiwi(SRect2f nArea, int direction) :
 void CElementEnemyKiwi::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(Area);
+   PhysicsEngineObject->setArea(SRect2(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y * 0.6f));
 
    //Set actor attributes
    PhysicsEngineObject->setControlFall(false);
@@ -132,6 +132,13 @@ void CElementEnemyKiwi::updateSceneObject(float time) {
       //TODO:  SEE ABOVE
       true;
       //SceneObject->setScale(SVector3f(1,1,1)*(zTimer + 1.0f));
+
+   if(ParticleEngine) {
+         SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.Position.Y, 0));
+         SceneObject->setRotation(SVector3(-90, 0, -90));
+         SceneObject->setScale(SVector3(Area.Size.X, Area.Size.X, 0.3f));
+         return;
+      }
 }
 
 void CElementEnemyKiwi::printInformation() {
@@ -140,15 +147,8 @@ void CElementEnemyKiwi::printInformation() {
 
 void CElementEnemyKiwi::DropBomb() {
 
-   float xLocation = Area.getCenter().X;
-   float yLocation = Area.getCenter().Y - 2.2f * Area.Size.Y;
+   float xLocation = Area.Position.X + Area.Size.X - .05f;
+   float yLocation = Area.getCenter().Y - Area.Size.Y - .5f;
 
-   //TODO:  Need to determine if projectiles are an enemy or a separate abstract class.
-   //TODO:  Determine the direction of the player with respect to the Kiwi.
-   if (Direction == 0) {
-      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2f(xLocation, yLocation, Area.Size.X, Area.Size.Y), Enemies::KIWI_PROJECTILE));
-   }
-   else {
-      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2f(xLocation, yLocation, Area.Size.X, Area.Size.Y), Enemies::KIWI_PROJECTILE));
-   }
+   Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(xLocation, yLocation, .2f, .2f), Enemies::KIWI_PROJECTILE));
 }

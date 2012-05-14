@@ -79,6 +79,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       bool used(Abilities::EAbilityType a);
 
       bool decrementHealth();
+      bool subtractHealth(int amount);
       void incrementHealth();
       void setHealth(int amount);
       void incrementLives();
