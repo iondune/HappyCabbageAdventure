@@ -930,11 +930,30 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
 void CLWIBState::PrepSky() {
 
    CMeshSceneObject *tempBlock;
+   CMeshSceneObject *cutOffBlock;
+
+   CMesh* ref = CMeshLoader::load3dsMesh("Base/Quad.3ds");
+   ref->centerMeshByExtents(SVector3(0.0f));
+   ref->linearizeIndices();
+   ref->calculateNormalsPerFace();
+
+   cutOffBlock = new CMeshSceneObject();
+   cutOffBlock->setMesh(ref);
+
+   cutOffBlock->setShader(ERP_DEFAULT, "DiffuseTextureBright");
+   cutOffBlock->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Textured");
+   cutOffBlock->setTranslation(SVector3(-25, 1, 1));
+   cutOffBlock->setScale(SVector3(1, 1, 1));
+   cutOffBlock->setRotation(SVector3(90.0f, 0.0f, 0.0f));
+
+   cutOffBlock->setTexture(CImageLoader::loadTexture("Base/sky.bmp", true));
+   CApplication::get().getSceneManager().addSceneObject(cutOffBlock);
 
    CMesh* quad = CMeshLoader::load3dsMesh("Base/Quad.3ds");
    quad->centerMeshByExtents(SVector3(0.0f));
    quad->linearizeIndices();
    quad->calculateNormalsPerFace();
+
 
    tempBlock = new CMeshSceneObject();
    tempBlock->setMesh(quad);
@@ -1489,7 +1508,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         cDown = 0;
     }
     if (widget == undoTile) {
-        if( placeables.size() > 0) {
+        if(placeables.size() > 0) {
             undoObjects();
         }
     }
@@ -1513,6 +1532,7 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
 
             redoPlaceables.pop_back();
         }*/
+
 
     }
 }
