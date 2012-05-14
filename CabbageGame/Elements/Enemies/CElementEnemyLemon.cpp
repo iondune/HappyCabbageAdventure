@@ -103,11 +103,6 @@ int CElementEnemyLemon::takeDamage(int amount) {
 
    explode();
 
-   CurHealth = 0;
-
-   if (rand()%3 == 0)
-      dropItem();
-
    return CurHealth;
 }
 
@@ -118,6 +113,9 @@ void CElementEnemyLemon::explode() {
    Level.getPlayer().setShaking(1.5f, .3f);
 
    Level.getPlayer().subtractHealth(2);
+
+   if (rand()%3 == 0)
+      dropItem();
 
    dieWithSeeds();
 }
