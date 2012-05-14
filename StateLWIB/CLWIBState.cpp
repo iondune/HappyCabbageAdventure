@@ -1162,13 +1162,14 @@ void CLWIBState::changeTiles() {
         tileSeven->setImage(blockDown);
         tileEight->setImage(blockUp);
         tileNine->setImage(blockIn);
-        tileTen->setImage(blockOut);
+        //tileTen->setImage(blockOut);
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 9; i++)
         {
             if (!Application.getGUIEngine().isWidgetIn(tileArray[i]))
                 Application.getGUIEngine().addWidget(tileArray[i]);
         }
+
 
     }
     if (change == 1) { // cabbage
@@ -1615,6 +1616,7 @@ void CLWIBState::prepHud() {
     blockIn = new CTexture(CImageLoader::loadImage("ModelImages/blockDepth.bmp"));
     blockOut = new CTexture(CImageLoader::loadImage("ModelImages/blockDepth2.bmp"));
 
+    circleArrow = new CTexture(CImageLoader::loadImage("ModelImages/arrow_circle.bmp"));
     derp = new CTexture(CImageLoader::loadImage("ModelImages/derp_gray.bmp"));
     grape = new CTexture(CImageLoader::loadImage("ModelImages/grapes_gray.bmp"));
     banana = new CTexture(CImageLoader::loadImage("ModelImages/banana_gray.bmp"));
@@ -1698,6 +1700,7 @@ void CLWIBState::prepHud() {
     tileTen = new CGUIImageWidget(ground,norm);
     tileTen->setPosition(SVector2(1.20f, .13f));
     tileArray.push_back(tileTen);
+    tileTen->setImage(circleArrow);
     //adding widgets to game 
 
     Application.getGUIEngine().addWidget(undoTile);
