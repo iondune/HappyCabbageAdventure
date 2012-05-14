@@ -133,6 +133,13 @@ void CElementEnemyKiwi::updateSceneObject(float time) {
       //TODO:  SEE ABOVE
       true;
       //SceneObject->setScale(SVector3(1,1,1)*(zTimer + 1.0f));
+
+   if(ParticleEngine) {
+         SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.Position.Y, 0));
+         SceneObject->setRotation(SVector3(-90, 0, -90));
+         SceneObject->setScale(SVector3(Area.Size.X, Area.Size.X, 0.3f));
+         return;
+      }
 }
 
 void CElementEnemyKiwi::printInformation() {

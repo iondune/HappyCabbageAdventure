@@ -12,6 +12,7 @@ void CElementEnemyLemon::setupPhysicsEngineObject() {
 
    //Set actor attributes
    PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
+   PhysicsEngineObject->getAttributes().WalkAccel = 10.f;
 }
 
 void CElementEnemyLemon::setupSceneObject() {
@@ -53,17 +54,33 @@ void CElementEnemyLemon::setupSceneObject() {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyLemon::updatePhysicsEngineObject(float time) {
-   SVector2 PlayerPosition = Level.getPlayer().getArea().Position;
-   //TODO: Make some class singleton so we can get the player's location
-   if (PlayerPosition.X < Area.getCenter().X)
-      PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
-   else if (PlayerPosition.X > Area.getCenter().X)
-      PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
+   SVector2f PlayerPosition = Level.getPlayer().getArea().Position;
+   SVector2f Difference = SVector2f (PlayerPosition.X - Area.Position.X, PlayerPosition.Y - Area.Position.Y);
+
+   if (abs(Difference.X) < 1.5f && abs(Difference.Y) < .5f) {
+      explode();
+   }
+   else if (abs(Difference.X) < 5.f && Difference.Y > -.2f) {
+      if (Difference.X < 0.f) {
+         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
+      }
+      else if (Difference.X > 0.f) {
+         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
+      }
+   }
+
+   else
+      PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
 }
 
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyLemon::updateSceneObject(float time) {
    SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
+   if (PhysicsEngineObject->getVelocity().X < 0.0f)
+      SceneObject->setRotation(SVector3(-90, PhysicsEngineObject->getVelocity().X*10.0f, -30));
+   else if (PhysicsEngineObject->getVelocity().X >= 0.0f)
+      SceneObject->setRotation(SVector3(-90, PhysicsEngineObject->getVelocity().X*10.0f, 30));
+
    if(ParticleEngine) {
       SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.Position.Y, 0));
       SceneObject->setRotation(SVector3(-90, 0, 0));
@@ -73,32 +90,36 @@ void CElementEnemyLemon::updateSceneObject(float time) {
 
    Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
 
-   if (ScaleMult > 1.1f)
-      PositiveScale = false;
-   else if (ScaleMult < .9f)
-      PositiveScale = true;
-
-   if (PositiveScale)
-      ScaleMult += .35f * time;
-   else
-      ScaleMult -= .35f * time;
-
-   ScaleMult = std::max(std::min(ScaleMult, 1.2f), 0.8f);
-
-   Scale.Y += ScaleMult - 1.0f;
-
-   if (PhysicsEngineObject->getVelocity().Y < .01f && PhysicsEngineObject->getVelocity().Y > -.01f) {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)
          SceneObject->setScale(SVector3(-Scale.X,Scale.X,Scale.Y));
       else if(PhysicsEngineObject->getVelocity().X > 0.01f)
          SceneObject->setScale(SVector3(Scale.X,Scale.X,Scale.Y));
-   }
-   else {
-      if(PhysicsEngineObject->getVelocity().X < -0.01f)
-         SceneObject->setScale(SVector3(-Scale.X,Scale.X,Scale.Y));
-      else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-         SceneObject->setScale(SVector3(Scale.X,Scale.X,Scale.Y));
-   }
+      else
+         SceneObject->setScale(SVector3(1.0f));
+}
+
+int CElementEnemyLemon::takeDamage(int amount) {
+   CurHealth = std::max(0, CurHealth - amount);
+
+   explode();
+
+   CurHealth = 0;
+
+   if (rand()%3 == 0)
+      dropItem();
+
+   return CurHealth;
+}
+
+void CElementEnemyLemon::explode() {
+   CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
+   PlayerActor->setImpulse(SVector2f(0.0f, 20.0f), 0.01f);
+
+   Level.getPlayer().setShaking(1.5f, .3f);
+
+   Level.getPlayer().subtractHealth(2);
+
+   dieWithSeeds();
 }
 
 void CElementEnemyLemon::printInformation() {
