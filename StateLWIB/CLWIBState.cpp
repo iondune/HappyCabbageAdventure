@@ -713,6 +713,7 @@ void CLWIBState::end()
 {
    Application.getGUIEngine().removeAllWidgets(); 
    //our_font.clean();
+   tileArray.clear();
    placeables.clear();
    redoPlaceables.clear();
    Application.getSceneManager().removeAllSceneObjects();
