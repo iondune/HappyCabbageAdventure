@@ -58,7 +58,7 @@ void CElementEnemyProjectileKiwi::setupSceneObject() {
 }
 
 void CElementEnemyProjectileKiwi::OnCollision(CCollideable *Object) {
-   if (!Dead && Object->CollideableType != COLLIDEABLE_TYPE_KIWI) {
+   if (!Dead) {
       removeFromGame();
       Dead = true;
 
@@ -68,10 +68,10 @@ void CElementEnemyProjectileKiwi::OnCollision(CCollideable *Object) {
          if (Level.getPlayer().decrementHealth()) {
 
            if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
-              PlayerActor->setImpulse(SVector2(4.f, 2.f), 0.1f);
+              PlayerActor->addImpulse(SVector2f(4.f, 2.f), 0.1f);
 
            else
-              PlayerActor->setImpulse(SVector2(-4.f, 2.f), 0.1f);
+              PlayerActor->addImpulse(SVector2f(-4.f, 2.f), 0.1f);
 
            Level.getPlayer().setShaking(1.0f, 3.0f);
          }

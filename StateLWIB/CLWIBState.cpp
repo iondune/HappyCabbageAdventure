@@ -933,7 +933,7 @@ void CLWIBState::PrepSky() {
    CMeshSceneObject *cutOffBlock;
 
    CMesh* ref = CMeshLoader::load3dsMesh("Base/Quad.3ds");
-   ref->centerMeshByExtents(SVector3(0.0f));
+   ref->centerMeshByExtents(SVector3f(0.0f));
    ref->linearizeIndices();
    ref->calculateNormalsPerFace();
 
@@ -942,9 +942,9 @@ void CLWIBState::PrepSky() {
 
    cutOffBlock->setShader(ERP_DEFAULT, "DiffuseTextureBright");
    cutOffBlock->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Textured");
-   cutOffBlock->setTranslation(SVector3(-25, 1, 1));
-   cutOffBlock->setScale(SVector3(1, 1, 1));
-   cutOffBlock->setRotation(SVector3(90.0f, 0.0f, 0.0f));
+   cutOffBlock->setTranslation(SVector3f(-25, 1, 1));
+   cutOffBlock->setScale(SVector3f(1, 1, 1));
+   cutOffBlock->setRotation(SVector3f(90.0f, 0.0f, 0.0f));
 
    cutOffBlock->setTexture(CImageLoader::loadTexture("Base/sky.bmp", true));
    CApplication::get().getSceneManager().addSceneObject(cutOffBlock);

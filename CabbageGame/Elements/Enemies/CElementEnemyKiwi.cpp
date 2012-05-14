@@ -9,7 +9,7 @@ CElementEnemyKiwi::CElementEnemyKiwi(SRect2f nArea, int direction) :
 void CElementEnemyKiwi::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(SRect2(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y * 0.6f));
+   PhysicsEngineObject->setArea(SRect2f(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y * 0.6f));
 
    //Set actor attributes
    PhysicsEngineObject->setControlFall(false);
@@ -134,9 +134,9 @@ void CElementEnemyKiwi::updateSceneObject(float time) {
       //SceneObject->setScale(SVector3f(1,1,1)*(zTimer + 1.0f));
 
    if(ParticleEngine) {
-         SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.Position.Y, 0));
-         SceneObject->setRotation(SVector3(-90, 0, -90));
-         SceneObject->setScale(SVector3(Area.Size.X, Area.Size.X, 0.3f));
+         SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
+         SceneObject->setRotation(SVector3f(-90, 0, -90));
+         SceneObject->setScale(SVector3f(Area.Size.X, Area.Size.X, 0.3f));
          return;
       }
 }
@@ -150,5 +150,5 @@ void CElementEnemyKiwi::DropBomb() {
    float xLocation = Area.Position.X + Area.Size.X - .05f;
    float yLocation = Area.getCenter().Y - Area.Size.Y - .5f;
 
-   Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(xLocation, yLocation, .2f, .2f), Enemies::KIWI_PROJECTILE));
+   Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2f(xLocation, yLocation, .2f, .2f), Enemies::KIWI_PROJECTILE));
 }
