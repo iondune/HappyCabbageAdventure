@@ -578,17 +578,10 @@ void CLWIBState::loadWorld() {
                 blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = (int) m_block->getArea().Position.Y+25;
             }
         }   
-        placeables.back()->removeFromSceneManager();
+        placeables.back()->removeFromGame();
         placeables.pop_back();
     }
     initBlockMap();
-
-    /*placeables.clear();
-    Application.getSceneManager().removeAllSceneObjects();
-
-    BlocksInit();
-    PreviewBlock = new CElementBlock(SRect2(1,1,1,1),1,1);
-    PreviewBlock->setupObjects();*/
 
     cout << "Enter the name of the file you want to load: ";
     cin >> name;
@@ -713,6 +706,7 @@ void CLWIBState::end()
 {
    Application.getGUIEngine().removeAllWidgets(); 
    //our_font.clean();
+   tileArray.clear();
    placeables.clear();
    redoPlaceables.clear();
    Application.getSceneManager().removeAllSceneObjects();
@@ -739,11 +733,11 @@ void CLWIBState::PrepItem(float x, float y, int item) {
    CElementItem *tempPlaceable;
    if (item == 0)
        tempPlaceable = CItemLoader::LoadItem(SRect2f(x, y, 1, 1), (Items::EItemType)item);
-   if (item == 1)
+   else if (item == 1)
        tempPlaceable = CItemLoader::LoadItem(SRect2f(x, y, 1, 1),(Items::EItemType) item);
-   if (item == 2)
+   else if (item == 2)
        tempPlaceable = CItemLoader::LoadItem(SRect2f(x, y, 1, 1),(Items::EItemType) item);
-   if (item == 3)
+   else if (item == 3)
        tempPlaceable = CItemLoader::LoadItem(SRect2f(x, y, 1, 1),(Items::EItemType) item);
    placeables.push_back(tempPlaceable);
    tempPlaceable->setupObjects();
@@ -1620,8 +1614,8 @@ void CLWIBState::pickInsert()
 void CLWIBState::prepHud() {
     // prepping hud wwidgest
     SVector2f norm = SVector2f(.1f, .1f);
-    CTexture *imgLeft = new CTexture(CImageLoader::loadImage("ModelImages/leftArrowPic.bmp"));
-    CTexture *imgright = new CTexture(CImageLoader::loadImage("ModelImages/rightArrowPic.bmp"));
+    CTexture *imgLeft = new CTexture(CImageLoader::loadTGAImage("ModelImages/leftArrowPic.tga"));
+    CTexture *imgright = new CTexture(CImageLoader::loadTGAImage("ModelImages/rightArrowPic.tga"));
     CTexture *saveImg = new CTexture(CImageLoader::loadImage("ModelImages/save.bmp"));
     CTexture *loadImg = new CTexture(CImageLoader::loadImage("ModelImages/folder.bmp"));
     CTexture *undoImg = new CTexture(CImageLoader::loadImage("ModelImages/undo.bmp"));
@@ -1636,7 +1630,7 @@ void CLWIBState::prepHud() {
     blockIn = new CTexture(CImageLoader::loadImage("ModelImages/blockDepth.bmp"));
     blockOut = new CTexture(CImageLoader::loadImage("ModelImages/blockDepth2.bmp"));
 
-    circleArrow = new CTexture(CImageLoader::loadImage("ModelImages/arrow_circle.bmp"));
+    circleArrow = new CTexture(CImageLoader::loadTGAImage("ModelImages/arrow_circle.tga"));
     derp = new CTexture(CImageLoader::loadImage("ModelImages/derp_gray.bmp"));
     grape = new CTexture(CImageLoader::loadImage("ModelImages/grapes_gray.bmp"));
     banana = new CTexture(CImageLoader::loadImage("ModelImages/banana_gray.bmp"));

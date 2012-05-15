@@ -58,7 +58,8 @@ void CElementEnemyLemon::updatePhysicsEngineObject(float time) {
    SVector2f Difference = SVector2f (PlayerPosition.X - Area.Position.X, PlayerPosition.Y - Area.Position.Y);
 
    if (abs(Difference.X) < 1.5f && abs(Difference.Y) < .5f) {
-      explode();
+      Level.getPlayer().subtractHealth(2);
+      takeDamage(1);
    }
    else if (abs(Difference.X) < 5.f && Difference.Y > -.2f) {
       if (Difference.X < 0.f) {
@@ -111,8 +112,6 @@ void CElementEnemyLemon::explode() {
    PlayerActor->addImpulse(SVector2f(0.0f, 20.0f), 0.01f);
 
    Level.getPlayer().setShaking(1.5f, .3f);
-
-   Level.getPlayer().subtractHealth(2);
 
    if (rand()%3 == 0)
       dropItem();
