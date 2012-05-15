@@ -15,17 +15,17 @@ class CGUIImageWidget : public CGUIWidget
 
 public:
 
-	CGUIImageWidget(CTexture * image, SVector2 const & size);
-	CGUIImageWidget(CImage * image, SVector2 const & size);
-	CGUIImageWidget(std::string const & imagePath, SVector2 const & size);
+	CGUIImageWidget(CTexture * image, SVector2f const & size);
+	CGUIImageWidget(CImage * image, SVector2f const & size);
+	CGUIImageWidget(std::string const & imagePath, SVector2f const & size);
 
 	void draw();
 
 	CTexture const * const getImage() const;
 	void setImage(CTexture * image);
 
-	SVector2 const & getSize() const;
-	void setSize(SVector2 const & size);
+	SVector2f const & getSize() const;
+	void setSize(SVector2f const & size);
 
 };
 

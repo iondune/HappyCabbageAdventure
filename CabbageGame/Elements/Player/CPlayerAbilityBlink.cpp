@@ -36,5 +36,5 @@ void CPlayerAbilityBlink::inOnCollision(CCollideable * collider) {
 */
 
 CPlayerAbilityBlink::CPlayerAbilityBlink(CElementPlayer & p) : CPlayerAbility(p, Abilities::BLINK) {
-   Player.getPhysicsEngineObject()->setArea(SRect2(Player.getArea().Position + SVector2(3.0f, 0.0f), Player.getArea().Size));
+   Player.getPhysicsEngineObject()->setArea(SRect2f(Player.getArea().Position + SVector2f(3.0f, 0.0f), Player.getArea().Size));
 }

@@ -1,11 +1,11 @@
 #include "CElementBlockElevator.h"
 #include "CGameLevel.h"
 
-CElementBlockElevator::CElementBlockElevator(SRect2 nArea, int D, int T, float R, float S)
+CElementBlockElevator::CElementBlockElevator(SRect2f nArea, int D, int T, float R, float S)
 : CElementBlock(nArea, D, T), Range(R), Speed(S) {
 }
 
-void CElementBlockElevator::OnCollision(CCollideable *Object) {
+void CElementBlockElevator::OnCollision(const SCollisionEvent& Event) {
    return;
 }
 
@@ -38,7 +38,7 @@ void CElementBlockElevator::writeXML(xmlwriter *l) {
 }
 
 void CElementBlockElevator::setupPhysicsEngineObject() {
-   CElevator *Ele;
+   CCollisionElevator *Ele;
    PhysicsEngineObject = Ele = Level.getPhysicsEngine().addElevator();
    PhysicsEngineObject->setArea(Area);
 
@@ -47,7 +47,7 @@ void CElementBlockElevator::setupPhysicsEngineObject() {
 }
 
 void CElementBlockElevator::updateSceneObject(float time) {
-   SceneObject->setTranslation(SVector3((Area.Position.X+(Area.Position.X+Area.Size.X))/2, (Area.Position.Y+(Area.Position.Y+Area.Size.Y))/2, 0));
+   SceneObject->setTranslation(SVector3f((Area.Position.X+(Area.Position.X+Area.Size.X))/2, (Area.Position.Y+(Area.Position.Y+Area.Size.Y))/2, 0));
 }
 
 void CElementBlockElevator::setupSceneObject() {

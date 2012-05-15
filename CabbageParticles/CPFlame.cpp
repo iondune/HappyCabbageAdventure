@@ -23,7 +23,7 @@ void CPFlame::setupRenderable() {
 void CPFlame::updateMatrices(float timeElapsed) {
    if(Counter > 0) {
       Counter -= timeElapsed;
-      translate = SVector3(-50);
+      translate = SVector3f(-50);
    }
    else {
       sineValue += 4*timeElapsed;
@@ -38,7 +38,7 @@ void CPFlame::updateMatrices(float timeElapsed) {
       // yFactor == [0, 1]
       // yHeight/maxHeight == [0, 1]
       
-      translate = SVector3((yFactor - 0.5f) * MIN(1, pow(yHeight / maxHeight, 0.2f)) + 0.5f,
+      translate = SVector3f((yFactor - 0.5f) * MIN(1, pow(yHeight / maxHeight, 0.2f)) + 0.5f,
                            yHeight + 0.1f,
                            Amplitude*sin(Period*sineValue));
    }

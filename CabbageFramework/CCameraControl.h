@@ -25,7 +25,7 @@ public:
 
     float Phi, Theta;
 
-	CCameraControl(SVector3 const position = SVector3(0, 3, 2))
+	CCameraControl(SVector3f const position = SVector3f(0, 3, 2))
         : Application(CApplication::get()), EventManager(CApplication::get().getEventManager()), Phi(0), Theta(-1.5708f), Tracking(false), MoveSpeed(20.5f)
 	{
         Application.getEventManager().OnMouseEvent.connect(this, & CCameraControl::OnMouseEvent);
@@ -59,7 +59,7 @@ public:
 
 	void update(float const TickTime)
 	{
-		LookDirection = SVector3(cos(Theta)*cos(Phi), sin(Phi), sin(Theta)*cos(Phi));
+		LookDirection = SVector3f(cos(Theta)*cos(Phi), sin(Phi), sin(Theta)*cos(Phi));
 
 		if (EventManager.IsKeyDown[SDLK_w])
 		{
@@ -84,7 +84,7 @@ public:
 		}
 	}
 
-	SVector3 const & getPosition()
+	SVector3f const & getPosition()
 	{
 		return Position;
 	}
