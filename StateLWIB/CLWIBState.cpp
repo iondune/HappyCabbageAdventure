@@ -1630,7 +1630,7 @@ void CLWIBState::prepHud() {
     blockIn = new CTexture(CImageLoader::loadImage("ModelImages/blockDepth.bmp"));
     blockOut = new CTexture(CImageLoader::loadImage("ModelImages/blockDepth2.bmp"));
 
-    circleArrow = new CTexture(CImageLoader::loadImage("ModelImages/arrow_circle.bmp"));
+    circleArrow = new CTexture(CImageLoader::loadTGAImage("ModelImages/arrow_circle.tga"));
     derp = new CTexture(CImageLoader::loadImage("ModelImages/derp_gray.bmp"));
     grape = new CTexture(CImageLoader::loadImage("ModelImages/grapes_gray.bmp"));
     banana = new CTexture(CImageLoader::loadImage("ModelImages/banana_gray.bmp"));
