@@ -64,20 +64,20 @@ void CElementEnemyKiwi::setupSceneObject() {
 void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
    //TODO: Make some class singleton so we can get the player's location
    //TODO:  Clean up KIWI z-axis code
-   if (true/*Manager->isPlayerAlive()*/)
+   if (!Level.getPlayer().isDead())
    {
-   /*   if(zTimer < 0.0f)
+      /*if(zTimer < 0.0f)
          zTimer = 0.0f;
       if(inZ) {
          if(zTimer >= Z_SPEED)
             zTimer = Z_SPEED;
          else {
-            zTimer += TickTime;
+            zTimer += time;
          }
       }
       else {
          if(zTimer > 0.0f)
-            zTimer -= TickTime;
+            zTimer -= time;
          else {
          }
       }*/
