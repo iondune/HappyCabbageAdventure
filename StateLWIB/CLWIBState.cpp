@@ -714,6 +714,7 @@ void CLWIBState::end()
 {
    Application.getGUIEngine().removeAllWidgets(); 
    //our_font.clean();
+   tileArray.clear();
    placeables.clear();
    redoPlaceables.clear();
    Application.getSceneManager().removeAllSceneObjects();
@@ -1622,8 +1623,8 @@ void CLWIBState::pickInsert()
 void CLWIBState::prepHud() {
     // prepping hud wwidgest
     SVector2 norm = SVector2(.1f, .1f);
-    CTexture *imgLeft = new CTexture(CImageLoader::loadImage("ModelImages/leftArrowPic.bmp"));
-    CTexture *imgright = new CTexture(CImageLoader::loadImage("ModelImages/rightArrowPic.bmp"));
+    CTexture *imgLeft = new CTexture(CImageLoader::loadTGAImage("ModelImages/leftArrowPic.tga"));
+    CTexture *imgright = new CTexture(CImageLoader::loadTGAImage("ModelImages/rightArrowPic.tga"));
     CTexture *saveImg = new CTexture(CImageLoader::loadImage("ModelImages/save.bmp"));
     CTexture *loadImg = new CTexture(CImageLoader::loadImage("ModelImages/folder.bmp"));
     CTexture *undoImg = new CTexture(CImageLoader::loadImage("ModelImages/undo.bmp"));
@@ -1638,7 +1639,7 @@ void CLWIBState::prepHud() {
     blockIn = new CTexture(CImageLoader::loadImage("ModelImages/blockDepth.bmp"));
     blockOut = new CTexture(CImageLoader::loadImage("ModelImages/blockDepth2.bmp"));
 
-    circleArrow = new CTexture(CImageLoader::loadImage("ModelImages/arrow_circle.bmp"));
+    circleArrow = new CTexture(CImageLoader::loadTGAImage("ModelImages/arrow_circle.tga"));
     derp = new CTexture(CImageLoader::loadImage("ModelImages/derp_gray.bmp"));
     grape = new CTexture(CImageLoader::loadImage("ModelImages/grapes_gray.bmp"));
     banana = new CTexture(CImageLoader::loadImage("ModelImages/banana_gray.bmp"));
