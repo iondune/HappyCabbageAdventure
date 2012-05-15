@@ -106,7 +106,7 @@ void CElementEnemyPineapple::updateSceneObject(float time) {
 
    Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
 
-   printf("Scale: %f, %f\n", Scale.X, Scale.Y);
+   //printf("Scale: %f, %f\n", Scale.X, Scale.Y);
 
    if (PhysicsEngineObject->getVelocity().Y < .01f && PhysicsEngineObject->getVelocity().Y > -.01f) {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)
