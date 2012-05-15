@@ -596,6 +596,7 @@ void CLWIBState::loadWorld() {
             if(!strcmp("CBlock", xml->getNodeName()))
             {
                 // id, X, Y, height, width / from 0,1,2 so on
+                cDown = 0;
                 x = xml->getAttributeValueAsInt(0);
                 y = xml->getAttributeValueAsInt(1);
                 h = xml->getAttributeValueAsInt(2);
@@ -1071,6 +1072,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
              PrepItem(round(eye.X + previewBlockMouseX),round(eye.Y + previewBlockMouseY),uniType);
          }
          lastMouseOveredBlock = m_qd;
+         printf("LMOB: %d, <%d, %d>\n", m_qd.o, m_qd.mapX, m_qd.mapY);
       }
    }
 }
