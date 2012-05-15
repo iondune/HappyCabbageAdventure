@@ -159,7 +159,10 @@ void CElementBlock::setupSceneObject() {
    tempBlock->setRotation(SVector3f(Texture==-5?-90.f:0, 0, 0));
 
    SceneObject = tempBlock;
-   CApplication::get().getSceneManager().addImmobileSceneObject(tempBlock, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
+   if(Level.isLoaded())
+      CApplication::get().getSceneManager().addImmobileSceneObject(tempBlock, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
+   else
+      CApplication::get().getSceneManager().addSceneObject(tempBlock);
 }
 
 void CElementBlock::printInformation() {

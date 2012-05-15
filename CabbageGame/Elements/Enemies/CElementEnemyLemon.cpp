@@ -78,9 +78,9 @@ void CElementEnemyLemon::updatePhysicsEngineObject(float time) {
 void CElementEnemyLemon::updateSceneObject(float time) {
    SceneObject->setTranslation(SVector3f(Area.getCenter().X,Area.getCenter().Y, 0));
    if (PhysicsEngineObject->getVelocity().X < 0.0f)
-      SceneObject->setRotation(SVector3f(-90, PhysicsEngineObject->getVelocity().X*10.0f, -30));
+      SceneObject->setRotation(SVector3f(-90.f, (float) PhysicsEngineObject->getVelocity().X*10.0f, -30.f));
    else if (PhysicsEngineObject->getVelocity().X >= 0.0f)
-      SceneObject->setRotation(SVector3f(-90, PhysicsEngineObject->getVelocity().X*10.0f, 30));
+      SceneObject->setRotation(SVector3f(-90.f, (float) PhysicsEngineObject->getVelocity().X*10.0f, 30.f));
 
    if(ParticleEngine) {
       SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));

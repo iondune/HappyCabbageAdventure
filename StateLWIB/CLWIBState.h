@@ -44,7 +44,7 @@ class CLWIBState : public CState<CLWIBState>
    int change;
    int tileLoop;
    int dayNight, env; 
-   bool showHelp;
+   bool showHelp, loadedFromXml;
    int enemyType, textureType, itemType, friendType;
    int uniType;
    int WindowWidth, WindowHeight;
