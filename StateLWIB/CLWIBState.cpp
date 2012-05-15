@@ -578,17 +578,10 @@ void CLWIBState::loadWorld() {
                 blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = m_block->getArea().Position.Y+25;
             }
         }   
-        placeables.back()->removeFromSceneManager();
+        placeables.back()->removeFromGame();
         placeables.pop_back();
     }
     initBlockMap();
-
-    /*placeables.clear();
-    Application.getSceneManager().removeAllSceneObjects();
-
-    BlocksInit();
-    PreviewBlock = new CElementBlock(SRect2(1,1,1,1),1,1);
-    PreviewBlock->setupObjects();*/
 
     cout << "Enter the name of the file you want to load: ";
     cin >> name;
@@ -740,11 +733,11 @@ void CLWIBState::PrepItem(float x, float y, int item) {
    CElementItem *tempPlaceable;
    if (item == 0)
        tempPlaceable = CItemLoader::LoadItem(SRect2(x, y, 1, 1), (Items::EItemType)item);
-   if (item == 1)
+   else if (item == 1)
        tempPlaceable = CItemLoader::LoadItem(SRect2(x, y, 1, 1),(Items::EItemType) item);
-   if (item == 2)
+   else if (item == 2)
        tempPlaceable = CItemLoader::LoadItem(SRect2(x, y, 1, 1),(Items::EItemType) item);
-   if (item == 3)
+   else if (item == 3)
        tempPlaceable = CItemLoader::LoadItem(SRect2(x, y, 1, 1),(Items::EItemType) item);
    placeables.push_back(tempPlaceable);
    tempPlaceable->setupObjects();
