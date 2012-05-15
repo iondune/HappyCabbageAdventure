@@ -58,6 +58,7 @@ void initBlockMap() {
 int pastX; int pastY;
 void CLWIBState::begin()
 {
+    loadedFromXml = false;
     tileLoop = 0;
     pastX = 0;
     pastY = 0;
@@ -613,7 +614,9 @@ void CLWIBState::loadWorld() {
                 x = xml->getAttributeValueAsInt(0);
                 y = xml->getAttributeValueAsInt(1);
                 t = xml->getAttributeValueAsInt(4);
+                loadedFromXml = true;
                 PrepEnemy((float)x,(float)y,t);
+                loadedFromXml = false;
             }
             if(!strcmp("CCabbage", xml->getNodeName()))
             {
@@ -782,23 +785,26 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
    }
    printf("Placed enemy starting at %0.2f, %0.2f\n", x, y);
    CGameplayElement *tempPlaceable;
-   if (type == 6){
-        type = 8;
-         h = 3;
-        w = 3;
+   if (!loadedFromXml)
+   {
+       if (type == 6){
+           type = 8;
+           h = 3;
+           w = 3;
+       }
+       else if(type == 7)
+           type = 9;
+       else if(type == 8) 
+           type = 10;
+       else if (type == 9)
+           type = 12;
+       else if (type == 10)
+           type = 14;
+       else if (type == 11)
+           type = 15;
+       else if (type == 12)
+           type = 16;
    }
-   else if(type == 7)
-        type = 9;
-   else if(type == 8) 
-        type = 10;
-   else if (type == 9)
-        type = 12;
-   else if (type == 10)
-        type = 14;
-   else if (type == 11)
-        type = 15;
-   else if (type == 12)
-        type = 16;
    placeables.push_back(tempPlaceable = CEnemyLoader::LoadEnemy(SRect2(x, y, (float)w, (float)h),(Enemies::EEnemyType) type));
    tempPlaceable->setupObjects(); 
    tempPlaceable->printInformation();
@@ -1236,6 +1242,8 @@ void CLWIBState::changeTiles() {
                     Application.getGUIEngine().removeWidget(tileArray[i]);
             }
         }
+        else 
+            tileLoop = 0;
     }
     if (change == 3) { // flag
 
@@ -1324,11 +1332,11 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             friendType = 0;
         }
         if (change == 2) {
-            if (tileLoop = 0)
+            if (tileLoop == 0)
             {
                 uniType = 0;
             }
-            else if (tileLoop = 1)
+            else if (tileLoop == 1)
             {
                 uniType = 9;
             }
@@ -1356,11 +1364,11 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             friendType = 1;
         }
         if (change == 2) {
-            if (uniType = 0)
+            if (tileLoop == 0)
             {
                 uniType = 1;
             }
-            else if (uniType = 1)
+            else if (tileLoop == 1)
             {
                 uniType = 10;
             }
@@ -1385,11 +1393,11 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             cDown = 0;
         }
         if (change == 2) { 
-            if (uniType = 0)
+            if (tileLoop == 0)
             {
                 uniType = 2;
             }
-            else if (uniType = 1)
+            else if (tileLoop == 1)
             {
                 uniType = 11;
             }
@@ -1408,11 +1416,11 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             cDown = 0;
         }
         if (change == 2) {
-            if (uniType = 0)
+            if (tileLoop == 0)
             {
                 uniType = 3;
             }
-            else if (uniType = 1)
+            else if (tileLoop == 1)
             {
                 uniType = 12;
             }
