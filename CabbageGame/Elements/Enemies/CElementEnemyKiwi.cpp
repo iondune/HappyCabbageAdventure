@@ -68,8 +68,6 @@ void CElementEnemyKiwi::setupSceneObject() {
 void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
    //TODO: Make some class singleton so we can get the player's location
    //TODO:  Clean up KIWI z-axis code
-   if (!Level.getPlayer().isDead())
-   {
       /*if(zTimer < 0.0f)
          zTimer = 0.0f;
       if(inZ) {
@@ -108,9 +106,6 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
          bombDropped = true;
       }
    }
-
-   else
-      PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
 }
 
 //This is where the renderable would be updated for the more complex enemies
