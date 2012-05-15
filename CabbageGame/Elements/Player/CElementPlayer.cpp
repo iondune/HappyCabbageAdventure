@@ -384,10 +384,10 @@ void CElementPlayer::setupSoundEffects() {
    temp = MusicDirectory + "fireLaser3.wav";
    fireLaser = Mix_LoadWAV(temp.c_str());
 
-   temp = MusicDirectory + "victory.wav";
+   temp = MusicDirectory + "Soundtracks/Win.wav";
    victoryMusic = Mix_LoadMUS(temp.c_str());
 
-   temp = MusicDirectory + "death.wav";
+   temp = MusicDirectory + "Soundtracks/Death.wav";
    deathMusic = Mix_LoadMUS(temp.c_str());
 
    if (!victoryMusic) {

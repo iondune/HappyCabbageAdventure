@@ -16,6 +16,15 @@ class CElementBlockFlag;
 #include "sound.h"
 #include "CabbageGameInformation.h"
 
+namespace Env {
+   enum Type {
+      FOREST = 0,
+      DESERT,
+      WATER,
+      ICE,
+   };
+}
+
 class CGameLevel {
    friend CGameLevel & CGameLevelLoader::loadLevel(std::string, bool);
 

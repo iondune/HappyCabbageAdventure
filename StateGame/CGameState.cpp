@@ -49,6 +49,9 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
          COverworldState::get().levelCompleted = false;
          COverworldState::get().NewStats = Level->getPlayer().getStats();
          CApplication::get().getStateManager().setState(new CFadeOutState(& COverworldState::get()));
+
+         if (Level->getEnv() == Env::DESERT)
+            CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_HEAT_WAVE, false);
       }
    }
    else  {
