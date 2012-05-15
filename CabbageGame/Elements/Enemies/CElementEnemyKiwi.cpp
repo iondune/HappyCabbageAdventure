@@ -9,13 +9,12 @@ CElementEnemyKiwi::CElementEnemyKiwi(SRect2 nArea, int direction) :
 void CElementEnemyKiwi::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(SRect2(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y * 0.6f));
+   PhysicsEngineObject->setArea(SRect2(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y));
 
    //Set actor attributes
    PhysicsEngineObject->setControlFall(false);
    PhysicsEngineObject->setFallAcceleration(0.0f);
 
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_KIWI;
    PhysicsEngineObject->getAttributes().MaxWalk = 3.0f;
    PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
 
@@ -24,6 +23,11 @@ void CElementEnemyKiwi::setupPhysicsEngineObject() {
 
    //TODO:  Is this still needed?
    PhysicsEngineObject->getAttributes().Reacts = 0;
+
+   if(Direction == 0)
+      PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
+   else
+      PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
 }
 
 void CElementEnemyKiwi::setupSceneObject() {
@@ -87,12 +91,6 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
 
       SVector2 vel = PhysicsEngineObject->getVelocity();
       PhysicsEngineObject->setVelocity(SVector2(vel.X, vel.Y > 0 ? vel.Y - 1.0f*time : 0));
-
-      //TODO: Check player direction
-      if(Direction == 0)
-         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
-      else
-         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
 
       //TODO:  Z-Code
       //TODO:  Player location
