@@ -318,11 +318,14 @@ void CElementPlayer::incrementLives() {
 void CElementPlayer::decrementLives() {
    Mix_PlayMusic(deathMusic, 1);
 
+   //Reset stage
    if (Stats.Lives > 1) {
       Stats.Lives--;
       Stats.Health = Stats.MaxHealth;
       Stats.Energy = Stats.MaxEnergy;
 
+      CGameState::get().Stats = Stats;
+      CApplication::get().getStateManager().setState(new CFadeOutState(& CGameState::get()));
    }
 
    //Reset to overworld and set stats back to max values.
@@ -334,7 +337,7 @@ void CElementPlayer::decrementLives() {
       newStats.Energy = Stats.MaxEnergy;
       newStats.Lives = 3; //default number of lives
 
-      CApplication::get().getStateManager().setState(new CFadeOutState(& COverworldState::get()));  //What should I ACTUALLY PUT HERE?
+      CApplication::get().getStateManager().setState(new CFadeOutState(& COverworldState::get()));
    }
 }
 
