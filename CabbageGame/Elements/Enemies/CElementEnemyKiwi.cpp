@@ -68,43 +68,42 @@ void CElementEnemyKiwi::setupSceneObject() {
 void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
    //TODO: Make some class singleton so we can get the player's location
    //TODO:  Clean up KIWI z-axis code
-      /*if(zTimer < 0.0f)
-         zTimer = 0.0f;
-      if(inZ) {
-         if(zTimer >= Z_SPEED)
-            zTimer = Z_SPEED;
-         else {
-            zTimer += time;
-         }
-      }
-      else {
-         if(zTimer > 0.0f)
-            zTimer -= time;
-         else {
-         }
-      }*/
+   /*if(zTimer < 0.0f)
+     zTimer = 0.0f;
+     if(inZ) {
+     if(zTimer >= Z_SPEED)
+     zTimer = Z_SPEED;
+     else {
+     zTimer += time;
+     }
+     }
+     else {
+     if(zTimer > 0.0f)
+     zTimer -= time;
+     else {
+     }
+     }*/
 
-      SineValue = 0.6f*sin(Area.Position.X - OldX);
-      Area.Position.Y += SineValue;
+   SineValue = 0.6f*sin(Area.Position.X - OldX);
+   Area.Position.Y += SineValue;
 
-      SVector2 vel = PhysicsEngineObject->getVelocity();
-      PhysicsEngineObject->setVelocity(SVector2(vel.X, vel.Y > 0 ? vel.Y - 1.0f*time : 0));
+   SVector2 vel = PhysicsEngineObject->getVelocity();
+   PhysicsEngineObject->setVelocity(SVector2(vel.X, vel.Y > 0 ? vel.Y - 1.0f*time : 0));
 
-      //TODO:  Z-Code
-      //TODO:  Player location
-      /*if(!inZ) {*/
+   //TODO:  Z-Code
+   //TODO:  Player location
+   /*if(!inZ) {*/
 
-      float xDist = Area.Position.X - Level.getPlayer().getArea().Position.X;
+   float xDist = Area.Position.X - Level.getPlayer().getArea().Position.X;
 
-      //Drop bomb projectile
-      if (xDist < .2f && !bombDropped && Direction == 0) {
-         DropBomb();
-         bombDropped = true;
-      }
-      else if (xDist > -.2f && !bombDropped && Direction == 1) {
-         DropBomb();
-         bombDropped = true;
-      }
+   //Drop bomb projectile
+   if (xDist < .2f && !bombDropped && Direction == 0) {
+      DropBomb();
+      bombDropped = true;
+   }
+   else if (xDist > -.2f && !bombDropped && Direction == 1) {
+      DropBomb();
+      bombDropped = true;
    }
 }
 
