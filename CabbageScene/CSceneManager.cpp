@@ -436,7 +436,7 @@ void CSceneManager::drawAll()
 	SceneChanged = false;
 
 	SceneFrameBuffer->bind();
-   printf("Num objects: %d\n", numObjects);
+   //printf("Num objects: %d\n", numObjects);
 }
 
 void CSceneManager::blurSceneIn(float seconds, float const RunTime)
