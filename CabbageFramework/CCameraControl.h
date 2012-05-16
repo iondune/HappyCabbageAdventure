@@ -25,68 +25,12 @@ public:
 
     float Phi, Theta;
 
-	CCameraControl(SVector3 const position = SVector3(0, 3, 2))
-        : Application(CApplication::get()), EventManager(CApplication::get().getEventManager()), Phi(0), Theta(-1.5708f), Tracking(false), MoveSpeed(20.5f)
-	{
-        Application.getEventManager().OnMouseEvent.connect(this, & CCameraControl::OnMouseEvent);
-	}
+	CCameraControl(SVector3f const position = SVector3f(0, 3, 2));
 
-	void OnMouseEvent(SMouseEvent const & Event)
-	{
-        if ((Event.Pressed) && Event.Button.Value == Event.Button.Right)
-			Tracking = true;
+	void OnMouseEvent(SMouseEvent const & Event);
 
-		if ((! Event.Pressed) && Event.Button.Value == Event.Button.Right)
-			Tracking = false;
+	void update(float const TickTime);
 
-        if ((Event.Type.Value == Event.Type.Move))
-		{
-			if (Tracking)
-			{
-                Theta += (Event.Movement.X)*0.005f;
-				Phi -= (Event.Movement.Y)*0.005f;
-
-                if (Phi > 3.1415f/2.02f)
-                    Phi = 3.1415f/2.02f;
-                if (Phi < -3.1415f/2.02f)
-                    Phi = -3.1415f/2.02f;
-        	}
-
-            MouseLastX = Event.Location.X;
-			MouseLastY = Event.Location.Y;
-		}
-	}
-
-	void update(float const TickTime)
-	{
-		LookDirection = SVector3(cos(Theta)*cos(Phi), sin(Phi), sin(Theta)*cos(Phi));
-
-		if (EventManager.IsKeyDown[SDLK_w])
-		{
-			Position += LookDirection*MoveSpeed*TickTime;
-		}
-
-		if (EventManager.IsKeyDown[SDLK_a])
-		{
-			Position.X += cos(Theta - 1.57079633f)*MoveSpeed*TickTime;
-			Position.Z += sin(Theta - 1.57079633f)*MoveSpeed*TickTime;
-		}
-
-		if (EventManager.IsKeyDown[SDLK_d])
-		{
-			Position.X += cos(Theta + 1.57079633f)*MoveSpeed*TickTime;
-			Position.Z += sin(Theta + 1.57079633f)*MoveSpeed*TickTime;
-		}
-
-		if (EventManager.IsKeyDown[SDLK_s])
-		{
-			Position -= LookDirection*MoveSpeed*TickTime;
-		}
-	}
-
-	SVector3 const & getPosition()
-	{
-		return Position;
-	}
+	SVector3f const & getPosition();
 
 };

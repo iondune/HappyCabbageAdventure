@@ -74,7 +74,7 @@ class CLWIBState : public CState<CLWIBState>
    CLWIBState();
    void begin();
    CPerspectiveCamera *Camera;
-   SVector3 eye, look;
+   SVector3f eye, look;
 
    int blockWidth, blockHeight,blockDepth;
    void OnRenderStart(float const Elapsed);
@@ -100,7 +100,7 @@ class CLWIBState : public CState<CLWIBState>
    void prepHud();
    void stepCamera(float delta);
    void changeTiles();
-   void removeObject();
+   void removeCollideable();
    void undoObjects();
    void OnWidgetClick(CGUIWidget * Widget);
    void OnWidgetHover(CGUIWidget * Widget);

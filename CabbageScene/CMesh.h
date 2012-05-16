@@ -20,7 +20,7 @@ public:
     struct STriangle
     {
         unsigned int Indices[3];
-        SVector3 Normal;
+        SVector3f Normal;
     };
 
     struct SMeshBuffer
@@ -43,16 +43,16 @@ public:
 
     unsigned int const getVertexCount() const;
 
-    void centerMeshByAverage(SVector3 const & CenterLocation);
-    void centerMeshByExtents(SVector3 const & CenterLocation);
+    void centerMeshByAverage(SVector3f const & CenterLocation);
+    void centerMeshByExtents(SVector3f const & CenterLocation);
 
-    void resizeMesh(SVector3 const & Scale);
+    void resizeMesh(SVector3f const & Scale);
 
-    SVector3 const getExtent() const;
+    SVector3f const getExtent() const;
 
     void calculateNormalsPerFace();
     void calculateNormalsPerVertex(bool CombineNear = true, float const NearTolerance = 0.01f);
-	void calculateTextureCoordinates(SVector3 const uVec, SVector3 const vVec);
+	void calculateTextureCoordinates(SVector3f const uVec, SVector3f const vVec);
 
     void updateBuffers();
 

@@ -8,10 +8,10 @@ class CElementEnemyBanana : public CElementEnemy, ISquishable
    private:
       float ScaleMult, ShootTime;
       bool PositiveScale;
-      SVector2 Scale;
+      SVector2f Scale;
 
    public:
-      CElementEnemyBanana(SRect2 nArea);
+      CElementEnemyBanana(SRect2f nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

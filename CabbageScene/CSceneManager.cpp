@@ -252,8 +252,8 @@ void CSceneManager::removeAllSceneObjects()
 }
 
 bool sortISOXY (ISceneObject* a, ISceneObject* b) {
-	SVector3 av = a->getWorldBoundingBoxMinPoint();
-	SVector3 bv = b->getWorldBoundingBoxMinPoint();
+	SVector3f av = a->getWorldBoundingBoxMinPoint();
+	SVector3f bv = b->getWorldBoundingBoxMinPoint();
 	if(av.X == bv.X) {
 		return av.Y < bv.Y;
 	}
@@ -287,7 +287,7 @@ ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
 		for (float i = (*aList)[0]->getWorldBoundingBoxMinPoint().X; j < aList->size() && i <= (*aList)[aList->size()-1]->getWorldBoundingBoxMinPoint().X + ARBITRARILY_INCREASING_VALUE;) {
 			ISceneObject * parentNode = new ISceneObject();
 			parentNode->setImmobile(true);
-			parentNode->setBoundingBox(SBoundingBox3(SVector3(i, -INF, -INF), SVector3(i + ARBITRARILY_INCREASING_VALUE, INF, INF)));
+			parentNode->setBoundingBox(SBoundingBox3(SVector3f(i, -INF, -INF), SVector3f(i + ARBITRARILY_INCREASING_VALUE, INF, INF)));
 			// TODO: See if I can get away with not setting any transforms for the nodes in the algorithm. Reasoning: if each object has its own transforms, they'll draw correctly, and if the parent has the correct bounding box, it will cull correctly (since its transforms will be 0).
 
 			int oldJ = j;
