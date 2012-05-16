@@ -68,10 +68,10 @@ void CElementEnemyProjectileKiwi::OnCollision(CCollideable *Object) {
          if (Level.getPlayer().decrementHealth()) {
 
            if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
-              PlayerActor->addImpulse(SVector2f(4.f, 2.f), 0.1f);
+              PlayerActor->addImpulse(SVector2f(4.f, 2.f), 0.001f);
 
            else
-              PlayerActor->addImpulse(SVector2f(-4.f, 2.f), 0.1f);
+              PlayerActor->addImpulse(SVector2f(-4.f, 2.f), 0.001f);
 
            Level.getPlayer().setShaking(1.0f, 3.0f);
          }

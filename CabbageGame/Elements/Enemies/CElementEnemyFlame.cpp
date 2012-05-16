@@ -28,13 +28,13 @@ void CElementEnemyFlame::OnCollision(const SCollisionEvent& Event) {
          if(Level.getPlayer().decrementHealth()) {
             CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
             if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {
-               PlayerActor->addImpulse(SVector2f(0.0f, flameJumpFactor), 0.01f);
+               PlayerActor->addImpulse(SVector2f(0.0f, flameJumpFactor), 0.001f);
             }
          }
       }
       else {
          //We can make enemies jump when they touch fire here too, once we have a pointer to the CElementEnemy*.
-         ((CCollisionActor *)Event.Other)->addImpulse(SVector2f(0.0f, flameJumpFactor), 0.01f);
+         ((CCollisionActor *)Event.Other)->addImpulse(SVector2f(0.0f, flameJumpFactor), 0.001f);
       }
    }
 }
