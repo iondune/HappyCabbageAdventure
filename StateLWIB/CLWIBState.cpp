@@ -58,6 +58,7 @@ void initBlockMap() {
 int pastX; int pastY;
 void CLWIBState::begin()
 {
+    loadedFromXml = false;
     tileLoop = 0;
     pastX = 0;
     pastY = 0;
@@ -578,17 +579,10 @@ void CLWIBState::loadWorld() {
                 blockMap[(int)m_block->getArea().Position.X+25+i][(int)(m_block->getArea().Position.Y-0.5+25)+j].mapY = (int) m_block->getArea().Position.Y+25;
             }
         }   
-        placeables.back()->removeFromSceneManager();
+        placeables.back()->removeFromGame();
         placeables.pop_back();
     }
     initBlockMap();
-
-    /*placeables.clear();
-    Application.getSceneManager().removeAllSceneObjects();
-
-    BlocksInit();
-    PreviewBlock = new CElementBlock(SRect2(1,1,1,1),1,1);
-    PreviewBlock->setupObjects();*/
 
     cout << "Enter the name of the file you want to load: ";
     cin >> name;
@@ -603,6 +597,7 @@ void CLWIBState::loadWorld() {
             if(!strcmp("CBlock", xml->getNodeName()))
             {
                 // id, X, Y, height, width / from 0,1,2 so on
+                cDown = 0;
                 x = xml->getAttributeValueAsInt(0);
                 y = xml->getAttributeValueAsInt(1);
                 h = xml->getAttributeValueAsInt(2);
@@ -620,7 +615,9 @@ void CLWIBState::loadWorld() {
                 x = xml->getAttributeValueAsInt(0);
                 y = xml->getAttributeValueAsInt(1);
                 t = xml->getAttributeValueAsInt(4);
+                loadedFromXml = true;
                 PrepEnemy((float)x,(float)y,t);
+                loadedFromXml = false;
             }
             if(!strcmp("CCabbage", xml->getNodeName()))
             {
@@ -713,6 +710,7 @@ void CLWIBState::end()
 {
    Application.getGUIEngine().removeAllWidgets(); 
    //our_font.clean();
+   tileArray.clear();
    placeables.clear();
    redoPlaceables.clear();
    Application.getSceneManager().removeAllSceneObjects();
@@ -739,11 +737,11 @@ void CLWIBState::PrepItem(float x, float y, int item) {
    CElementItem *tempPlaceable;
    if (item == 0)
        tempPlaceable = CItemLoader::LoadItem(SRect2f(x, y, 1, 1), (Items::EItemType)item);
-   if (item == 1)
+   else if (item == 1)
        tempPlaceable = CItemLoader::LoadItem(SRect2f(x, y, 1, 1),(Items::EItemType) item);
-   if (item == 2)
+   else if (item == 2)
        tempPlaceable = CItemLoader::LoadItem(SRect2f(x, y, 1, 1),(Items::EItemType) item);
-   if (item == 3)
+   else if (item == 3)
        tempPlaceable = CItemLoader::LoadItem(SRect2f(x, y, 1, 1),(Items::EItemType) item);
    placeables.push_back(tempPlaceable);
    tempPlaceable->setupObjects();
@@ -788,24 +786,26 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
    }
    printf("Placed enemy starting at %0.2f, %0.2f\n", x, y);
    CGameplayElement *tempPlaceable;
-   if (type == 6){
-        type = 8;
-         h = 3;
-        w = 3;
+   if (!loadedFromXml)
+   {
+       if (type == 6){
+           type = 8;
+           h = 3;
+           w = 3;
+       }
+       else if(type == 7)
+           type = 9;
+       else if(type == 8) 
+           type = 10;
+       else if (type == 9)
+           type = 12;
+       else if (type == 10)
+           type = 14;
+       else if (type == 11)
+           type = 15;
+       else if (type == 12)
+           type = 16;
    }
-   else if(type == 7)
-        type = 9;
-   else if(type == 8) 
-        type = 10;
-   else if (type == 9)
-        type = 12;
-   else if (type == 10)
-        type = 14;
-   else if (type == 11)
-        type = 15;
-   else if (type == 12)
-        type = 16;
-   placeables.push_back(tempPlaceable = CEnemyLoader::LoadEnemy(SRect2f(x, y, (float)w, (float)h),(Enemies::EEnemyType) type));
    tempPlaceable->setupObjects(); 
    tempPlaceable->printInformation();
 
@@ -933,7 +933,7 @@ void CLWIBState::PrepSky() {
    CMeshSceneObject *cutOffBlock;
 
    CMesh* ref = CMeshLoader::load3dsMesh("Base/Quad.3ds");
-   ref->centerMeshByExtents(SVector3(0.0f));
+   ref->centerMeshByExtents(SVector3f(0.0f));
    ref->linearizeIndices();
    ref->calculateNormalsPerFace();
 
@@ -942,9 +942,9 @@ void CLWIBState::PrepSky() {
 
    cutOffBlock->setShader(ERP_DEFAULT, "DiffuseTextureBright");
    cutOffBlock->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Textured");
-   cutOffBlock->setTranslation(SVector3(-25, 1, 1));
-   cutOffBlock->setScale(SVector3(1, 1, 1));
-   cutOffBlock->setRotation(SVector3(90.0f, 0.0f, 0.0f));
+   cutOffBlock->setTranslation(SVector3f(-25, 1, 1));
+   cutOffBlock->setScale(SVector3f(1, 1, 1));
+   cutOffBlock->setRotation(SVector3f(90.0f, 0.0f, 0.0f));
 
    cutOffBlock->setTexture(CImageLoader::loadTexture("Base/sky.bmp", true));
    CApplication::get().getSceneManager().addSceneObject(cutOffBlock);
@@ -1077,6 +1077,7 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
              PrepItem(round(eye.X + previewBlockMouseX),round(eye.Y + previewBlockMouseY),uniType);
          }
          lastMouseOveredBlock = m_qd;
+         printf("LMOB: %d, <%d, %d>\n", m_qd.o, m_qd.mapX, m_qd.mapY);
       }
    }
 }
@@ -1242,6 +1243,8 @@ void CLWIBState::changeTiles() {
                     Application.getGUIEngine().removeWidget(tileArray[i]);
             }
         }
+        else 
+            tileLoop = 0;
     }
     if (change == 3) { // flag
 
@@ -1330,11 +1333,11 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             friendType = 0;
         }
         if (change == 2) {
-            if (tileLoop = 0)
+            if (tileLoop == 0)
             {
                 uniType = 0;
             }
-            else if (tileLoop = 1)
+            else if (tileLoop == 1)
             {
                 uniType = 9;
             }
@@ -1362,11 +1365,11 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             friendType = 1;
         }
         if (change == 2) {
-            if (uniType = 0)
+            if (tileLoop == 0)
             {
                 uniType = 1;
             }
-            else if (uniType = 1)
+            else if (tileLoop == 1)
             {
                 uniType = 10;
             }
@@ -1391,11 +1394,11 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             cDown = 0;
         }
         if (change == 2) { 
-            if (uniType = 0)
+            if (tileLoop == 0)
             {
                 uniType = 2;
             }
-            else if (uniType = 1)
+            else if (tileLoop == 1)
             {
                 uniType = 11;
             }
@@ -1414,11 +1417,11 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             cDown = 0;
         }
         if (change == 2) {
-            if (uniType = 0)
+            if (tileLoop == 0)
             {
                 uniType = 3;
             }
-            else if (uniType = 1)
+            else if (tileLoop == 1)
             {
                 uniType = 12;
             }
@@ -1620,8 +1623,8 @@ void CLWIBState::pickInsert()
 void CLWIBState::prepHud() {
     // prepping hud wwidgest
     SVector2f norm = SVector2f(.1f, .1f);
-    CTexture *imgLeft = new CTexture(CImageLoader::loadImage("ModelImages/leftArrowPic.bmp"));
-    CTexture *imgright = new CTexture(CImageLoader::loadImage("ModelImages/rightArrowPic.bmp"));
+    CTexture *imgLeft = new CTexture(CImageLoader::loadTGAImage("ModelImages/leftArrowPic.tga"));
+    CTexture *imgright = new CTexture(CImageLoader::loadTGAImage("ModelImages/rightArrowPic.tga"));
     CTexture *saveImg = new CTexture(CImageLoader::loadImage("ModelImages/save.bmp"));
     CTexture *loadImg = new CTexture(CImageLoader::loadImage("ModelImages/folder.bmp"));
     CTexture *undoImg = new CTexture(CImageLoader::loadImage("ModelImages/undo.bmp"));
@@ -1636,7 +1639,7 @@ void CLWIBState::prepHud() {
     blockIn = new CTexture(CImageLoader::loadImage("ModelImages/blockDepth.bmp"));
     blockOut = new CTexture(CImageLoader::loadImage("ModelImages/blockDepth2.bmp"));
 
-    circleArrow = new CTexture(CImageLoader::loadImage("ModelImages/arrow_circle.bmp"));
+    circleArrow = new CTexture(CImageLoader::loadTGAImage("ModelImages/arrow_circle.tga"));
     derp = new CTexture(CImageLoader::loadImage("ModelImages/derp_gray.bmp"));
     grape = new CTexture(CImageLoader::loadImage("ModelImages/grapes_gray.bmp"));
     banana = new CTexture(CImageLoader::loadImage("ModelImages/banana_gray.bmp"));

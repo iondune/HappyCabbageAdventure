@@ -311,6 +311,7 @@ bool CElementPlayer::subtractHealth(int amount) {
       Mix_PlayChannel(-1, takeDmg, 0);
       return true;
    }
+   return false;
 }
 
 void CElementPlayer::incrementLives() {
