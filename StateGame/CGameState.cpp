@@ -43,7 +43,7 @@ CGameLevel & CGameState::getCurrentLevel() {
 #include "../CabbageGame/Elements/Player/CElementPlayer.h"
 void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
-   if(Event.Pressed ){
+   if(Event.Pressed){
       if(Event.Key == SDLK_ESCAPE) {
          Mix_FadeOutMusic(2000);
          COverworldState::get().levelCompleted = false;

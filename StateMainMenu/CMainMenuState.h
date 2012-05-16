@@ -40,6 +40,7 @@ class CMainMenuState : public CState<CMainMenuState>
 
       CMainMenuState();
       int mouse_x, mouse_y;
+      int buttonNum;
       char curDirection;
       float curAngle, maxX, maxY, sineValue;
       SPosition2 size;

@@ -23,7 +23,7 @@ void CElementPlayer::setStats(Cabbage::PlayerInformation st) {
 }
 
 void CElementPlayer::doGodmode() {
-   if(CApplication::get().getEventManager().IsKeyDown[SDLK_a]) {
+   if(CApplication::get().getEventManager().IsKeyDown[SDLK_a] || CApplication::get().getEventManager().IsKeyDown[SDLK_LEFT]) {
       if(MoveKeyDelay > 0.0f) {
          if(!used(Abilities::DASH)) {
             Abilities.push_back(new CPlayerAbilityDash(*this, true));
@@ -38,7 +38,7 @@ void CElementPlayer::doGodmode() {
       Action = Walking;
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
    }
-   else if(CApplication::get().getEventManager().IsKeyDown[SDLK_d]) {
+   else if(CApplication::get().getEventManager().IsKeyDown[SDLK_d] || CApplication::get().getEventManager().IsKeyDown[SDLK_RIGHT]) {
       if(MoveKeyDelay > 0.0f) {
          if(!used(Abilities::DASH)) {
             Abilities.push_back(new CPlayerAbilityDash(*this, true));
@@ -94,7 +94,7 @@ void CElementPlayer::updatePlayerAction() {
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
       return;
    }
-   if(CApplication::get().getEventManager().IsKeyDown[SDLK_a]) {
+   if(CApplication::get().getEventManager().IsKeyDown[SDLK_a] || CApplication::get().getEventManager().IsKeyDown[SDLK_LEFT]) {
       if(Stats.canUseAbility(Abilities::DASH)) {
          if(Action == Standing) {
             if(MoveKeyDelay > 0.0f) {
@@ -113,7 +113,7 @@ void CElementPlayer::updatePlayerAction() {
       Action = Walking;
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
    }
-   else if(CApplication::get().getEventManager().IsKeyDown[SDLK_d]) {
+   else if(CApplication::get().getEventManager().IsKeyDown[SDLK_d] || CApplication::get().getEventManager().IsKeyDown[SDLK_RIGHT]) {
       if(Stats.canUseAbility(Abilities::DASH)) {
          if(Action == Standing) {
             if(MoveKeyDelay > 0.0f) {
@@ -203,7 +203,7 @@ void CElementPlayer::checkAbilityKeypress() {
       if(!used(Abilities::DASH)) {
       }
       else {
-         getAbility(Abilities::DASH)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_a] || CApplication::get().getEventManager().IsKeyDown[SDLK_d]);
+         getAbility(Abilities::DASH)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_LEFT] || CApplication::get().getEventManager().IsKeyDown[SDLK_RIGHT] || CApplication::get().getEventManager().IsKeyDown[SDLK_a] || CApplication::get().getEventManager().IsKeyDown[SDLK_d]);
       }
    }
    if(Stats.canUseAbility(Abilities::BLINK)) {
@@ -269,14 +269,15 @@ void CElementPlayer::updateSceneObject(float time) {
    View->setCutoffPoint(l?l->getArea():SRect2f(-50.0f, -50.0f, 0.0f, 0.0f),r?r->getArea():SRect2f(-50.0f, -50.0f, 0.0f, 0.0f));
 
    updateAbilities(time);
-   if (Victory)
+   if (Victory) {
       playLevelVictory(time);
+   }
    else {
       View->updateView(time);
-      Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
-      View->setCabbageScale(SVector3f(Scale.X, Scale.X, Scale.Y));
    }
 
+   Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
+   View->setCabbageScale(SVector3(Scale.X, Scale.X, Scale.Y));
 }
 
 Cabbage::PlayerInformation & CElementPlayer::getStats() {
@@ -486,7 +487,30 @@ void CElementPlayer::playLevelVictory(float time) {
    //Start Victory Music
    if (VictoryTime == 0.0f) {
       Mix_PlayMusic(victoryMusic, 1);
+
+      if (!WinParticle1)
+         WinParticle1 = new CParticleEngine(SVector3(curLocation.X, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
+      if (!WinParticle2)
+         WinParticle2 = new CParticleEngine(SVector3(curLocation.X + 4.f, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
+      if (!WinParticle3)
+         WinParticle3 = new CParticleEngine(SVector3(curLocation.X + 8.f, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
    }
+
+   printf("After winparticles\n");
+
+   if (WinParticle1) {
+      printf("B/f 1\n");
+      WinParticle1->step(time);
+   }
+   if (WinParticle2) {
+      printf("B/f 2\n");
+      WinParticle2->step(time);
+   }
+   if (WinParticle3) {
+      printf("B/f 3\n");
+      WinParticle3->step(time);
+   }
+
 
    if (VictoryTime > .00f && VictoryTime < .07f) {
       Action = Standing;
@@ -507,16 +531,7 @@ void CElementPlayer::playLevelVictory(float time) {
       Action = Jumping;
       PhysicsEngineObject->setJumping(true);
    }
-   //Fireworks.  Ignoring for now. I can do that.  : D
-   /*else if (VictoryTime > .76f && VictoryTime < 1.f) {
-      if (!f1) {
-         SVector3f flagPosition = renderFlag->getTranslation();
 
-         f1 = new CParticleEngine(SVector3f(flagPosition.X, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);  //Would like to change these later so not leaves. Fine for now
-         f2 = new CParticleEngine(SVector3f(flagPosition.X + 4.f, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);
-         f3 = new CParticleEngine(SVector3f(flagPosition.X + 8.f, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);
-      }
-   }*/
    else if (VictoryTime > 1.f && VictoryTime < 1.2f) {
       Action = Walking;
       PhysicsEngineObject->setJumping(false);
@@ -549,20 +564,21 @@ void CElementPlayer::playLevelVictory(float time) {
       PhysicsEngineObject->setArea(SRect2f(Area.Position.X - 3.f*time, Area.Position.Y, 1.f, 1.f));
    }
    else if (VictoryTime > 4.9f && VictoryTime < 6.4f) {
-      /*if (!glow) {
-         glow = new CParticleEngine(SVector3f(Area.Position.X + 0.5f, Area.Position.Y - 0.25f, 0), 400, 2.f, LASER_CHARGING_PARTICLE);
-      }*/
+      if (!glow) {
+         glow = new CParticleEngine(SVector3(Area.getCenter().X + 0.5f, Area.getCenter().Y, 0), 400, 2.f, LASER_CHARGING_PARTICLE);
+      }
       Action = Standing;
       PhysicsEngineObject->setJumping(false);
 
       Scale.Y -= 0.4f*time;
+      glow->step(time);
    }
 
    if (VictoryTime > 6.9f && VictoryTime < 7.3f) {
       Scale.Y += 1.2f*time;
       Scale.X -= 1.8f*time;
 
-      PhysicsEngineObject->addImpulse(SVector2f(0.f, 30.f));
+      PhysicsEngineObject->addImpulse(SVector2(0.f, 30.f));
 
    }
 
@@ -582,4 +598,6 @@ void CElementPlayer::playLevelVictory(float time) {
    View->updateShadow();
 
    VictoryTime += time;
+
+   printf("End of victory\n");
 }
