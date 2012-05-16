@@ -43,7 +43,7 @@ bool const CCollisionActor::EActionType::operator == (Domain const value) const
 
 
 CCollisionActor::CCollisionActor()
-	: Standing(0), JumpTimer(0.f), FallAcceleration(0), ControlFall(true) 
+	: Standing(0), JumpTimer(0.f), FallAcceleration(0), ControlFall(true), WantsToJump(false), Jumping(false)
 {
 	TypeId = INTERACTOR_ACTORS;
 	CollisionMask = INTERACTOR_BLOCKS | INTERACTOR_ACTORS;
