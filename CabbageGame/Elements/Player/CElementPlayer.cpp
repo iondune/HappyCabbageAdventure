@@ -561,7 +561,7 @@ void CElementPlayer::playLevelVictory(float time) {
    }
    else if (VictoryTime > 4.9f && VictoryTime < 6.4f) {
       if (!glow) {
-         glow = new CParticleEngine(SVector3(Area.getCenter().X, Area.getCenter().Y, 0), 400, 2.f, LASER_CHARGING_PARTICLE);
+         glow = new CParticleEngine(SVector3f(Area.getCenter().X, Area.getCenter().Y, 0), 400, 2.f, LASER_CHARGING_PARTICLE);
       }
       Action = Standing;
       PhysicsEngineObject->setJumping(false);
