@@ -12,41 +12,41 @@ typedef struct {
 } MidiEvent;
 
 /* Midi events */
-#define ME_NONE 	0
-#define ME_NOTEON	1
-#define ME_NOTEOFF	2
-#define ME_KEYPRESSURE	3
-#define ME_MAINVOLUME	4
-#define ME_PAN		5
-#define ME_SUSTAIN	6
-#define ME_EXPRESSION	7
-#define ME_PITCHWHEEL	8
-#define ME_PROGRAM	9
-#define ME_TEMPO	10
-#define ME_PITCH_SENS	11
+#define ME_NONE    0
+#define ME_NOTEON   1
+#define ME_NOTEOFF   2
+#define ME_KEYPRESSURE   3
+#define ME_MAINVOLUME   4
+#define ME_PAN      5
+#define ME_SUSTAIN   6
+#define ME_EXPRESSION   7
+#define ME_PITCHWHEEL   8
+#define ME_PROGRAM   9
+#define ME_TEMPO   10
+#define ME_PITCH_SENS   11
 
-#define ME_ALL_SOUNDS_OFF	12
-#define ME_RESET_CONTROLLERS	13
-#define ME_ALL_NOTES_OFF	14
-#define ME_TONE_BANK	15
+#define ME_ALL_SOUNDS_OFF   12
+#define ME_RESET_CONTROLLERS   13
+#define ME_ALL_NOTES_OFF   14
+#define ME_TONE_BANK   15
 
-#define ME_LYRIC	16
-#define ME_TONE_KIT	17
-#define ME_MASTERVOLUME	18
+#define ME_LYRIC   16
+#define ME_TONE_KIT   17
+#define ME_MASTERVOLUME   18
 #define ME_CHANNEL_PRESSURE 19
 
-#define ME_HARMONICCONTENT	71
-#define ME_RELEASETIME		72
-#define ME_ATTACKTIME		73
-#define ME_BRIGHTNESS		74
+#define ME_HARMONICCONTENT   71
+#define ME_RELEASETIME      72
+#define ME_ATTACKTIME      73
+#define ME_BRIGHTNESS      74
 
-#define ME_REVERBERATION	91
-#define ME_CHORUSDEPTH		93
+#define ME_REVERBERATION   91
+#define ME_CHORUSDEPTH      93
 
-#define ME_EOT		99
+#define ME_EOT      99
 
 
-#define SFX_BANKTYPE	64
+#define SFX_BANKTYPE   64
 
 typedef struct {
   int

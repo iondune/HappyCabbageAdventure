@@ -15,6 +15,8 @@
 #include "CSceneManager.h"
 #include "CBufferObject.h"
 
+#include "CTextureLoader.h"
+
 #include "SUniform.h"
 #include "SAttribute.h"
 

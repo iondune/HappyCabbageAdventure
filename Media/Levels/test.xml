@@ -53,5 +53,5 @@
 </DeathBlock>
 <CCabbage X ="-23" Y ="1" height ="1" width ="1">
 </CCabbage>
-<CEnemy X ="-18" Y ="3" height ="1" width ="1" type ="17">
+<CEnemy X ="-18" Y ="3" height ="1" width ="1" type ="15">
 </CEnemy>

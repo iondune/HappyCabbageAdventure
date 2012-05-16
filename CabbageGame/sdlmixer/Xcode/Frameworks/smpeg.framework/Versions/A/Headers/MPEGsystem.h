@@ -21,7 +21,7 @@ class MPEGstream;
 class MPEGsystem : public MPEGerror
 {
 public:
-	/* Michel Darricau from eProcess <mdarricau@eprocess.fr>  need for override in popcorn */
+   /* Michel Darricau from eProcess <mdarricau@eprocess.fr>  need for override in popcorn */
     MPEGsystem() {}
     MPEGsystem(SDL_RWops *mpeg_source);
     virtual ~MPEGsystem();
@@ -31,11 +31,11 @@ public:
     bool Wait();
     Uint32 Tell();
     void Rewind();
-		/* Michel Darricau from eProcess <mdarricau@eprocess.fr>  need for override in popcorn */
+      /* Michel Darricau from eProcess <mdarricau@eprocess.fr>  need for override in popcorn */
     virtual void Start();
     void Stop();
     bool Eof() const;
-		/* Michel Darricau from eProcess <mdarricau@eprocess.fr>  need for override in popcorn */
+      /* Michel Darricau from eProcess <mdarricau@eprocess.fr>  need for override in popcorn */
     virtual bool Seek(int length);
     virtual Uint32 TotalSize();
     virtual double TotalTime();
@@ -62,11 +62,11 @@ public:
     /* Set eof for all streams */
     void end_all_streams();
     
-		/* Michel Darricau from eProcess <mdarricau@eprocess.fr>  need for override in popcorn */
+      /* Michel Darricau from eProcess <mdarricau@eprocess.fr>  need for override in popcorn */
     /* Seek the first header */
     virtual bool seek_first_header();
 
-		/* Michel Darricau from eProcess <mdarricau@eprocess.fr>  need for override in popcorn */
+      /* Michel Darricau from eProcess <mdarricau@eprocess.fr>  need for override in popcorn */
     /* Seek the next header */
     virtual bool seek_next_header();
 
@@ -74,7 +74,7 @@ protected:
     /* Run the loop to fill the stream buffers */
     static bool SystemLoop(MPEGsystem *system);
 
-		/* Michel Darricau from eProcess <mdarricau@eprocess.fr>  need for override in popcorn */
+      /* Michel Darricau from eProcess <mdarricau@eprocess.fr>  need for override in popcorn */
     /* Fill a buffer */
     virtual Uint8 FillBuffer();
 

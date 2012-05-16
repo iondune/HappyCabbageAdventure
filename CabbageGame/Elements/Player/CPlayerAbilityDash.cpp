@@ -16,7 +16,7 @@ void CPlayerAbilityDash::inUpdateSceneObject(float time) {
 
    //Update the particles
    ParticleEngine->setLookRight(Player.Direction == CElementPlayer::Right);
-   ParticleEngine->setCenterPos(SVector3(Player.getArea().getCenter(), 0.0f));
+   ParticleEngine->setCenterPos(SVector3f(Player.getArea().getCenter(), 0.0f));
    ParticleEngine->step(time);
 }
 
@@ -27,7 +27,7 @@ void CPlayerAbilityDash::inOnCollision(CCollideable * collider) {
 */
 
 CPlayerAbilityDash::CPlayerAbilityDash(CElementPlayer & p, bool doGodmode) : CPlayerAbility(p, Abilities::DASH), Godmode(doGodmode) {
-   ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), DASH_PARTICLE_COUNT, -1, DUST_PARTICLE);
+   ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), DASH_PARTICLE_COUNT, -1, DUST_PARTICLE);
    ParticleEngine->UsePhysics(&Player.Level.getPhysicsEngine());
    if(!Godmode)
       ((CCollisionActor*)Player.getPhysicsEngineObject())->getAttributes().MaxWalk = 7.5f;

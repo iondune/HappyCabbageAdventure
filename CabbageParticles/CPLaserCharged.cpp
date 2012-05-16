@@ -14,7 +14,7 @@ void CPLaserCharged::updateMatrices(float timeElapsed) {
       xFactor -= timeElapsed*8.0f;
       if(yHeight > 0.9f)
          yHeight = 0.0f;
-      translate = SVector3(
+      translate = SVector3f(
             0.55f*sin(xFactor),
             yHeight,
             0.55f*cos(xFactor));

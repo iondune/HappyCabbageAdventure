@@ -18,8 +18,8 @@ void CLevelManager::addBlockObject(SVector2 Position, SVector2 Size, int const T
     CMeshSceneObject * Renderable = new CMeshSceneObject();
     Renderable->setMesh(Mesh);
 
-    Renderable->setScale(SVector3(Size.X, Size.Y, 1.f));
-    Renderable->setTranslation(SVector3(Position.X, Position.Y, 0));
+    Renderable->setScale(SVector3f(Size.X, Size.Y, 1.f));
+    Renderable->setTranslation(SVector3f(Position.X, Position.Y, 0));
 
     Renderable->setShader(CShaderLoader::loadShader("Flat"));
 

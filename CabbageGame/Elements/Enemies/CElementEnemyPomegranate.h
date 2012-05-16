@@ -9,16 +9,16 @@ class CElementEnemyPomegranate : public CElementEnemy, ISquishable
       CParticleEngine *particleEngine;
       float ScaleMult, FlameTimer;
       bool PositiveScale, HitPlayer;
-      SVector2 Scale;
+      SVector2f Scale;
       float OldPositionX;
 
 
    public:
-      CElementEnemyPomegranate(SRect2 nArea);
+      CElementEnemyPomegranate(SRect2f nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
-      virtual void OnCollision(CCollideable *Object);
+      virtual void OnCollision(const SCollisionEvent& Event);
 
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);

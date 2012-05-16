@@ -8,14 +8,14 @@ class CElementEnemyPineapple : public CElementEnemy, ISquishable
    private:
       float ScaleMult, OldPositionX;
       bool PositiveScale, HitPlayer;
-      SVector2 Scale;
+      SVector2f Scale;
 
    public:
-      CElementEnemyPineapple(SRect2 nArea);
+      CElementEnemyPineapple(SRect2f nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
-      virtual void OnCollision(CCollideable *Object);
+      virtual void OnCollision(const SCollisionEvent& Event);
 
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);
