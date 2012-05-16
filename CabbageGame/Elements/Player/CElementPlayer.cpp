@@ -484,17 +484,17 @@ void CElementPlayer::playLevelVictory(float time) {
    if (VictoryTime == 0.0f) {
       Mix_PlayMusic(victoryMusic, 1);
 
-      /*if (!WinParticle1)
+      if (!WinParticle1)
          WinParticle1 = new CParticleEngine(SVector3(curLocation.X, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
       if (!WinParticle2)
          WinParticle2 = new CParticleEngine(SVector3(curLocation.X + 4.f, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
       if (!WinParticle3)
-         WinParticle3 = new CParticleEngine(SVector3(curLocation.X + 8.f, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);*/
+         WinParticle3 = new CParticleEngine(SVector3(curLocation.X + 8.f, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
    }
 
    printf("After winparticles\n");
 
-   /*if (WinParticle1) {
+   if (WinParticle1) {
       printf("B/f 1\n");
       WinParticle1->step(time);
    }
@@ -505,7 +505,7 @@ void CElementPlayer::playLevelVictory(float time) {
    if (WinParticle3) {
       printf("B/f 3\n");
       WinParticle3->step(time);
-   }*/
+   }
 
 
    if (VictoryTime > .00f && VictoryTime < .07f) {
