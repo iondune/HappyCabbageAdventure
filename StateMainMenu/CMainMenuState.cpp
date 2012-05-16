@@ -343,6 +343,7 @@ void CMainMenuState::OnWidgetClick(CGUIWidget * Widget)
    else if(Widget == StartEditor) {
       //stopSoundtrack();
       CApplication::get().getStateManager().setState(new CFadeOutState(& CLWIBState::get(), 0.3f));
+      Mix_FadeOutMusic(2000);
    }
    else if(Widget == ExitGame) {
       CApplication::get().close();
