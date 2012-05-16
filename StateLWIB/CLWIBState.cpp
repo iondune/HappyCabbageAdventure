@@ -806,8 +806,9 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
        else if (type == 12)
            type = 16;
    }
-   tempPlaceable->setupObjects(); 
-   tempPlaceable->printInformation();
+   // Dafuq? NO!
+   //tempPlaceable->setupObjects(); 
+   //tempPlaceable->printInformation();
 
    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
    blockMap[(int)x+25][(int)(y-0.5+25)].r = tempPlaceable;
