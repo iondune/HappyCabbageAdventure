@@ -811,7 +811,7 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
    //tempPlaceable->printInformation();
 
    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
-   blockMap[(int)x+25][(int)(y-0.5+25)].r = tempPlaceable;
+   //blockMap[(int)x+25][(int)(y-0.5+25)].r = tempPlaceable;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
    //redoPlaceables.clear();
