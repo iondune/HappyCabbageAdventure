@@ -9,13 +9,12 @@ CElementEnemyKiwi::CElementEnemyKiwi(SRect2f nArea, int direction) :
 void CElementEnemyKiwi::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(SRect2(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y * 0.6f));
+   PhysicsEngineObject->setArea(SRect2f(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y * 0.6f));
 
    //Set actor attributes
    PhysicsEngineObject->setControlFall(false);
    PhysicsEngineObject->setFallAcceleration(0.0f);
 
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_KIWI;
    PhysicsEngineObject->getAttributes().MaxWalk = 3.0f;
    PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
 
@@ -85,8 +84,8 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
       SineValue = 0.6f*sin(Area.Position.X - OldX);
       Area.Position.Y += SineValue;
 
-      SVector2 vel = PhysicsEngineObject->getVelocity();
-      PhysicsEngineObject->setVelocity(SVector2(vel.X, vel.Y > 0 ? vel.Y - 1.0f*time : 0));
+      SVector2f vel = PhysicsEngineObject->getVelocity();
+      PhysicsEngineObject->setVelocity(SVector2f(vel.X, vel.Y > 0 ? vel.Y - 1.0f*time : 0));
 
       //TODO: Check player direction
       if(Direction == 0)
