@@ -9,6 +9,10 @@ CMainMenuState::CMainMenuState()
 	maxX = (float) size.X;
 	maxY = (float) size.Y;
 	sineValue = 0.0f;
+	buttonNum = 0;
+printf("Before warp\n");
+   SDL_WarpMouse(.5*maxX, .4*maxY);
+   printf("After warp\n");
 }
 
 void CMainMenuState::setupTextures()
@@ -276,7 +280,48 @@ void CMainMenuState::OnRenderEnd(float const Elapsed)
 {}
 
 void CMainMenuState::OnKeyboardEvent(SKeyboardEvent const & Event)
-{}
+{
+   if (Event.Pressed) {
+      if (Event.Key == SDLK_UP || Event.Key == SDLK_w) {
+         if (buttonNum > 0)
+            buttonNum--;
+         else
+            buttonNum = 2;
+      }
+
+      else if (Event.Key == SDLK_DOWN || Event.Key == SDLK_s) {
+         if (buttonNum < 2)
+            buttonNum++;
+         else
+            buttonNum = 0;
+      }
+
+      else if (Event.Key == SDLK_SPACE) {
+         if (buttonNum == 0) {
+            OnWidgetClick(StartGame);
+         }
+
+         else if (buttonNum == 1) {
+            OnWidgetClick(StartEditor);
+         }
+
+         else if (buttonNum == 2) {
+            OnWidgetClick(ExitGame);
+         }
+      }
+
+      else if (Event.Key == SDLK_ESCAPE) {
+         OnWidgetClick(ExitGame);
+      }
+
+      if (buttonNum == 0)
+         SDL_WarpMouse(.5*maxX, .4*maxY);
+      else if (buttonNum == 1)
+         SDL_WarpMouse(.5*maxX, .6*maxY);
+      else if (buttonNum == 2)
+         SDL_WarpMouse(.5*maxX, .8*maxY);
+   }
+}
 
 void CMainMenuState::OnWidgetHover(CGUIWidget * Widget)
 {}

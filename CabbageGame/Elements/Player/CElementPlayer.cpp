@@ -23,7 +23,7 @@ void CElementPlayer::setStats(Cabbage::PlayerInformation st) {
 }
 
 void CElementPlayer::doGodmode() {
-   if(CApplication::get().getEventManager().IsKeyDown[SDLK_a]) {
+   if(CApplication::get().getEventManager().IsKeyDown[SDLK_a] || CApplication::get().getEventManager().IsKeyDown[SDLK_LEFT]) {
       if(MoveKeyDelay > 0.0f) {
          if(!used(Abilities::DASH)) {
             Abilities.push_back(new CPlayerAbilityDash(*this, true));
@@ -38,7 +38,7 @@ void CElementPlayer::doGodmode() {
       Action = Walking;
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
    }
-   else if(CApplication::get().getEventManager().IsKeyDown[SDLK_d]) {
+   else if(CApplication::get().getEventManager().IsKeyDown[SDLK_d] || CApplication::get().getEventManager().IsKeyDown[SDLK_RIGHT]) {
       if(MoveKeyDelay > 0.0f) {
          if(!used(Abilities::DASH)) {
             Abilities.push_back(new CPlayerAbilityDash(*this, true));
@@ -95,7 +95,7 @@ void CElementPlayer::updatePlayerAction() {
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
       return;
    }
-   if(CApplication::get().getEventManager().IsKeyDown[SDLK_a]) {
+   if(CApplication::get().getEventManager().IsKeyDown[SDLK_a] || CApplication::get().getEventManager().IsKeyDown[SDLK_LEFT]) {
       if(Stats.canUseAbility(Abilities::DASH)) {
          if(Action == Standing) {
             if(MoveKeyDelay > 0.0f) {
@@ -114,7 +114,7 @@ void CElementPlayer::updatePlayerAction() {
       Action = Walking;
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
    }
-   else if(CApplication::get().getEventManager().IsKeyDown[SDLK_d]) {
+   else if(CApplication::get().getEventManager().IsKeyDown[SDLK_d] || CApplication::get().getEventManager().IsKeyDown[SDLK_RIGHT]) {
       if(Stats.canUseAbility(Abilities::DASH)) {
          if(Action == Standing) {
             if(MoveKeyDelay > 0.0f) {
@@ -204,7 +204,7 @@ void CElementPlayer::checkAbilityKeypress() {
       if(!used(Abilities::DASH)) {
       }
       else {
-         getAbility(Abilities::DASH)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_a] || CApplication::get().getEventManager().IsKeyDown[SDLK_d]);
+         getAbility(Abilities::DASH)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_LEFT] || CApplication::get().getEventManager().IsKeyDown[SDLK_RIGHT] || CApplication::get().getEventManager().IsKeyDown[SDLK_a] || CApplication::get().getEventManager().IsKeyDown[SDLK_d]);
       }
    }
    if(Stats.canUseAbility(Abilities::BLINK)) {

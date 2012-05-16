@@ -66,13 +66,13 @@ public:
 			Position += LookDirection*MoveSpeed*TickTime;
 		}
 
-		if (EventManager.IsKeyDown[SDLK_a])
+		if (EventManager.IsKeyDown[SDLK_a] || EventManager.IsKeyDown[SDLK_LEFT])
 		{
 			Position.X += cos(Theta - 1.57079633f)*MoveSpeed*TickTime;
 			Position.Z += sin(Theta - 1.57079633f)*MoveSpeed*TickTime;
 		}
 
-		if (EventManager.IsKeyDown[SDLK_d])
+		if (EventManager.IsKeyDown[SDLK_d] || EventManager.IsKeyDown[SDLK_RIGHT])
 		{
 			Position.X += cos(Theta + 1.57079633f)*MoveSpeed*TickTime;
 			Position.Z += sin(Theta + 1.57079633f)*MoveSpeed*TickTime;
