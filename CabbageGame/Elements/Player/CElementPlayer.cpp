@@ -68,26 +68,36 @@ void CElementPlayer::doGodmode() {
    }
 }
 
+bool hWasDown = false;
+
 void CElementPlayer::updatePlayerAction() {
    if(Victory)
       return;
-   if(CApplication::get().getEventManager().IsKeyDown[SDLK_h])
+   if(!hWasDown && CApplication::get().getEventManager().IsKeyDown[SDLK_h]) {
       Godmode = !Godmode;
-   if(Godmode) {
-      PhysicsEngineObject->CollideableLevel = 0;//INTERACTOR_NULL_BLOCK;
-      PhysicsEngineObject->CanCollideWith = INTERACTOR_NULL_BLOCK;
-      PhysicsEngineObject->setControlFall(false);
-      PhysicsEngineObject->setFallAcceleration(0.0f);
-      PhysicsEngineObject->setJumping(false);
-      PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, 0.0f));
-      doGodmode();
-      return;
+      printf("Here\n");
+      if(Godmode) {
+         PhysicsEngineObject->CollideableLevel = 0;//INTERACTOR_NULL_BLOCK;
+         PhysicsEngineObject->CanCollideWith = INTERACTOR_NULL_BLOCK;
+         PhysicsEngineObject->setControlFall(false);
+         PhysicsEngineObject->setFallAcceleration(0.0f);
+         PhysicsEngineObject->setJumping(false);
+         PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, 0.0f));
+         hWasDown = CApplication::get().getEventManager().IsKeyDown[SDLK_h];
+         doGodmode();
+         return;
+      }
+      else {
+         PhysicsEngineObject->CollideableLevel = INTERACTOR_SUPERACTORS;
+         PhysicsEngineObject->CanCollideWith = INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS;
+         PhysicsEngineObject->CanCollideWith &= ~INTERACTOR_SUPERNONCOLLIDERS;
+         PhysicsEngineObject->setControlFall(true);
+         PhysicsEngineObject->setFallAcceleration(10.0f);
+         PhysicsEngineObject->setJumping(false);
+         PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, 0.0f));
+      }
    }
-   else {
-      PhysicsEngineObject->CollideableLevel = INTERACTOR_SUPERACTORS;
-      PhysicsEngineObject->CanCollideWith = INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS;
-      PhysicsEngineObject->CanCollideWith &= ~INTERACTOR_SUPERNONCOLLIDERS;
-   }
+   hWasDown = CApplication::get().getEventManager().IsKeyDown[SDLK_h];
 
    if(!AllowMovement) {
       Action = Standing;
