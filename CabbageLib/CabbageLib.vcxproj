@@ -50,7 +50,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalOptions>../Debug/CabbageScene.lib ../Debug/CabbageFramework.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>../Debug/CabbageScene.lib ../Debug/CabbageFramework.lib ../Debug/CabbageGUI.lib %(AdditionalOptions)</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -66,7 +66,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalOptions>../Release/CabbageScene.lib ../Release/CabbageFramework.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>../Release/CabbageScene.lib ../Release/CabbageFramework.lib ../Debug/CabbageGUI.lib %(AdditionalOptions)</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>

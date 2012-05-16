@@ -31,4 +31,22 @@ static float frand()
 	return std::rand() / (float) RAND_MAX;
 }
 
+template <typename T>
+static T const clamp(T const v, T const min, T const max)
+{
+	return v > max ? max : v < min ? min : v;
+}
+
+template <typename T>
+static T const min(T const a, T const b, T const c)
+{
+	return std::min(a, std::min(b, c));
+}
+
+template <typename T>
+static T const max(T const a, T const b, T const c)
+{
+	return std::max(a, std::max(b, c));
+}
+
 #endif

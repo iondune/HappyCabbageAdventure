@@ -58,6 +58,41 @@ public:
 		}
 	}
 
+	template <typename T>
+	SColor operator * (T const s) const
+	{
+		return SColor(Red*s, Green*s, Blue*s, Alpha*s);
+	}
+
+	SColor operator * (SColor const & s) const
+	{
+		return SColor(Red * s.Red, Green * s.Green, Blue * s.Blue, Alpha * s.Alpha);
+	}
+
+	SColor operator + (SColor const & s) const
+	{
+		return SColor(Red + s.Red, Green + s.Green, Blue + s.Blue, Alpha + s.Alpha);
+	}
+
+	SColor & operator *= (SColor const & s)
+	{
+		Red *= s.Red;
+		Green *= s.Green;
+		Blue *= s.Blue;
+		Alpha *= s.Alpha;
+		return * this;
+	}
+	
+	template <typename T>
+	SColor & operator *= (T const s)
+	{
+		Red *= s;
+		Green *= s;
+		Blue *= s;
+		Alpha *= s;
+		return * this;
+	}
+
 };
 
 #endif
