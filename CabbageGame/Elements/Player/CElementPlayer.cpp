@@ -98,6 +98,10 @@ void CElementPlayer::updatePlayerAction() {
       }
    }
    hWasDown = CApplication::get().getEventManager().IsKeyDown[SDLK_h];
+   if(Godmode) {
+      PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, 0.0f));
+      doGodmode();
+   }
 
    if(!AllowMovement) {
       Action = Standing;
@@ -210,7 +214,7 @@ void CElementPlayer::checkAbilityKeypress() {
       }
    }
    /* Dash */
-   if(Godmode || Stats.canUseAbility(Abilities::DASH)) {
+   if(Godmode || used(Abilities::DASH) || Stats.canUseAbility(Abilities::DASH)) {
       if(!used(Abilities::DASH)) {
       }
       else {
