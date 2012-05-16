@@ -58,6 +58,7 @@ void initBlockMap() {
 int pastX; int pastY;
 void CLWIBState::begin()
 {
+   Application.getSceneManager().setUseHierarchy(false);
     loadedFromXml = false;
     tileLoop = 0;
     pastX = 0;
@@ -709,6 +710,7 @@ void CLWIBState::printXML() {
 void CLWIBState::end()
 {
    Application.getGUIEngine().removeAllWidgets(); 
+   Application.getSceneManager().setUseHierarchy(true);
    //our_font.clean();
    tileArray.clear();
    placeables.clear();

@@ -227,11 +227,15 @@ void CSceneManager::addPostOpaqueSceneObject(ISceneObject *sceneObject) {
 
 void CSceneManager::addImmobileSceneObject(ISceneObject * sceneObject, unsigned int agreement)
 {
-	if(agreement != THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT) {
-		fprintf(stderr, "addImmobileSceneObject failure! The agreement argument was not accepted.\nEntered: %d. Expected: THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT\n", agreement);
-		exit(1);
-	}
-	ImmobileSceneObjects.push_back(sceneObject);   
+   if(UseHierarchy) {
+      if(agreement != THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT) {
+         fprintf(stderr, "addImmobileSceneObject failure! The agreement argument was not accepted.\nEntered: %d. Expected: THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT\n", agreement);
+         exit(1);
+      }
+      ImmobileSceneObjects.push_back(sceneObject);
+   }
+   else
+      addSceneObject(sceneObject);
 }
 
 void CSceneManager::removeSceneObject(ISceneObject * sceneObject)
@@ -353,7 +357,7 @@ ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
 
 void CSceneManager::drawAll()
 {
-	if (ImmobileSceneObjects.size() > 0) {
+	if (UseHierarchy && ImmobileSceneObjects.size() > 0) {
 		for (unsigned int i = 0; i < ImmobileSceneObjects.size(); ++ i) {
 			ImmobileSceneObjects[i]->updateAbsoluteTransformation();
 			ImmobileSceneObjects[i]->update();
