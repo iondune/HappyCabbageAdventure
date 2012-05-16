@@ -1,6 +1,6 @@
 #include "CParticle.h"
 
-void CParticle::setCenterPos(SVector3 *cPos) {
+void CParticle::setCenterPos(SVector3f *cPos) {
    centerPos = cPos;
 }
 

@@ -6,11 +6,11 @@
 class CElementEnemyCherry : public CElementEnemy
 {
    private:
-      SVector2 Scale;
+      SVector2f Scale;
       float BombTime;
 
    public:
-      CElementEnemyCherry(SRect2 nArea);
+      CElementEnemyCherry(SRect2f nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

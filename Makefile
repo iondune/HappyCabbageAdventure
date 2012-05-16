@@ -1,7 +1,7 @@
 OBJECT_FILES=`find | grep '\.o$$' | sed "/sdlmixer/d"`
 CABBAGE_GAME_DEPENDENCY_FILES=./CabbageGame/.dependencies
 
-all: build-Sound build-CabbageFramework build-CabbageParticles build-CabbageScene build-CabbageCore build-CabbageCollider build-base build-CabbageGUI build-CabbageGame build-StateGame build-CLWIB build-MainMenu build-Overworld
+all: build-Sound build-CabbageFramework build-CabbageParticles build-CabbageScene build-CabbageCollider build-base build-CabbageGUI build-CabbageGame build-StateGame build-CLWIB build-MainMenu build-Overworld
 
 #build-MeshLoaderDemo build-CabbageColliderDemo
 
@@ -32,16 +32,13 @@ build-CabbageCollider:
 build-CabbageGUI:
 	cd ./CabbageGUI && make -j
 
-build-CabbageCore:
-	cd ./CabbageCore && make -j
-
 build-MeshLoaderDemo: build-CabbageScene
 	cd ./DemoMeshLoader && make -j
 
 build-CabbageColliderDemo: build-CabbageCollider build-CabbageScene
 	cd ./DemoCabbageCollider && make -j
 
-build-base: build-StateGame build-CabbageGame build-CabbageCollider build-CabbageCore build-CabbageScene build-CabbageFramework build-CabbageParticles build-CabbageGUI build-CLWIB build-MainMenu build-Overworld
+build-base: build-StateGame build-CabbageGame build-CabbageCollider build-CabbageScene build-CabbageFramework build-CabbageParticles build-CabbageGUI build-CLWIB build-MainMenu build-Overworld
 	cd ./Base && make -j
 
 build-CabbageFramework:
@@ -54,7 +51,7 @@ clean:
 	rm -f $(OBJECT_FILES)
 	rm -rf $(CABBAGE_GAME_DEPENDENCY_FILES)
 	rm -f Base/cabbage DemoCabbageCollider/CabbageColliderDemo DemoMeshLoader/MeshLoaderDemo
-	rm -f lib/libCLWIB.a lib/libCabbageCollider.a lib/libCabbageFramework.a lib/libCabbageParticles.a lib/libCabbageScene.a lib/libCabbageSound.a lib/libOverworldState.a lib/libCabbageGUI.a lib/libCabbageCore.a lib/libCabbageGame.a lib/libStateGame.a
+	rm -f lib/libCLWIB.a lib/libCabbageCollider.a lib/libCabbageFramework.a lib/libCabbageParticles.a lib/libCabbageScene.a lib/libCabbageSound.a lib/libOverworldState.a lib/libCabbageGUI.a lib/libCabbageGame.a lib/libStateGame.a
 
 #	cd ./CabbageScene && make -j $@ && cd ../StateOverworld && make -j $@ && cd ../StateLWIB && make -j $@ && cd ../CabbageSound && make -j $@ && cd ../CabbageCollider && make -j $@ && cd ../DemoMeshLoader && make -j $@ && cd ../DemoCabbageCollider && make -j $@ && cd ../CabbageFramework && make -j $@
 

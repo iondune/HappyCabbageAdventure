@@ -8,7 +8,7 @@ class CElementItemEnergy : public CElementItem
    private:
 
    public:
-      CElementItemEnergy(SRect2 nArea);
+      CElementItemEnergy(SRect2f nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
@@ -16,7 +16,7 @@ class CElementItemEnergy : public CElementItem
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);
 
-      virtual void OnCollision(CCollideable *Object);
+      virtual void OnCollision(const SCollisionEvent& Event);
 
       virtual void printInformation();
 };
