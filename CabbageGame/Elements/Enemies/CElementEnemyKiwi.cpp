@@ -9,7 +9,7 @@ CElementEnemyKiwi::CElementEnemyKiwi(SRect2 nArea, int direction) :
 void CElementEnemyKiwi::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(SRect2(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y * 0.6f));
+   PhysicsEngineObject->setArea(SRect2(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y * 1.0f));
 
    //Set actor attributes
    PhysicsEngineObject->setControlFall(false);

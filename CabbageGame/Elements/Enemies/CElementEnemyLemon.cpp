@@ -57,7 +57,7 @@ void CElementEnemyLemon::updatePhysicsEngineObject(float time) {
    SVector2f PlayerPosition = Level.getPlayer().getArea().Position;
    SVector2f Difference = SVector2f (PlayerPosition.X - Area.Position.X, PlayerPosition.Y - Area.Position.Y);
 
-   if (abs(Difference.X) < 1.5f && abs(Difference.Y) < .5f) {
+   if (abs(Difference.X) < 1.5f && abs(Difference.Y) < 1.5f) {
       Level.getPlayer().subtractHealth(2);
       takeDamage(1);
    }
