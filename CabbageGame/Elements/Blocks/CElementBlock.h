@@ -10,7 +10,7 @@ class CElementBlock : public CGameplayElement {
       CMeshSceneObject * SceneObject; //Override CGameplayElement's but with type CMeshSceneObject
       int Depth, Texture;
    public:
-      virtual void OnCollision(CCollideable *Object);
+      virtual void OnCollision(const SCollisionEvent& Event);
 
       virtual void setupSceneObject();
       virtual void setupPhysicsEngineObject();
@@ -21,7 +21,7 @@ class CElementBlock : public CGameplayElement {
       virtual void reactToAbility(Abilities::EAbilityType ability); 
 
       virtual void writeXML(xmlwriter *);
-      CElementBlock(SRect2 nArea, int depth, int texture);
+      CElementBlock(SRect2f nArea, int depth, int texture);
 
       virtual void printInformation();
 };

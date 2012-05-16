@@ -27,14 +27,14 @@ void CPlayerView::setState(CPlayerView::State const value) {
    curState = value;
 
    if (CenterPosition.Y > LODActiviation)
-	{
-	    if (! CurrentLOD)
-		    CGameState::get().setLodLevel(CurrentLOD = 1);
-	}
+   {
+       if (! CurrentLOD)
+          CGameState::get().setLodLevel(CurrentLOD = 1);
+   }
    else
    {
-	   if (CurrentLOD)
-		   CGameState::get().setLodLevel(CurrentLOD = 0);
+      if (CurrentLOD)
+         CGameState::get().setLodLevel(CurrentLOD = 0);
    }
 //printf("vel %f, center %f, timer %f\n", Velocity.Y, CenterPosition.Y, zCamTimer);
    if(Velocity.Y == 0.00f  && zCamTimer <= 0.0f)
@@ -44,12 +44,12 @@ void CPlayerView::setState(CPlayerView::State const value) {
        float zfactor = (CenterPosition.Y - 3.0f) * 1.5f;
        //float zfactor = ((CenterPosition.Y > 10.0f ? 6.0f : CenterPosition.Y) - 3.0f) * 1.5f;
        zCamShift = (zfactor > 8.0f ? 8.0f :  zfactor) - zCam;
-	   
-	 }
+      
+    }
      else
      {
        zCamShift = -zCam;
-	   
+      
      }
 
      zCamTimer = CAM_TIMER;
@@ -66,7 +66,7 @@ void CPlayerView::step(float delta) {
    //printf("%0f\n", (time - (int)time));
    delta *= 1000.0f;
    if((int)((time - (int)time)*20.0f) % 2 == 0)
-      shakeFactor = SVector3((float)rand()/(float)RAND_MAX * 0.3f - 0.15f, (float)rand()/(float)RAND_MAX * 0.3f - 0.15f, 0);
+      shakeFactor = SVector3f((float)rand()/(float)RAND_MAX * 0.3f - 0.15f, (float)rand()/(float)RAND_MAX * 0.3f - 0.15f, 0);
    if(!(Velocity.Y > 0.01 || Velocity.Y < -0.01)) {
       if(curState == CPlayerView::State::Standing) {
          ySineValue += 0.005f*delta;
@@ -119,27 +119,27 @@ extern CPointLightSceneObject * playerLight2;
 
 void CPlayerView::draw() {
    int negFactor = 0;
-   PlayerRenderable->setTranslation(SVector3(CenterPosition.X, CenterPosition.Y + 0.065f*sin(ySineValue), 0));
+   PlayerRenderable->setTranslation(SVector3f(CenterPosition.X, CenterPosition.Y + 0.065f*sin(ySineValue), 0));
    playerLight2->setTranslation(PlayerRenderable->getTranslation());
 
-   renderLeftShadow->setTranslation(SVector3(CenterPosition.X, yLeftShadow + 0.01f, 0));
+   renderLeftShadow->setTranslation(SVector3f(CenterPosition.X, yLeftShadow + 0.01f, 0));
    LeftShadowStartValue = 0.f;
    LeftShadowCutoffValue = cutOffPoint;
 
-   renderRightShadow->setTranslation(SVector3(CenterPosition.X, yRightShadow + 0.01f, 0));
+   renderRightShadow->setTranslation(SVector3f(CenterPosition.X, yRightShadow + 0.01f, 0));
    RightShadowStartValue = cutOffPoint;
    RightShadowCutoffValue = 1.f;
 
    if(Charging) {
       xScale = yScale = 2.0f;
-      PlayerRenderable->setTranslation(SVector3(CenterPosition.X + 0.02f*sin(100.0f*ySineValue), CenterPosition.Y, 0));
-      PlayerRenderable->setScale(SVector3(xScale, xScale, yScale));
+      PlayerRenderable->setTranslation(SVector3f(CenterPosition.X + 0.02f*sin(100.0f*ySineValue), CenterPosition.Y, 0));
+      PlayerRenderable->setScale(SVector3f(xScale, xScale, yScale));
       return;
    }
 
    //Set player's current position
    if(!((recovering > 0 || godMode > 0) && (int)(recovering *100) % 2 != 0)) {
-      SVector3 rot = PlayerRenderable->getRotation();
+      SVector3f rot = PlayerRenderable->getRotation();
 
       if(!(Velocity.Y > 0.01f || Velocity.Y < -0.01f)) {
          rot.X = 15*sin(ySineValue/2)-90.f;
@@ -168,7 +168,7 @@ void CPlayerView::draw() {
          }
       }
 
-      PlayerRenderable->setScale(SVector3(xScale, xScale, yScale));
+      PlayerRenderable->setScale(SVector3f(xScale, xScale, yScale));
       rot.Z = lookRight ? 80.f : 0.f;
       PlayerRenderable->setRotation(rot);
       PlayerRenderable->setVisible(true);
@@ -177,12 +177,12 @@ void CPlayerView::draw() {
       PlayerRenderable->setVisible(false);
 
    //Set player's shadow
-   renderLeftShadow->setScale(SVector3((-.05f*sin(ySineValue)+1), 1, -0.05f*sin(ySineValue)+1));
-   renderRightShadow->setScale(SVector3((-.05f*sin(ySineValue)+1), 1, -0.05f*sin(ySineValue)+1));
+   renderLeftShadow->setScale(SVector3f((-.05f*sin(ySineValue)+1), 1, -0.05f*sin(ySineValue)+1));
+   renderRightShadow->setScale(SVector3f((-.05f*sin(ySineValue)+1), 1, -0.05f*sin(ySineValue)+1));
 }
 
 void CPlayerView::establishCamera(ICamera *Camera, int angle, int shaking) {
-   SVector3 camPos, camLook;
+   SVector3f camPos, camLook;
 
 
    if(angle == 0) {
@@ -191,18 +191,18 @@ void CPlayerView::establishCamera(ICamera *Camera, int angle, int shaking) {
        zCam += zCamShift * timeChange / CAM_TIMER;
        zCamTimer -= timeChange;
      }
-     camPos = SVector3(CenterPosition.X, CenterPosition.Y + 1.3f, 9.5f + zCam);
+     camPos = SVector3f(CenterPosition.X, CenterPosition.Y + 1.3f, 9.5f + zCam);
    }
    else if(angle == 1) {
-      camPos = SVector3(CenterPosition.X, CenterPosition.Y + 1.3f, 15.0f + zCam);
+      camPos = SVector3f(CenterPosition.X, CenterPosition.Y + 1.3f, 15.0f + zCam);
    }
    else if(angle == 2) {
-      camPos = SVector3(CenterPosition.X - 4, CenterPosition.Y + 4, 1);
+      camPos = SVector3f(CenterPosition.X - 4, CenterPosition.Y + 4, 1);
    }
    else {
-      camPos = SVector3(CenterPosition.X + 4, CenterPosition.Y + 4, 1);
+      camPos = SVector3f(CenterPosition.X + 4, CenterPosition.Y + 4, 1);
    }
-   camLook = SVector3(CenterPosition.X, CenterPosition.Y, 0) - camPos;
+   camLook = SVector3f(CenterPosition.X, CenterPosition.Y, 0) - camPos;
    if(shaking == 1) {
       camPos += shakeFactor;
    }

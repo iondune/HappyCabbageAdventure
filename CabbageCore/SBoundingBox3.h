@@ -8,35 +8,35 @@ class SBoundingBox3
 {
 private:
     // A skeleton point is one that doesn't represent the box, but represents the innermose bounding box this box can be. Used for the spatial data structure
-    SVector3 MinSkeletonPoint, MaxSkeletonPoint;
+    SVector3f MinSkeletonPoint, MaxSkeletonPoint;
 
 public:
 
-    SVector3 MinCorner, MaxCorner;
+    SVector3f MinCorner, MaxCorner;
 
     SBoundingBox3() :
        MinSkeletonPoint(std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity()),
        MaxSkeletonPoint(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity())
    {}
 
-    SBoundingBox3(SVector3 const & min, SVector3 const & max)
+    SBoundingBox3(SVector3f const & min, SVector3f const & max)
        : MinCorner(min), MaxCorner(max),
        MinSkeletonPoint(std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity()),
        MaxSkeletonPoint(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity())
    {}
 
-    SBoundingBox3(SVector3 const & v)
+    SBoundingBox3(SVector3f const & v)
        : MinCorner(v), MaxCorner(v), 
        MinSkeletonPoint(std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity()),
        MaxSkeletonPoint(-std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity())
    {}
 
-    SVector3 const getExtent() const
+    SVector3f const getExtent() const
     {
         return MaxCorner - MinCorner;
     }
 
-    SVector3 const getCenter() const
+    SVector3f const getCenter() const
     {
         return (MaxCorner + MinCorner) / 2.f;
     }
@@ -51,7 +51,7 @@ public:
             MinCorner.Z < r.MaxCorner.Z);
     }
 
-    void addInternalPoint(SVector3 const & v)
+    void addInternalPoint(SVector3f const & v)
     {
         if (v.X > MaxCorner.X)
             MaxCorner.X = v.X;
@@ -110,10 +110,10 @@ public:
     }
 
     // These intersect methods direct copies from irrlicht engine
-    bool intersectsWithLine(SVector3 const & linemiddle, SVector3 const & linevect, float halflength) const
+    bool intersectsWithLine(SVector3f const & linemiddle, SVector3f const & linevect, float halflength) const
     {
-        const SVector3 e = getExtent() * 0.5f;
-        const SVector3 t = getCenter() - linemiddle;
+        const SVector3f e = getExtent() * 0.5f;
+        const SVector3f t = getCenter() - linemiddle;
 
         if ((fabs(t.X) > e.X + halflength * fabs(linevect.X)) ||
             (fabs(t.Y) > e.Y + halflength * fabs(linevect.Y)) ||
@@ -135,27 +135,27 @@ public:
         return true;
     }
 
-	float const getMaximumRadius(SVector3 const Scale) const
+	float const getMaximumRadius(SVector3f const Scale) const
     {
-        SVector3 const Extents = getExtent() / 2.f;
+        SVector3f const Extents = getExtent() / 2.f;
         return std::max(std::max((Extents*Scale).xy().length(), (Extents*Scale).xz().length()), (Extents*Scale).yz().length());
     }
 
-    SVector3 const getCorner(int const i) const
+    SVector3f const getCorner(int const i) const
     {
-        SVector3 const Center = getCenter();
-        SVector3 const Extent = getExtent() / 2.f;
+        SVector3f const Center = getCenter();
+        SVector3f const Extent = getExtent() / 2.f;
 
         switch (i)
         {
-        default: case 0: return SVector3(Center.X + Extent.X, Center.Y + Extent.Y, Center.Z + Extent.Z);
-                 case 1: return SVector3(Center.X + Extent.X, Center.Y - Extent.Y, Center.Z + Extent.Z);
-                 case 2: return SVector3(Center.X + Extent.X, Center.Y + Extent.Y, Center.Z - Extent.Z);
-                 case 3: return SVector3(Center.X + Extent.X, Center.Y - Extent.Y, Center.Z - Extent.Z);
-                 case 4: return SVector3(Center.X - Extent.X, Center.Y + Extent.Y, Center.Z + Extent.Z);
-                 case 5: return SVector3(Center.X - Extent.X, Center.Y - Extent.Y, Center.Z + Extent.Z);
-                 case 6: return SVector3(Center.X - Extent.X, Center.Y + Extent.Y, Center.Z - Extent.Z);
-                 case 7: return SVector3(Center.X - Extent.X, Center.Y - Extent.Y, Center.Z - Extent.Z);
+        default: case 0: return SVector3f(Center.X + Extent.X, Center.Y + Extent.Y, Center.Z + Extent.Z);
+                 case 1: return SVector3f(Center.X + Extent.X, Center.Y - Extent.Y, Center.Z + Extent.Z);
+                 case 2: return SVector3f(Center.X + Extent.X, Center.Y + Extent.Y, Center.Z - Extent.Z);
+                 case 3: return SVector3f(Center.X + Extent.X, Center.Y - Extent.Y, Center.Z - Extent.Z);
+                 case 4: return SVector3f(Center.X - Extent.X, Center.Y + Extent.Y, Center.Z + Extent.Z);
+                 case 5: return SVector3f(Center.X - Extent.X, Center.Y - Extent.Y, Center.Z + Extent.Z);
+                 case 6: return SVector3f(Center.X - Extent.X, Center.Y + Extent.Y, Center.Z - Extent.Z);
+                 case 7: return SVector3f(Center.X - Extent.X, Center.Y - Extent.Y, Center.Z - Extent.Z);
         };
     }
 

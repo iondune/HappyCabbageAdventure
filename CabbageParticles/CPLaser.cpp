@@ -28,7 +28,7 @@ void CPLaser::updateMatrices(float timeElapsed) {
       if(Amplitude <= 0.01 && Amplitude >= -0.01)
          Amplitude = 0;
       Duration += timeElapsed;
-      translate = SVector3((*lookRight?1:-1)*reflectX*Amplitude*cos(xFactor),
+      translate = SVector3f((*lookRight?1:-1)*reflectX*Amplitude*cos(xFactor),
                            Amplitude*sin(yFactor),
                            Amplitude*zFactor);
       //getRenderable()->setRotation(RotationSpeed*sineValue);

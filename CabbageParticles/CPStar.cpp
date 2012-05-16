@@ -13,5 +13,5 @@ void CPStar::setupRenderable() {
 #define MIN(x,y) ((x>y)?y:x)
 
 void CPStar::updateMatrices(float timeElapsed) {
-   translate = SVector3(xValue, yValue, zValue);
+   translate = SVector3f(xValue, yValue, zValue);
 }

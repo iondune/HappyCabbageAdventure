@@ -18,8 +18,8 @@ void CItem::makeItem(float x, float y, float w, float h, ItemType item, CGamepla
    }
 
    else if (item == energy) {
-	   temp = new CIEnergy(x, y, w*.4f, h * .4f, manager);
-	   temp->Type = item;
+      temp = new CIEnergy(x, y, w*.4f, h * .4f, manager);
+      temp->Type = item;
    }
 
    else if (item == seed) {
@@ -39,5 +39,5 @@ void CItem::makeItem(float x, float y, float w, float h, ItemType item, CGamepla
 }
 
 void CItem::doRenderable() {
-   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, 0));
+   Renderable->setTranslation(SVector3f(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, 0));
 }
