@@ -482,6 +482,18 @@ void CElementPlayer::playLevelVictory(float time) {
    //Start Victory Music
    if (VictoryTime == 0.0f) {
       Mix_PlayMusic(victoryMusic, 1);
+
+      if (!WinParticle1) {
+         WinParticle1 = new CParticleEngine(SVector3(curLocation.X, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
+         WinParticle2 = new CParticleEngine(SVector3(curLocation.X + 4.f, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
+         WinParticle3 = new CParticleEngine(SVector3(curLocation.X + 8.f, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
+      }
+   }
+
+   if (WinParticle1) {
+      WinParticle1->step(time);
+      WinParticle2->step(time);
+      WinParticle3->step(time);
    }
 
    if (VictoryTime > .00f && VictoryTime < .07f) {
@@ -503,16 +515,7 @@ void CElementPlayer::playLevelVictory(float time) {
       Action = Jumping;
       PhysicsEngineObject->setJumping(true);
    }
-   //Fireworks.  Ignoring for now. I can do that.  : D
-   /*else if (VictoryTime > .76f && VictoryTime < 1.f) {
-      if (!f1) {
-         SVector3 flagPosition = renderFlag->getTranslation();
 
-         f1 = new CParticleEngine(SVector3(flagPosition.X, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);  //Would like to change these later so not leaves. Fine for now
-         f2 = new CParticleEngine(SVector3(flagPosition.X + 4.f, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);
-         f3 = new CParticleEngine(SVector3(flagPosition.X + 8.f, flagPosition.Y, flagPosition.Z + .5f), 40, 2.f, HURT_PARTICLE);
-      }
-   }*/
    else if (VictoryTime > 1.f && VictoryTime < 1.2f) {
       Action = Walking;
       PhysicsEngineObject->setJumping(false);

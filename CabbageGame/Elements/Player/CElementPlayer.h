@@ -30,7 +30,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
 
    private:
       CCollisionActor * PhysicsEngineObject; //Override CGameplayElement's but with type CObject
-      CParticleEngine *glow;
+      CParticleEngine *glow, *WinParticle1, *WinParticle2, *WinParticle3;
       ISceneObject * SceneObject; //Override CGameplayElement's. This will contain the cabbage and its shadow 
       CPlayerView *View;
 
