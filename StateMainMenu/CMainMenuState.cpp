@@ -11,7 +11,7 @@ CMainMenuState::CMainMenuState()
 	sineValue = 0.0f;
 	buttonNum = 0;
 printf("Before warp\n");
-   SDL_WarpMouse(.5*maxX, .4*maxY);
+   SDL_WarpMouse(Uint16(0.5f*maxX), Uint16(0.4f*maxY));
    printf("After warp\n");
 }
 
@@ -315,11 +315,11 @@ void CMainMenuState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
 
       if (buttonNum == 0)
-         SDL_WarpMouse(.5*maxX, .4*maxY);
+         SDL_WarpMouse(Uint16(0.5f*maxX), Uint16(0.4f*maxY));
       else if (buttonNum == 1)
-         SDL_WarpMouse(.5*maxX, .6*maxY);
+         SDL_WarpMouse(Uint16(0.5f*maxX), Uint16(0.6f*maxY));
       else if (buttonNum == 2)
-         SDL_WarpMouse(.5*maxX, .8*maxY);
+         SDL_WarpMouse(Uint16(0.5f*maxX), Uint16(0.8f*maxY));
    }
 }
 

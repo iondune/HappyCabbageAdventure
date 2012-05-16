@@ -277,7 +277,7 @@ void CElementPlayer::updateSceneObject(float time) {
    }
 
    Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
-   View->setCabbageScale(SVector3(Scale.X, Scale.X, Scale.Y));
+   View->setCabbageScale(SVector3f(Scale.X, Scale.X, Scale.Y));
 }
 
 Cabbage::PlayerInformation & CElementPlayer::getStats() {
@@ -489,11 +489,11 @@ void CElementPlayer::playLevelVictory(float time) {
       Mix_PlayMusic(victoryMusic, 1);
 
       if (!WinParticle1)
-         WinParticle1 = new CParticleEngine(SVector3(curLocation.X, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
+         WinParticle1 = new CParticleEngine(SVector3f(curLocation.X, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
       if (!WinParticle2)
-         WinParticle2 = new CParticleEngine(SVector3(curLocation.X + 4.f, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
+         WinParticle2 = new CParticleEngine(SVector3f(curLocation.X + 4.f, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
       if (!WinParticle3)
-         WinParticle3 = new CParticleEngine(SVector3(curLocation.X + 8.f, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
+         WinParticle3 = new CParticleEngine(SVector3f(curLocation.X + 8.f, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
    }
 
    printf("After winparticles\n");
@@ -565,7 +565,7 @@ void CElementPlayer::playLevelVictory(float time) {
    }
    else if (VictoryTime > 4.9f && VictoryTime < 6.4f) {
       if (!glow) {
-         glow = new CParticleEngine(SVector3(Area.getCenter().X + 0.5f, Area.getCenter().Y, 0), 400, 2.f, LASER_CHARGING_PARTICLE);
+         glow = new CParticleEngine(SVector3f(Area.getCenter().X + 0.5f, Area.getCenter().Y, 0), 400, 2.f, LASER_CHARGING_PARTICLE);
       }
       Action = Standing;
       PhysicsEngineObject->setJumping(false);
@@ -578,7 +578,7 @@ void CElementPlayer::playLevelVictory(float time) {
       Scale.Y += 1.2f*time;
       Scale.X -= 1.8f*time;
 
-      PhysicsEngineObject->addImpulse(SVector2(0.f, 30.f));
+      PhysicsEngineObject->addImpulse(SVector2f(0.f, 30.f));
 
    }
 
