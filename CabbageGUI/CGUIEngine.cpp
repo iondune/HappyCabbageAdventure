@@ -101,7 +101,7 @@ CGUIEventManager const * const CGUIEngine::getEventManager() const
 
 void CGUIEngine::OnMouseEvent(SMouseEvent const & Event)
 {
-	SVector2 RelativeLocation = Event.RelativeLocation;
+	SVector2f RelativeLocation = Event.RelativeLocation;
 	RelativeLocation.X *= ScreenSize.X / (float) ScreenSize.Y;
 	RelativeLocation.Y = 1.f - RelativeLocation.Y;
 

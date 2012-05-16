@@ -9,7 +9,7 @@ class CElementEnemyGrape : public CElementEnemy
       float shootTime;
 
    public:
-      CElementEnemyGrape(SRect2 nArea);
+      CElementEnemyGrape(SRect2f nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

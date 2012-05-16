@@ -14,7 +14,7 @@ class CElementEnemyProjectileKiwi : public CElementEnemyProjectile {
 
       virtual void OnCollision(CCollideable *Object);
 
-      CElementEnemyProjectileKiwi(SRect2 nArea);
+      CElementEnemyProjectileKiwi(SRect2f nArea);
 
       virtual void printInformation();
 };

@@ -6,7 +6,7 @@ void CParticleEngine::UsePhysics(CCollisionEngine *engine) {
    }
 }
 
-CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) {
+CParticleEngine::CParticleEngine(SVector3f pos, int max, float duration, int pT) {
    centerPos = pos;
    numParticles = max;
    totalDuration = duration;
@@ -82,34 +82,34 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
 
    float temp;
    for(int i = 0; i < max; i++) {
-      positionArr.push_back(new SVector3(-50));
+      positionArr.push_back(new SVector3f(-50));
       switch(particleType) {
          case LEAF_PARTICLE:
             if(rand() % 4 == 0) {
-               colorArr.push_back(new SVector3(1.0f));
+               colorArr.push_back(new SVector3f(1.0f));
             }
             else {
-               colorArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*0.2f + 0.4f, (float)rand()/(float)RAND_MAX*0.2f + 0.8f, (float)rand()/(float)RAND_MAX*0.4f + 0.4f));
+               colorArr.push_back(new SVector3f((float)rand()/(float)RAND_MAX*0.2f + 0.4f, (float)rand()/(float)RAND_MAX*0.2f + 0.8f, (float)rand()/(float)RAND_MAX*0.4f + 0.4f));
             }
             sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 15);
             break;
          case CUBE_PARTICLE:
             temp = (float)rand()/(float)RAND_MAX*0.3f + 0.3f;
             if(rand() % 4 == 0) {
-               colorArr.push_back(new SVector3(1));
+               colorArr.push_back(new SVector3f(1));
             }
             else {
-               colorArr.push_back(new SVector3(temp, temp*2, temp*3));
+               colorArr.push_back(new SVector3f(temp, temp*2, temp*3));
             }
             sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 10);
             break;
          case FLAME_PARTICLE:
             temp = (float)rand()/(float)RAND_MAX*0.3f + 0.3f;
             if(rand() % 3 == 0) {
-               colorArr.push_back(new SVector3(temp*3, temp*2, temp));
+               colorArr.push_back(new SVector3f(temp*3, temp*2, temp));
             }
             else {
-               colorArr.push_back(new SVector3(temp*3, temp, temp));
+               colorArr.push_back(new SVector3f(temp*3, temp, temp));
             }
 
             sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 15);
@@ -117,14 +117,14 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
          case DEATH_PARTICLE:
             if(rand() % 3 == 0) {
                if(rand() % 2 == 0) {
-                  colorArr.push_back(new SVector3(1.0f, 1.0f, 1.0f));
+                  colorArr.push_back(new SVector3f(1.0f, 1.0f, 1.0f));
                }
                else {
-                  colorArr.push_back(new SVector3(0.0f, 1.0f, 0.0f));
+                  colorArr.push_back(new SVector3f(0.0f, 1.0f, 0.0f));
                }
             }
             else {
-               colorArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*0.2f + 0.8f, (float)rand()/(float)RAND_MAX*0.2f + 0.8f, (float)rand()/(float)RAND_MAX*0.1f + 0.1f));
+               colorArr.push_back(new SVector3f((float)rand()/(float)RAND_MAX*0.2f + 0.8f, (float)rand()/(float)RAND_MAX*0.2f + 0.8f, (float)rand()/(float)RAND_MAX*0.1f + 0.1f));
             }
             sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 15);
             break;
@@ -132,57 +132,57 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
          case LASER_CHARGING_PARTICLE:
             temp = (float)rand()/(float)RAND_MAX*0.3f + 0.3f;
             if(rand() % 4 == 0) {
-               colorArr.push_back(new SVector3(1));
+               colorArr.push_back(new SVector3f(1));
             }
             else {
-               colorArr.push_back(new SVector3(temp*3, temp*3, temp*1));
+               colorArr.push_back(new SVector3f(temp*3, temp*3, temp*1));
             }
             sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 10);
             break;
          case LASER_FIRING_PARTICLE:
             temp = (float)rand()/(float)RAND_MAX*0.3f + 0.3f;
             if(rand() % 4 == 0) {
-               colorArr.push_back(new SVector3(1));
+               colorArr.push_back(new SVector3f(1));
             }
             else {
-               colorArr.push_back(new SVector3(temp*3, temp*3, temp*1));
+               colorArr.push_back(new SVector3f(temp*3, temp*3, temp*1));
             }
             sizeArr.push_back((rand() % 5 + 1)*3.0f);
             break;
          case HURT_PARTICLE:
-            colorArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*0.2f + 0.1f, 1.0f, (float)rand()/(float)RAND_MAX*0.4f + 0.1f));
+            colorArr.push_back(new SVector3f((float)rand()/(float)RAND_MAX*0.2f + 0.1f, 1.0f, (float)rand()/(float)RAND_MAX*0.4f + 0.1f));
             sizeArr.push_back((float)rand()/(float)RAND_MAX*5 + 65);
             break;
          case BURST_PARTICLE:
             temp = (float)rand()/(float)RAND_MAX*0.3f + 0.3f;
             if(rand() % 2 == 0)
-               colorArr.push_back(new SVector3(1.0f));
+               colorArr.push_back(new SVector3f(1.0f));
             else
-               colorArr.push_back(new SVector3(temp*3, temp*3, temp*1));
-            //colorArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*0.2f + 0.4f, (float)rand()/(float)RAND_MAX*0.2f + 0.8f, (float)rand()/(float)RAND_MAX*0.4f + 0.4f));
+               colorArr.push_back(new SVector3f(temp*3, temp*3, temp*1));
+            //colorArr.push_back(new SVector3f((float)rand()/(float)RAND_MAX*0.2f + 0.4f, (float)rand()/(float)RAND_MAX*0.2f + 0.8f, (float)rand()/(float)RAND_MAX*0.4f + 0.4f));
 
             sizeArr.push_back((float)rand()/(float)RAND_MAX*0 + 35);
             break;
          case DUST_PARTICLE:
             temp = (float)rand()/(float)RAND_MAX*0.3f + 0.3f;
             if(rand() % 6 == 0)
-               colorArr.push_back(new SVector3(1.0f));
+               colorArr.push_back(new SVector3f(1.0f));
             else
-               colorArr.push_back(new SVector3(temp*3, temp*3, temp*1));
-            //colorArr.push_back(new SVector3((float)rand()/(float)RAND_MAX*0.2f + 0.4f, (float)rand()/(float)RAND_MAX*0.2f + 0.8f, (float)rand()/(float)RAND_MAX*0.4f + 0.4f));
+               colorArr.push_back(new SVector3f(temp*3, temp*3, temp*1));
+            //colorArr.push_back(new SVector3f((float)rand()/(float)RAND_MAX*0.2f + 0.4f, (float)rand()/(float)RAND_MAX*0.2f + 0.8f, (float)rand()/(float)RAND_MAX*0.4f + 0.4f));
 
             sizeArr.push_back((float)rand()/(float)RAND_MAX*10 + 10);
             break;
          case STAR_PARTICLE:
             temp = 0.2f;
-            colorArr.push_back(new SVector3(1.0f - (float)rand()/(float)RAND_MAX*temp, 1.0f - (float)rand()/(float)RAND_MAX*temp, 1.0f - (float)rand()/(float)RAND_MAX*temp));
+            colorArr.push_back(new SVector3f(1.0f - (float)rand()/(float)RAND_MAX*temp, 1.0f - (float)rand()/(float)RAND_MAX*temp, 1.0f - (float)rand()/(float)RAND_MAX*temp));
             sizeArr.push_back((float)rand()/(float)RAND_MAX*60 + 30);
             break;
       }
    }
    myObj = new CParticleObject();
    //Default bounding box to 0,0,0 to 1,1,1. All of our particle effects at this point (i.e. flame) are 1x1x1
-   myObj->setBoundingBox(SBoundingBox3(centerPos - 0.7, centerPos + 0.7));
+   myObj->setBoundingBox(SBoundingBox3(centerPos - 0.7f, centerPos + 0.7f));
 
    const char *textureToUse;
    std::string v = "Base/particle";
@@ -246,7 +246,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
    */
 }
 
-void CParticleEngine::setCenterPos(SVector3 cP) {
+void CParticleEngine::setCenterPos(SVector3f cP) {
    if(!dead) {
       centerPos = cP;
       myObj->setBoundingBox(SBoundingBox3(centerPos - 0.5, centerPos + 0.5));

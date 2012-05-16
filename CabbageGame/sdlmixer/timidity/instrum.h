@@ -41,14 +41,14 @@ typedef struct {
 } Sample;
 
 /* Bits in modes: */
-#define MODES_16BIT	(1<<0)
-#define MODES_UNSIGNED	(1<<1)
-#define MODES_LOOPING	(1<<2)
-#define MODES_PINGPONG	(1<<3)
-#define MODES_REVERSE	(1<<4)
-#define MODES_SUSTAIN	(1<<5)
-#define MODES_ENVELOPE	(1<<6)
-#define MODES_FAST_RELEASE	(1<<7)
+#define MODES_16BIT   (1<<0)
+#define MODES_UNSIGNED   (1<<1)
+#define MODES_LOOPING   (1<<2)
+#define MODES_PINGPONG   (1<<3)
+#define MODES_REVERSE   (1<<4)
+#define MODES_SUSTAIN   (1<<5)
+#define MODES_ENVELOPE   (1<<6)
+#define MODES_FAST_RELEASE   (1<<7)
 
 #if 0
 typedef struct {
@@ -57,8 +57,8 @@ typedef struct {
 } Instrument;
 #endif
 
-#define INST_GUS	0
-#define INST_SF2	1
+#define INST_GUS   0
+#define INST_SF2   1
 
 typedef struct {
   int type;
@@ -80,9 +80,9 @@ typedef struct _InstrumentLayer {
 } InstrumentLayer;
 
 struct cfg_type {
-	int font_code;
-	int num;
-	const char *name;
+   int font_code;
+   int num;
+   const char *name;
 };
 
 #define FONT_NORMAL 0

@@ -26,8 +26,8 @@ public:
 	virtual void load(CScene const * const Scene);
 
 	void setRadius(float const Radius);
-	void setScale(SVector3 const & scale);
-	void setColor(SVector3 const & color);
+	void setScale(SVector3f const & scale);
+	void setColor(SVector3f const & color);
 
 };
 

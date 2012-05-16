@@ -22,7 +22,7 @@ public:
         : Red(red), Green(green), Blue(blue), Alpha(alpha)
     {}
 
-	SColor(SVector3 const & vector)
+	SColor(SVector3f const & vector)
 		: Red(vector.X), Green(vector.Y), Blue(vector.Z), Alpha(1.f)
 	{}
 
