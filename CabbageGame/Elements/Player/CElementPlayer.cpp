@@ -270,14 +270,15 @@ void CElementPlayer::updateSceneObject(float time) {
    View->setCutoffPoint(l?l->getArea():SRect2(-50.0f, -50.0f, 0.0f, 0.0f),r?r->getArea():SRect2(-50.0f, -50.0f, 0.0f, 0.0f));
 
    updateAbilities(time);
-   if (Victory)
+   if (Victory) {
       playLevelVictory(time);
+   }
    else {
       View->updateView(time);
-      Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
-      View->setCabbageScale(SVector3(Scale.X, Scale.X, Scale.Y));
    }
 
+   Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
+   View->setCabbageScale(SVector3(Scale.X, Scale.X, Scale.Y));
 }
 
 Cabbage::PlayerInformation & CElementPlayer::getStats() {
@@ -483,18 +484,29 @@ void CElementPlayer::playLevelVictory(float time) {
    if (VictoryTime == 0.0f) {
       Mix_PlayMusic(victoryMusic, 1);
 
-      if (!WinParticle1) {
+      /*if (!WinParticle1)
          WinParticle1 = new CParticleEngine(SVector3(curLocation.X, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
+      if (!WinParticle2)
          WinParticle2 = new CParticleEngine(SVector3(curLocation.X + 4.f, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
-         WinParticle3 = new CParticleEngine(SVector3(curLocation.X + 8.f, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
-      }
+      if (!WinParticle3)
+         WinParticle3 = new CParticleEngine(SVector3(curLocation.X + 8.f, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);*/
    }
 
-   if (WinParticle1) {
+   printf("After winparticles\n");
+
+   /*if (WinParticle1) {
+      printf("B/f 1\n");
       WinParticle1->step(time);
-      WinParticle2->step(time);
-      WinParticle3->step(time);
    }
+   if (WinParticle2) {
+      printf("B/f 2\n");
+      WinParticle2->step(time);
+   }
+   if (WinParticle3) {
+      printf("B/f 3\n");
+      WinParticle3->step(time);
+   }*/
+
 
    if (VictoryTime > .00f && VictoryTime < .07f) {
       Action = Standing;
@@ -548,20 +560,21 @@ void CElementPlayer::playLevelVictory(float time) {
       PhysicsEngineObject->setArea(SRect2(Area.Position.X - 3.f*time, Area.Position.Y, 1.f, 1.f));
    }
    else if (VictoryTime > 4.9f && VictoryTime < 6.4f) {
-      /*if (!glow) {
-         glow = new CParticleEngine(SVector3(Area.Position.X + 0.5f, Area.Position.Y - 0.25f, 0), 400, 2.f, LASER_CHARGING_PARTICLE);
-      }*/
+      if (!glow) {
+         glow = new CParticleEngine(SVector3(Area.getCenter().X + 0.5f, Area.getCenter().Y, 0), 400, 2.f, LASER_CHARGING_PARTICLE);
+      }
       Action = Standing;
       PhysicsEngineObject->setJumping(false);
 
       Scale.Y -= 0.4f*time;
+      glow->step(time);
    }
 
    if (VictoryTime > 6.9f && VictoryTime < 7.3f) {
       Scale.Y += 1.2f*time;
       Scale.X -= 1.8f*time;
 
-      PhysicsEngineObject->setImpulse(SVector2(0.f, 30.f), 0.01f);
+      PhysicsEngineObject->addImpulse(SVector2(0.f, 30.f));
 
    }
 
@@ -581,4 +594,6 @@ void CElementPlayer::playLevelVictory(float time) {
    View->updateShadow();
 
    VictoryTime += time;
+
+   printf("End of victory\n");
 }
