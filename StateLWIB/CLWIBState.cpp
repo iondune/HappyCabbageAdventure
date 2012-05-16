@@ -884,7 +884,7 @@ void CLWIBState::PrepCabbage(float x, float y) {
 }
 
 void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int moving) {
-   if(x < -25 || y < -25 || x >= 500 || y >= 75)
+   if(x < -40 || y < -25 || x >= 500 || y >= 75)
       return;
    //if(t == -5 && (int)y != -5)
    //    return;
@@ -947,7 +947,7 @@ void CLWIBState::PrepSky() {
    cutOffBlock->setScale(SVector3f(1, 1, 1));
    cutOffBlock->setRotation(SVector3f(90.0f, 0.0f, 0.0f));
 
-   cutOffBlock->setTexture(CImageLoader::loadTexture("Base/sky.bmp", true));
+   cutOffBlock->setTexture(CImageLoader::loadTexture("Base/forestBackground.bmp", true));
    CApplication::get().getSceneManager().addSceneObject(cutOffBlock);
 
    CMesh* quad = CMeshLoader::load3dsMesh("Base/Quad.3ds");
@@ -959,7 +959,7 @@ void CLWIBState::PrepSky() {
    tempBlock = new CMeshSceneObject();
    tempBlock->setMesh(quad);
 
-   tempBlock->setTexture(CImageLoader::loadTexture("Base/sky.bmp", true));
+   tempBlock->setTexture(CImageLoader::loadTexture("Base/forestBackground.bmp", true));
 
    tempBlock->setShader(ERP_DEFAULT, "DiffuseTextureBright");
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Textured");
@@ -1078,7 +1078,6 @@ void CLWIBState::OnMouseEvent(SMouseEvent const & Event) {
              PrepItem(round(eye.X + previewBlockMouseX),round(eye.Y + previewBlockMouseY),uniType);
          }
          lastMouseOveredBlock = m_qd;
-         printf("LMOB: %d, <%d, %d>\n", m_qd.o, m_qd.mapX, m_qd.mapY);
       }
    }
 }

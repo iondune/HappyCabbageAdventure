@@ -496,18 +496,14 @@ void CElementPlayer::playLevelVictory(float time) {
          WinParticle3 = new CParticleEngine(SVector3f(curLocation.X + 8.f, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
    }
 
-   printf("After winparticles\n");
 
    if (WinParticle1) {
-      printf("B/f 1\n");
       WinParticle1->step(time);
    }
    if (WinParticle2) {
-      printf("B/f 2\n");
       WinParticle2->step(time);
    }
    if (WinParticle3) {
-      printf("B/f 3\n");
       WinParticle3->step(time);
    }
 
@@ -565,7 +561,7 @@ void CElementPlayer::playLevelVictory(float time) {
    }
    else if (VictoryTime > 4.9f && VictoryTime < 6.4f) {
       if (!glow) {
-         glow = new CParticleEngine(SVector3f(Area.getCenter().X + 0.5f, Area.getCenter().Y, 0), 400, 2.f, LASER_CHARGING_PARTICLE);
+         glow = new CParticleEngine(SVector3(Area.getCenter().X, Area.getCenter().Y, 0), 400, 2.f, LASER_CHARGING_PARTICLE);
       }
       Action = Standing;
       PhysicsEngineObject->setJumping(false);
