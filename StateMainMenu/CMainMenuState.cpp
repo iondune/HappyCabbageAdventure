@@ -100,6 +100,25 @@ void CMainMenuState::setupMeshes()
   RenderBackground->setTexture(BackgroundTexture);
 }
 
+void CMainMenuState::setupSoundtrack() {
+   std::string temp;
+
+   if(Mix_OpenAudio(22050, AUDIO_S16, 2, 4096))
+      printf("Could not open audio!\n");
+
+   std::string MusicDirectory = "../Media/Music/";
+
+
+   temp = MusicDirectory + "Soundtracks/MainMenu.mp3";
+
+   Soundtrack = Mix_LoadMUS(temp.c_str());
+
+   if (!Soundtrack)
+         fprintf(stderr, "Soundtrack, Mix_LoadMUS: %s\n", Mix_GetError());
+
+   Mix_PlayMusic(Soundtrack, -1);
+}
+
 void CMainMenuState::begin()
 {
    SPosition2 size = Application.getWindowSize();
@@ -115,13 +134,7 @@ void CMainMenuState::begin()
    Application.getSceneManager().Lights.back()->Color = SVector3(1.f);
    Application.getSceneManager().Lights.back()->Position = SVector3(0.f, 0.f, -1.f);
 
-   //Sound Setup
-   //CHRIS LOOK HERE
-   //soundInit();
-   //setupSoundtrack("BeginningAnew.wav");
-   //DOES NOT WORK ON LINUX BECAUSE CAN'T RUN MP3
-   //startSoundtrack();
-
+   setupSoundtrack();
    setupTextures();
    setupMeshes();
    setupButtons();
@@ -277,6 +290,7 @@ void CMainMenuState::OnWidgetClick(CGUIWidget * Widget)
    if(Widget == StartGame) {
       COverworldState::get().newGame = true;
       COverworldState::get().Stats = Cabbage::PlayerInformation();
+      Mix_FadeOutMusic(2000);
       CApplication::get().getStateManager().setState(new CFadeOutState(& COverworldState::get(), 0.3f));
       //CGameplayManager::setLives(3);
       //printf("NumLives: %d\n", CGameplayManager::getNumLives());

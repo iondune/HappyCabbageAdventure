@@ -173,10 +173,22 @@ void CGameLevel::setupSoundtrack() {
 
    //Pre-load pointers
 
-   if (env == Env::FOREST)
+   if (env == Env::FOREST) {
+      if (!night)
+         temp = MusicDirectory + "Soundtracks/Forest.wav";
+      else
+         temp = MusicDirectory + "Soundtracks/ForestNight.mp3";
+   }
+
+   else if (env == Env::DESERT) {
+      if (!night)
+         temp = MusicDirectory + "Soundtracks/Desert.mp3";
+      else
+         temp = MusicDirectory + "Soundtracks/DesertNight.mp3";
+   }
+   else if (env == Env::WATER)
       temp = MusicDirectory + "Soundtracks/Forest.wav";
-   else if (env == Env::DESERT)
-      temp = MusicDirectory + "Soundtracks/Desert.mp3";
+
    Soundtrack = Mix_LoadMUS(temp.c_str());
 
    if (!Soundtrack)

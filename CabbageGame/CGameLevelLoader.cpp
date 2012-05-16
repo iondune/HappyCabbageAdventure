@@ -202,7 +202,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
              newLevel->env = env = xml->getAttributeValueAsInt(0);
              newLevel->night = xml->getAttributeValueAsInt(1);
 
-			 if (newLevel->getEnvironment() == 1 && ! newLevel->isNight())
+			 if (newLevel->getEnvironment() == Env::DESERT && ! newLevel->isNight())
 				 CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_HEAT_WAVE, true);
          }
          break;

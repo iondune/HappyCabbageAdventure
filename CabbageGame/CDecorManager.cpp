@@ -424,10 +424,13 @@ void CDecorManager::SetupSky() {
 
    tempBlock = new CMeshSceneObject();
    tempBlock->setMesh(quad);
-   if(env == 0)
-      tempBlock->setTexture(CImageLoader::loadTexture("Base/sky.bmp", true));
-   else if(env == 1)
-      tempBlock->setTexture(CImageLoader::loadTexture("Base/desert_bg.bmp", true));
+   if(env == Env::FOREST)
+      tempBlock->setTexture(CImageLoader::loadTexture("Base/ForestBackground.bmp", true));
+   else if(env == Env::DESERT)
+      tempBlock->setTexture(CImageLoader::loadTexture("Base/DesertBackground.bmp", true));
+   else if (env == Env::WATER)
+      tempBlock->setTexture(CImageLoader::loadTexture("Base/WaterBackground.bmp", true));
+
    tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
    tempBlock->setTranslation(SVector3(85/*75*/, 13, -5.0));

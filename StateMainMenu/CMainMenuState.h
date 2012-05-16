@@ -30,6 +30,7 @@ class CMainMenuState : public CState<CMainMenuState>
 
 
       ICamera *Camera;
+      Mix_Music *Soundtrack;
 
       CTexture * WoodTexture, * BackgroundTexture;
       CMesh *LogoMesh, *CubeMesh;
@@ -46,6 +47,7 @@ class CMainMenuState : public CState<CMainMenuState>
       void setupTextures();
       void setupMeshes();
       void setupButtons();
+      void setupSoundtrack();
 
       void drawButton();
       void rotateButton();

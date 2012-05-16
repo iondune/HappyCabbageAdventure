@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<envVar env="0" dayNight="0">
+<envVar env="2" dayNight="0">
 </envVar>
 <CBlock X ="-25" Y ="-3" height ="2" width ="5" depth ="5" texture ="-5">
 </CBlock>
