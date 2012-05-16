@@ -59,10 +59,10 @@ void CElementPlayer::doGodmode() {
    }
    if(CApplication::get().getEventManager().IsKeyDown[SDLK_SPACE] || CApplication::get().getEventManager().IsKeyDown[SDLK_w]) {
       Action = Jumping;
-      PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, 10.0f));
+      PhysicsEngineObject->setVelocity(SVector2f((float) PhysicsEngineObject->getVelocity().X, 10.0f));
    }
    else if(CApplication::get().getEventManager().IsKeyDown[SDLK_s]) {
-      PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, -10.0f));
+      PhysicsEngineObject->setVelocity(SVector2f((float) PhysicsEngineObject->getVelocity().X, -10.0f));
    }
    else {
    }
@@ -74,19 +74,18 @@ void CElementPlayer::updatePlayerAction() {
    if(CApplication::get().getEventManager().IsKeyDown[SDLK_h])
       Godmode = !Godmode;
    if(Godmode) {
-      PhysicsEngineObject->CollideableLevel = 0;//INTERACTOR_NULL_BLOCK;
-      PhysicsEngineObject->CanCollideWith = INTERACTOR_NULL_BLOCK;
+      PhysicsEngineObject->setTypeId(0);//INTERACTOR_NULL_BLOCK;
+      PhysicsEngineObject->setCollisionMask(0);
       PhysicsEngineObject->setControlFall(false);
       PhysicsEngineObject->setFallAcceleration(0.0f);
       PhysicsEngineObject->setJumping(false);
-      PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, 0.0f));
+      PhysicsEngineObject->setVelocity(SVector2f((float) PhysicsEngineObject->getVelocity().X, 0.0f));
       doGodmode();
       return;
    }
    else {
-      PhysicsEngineObject->CollideableLevel = INTERACTOR_SUPERACTORS;
-      PhysicsEngineObject->CanCollideWith = INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS;
-      PhysicsEngineObject->CanCollideWith &= ~INTERACTOR_SUPERNONCOLLIDERS;
+      PhysicsEngineObject->setTypeId(INTERACTOR_SUPERACTORS);
+	  PhysicsEngineObject->setCollisionMask((INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS) & ~INTERACTOR_SUPERNONCOLLIDERS);
    }
 
    if(!AllowMovement) {
