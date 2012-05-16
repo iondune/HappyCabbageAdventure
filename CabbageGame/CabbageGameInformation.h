@@ -8,7 +8,8 @@ namespace Abilities {
       SHIELD = 0,
       LASER = 1,
       DASH = 2,
-      BLINK = 3
+      BLINK = 3,
+      GODMODE = 100
    };
 }
 

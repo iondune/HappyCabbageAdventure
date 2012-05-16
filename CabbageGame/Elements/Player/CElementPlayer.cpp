@@ -6,7 +6,7 @@
 
 CElementPlayer::CElementPlayer(SRect2 nArea, bool useCamera)
 : CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f), Shaking(0.0f), ShakeFactor(SVector3(0.0f)),
-  ISquishable(2.0f, 2.0f), AllowMovement(true), PlayJump(true), Victory(false), VictoryTime(0.0f), ShakeFactorFactor(1000.0f), MoveKeyDelay(0.0f), UseCamera(useCamera) {
+  ISquishable(2.0f, 2.0f), AllowMovement(true), PlayJump(true), Victory(false), VictoryTime(0.0f), ShakeFactorFactor(1000.0f), MoveKeyDelay(0.0f), UseCamera(useCamera), Godmode(false) {
    setupSoundEffects();
 }
 
@@ -22,9 +22,73 @@ void CElementPlayer::setStats(Cabbage::PlayerInformation st) {
    Stats = st;
 }
 
+void CElementPlayer::doGodmode() {
+   if(CApplication::get().getEventManager().IsKeyDown[SDLK_a]) {
+      if(MoveKeyDelay > 0.0f) {
+         if(!used(Abilities::DASH)) {
+            Abilities.push_back(new CPlayerAbilityDash(*this, true));
+         }
+      }
+      else
+         MoveKeyDelay = 0.3f;
+      if(MoveKeyDelay < 0.0f) {
+         MoveKeyDelay = 0.0f;
+      }
+      Direction = Left;
+      Action = Walking;
+      PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
+   }
+   else if(CApplication::get().getEventManager().IsKeyDown[SDLK_d]) {
+      if(MoveKeyDelay > 0.0f) {
+         if(!used(Abilities::DASH)) {
+            Abilities.push_back(new CPlayerAbilityDash(*this, true));
+         }
+      }
+      else
+         MoveKeyDelay = 0.3f;
+      if(MoveKeyDelay < 0.0f) {
+         MoveKeyDelay = 0.0f;
+      }
+      Direction = Right;
+      Action = Walking;
+      PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
+   }
+   else {
+      Action = Standing;
+      PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
+   }
+   if(CApplication::get().getEventManager().IsKeyDown[SDLK_SPACE] || CApplication::get().getEventManager().IsKeyDown[SDLK_w]) {
+      Action = Jumping;
+      PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, 10.0f));
+   }
+   else if(CApplication::get().getEventManager().IsKeyDown[SDLK_s]) {
+      PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, -10.0f));
+   }
+   else {
+   }
+}
+
 void CElementPlayer::updatePlayerAction() {
    if(Victory)
       return;
+   if(CApplication::get().getEventManager().IsKeyDown[SDLK_h])
+      Godmode = !Godmode;
+   if(Godmode) {
+      PhysicsEngineObject->CollideableLevel = 0;//INTERACTOR_NULL_BLOCK;
+      PhysicsEngineObject->CanCollideWith = INTERACTOR_NULL_BLOCK;
+      PhysicsEngineObject->setControlFall(false);
+      PhysicsEngineObject->setFallAcceleration(0.0f);
+      PhysicsEngineObject->setJumping(false);
+      PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, 0.0f));
+      doGodmode();
+      return;
+   }
+   else {
+      PhysicsEngineObject->CollideableLevel = INTERACTOR_SUPERACTORS;
+      PhysicsEngineObject->CanCollideWith = INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS;
+      PhysicsEngineObject->CanCollideWith &= ~INTERACTOR_SUPERNONCOLLIDERS;
+   }
+
    if(!AllowMovement) {
       Action = Standing;
       PhysicsEngineObject->setJumping(false);
@@ -136,7 +200,7 @@ void CElementPlayer::checkAbilityKeypress() {
       }
    }
    /* Dash */
-   if(Stats.canUseAbility(Abilities::DASH)) {
+   if(Godmode || Stats.canUseAbility(Abilities::DASH)) {
       if(!used(Abilities::DASH)) {
       }
       else {
@@ -259,7 +323,7 @@ void CElementPlayer::setupSceneObject() {
 }
 
 bool CElementPlayer::decrementHealth() {
-   if(used(Abilities::SHIELD))
+   if(used(Abilities::SHIELD) || Godmode)
          return false;
 
    if(Recovering == 0.0f) {
@@ -290,7 +354,7 @@ void CElementPlayer::setHealth(int amount) {
 }
 
 bool CElementPlayer::subtractHealth(int amount) {
-   if(used(Abilities::SHIELD))
+   if(used(Abilities::SHIELD) || Godmode)
          return false;
 
    if(Recovering == 0.0f) {

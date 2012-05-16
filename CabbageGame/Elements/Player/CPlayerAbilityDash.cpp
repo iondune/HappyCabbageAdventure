@@ -26,10 +26,18 @@ void CPlayerAbilityDash::inOnCollision(CCollideable * collider) {
 }
 */
 
-CPlayerAbilityDash::CPlayerAbilityDash(CElementPlayer & p) : CPlayerAbility(p, Abilities::DASH) {
+CPlayerAbilityDash::CPlayerAbilityDash(CElementPlayer & p, bool doGodmode) : CPlayerAbility(p, Abilities::DASH), Godmode(doGodmode) {
    ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), DASH_PARTICLE_COUNT, -1, DUST_PARTICLE);
    ParticleEngine->UsePhysics(&Player.Level.getPhysicsEngine());
-   ((CCollisionActor*)Player.getPhysicsEngineObject())->getAttributes().MaxWalk = 7.5f;
+   if(!Godmode)
+      ((CCollisionActor*)Player.getPhysicsEngineObject())->getAttributes().MaxWalk = 7.5f;
+   else {
+/* For future physics overhaul
+      PhysicsEngineObject->setTypeId(0);//INTERACTOR_NULL_BLOCK;
+      PhysicsEngineObject->setCollisionMask(INTERACTOR_NULL_BLOCK);
+      */
+      ((CCollisionActor*)Player.getPhysicsEngineObject())->getAttributes().MaxWalk = 34.5f;
+   }
 
    EnergyTime = .5f;
 }
@@ -40,6 +48,12 @@ void CPlayerAbilityDash::checkKey(bool keyDown) {
       delete ParticleEngine;
       ((CCollisionActor*)Player.getPhysicsEngineObject())->getAttributes().MaxWalk = 3.5f;
       Dead = true;
+      if(Godmode) {
+/* For future physics overhaul
+         PhysicsEngineObject->setTypeId(INTERACTOR_SUPERACTORS);
+         PhysicsEngineObject->setCollisionMask((INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS) & ~INTERACTOR_SUPERNONCOLLIDERS);
+*/
+      }
       return;
    }
 }

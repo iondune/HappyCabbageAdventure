@@ -10,13 +10,14 @@ class CPlayerAbilityDash : public CPlayerAbility {
 
    private:
       float EnergyTime;
+      bool Godmode;
 
    public:
       void inUpdatePhysicsEngineObject(float);
       void inUpdateSceneObject(float);
       void checkKey(bool keyDown);
       //void inOnCollision(CCollideable *);
-      CPlayerAbilityDash(CElementPlayer &);
+      CPlayerAbilityDash(CElementPlayer &, bool Godmode = false);
 };
 
 #endif

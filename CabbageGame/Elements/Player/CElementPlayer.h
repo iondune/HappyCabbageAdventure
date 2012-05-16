@@ -34,6 +34,8 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       ISceneObject * SceneObject; //Override CGameplayElement's. This will contain the cabbage and its shadow 
       CPlayerView *View;
 
+      bool Godmode;
+
       Cabbage::PlayerInformation Stats;
       EDirection Direction;
       EAction Action; 
@@ -59,6 +61,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       std::vector<CPlayerAbility*> Abilities;
       void checkAbilityKeypress();
       void updateAbilities(float time);
+      void doGodmode();
       std::map<Abilities::EAbilityType, int> usedAbility;
 
    public:
