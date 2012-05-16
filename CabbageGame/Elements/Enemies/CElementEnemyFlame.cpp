@@ -14,7 +14,6 @@ void CElementEnemyFlame::setupPhysicsEngineObject() {
    //Makes them immune to gravity
    PhysicsEngineObject->setControlFall(false);
    PhysicsEngineObject->setFallAcceleration(0.0f);
-   //PhysicsEngineObject->setArea(SRect2f(SVector2f(Area.Position.X, Area.Position.Y-1.0f), Area.Size));
 }
 
 void CElementEnemyFlame::setupSceneObject() {
@@ -28,13 +27,13 @@ void CElementEnemyFlame::OnCollision(const SCollisionEvent& Event) {
          if(Level.getPlayer().decrementHealth()) {
             CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
             if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {
-               PlayerActor->addImpulse(SVector2f(0.0f, flameJumpFactor), 0.001f);
+               PlayerActor->addImpulse(SVector2f(0.0f, flameJumpFactor));
             }
          }
       }
       else {
          //We can make enemies jump when they touch fire here too, once we have a pointer to the CElementEnemy*.
-         ((CCollisionActor *)Event.Other)->addImpulse(SVector2f(0.0f, flameJumpFactor), 0.001f);
+         ((CCollisionActor *)Event.Other)->addImpulse(SVector2f(0.0f, flameJumpFactor));
       }
    }
 }

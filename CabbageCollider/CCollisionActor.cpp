@@ -56,6 +56,8 @@ CCollisionActor::CCollisionActor()
 CCollisionActor::~CCollisionActor()
 {}
 
+
+/*FLAMES AND BLADES NOT COLLIDING BECAUSE OF THIS I THINK*/
 int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const TickTime)
 {
 	int Out = ECollisionType::None;

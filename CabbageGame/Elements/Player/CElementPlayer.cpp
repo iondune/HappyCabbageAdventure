@@ -562,7 +562,7 @@ void CElementPlayer::playLevelVictory(float time) {
       Scale.Y += 1.2f*time;
       Scale.X -= 1.8f*time;
 
-      PhysicsEngineObject->addImpulse(SVector2f(0.f, 30.f), 0.01f);
+      PhysicsEngineObject->addImpulse(SVector2f(0.f, 30.f));
 
    }
 

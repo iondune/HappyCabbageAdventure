@@ -68,7 +68,7 @@ void CElementEnemyProjectileCherry::updatePhysicsEngineObject(float time) {
       if (XDir < 0)
          xRandom = -xRandom;
 
-      PhysicsEngineObject->addImpulse(SVector2f(XDir + xRandom, 2.f + yRandom), 0.001f);
+      PhysicsEngineObject->addImpulse(SVector2f(XDir + xRandom, 2.f + yRandom));
       SetImpulse = false;
    }
 }

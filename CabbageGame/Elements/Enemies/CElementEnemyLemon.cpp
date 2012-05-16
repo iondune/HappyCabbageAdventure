@@ -109,7 +109,7 @@ int CElementEnemyLemon::takeDamage(int amount) {
 
 void CElementEnemyLemon::explode() {
    CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
-   PlayerActor->addImpulse(SVector2f(0.0f, 20.0f), 0.001f);
+   PlayerActor->addImpulse(SVector2f(0.0f, 20.0f));
 
    Level.getPlayer().setShaking(1.5f, .3f);
 

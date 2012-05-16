@@ -115,7 +115,7 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
          delete ParticleEngine;
          Dead = true;
          LaserState = FIRED;
-         ((CCollisionActor *)Player.getPhysicsEngineObject())->addImpulse(SVector2f((Player.Direction == CElementPlayer::Right ? -1.0f : 1.0f)*15.0f, 0.0f), 0.001f);
+         ((CCollisionActor *)Player.getPhysicsEngineObject())->addImpulse(SVector2f((Player.Direction == CElementPlayer::Right ? -1.0f : 1.0f)*15.0f, 0.0f));
          Player.AllowMovement = true;
 
          Player.View->setVisible(true);

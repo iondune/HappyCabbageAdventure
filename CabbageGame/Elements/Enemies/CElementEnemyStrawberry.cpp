@@ -67,9 +67,9 @@ void CElementEnemyStrawberry::OnCollision(CCollideable *Object) {
       else {
          if(Level.getPlayer().decrementHealth()) {
             if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
-               PlayerActor->addImpulse(SVector2f(7.f, 2.8f), 0.001f);
+               PlayerActor->addImpulse(SVector2f(7.f, 2.8f));
             else
-               PlayerActor->addImpulse(SVector2f(-7.f, 2.8f), 0.001f);
+               PlayerActor->addImpulse(SVector2f(-7.f, 2.8f));
             Level.getPlayer().setShaking(1.0f, 3.0f);
          }
       }
