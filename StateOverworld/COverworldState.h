@@ -18,7 +18,7 @@ class COverworldState : public CState<COverworldState>
 {
   struct SomeLevel
   {
-    SVector3 loc;
+    SVector3f loc;
     char const * name;
     bool completed;
   };
@@ -30,7 +30,7 @@ class COverworldState : public CState<COverworldState>
    //Boolean integers for keypressing
    int aDown, dDown, spaceDown, wDown, sDown, yDown;
    float changex, changey, changez, sineValue;
-   SVector3 playerVector, playerVecShift, playerVecTarget;
+   SVector3f playerVector, playerVecShift, playerVecTarget;
 
    CShader *Flat, *Diffuse, *ToonTexture;
    CShader *DeferredFlat, * DeferredDiffuse, * DeferredTexture;
@@ -43,23 +43,23 @@ class COverworldState : public CState<COverworldState>
 
 
    bool isDay, transitionWorld;
-   SVector3 eye, look, eyeShift, lookShift, eyeTarget, lookTarget;
+   SVector3f eye, look, eyeShift, lookShift, eyeTarget, lookTarget;
    int WindowWidth, WindowHeight;
-   SVector3 rot;
+   SVector3f rot;
 
    float transitionTimer;
 
    SomeLevel levels [NUM_LEVELS];
-   SVector3 cameraPos [NUM_CAMERAS];
+   SVector3f cameraPos [NUM_CAMERAS];
    bool levelsUnlocked;
 
    void LoadShaders();
-   void addMeshes(SVector3 loc, CMesh *newMesh, CTexture *texture);
+   void addMeshes(SVector3f loc, CMesh *newMesh, CTexture *texture);
    void PrepMeshes();
    void PrepSkySphere();
    void loadLevels();
    void setCameraTrans();
-   void levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor);
+   void levelIcons(SVector3f loc, CMesh *levelIcon, int iconColor);
    void testFun();
 
    CLight * PlayerLight;
@@ -89,8 +89,8 @@ class COverworldState : public CState<COverworldState>
    void stepCamera(float delta);
    void OnMouseEvent(SMouseEvent const & Event);
    */
-   void superInterpolator(SVector3 & curr, SVector3 & change, float delta, float transLength);
-   void shiftSetter(SVector3 & curr, SVector3 & change, SVector3 & target);
-   float angleMaker(SVector3 start, SVector3 toPoint);
+   void superInterpolator(SVector3f & curr, SVector3f & change, float delta, float transLength);
+   void shiftSetter(SVector3f & curr, SVector3f & change, SVector3f & target);
+   float angleMaker(SVector3f start, SVector3f toPoint);
 };
 #endif

@@ -8,21 +8,21 @@
 class CElementBlockFlag : public CElementBlock {
    public:
       enum FlagRole {
-         NEXT			= 0,
-         SECRET		= 1
+         NEXT         = 0,
+         SECRET      = 1
       };
    private:
       FlagRole Role;
 
    public:
-      virtual void OnCollision(CCollideable *Object);
+      virtual void OnCollision(const SCollisionEvent& Event);
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
       virtual void update(float);
       virtual void writeXML(xmlwriter *);
 
-      CElementBlockFlag(SRect2, FlagRole);
-      CElementBlockFlag(SRect2 nArea, int role); //So we don't need a block loader
+      CElementBlockFlag(SRect2f, FlagRole);
+      CElementBlockFlag(SRect2f nArea, int role); //So we don't need a block loader
 
       virtual void printInformation();
       CElementBlockFlag::FlagRole getRole();

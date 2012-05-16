@@ -89,7 +89,6 @@
     <ClInclude Include="CFadeOutState.h" />
     <ClInclude Include="COrthoCamera.h" />
     <ClInclude Include="CStateManager.h" />
-    <ClInclude Include="sigslot\sigslot.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />

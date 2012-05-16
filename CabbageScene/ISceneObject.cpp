@@ -34,7 +34,7 @@ glm::mat4 const & ISceneObject::getAbsoluteTransformation() const
 	return AbsoluteTransformation;
 }
 
-void ISceneObject::setTranslation(SVector3 const & translation)
+void ISceneObject::setTranslation(SVector3f const & translation)
 {
 	if (Immobile)
 		return;
@@ -43,7 +43,7 @@ void ISceneObject::setTranslation(SVector3 const & translation)
 	Transformation.setTranslation(translation);
 }
 
-void ISceneObject::setRotation(SVector3 const & rotation)
+void ISceneObject::setRotation(SVector3f const & rotation)
 {
 	Rotation = rotation;
 	Transformation.setRotation(rotation);
@@ -54,7 +54,7 @@ void ISceneObject::setRotation(glm::mat4 const & matrix)
 	Transformation.setRotation(matrix);
 }
 
-void ISceneObject::setScale(SVector3 const & scale)
+void ISceneObject::setScale(SVector3f const & scale)
 {
 	//assert(!Immobile);
 	Scale = scale;
@@ -186,17 +186,17 @@ void ISceneObject::removeChildren()
 	Children.clear();
 }
 
-SVector3 const & ISceneObject::getRotation() const
+SVector3f const & ISceneObject::getRotation() const
 {
 	return Rotation;
 }
 
-SVector3 const & ISceneObject::getTranslation() const
+SVector3f const & ISceneObject::getTranslation() const
 {
 	return Translation;
 }
 
-SVector3 const & ISceneObject::getScale() const
+SVector3f const & ISceneObject::getScale() const
 {
 	return Scale;
 }
@@ -223,7 +223,7 @@ bool const ISceneObject::isCulled(CScene const * const Scene) const
 
 	for (int i = 0; i < 8; ++ i) 
 	{
-		SVector3 const Center = getBoundingBox().getCorner(i);
+		SVector3f const Center = getBoundingBox().getCorner(i);
 		glm::vec4 Center4(Center.X, Center.Y, Center.Z, 1.f);
 
 		glm::mat4 PVM;
@@ -283,14 +283,14 @@ void ISceneObject::setImmobile(bool val) {
 	Immobile = val;
 }
 
-SVector3 ISceneObject::getWorldBoundingBoxMinPoint() {
+SVector3f ISceneObject::getWorldBoundingBoxMinPoint() {
 	if(!Immobile) {
-		SVector3 p = getBoundingBox().MinCorner; 
+		SVector3f p = getBoundingBox().MinCorner; 
 		glm::vec4 p4(p.X, p.Y, p.Z, 1.f);
 		glm::vec4 temp = Transformation() * p4; 
 
 		//printf("Min: %0.2f %0.2f %0.2f\n", temp.x, temp.y, temp.z);
-		return SVector3(temp.x, temp.y, temp.z);
+		return SVector3f(temp.x, temp.y, temp.z);
 	}
 	else
 		return getBoundingBox().MinCorner;
@@ -298,17 +298,17 @@ SVector3 ISceneObject::getWorldBoundingBoxMinPoint() {
 
 SBoundingBox3 ISceneObject::getWorldBoundingBox() {
 	if(!Immobile) {
-		SVector3 min = getBoundingBox().MinCorner; 
+		SVector3f min = getBoundingBox().MinCorner; 
 		glm::vec4 min4(min.X, min.Y, min.Z, 1.f);
 		glm::vec4 temp = Transformation() * min4; 
 		//printf("Min: %0.2f %0.2f %0.2f\n", temp.x, temp.y, temp.z);
 
-		SVector3 max = getBoundingBox().MaxCorner; 
+		SVector3f max = getBoundingBox().MaxCorner; 
 		glm::vec4 max4(max.X, max.Y, max.Z, 1.f);
 		glm::vec4 temp2 = Transformation() * max4; 
 		//printf("Max: %0.2f %0.2f %0.2f\n", temp2.x, temp2.y, temp2.z);
 
-		return SBoundingBox3(SVector3(temp.x, temp.y, temp.z), SVector3(temp2.x, temp2.y, temp2.z));
+		return SBoundingBox3(SVector3f(temp.x, temp.y, temp.z), SVector3f(temp2.x, temp2.y, temp2.z));
 	}
 	else
 		return getBoundingBox();

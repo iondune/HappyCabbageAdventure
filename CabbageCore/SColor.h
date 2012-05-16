@@ -22,7 +22,7 @@ public:
         : Red(red), Green(green), Blue(blue), Alpha(alpha)
     {}
 
-	SColor(SVector3 const & vector)
+	SColor(SVector3f const & vector)
 		: Red(vector.X), Green(vector.Y), Blue(vector.Z), Alpha(1.f)
 	{}
 
@@ -56,6 +56,41 @@ public:
 		case 3:
 			return Alpha;
 		}
+	}
+
+	template <typename T>
+	SColor operator * (T const s) const
+	{
+		return SColor(Red*s, Green*s, Blue*s, Alpha*s);
+	}
+
+	SColor operator * (SColor const & s) const
+	{
+		return SColor(Red * s.Red, Green * s.Green, Blue * s.Blue, Alpha * s.Alpha);
+	}
+
+	SColor operator + (SColor const & s) const
+	{
+		return SColor(Red + s.Red, Green + s.Green, Blue + s.Blue, Alpha + s.Alpha);
+	}
+
+	SColor & operator *= (SColor const & s)
+	{
+		Red *= s.Red;
+		Green *= s.Green;
+		Blue *= s.Blue;
+		Alpha *= s.Alpha;
+		return * this;
+	}
+	
+	template <typename T>
+	SColor & operator *= (T const s)
+	{
+		Red *= s;
+		Green *= s;
+		Blue *= s;
+		Alpha *= s;
+		return * this;
 	}
 
 };
