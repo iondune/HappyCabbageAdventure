@@ -15,6 +15,7 @@ class CElementBlockDeath : public CElementBlock {
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
+      virtual void updateSceneObject(float);
 
       virtual void writeXML(xmlwriter *);
       virtual void update(float);

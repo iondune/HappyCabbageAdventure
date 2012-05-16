@@ -7,7 +7,7 @@ CElementBlockDeath::CElementBlockDeath(SRect2 nArea, int D, int T, float R, floa
 }
 
 void CElementBlockDeath::OnCollision(CCollideable *Object) {
-   Level.getPlayer().setHealth(0);
+   Level.getPlayer().subtractHealth(Level.getPlayer().getStats().MaxHealth);
    return;
 }
 
@@ -40,7 +40,7 @@ void CElementBlockDeath::writeXML(xmlwriter *l) {
 }
 
 void CElementBlockDeath::setupSceneObject() {
-   if (true /*Check for LWIBState here.  Don't see a way to at the moment.  Want to talk to Alden*/) {
+   if (!Level.isLoaded()) {
      CMeshSceneObject *tempBlock = new CMeshSceneObject();
       CMesh *mesh;
 
@@ -69,6 +69,9 @@ void CElementBlockDeath::setupSceneObject() {
       SceneObject = tempBlock;
       CApplication::get().getSceneManager().addImmobileSceneObject(tempBlock, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
    }
+}
+
+void CElementBlockDeath::updateSceneObject(float time) {
 }
 
 void CElementBlockDeath::setupPhysicsEngineObject() {

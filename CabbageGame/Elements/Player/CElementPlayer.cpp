@@ -383,7 +383,7 @@ void CElementPlayer::decrementLives() {
    Mix_PlayMusic(deathMusic, 1);
 
    //Reset stage
-   if (Stats.Lives > 1) {
+   if (Stats.Lives > 0) {
       Stats.Lives--;
       Stats.Health = Stats.MaxHealth;
       Stats.Energy = Stats.MaxEnergy;
