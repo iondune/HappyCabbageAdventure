@@ -9,12 +9,13 @@ CElementEnemyKiwi::CElementEnemyKiwi(SRect2 nArea, int direction) :
 void CElementEnemyKiwi::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(SRect2(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y));
+   PhysicsEngineObject->setArea(SRect2(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y * 0.6f));
 
    //Set actor attributes
    PhysicsEngineObject->setControlFall(false);
    PhysicsEngineObject->setFallAcceleration(0.0f);
 
+   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_KIWI;
    PhysicsEngineObject->getAttributes().MaxWalk = 3.0f;
    PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
 
@@ -23,11 +24,6 @@ void CElementEnemyKiwi::setupPhysicsEngineObject() {
 
    //TODO:  Is this still needed?
    PhysicsEngineObject->getAttributes().Reacts = 0;
-
-   if(Direction == 0)
-      PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
-   else
-      PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
 }
 
 void CElementEnemyKiwi::setupSceneObject() {
@@ -68,43 +64,55 @@ void CElementEnemyKiwi::setupSceneObject() {
 void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
    //TODO: Make some class singleton so we can get the player's location
    //TODO:  Clean up KIWI z-axis code
-   /*if(zTimer < 0.0f)
-     zTimer = 0.0f;
-     if(inZ) {
-     if(zTimer >= Z_SPEED)
-     zTimer = Z_SPEED;
-     else {
-     zTimer += time;
-     }
-     }
-     else {
-     if(zTimer > 0.0f)
-     zTimer -= time;
-     else {
-     }
-     }*/
+   if (!Level.getPlayer().isDead())
+   {
+      /*if(zTimer < 0.0f)
+         zTimer = 0.0f;
+      if(inZ) {
+         if(zTimer >= Z_SPEED)
+            zTimer = Z_SPEED;
+         else {
+            zTimer += time;
+         }
+      }
+      else {
+         if(zTimer > 0.0f)
+            zTimer -= time;
+         else {
+         }
+      }*/
 
-   SineValue = 0.6f*sin(Area.Position.X - OldX);
-   Area.Position.Y += SineValue;
+      SineValue = 0.6f*sin(Area.Position.X - OldX);
+      Area.Position.Y += SineValue;
 
-   SVector2 vel = PhysicsEngineObject->getVelocity();
-   PhysicsEngineObject->setVelocity(SVector2(vel.X, vel.Y > 0 ? vel.Y - 1.0f*time : 0));
+      SVector2 vel = PhysicsEngineObject->getVelocity();
+      PhysicsEngineObject->setVelocity(SVector2(vel.X, vel.Y > 0 ? vel.Y - 1.0f*time : 0));
 
-   //TODO:  Z-Code
-   //TODO:  Player location
-   /*if(!inZ) {*/
+      //TODO: Check player direction
+      if(Direction == 0)
+         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
+      else
+         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
 
-   float xDist = Area.Position.X - Level.getPlayer().getArea().Position.X;
+      //TODO:  Z-Code
+      //TODO:  Player location
+      /*if(!inZ) {*/
 
-   //Drop bomb projectile
-   if (xDist < .2f && !bombDropped && Direction == 0) {
-      DropBomb();
-      bombDropped = true;
+      float xDist = Area.Position.X - Level.getPlayer().getArea().Position.X;
+
+      //Drop bomb projectile
+      if (xDist < .2f && !bombDropped && Direction == 0) {
+         DropBomb();
+         bombDropped = true;
+      }
+      else if (xDist > -.2f && !bombDropped && Direction == 1) {
+         DropBomb();
+         bombDropped = true;
+      }
    }
-   else if (xDist > -.2f && !bombDropped && Direction == 1) {
-      DropBomb();
-      bombDropped = true;
-   }
+
+   else
+      PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
 }
 
 //This is where the renderable would be updated for the more complex enemies
@@ -145,3 +153,4 @@ void CElementEnemyKiwi::DropBomb() {
 
    Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(xLocation, yLocation, .2f, .2f), Enemies::KIWI_PROJECTILE));
 }
+
