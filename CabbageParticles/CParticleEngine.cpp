@@ -285,6 +285,10 @@ void CParticleEngine::step(float const elapsedTime) {
    }
 }
 
+ISceneObject * CParticleEngine::getSceneObject() {
+   return myObj;
+}
+
 void CParticleEngine::deconstruct() {
    if(!dead) {
       std::vector<CParticle*>::iterator it;

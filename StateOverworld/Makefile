@@ -5,7 +5,7 @@ COMPILER_VERSION=-std=c++0x
 ELEMENTSHEADER=$(shell find ../CabbageGame/Elements -type d | awk 'BEGIN{}{print "-I./"$$1}')
 INCLUDE = -I../CabbageCore -I../CabbageScene -I../CabbageFramework -I../CabbageCollider -I../CabbageSound -I../CabbageParticles -I../StateLWIB -I../CabbageGUI -I../CabbageGame -I ../CabbageGame/wmlwriter_src/ $(ELEMENTSHEADER) -I ../StateGame/ -I../StateMainMenu/
 
-CC=g++ -O1 -s
+CC=g++ -g
 
 #Chris Code.  Adding check for 32 or 64 bit
 LBITS:=$(shell getconf LONG_BIT)

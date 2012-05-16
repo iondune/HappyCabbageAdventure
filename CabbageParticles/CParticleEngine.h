@@ -57,5 +57,6 @@ class CParticleEngine {
       void deconstruct();
       void setVisible(bool visible);
       bool isVisible();
+      ISceneObject * getSceneObject();
 };
 #endif
