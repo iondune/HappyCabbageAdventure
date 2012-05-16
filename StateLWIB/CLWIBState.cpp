@@ -806,12 +806,12 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
        else if (type == 12)
            type = 16;
    }
-   // Dafuq? NO!
-   //tempPlaceable->setupObjects(); 
-   //tempPlaceable->printInformation();
+   placeables.push_back(tempPlaceable = CEnemyLoader::LoadEnemy(SRect2f(x, y, (float)w, (float)h),(Enemies::EEnemyType) type));
+   tempPlaceable->setupObjects(); 
+   tempPlaceable->printInformation();
 
    blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
-   //blockMap[(int)x+25][(int)(y-0.5+25)].r = tempPlaceable;
+   blockMap[(int)x+25][(int)(y-0.5+25)].r = tempPlaceable;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapX = (int)x+25;
    blockMap[(int)x+25][(int)(y-0.5+25)].mapY = (int)(y-0.5+25);
    //redoPlaceables.clear();
