@@ -8,6 +8,7 @@
 #include "CElementPlayer.h"
 #include "CElementItem.h"
 #include "CElementBlockFlag.h"
+#include "CParticleEngine.h"
 
 bool CGameLevel::isLoaded() {
    return Loaded;

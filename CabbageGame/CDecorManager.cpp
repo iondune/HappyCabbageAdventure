@@ -75,9 +75,9 @@ CDecorManager::CDecorManager(CGameLevel & level) {
    int NumFlowerTypes = 2;
    for(unsigned int i = 0; i < groundBlocks.size(); i++) {
       curBlock = groundBlocks[i];
-      if (env == 0)
+      if (env == Env::FOREST)
          GenerateForestPlants(curBlock);
-      else if (env == 1) {
+      else if (env == Env::DESERT) {
          drawTree--;
          if (drawTree == 0) {
             drawTree = rand()%2 + 1;

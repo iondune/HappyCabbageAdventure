@@ -45,7 +45,6 @@ void CElementEnemyOrange::setupSceneObject() {
       printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
 
    SceneObject->setMesh(mesh);
-   SceneObject->setTexture("Base/orange.bmp");
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
    SceneObject->setTranslation(SVector3((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y-1))/2, 0));
