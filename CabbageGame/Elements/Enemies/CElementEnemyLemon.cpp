@@ -13,6 +13,10 @@ void CElementEnemyLemon::setupPhysicsEngineObject() {
    //Set actor attributes
    PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
    PhysicsEngineObject->getAttributes().WalkAccel = 10.f;
+
+   //Why is this set to true?????  Something with physics stuff... and it's not calling setJumping.  : P
+   //Note, being dropped from the sky in the case it's jumping.  Checked Bounce, that wasn't the problem.
+   PhysicsEngineObject->setJumping(false);
 }
 
 void CElementEnemyLemon::setupSceneObject() {
