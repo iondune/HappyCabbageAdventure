@@ -357,7 +357,12 @@ void CCollisionActor::addImpulse(SVector2 const & velocity) {
 }
 
 
-void CCollisionActor::setFallAcceleration(float speed)
+void CCollisionActor::setGravity(float grav)
 {
-	FallAcceleration = speed;
+	Gravity = grav;
+}
+
+float CCollisionActor::getGravity()
+{
+   return Gravity;
 }

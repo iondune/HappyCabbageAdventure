@@ -18,7 +18,7 @@ class CPlayerAbilityLaser : public CPlayerAbility {
       static float const LASER_FIRING_DURATION;
       static int const LASER_CHARGE_PARTICLE_COUNT;
       static int const LASER_FIRING_PARTICLE_COUNT;
-      int EnergyUsed;
+      int EnergyUsed, tempGrav;
 
       CParticleEngine *ParticleEngine;
       ELaserState LaserState;

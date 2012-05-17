@@ -1,5 +1,5 @@
 FILES = SVector2.cpp SVector3.cpp
-CC=g++ -g
+CC=g++ -O1 -s
 
 OFILES = $(FILES:%.cpp=%.o)
 

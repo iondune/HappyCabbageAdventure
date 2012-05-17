@@ -80,7 +80,7 @@ void CElementPlayer::updatePlayerAction() {
          PhysicsEngineObject->CollideableLevel = 0;//INTERACTOR_NULL_BLOCK;
          PhysicsEngineObject->CanCollideWith = INTERACTOR_NULL_BLOCK;
          PhysicsEngineObject->setControlFall(false);
-         PhysicsEngineObject->setFallAcceleration(0.0f);
+         PhysicsEngineObject->setGravity(0.0f);
          PhysicsEngineObject->setJumping(false);
          PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, 0.0f));
          hWasDown = CApplication::get().getEventManager().IsKeyDown[SDLK_h];
@@ -92,7 +92,7 @@ void CElementPlayer::updatePlayerAction() {
          PhysicsEngineObject->CanCollideWith = INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS;
          PhysicsEngineObject->CanCollideWith &= ~INTERACTOR_SUPERNONCOLLIDERS;
          PhysicsEngineObject->setControlFall(true);
-         PhysicsEngineObject->setFallAcceleration(10.0f);
+         PhysicsEngineObject->setGravity(10.0f);
          PhysicsEngineObject->setJumping(false);
          PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, 0.0f));
       }
@@ -330,6 +330,17 @@ void CElementPlayer::setupPhysicsEngineObject() {
    PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_PLAYER;
    PhysicsEngineObject->CollideableLevel |= INTERACTOR_SUPERACTORS;
    PhysicsEngineObject->CanCollideWith |= INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS;
+
+   if (Level.getEnv() == Env::WATER) {
+      PhysicsEngineObject->getAttributes().MaxWalk *= 0.5f;
+      PhysicsEngineObject->getAttributes().WalkAccel *= 0.25f;
+      PhysicsEngineObject->getAttributes().JumpAccel *= 0.75f;
+      PhysicsEngineObject->getAttributes().JumpLength *= 2.0f;
+      PhysicsEngineObject->getAttributes().AirControl *= 8.0f;
+      PhysicsEngineObject->getAttributes().AirSpeedFactor *= 0.5f;
+
+      PhysicsEngineObject->setGravity(PhysicsEngineObject->getGravity()/16.0f);
+   }
 }
 
 void CElementPlayer::setupSceneObject() {

@@ -13,7 +13,7 @@ void CElementEnemyKiwi::setupPhysicsEngineObject() {
 
    //Set actor attributes
    PhysicsEngineObject->setControlFall(false);
-   PhysicsEngineObject->setFallAcceleration(0.0f);
+   PhysicsEngineObject->setGravity(0.0f);
 
    PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_KIWI;
    PhysicsEngineObject->getAttributes().MaxWalk = 3.0f;

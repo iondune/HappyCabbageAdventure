@@ -39,7 +39,7 @@ void PKiwi::loadActor() {
 
    //Makes them immune to gravity
    Actor->setControlFall(false);
-   Actor->setFallAcceleration(0.0f);
+   Actor->setGravity(0.0f);
 
    Actor->setArea(SRect2(SVector2(x, y), SVector2(w*.5f, h*.5f)));
 

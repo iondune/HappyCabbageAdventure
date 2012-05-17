@@ -13,7 +13,7 @@ void CElementEnemyFlame::setupPhysicsEngineObject() {
 
    //Makes them immune to gravity
    PhysicsEngineObject->setControlFall(false);
-   PhysicsEngineObject->setFallAcceleration(0.0f);
+   PhysicsEngineObject->setGravity(0.0f);
    //PhysicsEngineObject->setArea(SRect2(SVector2(Area.Position.X, Area.Position.Y-1.0f), Area.Size));
    PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_FLAME;
 }

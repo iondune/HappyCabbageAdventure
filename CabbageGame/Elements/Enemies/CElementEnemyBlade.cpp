@@ -12,7 +12,7 @@ void CElementEnemyBlade::setupPhysicsEngineObject() {
 
    //Makes them immune to gravity
    PhysicsEngineObject->setControlFall(false);
-   PhysicsEngineObject->setFallAcceleration(0.0f);
+   PhysicsEngineObject->setGravity(0.0f);
    PhysicsEngineObject->setArea(SRect2(SVector2(Area.Position.X + .5f, Area.Position.Y - .25f), Area.Size));
    PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_FLAME;
 }

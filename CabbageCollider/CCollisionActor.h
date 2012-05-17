@@ -126,8 +126,8 @@ public:
 	void setControlFall(bool const fall);
 	bool getControlFall();
 	void setStanding(bool);
-	void setFallAcceleration(float speed);
-	float getFallAcceleration();
+	void setGravity(float grav);
+	float getGravity();
 
 	virtual void draw();
 
