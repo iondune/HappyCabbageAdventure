@@ -143,6 +143,8 @@ protected:
 	//! Movement of this actor during current tick
 	SVec2 Movement;
 
+	std::set<CCollideable *> PhaseList, NewPhaseList;
+
 public:
 
 	//! Destructor
@@ -189,6 +191,8 @@ public:
 	virtual void draw();
 
 	void addImpulse(SVec2 const & velocity, float const Duration = 0.001f);
+
+	void updatePhaseList();
 
 };
 

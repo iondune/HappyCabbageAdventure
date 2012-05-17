@@ -308,6 +308,10 @@ void CCollisionActor::updateVectors(CollisionReal const TickTime)
 	// Perform test movement
 	Movement = Velocity * TickTime;
 	Area.Position += Movement;
+
+	// update phase list
+	PhaseList = NewPhaseList;
+	NewPhaseList.clear();
 }
 
 void CCollisionActor::pushIfCollided(CCollisionObject * Object, SVec2 const Movement)
@@ -379,7 +383,15 @@ bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTim
 		Event.Other = Object;
 		Event.Direction = (ECollisionType::Domain) CollisionType;
 
-		OnCollision.emit(Event);
+		if (CollisionType & ECollisionType::Responded)
+		{
+			OnCollision.emit(Event);
+		}
+		else if (PhaseList.find(Object) == PhaseList.end())
+		{
+			NewPhaseList.insert(Object);
+			OnPhaseBegin.emit(Event);
+		}
 	}
 
 	if (CollisionType & ECollisionType::Up && CollisionType & ECollisionType::Responded)
@@ -424,4 +436,19 @@ void CCollisionActor::addImpulse(SVec2 const & velocity, float const Duration)
 void CCollisionActor::setFallAcceleration(CollisionReal speed)
 {
 	FallAcceleration = speed;
+}
+
+void CCollisionActor::updatePhaseList()
+{
+	for (std::set<CCollideable *>::iterator it = PhaseList.begin(); it != PhaseList.end(); ++ it)
+	{
+		if (NewPhaseList.find(* it) == NewPhaseList.end())
+		{
+				SCollisionEvent Event;
+			Event.This = this;
+			Event.Other = * it;
+			Event.Direction = (ECollisionType::Domain) ECollisionType::UnPhase;
+			OnPhaseEnd.emit(Event);
+		}
+	}
 }

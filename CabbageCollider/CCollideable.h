@@ -32,7 +32,8 @@ public:
 		Down = 2,
 		Left = 4,
 		Right = 8,
-		Responded = 16
+		Responded = 16,
+		UnPhase = 32
 	};
 
 	Domain Value;
@@ -123,6 +124,8 @@ public:
 	}
 
 	sigslot::signal1<SCollisionEvent const &> OnCollision;
+	sigslot::signal1<SCollisionEvent const &> OnPhaseBegin;
+	sigslot::signal1<SCollisionEvent const &> OnPhaseEnd;
 
 };
 
