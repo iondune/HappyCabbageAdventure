@@ -330,6 +330,13 @@ void CElementPlayer::setupPhysicsEngineObject() {
    PhysicsEngineObject->setTypeId(PhysicsEngineObject->getTypeId() | INTERACTOR_SUPERACTORS);
    PhysicsEngineObject->setCollisionMask(PhysicsEngineObject->getCollisionMask() | INTERACTOR_SUPERACTORS);
    PhysicsEngineObject->setDetectionMask(INTERACTOR_ITEMS);
+   if(PhysicsEngineObject->getCollisionMask() & INTERACTOR_ITEMS) {
+      printf("Hate my life\n");
+      assert(false);
+   }
+   else {
+      printf("Ian is a cant-do-nothin\n");
+   }
 }
 
 void CElementPlayer::setupSceneObject() {
