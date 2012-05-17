@@ -141,7 +141,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
 
    stepCamera(Application.getElapsedTime());
    float x=round(eye.X + previewBlockMouseX),y= round(eye.Y + previewBlockMouseY);
-   PrepPreviews(x,y, Elapsed);
+   PrepPreviews(x,y,blockWidth,blockHeight, Elapsed);
     //PreviewBlock->
 
    //Draw Text
@@ -167,43 +167,34 @@ void CLWIBState::OnRenderStart(float const Elapsed)
            block3->setVisible(false);
            if (uniType == 0) {
                block2->setText("Placing grass block");
-               //PreviewBlock = new CElementBlock(SRect2(x,y,blockWidth,blockHeight),blockDepth,uniType);
            }
            if (uniType == 1) {
                block2->setText("Placing dirt block");
-               //PreviewBlock = new CElementBlock(SRect2(x,y,blockWidth,blockHeight),blockDepth,uniType);
            }
            if (uniType == 2) {
                block2->setText("Placing rock block");
-               //PreviewBlock = new CElementBlock(SRect2(x,y,blockWidth,blockHeight),blockDepth,uniType);
            }
 
            if (uniType == -5) {
                block2->setText("Placing ground block");
-               //PreviewBlock = new CElementBlock(SRect2(x,y,blockWidth,blockHeight),blockDepth,uniType);
            }
            if (uniType >= 3)
                uniType = 0;
        }
        if (cDown == 1) {
-           //block3->setVisible(true);
            block2->setText("changing block width\n");
        }
        if (cDown == 2) {
-           //block3->setVisible(true);
            block2->setText("changing block height\n");
        }
        if (cDown == 3) {
-           //block3->setVisible(true);
            block2->setText("changing block depth\n");
        }
        if (cDown == 4) {
           block2->setText("adding breakableBlocks");
-          //PreviewBlock = new CElementBlockBreakable(SRect2(x,y,blockWidth,blockHeight));
        }
        if (cDown == 5){
           block2->setText("adding deathBlocks");
-          //PreviewBlock = new CElementBlockDeath(SRect2(x,y,blockWidth,blockHeight),blockDepth,uniType, 1.0f,1.0f);
        }
    }
    if (twoDown && !showHelp && !tDown && !oneDown && !threeDown&& !fourDown) {
@@ -215,7 +206,6 @@ void CLWIBState::OnRenderStart(float const Elapsed)
        }
        if (uniType == 1) {
            block2->setText("Placing Orange\n");
-           //PreviewEnemy->setScale(SVector3(1,1,1));
        }
        if (uniType == 2) {
            block2->setText("Placing Kiwi\n");
@@ -718,9 +708,9 @@ void CLWIBState::end()
    Application.getSceneManager().removeAllSceneObjects();
 }
 
-void CLWIBState::PrepPreviews(int x , int y, float t) {
+void CLWIBState::PrepPreviews(int x , int y, int w, int h, float t) {
 
-    PreviewBlock->setArea(SRect2(x,y,1,1));
+    PreviewBlock->setArea(SRect2(x,y,w,h));
     PreviewBlock->update(t);
 
 }
@@ -886,7 +876,7 @@ void CLWIBState::PrepCabbage(float x, float y) {
 }
 
 void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int moving) {
-   if(x < -40 || y < -25 || x >= 500 || y >= 75)
+   if(x < -25 || y < -25 || x >= 500 || y >= 75)
       return;
    //if(t == -5 && (int)y != -5)
    //    return;
