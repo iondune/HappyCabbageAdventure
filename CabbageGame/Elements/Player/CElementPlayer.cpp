@@ -82,7 +82,7 @@ void CElementPlayer::updatePlayerAction() {
          PhysicsEngineObject->setControlFall(false);
          PhysicsEngineObject->setFallAcceleration(0.0f);
          PhysicsEngineObject->setJumping(false);
-         PhysicsEngineObject->setVelocity(SVector2f(PhysicsEngineObject->getVelocity().X, 0.0f));
+         PhysicsEngineObject->setVelocity(SVec2(PhysicsEngineObject->getVelocity().X, 0.0));
          hWasDown = CApplication::get().getEventManager().IsKeyDown[SDLK_h];
          doGodmode();
          return;
@@ -93,12 +93,12 @@ void CElementPlayer::updatePlayerAction() {
          PhysicsEngineObject->setControlFall(true);
          PhysicsEngineObject->setFallAcceleration(10.0f);
          PhysicsEngineObject->setJumping(false);
-         PhysicsEngineObject->setVelocity(SVector2f(PhysicsEngineObject->getVelocity().X, 0.0f));
+         PhysicsEngineObject->setVelocity(SVec2(PhysicsEngineObject->getVelocity().X, 0.0));
       }
    }
    hWasDown = CApplication::get().getEventManager().IsKeyDown[SDLK_h];
    if(Godmode) {
-      PhysicsEngineObject->setVelocity(SVector2f(PhysicsEngineObject->getVelocity().X, 0.0f));
+      PhysicsEngineObject->setVelocity(SVec2(PhysicsEngineObject->getVelocity().X, 0.0));
       doGodmode();
    }
 
