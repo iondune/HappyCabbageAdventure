@@ -404,7 +404,7 @@ bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTim
 	//if (Attributes.Reacts && (CollisionType & ECollisionType::Left || CollisionType & ECollisionType::Right))
 	//	Velocity.X *= -Object->getMaterial().Elasticity;
 
-	return (CollisionType & ECollisionType::Down) != 0;
+	return (CollisionType & ECollisionType::Down) && (CollisionType & ECollisionType::Responded);
 }
 
 void CCollisionActor::draw()
