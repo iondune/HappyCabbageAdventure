@@ -8,6 +8,25 @@
 #include "CSceneManager.h"
 
 
+int ISceneObject::ObjectsCulled = 0;
+int ISceneObject::TotalObjects = 0;
+
+void ISceneObject::resetObjectCounts()
+{
+	ObjectsCulled = 0;
+	TotalObjects = 0;
+}
+
+int const ISceneObject::getObjectsCulled()
+{
+	return ObjectsCulled;
+}
+
+int const ISceneObject::getTotalObjects()
+{
+	return TotalObjects;
+}
+
 ISceneObject::ISceneObject()
 	: DebugDataFlags(0), Visible(true), Parent(0), UseCulling(true), Immobile(false)
 {}
@@ -69,8 +88,6 @@ void ISceneObject::update()
 		(* it)->update();
 }
 
-int timesCalled = 0, numObjects = 0, numCulled = 0;
-
 void ISceneObject::draw(CScene const * const scene, ERenderPass const Pass)
 {
 	if (! Visible)
@@ -85,9 +102,9 @@ void ISceneObject::draw(CScene const * const scene, ERenderPass const Pass)
 			if((* it)->isImmobile())
 			printf("Culled an immobile ISO\n");
 			*/
-			numCulled++;
+			++ ObjectsCulled;
 		}
-		numObjects++;
+		++ TotalObjects;
 	}
 }
 

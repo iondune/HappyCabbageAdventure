@@ -22,12 +22,12 @@ class EDebugData
 
 public:
 
-    enum Domain
-    {
-        None = 0,
-        Normals = 1,
-        NormalColors = 2
-    };
+	enum Domain
+	{
+		None = 0,
+		Normals = 1,
+		NormalColors = 2
+	};
 
 };
 
@@ -45,59 +45,59 @@ class CScene;
 class ISceneObject
 {
 
+	static int ObjectsCulled, TotalObjects;
+
 protected:
 
-    // Model Transformation
-    STransformation3 Transformation;
+	// Model Transformation
+	STransformation3 Transformation;
 	glm::mat4 AbsoluteTransformation;
-    glm::mat4 RotationMatrix;
-    SBoundingBox3 BoundingBox;
+	glm::mat4 RotationMatrix;
+	SBoundingBox3 BoundingBox;
 
 	SVector3f Rotation, Translation, Scale;
 
-    int DebugDataFlags;
+	int DebugDataFlags;
 
-    bool Visible;
+	bool Visible;
 
 	std::list<ISceneObject *> Children;
-   ISceneObject * Parent;
-
-
+	ISceneObject * Parent;
 
 	bool UseCulling;
-   bool Immobile; // Its transforms will never change after the algorithm has ran
+	bool Immobile; // Its transforms will never change after the algorithm has ran
 
 public:
 
-   bool isImmobile();
-   void setImmobile(bool val);
-    ISceneObject();
+	bool isImmobile();
+	void setImmobile(bool val);
+	ISceneObject();
 
 	void updateAbsoluteTransformation();
 	glm::mat4 const & getAbsoluteTransformation() const;
 
-    void setTreeImmobile(bool value);
-    void setTranslation(SVector3f const & translation);
-    void setRotation(SVector3f const & rotation);
-    void setRotation(glm::mat4 const & matrix);
-    void setScale(SVector3f const & scale);
+	void setTreeImmobile(bool value);
+	void setTranslation(SVector3f const & translation);
+	void setRotation(SVector3f const & rotation);
+	void setRotation(glm::mat4 const & matrix);
+	void setScale(SVector3f const & scale);
 
 	virtual void update();
-    virtual void draw(CScene const * const scene, ERenderPass const Pass);
-   int getNumLeaves();
+	virtual void draw(CScene const * const scene, ERenderPass const Pass);
+	int getNumLeaves();
 
-    SBoundingBox3 const & getBoundingBox() const;
-    SBoundingBox3 & getBoundingBox();
-    void setBoundingBox(SBoundingBox3 const & boundingBox);
+	SBoundingBox3 const & getBoundingBox() const;
+	SBoundingBox3 & getBoundingBox();
+	void setBoundingBox(SBoundingBox3 const & boundingBox);
 
-    bool const isDebugDataEnabled(EDebugData::Domain const type) const;
-    void enableDebugData(EDebugData::Domain const type);
-    void disableDebugData(EDebugData::Domain const type);
+	bool const isDebugDataEnabled(EDebugData::Domain const type) const;
+	void enableDebugData(EDebugData::Domain const type);
+	void disableDebugData(EDebugData::Domain const type);
 
-    bool const intersectsWithLine(SLine3 const & line) const;
+	bool const intersectsWithLine(SLine3 const & line) const;
 
-    bool const isVisible() const;
-    void setVisible(bool const isVisible);
+	bool const isVisible() const;
+	void setVisible(bool const isVisible);
 
 	STransformation3 const & getTransformation() const;
 
@@ -108,7 +108,7 @@ public:
 	void addChild(ISceneObject * child);
 	void setParent(ISceneObject * parent);
 	void removeChildren();
-   void sortChildrenByZTranslation();
+	void sortChildrenByZTranslation();
 
 	SVector3f const & getRotation() const;
 	SVector3f const & getTranslation() const;
@@ -119,8 +119,13 @@ public:
 	void setCullingEnabled(bool const culling);
 
 	virtual void load(CScene const * const Scene, ERenderPass const Pass);
-   SVector3f getWorldBoundingBoxMinPoint();
-   SBoundingBox3 getWorldBoundingBox();
+	SVector3f getWorldBoundingBoxMinPoint();
+	SBoundingBox3 getWorldBoundingBox();
+
+	static void resetObjectCounts();
+
+	static int const getObjectsCulled();
+	static int const getTotalObjects();
 
 };
 
