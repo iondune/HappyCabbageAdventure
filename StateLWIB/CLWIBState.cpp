@@ -710,7 +710,7 @@ void CLWIBState::end()
 
 void CLWIBState::PrepPreviews(int x , int y, int w, int h, float t) {
 
-    PreviewBlock->setArea(SRect2f(x, y, (float) w, (float) h));
+    PreviewBlock->setArea(SRect2f((float) x, (float) y, (float) w, (float) h));
     PreviewBlock->update(t);
 
 }
