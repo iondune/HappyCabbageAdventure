@@ -14,14 +14,13 @@
 */
 #define INTERACTOR_NON 128
 
-typedef std::vector<CCollisionObject *> ObjectList;
-typedef std::vector<CCollisionActor *> ActorList;
-
-
 class CCollisionEngine
 {
 
 public:
+	
+	typedef std::vector<CCollisionObject *> ObjectList;
+	typedef std::vector<CCollisionActor *> ActorList;
 
 private:
 
@@ -36,7 +35,7 @@ private:
 
 public:
 
-   std::vector<CCollideable *> getAllInBound(SRect2 Bound);
+	std::vector<CCollideable *> getAllInBound(SRect2 Bound);
 	void removeAll();
 
 	void removeObject(CCollisionObject * Object);
