@@ -20,6 +20,7 @@ void CElementEnemyFlame::setupPhysicsEngineObject() {
 
 void CElementEnemyFlame::setupSceneObject() {
    particleEngine = new CParticleEngine(SVector3(Area.Position.X, Area.Position.Y, 0), 100, -1, FLAME_PARTICLE);
+   SceneObject = (CMeshSceneObject*) particleEngine->getSceneObject();
 }
 
 void CElementEnemyFlame::OnCollision(CCollideable *Object) {
