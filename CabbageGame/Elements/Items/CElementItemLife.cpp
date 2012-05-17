@@ -15,7 +15,8 @@ void CElementItemLife::setupPhysicsEngineObject() {
 
    //Set actor attributes
    PhysicsEngineObject->setTypeId(INTERACTOR_ITEMS);
-   PhysicsEngineObject->setCollisionMask(PhysicsEngineObject->getCollisionMask() | INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS);
+   PhysicsEngineObject->setCollisionMask(INTERACTOR_BLOCKS);
+   PhysicsEngineObject->setDetectionMask(INTERACTOR_SUPERACTORS);
 }
 
 void CElementItemLife::setupSceneObject() {

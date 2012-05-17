@@ -326,8 +326,10 @@ void CElementPlayer::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
    PhysicsEngineObject->setArea(Area);
    PhysicsEngineObject->getAttributes().MaxWalk = 3.5f;
+   printf("HERE!!! LOOK HEREs %d\n", PhysicsEngineObject->getTypeId());
    PhysicsEngineObject->setTypeId(PhysicsEngineObject->getTypeId() | INTERACTOR_SUPERACTORS);
-   PhysicsEngineObject->setCollisionMask(PhysicsEngineObject->getCollisionMask() | INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS);
+   PhysicsEngineObject->setCollisionMask(PhysicsEngineObject->getCollisionMask() | INTERACTOR_SUPERACTORS);
+   PhysicsEngineObject->setDetectionMask(INTERACTOR_ITEMS);
 }
 
 void CElementPlayer::setupSceneObject() {

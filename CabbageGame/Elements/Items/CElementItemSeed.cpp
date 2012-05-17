@@ -14,6 +14,7 @@ void CElementItemSeed::setupPhysicsEngineObject() {
    //Set actor attributes
    PhysicsEngineObject->setTypeId(INTERACTOR_ITEMS);
    PhysicsEngineObject->setCollisionMask(INTERACTOR_BLOCKS);
+   PhysicsEngineObject->setDetectionMask(0);
    PhysicsEngineObject->getAttributes().Bounce = 3;
 }
 
@@ -40,6 +41,7 @@ void CElementItemSeed::setupSceneObject() {
 
 void CElementItemSeed::OnCollision(const SCollisionEvent& Event) {
    if(!Dead && Event.Other == Level.getPlayer().getPhysicsEngineObject() && !Level.getPlayer().used(Abilities::SHIELD)) {
+      printf("Seed collision with the player (Seed == %d)\n", this);
       Level.getPlayer().incrementSeeds();
       removeFromGame();
       Dead = true;
