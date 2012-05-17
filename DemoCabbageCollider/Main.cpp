@@ -17,7 +17,6 @@
 #pragma comment(lib, "SDLmain.lib")
 #pragma comment(lib, "CabbageScene.lib")
 #pragma comment(lib, "CabbageCollider.lib")
-#pragma comment(lib, "CabbageCore.lib")
 #pragma comment(lib, "OpenGL32.lib")
 #pragma comment(lib, "glu32.lib")
 
@@ -67,7 +66,7 @@ void Draw()
 
 int main(int argc, char * argv[])
 {
-	int const WindowWidth = 800, WindowHeight = 600;
+	int const WindowWidth = 1600, WindowHeight = 900;
 	SDL_VideoInfo const * video;
 
     if ( SDL_Init(SDL_INIT_VIDEO) < 0 )
@@ -125,26 +124,38 @@ int main(int argc, char * argv[])
 
 	CCollisionEngine * Engine = new CCollisionEngine();
 	Player = Engine->addActor();
-	Player->setArea(SRect2(0, 3, 1, 1));
+	Player->setArea(SArea(0, 3, 1, 1));
 
 	CCollisionObject * Block2 = Engine->addObject();
-	Block2->setArea(SRect2(2, 1.1f, 1, 1.f));
+	Block2->setArea(SArea(2, 1.1f, 1, 1.f));
 
 	CCollisionObject * Block = Engine->addObject();
-	Block->setArea(SRect2(-1, -1, 15, 0.9f));
+	Block->setArea(SArea(-1, -1, 15, 0.9f));
+	Block->getMaterial().Friction = 0.4f;
+	Block = Engine->addObject();
+	Block->setArea(SArea(-6.5, -1, 5, 0.9f));
 	Block->getMaterial().Friction = 0.4f;
 
-    CCollisionObject * Elevator = Engine->addElevator();
-    Elevator->setArea(SRect2(6, -3, 1, 1));
+    CCollisionElevator * Elevator = Engine->addElevator();
+    Elevator->setArea(SArea(6, -3, 1, 1));
+	//Elevator->InitialDirection *= -1;
 
     Elevator = Engine->addElevator();
-    Elevator->setArea(SRect2(6, 1, 1, 1));
+    Elevator->setArea(SArea(6, 1, 1, 1));
+	
+    Elevator = Engine->addElevator();
+    Elevator->setArea(SArea(6, 2.5f, 1, 1));
+	Elevator->Style = ELT_VERTICAL;
+	
+    Elevator = Engine->addElevator();
+    Elevator->setArea(SArea(10, 0.5f, 1, 1));
+	Elevator->Style = ELT_CIRCULAR;
 
 	CCollisionActor * Derp = Engine->addActor();
-	Derp->setArea(SRect2(4, 0, 1, 1));
+	Derp->setArea(SArea(4, 0, 1, 1));
 
 
-	// Time-independant movement variables
+	// Time-independent movement variables
 	int Time0, Time1;
 
 	// Start keeping track of time

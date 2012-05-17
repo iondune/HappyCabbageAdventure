@@ -13,7 +13,7 @@ class CElementItemPowerup : public CElementItem
       CMeshSceneObject *Container;
 
    public:
-      CElementItemPowerup(SRect2 nArea, int t);
+      CElementItemPowerup(SRect2f nArea, int t);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
@@ -21,7 +21,7 @@ class CElementItemPowerup : public CElementItem
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);
 
-      virtual void OnCollision(CCollideable *Object);
+      virtual void OnCollision(const SCollisionEvent& Event);
       void writeXML(xmlwriter *l);
 
       virtual void printInformation();

@@ -57,7 +57,7 @@ CMesh * const CMeshLoader::load3dsMesh(std::string const & fileName, bool const 
     CMesh * MeshWrapper = new CMesh();
     CMesh::SMeshBuffer * Mesh = new CMesh::SMeshBuffer();
 
-    std::map<std::string, SVector3> Materials;
+    std::map<std::string, SVector3f> Materials;
     std::map<CMesh::SMeshBuffer *, std::string> FaceMaterials;
     std::string currentMat;
 
@@ -331,7 +331,7 @@ CMesh * const CMeshLoader::loadAsciiMesh(std::string const & fileName)
             int Index;
             Stream >> Index; // We don't care, throw it away
 
-            SVector3 Position;
+            SVector3f Position;
             Stream >> Position.X;
             Stream >> Position.Y;
             Stream >> Position.Z;
@@ -401,43 +401,43 @@ CMesh * const CMeshLoader::createCubeMesh()
     CMesh::SMeshBuffer * Mesh = new CMesh::SMeshBuffer();
 
     Mesh->Vertices.resize(24);
-    Mesh->Vertices[0].Position = SVector3(-0.5, -0.5, -0.5);
-    Mesh->Vertices[1].Position = SVector3(-0.5,  0.5, -0.5);
-    Mesh->Vertices[2].Position = SVector3( 0.5,  0.5, -0.5);
-    Mesh->Vertices[3].Position = SVector3( 0.5, -0.5, -0.5);
+    Mesh->Vertices[0].Position = SVector3f(-0.5, -0.5, -0.5);
+    Mesh->Vertices[1].Position = SVector3f(-0.5,  0.5, -0.5);
+    Mesh->Vertices[2].Position = SVector3f( 0.5,  0.5, -0.5);
+    Mesh->Vertices[3].Position = SVector3f( 0.5, -0.5, -0.5);
 
-    Mesh->Vertices[4].Position = SVector3( 0.5, -0.5, -0.5);
-    Mesh->Vertices[5].Position = SVector3( 0.5, 0.5, -0.5);
-    Mesh->Vertices[6].Position = SVector3( 0.5, 0.5,  0.5);
-    Mesh->Vertices[7].Position = SVector3( 0.5, -0.5,  0.5);
+    Mesh->Vertices[4].Position = SVector3f( 0.5, -0.5, -0.5);
+    Mesh->Vertices[5].Position = SVector3f( 0.5, 0.5, -0.5);
+    Mesh->Vertices[6].Position = SVector3f( 0.5, 0.5,  0.5);
+    Mesh->Vertices[7].Position = SVector3f( 0.5, -0.5,  0.5);
 
-    Mesh->Vertices[8].Position = SVector3( 0.5, -0.5,  0.5);
-    Mesh->Vertices[9].Position = SVector3( 0.5,  0.5,  0.5);
-    Mesh->Vertices[10].Position = SVector3(-0.5,  0.5,  0.5);
-    Mesh->Vertices[11].Position = SVector3(-0.5, -0.5,  0.5);
+    Mesh->Vertices[8].Position = SVector3f( 0.5, -0.5,  0.5);
+    Mesh->Vertices[9].Position = SVector3f( 0.5,  0.5,  0.5);
+    Mesh->Vertices[10].Position = SVector3f(-0.5,  0.5,  0.5);
+    Mesh->Vertices[11].Position = SVector3f(-0.5, -0.5,  0.5);
 
-    Mesh->Vertices[12].Position = SVector3(-0.5, -0.5,  0.5);
-    Mesh->Vertices[13].Position = SVector3(-0.5,  0.5,  0.5);
-    Mesh->Vertices[14].Position = SVector3(-0.5,  0.5, -0.5);
-    Mesh->Vertices[15].Position = SVector3(-0.5, -0.5, -0.5);
+    Mesh->Vertices[12].Position = SVector3f(-0.5, -0.5,  0.5);
+    Mesh->Vertices[13].Position = SVector3f(-0.5,  0.5,  0.5);
+    Mesh->Vertices[14].Position = SVector3f(-0.5,  0.5, -0.5);
+    Mesh->Vertices[15].Position = SVector3f(-0.5, -0.5, -0.5);
 
-    Mesh->Vertices[16].Position = SVector3(-0.5,  0.5, -0.5);
-    Mesh->Vertices[17].Position = SVector3(-0.5,  0.5,  0.5);
-    Mesh->Vertices[18].Position = SVector3( 0.5,  0.5,  0.5);
-    Mesh->Vertices[19].Position = SVector3( 0.5,  0.5, -0.5);
+    Mesh->Vertices[16].Position = SVector3f(-0.5,  0.5, -0.5);
+    Mesh->Vertices[17].Position = SVector3f(-0.5,  0.5,  0.5);
+    Mesh->Vertices[18].Position = SVector3f( 0.5,  0.5,  0.5);
+    Mesh->Vertices[19].Position = SVector3f( 0.5,  0.5, -0.5);
 
-    Mesh->Vertices[20].Position = SVector3( 0.5, -0.5, -0.5);
-    Mesh->Vertices[21].Position = SVector3( 0.5, -0.5,  0.5);
-    Mesh->Vertices[22].Position = SVector3(-0.5, -0.5,  0.5);
-    Mesh->Vertices[23].Position = SVector3(-0.5, -0.5, -0.5);
+    Mesh->Vertices[20].Position = SVector3f( 0.5, -0.5, -0.5);
+    Mesh->Vertices[21].Position = SVector3f( 0.5, -0.5,  0.5);
+    Mesh->Vertices[22].Position = SVector3f(-0.5, -0.5,  0.5);
+    Mesh->Vertices[23].Position = SVector3f(-0.5, -0.5, -0.5);
 
     Mesh->Triangles.resize(12);
     for (int i = 0; i < 6; ++ i)
     {
-        Mesh->Vertices[4*i + 0].TextureCoordinates = SVector2(0, 1);
-        Mesh->Vertices[4*i + 1].TextureCoordinates = SVector2(0, 0);
-        Mesh->Vertices[4*i + 2].TextureCoordinates = SVector2(1, 0);
-        Mesh->Vertices[4*i + 3].TextureCoordinates = SVector2(1, 1);
+        Mesh->Vertices[4*i + 0].TextureCoordinates = SVector2f(0, 1);
+        Mesh->Vertices[4*i + 1].TextureCoordinates = SVector2f(0, 0);
+        Mesh->Vertices[4*i + 2].TextureCoordinates = SVector2f(1, 0);
+        Mesh->Vertices[4*i + 3].TextureCoordinates = SVector2f(1, 1);
 
         Mesh->Triangles[2*i].Indices[0] = 4*i + 0;
         Mesh->Triangles[2*i].Indices[1] = 4*i + 1;
@@ -476,9 +476,9 @@ CMesh * const CMeshLoader::createDiscMesh(unsigned int const Triangles)
         Mesh->Vertices[i*3 + 2].Position.Y = 0;
         Mesh->Vertices[i*3 + 2].Position.Z = 0.5f * cos(float(i+1) / float(Triangles) * 2.f * 3.14159f);
 
-		Mesh->Vertices[i*3 + 0].Normal = SVector3(0, 0, 1);
-		Mesh->Vertices[i*3 + 1].Normal = SVector3(0, 0, 1);
-		Mesh->Vertices[i*3 + 2].Normal = SVector3(0, 0, 1);
+		Mesh->Vertices[i*3 + 0].Normal = SVector3f(0, 0, 1);
+		Mesh->Vertices[i*3 + 1].Normal = SVector3f(0, 0, 1);
+		Mesh->Vertices[i*3 + 2].Normal = SVector3f(0, 0, 1);
 
         Mesh->Triangles[i].Indices[0] = i*3 + 0;
         Mesh->Triangles[i].Indices[1] = i*3 + 1;
@@ -487,7 +487,7 @@ CMesh * const CMeshLoader::createDiscMesh(unsigned int const Triangles)
 
     for (unsigned int i = 0; i < Mesh->Vertices.size(); ++ i)
     {
-        Mesh->Vertices[i].TextureCoordinates = SVector2(Mesh->Vertices[i].Position.X, Mesh->Vertices[i].Position.Y) + SVector2(0.5f);
+        Mesh->Vertices[i].TextureCoordinates = SVector2f(Mesh->Vertices[i].Position.X, Mesh->Vertices[i].Position.Y) + SVector2f(0.5f);
     }
 
     MeshWrapper->MeshBuffers.push_back(Mesh);

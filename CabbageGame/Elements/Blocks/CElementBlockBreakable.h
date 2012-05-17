@@ -10,12 +10,12 @@ class CElementBlockBreakable : public CElementBlock {
       void explode();
 
    public:
-      virtual void OnCollision(CCollideable *Object);
+      virtual void OnCollision(const SCollisionEvent& Event);
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
       virtual void writeXML(xmlwriter *);
 
-      CElementBlockBreakable(SRect2 nArea); //So we don't need a block loader
+      CElementBlockBreakable(SRect2f nArea); //So we don't need a block loader
       virtual void reactToAbility(Abilities::EAbilityType ability); 
 
       virtual void printInformation();
