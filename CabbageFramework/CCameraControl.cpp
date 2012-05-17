@@ -36,24 +36,24 @@ void CCameraControl::update(float const TickTime)
 {
 	LookDirection = SVector3f(cos(Theta)*cos(Phi), sin(Phi), sin(Theta)*cos(Phi));
 
-	if (EventManager.IsKeyDown[SDLK_w])
+	if (EventManager.IsKeyDown[SDLK_w] || EventManager.IsKeyDown[SDLK_UP])
 	{
 		Position += LookDirection*MoveSpeed*TickTime;
 	}
 
-	if (EventManager.IsKeyDown[SDLK_a])
+	if (EventManager.IsKeyDown[SDLK_a] || EventManager.IsKeyDown[SDLK_LEFT])
 	{
 		Position.X += cos(Theta - 1.57079633f)*MoveSpeed*TickTime;
 		Position.Z += sin(Theta - 1.57079633f)*MoveSpeed*TickTime;
 	}
 
-	if (EventManager.IsKeyDown[SDLK_d])
+	if (EventManager.IsKeyDown[SDLK_d] || EventManager.IsKeyDown[SDLK_RIGHT])
 	{
 		Position.X += cos(Theta + 1.57079633f)*MoveSpeed*TickTime;
 		Position.Z += sin(Theta + 1.57079633f)*MoveSpeed*TickTime;
 	}
 
-	if (EventManager.IsKeyDown[SDLK_s])
+	if (EventManager.IsKeyDown[SDLK_s] || EventManager.IsKeyDown[SDLK_DOWN])
 	{
 		Position -= LookDirection*MoveSpeed*TickTime;
 	}
