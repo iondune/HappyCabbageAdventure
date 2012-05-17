@@ -115,14 +115,6 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 						AllowedMovement = true;
 						AllowedMovementForThisObject = true;
 						Movement[i] = OriginalMovement;
-
-						// Cancel collision output
-						if (OriginalMovement > (CollisionReal) 0.0)
-							Out ^= (i ? ECollisionType::Up : ECollisionType::Right);
-						else if (OriginalMovement < (CollisionReal) 0.f)
-							Out ^= (i ? ECollisionType::Down : ECollisionType::Left);
-						else
-							std::cout << "Null movement, undefined behavior." << std::endl;
 					}
 					else
 					{
@@ -141,14 +133,6 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 						AllowedMovement = true;
 						AllowedMovementForThisObject = true;
 						Movement[i] = OriginalMovement;
-
-						// Cancel collision output
-						if (OriginalMovement > (CollisionReal) 0.0)
-							Out ^= (i ? ECollisionType::Up : ECollisionType::Right);
-						else if (OriginalMovement < (CollisionReal) 0.f)
-							Out ^= (i ? ECollisionType::Down : ECollisionType::Left);
-						else
-							std::cout << "Null movement, undefined behavior." << std::endl;
 					}
 				}
 			}
