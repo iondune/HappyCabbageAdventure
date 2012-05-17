@@ -14,7 +14,7 @@ CCollideable::SMaterial::SMaterial()
 {}
 
 CCollideable::CCollideable()
-	: TypeId(1), CollisionMask(-1), DetectionMask(-1), VisualDepth(0.f), GameplayElement(0)
+	: TypeId(INTERACTOR_ALL), CollisionMask(0), DetectionMask(0), VisualDepth(0.f), GameplayElement(0)
 {}
 
 CCollideable::~CCollideable()
