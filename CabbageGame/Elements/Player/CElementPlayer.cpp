@@ -77,29 +77,28 @@ void CElementPlayer::updatePlayerAction() {
       Godmode = !Godmode;
       printf("Here\n");
       if(Godmode) {
-         PhysicsEngineObject->CollideableLevel = 0;//INTERACTOR_NULL_BLOCK;
-         PhysicsEngineObject->CanCollideWith = INTERACTOR_NULL_BLOCK;
+         PhysicsEngineObject->setTypeId(0);//INTERACTOR_NULL_BLOCK;
+         PhysicsEngineObject->setCollisionMask(0);
          PhysicsEngineObject->setControlFall(false);
          PhysicsEngineObject->setFallAcceleration(0.0f);
          PhysicsEngineObject->setJumping(false);
-         PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, 0.0f));
+         PhysicsEngineObject->setVelocity(SVector2f(PhysicsEngineObject->getVelocity().X, 0.0f));
          hWasDown = CApplication::get().getEventManager().IsKeyDown[SDLK_h];
          doGodmode();
          return;
       }
       else {
-         PhysicsEngineObject->CollideableLevel = INTERACTOR_SUPERACTORS;
-         PhysicsEngineObject->CanCollideWith = INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS;
-         PhysicsEngineObject->CanCollideWith &= ~INTERACTOR_SUPERNONCOLLIDERS;
+         PhysicsEngineObject->setTypeId(INTERACTOR_SUPERACTORS);
+         PhysicsEngineObject->setCollisionMask((INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS) & ~INTERACTOR_SUPERNONCOLLIDERS);
          PhysicsEngineObject->setControlFall(true);
          PhysicsEngineObject->setFallAcceleration(10.0f);
          PhysicsEngineObject->setJumping(false);
-         PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, 0.0f));
+         PhysicsEngineObject->setVelocity(SVector2f(PhysicsEngineObject->getVelocity().X, 0.0f));
       }
    }
    hWasDown = CApplication::get().getEventManager().IsKeyDown[SDLK_h];
    if(Godmode) {
-      PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, 0.0f));
+      PhysicsEngineObject->setVelocity(SVector2f(PhysicsEngineObject->getVelocity().X, 0.0f));
       doGodmode();
    }
 
@@ -338,27 +337,26 @@ void CElementPlayer::setupSceneObject() {
 
 bool CElementPlayer::decrementHealth() {
    if(used(Abilities::SHIELD) || Godmode)
-         return false;
+      return false;
 
-   if(Recovering == 0.0f) {
-      Stats.Health--;
+   if(Recovering > 0.0f) {
+      return false;
+   }
+   Stats.Health--;
 
-      if(Stats.Health <= 0) {
-         Stats.Health = 0;
-         decrementLives();
-         return false;
-      }
-
-      View->removeLeaf();
-      View->setHurt(true);
-      Recovering = 1.0f;
-
-      Mix_PlayChannel(-1, takeDmg, 0);
-
-      return true;
+   if(Stats.Health <= 0) {
+      Stats.Health = 0;
+      decrementLives();
+      return false;
    }
 
-   return false; // is this right? this control path didn't return before
+   View->removeLeaf();
+   View->setHurt(true);
+   Recovering = 1.0f;
+
+   Mix_PlayChannel(-1, takeDmg, 0);
+
+   return true;
 }
 void CElementPlayer::incrementHealth() {
    if(Stats.Health < 5) {
@@ -390,7 +388,6 @@ bool CElementPlayer::subtractHealth(int amount) {
    Mix_PlayChannel(-1, takeDmg, 0);
    return true;
 }
-   return false;
 
 void CElementPlayer::incrementLives() {
    Stats.Lives++;

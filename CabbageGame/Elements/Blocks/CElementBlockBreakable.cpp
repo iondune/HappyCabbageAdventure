@@ -69,7 +69,7 @@ void CElementBlockBreakable::setupSceneObject() {
    tempBlock->setTranslation(SVector3f((Area.Position.X+(Area.Position.X+Area.Size.X))/2, (Area.Position.Y+(Area.Position.Y+Area.Size.Y))/2, 0));
    tempBlock->setScale(SVector3f(Area.Size.X, Area.Size.Y, Area.Size.X));
 
-   SVector3 rots((float) (rand()%3*90-90), (float) (rand()%3*90-90), (float) (rand()%3*90-90));
+   SVector3f rots((float) (rand()%3*90-90), (float) (rand()%3*90-90), (float) (rand()%3*90-90));
    tempBlock->setRotation(rots);
 
    SceneObject = tempBlock;
