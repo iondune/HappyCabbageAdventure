@@ -15,8 +15,6 @@
 #include "CTexture.h"
 #include "CShaderContext.h"
 
-extern int timesCalled, numObjects, numCulled;
-
 class EDebugData
 {
 
@@ -45,7 +43,7 @@ class CScene;
 class ISceneObject
 {
 
-	static int ObjectsCulled, TotalObjects;
+	static int ObjectsCulled, TotalObjects, CullChecks;
 
 protected:
 
@@ -69,8 +67,8 @@ protected:
 
 public:
 
-	bool isImmobile();
-	void setImmobile(bool val);
+	bool const isImmobile() const;
+	void setImmobile(bool isImmobile);
 	ISceneObject();
 
 	void updateAbsoluteTransformation();
@@ -126,6 +124,7 @@ public:
 
 	static int const getObjectsCulled();
 	static int const getTotalObjects();
+	static int const getCullChecks();
 
 };
 

@@ -61,11 +61,13 @@ void CScene::setCullingEnabled(bool const culling)
 	UseCulling = culling;
 }
 
-void CScene::toggleUseHierarchy() {
+void CScene::toggleUseHierarchy()
+{
 	setUseHierarchy(!UseHierarchy);
 }
 
-bool CScene::getUseHierarchy() {
+bool CScene::getUseHierarchy()
+{
 	return UseHierarchy;
 }
 
@@ -137,21 +139,6 @@ boost::shared_ptr<IUniform const> const CScene::getUniform(std::string const & l
 
 	return boost::shared_ptr<IUniform const>();
 }
-
-
-extern int timesCalled, numObjects, numCulled;
-int CSceneManager::getTimesCalled() {
-	return timesCalled;
-}
-
-int CSceneManager::getNumObjects() {
-	return numObjects;
-}
-
-int CSceneManager::getNumCulled() {
-	return numCulled;
-}
-
 
 void CScene::update()
 {
@@ -370,7 +357,7 @@ void CSceneManager::drawAll()
 		//   RootObject.addChild((*it));
 		//printf("There are a total of %d leaves.\n", RootObject.getNumLeaves());
 	}
-	timesCalled = numObjects = numCulled = 0;
+	ISceneObject::resetObjectCounts();
 	CurrentScene->update();
 
    PostOpaqueRootObject.sortChildrenByZTranslation();

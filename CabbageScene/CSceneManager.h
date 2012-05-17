@@ -157,9 +157,5 @@ public:
 
 	void setDeferred(bool const isDeferred);
 
-	int getNumObjects();
-	int getNumCulled();
-	int getTimesCalled();
-
 };
 #endif

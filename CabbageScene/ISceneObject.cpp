@@ -10,11 +10,13 @@
 
 int ISceneObject::ObjectsCulled = 0;
 int ISceneObject::TotalObjects = 0;
+int ISceneObject::CullChecks = 0;
 
 void ISceneObject::resetObjectCounts()
 {
 	ObjectsCulled = 0;
 	TotalObjects = 0;
+	CullChecks = 0;
 }
 
 int const ISceneObject::getObjectsCulled()
@@ -25,6 +27,11 @@ int const ISceneObject::getObjectsCulled()
 int const ISceneObject::getTotalObjects()
 {
 	return TotalObjects;
+}
+
+int const ISceneObject::getCullChecks()
+{
+	return CullChecks;
 }
 
 ISceneObject::ISceneObject()
@@ -224,7 +231,7 @@ bool const ISceneObject::isCulled(CScene const * const Scene) const
 {
 	static bool const Inside = false;
 	static bool const Outside = true;
-	timesCalled++;
+	++ CullChecks;
 
 	if (! UseCulling || ! Scene->isCullingEnabled())
 		return false;
@@ -293,15 +300,20 @@ bool const ISceneObject::isCulled(CScene const * const Scene) const
 	return Inside;
 }
 
-bool ISceneObject::isImmobile() {
+bool const ISceneObject::isImmobile() const
+{
 	return Immobile;
 }
-void ISceneObject::setImmobile(bool val) {
-	Immobile = val;
+
+void ISceneObject::setImmobile(bool isImmobile) 
+{
+		Immobile = isImmobile;
 }
 
-SVector3f ISceneObject::getWorldBoundingBoxMinPoint() {
-	if(!Immobile) {
+SVector3f ISceneObject::getWorldBoundingBoxMinPoint()
+{
+	if (!Immobile)
+	{
 		SVector3f p = getBoundingBox().MinCorner; 
 		glm::vec4 p4(p.X, p.Y, p.Z, 1.f);
 		glm::vec4 temp = Transformation() * p4; 
@@ -313,8 +325,10 @@ SVector3f ISceneObject::getWorldBoundingBoxMinPoint() {
 		return getBoundingBox().MinCorner;
 }
 
-SBoundingBox3 ISceneObject::getWorldBoundingBox() {
-	if(!Immobile) {
+SBoundingBox3 ISceneObject::getWorldBoundingBox()
+{
+	if(!Immobile)
+	{
 		SVector3f min = getBoundingBox().MinCorner; 
 		glm::vec4 min4(min.X, min.Y, min.Z, 1.f);
 		glm::vec4 temp = Transformation() * min4; 
