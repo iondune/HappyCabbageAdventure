@@ -4,7 +4,7 @@
 #include "CElementPlayer.h"
 
 CElementBlockBreakable::CElementBlockBreakable(SRect2 nArea)
-: CElementBlock(nArea, nArea.Size.X, 0) {
+: CElementBlock(nArea, (int) nArea.Size.X, 0) {
 }
 
 void CElementBlockBreakable::OnCollision(CCollideable *Object) {
