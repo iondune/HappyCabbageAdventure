@@ -31,7 +31,8 @@ public:
 		Up = 1,
 		Down = 2,
 		Left = 4,
-		Right = 8
+		Right = 8,
+		Responded = 16
 	};
 
 	Domain Value;

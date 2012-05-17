@@ -153,6 +153,9 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 				}
 			}
 		}
+
+		if (Out)
+			Out |= ECollisionType::Responded;
 	}
 	else
 	{
@@ -379,13 +382,13 @@ bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTim
 		OnCollision.emit(Event);
 	}
 
-	if (CollisionType & ECollisionType::Up)
+	if (CollisionType & ECollisionType::Up && CollisionType & ECollisionType::Responded)
 	{
 		Velocity.Y *= -Object->getMaterial().Elasticity;
 		Jumping = false;
 	}
 
-	if (CollisionType & ECollisionType::Down)
+	if (CollisionType & ECollisionType::Down && CollisionType & ECollisionType::Responded)
 	{
 		/*if(Attributes.Bounce > 0.01f)
 		{
