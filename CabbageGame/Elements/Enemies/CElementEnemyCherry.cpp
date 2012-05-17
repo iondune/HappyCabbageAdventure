@@ -26,7 +26,7 @@ void CElementEnemyCherry::setupSceneObject() {
    }
 
    else if (Level.getEnvironment() == 1) {
-      mesh = CMeshLoader::load3dsMesh("Base/cherries.3ds");
+      mesh = CMeshLoader::load3dsMesh("Base/desert_cherries.3ds");
    }
    //LevelEditor has no environment
    else

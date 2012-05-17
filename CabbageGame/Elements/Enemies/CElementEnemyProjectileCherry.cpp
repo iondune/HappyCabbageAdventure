@@ -30,7 +30,7 @@ void CElementEnemyProjectileCherry::setupSceneObject() {
    }
 
    else if (Level.getEnvironment() == 1) {
-      mesh = CMeshLoader::load3dsMesh("Base/single_cherry.3ds");
+      mesh = CMeshLoader::load3dsMesh("Base/desert_single_cherry.3ds");
    }
 
    else {
