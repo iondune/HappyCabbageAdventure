@@ -29,8 +29,10 @@ void CPlayerAbilityDash::inOnCollision(CCollideable * collider) {
 CPlayerAbilityDash::CPlayerAbilityDash(CElementPlayer & p, bool doGodmode) : CPlayerAbility(p, Abilities::DASH), Godmode(doGodmode) {
    ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), DASH_PARTICLE_COUNT, -1, DUST_PARTICLE);
    ParticleEngine->UsePhysics(&Player.Level.getPhysicsEngine());
-   if(!Godmode)
+   if(!Godmode && Player.Level.getEnv()  != Env::WATER)
       ((CCollisionActor*)Player.getPhysicsEngineObject())->getAttributes().MaxWalk = 7.5f;
+   else if (!Godmode && Player.Level.getEnv() == Env::WATER)
+      ((CCollisionActor*)Player.getPhysicsEngineObject())->getAttributes().MaxWalk = 3.75f;
    else {
 /* For future physics overhaul
       PhysicsEngineObject->setTypeId(0);//INTERACTOR_NULL_BLOCK;
