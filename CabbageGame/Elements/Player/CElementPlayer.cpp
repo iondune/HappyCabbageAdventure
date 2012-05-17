@@ -98,6 +98,10 @@ void CElementPlayer::updatePlayerAction() {
       }
    }
    hWasDown = CApplication::get().getEventManager().IsKeyDown[SDLK_h];
+   if(Godmode) {
+      PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, 0.0f));
+      doGodmode();
+   }
 
    if(!AllowMovement) {
       Action = Standing;
@@ -210,7 +214,7 @@ void CElementPlayer::checkAbilityKeypress() {
       }
    }
    /* Dash */
-   if(Godmode || Stats.canUseAbility(Abilities::DASH)) {
+   if(Godmode || used(Abilities::DASH) || Stats.canUseAbility(Abilities::DASH)) {
       if(!used(Abilities::DASH)) {
       }
       else {
@@ -370,24 +374,23 @@ void CElementPlayer::setHealth(int amount) {
 
 bool CElementPlayer::subtractHealth(int amount) {
    if(used(Abilities::SHIELD) || Godmode)
-         return false;
+      return false;
+   if(Recovering > 0.0f)
+      return false;
+   std::max(0, Stats.Health -= amount);
 
-   if(Recovering == 0.0f) {
-      std::max(0, Stats.Health-= amount);
-
-      if(Stats.Health <= 0) {
-         Stats.Health = 0;
-         decrementLives();
-         return false;
-      }
-      View->removeLeaf();
-      View->setHurt(true);
-      Recovering = 1.0f;
-      Mix_PlayChannel(-1, takeDmg, 0);
-      return true;
+   if(Stats.Health <= 0) {
+      Stats.Health = 0;
+      decrementLives();
+      return false;
    }
-   return false;
+   View->removeLeaf();
+   View->setHurt(true);
+   Recovering = 1.0f;
+   Mix_PlayChannel(-1, takeDmg, 0);
+   return true;
 }
+   return false;
 
 void CElementPlayer::incrementLives() {
    Stats.Lives++;
