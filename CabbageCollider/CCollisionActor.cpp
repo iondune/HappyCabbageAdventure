@@ -386,6 +386,13 @@ bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTim
 		if (CollisionType & ECollisionType::Responded)
 		{
 			OnCollision.emit(Event);
+
+			SCollisionEvent Event;
+			Event.This = Object;
+			Event.Other = this;
+			Event.Direction = (ECollisionType::Domain) CollisionType;
+
+			Object->OnCollision.emit(Event);
 		}
 		else if (PhaseList.find(Object) == PhaseList.end())
 		{
@@ -444,7 +451,7 @@ void CCollisionActor::updatePhaseList()
 	{
 		if (NewPhaseList.find(* it) == NewPhaseList.end())
 		{
-				SCollisionEvent Event;
+			SCollisionEvent Event;
 			Event.This = this;
 			Event.Other = * it;
 			Event.Direction = (ECollisionType::Domain) ECollisionType::UnPhase;

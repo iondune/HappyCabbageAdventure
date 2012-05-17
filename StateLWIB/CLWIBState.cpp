@@ -141,7 +141,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
 
    stepCamera(Application.getElapsedTime());
    float x=round(eye.X + previewBlockMouseX),y= round(eye.Y + previewBlockMouseY);
-   PrepPreviews(x,y,blockWidth,blockHeight, Elapsed);
+   PrepPreviews((int) x, (int) y,blockWidth, blockHeight, Elapsed);
     //PreviewBlock->
 
    //Draw Text
@@ -710,7 +710,7 @@ void CLWIBState::end()
 
 void CLWIBState::PrepPreviews(int x , int y, int w, int h, float t) {
 
-    PreviewBlock->setArea(SRect2(x,y,w,h));
+    PreviewBlock->setArea(SRect2f(x, y, (float) w, (float) h));
     PreviewBlock->update(t);
 
 }
@@ -902,7 +902,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
    {
        if (w == h)
        {
-           placeables.push_back(tempPlaceable = new CElementBlockBreakable(SRect2f(x,y,w,h)));
+           placeables.push_back(tempPlaceable = new CElementBlockBreakable(SRect2f(x,y,(float) w,(float) h)));
        }
        else
             placeables.push_back(tempPlaceable = new CElementBlockBreakable(SRect2f(x,y,1,1)));
