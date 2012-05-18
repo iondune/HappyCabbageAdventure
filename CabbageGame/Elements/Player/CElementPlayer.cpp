@@ -69,17 +69,19 @@ void CElementPlayer::doGodmode() {
 }
 
 bool hWasDown = false;
+float oldGrav;
 
 void CElementPlayer::updatePlayerAction() {
    if(Victory)
       return;
    if(!hWasDown && CApplication::get().getEventManager().IsKeyDown[SDLK_h]) {
       Godmode = !Godmode;
-      printf("Here\n");
+      printf("Godmode toggled.\n");
       if(Godmode) {
          PhysicsEngineObject->CollideableLevel = 0;//INTERACTOR_NULL_BLOCK;
          PhysicsEngineObject->CanCollideWith = INTERACTOR_NULL_BLOCK;
          PhysicsEngineObject->setControlFall(false);
+         oldGrav = PhysicsEngineObject->getGravity();
          PhysicsEngineObject->setGravity(0.0f);
          PhysicsEngineObject->setJumping(false);
          PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, 0.0f));
@@ -92,7 +94,7 @@ void CElementPlayer::updatePlayerAction() {
          PhysicsEngineObject->CanCollideWith = INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS;
          PhysicsEngineObject->CanCollideWith &= ~INTERACTOR_SUPERNONCOLLIDERS;
          PhysicsEngineObject->setControlFall(true);
-         PhysicsEngineObject->setGravity(10.0f);
+         PhysicsEngineObject->setGravity(oldGrav);
          PhysicsEngineObject->setJumping(false);
          PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, 0.0f));
       }
