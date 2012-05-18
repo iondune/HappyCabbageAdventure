@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClInclude Include="CBiggerBlock.h" />
     <ClInclude Include="CDecorManager.h" />
-    <ClInclude Include="CGameEventReceiver.h" />
     <ClInclude Include="CGameLevel.h" />
     <ClInclude Include="CGameLevelEventManager.h" />
     <ClInclude Include="CGameLevelLoader.h" />
@@ -135,7 +134,6 @@
   <ItemGroup>
     <ClCompile Include="CBiggerBlock.cpp" />
     <ClCompile Include="CDecorManager.cpp" />
-    <ClCompile Include="CGameEventReceiver.cpp" />
     <ClCompile Include="CGameLevel.cpp" />
     <ClCompile Include="CGameLevelLoader.cpp" />
     <ClCompile Include="CGameplayGUIManager.cpp" />
