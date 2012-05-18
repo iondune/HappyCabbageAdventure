@@ -115,14 +115,6 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 						AllowedMovement = true;
 						AllowedMovementForThisObject = true;
 						Movement[i] = OriginalMovement;
-
-						// Cancel collision output
-						if (OriginalMovement > (CollisionReal) 0.0)
-							Out ^= (i ? ECollisionType::Up : ECollisionType::Right);
-						else if (OriginalMovement < (CollisionReal) 0.f)
-							Out ^= (i ? ECollisionType::Down : ECollisionType::Left);
-						else
-							std::cout << "Null movement, undefined behavior." << std::endl;
 					}
 					else
 					{
@@ -141,14 +133,6 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 						AllowedMovement = true;
 						AllowedMovementForThisObject = true;
 						Movement[i] = OriginalMovement;
-
-						// Cancel collision output
-						if (OriginalMovement > (CollisionReal) 0.0)
-							Out ^= (i ? ECollisionType::Up : ECollisionType::Right);
-						else if (OriginalMovement < (CollisionReal) 0.f)
-							Out ^= (i ? ECollisionType::Down : ECollisionType::Left);
-						else
-							std::cout << "Null movement, undefined behavior." << std::endl;
 					}
 				}
 			}
@@ -420,7 +404,7 @@ bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTim
 	//if (Attributes.Reacts && (CollisionType & ECollisionType::Left || CollisionType & ECollisionType::Right))
 	//	Velocity.X *= -Object->getMaterial().Elasticity;
 
-	return (CollisionType & ECollisionType::Down) != 0;
+	return (CollisionType & ECollisionType::Down) && (CollisionType & ECollisionType::Responded);
 }
 
 void CCollisionActor::draw()
