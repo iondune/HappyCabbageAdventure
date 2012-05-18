@@ -59,6 +59,10 @@ int pastX; int pastY;
 void CLWIBState::begin()
 {
    Application.getSceneManager().setUseHierarchy(false);
+   CApplication::get().getSceneManager().setDeferred(false);
+   CApplication::get().getSceneManager().removeAllSceneObjects();
+   CGameLevelLoader::resetLevel();
+
     loadedFromXml = false;
     tileLoop = 0;
     pastX = 0;

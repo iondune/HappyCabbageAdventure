@@ -18,6 +18,7 @@ class CGameplayManager : public IUpdater {
    public:
       CGameplayManager(CGameLevel & level);
       void update(float);
+      void OnEnd();
 };
 
 #endif

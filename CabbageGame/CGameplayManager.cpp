@@ -81,3 +81,12 @@ void CGameplayManager::update(float time) {
       delete KillList[i];
    }
 }
+
+void CGameplayManager::OnEnd() {
+   for(int i = 0; i < Level.getElements().size(); i++) {
+      Level.getElements()[i]->removeFromGame();
+   }
+   CApplication::get().getSceneManager().setDeferred(false);
+   CApplication::get().getSceneManager().removeAllSceneObjects();
+   CGameLevelLoader::resetLevel();
+}

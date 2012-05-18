@@ -15,6 +15,9 @@
 std::map<std::string, CGameLevel*> CGameLevelLoader::LoadedLevels;
 CGameLevel *CGameLevelLoader::LatestLevel = NULL;
 std::string CGameLevelLoader::LevelDirectory = "../Media/Levels/";
+void CGameLevelLoader::resetLevel() {
+   LatestLevel = NULL;
+}
 CGameLevel & CGameLevelLoader::getLatestLevel() {
    if(LatestLevel == NULL)
       LatestLevel = new CGameLevel();

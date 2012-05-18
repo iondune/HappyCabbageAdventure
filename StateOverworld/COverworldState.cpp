@@ -327,8 +327,10 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 void COverworldState::end()
 {
-   Application.getSceneManager().removeAllSceneObjects();
-   Application.getSceneManager().Lights.clear();
+   CApplication::get().getSceneManager().setDeferred(false);
+   CApplication::get().getSceneManager().removeAllSceneObjects();
+   CApplication::get().getSceneManager().Lights.clear();
+   CGameLevelLoader::resetLevel();
 }
 
 void COverworldState::loadLevels()

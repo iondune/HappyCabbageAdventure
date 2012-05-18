@@ -31,8 +31,11 @@ void CGameState::OnRenderEnd(float const Elapsed) {
 }
 
 void CGameState::end() {
+   GameplayManager->OnEnd();
    CApplication::get().getSceneManager().setDeferred(false);
    CApplication::get().getSceneManager().removeAllSceneObjects();
+   CGameLevelLoader::resetLevel();
+   printf("Here in CGameState::end\n");
 }
 
 CGameLevel & CGameState::getCurrentLevel() {
