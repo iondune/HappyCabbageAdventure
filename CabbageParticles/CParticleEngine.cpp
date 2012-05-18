@@ -243,6 +243,7 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
    case WIGGLE_PARTICLE:
       textureToUse = "Base/particleCircle.bmp";
       myObj->setSizeFactor(25.0f);
+      myObj->setBoundingBox(SBoundingBox3(SVector3(0.0f) + centerPos, SVector3(1.5f, 3.0f, 1.0f) + centerPos));
       break;
    default:
       textureToUse = "Base/particle2.bmp";
