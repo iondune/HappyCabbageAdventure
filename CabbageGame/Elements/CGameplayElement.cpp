@@ -79,6 +79,8 @@ void CGameplayElement::removeFromGame() {
          delete ParticleEngine;
          ParticleEngine = NULL;
       }
+      delete PhysicsEngineObject;
+      delete SceneObject;
       Dead = true;
    }
 }
