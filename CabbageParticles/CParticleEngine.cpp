@@ -197,8 +197,8 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
             sizeArr.push_back((float)rand()/(float)RAND_MAX*60 + 30);
             break;
          case WIGGLE_PARTICLE:
-            colorArr.push_back(new SVector3(0.0f, frand(), frand()*0.2 + 0.8f));
-            sizeArr.push_back((float)rand()/(float)RAND_MAX*3 + 10);
+            colorArr.push_back(new SVector3(0.0f, frand()*4 + 0.6f, frand()*0.2 + 0.8f));
+            sizeArr.push_back((float)rand()/(float)RAND_MAX*5.0f + 0.5f);
             break;
       }
    }
@@ -239,6 +239,10 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
       textureToUse = "Base/particleStar.bmp";
       myObj->setAlwaysRender();
       myObj->setSizeFactor(38.0f);
+      break;
+   case WIGGLE_PARTICLE:
+      textureToUse = "Base/particleCircle.bmp";
+      myObj->setSizeFactor(25.0f);
       break;
    default:
       textureToUse = "Base/particle2.bmp";
