@@ -10,11 +10,10 @@ CElementEnemyCherry::CElementEnemyCherry(SRect2 nArea) :
 void CElementEnemyCherry::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(Area);
 
-   //Set actor attributes
-   PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_CHERRY;
+   PhysicsEngineObject->getAttributes().MaxWalk = 0.0f;
+
+   CElementEnemy::setupPhysicsEngineObject();
 }
 
 void CElementEnemyCherry::setupSceneObject() {

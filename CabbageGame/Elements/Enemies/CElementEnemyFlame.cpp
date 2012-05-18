@@ -9,13 +9,11 @@ CElementEnemyFlame::CElementEnemyFlame(SRect2 nArea) :
 void CElementEnemyFlame::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(Area);
 
-   //Makes them immune to gravity
    PhysicsEngineObject->setControlFall(false);
    PhysicsEngineObject->setGravity(0.0f);
-   //PhysicsEngineObject->setArea(SRect2(SVector2(Area.Position.X, Area.Position.Y-1.0f), Area.Size));
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_FLAME;
+
+   CElementEnemy::setupPhysicsEngineObject();
 }
 
 void CElementEnemyFlame::setupSceneObject() {

@@ -50,7 +50,7 @@ class CElementEnemy : public CGameplayElement {
       virtual void OnCollision(CCollideable *Object);
       virtual void writeXML(xmlwriter *l);
 
-      virtual void setupPhysicsEngineObject()=0;
+      virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject()=0;
 
       virtual void updatePhysicsEngineObject(float time);

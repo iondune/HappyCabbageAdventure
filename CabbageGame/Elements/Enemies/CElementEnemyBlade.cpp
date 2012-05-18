@@ -10,11 +10,10 @@ void CElementEnemyBlade::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
 
-   //Makes them immune to gravity
    PhysicsEngineObject->setControlFall(false);
    PhysicsEngineObject->setGravity(0.0f);
-   PhysicsEngineObject->setArea(SRect2(SVector2(Area.Position.X + .5f, Area.Position.Y - .25f), Area.Size));
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_FLAME;
+
+   CElementEnemy::setupPhysicsEngineObject();
 }
 
 void CElementEnemyBlade::setupSceneObject() {
