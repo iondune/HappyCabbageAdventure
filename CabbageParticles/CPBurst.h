@@ -13,7 +13,7 @@ class CPBurst : public CPhysicsParticle {
    void setupRenderable();
    void updateMatrices(float);
    public:
-      void setEngine(CCollisionEngine *engine);
+      void setEngine(CCollisionEngine *engine, int env);
 };
 
 #endif

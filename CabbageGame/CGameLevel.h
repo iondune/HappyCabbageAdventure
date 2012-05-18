@@ -9,12 +9,14 @@ class CElementPlayer;
 class CElementItem;
 class CElementBlockElevator;
 class CElementBlockFlag;
+class CGroundBlock;
+class CBiggerBlock;
 
-#include "CDecorManager.h" //For CGroundBlock
-#include "CBiggerBlock.h"
+class CCollisionEngine;
+
+#include "CabbageGameInformation.h"
 #include "CGameLevelLoader.h"
 #include "sound.h"
-#include "CabbageGameInformation.h"
 
 namespace Env {
    enum Type {

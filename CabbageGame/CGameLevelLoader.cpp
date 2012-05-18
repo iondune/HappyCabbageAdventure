@@ -1,6 +1,8 @@
 #include "CGameLevelLoader.h"
 
 #include "CGameLevel.h"
+#include "CDecorManager.h" //For CGroundBlock
+#include "CBiggerBlock.h"
 #include "CElementBlock.h"
 #include "CElementBlockFlag.h"
 #include "CElementBlockBreakable.h"
@@ -15,6 +17,12 @@
 std::map<std::string, CGameLevel*> CGameLevelLoader::LoadedLevels;
 CGameLevel *CGameLevelLoader::LatestLevel = NULL;
 std::string CGameLevelLoader::LevelDirectory = "../Media/Levels/";
+void CGameLevelLoader::resetLevel() {
+   LatestLevel = NULL;
+}
+std::string CGameLevelLoader::getLevelDirectory() {
+   return CGameLevelLoader::LevelDirectory;
+}
 CGameLevel & CGameLevelLoader::getLatestLevel() {
    if(LatestLevel == NULL)
       LatestLevel = new CGameLevel();

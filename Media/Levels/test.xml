@@ -1,53 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<envVar env="2" dayNight="0">
+<envVar env="0" dayNight="0">
 </envVar>
-<CBlock X ="-25" Y ="-3" height ="1" width ="1" depth ="1" texture ="0">
+<CBlock X ="-24" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
 </CBlock>
-<CBlock X ="-24" Y ="-3" height ="1" width ="1" depth ="1" texture ="0">
+<CBlock X ="-23" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
 </CBlock>
-<CBlock X ="-23" Y ="-3" height ="1" width ="1" depth ="1" texture ="0">
+<CBlock X ="-22" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
 </CBlock>
-<CBlock X ="-22" Y ="-3" height ="1" width ="1" depth ="1" texture ="0">
+<CBlock X ="-21" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
 </CBlock>
-<CBlock X ="-21" Y ="-3" height ="1" width ="1" depth ="1" texture ="0">
+<CBlock X ="-20" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
 </CBlock>
-<CBlock X ="-20" Y ="-3" height ="1" width ="1" depth ="1" texture ="0">
+<CBlock X ="-19" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
 </CBlock>
-<CBlock X ="-19" Y ="-3" height ="1" width ="1" depth ="1" texture ="0">
+<CBlock X ="-18" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
 </CBlock>
-<CBlock X ="-22" Y ="-1" height ="2" width ="5" depth ="5" texture ="-5">
+<CBlock X ="-17" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
 </CBlock>
-<CBlock X ="-17" Y ="-1" height ="2" width ="5" depth ="5" texture ="-5">
+<CBlock X ="-16" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
 </CBlock>
-<CBlock X ="-18" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
+<CBlock X ="-15" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
 </CBlock>
-<CBlock X ="-17" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
+<CEnemy X ="-17" Y ="1" height ="1" width ="1" type ="17">
+</CEnemy>
+<CBlock X ="-24" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
 </CBlock>
-<CCabbage X ="-21" Y ="1" height ="1" width ="1">
+<CBlock X ="-23" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-22" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-21" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CCabbage X ="-23" Y ="2" height ="1" width ="1">
 </CCabbage>
-<CBlock X ="-16" Y ="-5" height ="2" width ="5" depth ="5" texture ="-5">
-</CBlock>
-<CBlock X ="-12" Y ="4" height ="2" width ="5" depth ="5" texture ="-5">
-</CBlock>
-<CBlock X ="-14" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
-</CBlock>
-<CBlock X ="-13" Y ="2" height ="1" width ="1" depth ="1" texture ="0">
-</CBlock>
-<CBlock X ="-13" Y ="3" height ="1" width ="1" depth ="1" texture ="0">
-</CBlock>
-<CBlock X ="-13" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
-</CBlock>
-<CBlock X ="-15" Y ="2" height ="1" width ="1" depth ="1" texture ="0">
-</CBlock>
-<CBlock X ="-15" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
-</CBlock>
-<CBlock X ="-14" Y ="3" height ="1" width ="1" depth ="1" texture ="0">
-</CBlock>
-<DeathBlock X ="-22" Y ="2" height ="1" width ="1" depth ="1" texture ="1" isMoving ="1">
-</DeathBlock>
-<DeathBlock X ="-22" Y ="3" height ="1" width ="1" depth ="1" texture ="1" isMoving ="1">
-</DeathBlock>
-<DeathBlock X ="-21" Y ="3" height ="1" width ="1" depth ="1" texture ="1" isMoving ="1">
-</DeathBlock>
-<DeathBlock X ="-18" Y ="3" height ="1" width ="1" depth ="1" texture ="1" isMoving ="1">
-</DeathBlock>

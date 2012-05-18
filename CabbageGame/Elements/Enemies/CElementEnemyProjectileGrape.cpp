@@ -9,9 +9,7 @@ CElementEnemyProjectileGrape::CElementEnemyProjectileGrape(SRect2 nArea)
 
 void CElementEnemyProjectileGrape::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(Area);
 
-   //Set actor attributes
    PhysicsEngineObject->setControlFall(false);
    PhysicsEngineObject->setGravity(0.0f);
 
@@ -19,7 +17,8 @@ void CElementEnemyProjectileGrape::setupPhysicsEngineObject() {
    PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
    PhysicsEngineObject->getAttributes().AirControl = 1.0f;
    PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_PKIWI;
+
+   CElementEnemy::setupPhysicsEngineObject();
 }
 
 void CElementEnemyProjectileGrape::setupSceneObject() {
@@ -83,11 +82,17 @@ void CElementEnemyProjectileGrape::updateSceneObject(float time) {
 
 void CElementEnemyProjectileGrape::updatePhysicsEngineObject(float time) {
    if (PlayerLeft) { //go left
-      PhysicsEngineObject->setVelocity(SVector2(-5.f, 0.f));
+      if (Level.getEnv() != Env::WATER)
+         PhysicsEngineObject->setVelocity(SVector2(-5.f, 0.f));
+      else
+         PhysicsEngineObject->setVelocity(SVector2(-2.5f, 0.f));
    }
    
    else { //go right
-      PhysicsEngineObject->setVelocity(SVector2(5.f, 0.f));
+      if (Level.getEnv() != Env::WATER)
+         PhysicsEngineObject->setVelocity(SVector2(5.f, 0.f));
+      else
+         PhysicsEngineObject->setVelocity(SVector2(2.5f, 0.f));
    }
 }
 

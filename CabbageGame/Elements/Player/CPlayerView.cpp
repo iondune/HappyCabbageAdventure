@@ -5,7 +5,7 @@
 #include <sstream>
 CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2 & nArea, SVector3 & sf, CCollisionActor* peo, bool uC) :
    SceneObject(obj), CabbageIndex(CurHealth - 1), Direction(dir), Action(act), Hurt(false), Area(nArea), ShakeFactor(sf),
-   ySineValue(0.0f), PhysicsEngineObject(peo), UseCamera(uC) {
+   ySineValue(0.0f), PhysicsEngineObject(peo), UseCamera(uC), UseSubView(0) {
 
    SceneObject->setCullingEnabled(false);
 
@@ -199,8 +199,43 @@ void CPlayerView::updateCameraPosition(float const ElapsedTime)
 	CApplication::get().getSceneManager().getActiveCamera()->setPosition(SVector3(CurrentCameraPosition, 10) + ShakeFactor);
 }
 
+int CPlayerView::getSubView() {
+   return UseSubView;
+}
+
+void CPlayerView::useSubView(int subView) {
+   UseSubView = subView;
+   if(UseSubView == 0) {
+      UseCamera = 1;
+      CApplication::get().getSceneManager().getActiveCamera()->setLookDirection(SVector3(0, 0, -1.0f));
+   }
+   else {
+      UseCamera = 0;
+   }
+}
+
 void CPlayerView::updateView(float time) {
    updateCameraPosition(time);
+
+   if(!UseCamera && UseSubView) {
+      SVector3 camPos;
+      switch(UseSubView) {
+      case 1: //Overhead
+         camPos = SVector3(Area.getCenter().X, Area.getCenter().Y + 10.0f, 0.5f);
+         break;
+      case 2: //Left halfover
+         camPos = SVector3(Area.getCenter().X - 5.0f, Area.getCenter().Y + 5.0f, 5.0f);
+         break;
+      case 3: //Right halfover
+         camPos = SVector3(Area.getCenter().X + 5.0f, Area.getCenter().Y + 5.0f, 5.0f);
+         break;
+      case 4: //Quarterover
+         camPos = SVector3(Area.getCenter().X, Area.getCenter().Y + 2.5f, 2.5f);
+         break;
+      }
+      CApplication::get().getSceneManager().getActiveCamera()->setPosition(camPos + ShakeFactor);
+      CApplication::get().getSceneManager().getActiveCamera()->setLookDirection((SVector3(Area.getCenter(), 0.0f) - camPos).getNormalized());
+   }
 
    updateShadow(time);
 

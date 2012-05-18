@@ -6,7 +6,8 @@
 
 CElementPlayer::CElementPlayer(SRect2 nArea, bool useCamera)
 : CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f), Shaking(0.0f), ShakeFactor(SVector3(0.0f)),
-  ISquishable(2.0f, 2.0f), AllowMovement(true), PlayJump(true), Victory(false), VictoryTime(0.0f), ShakeFactorFactor(1000.0f), MoveKeyDelay(0.0f), UseCamera(useCamera), Godmode(false) {
+  ISquishable(2.0f, 2.0f), AllowMovement(true), PlayJump(true), Victory(false), VictoryTime(0.0f), ShakeFactorFactor(1000.0f), MoveKeyDelay(0.0f), UseCamera(useCamera), Godmode(false),
+WinParticle1(NULL), WinParticle2(NULL), WinParticle3(NULL), glow(NULL) {
    setupSoundEffects();
 }
 
@@ -69,17 +70,20 @@ void CElementPlayer::doGodmode() {
 }
 
 bool hWasDown = false;
+bool jWasDown = false;
+float oldGrav;
 
 void CElementPlayer::updatePlayerAction() {
    if(Victory)
       return;
    if(!hWasDown && CApplication::get().getEventManager().IsKeyDown[SDLK_h]) {
       Godmode = !Godmode;
-      printf("Here\n");
+      printf("Godmode toggled.\n");
       if(Godmode) {
          PhysicsEngineObject->CollideableLevel = 0;//INTERACTOR_NULL_BLOCK;
          PhysicsEngineObject->CanCollideWith = INTERACTOR_NULL_BLOCK;
          PhysicsEngineObject->setControlFall(false);
+         oldGrav = PhysicsEngineObject->getGravity();
          PhysicsEngineObject->setGravity(0.0f);
          PhysicsEngineObject->setJumping(false);
          PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, 0.0f));
@@ -92,7 +96,7 @@ void CElementPlayer::updatePlayerAction() {
          PhysicsEngineObject->CanCollideWith = INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS;
          PhysicsEngineObject->CanCollideWith &= ~INTERACTOR_SUPERNONCOLLIDERS;
          PhysicsEngineObject->setControlFall(true);
-         PhysicsEngineObject->setGravity(10.0f);
+         PhysicsEngineObject->setGravity(oldGrav);
          PhysicsEngineObject->setJumping(false);
          PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, 0.0f));
       }
@@ -252,6 +256,15 @@ void CElementPlayer::updatePhysicsEngineObject(float time) {
 }
 
 void CElementPlayer::updateSceneObject(float time) {
+   if(!jWasDown && CApplication::get().getEventManager().IsKeyDown[SDLK_j]) {
+      int newSubView = View->getSubView();
+      newSubView++;
+      if(newSubView > 4)
+         newSubView = 0;
+      View->useSubView(newSubView);
+   }
+   jWasDown = CApplication::get().getEventManager().IsKeyDown[SDLK_j];
+
    if(Recovering > 0.0f) {
       Recovering -= time;
       if(Recovering <= 0.0f) {

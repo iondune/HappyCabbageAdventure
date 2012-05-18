@@ -1,7 +1,7 @@
 #ifndef __CBIGGERBLOCK_HEADER
 #define __CBIGGERBLOCK_HEADER
 
-#include "CCollisionEngine.h"
+class CCollisionEngine;
 
 class CBiggerBlock {
    public:

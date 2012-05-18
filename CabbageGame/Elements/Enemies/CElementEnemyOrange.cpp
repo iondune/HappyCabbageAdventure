@@ -9,7 +9,6 @@ CElementEnemyOrange::CElementEnemyOrange(SRect2 nArea) :
 void CElementEnemyOrange::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(Area);
 
    //Set actor attributes
    PhysicsEngineObject->getAttributes().MaxWalk = 5.0f;
@@ -18,7 +17,9 @@ void CElementEnemyOrange::setupPhysicsEngineObject() {
    PhysicsEngineObject->getAttributes().JumpLength = .1f;
    PhysicsEngineObject->getAttributes().AirControl = 0.75f;
    PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_ORANGE;
+
+
+   CElementEnemy::setupPhysicsEngineObject();
 }
 void CElementEnemyOrange::setupSceneObject() {
    SceneObject = new CMeshSceneObject();

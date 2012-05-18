@@ -17,6 +17,14 @@ void CMeshSceneObject::update()
 }
 */
 
+bool CParticleObject::getOnlyRenderLights() {
+   return OnlyRenderLights;
+}
+
+void CParticleObject::setOnlyRenderLights(bool b) {
+   OnlyRenderLights = b;
+}
+
 void CParticleObject::update() {
    ISceneObject::update();
 
@@ -45,17 +53,19 @@ void CParticleObject::draw(CScene const * const scene, ERenderPass const Pass)
    {
    case ERP_DEFAULT:
    case ERP_DEFERRED_OBJECTS:
-      glEnable(GL_POINT_SPRITE);
-      glDepthMask(GL_FALSE);
-      GLint oldAlpha, oldRGB;
-      glGetIntegerv(GL_BLEND_DST_ALPHA, &oldAlpha);
-      glGetIntegerv(GL_BLEND_DST_RGB, &oldRGB);
-      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-      particlesRenderable->draw(scene, Pass);
-      glBlendFunc(oldAlpha, oldRGB);
-      //glDepthMask(GL_TRUE);
-      glDisable(GL_POINT_SPRITE);
-      glDepthFunc(GL_LESS);
+      if(!OnlyRenderLights) {
+         glEnable(GL_POINT_SPRITE);
+         glDepthMask(GL_FALSE);
+         GLint oldAlpha, oldRGB;
+         glGetIntegerv(GL_BLEND_DST_ALPHA, &oldAlpha);
+         glGetIntegerv(GL_BLEND_DST_RGB, &oldRGB);
+         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+         particlesRenderable->draw(scene, Pass);
+         glBlendFunc(oldAlpha, oldRGB);
+         //glDepthMask(GL_TRUE);
+         glDisable(GL_POINT_SPRITE);
+         glDepthFunc(GL_LESS);
+      }
       break;
    case ERP_MODEL_NORMALS:
    case ERP_DEFERRED_LIGHTS:
@@ -68,7 +78,7 @@ void CParticleObject::setAlwaysRender() {
    setCullingEnabled(false);
 }
 
-CParticleObject::CParticleObject() {
+CParticleObject::CParticleObject() : OnlyRenderLights(false) {
    sizeFactor = 40.0f;
 }
 

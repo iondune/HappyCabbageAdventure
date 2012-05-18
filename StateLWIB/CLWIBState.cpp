@@ -59,6 +59,10 @@ int pastX; int pastY;
 void CLWIBState::begin()
 {
    Application.getSceneManager().setUseHierarchy(false);
+   CApplication::get().getSceneManager().setDeferred(false);
+   CApplication::get().getSceneManager().removeAllSceneObjects();
+   CGameLevelLoader::resetLevel();
+
     loadedFromXml = false;
     tileLoop = 0;
     pastX = 0;
@@ -577,7 +581,7 @@ void CLWIBState::loadWorld() {
 
     cout << "Enter the name of the file you want to load: ";
     cin >> name;
-    irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader(name.c_str());
+    irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader((CGameLevelLoader::getLevelDirectory() + name).c_str());
     while (xml && xml->read())
     {
         switch(xml->getNodeType())
@@ -677,7 +681,7 @@ void CLWIBState::printXML() {
 
     cout << name;
 
-    xmlwriter *worldlist = new xmlwriter(name);
+    xmlwriter *worldlist = new xmlwriter(CGameLevelLoader::getLevelDirectory() + name);
     std::stringstream DN, area, tag;
     //for day or night
     DN << dayNight;
@@ -944,7 +948,7 @@ void CLWIBState::PrepSky() {
    cutOffBlock->setScale(SVector3(1, 1, 1));
    cutOffBlock->setRotation(SVector3(90.0f, 0.0f, 0.0f));
 
-   cutOffBlock->setTexture(CImageLoader::loadTexture("Base/forestBackground.bmp", true));
+   cutOffBlock->setTexture(CImageLoader::loadTexture("Base/ForestBackground.bmp", true));
    CApplication::get().getSceneManager().addSceneObject(cutOffBlock);
 
    CMesh* quad = CMeshLoader::load3dsMesh("Base/Quad.3ds");
@@ -956,7 +960,7 @@ void CLWIBState::PrepSky() {
    tempBlock = new CMeshSceneObject();
    tempBlock->setMesh(quad);
 
-   tempBlock->setTexture(CImageLoader::loadTexture("Base/forestBackground.bmp", true));
+   tempBlock->setTexture(CImageLoader::loadTexture("Base/ForestBackground.bmp", true));
 
    tempBlock->setShader(ERP_DEFAULT, "DiffuseTextureBright");
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Textured");

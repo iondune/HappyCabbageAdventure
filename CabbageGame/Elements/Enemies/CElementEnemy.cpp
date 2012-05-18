@@ -93,7 +93,9 @@ CElementEnemy *CEnemyLoader::LoadEnemy(SRect2 nArea, Enemies::EEnemyType type) {
    }
 }
 
-/*void CElementEnemy::setupPhysicsEngineObject() {
+void CElementEnemy::setupPhysicsEngineObject() {
+   PhysicsEngineObject->setArea(Area);
+
    if (Level.getEnv() == Env::WATER) {
       PhysicsEngineObject->getAttributes().MaxWalk *= 0.5f;
       PhysicsEngineObject->getAttributes().WalkAccel *= 0.25f;
@@ -104,7 +106,7 @@ CElementEnemy *CEnemyLoader::LoadEnemy(SRect2 nArea, Enemies::EEnemyType type) {
 
       PhysicsEngineObject->setGravity(PhysicsEngineObject->getGravity()/16.0f);
    }
-}*/
+}
 
 void CElementEnemy::writeXML(xmlwriter *l) {
     std::stringstream xValue, yValue, widthValue, heightValue, tagValue, eType;
@@ -142,7 +144,7 @@ void CElementEnemy::dieWithSeeds() {
    TempTime = 0.0f;
    removeFromPhysicsEngine();
    ParticleEngine = new CParticleEngine(SceneObject->getTranslation(), 20, 4, BURST_PARTICLE);
-   ParticleEngine->UsePhysics(&Level.getPhysicsEngine());
+   ParticleEngine->UsePhysics(&Level.getPhysicsEngine(), Level.getEnv());
 }
 
 void CElementEnemy::dropItem() {

@@ -13,7 +13,7 @@ class CPhysicsParticle : public CParticle {
    CCollisionActor *Actor;
    CCollisionEngine *Engine;
 
-   virtual void setEngine(CCollisionEngine *engine);
+   virtual void setEngine(CCollisionEngine *engine, int env);
    virtual void deconstruct();
 };
 

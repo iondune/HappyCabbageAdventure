@@ -1,5 +1,6 @@
 #include "CGameLevel.h"
 
+#include "CDecorManager.h" //For CGroundBlock
 #include "CGameplayElement.h"
 #include "CElementBlock.h"
 #include "CElementBlockElevator.h"
@@ -8,6 +9,7 @@
 #include "CElementPlayer.h"
 #include "CElementItem.h"
 #include "CElementBlockFlag.h"
+#include "CBiggerBlock.h"
 #include "CParticleEngine.h"
 
 bool CGameLevel::isLoaded() {

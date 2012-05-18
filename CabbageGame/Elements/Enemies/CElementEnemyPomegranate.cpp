@@ -4,9 +4,6 @@
 CElementEnemyPomegranate::CElementEnemyPomegranate(SRect2 nArea) :
    CElementEnemy(nArea, Enemies::POMEGRANATE), ISquishable(nArea.Size.X, nArea.Size.Y), OldPositionX(nArea.Position.X), HitPlayer(false), FlameTimer(0.0f) {
 
-   MaxHealth = 1;
-   CurHealth = MaxHealth;
-
    particleEngine = new CParticleEngine(SVector3(Area.getCenter().X - nArea.Size.X, Area.getCenter().Y + nArea.Size.Y/2.f, 0), 100, -1, FLAME_PARTICLE);
    particleEngine->setVisible(false);
 }
@@ -14,12 +11,11 @@ CElementEnemyPomegranate::CElementEnemyPomegranate(SRect2 nArea) :
 void CElementEnemyPomegranate::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(Area);
 
-   //Set actor attributes
    PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
-
    PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
+
+   CElementEnemy::setupPhysicsEngineObject();
 }
 
 void CElementEnemyPomegranate::setupSceneObject() {

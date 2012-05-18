@@ -1,13 +1,18 @@
 #include "CGameplayManager.h"
 
+#include "CGameplayElement.h"
+#include "CGameLevelLoader.h"
+
 #include "CGameLevel.h"
 #include "CabbageScene.h"
 #include "CabbageFramework.h"
 #include "CGameplayGUIManager.h"
+#include "CBiggerBlock.h"
 
 #define DEBUG_PRINTFS
 
 CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(level.getElements()) {
+   srand((unsigned int) 52);
    PhysicsEngine = new CCollisionEngine();
    level.setPhysicsEngine(PhysicsEngine);
 
@@ -80,4 +85,13 @@ void CGameplayManager::update(float time) {
       Level.removeObject(KillList[i]);
       delete KillList[i];
    }
+}
+
+void CGameplayManager::OnEnd() {
+   for(int i = 0; i < Level.getElements().size(); i++) {
+      Level.getElements()[i]->removeFromGame();
+   }
+   CApplication::get().getSceneManager().setDeferred(false);
+   CApplication::get().getSceneManager().removeAllSceneObjects();
+   CGameLevelLoader::resetLevel();
 }

@@ -16,6 +16,9 @@ namespace Abilities {
 namespace Cabbage {
    //Information kept between levels
    class PlayerInformation {
+      private:
+         bool Godmode;
+
       public:
          int Health;
          int MaxHealth;
@@ -25,11 +28,19 @@ namespace Cabbage {
          int Seeds;
          std::set<Abilities::EAbilityType> AvailableAbilities;
          bool canUseAbility(Abilities::EAbilityType type) {
-            return (AvailableAbilities.find(type) != AvailableAbilities.end());
+            return Godmode || (AvailableAbilities.find(type) != AvailableAbilities.end());
+         }
+
+         void toggleGodmode() {
+            Godmode = !Godmode;
+         }
+
+         bool isGodmodeEnabled() {
+            return Godmode;
          }
 
          PlayerInformation() : Health(5), MaxHealth(5), Energy(100), MaxEnergy(100),
-         Lives(3), Seeds(0) {
+         Lives(3), Seeds(0), Godmode(false) {
             //Available abilities by default
             AvailableAbilities.insert(Abilities::LASER);
             AvailableAbilities.insert(Abilities::SHIELD);

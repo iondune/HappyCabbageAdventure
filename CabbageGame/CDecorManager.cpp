@@ -2,6 +2,8 @@
 #include "CGameLevel.h"
 
 #include "CParticleEngine.h"
+#include "CabbageScene.h"
+#include "CApplication.h"
 
 CGroundBlock::CGroundBlock(float nx, float ny, float nw, float nh, float nd) : x(nx), y(ny), w(nw), h(nh), d(nd) {
 }
@@ -45,7 +47,9 @@ ISceneObject *CDecorManager::SetupObject(float x, float y, float z, float scale,
 void CDecorManager::update(float f) {
    if(StarEngine)
       StarEngine->step(f);
-
+   for(int i = 0; i < DecorativeParticleEngines.size(); i++) {
+      DecorativeParticleEngines[i]->step(f);
+   }
 }
 
 CDecorManager::CDecorManager(CGameLevel & level) {
@@ -59,13 +63,6 @@ CDecorManager::CDecorManager(CGameLevel & level) {
    if(night) {
       StarEngine = new CParticleEngine(SVector3(-30.0f, 15.0f, 0.0f), 100, -1, STAR_PARTICLE);
       SetupClouds();
-      for (int x = -5; x < 200; ++ x)
-         for (int y = -0; y < 2; ++ y)
-         {
-            CPointLightSceneObject * point = new CPointLightSceneObject(1.5f, x % 2 ? SColor(1, 0, 0) : SColor(0, 1, 1));
-            point->setTranslation(SVector3(x * 3.f, y * 3.f, 0.f));
-            CApplication::get().getSceneManager().addSceneObject(point);
-         }
    }
    oldFern = false;
 
@@ -85,6 +82,28 @@ CDecorManager::CDecorManager(CGameLevel & level) {
          }
          else
             GenerateDesertPlants(curBlock, false);
+      }
+      int n=0;
+      if(night) {
+         CPointLightSceneObject * point;
+         for(float y = 0; y < 15; y += 3) {
+            /*
+            point = new CPointLightSceneObject(1.5f, n % 2 ? SColor(1.0f, 0.62f, 0.0f) : SColor(0.68f, 1.0f, 0.18f)); //Orange and Yellowgreen
+            point->setTranslation(SVector3(curBlock->x, y, 0.f));
+            CApplication::get().getSceneManager().addSceneObject(point);
+            n++;
+            */
+
+            point = new CPointLightSceneObject(1.5f, n % 2 ? SColor(1.0f, 0.62f, 0.0f) : SColor(0.68f, 1.0f, 0.18f)); //Orange and Yellowgreen
+            point->setTranslation(SVector3(curBlock->x + curBlock->w / 2.0f, y, 0.f));
+            CApplication::get().getSceneManager().addSceneObject(point);
+            n++;
+         }
+
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3(curBlock->x + curBlock->w / 3.0f, curBlock->y + curBlock->h, 1), 10, -1, WIGGLE_PARTICLE));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3(curBlock->x + 2.0f*curBlock->w / 3.0f, curBlock->y + curBlock->h, 1), 10, -1, WIGGLE_PARTICLE));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3(curBlock->x + curBlock->w / 3.0f, curBlock->y + curBlock->h, -1), 10, -1, WIGGLE_PARTICLE));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3(curBlock->x + 2.0f*curBlock->w / 3.0f, curBlock->y + curBlock->h, -1), 10, -1, WIGGLE_PARTICLE));
       }
       delete curBlock;
    }

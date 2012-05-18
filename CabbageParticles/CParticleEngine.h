@@ -3,17 +3,6 @@
 
 #include <vector>
 #include "CParticle.h"
-#include "CPCube.h"
-#include "CPLeaf.h"
-#include "CPFlame.h"
-#include "CPDeath.h"
-#include "CPLaser.h"
-#include "CPLaser2.h"
-#include "CPHurt.h"
-#include "CPBurst.h"
-#include "CPDust.h"
-#include "CPStar.h"
-#include "CPLaserCharged.h"
 #include "CParticleObject.h"
 #include "../CabbageScene/CabbageScene.h"
 #include "../CabbageFramework/CabbageFramework.h"
@@ -32,6 +21,7 @@
 #define DUST_PARTICLE 8
 #define STAR_PARTICLE 9
 #define LASER_CHARGED_PARTICLE 10
+#define WIGGLE_PARTICLE 11
 
 class CParticleEngine {
    std::vector<CParticle*> particles;
@@ -51,7 +41,7 @@ class CParticleEngine {
       //Duration in milliseconds
       CParticleEngine(SVector3 pos, int maxParticles, float duration, int);
       void setCenterPos(SVector3 cP);
-      void UsePhysics(CCollisionEngine *engine);
+      void UsePhysics(CCollisionEngine *engine, int env);
       void setLookRight(int pf);
       void step(float const elapsedTime);
       void deconstruct();
