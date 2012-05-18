@@ -66,7 +66,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalOptions>../Release/CabbageScene.lib ../Release/CabbageFramework.lib ../Debug/CabbageGUI.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>../Release/CabbageScene.lib ../Release/CabbageFramework.lib ../Release/CabbageGUI.lib %(AdditionalOptions)</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
