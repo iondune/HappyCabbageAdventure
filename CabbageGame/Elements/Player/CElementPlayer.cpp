@@ -6,7 +6,8 @@
 
 CElementPlayer::CElementPlayer(SRect2 nArea, bool useCamera)
 : CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f), Shaking(0.0f), ShakeFactor(SVector3(0.0f)),
-  ISquishable(2.0f, 2.0f), AllowMovement(true), PlayJump(true), Victory(false), VictoryTime(0.0f), ShakeFactorFactor(1000.0f), MoveKeyDelay(0.0f), UseCamera(useCamera), Godmode(false) {
+  ISquishable(2.0f, 2.0f), AllowMovement(true), PlayJump(true), Victory(false), VictoryTime(0.0f), ShakeFactorFactor(1000.0f), MoveKeyDelay(0.0f), UseCamera(useCamera), Godmode(false),
+WinParticle1(NULL), WinParticle2(NULL), WinParticle3(NULL) {
    setupSoundEffects();
 }
 
