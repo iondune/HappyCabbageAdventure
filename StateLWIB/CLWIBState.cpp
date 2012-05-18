@@ -944,7 +944,7 @@ void CLWIBState::PrepSky() {
    cutOffBlock->setScale(SVector3(1, 1, 1));
    cutOffBlock->setRotation(SVector3(90.0f, 0.0f, 0.0f));
 
-   cutOffBlock->setTexture(CImageLoader::loadTexture("Base/forestBackground.bmp", true));
+   cutOffBlock->setTexture(CImageLoader::loadTexture("Base/ForestBackground.bmp", true));
    CApplication::get().getSceneManager().addSceneObject(cutOffBlock);
 
    CMesh* quad = CMeshLoader::load3dsMesh("Base/Quad.3ds");
@@ -956,7 +956,7 @@ void CLWIBState::PrepSky() {
    tempBlock = new CMeshSceneObject();
    tempBlock->setMesh(quad);
 
-   tempBlock->setTexture(CImageLoader::loadTexture("Base/forestBackground.bmp", true));
+   tempBlock->setTexture(CImageLoader::loadTexture("Base/ForestBackground.bmp", true));
 
    tempBlock->setShader(ERP_DEFAULT, "DiffuseTextureBright");
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Textured");
