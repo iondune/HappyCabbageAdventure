@@ -18,6 +18,9 @@ std::string CGameLevelLoader::LevelDirectory = "../Media/Levels/";
 void CGameLevelLoader::resetLevel() {
    LatestLevel = NULL;
 }
+std::string CGameLevelLoader::getLevelDirectory() {
+   return CGameLevelLoader::LevelDirectory;
+}
 CGameLevel & CGameLevelLoader::getLatestLevel() {
    if(LatestLevel == NULL)
       LatestLevel = new CGameLevel();

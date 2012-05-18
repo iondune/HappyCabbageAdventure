@@ -17,6 +17,7 @@ class CGameLevelLoader {
       static CGameLevel &loadLevel(std::string);
       static CGameLevel &loadLevel(std::string, bool);
       static CGameLevel &getLatestLevel();
+      static std::string getLevelDirectory();
       static void resetLevel();
 };
 

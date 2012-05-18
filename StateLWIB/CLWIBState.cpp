@@ -581,7 +581,7 @@ void CLWIBState::loadWorld() {
 
     cout << "Enter the name of the file you want to load: ";
     cin >> name;
-    irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader(name.c_str());
+    irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader((CGameLevelLoader::getLevelDirectory() + name).c_str());
     while (xml && xml->read())
     {
         switch(xml->getNodeType())
@@ -681,7 +681,7 @@ void CLWIBState::printXML() {
 
     cout << name;
 
-    xmlwriter *worldlist = new xmlwriter(name);
+    xmlwriter *worldlist = new xmlwriter(CGameLevelLoader::getLevelDirectory() + name);
     std::stringstream DN, area, tag;
     //for day or night
     DN << dayNight;
