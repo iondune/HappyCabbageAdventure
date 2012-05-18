@@ -3,13 +3,13 @@
 #include "CGameLevel.h"
 #include "CElementPlayer.h"
 
-CElementBlockBreakable::CElementBlockBreakable(SRect2 nArea)
+CElementBlockBreakable::CElementBlockBreakable(SRect2f nArea)
 : CElementBlock(nArea, (int) nArea.Size.X, 0) {
 }
 
-void CElementBlockBreakable::OnCollision(CCollideable *Object) {
-	if (Object == Level.getPlayer().getPhysicsEngineObject()) {
-	}
+void CElementBlockBreakable::OnCollision(const SCollisionEvent& Event) {
+   if (Event.Other == Level.getPlayer().getPhysicsEngineObject()) {
+   }
    return;
 }
 
@@ -51,8 +51,8 @@ void CElementBlockBreakable::setupSceneObject() {
    mesh = CMeshLoader::load3dsMesh("Base/breakableblock2.3ds");
 
    if(mesh) {
-         mesh->resizeMesh(SVector3(1));
-         mesh->centerMeshByExtents(SVector3(0));
+         mesh->resizeMesh(SVector3f(1));
+         mesh->centerMeshByExtents(SVector3f(0));
          mesh->calculateNormalsPerFace();
          //mesh->calculateNormalsPerVertex();
    }
@@ -66,10 +66,10 @@ void CElementBlockBreakable::setupSceneObject() {
    tempBlock->setShader(ERP_DEFAULT, CShaderLoader::loadShader("ToonTexture"));
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, CShaderLoader::loadShader("Deferred/Textured"));
 
-   tempBlock->setTranslation(SVector3((Area.Position.X+(Area.Position.X+Area.Size.X))/2, (Area.Position.Y+(Area.Position.Y+Area.Size.Y))/2, 0));
-   tempBlock->setScale(SVector3(Area.Size.X, Area.Size.Y, Area.Size.X));
+   tempBlock->setTranslation(SVector3f((Area.Position.X+(Area.Position.X+Area.Size.X))/2, (Area.Position.Y+(Area.Position.Y+Area.Size.Y))/2, 0));
+   tempBlock->setScale(SVector3f(Area.Size.X, Area.Size.Y, Area.Size.X));
 
-   SVector3 rots((float) (rand()%3*90-90), (float) (rand()%3*90-90), (float) (rand()%3*90-90));
+   SVector3f rots((float) (rand()%3*90-90), (float) (rand()%3*90-90), (float) (rand()%3*90-90));
    tempBlock->setRotation(rots);
 
    SceneObject = tempBlock;

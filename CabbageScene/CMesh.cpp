@@ -76,23 +76,23 @@ unsigned int const CMesh::getVertexCount() const
     return Count;
 }
 
-void CMesh::centerMeshByAverage(SVector3 const & CenterLocation)
+void CMesh::centerMeshByAverage(SVector3f const & CenterLocation)
 {
-    SVector3 VertexSum;
+    SVector3f VertexSum;
     for (std::vector<SMeshBuffer *>::const_iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
         for (std::vector<SVertex>::const_iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
             VertexSum += it->Position;
 
     VertexSum /= (float) getVertexCount();
-    SVector3 VertexOffset = CenterLocation - VertexSum;
+    SVector3f VertexOffset = CenterLocation - VertexSum;
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
         for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
             it->Position += VertexOffset;
 }
 
-void CMesh::centerMeshByExtents(SVector3 const & CenterLocation)
+void CMesh::centerMeshByExtents(SVector3f const & CenterLocation)
 {
-    SVector3 Min(std::numeric_limits<float>::max()), Max(-std::numeric_limits<float>::max());
+    SVector3f Min(std::numeric_limits<float>::max()), Max(-std::numeric_limits<float>::max());
     {
         for (std::vector<SMeshBuffer *>::const_iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
         for (std::vector<SVertex>::const_iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
@@ -113,26 +113,26 @@ void CMesh::centerMeshByExtents(SVector3 const & CenterLocation)
         }
     }
 
-    SVector3 Center = (Max + Min) / 2;
+    SVector3f Center = (Max + Min) / 2;
 
-    SVector3 VertexOffset = CenterLocation - Center;
+    SVector3f VertexOffset = CenterLocation - Center;
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
     for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
         it->Position += VertexOffset;
 }
 
-void CMesh::resizeMesh(SVector3 const & Scale)
+void CMesh::resizeMesh(SVector3f const & Scale)
 {
-    SVector3 Extent = getExtent();
-    SVector3 Resize = Scale / std::max(Extent.X, std::max(Extent.Y, Extent.Z));
+    SVector3f Extent = getExtent();
+    SVector3f Resize = Scale / std::max(Extent.X, std::max(Extent.Y, Extent.Z));
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
     for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
         it->Position *= Resize;
 }
 
-SVector3 const CMesh::getExtent() const
+SVector3f const CMesh::getExtent() const
 {
-    SVector3 Min(std::numeric_limits<float>::max()), Max(-std::numeric_limits<float>::max());
+    SVector3f Min(std::numeric_limits<float>::max()), Max(-std::numeric_limits<float>::max());
     {
         for (std::vector<SMeshBuffer *>::const_iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
         for (std::vector<SVertex>::const_iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
@@ -180,7 +180,7 @@ void CMesh::calculateNormalsPerVertex(bool CombineNear, float const NearToleranc
 
 	for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
 		for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
-			it->Normal = SVector3();
+			it->Normal = SVector3f();
 
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
 		for (std::vector<STriangle>::iterator it = (* bit)->Triangles.begin(); it != (* bit)->Triangles.end(); ++ it)
@@ -201,9 +201,9 @@ void CMesh::calculateNormalsPerVertex(bool CombineNear, float const NearToleranc
 }
 
 
-void CMesh::calculateTextureCoordinates(SVector3 const uVec, SVector3 const vVec)
+void CMesh::calculateTextureCoordinates(SVector3f const uVec, SVector3f const vVec)
 {
-	SVector3 Min(std::numeric_limits<float>::max()), Max(-std::numeric_limits<float>::max());
+	SVector3f Min(std::numeric_limits<float>::max()), Max(-std::numeric_limits<float>::max());
     {
         for (std::vector<SMeshBuffer *>::const_iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
         for (std::vector<SVertex>::const_iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
@@ -227,8 +227,8 @@ void CMesh::calculateTextureCoordinates(SVector3 const uVec, SVector3 const vVec
     for (std::vector<SMeshBuffer *>::iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
     for (std::vector<SVertex>::iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)
     {
-		SVector3 const RelativePosition = (it->Position - Min) / (Max - Min);
-		it->TextureCoordinates = SVector2((RelativePosition * uVec.getNormalized()).length(),
+		SVector3f const RelativePosition = (it->Position - Min) / (Max - Min);
+		it->TextureCoordinates = SVector2f((RelativePosition * uVec.getNormalized()).length(),
 			(RelativePosition * vVec.getNormalized()).length());
 	}
 }
@@ -244,7 +244,7 @@ void CMesh::updateBuffers()
 
 SBoundingBox3 const CMesh::getBoundingBox() const
 {
-    SBoundingBox3 Box(SVector3(std::numeric_limits<float>().max()), SVector3(-std::numeric_limits<float>().max()));
+    SBoundingBox3 Box(SVector3f(std::numeric_limits<float>().max()), SVector3f(-std::numeric_limits<float>().max()));
 
     for (std::vector<SMeshBuffer *>::const_iterator bit = MeshBuffers.begin(); bit != MeshBuffers.end(); ++ bit)
     for (std::vector<SVertex>::const_iterator it = (* bit)->Vertices.begin(); it != (* bit)->Vertices.end(); ++ it)

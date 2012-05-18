@@ -1,7 +1,7 @@
 #include "CElementEnemyPineapple.h"
 #include "CGameLevel.h"
 
-CElementEnemyPineapple::CElementEnemyPineapple(SRect2 nArea) :
+CElementEnemyPineapple::CElementEnemyPineapple(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::PINEAPPLE), ISquishable(4.0f, 4.0f), HitPlayer(false), OldPositionX(nArea.Position.X) {
 
    MaxHealth = 4;
@@ -35,8 +35,8 @@ void CElementEnemyPineapple::setupSceneObject() {
       mesh = CMeshLoader::load3dsMesh("Base/pineapple_stack.3ds");
 
    if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(1));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -44,7 +44,7 @@ void CElementEnemyPineapple::setupSceneObject() {
       printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
 
    SceneObject->setMesh(mesh);
-   SceneObject->setRotation(SVector3(-90, 0, 180));
+   SceneObject->setRotation(SVector3f(-90, 0, 180));
 
    Scale = Area.Size;
 
@@ -56,8 +56,8 @@ void CElementEnemyPineapple::setupSceneObject() {
                                                             
 //CGameplayElement has an attribute called ElapsedTime, which is updated by CGameplayElement's update function.
 
-void CElementEnemyPineapple::OnCollision(CCollideable *Object) {
-   if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
+void CElementEnemyPineapple::OnCollision(const SCollisionEvent& Event) {
+   if(!Dead && Event.Other == Level.getPlayer().getPhysicsEngineObject()) {
       CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
       HitPlayer = true;
 
@@ -70,9 +70,9 @@ void CElementEnemyPineapple::OnCollision(CCollideable *Object) {
       else {
          if(Level.getPlayer().decrementHealth()) {
             if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
-               PlayerActor->setImpulse(SVector2(7.f, 2.8f), 0.1f);
+               PlayerActor->addImpulse(SVector2f(7.f, 2.8f));
             else
-               PlayerActor->setImpulse(SVector2(-7.f, 2.8f), 0.1f);
+               PlayerActor->addImpulse(SVector2f(-7.f, 2.8f));
             Level.getPlayer().setShaking(1.0f, 3.0f);
          }
       }
@@ -96,11 +96,11 @@ void CElementEnemyPineapple::updatePhysicsEngineObject(float time) {
 
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyPineapple::updateSceneObject(float time) {
-   SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X,Area.getCenter().Y, 0));
    if(ParticleEngine) {
-      SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.Position.Y, 0));
-      SceneObject->setRotation(SVector3(-90, 0, 0));
-      SceneObject->setScale(SVector3(1.0f, 1.0f, 0.3f));
+      SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
+      SceneObject->setRotation(SVector3f(-90, 0, 0));
+      SceneObject->setScale(SVector3f(1.0f, 1.0f, 0.3f));
       return;
    }
 
@@ -110,16 +110,16 @@ void CElementEnemyPineapple::updateSceneObject(float time) {
 
    if (PhysicsEngineObject->getVelocity().Y < .01f && PhysicsEngineObject->getVelocity().Y > -.01f) {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)
-         SceneObject->setScale(SVector3(-Scale.X,Scale.X,Scale.Y));
+         SceneObject->setScale(SVector3f(-Scale.X,Scale.X,Scale.Y));
       else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-         SceneObject->setScale(SVector3(Scale.X,Scale.X,Scale.Y));
+         SceneObject->setScale(SVector3f(Scale.X,Scale.X,Scale.Y));
    }
 
    else {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)
-         SceneObject->setScale(SVector3(-Scale.X,Scale.X,Scale.Y));
+         SceneObject->setScale(SVector3f(-Scale.X,Scale.X,Scale.Y));
       else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-         SceneObject->setScale(SVector3(Scale.X,Scale.X,Scale.Y));
+         SceneObject->setScale(SVector3f(Scale.X,Scale.X,Scale.Y));
    }
 }
 

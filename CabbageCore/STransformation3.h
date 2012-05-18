@@ -49,7 +49,7 @@ public:
 		Rotation = glm::rotate(Rotation, rotation.z, glm::vec3(0, 0, 1));
 	}
 
-	void setRotation(SVector3 const & rotation)
+	void setRotation(SVector3f const & rotation)
 	{
 		Rotation = glm::rotate(glm::mat4(1.f), rotation.X, glm::vec3(1, 0, 0));
 		Rotation = glm::rotate(Rotation, rotation.Y, glm::vec3(0, 1, 0));
@@ -61,7 +61,7 @@ public:
 		Scale = glm::scale(glm::mat4(1.f), scale);
 	}
 
-	void setScale(SVector3 const & scale)
+	void setScale(SVector3f const & scale)
 	{
 		Scale = glm::scale(glm::mat4(1.f), scale.getGLMVector());
 	}
@@ -71,7 +71,7 @@ public:
 		Translation = glm::translate(glm::mat4(1.f), translation);
 	}
 
-	void setTranslation(SVector3 const & translation)
+	void setTranslation(SVector3f const & translation)
 	{
 		Translation = glm::translate(glm::mat4(1.f), translation.getGLMVector());
 	}

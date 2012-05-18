@@ -11,7 +11,7 @@ class CElementBlockElevator : public CElementBlock {
       float Range, Speed;
 
    public:
-      virtual void OnCollision(CCollideable *Object);
+      virtual void OnCollision(const SCollisionEvent& Event);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
@@ -20,7 +20,7 @@ class CElementBlockElevator : public CElementBlock {
       virtual void update(float);
       virtual void updateSceneObject(float);
 
-      CElementBlockElevator(SRect2 nArea, int depth, int texture, float r, float s);
+      CElementBlockElevator(SRect2f nArea, int depth, int texture, float r, float s);
 
       virtual void printInformation();
 };

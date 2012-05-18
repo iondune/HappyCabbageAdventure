@@ -12,7 +12,7 @@ void CPlayerAbilityLaser::inUpdatePhysicsEngineObject(float time) {
       return;
    TemporaryTimeVariable += time;
    if(LaserState == FIRING) {
-      SRect2 FiringRange = Player.Area;
+      SRect2f FiringRange = Player.Area;
       if(Player.Direction == CElementPlayer::Right) {
          FiringRange.Size.X += 5.0f;
       }
@@ -22,8 +22,8 @@ void CPlayerAbilityLaser::inUpdatePhysicsEngineObject(float time) {
       }
       std::vector<CCollideable*> InRange = Player.Level.getPhysicsEngine().getAllInBound(FiringRange);
       for(unsigned int i = 0; i < InRange.size(); i++) {
-         if(InRange[i]->getElement())
-            InRange[i]->getElement()->reactToAbility(Abilities::LASER);
+         if(InRange[i]->getGameplayElement())
+            InRange[i]->getGameplayElement()->reactToAbility(Abilities::LASER);
       }
    }
    return;
@@ -35,17 +35,17 @@ void CPlayerAbilityLaser::inUpdateSceneObject(float time) {
    if(ParticleEngine) {
       //Update the particles
       if(LaserState == CHARGED) {
-         ParticleEngine->setCenterPos(SVector3(Player.getArea().getCenter().X, Player.getArea().Position.Y, 0.0f));
+         ParticleEngine->setCenterPos(SVector3f(Player.getArea().getCenter().X, Player.getArea().Position.Y, 0.0f));
       }
       else
-         ParticleEngine->setCenterPos(SVector3(Player.getArea().getCenter(), 0.0f));
+         ParticleEngine->setCenterPos(SVector3f(Player.getArea().getCenter(), 0.0f));
       ParticleEngine->step(time);
    }
    if(LaserState == FIRING)
       Player.View->setVisible(true);
 }
 
-void CPlayerAbilityLaser::inOnCollision(CCollideable * collider) {
+void CPlayerAbilityLaser::inOnCollision(const SCollisionEvent& Event) {
    return;
 }
 
@@ -53,7 +53,7 @@ CPlayerAbilityLaser::CPlayerAbilityLaser(CElementPlayer & p) : CPlayerAbility(p,
    EnergyUsed = 33;
 
    if (Player.Stats.Energy >= EnergyUsed)
-      ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), LASER_CHARGE_PARTICLE_COUNT, LASER_CHARGE_DURATION, LASER_CHARGING_PARTICLE);
+      ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), LASER_CHARGE_PARTICLE_COUNT, LASER_CHARGE_DURATION, LASER_CHARGING_PARTICLE);
    else
       Dead = true;
 }
@@ -82,7 +82,7 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
          Player.AllowMovement = true;
          ParticleEngine->deconstruct();
          delete ParticleEngine;
-         ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), 20, -1, LASER_CHARGED_PARTICLE);
+         ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), 20, -1, LASER_CHARGED_PARTICLE);
          LaserState = CHARGED;
          return;
       }
@@ -92,7 +92,7 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
          ParticleEngine->deconstruct();
          delete ParticleEngine;
          Player.AllowMovement = false;
-         ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), LASER_FIRING_PARTICLE_COUNT, LASER_FIRING_DURATION, LASER_FIRING_PARTICLE);
+         ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), LASER_FIRING_PARTICLE_COUNT, LASER_FIRING_DURATION, LASER_FIRING_PARTICLE);
          ParticleEngine->setLookRight(Player.Direction == CElementPlayer::Right);
          LaserState = FIRING;
          TemporaryTimeVariable = 0;
@@ -108,7 +108,7 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
       Player.View->setVisible(true);
       Player.View->setHurt(false);
       Player.getPhysicsEngineObject()->setArea(TemporaryArea);
-      ((CCollisionActor *)Player.getPhysicsEngineObject())->setVelocity(SVector2(0.0f));
+      ((CCollisionActor *)Player.getPhysicsEngineObject())->setVelocity(SVector2f(0.0f));
       ((CCollisionActor *)Player.getPhysicsEngineObject())->setGravity(0.0f);
       Player.AllowMovement = false;
       if(TemporaryTimeVariable >= LASER_FIRING_DURATION) {
@@ -116,7 +116,7 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
          delete ParticleEngine;
          Dead = true;
          LaserState = FIRED;
-         ((CCollisionActor *)Player.getPhysicsEngineObject())->setImpulse(SVector2((Player.Direction == CElementPlayer::Right ? -1.0f : 1.0f)*15.0f, 0.0f), 0.1f);
+         ((CCollisionActor *)Player.getPhysicsEngineObject())->addImpulse(SVector2f((Player.Direction == CElementPlayer::Right ? -1.0f : 1.0f)*15.0f, 0.0f));
          Player.AllowMovement = true;
          ((CCollisionActor *)Player.getPhysicsEngineObject())->setGravity(tempGrav);
          Player.View->setVisible(true);

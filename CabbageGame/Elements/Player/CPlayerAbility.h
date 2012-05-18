@@ -2,6 +2,7 @@
 #define CPLAYERABILITY__HEADER
 
 #include "IUpdater.h"
+#include "CCollisionEngine.h"
 
 class CElementPlayer;
 class CCollideable;
@@ -20,7 +21,7 @@ class CPlayerAbility {
       virtual void inUpdateSceneObject(float)=0;
       void updateTime(float);
       bool isDead();
-      virtual void inOnCollision(CCollideable *Object);
+      virtual void inOnCollision(const SCollisionEvent& Event);
       virtual void checkKey(bool keyDown);
       CPlayerAbility(CElementPlayer &, Abilities::EAbilityType);
       Abilities::EAbilityType getType();

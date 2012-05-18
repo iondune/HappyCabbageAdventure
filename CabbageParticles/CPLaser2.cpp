@@ -22,12 +22,12 @@ void CPLaser2::updateMatrices(float timeElapsed) {
 
       xValue += 20*timeElapsed;
       if(xValue < 0 || xValue > 5) {
-         translate = SVector3(-50);
+         translate = SVector3f(-50);
          if(xValue > 5)
             xValue -= 6;
       }
       else {
-         translate = SVector3((*lookRight?1:-1)*xValue,
+         translate = SVector3f((*lookRight?1:-1)*xValue,
                yValue * ((xValue > 1 || xValue <= 0) ? 1 : xValue),
                zValue);
       }

@@ -14,7 +14,7 @@ void CPLeaf::updateMatrices(float timeElapsed) {
    }
    else {
       sineValue += 4*timeElapsed;
-      translate = SVector3(Amplitude*cos(Period*sineValue),
+      translate = SVector3f(Amplitude*cos(Period*sineValue),
                            yFactor,
                            Amplitude*sin(Period*sineValue));
    }

@@ -16,8 +16,8 @@ void PKiwi::loadMesh() {
    Renderable = new CMeshSceneObject();
    CMesh *mesh = CMeshLoader::load3dsMesh("Base/kiwi_seed.3ds");
    if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(1));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -27,8 +27,8 @@ void PKiwi::loadMesh() {
    Renderable->setMesh(mesh);
    Renderable->setShader(ERP_DEFAULT, "Toon");
    Renderable->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   Renderable->setScale(SVector3(.5f, .5f, .5f));
-   Renderable->setRotation(SVector3(-90, 90, 90));
+   Renderable->setScale(SVector3f(.5f, .5f, .5f));
+   Renderable->setRotation(SVector3f(-90, 90, 90));
 
    CApplication::get().getSceneManager().addSceneObject(Renderable);
 }
@@ -41,7 +41,7 @@ void PKiwi::loadActor() {
    Actor->setControlFall(false);
    Actor->setGravity(0.0f);
 
-   Actor->setArea(SRect2(SVector2(x, y), SVector2(w*.5f, h*.5f)));
+   Actor->setArea(SRect2f(SVector2f(x, y), SVector2f(w*.5f, h*.5f)));
 
    //Set actor attributes
    Actor->getAttributes().MaxWalk = 4.0f;
@@ -49,7 +49,6 @@ void PKiwi::loadActor() {
 
    Actor->getAttributes().AirControl = 1.0f;
    Actor->getAttributes().AirSpeedFactor = 1.0f;
-   Actor->CollideableType = COLLIDEABLE_TYPE_PKIWI;
 
    Mix_PlayChannel(-1, dropKiwi, 0);
 }
@@ -61,6 +60,6 @@ void PKiwi::update(float const TickTime) {
 
    if (Manager->isPlayerAlive())
    {
-      Actor->setVelocity(SVector2(0.f, -6.f));
+      Actor->setVelocity(SVector2f(0.f, -6.f));
    }
 }

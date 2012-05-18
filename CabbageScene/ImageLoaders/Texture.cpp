@@ -1,3 +1,5 @@
+#define  _CRT_SECURE_NO_WARNINGS
+
 // http://nehe.gamedev.net/data/lessons/lesson.asp?lesson=33
 
 #include "Texture.h"

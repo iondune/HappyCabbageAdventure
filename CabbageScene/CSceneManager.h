@@ -23,10 +23,10 @@ class CLight
 public:
 
 	SColor Color;
-	SVector3 Position;
+	SVector3f Position;
 
 	SUniform<SColor> BindColor;
-	SUniform<SVector3> BindPosition;
+	SUniform<SVector3f> BindPosition;
 
 	// Todo: change values only through get/set, set scene changed when so
 
@@ -156,10 +156,6 @@ public:
 	static GLuint const getQuadHandle();
 
 	void setDeferred(bool const isDeferred);
-
-	int getNumObjects();
-	int getNumCulled();
-	int getTimesCalled();
 
 };
 #endif
