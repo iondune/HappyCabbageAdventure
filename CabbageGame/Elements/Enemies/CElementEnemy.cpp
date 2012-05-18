@@ -144,7 +144,7 @@ void CElementEnemy::dieWithSeeds() {
    TempTime = 0.0f;
    removeFromPhysicsEngine();
    ParticleEngine = new CParticleEngine(SceneObject->getTranslation(), 20, 4, BURST_PARTICLE);
-   ParticleEngine->UsePhysics(&Level.getPhysicsEngine());
+   ParticleEngine->UsePhysics(&Level.getPhysicsEngine(), Level.getEnv());
 }
 
 void CElementEnemy::dropItem() {
