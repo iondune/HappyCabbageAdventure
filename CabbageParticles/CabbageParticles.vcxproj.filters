@@ -56,6 +56,12 @@
     <ClCompile Include="CPLaserCharged.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CPRWiggle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CParticleRiser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CParticle.h">
@@ -98,6 +104,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CPLaserCharged.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CPRWiggle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CParticleRiser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
