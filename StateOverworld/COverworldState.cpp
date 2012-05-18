@@ -232,6 +232,10 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
       if(Event.Key == SDLK_y) {
          yDown = 1;
       }
+      if(Event.Key == SDLK_h) {
+         Stats.toggleGodmode();
+         printf("Godmode %s.\n", (Stats.isGodmodeEnabled()?"enabled; all abilities now available":"disabled; all normal abilities returned"));
+      }
       if(Event.Key == SDLK_a || Event.Key == SDLK_LEFT){
          aDown = 1;
          movePlayer();
