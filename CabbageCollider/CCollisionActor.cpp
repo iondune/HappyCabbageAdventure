@@ -429,6 +429,16 @@ void CCollisionActor::setFallAcceleration(CollisionReal speed)
 	FallAcceleration = speed;
 }
 
+void CCollisionActor::setGravity(CollisionReal speed)
+{
+	setFallAcceleration(speed);
+}
+
+CollisionReal const CCollisionActor::getGravity() const
+{
+	return FallAcceleration;
+}
+
 void CCollisionActor::updatePhaseList()
 {
 	for (std::set<CCollideable *>::iterator it = PhaseList.begin(); it != PhaseList.end(); ++ it)

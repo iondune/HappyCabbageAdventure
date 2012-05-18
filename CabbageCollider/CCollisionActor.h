@@ -184,6 +184,8 @@ public:
 
 	//! see FallAcceleration
 	void setFallAcceleration(CollisionReal speed);
+	void setGravity(CollisionReal speed);
+	CollisionReal const getGravity() const;
 	//! see FallAcceleration
 
 	//! For debugging purposes, draws this actor onto the screen using FFP OpenGL
