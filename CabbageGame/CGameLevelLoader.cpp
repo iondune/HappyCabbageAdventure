@@ -1,6 +1,8 @@
 #include "CGameLevelLoader.h"
 
 #include "CGameLevel.h"
+#include "CDecorManager.h" //For CGroundBlock
+#include "CBiggerBlock.h"
 #include "CElementBlock.h"
 #include "CElementBlockFlag.h"
 #include "CElementBlockBreakable.h"

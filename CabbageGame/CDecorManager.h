@@ -4,8 +4,9 @@
 #include "IUpdater.h"
 class CParticleEngine;
 
-#include "CabbageScene.h"
-#include "CApplication.h"
+class ISceneObject;
+class CMesh;
+class CShader;
 
 #include <stdio.h>
 

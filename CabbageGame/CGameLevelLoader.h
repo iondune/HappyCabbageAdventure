@@ -2,9 +2,12 @@
 #define __CGAMELEVELLOADER_HEADER
 
 #include "irrxml-1.2/src/irrXML.h"
+#include <map>
+#include <string>
+#include <vector>
 
-#include "CDecorManager.h" //For CGroundBlock
-#include "CBiggerBlock.h"
+class CBiggerBlock;
+class CGameLevel;
 
 class CGameLevelLoader {
    private:

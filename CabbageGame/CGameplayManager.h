@@ -1,11 +1,14 @@
 #ifndef _CGAMEPLAYEMANAGER_H_INCLUDED_
 #define _CGAMEPLAYEMANAGER_H_INCLUDED_
 
-#include "CGameplayElement.h"
-#include "CGameLevelLoader.h"
+#include "IUpdater.h"
+#include <vector>
+
+class CCollisionEngine;
 
 class CGameLevel;
 class CElementPlayer;
+class CGameplayElement;
 class CGameplayGUIManager;
 
 class CGameplayManager : public IUpdater {

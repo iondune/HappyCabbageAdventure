@@ -2,6 +2,8 @@
 #include "CGameLevel.h"
 
 #include "CParticleEngine.h"
+#include "CabbageScene.h"
+#include "CApplication.h"
 
 CGroundBlock::CGroundBlock(float nx, float ny, float nw, float nh, float nd) : x(nx), y(ny), w(nw), h(nh), d(nd) {
 }

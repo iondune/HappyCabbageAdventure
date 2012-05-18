@@ -1,9 +1,13 @@
 #include "CGameplayManager.h"
 
+#include "CGameplayElement.h"
+#include "CGameLevelLoader.h"
+
 #include "CGameLevel.h"
 #include "CabbageScene.h"
 #include "CabbageFramework.h"
 #include "CGameplayGUIManager.h"
+#include "CBiggerBlock.h"
 
 #define DEBUG_PRINTFS
 
