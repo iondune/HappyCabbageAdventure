@@ -47,7 +47,9 @@ ISceneObject *CDecorManager::SetupObject(float x, float y, float z, float scale,
 void CDecorManager::update(float f) {
    if(StarEngine)
       StarEngine->step(f);
-
+   for(int i = 0; i < DecorativeParticleEngines.size(); i++) {
+      DecorativeParticleEngines[i]->step(f);
+   }
 }
 
 CDecorManager::CDecorManager(CGameLevel & level) {
@@ -87,6 +89,12 @@ CDecorManager::CDecorManager(CGameLevel & level) {
          }
          else
             GenerateDesertPlants(curBlock, false);
+      }
+      if(night) {
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3(curBlock->x + curBlock->w / 3.0f, curBlock->y + curBlock->h, 1), 10, -1, WIGGLE_PARTICLE));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3(curBlock->x + 2.0f*curBlock->w / 3.0f, curBlock->y + curBlock->h, 1), 10, -1, WIGGLE_PARTICLE));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3(curBlock->x + curBlock->w / 3.0f, curBlock->y + curBlock->h, -1), 10, -1, WIGGLE_PARTICLE));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3(curBlock->x + 2.0f*curBlock->w / 3.0f, curBlock->y + curBlock->h, -1), 10, -1, WIGGLE_PARTICLE));
       }
       delete curBlock;
    }

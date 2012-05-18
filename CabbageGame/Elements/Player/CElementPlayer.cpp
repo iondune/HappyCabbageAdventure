@@ -69,6 +69,7 @@ void CElementPlayer::doGodmode() {
 }
 
 bool hWasDown = false;
+bool jWasDown = false;
 float oldGrav;
 
 void CElementPlayer::updatePlayerAction() {
@@ -254,6 +255,15 @@ void CElementPlayer::updatePhysicsEngineObject(float time) {
 }
 
 void CElementPlayer::updateSceneObject(float time) {
+   if(!jWasDown && CApplication::get().getEventManager().IsKeyDown[SDLK_j]) {
+      int newSubView = View->getSubView();
+      newSubView++;
+      if(newSubView > 4)
+         newSubView = 0;
+      View->useSubView(newSubView);
+   }
+   jWasDown = CApplication::get().getEventManager().IsKeyDown[SDLK_j];
+
    if(Recovering > 0.0f) {
       Recovering -= time;
       if(Recovering <= 0.0f) {

@@ -12,6 +12,7 @@
 #define DEBUG_PRINTFS
 
 CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(level.getElements()) {
+   srand((unsigned int) 52);
    PhysicsEngine = new CCollisionEngine();
    level.setPhysicsEngine(PhysicsEngine);
 

@@ -1,5 +1,18 @@
 #include "CParticleEngine.h"
 
+#include "CPCube.h"
+#include "CPLeaf.h"
+#include "CPFlame.h"
+#include "CPDeath.h"
+#include "CPLaser.h"
+#include "CPLaser2.h"
+#include "CPHurt.h"
+#include "CPBurst.h"
+#include "CPDust.h"
+#include "CPStar.h"
+#include "CPLaserCharged.h"
+#include "CPRWiggle.h"
+
 void CParticleEngine::UsePhysics(CCollisionEngine *engine) {
    for(int i = 0; i < numParticles; i++) {
       ((CPhysicsParticle*)particles[i])->setEngine(engine);
@@ -72,6 +85,11 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
             particles.push_back(cPtr = new CPStar());
             cPtr->setAppearRate(0);
             cPtr->useCenterPos = 0;
+            break;
+         case WIGGLE_PARTICLE:
+            particles.push_back(cPtr = new CPRWiggle());
+            cPtr->setAppearRate(1.0f);
+            cPtr->useCenterPos = 1;
             break;
       }
       cPtr->setCenterPos(&centerPos);
@@ -178,6 +196,10 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
             colorArr.push_back(new SVector3(1.0f - (float)rand()/(float)RAND_MAX*temp, 1.0f - (float)rand()/(float)RAND_MAX*temp, 1.0f - (float)rand()/(float)RAND_MAX*temp));
             sizeArr.push_back((float)rand()/(float)RAND_MAX*60 + 30);
             break;
+         case WIGGLE_PARTICLE:
+            colorArr.push_back(new SVector3(0.0f, frand(), frand()*0.2 + 0.8f));
+            sizeArr.push_back((float)rand()/(float)RAND_MAX*3 + 10);
+            break;
       }
    }
    myObj = new CParticleObject();
@@ -194,12 +216,12 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
    case CUBE_PARTICLE:
       textureToUse = "Base/particleStar.bmp";
       /* Texture input
-      std::cout << "What particle file?";
-      std::cin >> buf;
-      v.append(buf);
-      v.append(".bmp");
-      textureToUse = v.c_str();
-      */
+         std::cout << "What particle file?";
+         std::cin >> buf;
+         v.append(buf);
+         v.append(".bmp");
+         textureToUse = v.c_str();
+         */
       break;
    case FLAME_PARTICLE:
       textureToUse = "Base/particleTriangle2.bmp";
@@ -207,26 +229,19 @@ CParticleEngine::CParticleEngine(SVector3 pos, int max, float duration, int pT) 
    case DEATH_PARTICLE:
       textureToUse = "Base/particleStar.bmp";
       break;
-   case LASER_CHARGED_PARTICLE:
-   case LASER_CHARGING_PARTICLE:
-      textureToUse = "Base/particle2.bmp";
-      break;
-   case LASER_FIRING_PARTICLE:
-      textureToUse = "Base/particle2.bmp";
-      break;
    case HURT_PARTICLE:
       textureToUse = "Base/particleLeaf.bmp";
       break;
    case BURST_PARTICLE:
       textureToUse = "Base/particleStar.bmp";
       break;
-   case DUST_PARTICLE:
-      textureToUse = "Base/particle2.bmp";
-      break;
    case STAR_PARTICLE:
       textureToUse = "Base/particleStar.bmp";
       myObj->setAlwaysRender();
       myObj->setSizeFactor(38.0f);
+      break;
+   default:
+      textureToUse = "Base/particle2.bmp";
       break;
    }
 
