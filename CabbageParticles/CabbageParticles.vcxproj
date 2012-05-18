@@ -85,6 +85,7 @@
     <ClCompile Include="CParticle.cpp" />
     <ClCompile Include="CParticleEngine.cpp" />
     <ClCompile Include="CParticleObject.cpp" />
+    <ClCompile Include="CParticleRiser.cpp" />
     <ClCompile Include="CPBurst.cpp" />
     <ClCompile Include="CPCube.cpp" />
     <ClCompile Include="CPDeath.cpp" />
@@ -96,12 +97,14 @@
     <ClCompile Include="CPLaser2.cpp" />
     <ClCompile Include="CPLaserCharged.cpp" />
     <ClCompile Include="CPLeaf.cpp" />
+    <ClCompile Include="CPRWiggle.cpp" />
     <ClCompile Include="CPStar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CParticle.h" />
     <ClInclude Include="CParticleEngine.h" />
     <ClInclude Include="CParticleObject.h" />
+    <ClInclude Include="CParticleRiser.h" />
     <ClInclude Include="CPBurst.h" />
     <ClInclude Include="CPCube.h" />
     <ClInclude Include="CPDeath.h" />
@@ -113,6 +116,7 @@
     <ClInclude Include="CPLaser2.h" />
     <ClInclude Include="CPLaserCharged.h" />
     <ClInclude Include="CPLeaf.h" />
+    <ClInclude Include="CPRWiggle.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
