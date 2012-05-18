@@ -87,10 +87,12 @@ CDecorManager::CDecorManager(CGameLevel & level) {
       if(night) {
          CPointLightSceneObject * point;
          for(float y = 0; y < 15; y += 3) {
+            /*
             point = new CPointLightSceneObject(1.5f, n % 2 ? SColor(1.0f, 0.62f, 0.0f) : SColor(0.68f, 1.0f, 0.18f)); //Orange and Yellowgreen
             point->setTranslation(SVector3(curBlock->x, y, 0.f));
             CApplication::get().getSceneManager().addSceneObject(point);
             n++;
+            */
 
             point = new CPointLightSceneObject(1.5f, n % 2 ? SColor(1.0f, 0.62f, 0.0f) : SColor(0.68f, 1.0f, 0.18f)); //Orange and Yellowgreen
             point->setTranslation(SVector3(curBlock->x + curBlock->w / 2.0f, y, 0.f));
