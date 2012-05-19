@@ -37,7 +37,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       bool Godmode;
       bool hWasDown;
       bool jWasDown;
-      float oldGrav;
+      CollisionReal oldGrav;
 
 
       Cabbage::PlayerInformation Stats;
