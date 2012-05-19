@@ -120,6 +120,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             h = xml->getAttributeValueAsInt(2);
             w = xml->getAttributeValueAsInt(3);
             t = xml->getAttributeValueAsInt(4);
+
             CElementEnemy *myEnemy = CEnemyLoader::LoadEnemy(SRect2((float)x, (float)y, (float)w, (float)h), (Enemies::EEnemyType)t);
             if(myEnemy != NULL) {
                newLevel->Enemies.push_back(myEnemy);

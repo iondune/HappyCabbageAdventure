@@ -9,7 +9,6 @@ CElementEnemyGiantApple::CElementEnemyGiantApple(SRect2 nArea) :
 }
 
 void CElementEnemyGiantApple::setupPhysicsEngineObject() {
-   /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
 
    PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
@@ -21,14 +20,12 @@ void CElementEnemyGiantApple::setupSceneObject() {
    SceneObject = new CMeshSceneObject();
    CMesh *mesh;
 
-   if (Level.getEnvironment() == 0) {
+   if (Level.getEnvironment() == Env::FOREST)
       mesh = CMeshLoader::load3dsMesh("Base/appleEnemy.3ds");
-   }
-
-   else if (Level.getEnvironment() == 1) {
+   else if (Level.getEnvironment() == Env::DESERT)
       mesh = CMeshLoader::load3dsMesh("Base/desertapple.3ds");
-   }
-   //LevelEditor has no environment
+   else if (Level.getEnvironment() == Env::WATER)
+      mesh = CMeshLoader::load3dsMesh("Base/water_apple.3ds");
    else
       mesh = CMeshLoader::load3dsMesh("Base/appleEnemy.3ds");
 
@@ -43,6 +40,7 @@ void CElementEnemyGiantApple::setupSceneObject() {
 
    SceneObject->setMesh(mesh);
    SceneObject->setRotation(SVector3(-90, 0, 0));
+   SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
 
    Scale = Area.Size;
    SceneObject->setScale(SVector3(Scale.X, Scale.X, Scale.Y));

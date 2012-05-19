@@ -43,7 +43,7 @@ void CElementEnemyProjectileKiwi::setupSceneObject() {
    }
 
    else {
-      fprintf(stderr, "KiwiProjectile: Unrecognized environment.\n");
+      mesh = CMeshLoader::load3dsMesh("Base/kiwi_seed.3ds");
    }
 
    if (mesh) {

@@ -36,7 +36,7 @@
 <CBlock X ="56" Y ="-2" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
 
-<CEnemy X ="0" Y ="1" height ="1" width ="1" type ="10">
+<CEnemy X ="0" Y ="1" height ="1" width ="1" type ="0">
 </CEnemy>
 
 
