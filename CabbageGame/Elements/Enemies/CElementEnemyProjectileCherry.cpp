@@ -11,13 +11,13 @@ CElementEnemyProjectileCherry::CElementEnemyProjectileCherry(SRect2f nArea, floa
 
 void CElementEnemyProjectileCherry::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(Area);
 
-   //Set actor attributes
    PhysicsEngineObject->getAttributes().MaxWalk = 4.0f;
    PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
    PhysicsEngineObject->getAttributes().AirControl = 1.0f;
    PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
+
+   CElementEnemy::setupPhysicsEngineObject();
 }
 
 void CElementEnemyProjectileCherry::setupSceneObject() {
@@ -33,7 +33,7 @@ void CElementEnemyProjectileCherry::setupSceneObject() {
    }
 
    else {
-      fprintf(stderr, "CherryProjectile: Unrecognized environment.\n");
+      mesh = CMeshLoader::load3dsMesh("Base/single_cherry.3ds");
    }
 
 

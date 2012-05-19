@@ -9,7 +9,6 @@ CElementEnemyProjectileKiwi::CElementEnemyProjectileKiwi(SRect2f nArea)
 
 void CElementEnemyProjectileKiwi::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(Area);
 
    //Set actor attributes
    PhysicsEngineObject->setControlFall(false);
@@ -21,7 +20,13 @@ void CElementEnemyProjectileKiwi::setupPhysicsEngineObject() {
    PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
 
    PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
-   PhysicsEngineObject->setVelocity(SVector2f(0.f, -6.f));
+
+   if (Level.getEnv() != Env::WATER)
+      PhysicsEngineObject->setVelocity(SVector2(0.f, -6.f));
+   else
+      PhysicsEngineObject->setVelocity(SVector2(0.f, -3.f));
+
+   CElementEnemy::setupPhysicsEngineObject();
 }
 
 void CElementEnemyProjectileKiwi::setupSceneObject() {
@@ -37,7 +42,7 @@ void CElementEnemyProjectileKiwi::setupSceneObject() {
    }
 
    else {
-      fprintf(stderr, "KiwiProjectile: Unrecognized environment.\n");
+      mesh = CMeshLoader::load3dsMesh("Base/kiwi_seed.3ds");
    }
 
    if (mesh) {

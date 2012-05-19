@@ -13,9 +13,9 @@
 #include "CPLaserCharged.h"
 #include "CPRWiggle.h"
 
-void CParticleEngine::UsePhysics(CCollisionEngine *engine) {
+void CParticleEngine::UsePhysics(CCollisionEngine *engine, int env) {
    for(int i = 0; i < numParticles; i++) {
-      ((CPhysicsParticle*)particles[i])->setEngine(engine);
+      ((CPhysicsParticle*)particles[i])->setEngine(engine, env);
    }
 }
 

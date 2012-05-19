@@ -7,25 +7,25 @@ CElementEnemyApple::CElementEnemyApple(SRect2f nArea) :
 }
 
 void CElementEnemyApple::setupPhysicsEngineObject() {
-   /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(Area);
-
-   //Set actor attributes
    PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
+
+   CElementEnemy::setupPhysicsEngineObject();
 }
 
 void CElementEnemyApple::setupSceneObject() {
    SceneObject = new CMeshSceneObject();
    CMesh *mesh;
 
-   if (Level.getEnvironment() == 0) {
+   if (Level.getEnvironment() == Env::FOREST) {
       mesh = CMeshLoader::load3dsMesh("Base/appleEnemy.3ds");
    }
 
-   else if (Level.getEnvironment() == 1) {
+   else if (Level.getEnvironment() == Env::DESERT) {
       mesh = CMeshLoader::load3dsMesh("Base/desertapple.3ds");
    }
+   else if (Level.getEnvironment() == Env::WATER)
+      mesh = CMeshLoader::load3dsMesh("Base/water_apple.3ds");
    //LevelEditor has no environment
    else
       mesh = CMeshLoader::load3dsMesh("Base/appleEnemy.3ds");
@@ -68,15 +68,21 @@ void CElementEnemyApple::updatePhysicsEngineObject(float time) {
             Roll = Left;
          else
             Roll = Right;
-         PhysicsEngineObject->getAttributes().MaxWalk = 6.0f;
+         if (Level.getEnv() != Env::WATER)
+                  PhysicsEngineObject->getAttributes().MaxWalk = 6.0f;
+               else
+                  PhysicsEngineObject->getAttributes().MaxWalk = 3.0f;
       }
    }
 
    if (Rotate >= 360 || Rotate <= -360) {
       Rotate = 0;
       Roll = None;
-      PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
-      PhysicsEngineObject->setVelocity(SVector2f(2.2f, 0.0f));
+      if (Level.getEnv() != Env::WATER)
+         PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
+      else
+         PhysicsEngineObject->getAttributes().MaxWalk = 1.1f;
+      PhysicsEngineObject->setVelocity(SVector2(2.2f, 0.0f));
    }
 }
 

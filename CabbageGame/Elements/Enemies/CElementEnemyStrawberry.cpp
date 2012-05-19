@@ -7,9 +7,7 @@ CElementEnemyStrawberry::CElementEnemyStrawberry(SRect2f nArea) :
 
 void CElementEnemyStrawberry::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(Area);
 
-   //Set actor attributes
    PhysicsEngineObject->getAttributes().MaxWalk = 1.0f;//2.8f;
    PhysicsEngineObject->getAttributes().JumpLength = .01f;
    PhysicsEngineObject->getAttributes().JumpAccel = 7.0f;
@@ -17,6 +15,8 @@ void CElementEnemyStrawberry::setupPhysicsEngineObject() {
    PhysicsEngineObject->getAttributes().AirControl = 0.75f;
 
    PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
+
+   CElementEnemy::setupPhysicsEngineObject();
 }
 
 void CElementEnemyStrawberry::setupSceneObject() {

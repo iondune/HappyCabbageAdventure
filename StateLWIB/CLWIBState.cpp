@@ -580,6 +580,8 @@ void CLWIBState::loadWorld() {
     initBlockMap();
 
     cout << "Enter the name of the file you want to load: ";
+    //Chris Colwell "hack code"
+    //name = "chris-water1.xml";
     cin >> name;
     irr::io::IrrXMLReader* xml = irr::io::createIrrXMLReader((CGameLevelLoader::getLevelDirectory() + name).c_str());
     while (xml && xml->read())
@@ -677,6 +679,8 @@ void CLWIBState::printXML() {
     std::string name;
 
     cout << "Enter the name of the file you want to save: ";
+    //Chris hack code.
+    //name = "chris-water1.xml";
     cin >> name;
 
     cout << name;

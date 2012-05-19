@@ -9,20 +9,17 @@ CElementEnemyKiwi::CElementEnemyKiwi(SRect2f nArea, int direction) :
 void CElementEnemyKiwi::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(SRect2f(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y * 1.0f));
 
-   //Set actor attributes
    PhysicsEngineObject->setControlFall(false);
    PhysicsEngineObject->setGravity(0.0f);
 
    PhysicsEngineObject->getAttributes().MaxWalk = 3.0f;
    PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
-
    PhysicsEngineObject->getAttributes().AirControl = 1.0f;
    PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
-
-   //TODO:  Is this still needed?
    PhysicsEngineObject->getAttributes().Reacts = 0;
+
+   CElementEnemy::setupPhysicsEngineObject();
 }
 
 void CElementEnemyKiwi::setupSceneObject() {

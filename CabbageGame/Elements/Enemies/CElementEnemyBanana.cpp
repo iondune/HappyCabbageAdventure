@@ -9,10 +9,10 @@ CElementEnemyBanana::CElementEnemyBanana(SRect2f nArea) :
 void CElementEnemyBanana::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(Area);
 
-   //Set actor attributes
    PhysicsEngineObject->getAttributes().MaxWalk = 0.8f;
+
+   CElementEnemy::setupPhysicsEngineObject();
 }
 
 void CElementEnemyBanana::setupSceneObject() {
@@ -45,6 +45,7 @@ void CElementEnemyBanana::setupSceneObject() {
    SceneObject->setScale(SVector3f(Scale.X, Scale.X, Scale.Y));
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
+   SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
@@ -62,7 +63,7 @@ void CElementEnemyBanana::updatePhysicsEngineObject(float time) {
 
    ShootTime += time;
 
-   if (ShootTime >= 2.0f) {
+   if ((ShootTime >= 2.0f && Level.getEnv() != Env::WATER) || ShootTime >= 4.0f) {
       ShootTime = 0.0f;
 
       float x = Area.Position.X;

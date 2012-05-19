@@ -10,10 +10,10 @@ void CElementEnemyBlade::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
 
-   //Makes them immune to gravity
    PhysicsEngineObject->setControlFall(false);
    PhysicsEngineObject->setGravity(0.0f);
-   PhysicsEngineObject->setArea(SRect2f(SVector2f(Area.Position.X + .5f, Area.Position.Y - .25f), Area.Size));
+
+   CElementEnemy::setupPhysicsEngineObject();
 }
 
 void CElementEnemyBlade::setupSceneObject() {

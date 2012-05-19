@@ -9,9 +9,7 @@ CElementEnemyProjectileGrape::CElementEnemyProjectileGrape(SRect2f nArea)
 
 void CElementEnemyProjectileGrape::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(Area);
 
-   //Set actor attributes
    PhysicsEngineObject->setControlFall(false);
    PhysicsEngineObject->setGravity(0.0f);
 
@@ -19,6 +17,8 @@ void CElementEnemyProjectileGrape::setupPhysicsEngineObject() {
    PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
    PhysicsEngineObject->getAttributes().AirControl = 1.0f;
    PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
+
+   CElementEnemy::setupPhysicsEngineObject();
 }
 
 void CElementEnemyProjectileGrape::setupSceneObject() {
@@ -27,7 +27,7 @@ void CElementEnemyProjectileGrape::setupSceneObject() {
 
    int random = rand() % 3;
 
-   if (Level.getEnvironment() == 0) {
+   if (Level.getEnvironment() == Env::FOREST) {
       if (random == 0)
          mesh = CMeshLoader::load3dsMesh("Base/grape1.3ds");
       else if (random == 1)
@@ -36,7 +36,7 @@ void CElementEnemyProjectileGrape::setupSceneObject() {
          mesh = CMeshLoader::load3dsMesh("Base/grape3.3ds");
    }
 
-   else if (Level.getEnvironment() == 1) {
+   else if (Level.getEnvironment() == Env::DESERT) {
       if (random == 0)
          mesh = CMeshLoader::load3dsMesh("Base/grape1.3ds");
       else if (random == 1)
@@ -45,8 +45,13 @@ void CElementEnemyProjectileGrape::setupSceneObject() {
          mesh = CMeshLoader::load3dsMesh("Base/grape3.3ds");
    }
 
-   else {
-      fprintf(stderr, "GrapeProjectile: Unrecognized environment.\n");
+   else (Level.getEnvironment() == Env::WATER) {
+      if (random == 0)
+         mesh = CMeshLoader::load3dsMesh("Base/grape1.3ds");
+      else if (random == 1)
+         mesh = CMeshLoader::load3dsMesh("Base/grape2.3ds");
+      else
+         mesh = CMeshLoader::load3dsMesh("Base/grape3.3ds");
    }
 
 
@@ -74,6 +79,8 @@ void CElementEnemyProjectileGrape::setupSceneObject() {
    }
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
+
+   printf("YEEEEEEEEEEEEEEEEEEEEE!\n");
 }
 
 void CElementEnemyProjectileGrape::updateSceneObject(float time) {
@@ -82,11 +89,17 @@ void CElementEnemyProjectileGrape::updateSceneObject(float time) {
 
 void CElementEnemyProjectileGrape::updatePhysicsEngineObject(float time) {
    if (PlayerLeft) { //go left
-      PhysicsEngineObject->setVelocity(SVector2f(-5.f, 0.f));
+      if (Level.getEnv() != Env::WATER)
+         PhysicsEngineObject->setVelocity(SVector2(-5.f, 0.f));
+      else
+         PhysicsEngineObject->setVelocity(SVector2(-2.5f, 0.f));
    }
    
    else { //go right
-      PhysicsEngineObject->setVelocity(SVector2f(5.f, 0.f));
+      if (Level.getEnv() != Env::WATER)
+         PhysicsEngineObject->setVelocity(SVector2(5.f, 0.f));
+      else
+         PhysicsEngineObject->setVelocity(SVector2(2.5f, 0.f));
    }
 }
 

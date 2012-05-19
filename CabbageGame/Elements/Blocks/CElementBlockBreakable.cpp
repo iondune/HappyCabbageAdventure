@@ -36,7 +36,7 @@ void CElementBlockBreakable::explode() {
    removeFromPhysicsEngine();
    removeFromSceneManager();
    ParticleEngine = new CParticleEngine(SceneObject->getTranslation(), 200, 4, BURST_PARTICLE);
-   ParticleEngine->UsePhysics(&Level.getPhysicsEngine());
+   ParticleEngine->UsePhysics(&Level.getPhysicsEngine(), Level.getEnv());
 }
 
 void CElementBlockBreakable::setupPhysicsEngineObject() {

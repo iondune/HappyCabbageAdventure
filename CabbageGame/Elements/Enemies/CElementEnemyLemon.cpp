@@ -8,13 +8,11 @@ CElementEnemyLemon::CElementEnemyLemon(SRect2f nArea) :
 void CElementEnemyLemon::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(Area);
 
-   //Set actor attributes
    PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
    PhysicsEngineObject->getAttributes().WalkAccel = 10.f;
 
-   //Why is this set to true?????  Something with physics stuff... and it's not calling setJumping.  : P
+   CElementEnemy::setupPhysicsEngineObject();
    //Note, being dropped from the sky in the case it's jumping.  Checked Bounce, that wasn't the problem.
 }
 
@@ -47,6 +45,7 @@ void CElementEnemyLemon::setupSceneObject() {
 
    Scale = Area.Size;
    SceneObject->setScale(SVector3f(Scale.X, Scale.X, Scale.Y));
+   SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
 

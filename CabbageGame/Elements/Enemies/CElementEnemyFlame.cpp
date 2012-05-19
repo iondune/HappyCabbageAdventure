@@ -9,16 +9,17 @@ CElementEnemyFlame::CElementEnemyFlame(SRect2f nArea) :
 void CElementEnemyFlame::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(Area);
 
-   //Makes them immune to gravity
    PhysicsEngineObject->setControlFall(false);
    PhysicsEngineObject->setGravity(0.0f);
+
+   CElementEnemy::setupPhysicsEngineObject();
 }
 
 void CElementEnemyFlame::setupSceneObject() {
    particleEngine = new CParticleEngine(SVector3f(Area.Position.X, Area.Position.Y, 0), 100, -1, FLAME_PARTICLE);
    SceneObject = (CMeshSceneObject*) particleEngine->getSceneObject();
+   SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
 }
 
 void CElementEnemyFlame::OnCollision(const SCollisionEvent& Event) {

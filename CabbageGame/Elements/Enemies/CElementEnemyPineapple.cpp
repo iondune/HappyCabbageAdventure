@@ -9,14 +9,12 @@ CElementEnemyPineapple::CElementEnemyPineapple(SRect2f nArea) :
 }
 
 void CElementEnemyPineapple::setupPhysicsEngineObject() {
-   /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(Area);
 
-   //Set actor attributes
    PhysicsEngineObject->getAttributes().MaxWalk = 1.2f;
-
    PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
+
+   CElementEnemy::setupPhysicsEngineObject();
 }
 
 void CElementEnemyPineapple::setupSceneObject() {
@@ -50,6 +48,7 @@ void CElementEnemyPineapple::setupSceneObject() {
 
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
+   SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }

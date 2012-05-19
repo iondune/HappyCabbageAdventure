@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 11
+Microsoft Visual Studio Solution File, Format Version 11.0
+# Visual Studio 10
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageCore", "CabbageCore\CabbageCore.vcxproj", "{C0397D79-C283-45CD-B54E-CA0234CAA8EF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageScene", "CabbageScene\CabbageScene.vcxproj", "{8389DE31-B188-40BA-983F-D0BB58DDB9FB}"
@@ -111,13 +111,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageGame", "CabbageGame\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StateGame", "StateGame\StateGame.vcxproj", "{19F4292D-FC1B-4F96-8033-5C723595C473}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageLib", "CabbageLib\CabbageLib.vcxproj", "{18957AE2-887B-6104-E1EB-DF84F9307168}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8389DE31-B188-40BA-983F-D0BB58DDB9FB} = {8389DE31-B188-40BA-983F-D0BB58DDB9FB}
 		{B139B8AE-77AA-4A47-9E7F-B95B4BCDFD1C} = {B139B8AE-77AA-4A47-9E7F-B95B4BCDFD1C}
-		{C8987DB4-983C-4801-BBBE-072704FAF615} = {C8987DB4-983C-4801-BBBE-072704FAF615}
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -135,10 +129,6 @@ Global
 		{1248412D-5901-40EF-A1DD-09C879B8E66B}.Debug|Win32.ActiveCfg = Debug|Win32
 		{1248412D-5901-40EF-A1DD-09C879B8E66B}.Release|Win32.ActiveCfg = Release|Win32
 		{1248412D-5901-40EF-A1DD-09C879B8E66B}.Release|Win32.Build.0 = Release|Win32
-		{18957AE2-887B-6104-E1EB-DF84F9307168}.Debug|Win32.ActiveCfg = Debug|Win32
-		{18957AE2-887B-6104-E1EB-DF84F9307168}.Debug|Win32.Build.0 = Debug|Win32
-		{18957AE2-887B-6104-E1EB-DF84F9307168}.Release|Win32.ActiveCfg = Release|Win32
-		{18957AE2-887B-6104-E1EB-DF84F9307168}.Release|Win32.Build.0 = Release|Win32
 		{19F4292D-FC1B-4F96-8033-5C723595C473}.Debug|Win32.ActiveCfg = Debug|Win32
 		{19F4292D-FC1B-4F96-8033-5C723595C473}.Debug|Win32.Build.0 = Debug|Win32
 		{19F4292D-FC1B-4F96-8033-5C723595C473}.Release|Win32.ActiveCfg = Release|Win32

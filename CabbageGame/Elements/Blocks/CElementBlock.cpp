@@ -89,7 +89,7 @@ void CElementBlock::setupSceneObject() {
    }
 
    tempBlock->setMesh(mesh);
-   if (Level.getEnvironment() == 0) {
+   if (Level.getEnvironment() == Env::FOREST) {
       switch(Texture) {
       case 0:
          tempBlock->setTexture("Base/grass.bmp");
@@ -119,7 +119,7 @@ void CElementBlock::setupSceneObject() {
          break;
       }
    }
-   else if (Level.getEnvironment() == 1) {
+   else if (Level.getEnvironment() == Env::DESERT) {
       switch(Texture) {
       case -5:
          mesh = CMeshLoader::load3dsMesh("Base/levelBlock.3ds");
@@ -145,6 +145,38 @@ void CElementBlock::setupSceneObject() {
          break;
       }
    }
+
+   else if (Level.getEnvironment() == Env::WATER) {
+         switch(Texture) {
+         case 0:
+            tempBlock->setTexture("Base/grass.bmp");
+            break;
+         case 1:
+            tempBlock->setTexture("Base/dirt.bmp");
+            break;
+         case 2:
+            tempBlock->setTexture("Base/rock.bmp");
+            break;
+         case -5:
+            mesh = CMeshLoader::load3dsMesh("Base/levelBlock.3ds");
+            if (mesh) {
+               mesh->resizeMesh(SVector3(1));
+               mesh->centerMeshByExtents(SVector3(0));
+               mesh->calculateNormalsPerVertex();
+            }
+            else {
+               fprintf(stderr, "Failed to load the mesh\n");
+            }
+            tempBlock->setMesh(mesh);
+            tempBlock->setTexture("Base/GrassyGrass.bmp", 2);
+            tempBlock->setTexture("Base/DirtyDirt.bmp", 3);
+            break;
+         default:
+            fprintf(stderr, "Unknown texture type %d\n", Texture);
+            break;
+         }
+      }
+
    tempBlock->setShader(ERP_DEFAULT, CShaderLoader::loadShader("ToonTexture"));
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, CShaderLoader::loadShader("Deferred/Textured"));
    if(Texture != -5) {

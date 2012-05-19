@@ -295,20 +295,6 @@
 </CBlock>
 <CBlock X ="-10" Y ="1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CEnemy X ="-10" Y ="0" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="20" Y ="7" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="20" Y ="10" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="16" Y ="5" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="19" Y ="5" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="18" Y ="5" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="17" Y ="5" height ="1" width ="1" type ="4">
-</CEnemy>
 <CBlock X ="36" Y ="-2" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
 <CBlock X ="41" Y ="-2" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
@@ -341,30 +327,6 @@
 </CBlock>
 <CBlock X ="111" Y ="-2" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CEnemy X ="41" Y ="0" height ="1" width ="1" type ="1">
-</CEnemy>
-<CEnemy X ="51" Y ="0" height ="1" width ="1" type ="1">
-</CEnemy>
-<CEnemy X ="43" Y ="5" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="49" Y ="5" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="38" Y ="5" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="55" Y ="3" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="58" Y ="5" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="60" Y ="3" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="63" Y ="4" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="46" Y ="0" height ="1" width ="1" type ="1">
-</CEnemy>
-<CEnemy X ="57" Y ="0" height ="1" width ="1" type ="1">
-</CEnemy>
-<CEnemy X ="62" Y ="0" height ="1" width ="1" type ="1">
-</CEnemy>
 <CBlock X ="72" Y ="0" height ="1" width ="1" depth ="1" texture ="1" isMoving ="0" range ="0" speed ="0">
 </CBlock>
 <CBlock X ="73" Y ="1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
@@ -375,18 +337,6 @@
 </CBlock>
 <CBlock X ="76" Y ="4" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CEnemy X ="71" Y ="0" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="72" Y ="1" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="73" Y ="2" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="74" Y ="3" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="75" Y ="4" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="76" Y ="5" height ="1" width ="1" type ="3">
-</CEnemy>
 <CBlock X ="77" Y ="5" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
 <CBlock X ="77" Y ="4" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
@@ -485,12 +435,6 @@
 </CBlock>
 <CBlock X ="87" Y ="5" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CEnemy X ="87" Y ="6" height ="1" width ="1" type ="3">
-</CEnemy>
-<CBlock X ="84" Y ="8" height ="1" width ="1" depth ="1" texture ="1" isMoving ="0" range ="0" speed ="0">
-</CBlock>
-<CEnemy X ="84" Y ="9" height ="1" width ="1" type ="3">
-</CEnemy>
 <CBlock X ="88" Y ="5" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
 <CBlock X ="88" Y ="4" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
@@ -533,12 +477,6 @@
 </CBlock>
 <CBlock X ="90" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CEnemy X ="99" Y ="0" height ="1" width ="1" type ="1">
-</CEnemy>
-<CEnemy X ="105" Y ="0" height ="1" width ="1" type ="1">
-</CEnemy>
-<CEnemy X ="109" Y ="0" height ="1" width ="1" type ="1">
-</CEnemy>
 <CBlock X ="116" Y ="-2" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
 <CBlock X ="121" Y ="-2" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
@@ -607,52 +545,7 @@
 </CBlock>
 <CFlag X ="152" Y ="6" height ="1" width ="1" secret ="0" isMoving ="0">
 </CFlag>
-<CEnemy X ="109" Y ="5" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="112" Y ="5" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="114" Y ="5" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="116" Y ="5" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="118" Y ="5" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="120" Y ="5" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="122" Y ="5" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="125" Y ="5" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="128" Y ="5" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="131" Y ="5" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="119" Y ="4" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="117" Y ="4" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="115" Y ="4" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="113" Y ="4" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="111" Y ="4" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="121" Y ="4" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="124" Y ="4" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="126" Y ="4" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="129" Y ="4" height ="1" width ="1" type ="2">
-</CEnemy>
-<CEnemy X ="112" Y ="0" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="118" Y ="0" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="122" Y ="0" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="127" Y ="0" height ="1" width ="1" type ="3">
-</CEnemy>
+
 <CBlock X ="127" Y ="1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
 <CBlock X ="122" Y ="1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
@@ -663,28 +556,7 @@
 </CBlock>
 <CCabbage X ="-21" Y ="0" height ="1" width ="1" isMoving ="0">
 </CCabbage>
-<CEnemy X ="86" Y ="3" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="85" Y ="3" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="84" Y ="3" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="83" Y ="3" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="82" Y ="3" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="81" Y ="3" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="80" Y ="3" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="79" Y ="3" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="78" Y ="3" height ="1" width ="1" type ="4">
-</CEnemy>
-<CEnemy X ="87" Y ="7" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="83" Y ="8" height ="1" width ="1" type ="2">
-</CEnemy>
+
 <CBlock X ="81" Y ="5" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
 <CBlock X ="85" Y ="5" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">

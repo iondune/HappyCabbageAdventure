@@ -9,12 +9,11 @@ CElementEnemyPear::CElementEnemyPear(SRect2f nArea) :
 void CElementEnemyPear::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(Area);
 
-   //Set actor attributes
    PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
-
    PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
+
+   CElementEnemy::setupPhysicsEngineObject();
 }
 
 void CElementEnemyPear::setupSceneObject() {

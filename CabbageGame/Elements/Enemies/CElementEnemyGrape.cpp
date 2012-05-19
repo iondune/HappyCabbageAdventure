@@ -3,16 +3,15 @@
 
 CElementEnemyGrape::CElementEnemyGrape(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::GRAPE), shootTime(0.f) {
-
 }
 
 void CElementEnemyGrape::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(Area);
 
-   //Set actor attributes
    PhysicsEngineObject->getAttributes().MaxWalk = 0.0f;
+
+   CElementEnemy::setupPhysicsEngineObject();
 }
 
 void CElementEnemyGrape::setupSceneObject() {
@@ -27,7 +26,6 @@ void CElementEnemyGrape::setupSceneObject() {
       mesh = CMeshLoader::load3dsMesh("Base/grape_bunch.3ds");
    }
 
-   //LevelEditor has no environment
    else
       mesh = CMeshLoader::load3dsMesh("Base/grape_bunch.3ds");
 
@@ -43,9 +41,8 @@ void CElementEnemyGrape::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   SceneObject->setScale(SVector3f(1, 1, 1));
-   SceneObject->setRotation(SVector3f(-90, 0, 90));
 
+   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y + .2f, 0));
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
@@ -56,7 +53,7 @@ void CElementEnemyGrape::updatePhysicsEngineObject(float time) {
    shootTime += time;
 
    //TODO: Check the player is alive
-   if (shootTime >= 1.5f) {
+   if ((Level.getEnv() != Env:: WATER && shootTime >= 1.5f) || (Level.getEnv() == Env::WATER && shootTime >= 3.0f)) {
       shootTime = 0.f;
 
       //fire projectile
@@ -66,9 +63,9 @@ void CElementEnemyGrape::updatePhysicsEngineObject(float time) {
 
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyGrape::updateSceneObject(float time) {
-   SVector2f playerPosition = Level.getPlayer().getArea().Position;
-
    SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y + .2f, 0));
+
+   SVector2 playerPosition = Level.getPlayer().getArea().Position;
 
    SceneObject->setRotation(SVector3f(-90, 0, 90));
 
