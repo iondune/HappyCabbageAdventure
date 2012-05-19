@@ -88,7 +88,7 @@ void CGameplayManager::update(float time) {
 }
 
 void CGameplayManager::OnEnd() {
-   for(int i = 0; i < Level.getElements().size(); i++) {
+   for(unsigned int i = 0; i < Level.getElements().size(); i++) {
       Level.getElements()[i]->removeFromGame();
    }
    CApplication::get().getSceneManager().setDeferred(false);

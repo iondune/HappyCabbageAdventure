@@ -69,9 +69,10 @@ void CElementPlayer::doGodmode() {
    }
 }
 
+// GLOBAL VARIABLES WHAT THE FFFFUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCCCCCCCCCCCCCCKKKKKKKKKKKKKKKKKK
 bool hWasDown = false;
 bool jWasDown = false;
-float oldGrav;
+CollisionReal oldGrav;
 
 void CElementPlayer::updatePlayerAction() {
    if(Victory)

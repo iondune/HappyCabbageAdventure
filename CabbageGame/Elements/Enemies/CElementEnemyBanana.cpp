@@ -45,7 +45,7 @@ void CElementEnemyBanana::setupSceneObject() {
    SceneObject->setScale(SVector3f(Scale.X, Scale.X, Scale.Y));
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X,Area.getCenter().Y, 0));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }

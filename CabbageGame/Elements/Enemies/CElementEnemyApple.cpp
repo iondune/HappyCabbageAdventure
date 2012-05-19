@@ -82,7 +82,7 @@ void CElementEnemyApple::updatePhysicsEngineObject(float time) {
          PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
       else
          PhysicsEngineObject->getAttributes().MaxWalk = 1.1f;
-      PhysicsEngineObject->setVelocity(SVector2(2.2f, 0.0f));
+      PhysicsEngineObject->setVelocity(SVector2f(2.2f, 0.0f));
    }
 }
 

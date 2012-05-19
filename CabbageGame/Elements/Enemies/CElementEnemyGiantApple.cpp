@@ -40,7 +40,7 @@ void CElementEnemyGiantApple::setupSceneObject() {
 
    SceneObject->setMesh(mesh);
    SceneObject->setRotation(SVector3f(-90, 0, 0));
-   SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X,Area.getCenter().Y, 0));
 
    Scale = Area.Size;
    SceneObject->setScale(SVector3f(Scale.X, Scale.X, Scale.Y));

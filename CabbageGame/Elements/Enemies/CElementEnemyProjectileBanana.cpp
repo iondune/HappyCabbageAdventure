@@ -74,16 +74,16 @@ void CElementEnemyProjectileBanana::updatePhysicsEngineObject(float time) {
 
    if (Direction == Projectile::LEFT) { //go left
       if (Level.getEnv() != Env::WATER)
-         PhysicsEngineObject->setVelocity(SVector2(-5.0f*cos(CosValue), 2.5f*sin(SinValue)));
+         PhysicsEngineObject->setVelocity(SVector2f(-5.0f*cos(CosValue), 2.5f*sin(SinValue)));
       else
-         PhysicsEngineObject->setVelocity(SVector2(-2.5f*cos(CosValue), 1.25f*sin(SinValue)));
+         PhysicsEngineObject->setVelocity(SVector2f(-2.5f*cos(CosValue), 1.25f*sin(SinValue)));
    }
    
    else { //go right
       if (Level.getEnv() != Env::WATER)
-         PhysicsEngineObject->setVelocity(SVector2(5.0f*cos(CosValue), 2.5f*sin(SinValue)));
+         PhysicsEngineObject->setVelocity(SVector2f(5.0f*cos(CosValue), 2.5f*sin(SinValue)));
       else
-         PhysicsEngineObject->setVelocity(SVector2(2.5f*cos(CosValue), 1.25f*sin(SinValue)));
+         PhysicsEngineObject->setVelocity(SVector2f(2.5f*cos(CosValue), 1.25f*sin(SinValue)));
    }
 
    SinValue += time;

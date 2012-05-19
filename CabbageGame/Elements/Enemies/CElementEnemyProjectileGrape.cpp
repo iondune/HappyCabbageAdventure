@@ -90,16 +90,16 @@ void CElementEnemyProjectileGrape::updateSceneObject(float time) {
 void CElementEnemyProjectileGrape::updatePhysicsEngineObject(float time) {
    if (PlayerLeft) { //go left
       if (Level.getEnv() != Env::WATER)
-         PhysicsEngineObject->setVelocity(SVector2(-5.f, 0.f));
+         PhysicsEngineObject->setVelocity(SVector2f(-5.f, 0.f));
       else
-         PhysicsEngineObject->setVelocity(SVector2(-2.5f, 0.f));
+         PhysicsEngineObject->setVelocity(SVector2f(-2.5f, 0.f));
    }
    
    else { //go right
       if (Level.getEnv() != Env::WATER)
-         PhysicsEngineObject->setVelocity(SVector2(5.f, 0.f));
+         PhysicsEngineObject->setVelocity(SVector2f(5.f, 0.f));
       else
-         PhysicsEngineObject->setVelocity(SVector2(2.5f, 0.f));
+         PhysicsEngineObject->setVelocity(SVector2f(2.5f, 0.f));
    }
 }
 

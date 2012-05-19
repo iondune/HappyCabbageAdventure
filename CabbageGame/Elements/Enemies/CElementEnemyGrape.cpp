@@ -42,7 +42,7 @@ void CElementEnemyGrape::setupSceneObject() {
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
 
-   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y + .2f, 0));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y + .2f, 0));
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
@@ -65,7 +65,7 @@ void CElementEnemyGrape::updatePhysicsEngineObject(float time) {
 void CElementEnemyGrape::updateSceneObject(float time) {
    SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y + .2f, 0));
 
-   SVector2 playerPosition = Level.getPlayer().getArea().Position;
+   SVector2f playerPosition = Level.getPlayer().getArea().Position;
 
    SceneObject->setRotation(SVector3f(-90, 0, 90));
 

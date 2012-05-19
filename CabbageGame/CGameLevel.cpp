@@ -39,6 +39,13 @@ void CGameLevel::incrementXmlCount() {
 std::vector<CGameplayElement*> & CGameLevel::getGameplayElements() {
    return Elements;
 }
+
+
+std::vector<CGameplayElement*> & CGameLevel::getElements() {
+   return Elements;
+}
+
+
 std::vector<CElementBlock*> & CGameLevel::getBlocks() {
    return Blocks;
 }

@@ -98,7 +98,7 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
          TemporaryTimeVariable = 0;
          TemporaryArea = Player.getArea();
          Player.setShaking(1.2f, 0.3f);
-         tempGrav = ((CCollisionActor *)Player.getPhysicsEngineObject())->getGravity();
+         tempGrav = (int) ((CCollisionActor *)Player.getPhysicsEngineObject())->getGravity();
          return;
       }
    }

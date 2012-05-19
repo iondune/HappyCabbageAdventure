@@ -160,8 +160,8 @@ void CElementBlock::setupSceneObject() {
          case -5:
             mesh = CMeshLoader::load3dsMesh("Base/levelBlock.3ds");
             if (mesh) {
-               mesh->resizeMesh(SVector3(1));
-               mesh->centerMeshByExtents(SVector3(0));
+               mesh->resizeMesh(SVector3f(1));
+               mesh->centerMeshByExtents(SVector3f(0));
                mesh->calculateNormalsPerVertex();
             }
             else {

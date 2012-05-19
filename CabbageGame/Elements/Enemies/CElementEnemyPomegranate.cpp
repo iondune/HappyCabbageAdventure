@@ -46,8 +46,8 @@ void CElementEnemyPomegranate::setupSceneObject() {
    SceneObject->setRotation(SVector3f(-90, 0, 0));
 
    Scale = Area.Size;
-   SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
-   SceneObject->setScale(SVector3(Scale.X, Scale.X, Scale.Y));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X,Area.getCenter().Y, 0));
+   SceneObject->setScale(SVector3f(Scale.X, Scale.X, Scale.Y));
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
 
