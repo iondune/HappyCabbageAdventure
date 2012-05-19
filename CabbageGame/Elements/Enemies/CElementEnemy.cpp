@@ -233,6 +233,7 @@ void CElementEnemy::reactToAbility(Abilities::EAbilityType Ability) {
       case Abilities::HEADBUTT:
          if(TimeToDeath == -1.0f) {
             printf("Headbutt w/ end impulse: %0.2f %0.2f\n", endImpulse.X, endImpulse.Y); 
+            Level.getPlayer().setShaking(0.25f, 0.7f);
             ((CCollisionActor*)PhysicsEngineObject)->addImpulse(endImpulse);
             ((CCollisionActor*)PhysicsEngineObject)->getAttributes().AirStandingFriction = 0.99f;
             ((CCollisionActor*)PhysicsEngineObject)->setControlFall(false);

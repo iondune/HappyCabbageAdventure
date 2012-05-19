@@ -82,6 +82,8 @@ void CElementBlockBreakable::printInformation() {
 
 void CElementBlockBreakable::reactToAbility(Abilities::EAbilityType Ability) {
    switch(Ability) {
+      case Abilities::HEADBUTT:
+         Level.getPlayer().setShaking(0.45f, 0.7f);
       case Abilities::LASER:
          if(!Dead)
             explode();
