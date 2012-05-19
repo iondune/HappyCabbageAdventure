@@ -48,6 +48,7 @@ void CElementEnemyPineapple::setupSceneObject() {
 
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
+   SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }

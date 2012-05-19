@@ -48,7 +48,10 @@ void CPlayerAbilityDash::checkKey(bool keyDown) {
    if(!keyDown) {
       ParticleEngine->deconstruct();
       delete ParticleEngine;
-      ((CCollisionActor*)Player.getPhysicsEngineObject())->getAttributes().MaxWalk = 3.5f;
+      if(Player.Level.getEnv() != Env::WATER)
+         ((CCollisionActor*)Player.getPhysicsEngineObject())->getAttributes().MaxWalk = 3.5f;
+      else
+         ((CCollisionActor*)Player.getPhysicsEngineObject())->getAttributes().MaxWalk = 1.75f;
       Dead = true;
       if(Godmode) {
 /* For future physics overhaul

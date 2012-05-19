@@ -33,7 +33,7 @@ void CElementEnemyProjectileCherry::setupSceneObject() {
    }
 
    else {
-      fprintf(stderr, "CherryProjectile: Unrecognized environment.\n");
+      mesh = CMeshLoader::load3dsMesh("Base/single_cherry.3ds");
    }
 
 

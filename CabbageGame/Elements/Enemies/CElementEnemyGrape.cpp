@@ -3,7 +3,6 @@
 
 CElementEnemyGrape::CElementEnemyGrape(SRect2 nArea) :
    CElementEnemy(nArea, Enemies::GRAPE), shootTime(0.f) {
-
 }
 
 void CElementEnemyGrape::setupPhysicsEngineObject() {
@@ -27,7 +26,6 @@ void CElementEnemyGrape::setupSceneObject() {
       mesh = CMeshLoader::load3dsMesh("Base/grape_bunch.3ds");
    }
 
-   //LevelEditor has no environment
    else
       mesh = CMeshLoader::load3dsMesh("Base/grape_bunch.3ds");
 
@@ -43,9 +41,8 @@ void CElementEnemyGrape::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   SceneObject->setScale(SVector3(1, 1, 1));
-   SceneObject->setRotation(SVector3(-90, 0, 90));
 
+   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y + .2f, 0));
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
@@ -56,7 +53,7 @@ void CElementEnemyGrape::updatePhysicsEngineObject(float time) {
    shootTime += time;
 
    //TODO: Check the player is alive
-   if (shootTime >= 1.5f) {
+   if ((Level.getEnv() != Env:: WATER && shootTime >= 1.5f) || (Level.getEnv() == Env::WATER && shootTime >= 3.0f)) {
       shootTime = 0.f;
 
       //fire projectile
@@ -66,9 +63,9 @@ void CElementEnemyGrape::updatePhysicsEngineObject(float time) {
 
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyGrape::updateSceneObject(float time) {
-   SVector2 playerPosition = Level.getPlayer().getArea().Position;
-
    SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y + .2f, 0));
+
+   SVector2 playerPosition = Level.getPlayer().getArea().Position;
 
    SceneObject->setRotation(SVector3(-90, 0, 90));
 
