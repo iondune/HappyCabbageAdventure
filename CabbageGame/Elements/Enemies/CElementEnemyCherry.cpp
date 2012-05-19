@@ -54,6 +54,9 @@ void CElementEnemyCherry::setupSceneObject() {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyCherry::updatePhysicsEngineObject(float time) {
+   CElementEnemy::updatePhysicsEngineObject(time);
+   if(TimeToDeath > 0.0f)
+      return;
    if (BombTime >= 3.0f) {
          BombTime = 0.0f;
 
@@ -75,6 +78,10 @@ void CElementEnemyCherry::updateSceneObject(float time) {
       SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
       SceneObject->setRotation(SVector3f(-90, 0, 0));
       SceneObject->setScale(SVector3f(1.0f, 1.0f, 0.3f));
+      return;
+   }
+   if(TimeToDeath > 0.0f) {
+      CElementEnemy::updateSceneObject(time);
       return;
    }
 

@@ -43,6 +43,9 @@ void CElementEnemyFlame::OnCollision(const SCollisionEvent& Event) {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyFlame::updatePhysicsEngineObject(float time) {
+   CElementEnemy::updatePhysicsEngineObject(time);
+   if(TimeToDeath > 0.0f)
+      return;
 }
 
 //This is where the renderable would be updated for the more complex enemies

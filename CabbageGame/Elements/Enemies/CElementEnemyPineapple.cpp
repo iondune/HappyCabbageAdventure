@@ -80,6 +80,9 @@ void CElementEnemyPineapple::OnCollision(const SCollisionEvent& Event) {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyPineapple::updatePhysicsEngineObject(float time) {
+   CElementEnemy::updatePhysicsEngineObject(time);
+   if(TimeToDeath > 0.0f)
+      return;
    float difference = Area.Position.X - OldPositionX;
 
    if (difference < .00001f && difference > -.00001f && !HitPlayer) {
@@ -100,6 +103,10 @@ void CElementEnemyPineapple::updateSceneObject(float time) {
       SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
       SceneObject->setRotation(SVector3f(-90, 0, 0));
       SceneObject->setScale(SVector3f(1.0f, 1.0f, 0.3f));
+      return;
+   }
+   if(TimeToDeath > 0.0f) {
+      CElementEnemy::updateSceneObject(time);
       return;
    }
 

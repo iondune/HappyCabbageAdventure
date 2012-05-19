@@ -61,6 +61,9 @@ void CElementEnemyProjectileCherry::updateSceneObject(float time) {
 }
 
 void CElementEnemyProjectileCherry::updatePhysicsEngineObject(float time) {
+   CElementEnemy::updatePhysicsEngineObject(time);
+   if(TimeToDeath > 0.0f)
+      return;
    if (SetImpulse) {
       float xRandom = 10.0f * frand();
       float yRandom = 10.0f * frand();

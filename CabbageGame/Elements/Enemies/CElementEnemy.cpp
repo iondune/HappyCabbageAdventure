@@ -26,7 +26,7 @@
 
 //Generic enemy, for usage in the LWIB, I guess.
 CElementEnemy::CElementEnemy(SRect2f nArea, Enemies::EEnemyType type)
-: CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), PhysicsEngineObject(NULL), SceneObject(NULL), Type(type), MaxHealth(1), CurHealth(MaxHealth) {
+: CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), PhysicsEngineObject(NULL), SceneObject(NULL), Type(type), MaxHealth(1), CurHealth(MaxHealth), TimeToDeath(-1.0f), OldRot(SVector3f(0.0f)) {
 }
 
 //Enemy created by factory
@@ -169,6 +169,8 @@ void CElementEnemy::dropItem() {
 
 void CElementEnemy::OnCollision(const SCollisionEvent& Event) {
    if(!Dead && Event.Other == Level.getPlayer().getPhysicsEngineObject()) {
+      if(TimeToDeath > 0.0f)
+         return;
       CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
 
       //Check if jumped on top of enemy.
@@ -190,14 +192,23 @@ void CElementEnemy::OnCollision(const SCollisionEvent& Event) {
 }
 
 void CElementEnemy::updatePhysicsEngineObject(float time) {
-   fprintf(stderr, "Error: updatePhysicsEngineObject on generic enemy type %d (perhaps the CElementEnemy::updatePhysicsEngineObject function wasn't overridden?).\n", Type);
-   exit(1);
+   if(TimeToDeath > 0.0f) {
+      TimeToDeath -= time;
+      if(TimeToDeath <= 0.0f) {
+         dieWithSeeds();
+      }
+   }
 }
 
 void CElementEnemy::updateSceneObject(float time) {
    if(ParticleEngine) {
       ParticleEngine->step(time);
       ParticleEngine->setCenterPos(SVector3f(Area.getCenter(), 0.0f));
+   }
+   else if(TimeToDeath > 0.0f) {
+      SceneObject->setRotation(OldRot + SVector3f(0.0f, 720.0f*time, 0.0f));
+      OldRot = SceneObject->getRotation();
+      //printf("Rot is %0.2f %0.2f %0.2f\n", OldRot.X, OldRot.Y, OldRot.Z);
    }
    return;
 }
@@ -212,10 +223,21 @@ void CElementEnemy::printInformation() {
 
 void CElementEnemy::reactToAbility(Abilities::EAbilityType Ability) {
    SVector2f PlayerVelocity = ((CCollisionActor*)Level.getPlayer().getPhysicsEngineObject())->getVelocity();
+   SVector2f endImpulse = (SVector2f(PlayerVelocity.X > 0.0f ? 6.0f : -6.0f, 2.0f) * 3.0f);
    switch(Ability) {
       case Abilities::SHIELD:
          ((CCollisionActor*)PhysicsEngineObject)->addImpulse((PlayerVelocity + SVector2f(0.0f, 2.5f)) * 3.0f);
          //dieWithSeeds();
+         break;
+      case Abilities::HEADBUTT:
+         if(TimeToDeath == -1.0f) {
+            printf("Headbutt w/ end impulse: %0.2f %0.2f\n", endImpulse.X, endImpulse.Y); 
+            ((CCollisionActor*)PhysicsEngineObject)->addImpulse(endImpulse);
+            ((CCollisionActor*)PhysicsEngineObject)->getAttributes().AirStandingFriction = 0.99f;
+            ((CCollisionActor*)PhysicsEngineObject)->setControlFall(false);
+            OldRot = SceneObject->getRotation();
+            TimeToDeath = 0.5f;
+         }
          break;
       case Abilities::LASER:
          if(!Dead)

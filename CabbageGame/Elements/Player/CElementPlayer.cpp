@@ -178,6 +178,7 @@ void CElementPlayer::updatePlayerAction() {
 #include "CPlayerAbilityShield.h"
 #include "CPlayerAbilityBlink.h"
 #include "CPlayerAbilityLaser.h"
+#include "CPlayerAbilityHeadbutt.h"
 
 bool CElementPlayer::used(Abilities::EAbilityType a) {
    return (usedAbility.find(a) != usedAbility.end());
@@ -207,6 +208,17 @@ void CElementPlayer::checkAbilityKeypress() {
       }
       else {
          getAbility(Abilities::LASER)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_l]);
+      }
+   }
+   /* Headbutt */
+   if(Stats.canUseAbility(Abilities::HEADBUTT)) {
+      if(!used(Abilities::HEADBUTT)) {
+         if(CApplication::get().getEventManager().IsKeyDown[SDLK_p]) {
+            Abilities.push_back(new CPlayerAbilityHeadbutt(*this));
+         }
+      }
+      else {
+         getAbility(Abilities::HEADBUTT)->checkKey(CApplication::get().getEventManager().IsKeyDown[SDLK_p]);
       }
    }
    /* Shield */

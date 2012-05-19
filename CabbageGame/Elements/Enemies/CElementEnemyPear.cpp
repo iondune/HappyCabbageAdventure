@@ -51,30 +51,16 @@ void CElementEnemyPear::setupSceneObject() {
 }
 
 void CElementEnemyPear::OnCollision(const SCollisionEvent& Event) {
-   if(!Dead && Event.Other == Level.getPlayer().getPhysicsEngineObject()) {
-      CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
+   if(!Dead && Event.Other == Level.getPlayer().getPhysicsEngineObject())
       HitPlayer = true;
-
-      //Check if jumped on top of enemy.
-      if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {
-         takeDamage(1);
-      }
-
-      //Did the player run into them?
-      else {
-         if(Level.getPlayer().decrementHealth()) {
-            if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
-               PlayerActor->addImpulse(SVector2f(7.f, 2.8f));
-            else
-               PlayerActor->addImpulse(SVector2f(-7.f, 2.8f));
-            Level.getPlayer().setShaking(1.0f, 3.0f);
-         }
-      }
-   }
+   CElementEnemy::OnCollision(Event);
 }
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyPear::updatePhysicsEngineObject(float time) {
+   CElementEnemy::updatePhysicsEngineObject(time);
+   if(TimeToDeath > 0.0f)
+      return;
    float difference = Area.Position.X - OldPositionX;
 
    if (difference < .001f && difference > -.001f && !HitPlayer) {
@@ -95,6 +81,10 @@ void CElementEnemyPear::updateSceneObject(float time) {
       SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
       SceneObject->setRotation(SVector3f(-90, 0, 0));
       SceneObject->setScale(SVector3f(1.0f, 1.0f, 0.3f));
+      return;
+   }
+   if(TimeToDeath > 0.0f) {
+      CElementEnemy::updateSceneObject(time);
       return;
    }
 

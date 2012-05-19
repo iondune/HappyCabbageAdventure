@@ -33,6 +33,7 @@ void CElementEnemyProjectile::OnCollision(const SCollisionEvent& Event) {
 }
 
 void CElementEnemyProjectile::updatePhysicsEngineObject(float time) {
+   CElementEnemy::updatePhysicsEngineObject(time);
    return;
 }
 

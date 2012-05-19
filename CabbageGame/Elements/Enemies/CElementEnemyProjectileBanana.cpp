@@ -70,6 +70,9 @@ void CElementEnemyProjectileBanana::updateSceneObject(float time) {
 }
 
 void CElementEnemyProjectileBanana::updatePhysicsEngineObject(float time) {
+   CElementEnemy::updatePhysicsEngineObject(time);
+   if(TimeToDeath > 0.0f)
+      return;
    printf("SinValue: %f\n", SinValue);
 
    if (Direction == Projectile::LEFT) { //go left

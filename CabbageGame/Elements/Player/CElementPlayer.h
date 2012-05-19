@@ -17,6 +17,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
    friend class CPlayerAbilityBlink;
    friend class CPlayerAbilityLaser;
    friend class CPlayerAbilityDash;
+   friend class CPlayerAbilityHeadbutt;
    public:
       enum EDirection {
          Left = 0,

@@ -35,6 +35,9 @@ class CElementEnemy : public CGameplayElement {
       CCollisionActor * PhysicsEngineObject; //Override CGameplayElement's but with type CCollisionActor
       CMeshSceneObject * SceneObject; //Override CGameplayElement's but with type CMeshSceneObject
 
+      SRect2f OldArea;
+      SVector3f OldRot;
+      float TimeToDeath;
       Enemies::EEnemyType Type;
       void dieWithSeeds();
       void deathAnimation();

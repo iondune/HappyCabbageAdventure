@@ -58,6 +58,9 @@ void CElementEnemyKiwi::setupSceneObject() {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
+   CElementEnemy::updatePhysicsEngineObject(time);
+   if(TimeToDeath > 0.0f)
+      return;
    //TODO: Make some class singleton so we can get the player's location
    //TODO:  Clean up KIWI z-axis code
    if (!Level.getPlayer().isDead())
@@ -131,11 +134,15 @@ void CElementEnemyKiwi::updateSceneObject(float time) {
       //SceneObject->setScale(SVector3f(1,1,1)*(zTimer + 1.0f));
 
    if(ParticleEngine) {
-         SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
-         SceneObject->setRotation(SVector3f(-90, 0, -90));
-         SceneObject->setScale(SVector3f(Area.Size.X, Area.Size.X, 0.3f));
-         return;
-      }
+      SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
+      SceneObject->setRotation(SVector3f(-90, 0, -90));
+      SceneObject->setScale(SVector3f(Area.Size.X, Area.Size.X, 0.3f));
+      return;
+   }
+   if(TimeToDeath > 0.0f) {
+      CElementEnemy::updateSceneObject(time);
+      return;
+   }
 }
 
 void CElementEnemyKiwi::printInformation() {

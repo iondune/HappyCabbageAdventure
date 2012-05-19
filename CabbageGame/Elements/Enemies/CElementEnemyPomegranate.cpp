@@ -86,6 +86,9 @@ void CElementEnemyPomegranate::OnCollision(const SCollisionEvent& Event) {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyPomegranate::updatePhysicsEngineObject(float time) {
+   CElementEnemy::updatePhysicsEngineObject(time);
+   if(TimeToDeath > 0.0f)
+      return;
    float difference = Area.Position.X - OldPositionX;
 
    FlameTimer += time;
@@ -120,6 +123,10 @@ void CElementEnemyPomegranate::updateSceneObject(float time) {
       SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
       SceneObject->setRotation(SVector3f(-90, 0, 0));
       SceneObject->setScale(SVector3f(Scale.X, Scale.X, 0.3f));
+      return;
+   }
+   if(TimeToDeath > 0.0f) {
+      CElementEnemy::updateSceneObject(time);
       return;
    }
 

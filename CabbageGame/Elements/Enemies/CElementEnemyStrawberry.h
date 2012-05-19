@@ -28,7 +28,8 @@ class CElementEnemyStrawberry : public CElementEnemy, public ISquishable
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
-      virtual void OnCollision(CCollideable * Object);
+      //Chris, this isn't even overriding CElementEnemy's OnCollision function.
+      //virtual void OnCollision(CCollideable * Object);
 
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);

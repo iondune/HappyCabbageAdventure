@@ -60,6 +60,9 @@ void CElementEnemyBlade::OnCollision(const SCollisionEvent& Event) {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyBlade::updatePhysicsEngineObject(float time) {
+   CElementEnemy::updatePhysicsEngineObject(time);
+   if(TimeToDeath > 0.0f)
+      return;
    return; //Doesn't move in physics engine
 }
 

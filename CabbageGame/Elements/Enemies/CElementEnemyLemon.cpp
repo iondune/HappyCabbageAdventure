@@ -56,6 +56,9 @@ void CElementEnemyLemon::setupSceneObject() {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyLemon::updatePhysicsEngineObject(float time) {
+   CElementEnemy::updatePhysicsEngineObject(time);
+   if(TimeToDeath > 0.0f)
+      return;
    SVector2f PlayerPosition = Level.getPlayer().getArea().Position;
    SVector2f Difference = SVector2f (PlayerPosition.X - Area.Position.X, PlayerPosition.Y - Area.Position.Y);
 
@@ -88,6 +91,10 @@ void CElementEnemyLemon::updateSceneObject(float time) {
       SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
       SceneObject->setRotation(SVector3f(-90, 0, 0));
       SceneObject->setScale(SVector3f(Scale.X, Scale.X, 0.3f));
+      return;
+   }
+   if(TimeToDeath > 0.0f) {
+      CElementEnemy::updateSceneObject(time);
       return;
    }
 

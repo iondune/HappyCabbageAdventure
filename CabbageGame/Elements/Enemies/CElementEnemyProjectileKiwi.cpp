@@ -85,6 +85,7 @@ void CElementEnemyProjectileKiwi::OnCollision(CCollideable *Object) {
 }
 
 void CElementEnemyProjectileKiwi::updatePhysicsEngineObject(float time) {
+   CElementEnemy::updatePhysicsEngineObject(time);
    PhysicsEngineObject->setVelocity(SVector2f(0.f, -6.f));
 }
 
