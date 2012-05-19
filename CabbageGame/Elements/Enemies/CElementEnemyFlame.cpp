@@ -20,7 +20,7 @@ void CElementEnemyFlame::setupSceneObject() {
    particleEngine = new CParticleEngine(SVector3f(0.0f), 100, -1, FLAME_PARTICLE);
    //particleEngine = new CParticleEngine(SVector3(Area.Position.X, Area.Position.Y, 0), 100, -1, FLAME_PARTICLE);
    SceneObject = (CMeshSceneObject*) particleEngine->getSceneObject();
-   SceneObject->setTranslation(SVector3(Area.Position.X, Area.Position.Y, 0));
+   SceneObject->setTranslation(SVector3f(Area.Position.X, Area.Position.Y, 0));
 }
 
 void CElementEnemyFlame::OnCollision(const SCollisionEvent& Event) {

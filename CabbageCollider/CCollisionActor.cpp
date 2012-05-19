@@ -199,7 +199,7 @@ void CCollisionActor::setFallAcceleration(float fa) {
    FallAcceleration = fa;
 }
 
-void CCollisionActor::updateVectors(float const TickTime)
+void CCollisionActor::updateVectors(CollisionReal const TickTime)
 {
 	// Manage jumping action
 	if (Jumping || Standing) // Can't start jumping unless we are standing
