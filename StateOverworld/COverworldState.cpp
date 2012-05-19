@@ -17,7 +17,7 @@ void COverworldState::begin()
    transitionWorld = 0;
 
    camRotValue = stepValue = 0;
-   rot = SVector3(-90, 0, -90);
+   rot = SVector3f(-90, 0, -90);
    SPosition2 size = Application.getWindowSize();
    WindowWidth = size.X;
    WindowHeight = size.Y; 
@@ -65,8 +65,8 @@ void COverworldState::begin()
    changey = -0.25f;
    changez = -0.38f;
 
-   //eye = SVector3(1.47f, 0.33f, 0);
-   //look = SVector3(0.57f, -0.08f, 0.19f);
+   //eye = SVector3f(1.47f, 0.33f, 0);
+   //look = SVector3f(0.57f, -0.08f, 0.19f);
    eye = cameraPos[curCamera];
    look = levels[curNode].loc;
    Camera = new CPerspectiveCamera((float)WindowWidth/(float)WindowHeight, 0.01f, 100.f, 60.f);
@@ -78,19 +78,19 @@ void COverworldState::begin()
    CSceneManager & SceneManager = Application.getSceneManager();
 
    SceneManager.Lights.push_back(new CLight());
-   SceneManager.Lights.back()->Color = SVector3(LightBrightness);
-   SceneManager.Lights.back()->Position = SVector3(30.f, 2.f, 3.f);
+   SceneManager.Lights.back()->Color = SVector3f(LightBrightness);
+   SceneManager.Lights.back()->Position = SVector3f(30.f, 2.f, 3.f);
 
    SceneManager.Lights.push_back(new CLight());
-   SceneManager.Lights.back()->Color = SVector3(LightBrightness);
-   SceneManager.Lights.back()->Position = SVector3(-1.f, -2.f, 30.f);
+   SceneManager.Lights.back()->Color = SVector3f(LightBrightness);
+   SceneManager.Lights.back()->Position = SVector3f(-1.f, -2.f, 30.f);
 
    SceneManager.Lights.push_back(new CLight());
-   SceneManager.Lights.back()->Color = SVector3(LightBrightness);
-   SceneManager.Lights.back()->Position = SVector3(-30.f, 0.f, 0.f);
+   SceneManager.Lights.back()->Color = SVector3f(LightBrightness);
+   SceneManager.Lights.back()->Position = SVector3f(-30.f, 0.f, 0.f);
 
    SceneManager.Lights.push_back(new CLight());
-   SceneManager.Lights.back()->Color = SVector3(LightBrightness);
+   SceneManager.Lights.back()->Color = SVector3f(LightBrightness);
    PlayerLight = SceneManager.Lights.back();
 
 
@@ -111,16 +111,16 @@ void COverworldState::PrepSkySphere() {
    printf("Loading sky sphere mesh\n");
    CMesh *splitSphereMesh = CMeshLoader::load3dsMesh("Base/SphereSplit.3ds");
    if(splitSphereMesh) {
-      splitSphereMesh->resizeMesh(SVector3(10.0f));
-      splitSphereMesh->centerMeshByExtents(SVector3(0));
+      splitSphereMesh->resizeMesh(SVector3f(10.0f));
+      splitSphereMesh->centerMeshByExtents(SVector3f(0));
       splitSphereMesh->linearizeIndices();
       splitSphereMesh->calculateNormalsPerVertex();
    }
    CMeshSceneObject *temp = new CMeshSceneObject();
 
    temp->setMesh(splitSphereMesh);
-   temp->setScale(SVector3(9.0f));
-   temp->setTranslation(SVector3(0.0f, -24.0f, 0.0f));
+   temp->setScale(SVector3f(9.0f));
+   temp->setTranslation(SVector3f(0.0f, -24.0f, 0.0f));
    /*
    temp->setTexture(CImageLoader::loadTexture("Colors/LightBlue.bmp", 1), 0);
    temp->setTexture(CImageLoader::loadTexture("Colors/DarkBlue.bmp", 1), 1);
@@ -150,14 +150,14 @@ void COverworldState::step(float delta) {
    else if(transitionTimer < 0.0f )
    { 
       transitionTimer =  0.0f;
-      playerRender->setRotation(SVector3(-90, 0, angleMaker(levels[curNode].loc, cameraPos[curCamera])));
+      playerRender->setRotation(SVector3f(-90, 0, angleMaker(levels[curNode].loc, cameraPos[curCamera])));
       transitionWorld = 0;
 
       /*
          if(curNode != NUM_LEVELS -1)
          {
-         arrowRender2->setTranslation(SVector3(0,0.2,0) + playerVector);
-         arrowRender2->setRotation(SVector3(90.0f, 0.0f, angleMaker(playerVector, levels[curNode + 1].loc)));
+         arrowRender2->setTranslation(SVector3f(0,0.2,0) + playerVector);
+         arrowRender2->setRotation(SVector3f(90.0f, 0.0f, angleMaker(playerVector, levels[curNode + 1].loc)));
          }
          */
    }
@@ -171,9 +171,9 @@ void COverworldState::step(float delta) {
 
       sineValue += 180.0f/TRANSITION_PERIOD*delta;
    }
-   //SkySphere->setScale(SVector3(0.0f + sineValue/20.0f));
+   //SkySphere->setScale(SVector3f(0.0f + sineValue/20.0f));
    //printf("Total: %0.0f\n", 0.0f + sineValue/20.0f);
-   SkySphere->setRotation(SVector3(90, 180 + sineValue, 0));
+   SkySphere->setRotation(SVector3f(90, 180 + sineValue, 0));
 
 
    stepValue += 0.5f*delta;
@@ -188,7 +188,7 @@ void COverworldState::OnRenderStart(float const Elapsed)
 
    step(Application.getElapsedTime());
    //stepCamera(Application.getElapsedTime());
-   SVector3 eyeRot = eye;
+   SVector3f eyeRot = eye;
    eyeRot.X += 0.2f*cos(camRotValue);
    eyeRot.Z += 0.2f*(sin(camRotValue) + 1);
    eyeRot.Y += 0.1f*(sin(camRotValue) + 1);
@@ -311,7 +311,7 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
       if(Event.Key == SDLK_n){
          look = levels[0].loc;
-         eye = SVector3(0.74f, 0.48f, 1.50f);
+         eye = SVector3f(0.74f, 0.48f, 1.50f);
       }
       if(Event.Key == SDLK_SPACE){
          spaceDown = 0;
@@ -319,13 +319,13 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
    }
 
    if(diskChanger)
-      discRender->setTranslation(SVector3(changex,changey, changez));
+      discRender->setTranslation(SVector3f(changex,changey, changez));
 
    if(eyeChanger)
-      eye = SVector3(changex, changey, changez);
+      eye = SVector3f(changex, changey, changez);
 
    if(arrowChanger)
-      arrowRender2->setRotation(SVector3(90.0f, 0.0f, changez ));
+      arrowRender2->setRotation(SVector3f(90.0f, 0.0f, changez ));
 
 }
 
@@ -341,20 +341,20 @@ void COverworldState::loadLevels()
 {
    //If you're adding more levels be sure to update COverworldState's NUM_LEVELS
    levels[0].name = "test.xml";//"jorge1.xml";
-   levels[0].loc = SVector3(0.33f, -0.17f, 1.05f); //bit of green near sole orange hill
+   levels[0].loc = SVector3f(0.33f, -0.17f, 1.05f); //bit of green near sole orange hill
    levels[1].name = "jorge2.xml";
-   levels[1].loc = SVector3(0.83f, 0.00f, 0.65f); //Green hill
+   levels[1].loc = SVector3f(0.83f, 0.00f, 0.65f); //Green hill
    levels[2].name = "jorge3.xml";
-   levels[2].loc = SVector3(0.9f, -0.12999999f, 0.3f);
+   levels[2].loc = SVector3f(0.9f, -0.12999999f, 0.3f);
    levels[3].name = "chris-night.xml";
-   levels[3].loc = SVector3(0.5f, -0.13f, 0.1f);
+   levels[3].loc = SVector3f(0.5f, -0.13f, 0.1f);
    levels[4].name = "test.xml";
    //levels[4].name = "chris2-night.xml";
-   levels[4].loc = SVector3(0.98f, -0.27f, -0.19f); //Green beach
+   levels[4].loc = SVector3f(0.98f, -0.27f, -0.19f); //Green beach
    levels[5].name = "chrisDesert.xml";
-   levels[5].loc = SVector3(0.94f, -0.25f, -0.38f); //Yellow beach
+   levels[5].loc = SVector3f(0.94f, -0.25f, -0.38f); //Yellow beach
    levels[6].name = "chrisDesert1-night.xml";
-   levels[6].loc = SVector3(0.77f, -0.20f, -0.66f); //Yellow hills
+   levels[6].loc = SVector3f(0.77f, -0.20f, -0.66f); //Yellow hills
 
    for(int i = 0; i < NUM_LEVELS; i++)
    {
@@ -364,9 +364,9 @@ void COverworldState::loadLevels()
 
 void COverworldState::setCameraTrans()
 {
-   cameraPos[0] = SVector3(0.21f, 0.36f, 1.76f);
-   cameraPos[1] = SVector3(1.47f, 0.33f, 0.0f);
-   cameraPos[2] = SVector3(1.11f, 0.45f, -2.16f);
+   cameraPos[0] = SVector3f(0.21f, 0.36f, 1.76f);
+   cameraPos[1] = SVector3f(1.47f, 0.33f, 0.0f);
+   cameraPos[2] = SVector3f(1.11f, 0.45f, -2.16f);
 
 }
 
@@ -386,7 +386,7 @@ void COverworldState::PrepMeshes()
    //Set up world map renderable
    CMesh *mapMesh = CMeshLoader::load3dsMesh("Base/world.3ds");
    if(mapMesh) {
-      mapMesh->centerMeshByExtents(SVector3(0));
+      mapMesh->centerMeshByExtents(SVector3f(0));
       mapMesh->calculateNormalsPerFace();
    }
 
@@ -403,8 +403,8 @@ void COverworldState::PrepMeshes()
    // CMesh *playerMesh = CMeshLoader::load3dsMesh("Base/crappycabbage2.3ds");
 
    if (playerMesh) {
-      playerMesh->resizeMesh(SVector3(0.45f));
-      playerMesh->centerMeshByExtents(SVector3(0));
+      playerMesh->resizeMesh(SVector3f(0.45f));
+      playerMesh->centerMeshByExtents(SVector3f(0));
       playerMesh->calculateNormalsPerFace();
    }
    else {
@@ -415,29 +415,29 @@ void COverworldState::PrepMeshes()
    playerVector = levels[curNode].loc;
    playerVector.Y += 0.05f;
    playerRender->setTranslation(playerVector);
-   playerRender->setRotation(SVector3(-90.0f, 0.0f, 45.0f));
-   playerRender->setScale(SVector3(0.18f));
+   playerRender->setRotation(SVector3f(-90.0f, 0.0f, 45.0f));
+   playerRender->setScale(SVector3f(0.18f));
 
    (playerRender);
 
    CMesh *arrowMesh = CMeshLoader::load3dsMesh("Base/arrow.3ds");
    if (arrowMesh) {
-      arrowMesh->resizeMesh(SVector3(0.5f));
-      arrowMesh->centerMeshByExtents(SVector3(0));
+      arrowMesh->resizeMesh(SVector3f(0.5f));
+      arrowMesh->centerMeshByExtents(SVector3f(0));
       arrowMesh->calculateNormalsPerFace();
    }
    else {
       fprintf(stderr, "Failed to load the cababge mesh\n");
    }
    arrowRender1 = CApplication::get().getSceneManager().addMeshSceneObject(arrowMesh, Flat, DeferredFlat);
-   arrowRender1->setTranslation(SVector3(0, -0.2f, 0.0) + playerVector);
-   arrowRender1->setRotation(SVector3(-90.0f, 0.0f, 45.0f));
-   arrowRender1->setScale(SVector3(0.18f));
+   arrowRender1->setTranslation(SVector3f(0, -0.2f, 0.0) + playerVector);
+   arrowRender1->setRotation(SVector3f(-90.0f, 0.0f, 45.0f));
+   arrowRender1->setScale(SVector3f(0.18f));
 
    arrowRender2 = CApplication::get().getSceneManager().addMeshSceneObject(arrowMesh, Flat, DeferredFlat);
-   arrowRender2->setTranslation(SVector3(0,-0.2f,0) + playerVector);
-   arrowRender2->setRotation(SVector3(90.0f, 0.0f, angleMaker(playerVector, levels[curNode + 1].loc) + 90.0f ));
-   arrowRender2->setScale(SVector3(0.18f));
+   arrowRender2->setTranslation(SVector3f(0,-0.2f,0) + playerVector);
+   arrowRender2->setRotation(SVector3f(90.0f, 0.0f, angleMaker(playerVector, levels[curNode + 1].loc) + 90.0f ));
+   arrowRender2->setScale(SVector3f(0.18f));
 
 
 
@@ -448,7 +448,7 @@ void COverworldState::PrepMeshes()
    CMesh *flagMesh = CMeshLoader::load3dsMesh("Base/flag2.3ds");
 
    if (flagMesh) {
-      flagMesh->centerMeshByExtents(SVector3(0));
+      flagMesh->centerMeshByExtents(SVector3f(0));
       flagMesh->calculateNormalsPerFace();
    }
 
@@ -475,7 +475,7 @@ void COverworldState::PrepMeshes()
 
 }
 
-void COverworldState::levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor)
+void COverworldState::levelIcons(SVector3f loc, CMesh *levelIcon, int iconColor)
 {
 
    discRender = CApplication::get().getSceneManager().addMeshSceneObject(levelIcon, ToonTexture, DeferredTexture);
@@ -498,16 +498,16 @@ void COverworldState::levelIcons(SVector3 loc, CMesh *levelIcon, int iconColor)
    discRender->setMaterial(mat);
 
    discRender->setTranslation(loc);
-   discRender->setScale(SVector3(0.1f));
+   discRender->setScale(SVector3f(0.1f));
 }
 
-void COverworldState::addMeshes(SVector3 loc, CMesh *newMesh, CTexture *texture)
+void COverworldState::addMeshes(SVector3f loc, CMesh *newMesh, CTexture *texture)
 {
    CMeshSceneObject *renderFlag = new CMeshSceneObject();
    renderFlag->setMesh(newMesh);
-   renderFlag->setTranslation(loc + SVector3(-0.05f, 0.05f, 0.05f));
-   renderFlag->setRotation(SVector3(-90,0,0));
-   renderFlag->setScale(SVector3(.00150f, .000025f,.00016f));
+   renderFlag->setTranslation(loc + SVector3f(-0.05f, 0.05f, 0.05f));
+   renderFlag->setRotation(SVector3f(-90,0,0));
+   renderFlag->setScale(SVector3f(.00150f, .000025f,.00016f));
    renderFlag->setTexture(texture);
    renderFlag->setShader(ERP_DEFAULT, ToonTexture);
    renderFlag->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
@@ -519,7 +519,7 @@ void COverworldState::addMeshes(SVector3 loc, CMesh *newMesh, CTexture *texture)
 }
 
 void COverworldState::bouncePlayer() {
-   SVector3 m_base = playerVector;
+   SVector3f m_base = playerVector;
    m_base.Y += 0.03f*(sin(stepValue*15)+1);
    playerRender->setTranslation(m_base);
 }
@@ -607,10 +607,10 @@ void COverworldState::movePlayer() {
    }
 }
 
-void COverworldState::superInterpolator(SVector3 & curr, SVector3 & change,
+void COverworldState::superInterpolator(SVector3f & curr, SVector3f & change,
       float delta, float transLength)
 {
-   SVector3 zeroV = SVector3(0.0f, 0.0f, 0.0f);
+   SVector3f zeroV = SVector3f(0.0f, 0.0f, 0.0f);
 
    if(transitionTimer <= 0.0f)
    {
@@ -627,16 +627,16 @@ void COverworldState::superInterpolator(SVector3 & curr, SVector3 & change,
    }
 }
 
-void COverworldState::shiftSetter(SVector3 & curr, SVector3 & change, SVector3 & target)
+void COverworldState::shiftSetter(SVector3f & curr, SVector3f & change, SVector3f & target)
 {
    change = target - curr;
 }
 
-float COverworldState::angleMaker(SVector3 start, SVector3 toPoint)
+float COverworldState::angleMaker(SVector3f start, SVector3f toPoint)
 {
    //float asinxz, asinzx, acosxz, acoszx;
    float lookat = 0.f;
-   SVector3 temp = toPoint - start;
+   SVector3f temp = toPoint - start;
 
    temp.normalize();
    /*
@@ -655,7 +655,7 @@ float COverworldState::angleMaker(SVector3 start, SVector3 toPoint)
 }
 void COverworldState::testFun()
 {
-   SVector3 temp = cameraPos[1] -levels[2].loc;
+   SVector3f temp = cameraPos[1] -levels[2].loc;
    temp.normalize();
 
    printf("TEST %f\n", (atan2(temp.X,temp.Z) * RAD_TO_DEG));

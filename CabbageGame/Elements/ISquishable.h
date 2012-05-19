@@ -9,7 +9,7 @@ class ISquishable {
       float xScaleOrig, yScaleOrig;
 
    public:
-      SVector2 Squish(SVector2 velocity);
+      SVector2f Squish(SVector2f velocity);
 
       ISquishable(float x, float y);
 };

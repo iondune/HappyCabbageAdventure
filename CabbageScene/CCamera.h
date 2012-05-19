@@ -9,8 +9,8 @@ class ICamera
 
 protected:
 
-    SVector3 Position;
-    SVector3 LookDirection;
+    SVector3f Position;
+    SVector3f LookDirection;
 
     glm::mat4 ViewMatrix;
     glm::mat4 ProjectionMatrix;
@@ -21,11 +21,11 @@ public:
 
 	virtual void recalculateViewMatrix();
 
-	SVector3 const & getPosition() const;
-    SVector3 const & getLookDirecton() const;
+	SVector3f const & getPosition() const;
+    SVector3f const & getLookDirecton() const;
 
-	void setPosition(SVector3 const & position);
-    void setLookDirection(SVector3 const & lookDirection);
+	void setPosition(SVector3f const & position);
+    void setLookDirection(SVector3f const & lookDirection);
 
 	glm::mat4 const & getViewMatrix() const;
     glm::mat4 const & getProjectionMatrix() const;

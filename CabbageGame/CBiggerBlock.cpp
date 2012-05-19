@@ -8,10 +8,10 @@ CBiggerBlock::CBiggerBlock(float nx, float ny, float nw, float nh, float d) : x(
 
 void CBiggerBlock::addToEngine(CCollisionEngine *Engine) {
    CCollisionObject *block = Engine->addObject();
-   block->setCollisionResponder(NULL);
-   block->setArea(SRect2(x, y, w, h));
-   block->setDepth(z);
-   block->setElement(new CElementBlock(SRect2(x, y, w, h), (int) z, 3));
+   //block->OnCollision.connect(this, &CGameplayElement::OnCollision);
+   block->setArea(SRect2f(x, y, w, h));
+   block->setVisualDepth(z);
+   block->setGameplayElement(new CElementBlock(SRect2f(x, y, w, h), (int) z, 3));
 }
 
 bool sortXY (CBiggerBlock* a, CBiggerBlock* b) {

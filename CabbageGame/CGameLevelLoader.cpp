@@ -34,18 +34,18 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName) {
 }
 
 CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
-	if (useCache)
-	{
+   if (useCache)
+   {
       //We aren't using cache currently
       /*
-		std::map<std::string, CGameLevel *>::iterator it = LoadedLevels.find(levelName);
+      std::map<std::string, CGameLevel *>::iterator it = LoadedLevels.find(levelName);
 
-		if (it != LoadedLevels.end())
-		{
-			return *(it->second);
-		}
+      if (it != LoadedLevels.end())
+      {
+         return *(it->second);
+      }
       */
-	}
+   }
    CGameLevel *newLevel = LatestLevel = new CGameLevel();
    std::vector<CBiggerBlock*> blocksY;
    int x,y,w,d,h,t, moving, env = -1;
@@ -81,11 +81,11 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
                range = (float) xml->getAttributeValueAsInt(7);
                speed = (float) xml->getAttributeValueAsInt(8);
                CElementBlockElevator * ptr2;
-               newLevel->Elevators.push_back(ptr2 = new CElementBlockElevator(SRect2((float)x, (float)y, (float)w, (float)h), d, t, range, speed));
+               newLevel->Elevators.push_back(ptr2 = new CElementBlockElevator(SRect2f((float)x, (float)y, (float)w, (float)h), d, t, range, speed));
                newLevel->Elements.push_back(ptr2);
             }
             else {
-               newLevel->Blocks.push_back(ptr = new CElementBlock(SRect2((float)x, (float)y, (float)w, (float)h), d, t));
+               newLevel->Blocks.push_back(ptr = new CElementBlock(SRect2f((float)x, (float)y, (float)w, (float)h), d, t));
                newLevel->Elements.push_back(ptr);
                //ptr->isMovingPlatform = 0;
                //numBlocks++;
@@ -108,7 +108,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             printf("breakable blocks x y h w are %d %d %d %d\n",x ,y,h,w);
 
             CElementBlockBreakable * ptr2;
-            newLevel->Elements.push_back(ptr2 = new CElementBlockBreakable(SRect2((float)x, (float)y, (float)w, (float)h)));
+            newLevel->Elements.push_back(ptr2 = new CElementBlockBreakable(SRect2f((float)x, (float)y, (float)w, (float)h)));
             newLevel->BreakableBlocks.push_back(ptr2);
          }
          if(!strcmp("CEnemy", xml->getNodeName()))
@@ -120,7 +120,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             h = xml->getAttributeValueAsInt(2);
             w = xml->getAttributeValueAsInt(3);
             t = xml->getAttributeValueAsInt(4);
-            CElementEnemy *myEnemy = CEnemyLoader::LoadEnemy(SRect2((float)x, (float)y, (float)w, (float)h), (Enemies::EEnemyType)t);
+            CElementEnemy *myEnemy = CEnemyLoader::LoadEnemy(SRect2f((float)x, (float)y, (float)w, (float)h), (Enemies::EEnemyType)t);
             if(myEnemy != NULL) {
                newLevel->Enemies.push_back(myEnemy);
                newLevel->Elements.push_back(myEnemy);
@@ -137,7 +137,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             w = xml->getAttributeValueAsInt(3);
             t = xml->getAttributeValueAsInt(4);
 
-            CElementPlayer *player = new CElementPlayer(SRect2((float)x, (float)y, (float)h, (float)w));
+            CElementPlayer *player = new CElementPlayer(SRect2f((float)x, (float)y, (float)h, (float)w));
             newLevel->Elements.push_back(player);
             newLevel->PlayerElement = player;
          }
@@ -150,7 +150,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             w = xml->getAttributeValueAsInt(3);
             t = xml->getAttributeValueAsInt(4);
 
-            CElementBlockFlag *myFlag = new CElementBlockFlag(SRect2((float)x, (float)y, (float)w, (float)h), t);
+            CElementBlockFlag *myFlag = new CElementBlockFlag(SRect2f((float)x, (float)y, (float)w, (float)h), t);
             newLevel->Flags.push_back(myFlag);
             newLevel->Elements.push_back(myFlag);
          }
@@ -161,7 +161,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             x = xml->getAttributeValueAsInt(0);
             y = xml->getAttributeValueAsInt(1);
             t = xml->getAttributeValueAsInt(2);
-            CElementItem *myItem = CItemLoader::LoadItem(SRect2((float)x, (float)y, 1.0f, 1.0f), (Items::EItemType)t);
+            CElementItem *myItem = CItemLoader::LoadItem(SRect2f((float)x, (float)y, 1.0f, 1.0f), (Items::EItemType)t);
             if(myItem != NULL) {
                newLevel->Items.push_back(myItem);
                newLevel->Elements.push_back(myItem);
@@ -176,7 +176,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             x = xml->getAttributeValueAsInt(0);
             y = xml->getAttributeValueAsInt(1);
             t = xml->getAttributeValueAsInt(2);
-            CElementItem *myItem = new CElementItemPowerup(SRect2((float)x, (float)y, 1.0f, 1.0f), t);
+            CElementItem *myItem = new CElementItemPowerup(SRect2f((float)x, (float)y, 1.0f, 1.0f), t);
             newLevel->Items.push_back(myItem);
             newLevel->Elements.push_back(myItem);
          }
@@ -190,7 +190,7 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             w = xml->getAttributeValueAsInt(3);
             d = xml->getAttributeValueAsInt(4);
             t = xml->getAttributeValueAsInt(5);
-            CGameplayElement *myItem = new CElementBlockDeath(SRect2(x,y,w,h),d,t,1.0f,1.0f);
+            CGameplayElement *myItem = new CElementBlockDeath(SRect2f((float) x, (float) y, (float) w, (float) h), d, t, 1.0f, 1.0f);
 
             newLevel->Elements.push_back(myItem);
          }
@@ -209,10 +209,10 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
          if (!strcmp("envVar", xml->getNodeName()))
          {
              newLevel->env = env = xml->getAttributeValueAsInt(0);
-             newLevel->night = xml->getAttributeValueAsInt(1);
+             newLevel->night = xml->getAttributeValueAsInt(1) != 0;
 
 			 if (newLevel->getEnvironment() == Env::DESERT && ! newLevel->isNight())
-				 CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_HEAT_WAVE, true);
+             CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_HEAT_WAVE, true);
          }
          break;
       }
@@ -229,8 +229,8 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
       exit(1);
    }
    newLevel->blocksFinal = CGameLevelLoader::consolidateBlocks(blocksY);
-	if (useCache)
-		LoadedLevels[levelName] = newLevel;
+   if (useCache)
+      LoadedLevels[levelName] = newLevel;
    newLevel->toggleLoaded();
 
    return *newLevel;

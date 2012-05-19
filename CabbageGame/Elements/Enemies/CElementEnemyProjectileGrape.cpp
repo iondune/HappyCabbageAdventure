@@ -2,7 +2,7 @@
 #include "CGameLevel.h"
 
 //Generic enemy, for usage in the LWIB, I guess.
-CElementEnemyProjectileGrape::CElementEnemyProjectileGrape(SRect2 nArea)
+CElementEnemyProjectileGrape::CElementEnemyProjectileGrape(SRect2f nArea)
 : CElementEnemyProjectile(nArea, Enemies::GRAPE_PROJECTILE) {
 }
 
@@ -19,7 +19,6 @@ void CElementEnemyProjectileGrape::setupPhysicsEngineObject() {
    PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
    PhysicsEngineObject->getAttributes().AirControl = 1.0f;
    PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_PKIWI;
 }
 
 void CElementEnemyProjectileGrape::setupSceneObject() {
@@ -52,8 +51,8 @@ void CElementEnemyProjectileGrape::setupSceneObject() {
 
 
    if (mesh) {
-      mesh->resizeMesh(SVector3(.4f));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(.4f));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -63,14 +62,14 @@ void CElementEnemyProjectileGrape::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   SceneObject->setScale(SVector3(1, 1, 1));
+   SceneObject->setScale(SVector3f(1, 1, 1));
 
    if(Level.getPlayer().getArea().Position.X < Area.Position.X) {
-      SceneObject->setRotation(SVector3(-90, 0, -45));
+      SceneObject->setRotation(SVector3f(-90, 0, -45));
       PlayerLeft = true;
    }
    else {
-      SceneObject->setRotation(SVector3(-90, 0, 45));
+      SceneObject->setRotation(SVector3f(-90, 0, 45));
       PlayerLeft = false;
    }
 
@@ -78,16 +77,16 @@ void CElementEnemyProjectileGrape::setupSceneObject() {
 }
 
 void CElementEnemyProjectileGrape::updateSceneObject(float time) {
-   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, 0));
 }
 
 void CElementEnemyProjectileGrape::updatePhysicsEngineObject(float time) {
    if (PlayerLeft) { //go left
-      PhysicsEngineObject->setVelocity(SVector2(-5.f, 0.f));
+      PhysicsEngineObject->setVelocity(SVector2f(-5.f, 0.f));
    }
    
    else { //go right
-      PhysicsEngineObject->setVelocity(SVector2(5.f, 0.f));
+      PhysicsEngineObject->setVelocity(SVector2f(5.f, 0.f));
    }
 }
 

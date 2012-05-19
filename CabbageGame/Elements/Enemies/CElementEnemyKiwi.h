@@ -11,7 +11,7 @@ class CElementEnemyKiwi : public CElementEnemy
       int Direction;
 
    public:
-      CElementEnemyKiwi(SRect2 nArea, int direction);
+      CElementEnemyKiwi(SRect2f nArea, int direction);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

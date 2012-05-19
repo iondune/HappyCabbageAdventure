@@ -1,7 +1,7 @@
 #include "CElementEnemyLemon.h"
 #include "CGameLevel.h"
 
-CElementEnemyLemon::CElementEnemyLemon(SRect2 nArea) :
+CElementEnemyLemon::CElementEnemyLemon(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::LEMON), ISquishable(nArea.Size.X, nArea.Size.Y) {
 }
 
@@ -13,6 +13,9 @@ void CElementEnemyLemon::setupPhysicsEngineObject() {
    //Set actor attributes
    PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
    PhysicsEngineObject->getAttributes().WalkAccel = 10.f;
+
+   //Why is this set to true?????  Something with physics stuff... and it's not calling setJumping.  : P
+   //Note, being dropped from the sky in the case it's jumping.  Checked Bounce, that wasn't the problem.
 }
 
 void CElementEnemyLemon::setupSceneObject() {
@@ -31,8 +34,8 @@ void CElementEnemyLemon::setupSceneObject() {
       mesh = CMeshLoader::load3dsMesh("Base/lemon.3ds");
 
    if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(1));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -40,10 +43,10 @@ void CElementEnemyLemon::setupSceneObject() {
       printf("ERROR.  MESH DID NOT LOAD PROPERLY.\n");
 
    SceneObject->setMesh(mesh);
-   SceneObject->setRotation(SVector3(-90, 0, 0));
+   SceneObject->setRotation(SVector3f(-90, 0, 0));
 
    Scale = Area.Size;
-   SceneObject->setScale(SVector3(Scale.X, Scale.X, Scale.Y));
+   SceneObject->setScale(SVector3f(Scale.X, Scale.X, Scale.Y));
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
 
@@ -76,27 +79,27 @@ void CElementEnemyLemon::updatePhysicsEngineObject(float time) {
 
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyLemon::updateSceneObject(float time) {
-   SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X,Area.getCenter().Y, 0));
    if (PhysicsEngineObject->getVelocity().X < 0.0f)
-      SceneObject->setRotation(SVector3(-90, PhysicsEngineObject->getVelocity().X*10.0f, -30));
+      SceneObject->setRotation(SVector3f(-90.f, (float) PhysicsEngineObject->getVelocity().X*10.0f, -30.f));
    else if (PhysicsEngineObject->getVelocity().X >= 0.0f)
-      SceneObject->setRotation(SVector3(-90, PhysicsEngineObject->getVelocity().X*10.0f, 30));
+      SceneObject->setRotation(SVector3f(-90.f, (float) PhysicsEngineObject->getVelocity().X*10.0f, 30.f));
 
    if(ParticleEngine) {
-      SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.Position.Y, 0));
-      SceneObject->setRotation(SVector3(-90, 0, 0));
-      SceneObject->setScale(SVector3(Scale.X, Scale.X, 0.3f));
+      SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
+      SceneObject->setRotation(SVector3f(-90, 0, 0));
+      SceneObject->setScale(SVector3f(Scale.X, Scale.X, 0.3f));
       return;
    }
 
    Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
 
       if(PhysicsEngineObject->getVelocity().X < -0.01f)
-         SceneObject->setScale(SVector3(-Scale.X,Scale.X,Scale.Y));
+         SceneObject->setScale(SVector3f(-Scale.X,Scale.X,Scale.Y));
       else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-         SceneObject->setScale(SVector3(Scale.X,Scale.X,Scale.Y));
+         SceneObject->setScale(SVector3f(Scale.X,Scale.X,Scale.Y));
       else
-         SceneObject->setScale(SVector3(1.0f));
+         SceneObject->setScale(SVector3f(1.0f));
 }
 
 int CElementEnemyLemon::takeDamage(int amount) {
@@ -109,7 +112,7 @@ int CElementEnemyLemon::takeDamage(int amount) {
 
 void CElementEnemyLemon::explode() {
    CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
-   PlayerActor->setImpulse(SVector2f(0.0f, 20.0f), 0.01f);
+   PlayerActor->addImpulse(SVector2f(0.0f, 20.0f));
 
    Level.getPlayer().setShaking(1.5f, .3f);
 

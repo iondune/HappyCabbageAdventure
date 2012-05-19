@@ -61,11 +61,13 @@ void CScene::setCullingEnabled(bool const culling)
 	UseCulling = culling;
 }
 
-void CScene::toggleUseHierarchy() {
+void CScene::toggleUseHierarchy()
+{
 	setUseHierarchy(!UseHierarchy);
 }
 
-bool CScene::getUseHierarchy() {
+bool CScene::getUseHierarchy()
+{
 	return UseHierarchy;
 }
 
@@ -137,21 +139,6 @@ boost::shared_ptr<IUniform const> const CScene::getUniform(std::string const & l
 
 	return boost::shared_ptr<IUniform const>();
 }
-
-
-extern int timesCalled, numObjects, numCulled;
-int CSceneManager::getTimesCalled() {
-	return timesCalled;
-}
-
-int CSceneManager::getNumObjects() {
-	return numObjects;
-}
-
-int CSceneManager::getNumCulled() {
-	return numCulled;
-}
-
 
 void CScene::update()
 {
@@ -256,8 +243,8 @@ void CSceneManager::removeAllSceneObjects()
 }
 
 bool sortISOXY (ISceneObject* a, ISceneObject* b) {
-	SVector3 av = a->getWorldBoundingBoxMinPoint();
-	SVector3 bv = b->getWorldBoundingBoxMinPoint();
+	SVector3f av = a->getWorldBoundingBoxMinPoint();
+	SVector3f bv = b->getWorldBoundingBoxMinPoint();
 	if(av.X == bv.X) {
 		return av.Y < bv.Y;
 	}
@@ -291,7 +278,7 @@ ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
 		for (float i = (*aList)[0]->getWorldBoundingBoxMinPoint().X; j < aList->size() && i <= (*aList)[aList->size()-1]->getWorldBoundingBoxMinPoint().X + ARBITRARILY_INCREASING_VALUE;) {
 			ISceneObject * parentNode = new ISceneObject();
 			parentNode->setImmobile(true);
-			parentNode->setBoundingBox(SBoundingBox3(SVector3(i, -INF, -INF), SVector3(i + ARBITRARILY_INCREASING_VALUE, INF, INF)));
+			parentNode->setBoundingBox(SBoundingBox3(SVector3f(i, -INF, -INF), SVector3f(i + ARBITRARILY_INCREASING_VALUE, INF, INF)));
 			// TODO: See if I can get away with not setting any transforms for the nodes in the algorithm. Reasoning: if each object has its own transforms, they'll draw correctly, and if the parent has the correct bounding box, it will cull correctly (since its transforms will be 0).
 
 			int oldJ = j;
@@ -370,7 +357,7 @@ void CSceneManager::drawAll()
 		//   RootObject.addChild((*it));
 		//printf("There are a total of %d leaves.\n", RootObject.getNumLeaves());
 	}
-	timesCalled = numObjects = numCulled = 0;
+	ISceneObject::resetObjectCounts();
 	CurrentScene->update();
 
    PostOpaqueRootObject.sortChildrenByZTranslation();

@@ -19,12 +19,12 @@ namespace Strawberry {
 class CElementEnemyStrawberry : public CElementEnemy, public ISquishable
 {
    private:
-      SVector2 Scale;
+      SVector2f Scale;
       float OldPositionX, HitPlayer, JumpTimer;
       int JumpNum;
 
    public:
-      CElementEnemyStrawberry(SRect2 nArea);
+      CElementEnemyStrawberry(SRect2f nArea);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

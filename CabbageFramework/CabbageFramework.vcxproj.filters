@@ -17,9 +17,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="sigslot">
-      <UniqueIdentifier>{cefff7c2-b7cf-4b35-bd49-ea9be8b7279d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Cameras">
       <UniqueIdentifier>{28db67e1-a733-4fab-a6d0-7e9c1dfa0e4a}</UniqueIdentifier>
     </Filter>
@@ -28,9 +25,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="sigslot\sigslot.h">
-      <Filter>sigslot</Filter>
-    </ClInclude>
     <ClInclude Include="CApplication.h" />
     <ClInclude Include="CEventManager.h" />
     <ClInclude Include="CabbageFramework.h" />

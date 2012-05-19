@@ -38,7 +38,7 @@
 #include "MPEGsystem.h"
 #include "MPEGfilter.h"
 
-#define LENGTH_TO_CHECK_FOR_SYSTEM 0x50000	// Added by HanishKVC
+#define LENGTH_TO_CHECK_FOR_SYSTEM 0x50000   // Added by HanishKVC
 
 /* The main MPEG class - parses system streams and creates other streams
  A few design notes:
@@ -52,9 +52,9 @@
 class MPEG : public MPEGerror
 {
 public:
-		/* Michel Darricau from eProcess <mdarricau@eprocess.fr>  need for override in popcorn */
+      /* Michel Darricau from eProcess <mdarricau@eprocess.fr>  need for override in popcorn */
     MPEG():MPEGerror(){}
-	MPEG(bool Sdlaudio, char *addresse,char *asset,long buffersize){}
+   MPEG(bool Sdlaudio, char *addresse,char *asset,long buffersize){}
 
     MPEG(const char * name, bool SDLaudio = true);
     MPEG(int Mpeg_FD, bool SDLaudio = true);
@@ -74,15 +74,15 @@ public:
 
     /* MPEG actions */
     void Loop(bool toggle);
-		/* Michel Darricau from eProcess <mdarricau@eprocess.fr>  need for override in popcorn */
+      /* Michel Darricau from eProcess <mdarricau@eprocess.fr>  need for override in popcorn */
     virtual void Play(void);
     void Stop(void);
     void Rewind(void);
-		/* Michel Darricau from eProcess <mdarricau@eprocess.fr>  need for override in popcorn */
+      /* Michel Darricau from eProcess <mdarricau@eprocess.fr>  need for override in popcorn */
     virtual void Pause(void);
     virtual void Seek(int bytes);
     void Skip(float seconds);
-		/* Michel Darricau from eProcess <mdarricau@eprocess.fr>  need for override in popcorn */
+      /* Michel Darricau from eProcess <mdarricau@eprocess.fr>  need for override in popcorn */
     MPEGstatus GetStatus(void);
     void GetSystemInfo(MPEG_SystemInfo *info);
 
@@ -96,7 +96,7 @@ public:
     /* MPEG video actions */
     bool GetVideoInfo(MPEG_VideoInfo *info);
     bool SetDisplay(SDL_Surface *dst, SDL_mutex *lock,
-		                 MPEG_DisplayCallback callback);
+                       MPEG_DisplayCallback callback);
     void MoveDisplay(int x, int y);
     void ScaleDisplayXY(int w, int h);
     void SetDisplayRegion(int x, int y, int w, int h);

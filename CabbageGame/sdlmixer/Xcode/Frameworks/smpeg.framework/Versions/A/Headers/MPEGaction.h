@@ -39,7 +39,7 @@ public:
         playing = false;
         paused = false;
         looping = false;
-	play_time = 0.0;
+   play_time = 0.0;
     }
     virtual void Loop(bool toggle) {
         looping = toggle;
@@ -61,7 +61,7 @@ public:
             paused = true;
         }
     }
-		/* Michel Darricau from eProcess <mdarricau@eprocess.fr>  conflict name in popcorn */
+      /* Michel Darricau from eProcess <mdarricau@eprocess.fr>  conflict name in popcorn */
     virtual MPEGstatus GetStatus(void) = 0;
 
 protected:
