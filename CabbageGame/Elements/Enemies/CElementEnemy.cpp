@@ -193,6 +193,7 @@ void CElementEnemy::OnCollision(const SCollisionEvent& Event) {
 
 void CElementEnemy::updatePhysicsEngineObject(float time) {
    if(TimeToDeath > 0.0f) {
+      PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
       TimeToDeath -= time;
       if(TimeToDeath <= 0.0f) {
          dieWithSeeds();
