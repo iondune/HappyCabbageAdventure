@@ -128,6 +128,7 @@ public:
 	void setStanding(bool);
 	void setGravity(float grav);
 	float getGravity();
+   void setFallAcceleration(float fa);
 
 	virtual void draw();
 

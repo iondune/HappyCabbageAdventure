@@ -150,6 +150,10 @@ bool CCollisionActor::getControlFall() {
 	return ControlFall;
 }
 
+void CCollisionActor::setFallAcceleration(float fa) {
+   FallAcceleration = fa;
+}
+
 void CCollisionActor::updateVectors(float const TickTime)
 {
 	if (ControlFall)

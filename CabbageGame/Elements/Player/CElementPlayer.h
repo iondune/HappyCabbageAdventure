@@ -35,6 +35,10 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       CPlayerView *View;
 
       bool Godmode;
+      bool hWasDown;
+      bool jWasDown;
+      float oldGrav;
+
 
       Cabbage::PlayerInformation Stats;
       EDirection Direction;

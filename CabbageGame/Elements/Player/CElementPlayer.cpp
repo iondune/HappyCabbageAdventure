@@ -7,7 +7,7 @@
 CElementPlayer::CElementPlayer(SRect2 nArea, bool useCamera)
 : CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f), Shaking(0.0f), ShakeFactor(SVector3(0.0f)),
   ISquishable(2.0f, 2.0f), AllowMovement(true), PlayJump(true), Victory(false), VictoryTime(0.0f), ShakeFactorFactor(1000.0f), MoveKeyDelay(0.0f), UseCamera(useCamera), Godmode(false),
-WinParticle1(NULL), WinParticle2(NULL), WinParticle3(NULL), glow(NULL) {
+WinParticle1(NULL), WinParticle2(NULL), WinParticle3(NULL), glow(NULL), hWasDown(false), jWasDown(false), oldGrav(0.0f) {
    setupSoundEffects();
 }
 
@@ -69,10 +69,6 @@ void CElementPlayer::doGodmode() {
    }
 }
 
-bool hWasDown = false;
-bool jWasDown = false;
-float oldGrav;
-
 void CElementPlayer::updatePlayerAction() {
    if(Victory)
       return;
@@ -85,6 +81,7 @@ void CElementPlayer::updatePlayerAction() {
          PhysicsEngineObject->setControlFall(false);
          oldGrav = PhysicsEngineObject->getGravity();
          PhysicsEngineObject->setGravity(0.0f);
+         PhysicsEngineObject->setFallAcceleration(0.0f);
          PhysicsEngineObject->setJumping(false);
          PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, 0.0f));
          hWasDown = CApplication::get().getEventManager().IsKeyDown[SDLK_h];
@@ -97,6 +94,7 @@ void CElementPlayer::updatePlayerAction() {
          PhysicsEngineObject->CanCollideWith &= ~INTERACTOR_SUPERNONCOLLIDERS;
          PhysicsEngineObject->setControlFall(true);
          PhysicsEngineObject->setGravity(oldGrav);
+         PhysicsEngineObject->setFallAcceleration(0.0f);
          PhysicsEngineObject->setJumping(false);
          PhysicsEngineObject->setVelocity(SVector2(PhysicsEngineObject->getVelocity().X, 0.0f));
       }
