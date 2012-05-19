@@ -47,7 +47,7 @@ ISceneObject *CDecorManager::SetupObject(float x, float y, float z, float scale,
 void CDecorManager::update(float f) {
    if(StarEngine)
       StarEngine->step(f);
-   for(int i = 0; i < DecorativeParticleEngines.size(); i++) {
+   for(unsigned int i = 0; i < DecorativeParticleEngines.size(); i++) {
       DecorativeParticleEngines[i]->step(f);
    }
 }
@@ -95,15 +95,15 @@ CDecorManager::CDecorManager(CGameLevel & level) {
             */
 
             point = new CPointLightSceneObject(1.5f, n % 2 ? SColor(1.0f, 0.62f, 0.0f) : SColor(0.68f, 1.0f, 0.18f)); //Orange and Yellowgreen
-            point->setTranslation(SVector3(curBlock->x + curBlock->w / 2.0f, y, 0.f));
+            point->setTranslation(SVector3f(curBlock->x + curBlock->w / 2.0f, y, 0.f));
             CApplication::get().getSceneManager().addSceneObject(point);
             n++;
          }
 
-         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3(curBlock->x + curBlock->w / 3.0f, curBlock->y + curBlock->h, 1), 10, -1, WIGGLE_PARTICLE));
-         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3(curBlock->x + 2.0f*curBlock->w / 3.0f, curBlock->y + curBlock->h, 1), 10, -1, WIGGLE_PARTICLE));
-         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3(curBlock->x + curBlock->w / 3.0f, curBlock->y + curBlock->h, -1), 10, -1, WIGGLE_PARTICLE));
-         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3(curBlock->x + 2.0f*curBlock->w / 3.0f, curBlock->y + curBlock->h, -1), 10, -1, WIGGLE_PARTICLE));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + curBlock->w / 3.0f, curBlock->y + curBlock->h, 1), 10, -1, WIGGLE_PARTICLE));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + 2.0f*curBlock->w / 3.0f, curBlock->y + curBlock->h, 1), 10, -1, WIGGLE_PARTICLE));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + curBlock->w / 3.0f, curBlock->y + curBlock->h, -1), 10, -1, WIGGLE_PARTICLE));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + 2.0f*curBlock->w / 3.0f, curBlock->y + curBlock->h, -1), 10, -1, WIGGLE_PARTICLE));
       }
       delete curBlock;
    }
