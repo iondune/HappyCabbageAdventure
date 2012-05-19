@@ -11,6 +11,20 @@ CElementItem::CElementItem(SRect2f nArea, Items::EItemType type)
 : CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Type(type) {
 }
 
+void CElementItem::setupPhysicsEngineObject() {
+   /* Set up the actor (not actually an actor, since this one doesn't move its position) */
+   PhysicsEngineObject = Level.getPhysicsEngine().addActor();
+   PhysicsEngineObject->setArea(Area);
+
+   //Set actor attributes
+   PhysicsEngineObject->setTypeId(INTERACTOR_ITEMS);
+   PhysicsEngineObject->setCollisionMask(INTERACTOR_BLOCKS);
+   PhysicsEngineObject->setDetectionMask(INTERACTOR_SUPERACTORS);
+
+   //Connect Phase to OnCollision :(
+   PhysicsEngineObject->OnPhaseBegin.connect(this, &CElementItem::OnCollision);
+}
+
 //Item created by factory
 CElementItem *CItemLoader::LoadItem(SRect2f nArea, Items::EItemType type) {
    switch(type) {

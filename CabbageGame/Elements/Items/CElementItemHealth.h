@@ -10,7 +10,6 @@ class CElementItemHealth : public CElementItem
    public:
       CElementItemHealth(SRect2f nArea);
 
-      virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
 
       virtual void updatePhysicsEngineObject(float time);

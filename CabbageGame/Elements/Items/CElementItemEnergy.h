@@ -10,7 +10,6 @@ class CElementItemEnergy : public CElementItem
    public:
       CElementItemEnergy(SRect2f nArea);
 
-      virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
 
       virtual void updatePhysicsEngineObject(float time);

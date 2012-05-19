@@ -5,16 +5,6 @@ CElementItemPowerup::CElementItemPowerup(SRect2f nArea, int t) :
    CElementItem(nArea, Items::POWERUP), Type((Abilities::EAbilityType) t) {
 }
 
-void CElementItemPowerup::setupPhysicsEngineObject() {
-   /* Set up the actor (not actually an actor, since this one doesn't move its position) */
-   PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(Area);
-
-   //Set actor attributes
-   PhysicsEngineObject->setTypeId(INTERACTOR_ITEMS);
-   PhysicsEngineObject->setCollisionMask(PhysicsEngineObject->getCollisionMask() | INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS);
-}
-
 void CElementItemPowerup::setupSceneObject() {
    SceneObject = new CMeshSceneObject();
    SceneObject->setCullingEnabled(false);

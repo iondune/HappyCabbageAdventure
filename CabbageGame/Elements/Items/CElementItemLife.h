@@ -10,7 +10,6 @@ class CElementItemLife : public CElementItem
    public:
       CElementItemLife(SRect2f nArea);
 
-      virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
 
       virtual void updatePhysicsEngineObject(float time);

@@ -26,7 +26,7 @@ class CElementItem : public CGameplayElement {
       virtual void OnCollision(const SCollisionEvent& Event);
       virtual void writeXML(xmlwriter *l);
 
-      virtual void setupPhysicsEngineObject()=0;
+      virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject()=0;
 
       virtual void updatePhysicsEngineObject(float time);
