@@ -6,17 +6,6 @@ CElementItemHealth::CElementItemHealth(SRect2f nArea) :
 
 }
 
-void CElementItemHealth::setupPhysicsEngineObject() {
-   /* Set up the actor (not actually an actor, since this one doesn't move its position) */
-   PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(Area);
-
-   //Set actor attributes
-   PhysicsEngineObject->setTypeId(INTERACTOR_ITEMS);
-   PhysicsEngineObject->setCollisionMask(INTERACTOR_BLOCKS);
-   PhysicsEngineObject->setDetectionMask(INTERACTOR_SUPERACTORS);
-}
-
 void CElementItemHealth::setupSceneObject() {
    SceneObject = new CMeshSceneObject();
    CMesh *mesh = CMeshLoader::load3dsMesh("Base/healthboost.3ds");

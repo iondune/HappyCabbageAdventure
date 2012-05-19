@@ -15,7 +15,6 @@ class CElementItemPowerup : public CElementItem
    public:
       CElementItemPowerup(SRect2f nArea, int t);
 
-      virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
 
       virtual void updatePhysicsEngineObject(float time);

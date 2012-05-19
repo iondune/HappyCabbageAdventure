@@ -8,13 +8,7 @@ CElementItemSeed::CElementItemSeed(SRect2f nArea) :
 
 void CElementItemSeed::setupPhysicsEngineObject() {
    Area.Size = SVector2f(0.1f, 0.1f);
-   PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(Area);
-
-   //Set actor attributes
-   PhysicsEngineObject->setTypeId(INTERACTOR_ITEMS);
-   PhysicsEngineObject->setCollisionMask(INTERACTOR_BLOCKS);
-   PhysicsEngineObject->setDetectionMask(0);
+   CElementItem::setupPhysicsEngineObject();
    PhysicsEngineObject->getAttributes().Bounce = 3;
 }
 

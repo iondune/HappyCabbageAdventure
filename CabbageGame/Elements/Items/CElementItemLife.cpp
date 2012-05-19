@@ -6,19 +6,6 @@ CElementItemLife::CElementItemLife(SRect2f nArea) :
 
 }
 
-void CElementItemLife::setupPhysicsEngineObject() {
-   /* Set up the actor (not actually an actor, since this one doesn't move its position) */
-   PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   Area.Position += SVector2f(Area.Size.Y*0.4f);
-   Area.Size *= SVector2f(0.8f);
-   PhysicsEngineObject->setArea(Area);
-
-   //Set actor attributes
-   PhysicsEngineObject->setTypeId(INTERACTOR_ITEMS);
-   PhysicsEngineObject->setCollisionMask(INTERACTOR_BLOCKS);
-   PhysicsEngineObject->setDetectionMask(INTERACTOR_SUPERACTORS);
-}
-
 void CElementItemLife::setupSceneObject() {
    SceneObject = new CMeshSceneObject();
    CMesh *mesh = CMeshLoader::load3dsMesh("Base/crappycabbage2.3ds");

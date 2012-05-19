@@ -95,6 +95,11 @@ void CElementPlayer::updatePlayerAction() {
       else {
          PhysicsEngineObject->setTypeId(INTERACTOR_SUPERACTORS);
          PhysicsEngineObject->setCollisionMask((INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS) & ~INTERACTOR_SUPERNONCOLLIDERS);
+         PhysicsEngineObject->setDetectionMask(0);
+         /* Correct version. Leaving this out for now so Ian/I can play with the collision stuff.
+         PhysicsEngineObject->setCollisionMask((INTERACTOR_SUPERACTORS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS) & ~INTERACTOR_SUPERNONCOLLIDERS);
+         PhysicsEngineObject->setDetectionMask(INTERACTOR_ITEMS);
+         */
          PhysicsEngineObject->setControlFall(true);
          PhysicsEngineObject->setGravity(oldGrav);
          PhysicsEngineObject->setJumping(false);
