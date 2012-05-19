@@ -45,7 +45,7 @@ void CElementEnemyProjectileGrape::setupSceneObject() {
          mesh = CMeshLoader::load3dsMesh("Base/grape3.3ds");
    }
 
-   else (Level.getEnvironment() == Env::WATER) {
+   else if (Level.getEnvironment() == Env::WATER) {
       if (random == 0)
          mesh = CMeshLoader::load3dsMesh("Base/grape1.3ds");
       else if (random == 1)
