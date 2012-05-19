@@ -49,8 +49,8 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       void updatePlayerAction();
       float Recovering, Shaking, ShakeFactorFactor, VictoryTime;
       float MoveKeyDelay;
-      SVector2 Scale;
-      SVector3 ShakeFactor;
+      SVector2f Scale;
+      SVector3f ShakeFactor;
 
       //Sound Variables
       Mix_Chunk *takeDmg;
@@ -69,10 +69,10 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       std::map<Abilities::EAbilityType, int> usedAbility;
 
    public:
-      CElementPlayer(SRect2 nArea, bool useCamera = true);
+      CElementPlayer(SRect2f nArea, bool useCamera = true);
 
       //CGameplayElement functions
-      virtual void OnCollision(CCollideable *Object);
+      virtual void OnCollision(const SCollisionEvent& Event);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();

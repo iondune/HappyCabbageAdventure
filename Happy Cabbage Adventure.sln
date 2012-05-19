@@ -111,6 +111,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageGame", "CabbageGame\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StateGame", "StateGame\StateGame.vcxproj", "{19F4292D-FC1B-4F96-8033-5C723595C473}"
 EndProject
+		{B139B8AE-77AA-4A47-9E7F-B95B4BCDFD1C} = {B139B8AE-77AA-4A47-9E7F-B95B4BCDFD1C}
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32

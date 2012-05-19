@@ -2,7 +2,7 @@
 #include "CGameLevel.h"
 
 //Generic enemy, for usage in the LWIB, I guess.
-CElementEnemyProjectileBanana::CElementEnemyProjectileBanana(SRect2 nArea)
+CElementEnemyProjectileBanana::CElementEnemyProjectileBanana(SRect2f nArea)
 : CElementEnemyProjectile(nArea, Enemies::BANANA_PROJECTILE), SinValue(0.0f), CosValue(-1.0f) {
 }
 
@@ -28,8 +28,8 @@ void CElementEnemyProjectileBanana::setupSceneObject() {
       mesh = CMeshLoader::load3dsMesh("Base/banana_projectile.3ds");
 
    if (mesh) {
-      mesh->resizeMesh(SVector3(1.0f));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(1.0f));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -39,18 +39,18 @@ void CElementEnemyProjectileBanana::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   SceneObject->setScale(SVector3(1, 1, 1));
+   SceneObject->setScale(SVector3f(1, 1, 1));
 
    if(Direction == Projectile::LEFT)
-      Rotation = SVector3(-90, 0, -45);
+      Rotation = SVector3f(-90, 0, -45);
    else if (Direction == Projectile::RIGHT)
-      Rotation = SVector3(-90, 0, 45);
+      Rotation = SVector3f(-90, 0, 45);
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
 void CElementEnemyProjectileBanana::updateSceneObject(float time) {
-   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, 0));
 
    if (Direction == Projectile::LEFT) {
       if (Level.getEnv() != Env::WATER)
@@ -74,16 +74,16 @@ void CElementEnemyProjectileBanana::updatePhysicsEngineObject(float time) {
 
    if (Direction == Projectile::LEFT) { //go left
       if (Level.getEnv() != Env::WATER)
-         PhysicsEngineObject->setVelocity(SVector2(-5.0f*cos(CosValue), 2.5f*sin(SinValue)));
+         PhysicsEngineObject->setVelocity(SVector2f(-5.0f*cos(CosValue), 2.5f*sin(SinValue)));
       else
-         PhysicsEngineObject->setVelocity(SVector2(-2.5f*cos(CosValue), 1.25f*sin(SinValue)));
+         PhysicsEngineObject->setVelocity(SVector2f(-2.5f*cos(CosValue), 1.25f*sin(SinValue)));
    }
    
    else { //go right
       if (Level.getEnv() != Env::WATER)
-         PhysicsEngineObject->setVelocity(SVector2(5.0f*cos(CosValue), 2.5f*sin(SinValue)));
+         PhysicsEngineObject->setVelocity(SVector2f(5.0f*cos(CosValue), 2.5f*sin(SinValue)));
       else
-         PhysicsEngineObject->setVelocity(SVector2(2.5f*cos(CosValue), 1.25f*sin(SinValue)));
+         PhysicsEngineObject->setVelocity(SVector2f(2.5f*cos(CosValue), 1.25f*sin(SinValue)));
    }
 
    SinValue += time;

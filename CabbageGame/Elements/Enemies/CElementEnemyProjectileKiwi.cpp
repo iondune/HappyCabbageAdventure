@@ -2,7 +2,7 @@
 #include "CGameLevel.h"
 
 //Generic enemy, for usage in the LWIB, I guess.
-CElementEnemyProjectileKiwi::CElementEnemyProjectileKiwi(SRect2 nArea)
+CElementEnemyProjectileKiwi::CElementEnemyProjectileKiwi(SRect2f nArea)
 : CElementEnemyProjectile(nArea, Enemies::KIWI_PROJECTILE) {
 
 }
@@ -18,14 +18,13 @@ void CElementEnemyProjectileKiwi::setupPhysicsEngineObject() {
    PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
    PhysicsEngineObject->getAttributes().AirControl = 1.0f;
    PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_PKIWI;
 
    PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
 
    if (Level.getEnv() != Env::WATER)
-      PhysicsEngineObject->setVelocity(SVector2(0.f, -6.f));
+      PhysicsEngineObject->setVelocity(SVector2f(0.f, -6.f));
    else
-      PhysicsEngineObject->setVelocity(SVector2(0.f, -3.f));
+      PhysicsEngineObject->setVelocity(SVector2f(0.f, -3.f));
 
    CElementEnemy::setupPhysicsEngineObject();
 }
@@ -47,8 +46,8 @@ void CElementEnemyProjectileKiwi::setupSceneObject() {
    }
 
    if (mesh) {
-      mesh->resizeMesh(SVector3(.4f));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(.4f));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -58,13 +57,13 @@ void CElementEnemyProjectileKiwi::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   SceneObject->setScale(SVector3(1, 1, 1));
+   SceneObject->setScale(SVector3f(1, 1, 1));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
 void CElementEnemyProjectileKiwi::OnCollision(CCollideable *Object) {
-   if (!Dead && Object->CollideableType != COLLIDEABLE_TYPE_KIWI) {
+   if (!Dead) {
       removeFromGame();
       Dead = true;
 
@@ -74,10 +73,10 @@ void CElementEnemyProjectileKiwi::OnCollision(CCollideable *Object) {
          if (Level.getPlayer().decrementHealth()) {
 
            if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
-              PlayerActor->setImpulse(SVector2(4.f, 2.f), 0.1f);
+              PlayerActor->addImpulse(SVector2f(4.f, 2.f));
 
            else
-              PlayerActor->setImpulse(SVector2(-4.f, 2.f), 0.1f);
+              PlayerActor->addImpulse(SVector2f(-4.f, 2.f));
 
            Level.getPlayer().setShaking(1.0f, 3.0f);
          }
@@ -86,11 +85,11 @@ void CElementEnemyProjectileKiwi::OnCollision(CCollideable *Object) {
 }
 
 void CElementEnemyProjectileKiwi::updatePhysicsEngineObject(float time) {
-   PhysicsEngineObject->setVelocity(SVector2(0.f, -6.f));
+   PhysicsEngineObject->setVelocity(SVector2f(0.f, -6.f));
 }
 
 void CElementEnemyProjectileKiwi::updateSceneObject(float time) {
-   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y, 0));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, 0));
 }
 
 void CElementEnemyProjectileKiwi::printInformation() {

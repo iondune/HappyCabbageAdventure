@@ -2,7 +2,7 @@
 #include "CElementEnemyProjectile.h"
 #include "CGameLevel.h"
 
-CElementEnemyBanana::CElementEnemyBanana(SRect2 nArea) :
+CElementEnemyBanana::CElementEnemyBanana(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::BANANA), ISquishable(nArea.Size.X, nArea.Size.Y), ShootTime(0.0f) {
 }
 
@@ -31,8 +31,8 @@ void CElementEnemyBanana::setupSceneObject() {
       mesh = CMeshLoader::load3dsMesh("Base/banana.3ds");
 
    if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(1));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -42,10 +42,10 @@ void CElementEnemyBanana::setupSceneObject() {
    SceneObject->setMesh(mesh);
 
    Scale = Area.Size;
-   SceneObject->setScale(SVector3(Scale.X, Scale.X, Scale.Y));
+   SceneObject->setScale(SVector3f(Scale.X, Scale.X, Scale.Y));
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X,Area.getCenter().Y, 0));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
@@ -54,7 +54,7 @@ void CElementEnemyBanana::setupSceneObject() {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyBanana::updatePhysicsEngineObject(float time) {
-   SVector2 PlayerPosition = Level.getPlayer().getArea().Position;
+   SVector2f PlayerPosition = Level.getPlayer().getArea().Position;
    //TODO: Make some class singleton so we can get the player's location
    if (PlayerPosition.X < Area.getCenter().X)
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
@@ -72,14 +72,14 @@ void CElementEnemyBanana::updatePhysicsEngineObject(float time) {
 
       if (PlayerPosition.X < Area.Position.X) {
          x -= 1.2f;
-         projectile = CEnemyLoader::LoadEnemy(SRect2(x, y, Area.Size.X, Area.Size.Y), Enemies::BANANA_PROJECTILE);
+         projectile = CEnemyLoader::LoadEnemy(SRect2f(x, y, Area.Size.X, Area.Size.Y), Enemies::BANANA_PROJECTILE);
                   ((CElementEnemyProjectile *)projectile)->setDirection(Projectile::LEFT);
                   Level.addEnemy(projectile);
       }
 
       else {
          x += 1.2f;
-         projectile = CEnemyLoader::LoadEnemy(SRect2(x, y, Area.Size.X, Area.Size.Y), Enemies::BANANA_PROJECTILE);
+         projectile = CEnemyLoader::LoadEnemy(SRect2f(x, y, Area.Size.X, Area.Size.Y), Enemies::BANANA_PROJECTILE);
          ((CElementEnemyProjectile *)projectile)->setDirection(Projectile::RIGHT);
          Level.addEnemy(projectile);
       }
@@ -88,11 +88,11 @@ void CElementEnemyBanana::updatePhysicsEngineObject(float time) {
 
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyBanana::updateSceneObject(float time) {
-   SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X,Area.getCenter().Y, 0));
    if(ParticleEngine) {
-      SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.Position.Y, 0));
-      SceneObject->setRotation(SVector3(-90, 0, 0));
-      SceneObject->setScale(SVector3(Scale.X, Scale.X, 0.3f));
+      SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
+      SceneObject->setRotation(SVector3f(-90, 0, 0));
+      SceneObject->setScale(SVector3f(Scale.X, Scale.X, 0.3f));
       return;
    }
 
@@ -112,19 +112,19 @@ void CElementEnemyBanana::updateSceneObject(float time) {
 
    Scale.Y += ScaleMult - 1.0f;
 
-   SceneObject->setScale(SVector3(Scale.X, Scale.X, Scale.Y));
+   SceneObject->setScale(SVector3f(Scale.X, Scale.X, Scale.Y));
 
    if (PhysicsEngineObject->getVelocity().Y < .01f && PhysicsEngineObject->getVelocity().Y > -.01f) {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)
-         SceneObject->setRotation(SVector3(-90,0,-45));
+         SceneObject->setRotation(SVector3f(-90,0,-45));
       else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-         SceneObject->setRotation(SVector3(-90,0,45));
+         SceneObject->setRotation(SVector3f(-90,0,45));
    }
    else {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)
-         SceneObject->setRotation(SVector3(-90,0,-45));
+         SceneObject->setRotation(SVector3f(-90,0,-45));
       else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-         SceneObject->setRotation(SVector3(-90,0,45));
+         SceneObject->setRotation(SVector3f(-90,0,45));
    }
 }
 

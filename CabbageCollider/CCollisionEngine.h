@@ -2,16 +2,14 @@
 #define _CABBAGECOLLIDER_CENGINE_H_INCLUDED_
 
 #include <vector>
+#include <set>
 #include <limits>
 
 #include "CCollisionObject.h"
 #include "CCollisionActor.h"
+#include "CCollisionElevator.h"
 
-/*
-#define INTERACTOR_
-#define INTERACTOR_
-#define INTERACTOR_
-*/
+
 #define INTERACTOR_NON 128
 
 class CCollisionEngine
@@ -19,56 +17,49 @@ class CCollisionEngine
 
 public:
 	
-	typedef std::vector<CCollisionObject *> ObjectList;
-	typedef std::vector<CCollisionActor *> ActorList;
+	typedef std::set<CCollideable *> CollideableList;
+	typedef std::set<CCollisionObject *> ObjectList;
+	typedef std::set<CCollisionActor *> ActorList;
 
 private:
 
 	ObjectList Objects;
 	ActorList Actors;
 
-	bool CanCollide(CCollideable *a, CCollideable *b);
+	ActorList ActorAddList;
+	ObjectList ObjectAddList;
+	CollideableList RemoveList;
 
 	void performTick(float const TickTime);
 
 	float Timer;
 
+	void runLists();
+
 public:
 
-	std::vector<CCollideable *> getAllInBound(SRect2 Bound);
-	void removeAll();
-
-	void removeObject(CCollisionObject * Object);
-
-
 	CCollisionEngine();
-
 	~CCollisionEngine();
 
+	void removeAll();
+	void removeCollideable(CCollideable * Collideable);
+	void remove(CCollideable * Collideable);
 
-	void removeActor(CCollisionActor * Actor);
-	void remove(CCollideable *);
-
-	void update(float const Elapsed);
 	void updateAll(float const Elapsed);
+	void update(float const Elapsed);
 
-	CCollisionObject* const getObjectBelow(SVector2 pos);
-
-	float const getHeightBelow(SVector2 pos);
-
+	CCollisionObject* const getObjectBelow(SVector2f pos);
+	float const getHeightBelow(SVector2f pos);
 	float const getHeightBelow(CCollisionActor * Actor);
 
-	void addNullBlock();
-
 	CCollisionObject * addObject();
-
-	CElevator * addElevator();
-
+	CCollisionElevator * addElevator();
 	CCollisionActor * addActor();
 
 	ObjectList const & getObjects() const;
-
 	ActorList const & getActors() const;
+
+	std::vector<CCollideable *> const getAllInBound(SRect2f const Bound) const;
 
 };
 

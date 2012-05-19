@@ -1,7 +1,7 @@
 #include "CElementEnemyFlame.h"
 #include "CGameLevel.h"
 
-CElementEnemyFlame::CElementEnemyFlame(SRect2 nArea) :
+CElementEnemyFlame::CElementEnemyFlame(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::FLAME) {
 
 }
@@ -23,20 +23,20 @@ void CElementEnemyFlame::setupSceneObject() {
    SceneObject->setTranslation(SVector3(Area.Position.X, Area.Position.Y, 0));
 }
 
-void CElementEnemyFlame::OnCollision(CCollideable *Object) {
+void CElementEnemyFlame::OnCollision(const SCollisionEvent& Event) {
    static float const flameJumpFactor = 8.0f;
    if(!Dead) {
-      if(Object == Level.getPlayer().getPhysicsEngineObject()) {
+      if(Event.Other == Level.getPlayer().getPhysicsEngineObject()) {
          if(Level.getPlayer().decrementHealth()) {
             CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
             if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {
-               PlayerActor->setImpulse(SVector2(0.0f, flameJumpFactor), 0.01f);
+               PlayerActor->addImpulse(SVector2f(0.0f, flameJumpFactor));
             }
          }
       }
       else {
          //We can make enemies jump when they touch fire here too, once we have a pointer to the CElementEnemy*.
-         ((CCollisionActor *)Object)->setImpulse(SVector2(0.0f, flameJumpFactor), 0.01f);
+         ((CCollisionActor *)Event.Other)->addImpulse(SVector2f(0.0f, flameJumpFactor));
       }
    }
 }

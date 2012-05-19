@@ -102,7 +102,6 @@
     <ClInclude Include="CBiggerBlock.h" />
     <ClInclude Include="CDecorManager.h" />
     <ClInclude Include="CGameLevel.h" />
-    <ClInclude Include="CGameLevelEventManager.h" />
     <ClInclude Include="CGameLevelLoader.h" />
     <ClInclude Include="CGameplayGUIManager.h" />
     <ClInclude Include="CGameplayManager.h" />
