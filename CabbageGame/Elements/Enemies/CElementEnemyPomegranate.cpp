@@ -13,7 +13,6 @@ void CElementEnemyPomegranate::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
 
    PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
-   PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
 
    CElementEnemy::setupPhysicsEngineObject();
 }
@@ -98,10 +97,10 @@ void CElementEnemyPomegranate::updatePhysicsEngineObject(float time) {
    FlameTimer += time;
 
    if (fabs(difference) < 0.0001f && !HitPlayer) {
-      if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveLeft)
-         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
-      else if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveRight)
+      if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveRight)
          PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
+      else
+         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
    }
 
    if (FlameTimer >= 4.0f) {
