@@ -168,7 +168,7 @@ public:
     void ResetSynchro(double time);
     void Skip(float seconds);
     void Volume(int vol);
-		/* Michel Darricau from eProcess <mdarricau@eprocess.fr> conflict name in popcorn */
+      /* Michel Darricau from eProcess <mdarricau@eprocess.fr> conflict name in popcorn */
     MPEGstatus GetStatus(void);
 
     /* Returns the desired SDL audio spec for this stream */

@@ -8,6 +8,7 @@
 #include "../StateMainMenu/CMainMenuState.h"
 #include "../CabbageGame/Elements/Enemies/CElementEnemy.h"
 #include "../CabbageGame/Elements/Blocks/CElementBlock.h"
+#include "../CabbageGame/Elements/Blocks/CElementBlockElevator.h"
 #include "../CabbageGame/Elements/Player/CElementPlayer.h"
 #include "../CabbageGame/Elements/Blocks/CElementBlockBreakable.h"
 #include "../CabbageGame/Elements/Blocks/CElementBlockDeath.h"
@@ -74,7 +75,7 @@ class CLWIBState : public CState<CLWIBState>
    CLWIBState();
    void begin();
    CPerspectiveCamera *Camera;
-   SVector3 eye, look;
+   SVector3f eye, look;
 
    int blockWidth, blockHeight,blockDepth;
    void OnRenderStart(float const Elapsed);
@@ -100,7 +101,7 @@ class CLWIBState : public CState<CLWIBState>
    void prepHud();
    void stepCamera(float delta);
    void changeTiles();
-   void removeObject();
+   void removeCollideable();
    void undoObjects();
    void OnWidgetClick(CGUIWidget * Widget);
    void OnWidgetHover(CGUIWidget * Widget);

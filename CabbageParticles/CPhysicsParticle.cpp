@@ -3,9 +3,9 @@
 void CPhysicsParticle::setEngine(CCollisionEngine *engine, int env) {
    Engine = engine;
    Actor = Engine->addActor();
-   Actor->CollideableLevel = INTERACTOR_NONCOLLIDERS;
-   Actor->CanCollideWith = INTERACTOR_BLOCKS;
-   Actor->setArea(SRect2(centerPos->X, centerPos->Y, 0.001f, 0.001f));
+   Actor->setTypeId(INTERACTOR_NONCOLLIDERS);
+   Actor->setCollisionMask(INTERACTOR_BLOCKS);
+   Actor->setArea(SRect2f(centerPos->X, centerPos->Y, 0.001f, 0.001f));
 
    if (env == 2) {
       Actor->getAttributes().MaxWalk *= 0.5f;
@@ -24,6 +24,6 @@ void CPhysicsParticle::setEngine(CCollisionEngine *engine, int env) {
 
 void CPhysicsParticle::deconstruct() {
    if(Actor && Engine) {
-      Engine->removeActor(Actor);
+      Engine->removeCollideable(Actor);
    }
 }

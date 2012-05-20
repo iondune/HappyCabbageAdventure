@@ -1,5 +1,5 @@
-FILES = CCollisionEngine.cpp CCollisionActor.cpp CCollideable.cpp CCollisionObject.cpp 
-CC=g++ -g
+FILES = CCollisionEngine.cpp CCollisionActor.cpp CCollideable.cpp CCollisionObject.cpp CCollisionElevator.cpp 
+CC=g++ -O1 -s
 
 OFILES = $(FILES:%.cpp=%.o)
 

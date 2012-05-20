@@ -36,9 +36,16 @@ void CGameLevel::incrementXmlCount() {
    XmlCount++;
 }
 
+std::vector<CGameplayElement*> & CGameLevel::getGameplayElements() {
+   return Elements;
+}
+
+
 std::vector<CGameplayElement*> & CGameLevel::getElements() {
    return Elements;
 }
+
+
 std::vector<CElementBlock*> & CGameLevel::getBlocks() {
    return Blocks;
 }
@@ -99,7 +106,7 @@ std::vector<CBiggerBlock*> & CGameLevel::getConsolidatedBlocks() {
 
 CElementPlayer & CGameLevel::getPlayer() {
    if(PlayerElement == NULL)
-      PlayerElement = new CElementPlayer(SRect2(-100, 0, 1, 1));
+      PlayerElement = new CElementPlayer(SRect2f(-100, 0, 1, 1));
    return *PlayerElement;
 }
 
@@ -149,7 +156,7 @@ void CGameLevel::addItem(CElementItem* Item) {
    Elements.push_back(Item);
 }
 
-void CGameLevel::removeObject(CGameplayElement* Object) {
+void CGameLevel::removeCollideable(CGameplayElement* Object) {
    Elements.erase(std::remove(Elements.begin(), Elements.end(), Object), Elements.end());
    Blocks.erase(std::remove(Blocks.begin(), Blocks.end(), Object), Blocks.end());
    Enemies.erase(std::remove(Enemies.begin(), Enemies.end(), Object), Enemies.end());

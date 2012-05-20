@@ -25,7 +25,9 @@ public:
 
 	void setShader(ERenderPass const Pass, CShader * shader);
 	void setShader(ERenderPass const Pass, std::string const & shader);
+
 	void setMaterial(CMaterial const & material);
+
 	void setTexture(CTexture * texture);
 	void setTexture(CTexture * texture, int const renderable);
 	void setTexture(std::string const & texture);
@@ -40,6 +42,7 @@ public:
 
 	void addAttribute(std::string const & label, boost::shared_ptr<IAttribute const> const attribute);
     void addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform);
+
     void removeAttribute(std::string const & label);
     void removeUniform(std::string const & label);
 

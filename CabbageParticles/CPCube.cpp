@@ -23,7 +23,7 @@ void CPCube::updateMatrices(float timeElapsed) {
       sineValue += 4*timeElapsed;
       Duration += timeElapsed;
       float newX = (*lookRight?1:-1)*(0.8f+yFactor);
-      translate = SVector3(newX,
+      translate = SVector3f(newX,
                            Amplitude*cos(Period*sineValue), 
                            Amplitude*sin(Period*sineValue));
    }

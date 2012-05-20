@@ -1,7 +1,7 @@
 #include "CElementEnemyGrape.h"
 #include "CGameLevel.h"
 
-CElementEnemyGrape::CElementEnemyGrape(SRect2 nArea) :
+CElementEnemyGrape::CElementEnemyGrape(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::GRAPE), shootTime(0.f) {
 }
 
@@ -18,20 +18,23 @@ void CElementEnemyGrape::setupSceneObject() {
    SceneObject = new CMeshSceneObject();
    CMesh *mesh;
 
-   if (Level.getEnvironment() == 0) {
+   if (Level.getEnvironment() == Env::FOREST) {
       mesh = CMeshLoader::load3dsMesh("Base/grape_bunch.3ds");
    }
 
-   else if (Level.getEnvironment() == 1) {
+   else if (Level.getEnvironment() == Env::DESERT) {
       mesh = CMeshLoader::load3dsMesh("Base/grape_bunch.3ds");
    }
+
+   else if (Level.getEnvironment() == Env::WATER)
+      mesh = CMeshLoader::load3dsMesh("Base/water_grape_bunch.3ds");
 
    else
       mesh = CMeshLoader::load3dsMesh("Base/grape_bunch.3ds");
 
    if(mesh) {
-      mesh->resizeMesh(SVector3(2));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(2));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -42,7 +45,7 @@ void CElementEnemyGrape::setupSceneObject() {
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
 
-   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y + .2f, 0));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y + .2f, 0));
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
@@ -50,6 +53,9 @@ void CElementEnemyGrape::setupSceneObject() {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyGrape::updatePhysicsEngineObject(float time) {
+   CElementEnemy::updatePhysicsEngineObject(time);
+   if(TimeToDeath > 0.0f)
+      return;
    shootTime += time;
 
    //TODO: Check the player is alive
@@ -63,16 +69,20 @@ void CElementEnemyGrape::updatePhysicsEngineObject(float time) {
 
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyGrape::updateSceneObject(float time) {
-   SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y + .2f, 0));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y + .2f, 0));
 
-   SVector2 playerPosition = Level.getPlayer().getArea().Position;
+   SVector2f playerPosition = Level.getPlayer().getArea().Position;
 
-   SceneObject->setRotation(SVector3(-90, 0, 90));
+   SceneObject->setRotation(SVector3f(-90, 0, 90));
 
    if(ParticleEngine) {
-      SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.Position.Y, 0));
-      SceneObject->setRotation(SVector3(-90, 0, 90));
-      SceneObject->setScale(SVector3(1.0f, 1.0f, 0.3f));
+      SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
+      SceneObject->setRotation(SVector3f(-90, 0, 90));
+      SceneObject->setScale(SVector3f(1.0f, 1.0f, 0.3f));
+      return;
+   }
+   if(TimeToDeath > 0.0f) {
+      CElementEnemy::updateSceneObject(time);
       return;
    }
 
@@ -83,19 +93,19 @@ void CElementEnemyGrape::printInformation() {
 }
 
 void CElementEnemyGrape::ShootGrape() {
-   SVector2 playerPosition = Level.getPlayer().getArea().Position;
+   SVector2f playerPosition = Level.getPlayer().getArea().Position;
    float x, y;
 
    if (playerPosition.X < Area.Position.X) {//spawn to the left
       x = Area.Position.X - Area.Size.X/2.f - .5f;
       y = Area.Position.Y + .15f;
 
-      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(x, y, Area.Size.X, Area.Size.Y), Enemies::GRAPE_PROJECTILE));
+      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2f(x, y, Area.Size.X, Area.Size.Y), Enemies::GRAPE_PROJECTILE));
    }
    else {//spawn to the right
       x = Area.Position.X + Area.Size.X/2.f + .55f;
       y = Area.Position.Y + .15f;
 
-      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2(x, y, Area.Size.X, Area.Size.Y), Enemies::GRAPE_PROJECTILE));
+      Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2f(x, y, Area.Size.X, Area.Size.Y), Enemies::GRAPE_PROJECTILE));
    }
 }

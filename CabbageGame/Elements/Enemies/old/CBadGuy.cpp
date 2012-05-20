@@ -58,11 +58,11 @@ void CBadGuy::makeBadGuy(float x, float y, float w, float h, EnemyType enemy, CG
 
 void CBadGuy::doRenderable() {
 
-   Renderable->setTranslation(SVector3(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, 0));
+   Renderable->setTranslation(SVector3f(Actor->getArea().getCenter().X,Actor->getArea().getCenter().Y, 0));
 
    if(Actor->getVelocity().X < -0.01f)
-      Renderable->setScale(SVector3(-1,1,1));
+      Renderable->setScale(SVector3f(-1,1,1));
    else if(Actor->getVelocity().X > 0.01f)
-      Renderable->setScale(SVector3(1,1,1));
+      Renderable->setScale(SVector3f(1,1,1));
 
 }

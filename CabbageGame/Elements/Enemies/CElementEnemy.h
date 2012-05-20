@@ -6,14 +6,14 @@
 
 namespace Enemies {
    enum EEnemyType {
-      APPLE					 = 0,
-      ORANGE				 = 1,
-      KIWI					 = 2,
-      GRAPE					 = 3,
-      FLAME					 = 4,
-      BLADE					 = 5,
-      KIWI_PROJECTILE	 = 6,
-      GRAPE_PROJECTILE	 = 7,
+      APPLE                = 0,
+      ORANGE             = 1,
+      KIWI                = 2,
+      GRAPE                = 3,
+      FLAME                = 4,
+      BLADE                = 5,
+      KIWI_PROJECTILE    = 6,
+      GRAPE_PROJECTILE    = 7,
       GIANT_APPLE        = 8,
       PEAR               = 9,
       BANANA            = 10,
@@ -35,6 +35,9 @@ class CElementEnemy : public CGameplayElement {
       CCollisionActor * PhysicsEngineObject; //Override CGameplayElement's but with type CCollisionActor
       CMeshSceneObject * SceneObject; //Override CGameplayElement's but with type CMeshSceneObject
 
+      SRect2f OldArea;
+      SVector3f OldRot;
+      float TimeToDeath;
       Enemies::EEnemyType Type;
       void dieWithSeeds();
       void deathAnimation();
@@ -47,7 +50,7 @@ class CElementEnemy : public CGameplayElement {
       int MaxHealth, CurHealth;
 
    public:
-      virtual void OnCollision(CCollideable *Object);
+      virtual void OnCollision(const SCollisionEvent& Event);
       virtual void writeXML(xmlwriter *l);
 
       virtual void setupPhysicsEngineObject();
@@ -59,7 +62,7 @@ class CElementEnemy : public CGameplayElement {
 
       Enemies::EEnemyType getEnemyType();
 
-      CElementEnemy(SRect2 nArea, Enemies::EEnemyType type);
+      CElementEnemy(SRect2f nArea, Enemies::EEnemyType type);
 
       virtual int getHealth();
       virtual int takeDamage(int amount);
@@ -70,6 +73,6 @@ class CElementEnemy : public CGameplayElement {
 
 class CEnemyLoader {
    public:
-      static CElementEnemy *LoadEnemy(SRect2 nArea, Enemies::EEnemyType type); 
+      static CElementEnemy *LoadEnemy(SRect2f nArea, Enemies::EEnemyType type); 
 };
 #endif

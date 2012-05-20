@@ -7,10 +7,10 @@
 class CPlayerAbilityLaser : public CPlayerAbility {
    public:
       enum ELaserState {
-         CHARGING		= 0,
-         CHARGED		= 1,
-         FIRING		= 2,
-         FIRED			= 3
+         CHARGING      = 0,
+         CHARGED      = 1,
+         FIRING      = 2,
+         FIRED         = 3
       };
 
    private:
@@ -23,12 +23,12 @@ class CPlayerAbilityLaser : public CPlayerAbility {
       CParticleEngine *ParticleEngine;
       ELaserState LaserState;
       float TemporaryTimeVariable;
-      SRect2 TemporaryArea;
+      SRect2f TemporaryArea;
 
    public:
       void inUpdatePhysicsEngineObject(float);
       void inUpdateSceneObject(float);
-      void inOnCollision(CCollideable *Object);
+      void inOnCollision(const SCollisionEvent& Event);
       void checkKey(bool keyDown);
       //void inOnCollision(CCollideable *);
       CPlayerAbilityLaser(CElementPlayer &);

@@ -19,25 +19,25 @@ ISceneObject *CDecorManager::SetupObject(float x, float y, float z, float scale,
    render->setMesh(model);
    render->setShader(ERP_DEFAULT, Toon);
    render->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
-   render->setTranslation(SVector3(x, y, z));
-   render->setScale(SVector3(scale));
-   render->setRotation(SVector3(-90, 0, 0));
+   render->setTranslation(SVector3f(x, y, z));
+   render->setScale(SVector3f(scale));
+   render->setRotation(SVector3f(-90, 0, 0));
 
    if (model == fernMesh) {
-      render->setRotation(SVector3(-90, 0, -115));
+      render->setRotation(SVector3f(-90, 0, -115));
    }
    else if (model == whiteFlwrMesh) {
-      render->setRotation(SVector3(-90, 0, -80));
+      render->setRotation(SVector3f(-90, 0, -80));
    }
    else if (model == cactus1Mesh) {
       render->setShader(ERP_DEFAULT, ToonTexture);
       render->setTexture(CImageLoader::loadTexture("Base/cactus.bmp", true));
       render->setShader(ERP_DEFERRED_OBJECTS, DeferredToonTexture);
 
-      render->setRotation(SVector3(-90, 0, rand()%179 - 90.f));
+      render->setRotation(SVector3f(-90, 0, rand()%179 - 90.f));
    }
    else if (model == cactus2Mesh || model == cactusBush2Mesh) {
-      render->setRotation(SVector3(-90, 0, rand()%179 - 90.f));
+      render->setRotation(SVector3f(-90, 0, rand()%179 - 90.f));
    }
 
    CApplication::get().getSceneManager().addImmobileSceneObject(render, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
@@ -47,7 +47,7 @@ ISceneObject *CDecorManager::SetupObject(float x, float y, float z, float scale,
 void CDecorManager::update(float f) {
    if(StarEngine)
       StarEngine->step(f);
-   for(int i = 0; i < DecorativeParticleEngines.size(); i++) {
+   for(unsigned int i = 0; i < DecorativeParticleEngines.size(); i++) {
       DecorativeParticleEngines[i]->step(f);
    }
 }
@@ -61,7 +61,7 @@ CDecorManager::CDecorManager(CGameLevel & level) {
    SetupSky();
    StarEngine = NULL;
    if(night) {
-      StarEngine = new CParticleEngine(SVector3(-30.0f, 15.0f, 0.0f), 100, -1, STAR_PARTICLE);
+      StarEngine = new CParticleEngine(SVector3f(-30.0f, 15.0f, 0.0f), 100, -1, STAR_PARTICLE);
       SetupClouds();
    }
    oldFern = false;
@@ -75,14 +75,20 @@ CDecorManager::CDecorManager(CGameLevel & level) {
       if (env == Env::FOREST)
          GenerateForestPlants(curBlock);
       else if (env == Env::DESERT) {
-         drawTree--;
-         if (drawTree == 0) {
-            drawTree = rand()%2 + 1;
-            GenerateDesertPlants(curBlock, true);
-         }
-         else
-            GenerateDesertPlants(curBlock, false);
+    	  drawTree--;
+    	  if (drawTree == 0) {
+    		  drawTree = rand()%2 + 1;
+    		  GenerateDesertPlants(curBlock, true);
+    	  }
+
+    	  else
+    		  GenerateDesertPlants(curBlock, false);
       }
+
+      else if (env == Env::WATER) {
+    	  GenerateWaterPlants(curBlock);
+      }
+
       int n=0;
       if(night) {
          CPointLightSceneObject * point;
@@ -95,15 +101,15 @@ CDecorManager::CDecorManager(CGameLevel & level) {
             */
 
             point = new CPointLightSceneObject(1.5f, n % 2 ? SColor(1.0f, 0.62f, 0.0f) : SColor(0.68f, 1.0f, 0.18f)); //Orange and Yellowgreen
-            point->setTranslation(SVector3(curBlock->x + curBlock->w / 2.0f, y, 0.f));
+            point->setTranslation(SVector3f(curBlock->x + curBlock->w / 2.0f, y, 0.f));
             CApplication::get().getSceneManager().addSceneObject(point);
             n++;
          }
 
-         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3(curBlock->x + curBlock->w / 3.0f, curBlock->y + curBlock->h, 1), 10, -1, WIGGLE_PARTICLE));
-         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3(curBlock->x + 2.0f*curBlock->w / 3.0f, curBlock->y + curBlock->h, 1), 10, -1, WIGGLE_PARTICLE));
-         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3(curBlock->x + curBlock->w / 3.0f, curBlock->y + curBlock->h, -1), 10, -1, WIGGLE_PARTICLE));
-         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3(curBlock->x + 2.0f*curBlock->w / 3.0f, curBlock->y + curBlock->h, -1), 10, -1, WIGGLE_PARTICLE));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + curBlock->w / 3.0f, curBlock->y + curBlock->h, 1), 10, -1, WIGGLE_PARTICLE));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + 2.0f*curBlock->w / 3.0f, curBlock->y + curBlock->h, 1), 10, -1, WIGGLE_PARTICLE));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + curBlock->w / 3.0f, curBlock->y + curBlock->h, -1), 10, -1, WIGGLE_PARTICLE));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + 2.0f*curBlock->w / 3.0f, curBlock->y + curBlock->h, -1), 10, -1, WIGGLE_PARTICLE));
       }
       delete curBlock;
    }
@@ -282,6 +288,106 @@ void CDecorManager::GenerateForestPlants(CGroundBlock* block) {
    }
 }
 
+void CDecorManager::GenerateWaterPlants(CGroundBlock* block) {
+   float x = block->x,
+         y = block->y,
+         w = block->w,
+         h = block->h,
+         d = block->d;
+   int numForeground, numBackground;
+   int random;
+   float randScale, randDepth;
+   float div, yVal = y + h;
+
+   if (w > 0.5f && w < 1.5f)  //If block size roughly 1, don't draw any trees
+      numForeground = numBackground = 0;
+   else {
+      numForeground = (int) w / 2;
+      numBackground = (int) w / 2;
+   }
+
+   div =  w/(float)numBackground;
+
+   //Check how many tree-type objects we should draw in the background
+   for (int n = 0; n < numBackground; n++) {
+      random = rand()%2;
+
+      if (random == 0)
+         SetupObject(x + (n)*div + div/2.0f, yVal + 1.8f, -d/2.0f + .4f, 8.0f, basicTreeMesh);
+      else if (random == 1)
+         SetupObject(x + (n)*div + div/2.0f, yVal + 1.4f, -d/2.0f + .4f, 6.0f, christmasTreeMesh);
+   }
+
+   //Draw flower-type plants in background
+   for (int n = 0; n < w; n++) {
+      random = rand()%6;
+      float subrand = (float) (rand()%5);
+      randScale = (float) (rand()%20);
+      randScale = randScale * .025f;
+      randDepth = (float) (rand()%2);
+      randDepth = (float) randDepth*.25f;
+
+      if (random == 0 || random == 1)
+         SetupObject(x + n + .5f, yVal + .2f, -d/2.0f + 1.6f + randDepth, .7f, whiteFlwrMesh);
+      else if (random == 2 || random == 3 || random == 4) {
+         if (subrand == 0)
+            SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, yellowFlwrMesh);
+         else if (subrand == 1)
+            SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, blueFlwrMesh);
+         else if (subrand == 2)
+            SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, whiteSunflwrMesh);
+         else if (subrand == 3)
+            SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, tealFlwrMesh);
+         else if (subrand == 4)
+            SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, purpleFlwrMesh);
+      }
+      else if (random == 5 && !oldFern) {
+         SetupObject(x + n + .5f, yVal + .2f, -d/2.0f + 1.5f + randDepth, 1.f + randScale, fernMesh);
+         oldFern = true;
+      }
+      else if (random == 5 && oldFern)
+         n--;
+
+      if (random != 5)
+         oldFern = false;
+   }
+
+   //Draw flower-type plants in foreground
+   for (int n = 0; n < w; n++) {
+      random = rand()%6;
+      float subrand = (float) (rand()%5);
+      randScale = (float) (rand()%10);
+      randScale = randScale * 0.04f;
+      randDepth = (float) (rand()%2);
+      randDepth = randDepth*0.25f;
+
+      if (random == 0 || random == 1)
+         SetupObject(x + n + 0.5f, yVal + .2f, d/2.0f - 0.6f, 0.5f + randScale/2.0f, whiteFlwrMesh);
+      else if (random == 2 || random == 3 || random == 4) {
+         if (subrand == 0)
+            SetupObject(x + n + 0.5f, yVal + .3f, d/2.0f - 0.6f, 0.4f + randScale, blueFlwrMesh);
+         else if (subrand == 1)
+            SetupObject(x + n + 0.5f, yVal + .3f, d/2.0f - 0.6f, 0.4f + randScale, tealFlwrMesh);
+         else if (subrand == 2)
+            SetupObject(x + n + 0.5f, yVal + .3f, d/2.0f - 0.6f + .4f, 0.4f + randScale, purpleFlwrMesh);
+         else if (subrand == 3)
+            SetupObject(x + n + 0.5f, yVal + .3f, d/2.0f - 0.6f, 0.4f + randScale, yellowFlwrMesh);
+         else if (subrand == 3)
+            SetupObject(x + n + 0.5f, yVal + .3f, d/2.0f - 0.6f, 0.4f + randScale, whiteSunflwrMesh);
+      }
+      else if (random == 5 && !oldFern) {
+         SetupObject(x + n + 0.5f, yVal + 0.2f, d/2.0f - 0.6f, 0.7f, fernMesh);
+         oldFern = true;
+      }
+      else if (random == 5 && oldFern) {
+         n--;
+      }
+
+      if (random != 5)
+         oldFern = false;
+   }
+}
+
 void CDecorManager::PrepShaders() {
    DeferredFlat = CShaderLoader::loadShader("Deferred/Diffuse");
    DeferredDiffuse = CShaderLoader::loadShader("Deferred/Diffuse");
@@ -305,8 +411,8 @@ void CDecorManager::PrepMeshes()
    //Forest Meshes
    basicTreeMesh = CMeshLoader::load3dsMesh("Base/tree4.3ds");
    if (basicTreeMesh) {
-      basicTreeMesh->resizeMesh(SVector3(0.5));
-      basicTreeMesh->centerMeshByExtents(SVector3(0));
+      basicTreeMesh->resizeMesh(SVector3f(0.5));
+      basicTreeMesh->centerMeshByExtents(SVector3f(0));
       basicTreeMesh->calculateNormalsPerVertex();
    }
    else {
@@ -315,8 +421,8 @@ void CDecorManager::PrepMeshes()
 
    christmasTreeMesh = CMeshLoader::load3dsMesh("Base/christmasTree3.3ds");
    if (christmasTreeMesh) {
-      christmasTreeMesh->resizeMesh(SVector3(0.5));
-      christmasTreeMesh->centerMeshByExtents(SVector3(0));
+      christmasTreeMesh->resizeMesh(SVector3f(0.5));
+      christmasTreeMesh->centerMeshByExtents(SVector3f(0));
       christmasTreeMesh->calculateNormalsPerFace();
    }
    else {
@@ -325,7 +431,7 @@ void CDecorManager::PrepMeshes()
 
    blueFlwrMesh = CMeshLoader::load3dsMesh("Base/simpleflower1.3ds");
    if (blueFlwrMesh) {
-      blueFlwrMesh->centerMeshByExtents(SVector3(0));
+      blueFlwrMesh->centerMeshByExtents(SVector3f(0));
       blueFlwrMesh->calculateNormalsPerFace();
    }
    else {
@@ -334,8 +440,8 @@ void CDecorManager::PrepMeshes()
 
    whiteFlwrMesh = CMeshLoader::load3dsMesh("Base/simpleflower2.3ds");
    if (whiteFlwrMesh) {
-      whiteFlwrMesh->centerMeshByExtents(SVector3(0));
-      whiteFlwrMesh->resizeMesh(SVector3(.8f));
+      whiteFlwrMesh->centerMeshByExtents(SVector3f(0));
+      whiteFlwrMesh->resizeMesh(SVector3f(.8f));
       whiteFlwrMesh->calculateNormalsPerFace();
    }
    else
@@ -343,8 +449,8 @@ void CDecorManager::PrepMeshes()
 
    whiteSunflwrMesh = CMeshLoader::load3dsMesh("Base/sunflowerwhite.3ds");
    if (whiteSunflwrMesh) {
-      whiteSunflwrMesh->centerMeshByExtents(SVector3(0));
-      whiteSunflwrMesh->resizeMesh(SVector3(.8f));
+      whiteSunflwrMesh->centerMeshByExtents(SVector3f(0));
+      whiteSunflwrMesh->resizeMesh(SVector3f(.8f));
       whiteSunflwrMesh->calculateNormalsPerFace();
    }
    else
@@ -352,8 +458,8 @@ void CDecorManager::PrepMeshes()
 
    yellowFlwrMesh = CMeshLoader::load3dsMesh("Base/sunfloweryellow.3ds");
    if (yellowFlwrMesh) {
-      yellowFlwrMesh->centerMeshByExtents(SVector3(0));
-      yellowFlwrMesh->resizeMesh(SVector3(.8f));
+      yellowFlwrMesh->centerMeshByExtents(SVector3f(0));
+      yellowFlwrMesh->resizeMesh(SVector3f(.8f));
       yellowFlwrMesh->calculateNormalsPerFace();
    }
    else
@@ -361,8 +467,8 @@ void CDecorManager::PrepMeshes()
 
    purpleFlwrMesh = CMeshLoader::load3dsMesh("Base/sunflowerpurple.3ds");
    if (purpleFlwrMesh) {
-      purpleFlwrMesh->centerMeshByExtents(SVector3(0));
-      purpleFlwrMesh->resizeMesh(SVector3(.8f));
+      purpleFlwrMesh->centerMeshByExtents(SVector3f(0));
+      purpleFlwrMesh->resizeMesh(SVector3f(.8f));
       purpleFlwrMesh->calculateNormalsPerFace();
    }
    else
@@ -370,8 +476,8 @@ void CDecorManager::PrepMeshes()
 
    tealFlwrMesh = CMeshLoader::load3dsMesh("Base/sunflowerteal.3ds");
    if (tealFlwrMesh) {
-      tealFlwrMesh->centerMeshByExtents(SVector3(0));
-      tealFlwrMesh->resizeMesh(SVector3(.8f));
+      tealFlwrMesh->centerMeshByExtents(SVector3f(0));
+      tealFlwrMesh->resizeMesh(SVector3f(.8f));
       tealFlwrMesh->calculateNormalsPerFace();
    }
    else
@@ -379,8 +485,8 @@ void CDecorManager::PrepMeshes()
 
    fernMesh = CMeshLoader::load3dsMesh("Base/fern.3ds");
    if (fernMesh) {
-      fernMesh->centerMeshByExtents(SVector3(0));
-      fernMesh->resizeMesh(SVector3(2.f));
+      fernMesh->centerMeshByExtents(SVector3f(0));
+      fernMesh->resizeMesh(SVector3f(2.f));
       fernMesh->calculateNormalsPerFace();
    }
    else {
@@ -390,8 +496,8 @@ void CDecorManager::PrepMeshes()
    //Desert Meshes
    cactus1Mesh = CMeshLoader::load3dsMesh("Base/cactus.3ds");
    if (cactus1Mesh) {
-         cactus1Mesh->centerMeshByExtents(SVector3(0));
-         cactus1Mesh->resizeMesh(SVector3(.8f));
+         cactus1Mesh->centerMeshByExtents(SVector3f(0));
+         cactus1Mesh->resizeMesh(SVector3f(.8f));
          cactus1Mesh->calculateNormalsPerFace();
       }
       else {
@@ -400,8 +506,8 @@ void CDecorManager::PrepMeshes()
 
    cactus2Mesh = CMeshLoader::load3dsMesh("Base/cactus1.3ds");
    if (cactus2Mesh) {
-      cactus2Mesh->centerMeshByExtents(SVector3(0));
-      cactus2Mesh->resizeMesh(SVector3(.8f));
+      cactus2Mesh->centerMeshByExtents(SVector3f(0));
+      cactus2Mesh->resizeMesh(SVector3f(.8f));
       cactus2Mesh->calculateNormalsPerFace();
    }
    else {
@@ -410,8 +516,8 @@ void CDecorManager::PrepMeshes()
 
    cactusBush2Mesh = CMeshLoader::load3dsMesh("Base/cactus2.3ds");
    if (cactusBush2Mesh) {
-      cactusBush2Mesh->centerMeshByExtents(SVector3(0));
-      cactusBush2Mesh->resizeMesh(SVector3(.8f));
+      cactusBush2Mesh->centerMeshByExtents(SVector3f(0));
+      cactusBush2Mesh->resizeMesh(SVector3f(.8f));
       cactusBush2Mesh->calculateNormalsPerFace();
    }
    else {
@@ -420,8 +526,8 @@ void CDecorManager::PrepMeshes()
 
    cactusBushMesh = CMeshLoader::load3dsMesh("Base/bushCactus.3ds");
    if (cactusBushMesh) {
-      cactusBushMesh->centerMeshByExtents(SVector3(0));
-      cactusBushMesh->resizeMesh(SVector3(.8f));
+      cactusBushMesh->centerMeshByExtents(SVector3f(0));
+      cactusBushMesh->resizeMesh(SVector3f(.8f));
       cactusBushMesh->calculateNormalsPerFace();
    }
    else {
@@ -433,7 +539,7 @@ void CDecorManager::SetupSky() {
    CMeshSceneObject *tempBlock;
 
    CMesh* quad = CMeshLoader::load3dsMesh("Base/Quad.3ds");
-   quad->centerMeshByExtents(SVector3(0.0f));
+   quad->centerMeshByExtents(SVector3f(0.0f));
    quad->linearizeIndices();
    quad->calculateNormalsPerFace();
 
@@ -452,9 +558,9 @@ void CDecorManager::SetupSky() {
 
    tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
-   tempBlock->setTranslation(SVector3(85/*75*/, 13, -5.0));
-   tempBlock->setScale(SVector3(250, 1, 50));
-   tempBlock->setRotation(SVector3(90.0f, 0.0f, 0.0f));
+   tempBlock->setTranslation(SVector3f(85/*75*/, 13, -5.0));
+   tempBlock->setScale(SVector3f(250, 1, 50));
+   tempBlock->setRotation(SVector3f(90.0f, 0.0f, 0.0f));
 
    CApplication::get().getSceneManager().addSceneObject(tempBlock);
 }
@@ -474,8 +580,8 @@ void CDecorManager::SetupClouds() {
    tempBlock->setTexture(tex);
    tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
-   tempBlock->setTranslation(SVector3(85/*75*/, 13, -4.9f));
-   tempBlock->setScale(SVector3(250, -50, 1));
+   tempBlock->setTranslation(SVector3f(85/*75*/, 13, -4.9f));
+   tempBlock->setScale(SVector3f(250, -50, 1));
    tempBlock->setVisible(true);
 
    CApplication::get().getSceneManager().addSceneObject(tempBlock);
@@ -483,7 +589,7 @@ void CDecorManager::SetupClouds() {
 
    /* Not using the clouds/mist until we have good transparency for DS
    CMesh* quad = CMeshLoader::load3dsMesh("Base/Quad.3ds");
-   quad->centerMeshByExtents(SVector3(0.0f));
+   quad->centerMeshByExtents(SVector3f(0.0f));
    quad->calculateNormalsPerFace();
 
    for(int i = 0; i < 10; i++) {
@@ -492,9 +598,9 @@ void CDecorManager::SetupClouds() {
       tempBlock->setTexture(cloudTextures[i % 3]);
       tempBlock->setShader(ERP_DEFAULT, DiffuseTexture);
       tempBlock->setShader(ERP_DEFERRED_OBJECTS, DeferredTexture);
-      tempBlock->setTranslation(SVector3(-20 + i*60, 4, 5));
-      tempBlock->setScale(SVector3(10, 1, 10));
-      tempBlock->setRotation(SVector3(90, 0, 0));
+      tempBlock->setTranslation(SVector3f(-20 + i*60, 4, 5));
+      tempBlock->setScale(SVector3f(10, 1, 10));
+      tempBlock->setRotation(SVector3f(90, 0, 0));
       tempBlock->setVisible(false);
 
       Application.getSceneManager().addPostOpaqueSceneObject(tempBlock);

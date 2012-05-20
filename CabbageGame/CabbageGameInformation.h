@@ -9,7 +9,7 @@ namespace Abilities {
       LASER = 1,
       DASH = 2,
       BLINK = 3,
-      GODMODE = 100
+      HEADBUTT = 4
    };
 }
 
@@ -44,6 +44,7 @@ namespace Cabbage {
             //Available abilities by default
             AvailableAbilities.insert(Abilities::LASER);
             AvailableAbilities.insert(Abilities::SHIELD);
+            AvailableAbilities.insert(Abilities::HEADBUTT);
          }
    };
 

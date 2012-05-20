@@ -3,7 +3,7 @@
 
 
 #include <sstream>
-CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2 & nArea, SVector3 & sf, CCollisionActor* peo, bool uC) :
+CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2f & nArea, SVector3f & sf, CCollisionActor* peo, bool uC) :
    SceneObject(obj), CabbageIndex(CurHealth - 1), Direction(dir), Action(act), Hurt(false), Area(nArea), ShakeFactor(sf),
    ySineValue(0.0f), PhysicsEngineObject(peo), UseCamera(uC), UseSubView(0) {
 
@@ -20,16 +20,16 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
 
    Light = new CPointLightSceneObject(4.f);
    CApplication::get().getSceneManager().addSceneObject(Light);
-   CApplication::get().getSceneManager().addSceneObject(new CDirectionalLightSceneObject(SVector3(0, -1, 0), SColor(0.3f, 0.4f, 0.7f)));
+   CApplication::get().getSceneManager().addSceneObject(new CDirectionalLightSceneObject(SVector3f(0, -1, 0), SColor(0.3f, 0.4f, 0.7f)));
 
    for(int i = 1; i <= 5; i++) {
       std::ostringstream fileName;
       fileName << "Base/cabbage/cabbage_" << i << ".3ds";
       CMesh *cabbageMesh = CMeshLoader::load3dsMesh(fileName.str());
       if(cabbageMesh) {
-         cabbageMesh->centerMeshByExtents(SVector3(0.0f));
+         cabbageMesh->centerMeshByExtents(SVector3f(0.0f));
          cabbageMesh->calculateNormalsPerFace();
-         cabbageMesh->resizeMesh(SVector3(0.45f));
+         cabbageMesh->resizeMesh(SVector3f(0.45f));
       }
 
       CMeshSceneObject *cabbageRenderable = new CMeshSceneObject();
@@ -53,9 +53,9 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
       fileName << "Base/cabbage/cabbage_ouch_" << i << ".3ds";
       CMesh *cabbageMesh = CMeshLoader::load3dsMesh(fileName.str());
       if(cabbageMesh) {
-         cabbageMesh->centerMeshByExtents(SVector3(0.0f));
+         cabbageMesh->centerMeshByExtents(SVector3f(0.0f));
          cabbageMesh->calculateNormalsPerFace();
-         cabbageMesh->resizeMesh(SVector3(0.85f));
+         cabbageMesh->resizeMesh(SVector3f(0.85f));
       }
 
       CMeshSceneObject *cabbageRenderable = new CMeshSceneObject();
@@ -64,7 +64,7 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
       cabbageRenderable->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
       cabbageRenderable->setCullingEnabled(false);
       cabbageRenderable->setVisible(false);
-      cabbageRenderable->setTranslation(SVector3(0.0f, 0.0f, 0.2f));
+      cabbageRenderable->setTranslation(SVector3f(0.0f, 0.0f, 0.2f));
 
       HurtCabbage->addChild(cabbageRenderable);
       HurtCabbageRenderables[i-1] = cabbageRenderable;
@@ -90,16 +90,16 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 } 
 
-void CPlayerView::setCabbageScale(SVector3 sc) {
+void CPlayerView::setCabbageScale(SVector3f sc) {
    CabbageSceneObject->setScale(sc);
 }
 
 void CPlayerView::updateShadow(float time) {
-   ShadowLeft->setTranslation(SVector3(Area.getCenter().X, yLeftShadow + 0.01f, 0));
+   ShadowLeft->setTranslation(SVector3f(Area.getCenter().X, yLeftShadow + 0.01f, 0));
    LeftShadowStartValue = 0.f;
    LeftShadowCutoffValue = cutOffPoint;
 
-   ShadowRight->setTranslation(SVector3(Area.getCenter().X, yRightShadow + 0.01f, 0));
+   ShadowRight->setTranslation(SVector3f(Area.getCenter().X, yRightShadow + 0.01f, 0));
    RightShadowStartValue = cutOffPoint;
    RightShadowCutoffValue = 1.0f;
 
@@ -138,7 +138,7 @@ void CPlayerView::setShadowHeights(float l, float r) {
    yRightShadow = r;
 }
 
-void CPlayerView::setCutoffPoint(SRect2 left, SRect2 right) {
+void CPlayerView::setCutoffPoint(SRect2f left, SRect2f right) {
    ShadowLeft->setVisible(left.Size.X != 0.0f);
    ShadowRight->setVisible(right.Size.X != 0.0f);
    bool equal = false;
@@ -181,11 +181,11 @@ void CPlayerView::updateCameraPosition(float const ElapsedTime)
 {
    if(!UseCamera)
       return;
-	TargetCameraPosition = SVector2(Area.getCenter().X + (Direction == CElementPlayer::Right ? 1.75f : -1.75f), Area.getCenter().Y + 1.3f);
+   TargetCameraPosition = SVector2f(Area.getCenter().X + (Direction == CElementPlayer::Right ? 1.75f : -1.75f), Area.getCenter().Y + 1.3f);
 
-	if (TargetCameraPosition != CurrentCameraPosition)
-	{
-		float const DistanceToGo = TargetCameraPosition.getDistanceFrom(CurrentCameraPosition);
+   if (TargetCameraPosition != CurrentCameraPosition)
+   {
+      float const DistanceToGo = TargetCameraPosition.getDistanceFrom(CurrentCameraPosition);
         float const MoveVelocity = max(2.f * DistanceToGo + 0.2f, 1.f * DistanceToGo * DistanceToGo);
         float const Movement = MoveVelocity * ElapsedTime;
         
@@ -194,9 +194,9 @@ void CPlayerView::updateCameraPosition(float const ElapsedTime)
         else
                 CurrentCameraPosition = TargetCameraPosition;
 
-	}
+   }
 
-	CApplication::get().getSceneManager().getActiveCamera()->setPosition(SVector3(CurrentCameraPosition, 10) + ShakeFactor);
+   CApplication::get().getSceneManager().getActiveCamera()->setPosition(SVector3f(CurrentCameraPosition, 10) + ShakeFactor);
 }
 
 int CPlayerView::getSubView() {
@@ -207,7 +207,7 @@ void CPlayerView::useSubView(int subView) {
    UseSubView = subView;
    if(UseSubView == 0) {
       UseCamera = 1;
-      CApplication::get().getSceneManager().getActiveCamera()->setLookDirection(SVector3(0, 0, -1.0f));
+      CApplication::get().getSceneManager().getActiveCamera()->setLookDirection(SVector3f(0, 0, -1.0f));
    }
    else {
       UseCamera = 0;
@@ -218,36 +218,36 @@ void CPlayerView::updateView(float time) {
    updateCameraPosition(time);
 
    if(!UseCamera && UseSubView) {
-      SVector3 camPos;
+      SVector3f camPos;
       switch(UseSubView) {
       case 1: //Overhead
-         camPos = SVector3(Area.getCenter().X, Area.getCenter().Y + 10.0f, 0.5f);
+         camPos = SVector3f(Area.getCenter().X, Area.getCenter().Y + 10.0f, 0.5f);
          break;
       case 2: //Left halfover
-         camPos = SVector3(Area.getCenter().X - 5.0f, Area.getCenter().Y + 5.0f, 5.0f);
+         camPos = SVector3f(Area.getCenter().X - 5.0f, Area.getCenter().Y + 5.0f, 5.0f);
          break;
       case 3: //Right halfover
-         camPos = SVector3(Area.getCenter().X + 5.0f, Area.getCenter().Y + 5.0f, 5.0f);
+         camPos = SVector3f(Area.getCenter().X + 5.0f, Area.getCenter().Y + 5.0f, 5.0f);
          break;
       case 4: //Quarterover
-         camPos = SVector3(Area.getCenter().X, Area.getCenter().Y + 2.5f, 2.5f);
+         camPos = SVector3f(Area.getCenter().X, Area.getCenter().Y + 2.5f, 2.5f);
          break;
       }
       CApplication::get().getSceneManager().getActiveCamera()->setPosition(camPos + ShakeFactor);
-      CApplication::get().getSceneManager().getActiveCamera()->setLookDirection((SVector3(Area.getCenter(), 0.0f) - camPos).getNormalized());
+      CApplication::get().getSceneManager().getActiveCamera()->setLookDirection((SVector3f(Area.getCenter(), 0.0f) - camPos).getNormalized());
    }
 
    updateShadow(time);
 
    float rotateX = 15*sin(ySineValue/2)-90.f;
 
-   CabbageSceneObject->setRotation(SVector3(rotateX, 0, Direction == CElementPlayer::Right ? 80.0f : 0.0f));
+   CabbageSceneObject->setRotation(SVector3f(rotateX, 0, Direction == CElementPlayer::Right ? 80.0f : 0.0f));
 
    translateCabbage(time);
 
    float ySineAmount = 0.065f*sin(ySineValue);
 
-   CabbageSceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y + ySineAmount, 0));
+   CabbageSceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y + ySineAmount, 0));
 }
 
 void CPlayerView::setHurt(bool b) {

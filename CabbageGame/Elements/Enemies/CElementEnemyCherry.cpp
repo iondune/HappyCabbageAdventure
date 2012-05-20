@@ -2,7 +2,7 @@
 #include "CElementEnemyProjectileCherry.h"
 #include "CGameLevel.h"
 
-CElementEnemyCherry::CElementEnemyCherry(SRect2 nArea) :
+CElementEnemyCherry::CElementEnemyCherry(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::CHERRY), BombTime(0.0f) {
 
 }
@@ -20,20 +20,22 @@ void CElementEnemyCherry::setupSceneObject() {
    SceneObject = new CMeshSceneObject();
    CMesh *mesh;
 
-   if (Level.getEnvironment() == 0) {
+   if (Level.getEnvironment() == Env::FOREST) {
       mesh = CMeshLoader::load3dsMesh("Base/cherries.3ds");
    }
 
-   else if (Level.getEnvironment() == 1) {
+   else if (Level.getEnvironment() == Env::DESERT) {
       mesh = CMeshLoader::load3dsMesh("Base/desert_cherries.3ds");
    }
+   else if (Level.getEnvironment() == Env::WATER)
+      mesh = CMeshLoader::load3dsMesh("Base/water_cherries.3ds");
    //LevelEditor has no environment
    else
       mesh = CMeshLoader::load3dsMesh("Base/cherries.3ds");
 
    if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(1));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -43,9 +45,9 @@ void CElementEnemyCherry::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   SceneObject->setTranslation(SVector3((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y-1))/2, 0));
-   SceneObject->setScale(SVector3(Area.Size.X, Area.Size.X, Area.Size.Y));
-   SceneObject->setRotation(SVector3(-90, 0, 0));
+   SceneObject->setTranslation(SVector3f((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y-1))/2, 0));
+   SceneObject->setScale(SVector3f(Area.Size.X, Area.Size.X, Area.Size.Y));
+   SceneObject->setRotation(SVector3f(-90, 0, 0));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
@@ -54,10 +56,13 @@ void CElementEnemyCherry::setupSceneObject() {
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyCherry::updatePhysicsEngineObject(float time) {
+   CElementEnemy::updatePhysicsEngineObject(time);
+   if(TimeToDeath > 0.0f)
+      return;
    if (BombTime >= 3.0f) {
          BombTime = 0.0f;
 
-         SRect2 projectileArea = Area;
+         SRect2f projectileArea = Area;
          projectileArea.Position.Y += .3f;
          projectileArea.Position.X -= 1.0f;
 
@@ -70,11 +75,15 @@ void CElementEnemyCherry::updatePhysicsEngineObject(float time) {
 
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyCherry::updateSceneObject(float time) {
-   SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X,Area.getCenter().Y, 0));
    if(ParticleEngine) {
-      SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.Position.Y, 0));
-      SceneObject->setRotation(SVector3(-90, 0, 0));
-      SceneObject->setScale(SVector3(1.0f, 1.0f, 0.3f));
+      SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
+      SceneObject->setRotation(SVector3f(-90, 0, 0));
+      SceneObject->setScale(SVector3f(1.0f, 1.0f, 0.3f));
+      return;
+   }
+   if(TimeToDeath > 0.0f) {
+      CElementEnemy::updateSceneObject(time);
       return;
    }
 

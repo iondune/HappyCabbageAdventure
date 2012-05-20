@@ -1,7 +1,7 @@
 #include "CElementEnemyPear.h"
 #include "CGameLevel.h"
 
-CElementEnemyPear::CElementEnemyPear(SRect2 nArea) :
+CElementEnemyPear::CElementEnemyPear(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::PEAR), ISquishable(nArea.Size.X, nArea.Size.Y), OldPositionX(nArea.Position.X), HitPlayer(false) {
    printf("Made a pear!\n");
 }
@@ -20,20 +20,19 @@ void CElementEnemyPear::setupSceneObject() {
    SceneObject = new CMeshSceneObject();
    CMesh *mesh;
 
-   if (Level.getEnvironment() == 0) {
-      mesh = CMeshLoader::load3dsMesh("Base/pear.3ds");
+   if (Level.getEnvironment() == Env::FOREST)
+	   mesh = CMeshLoader::load3dsMesh("Base/pear.3ds");
+   else if (Level.getEnvironment() == Env::DESERT)
+	   mesh = CMeshLoader::load3dsMesh("Base/pear.3ds");
+   else if (Level.getEnvironment() == Env::WATER) {
+	   mesh = CMeshLoader::load3dsMesh("Base/water_pear.3ds");
    }
-
-   else if (Level.getEnvironment() == 1) {
-      mesh = CMeshLoader::load3dsMesh("Base/pear.3ds");
-   }
-   //LevelEditor has no environment
    else
       mesh = CMeshLoader::load3dsMesh("Base/pear.3ds");
 
    if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(1));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -43,38 +42,24 @@ void CElementEnemyPear::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   SceneObject->setTranslation(SVector3((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y-1))/2, 0));
-   SceneObject->setScale(SVector3(Area.Size.X, Area.Size.X, Area.Size.Y));
-   SceneObject->setRotation(SVector3(-90, 0, 20));
+   SceneObject->setTranslation(SVector3f((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y-1))/2, 0));
+   SceneObject->setScale(SVector3f(Area.Size.X, Area.Size.X, Area.Size.Y));
+   SceneObject->setRotation(SVector3f(-90, 0, 20));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
-void CElementEnemyPear::OnCollision(CCollideable *Object) {
-   if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject()) {
-      CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
+void CElementEnemyPear::OnCollision(const SCollisionEvent& Event) {
+   if(!Dead && Event.Other == Level.getPlayer().getPhysicsEngineObject())
       HitPlayer = true;
-
-      //Check if jumped on top of enemy.
-      if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {
-         takeDamage(1);
-      }
-
-      //Did the player run into them?
-      else {
-         if(Level.getPlayer().decrementHealth()) {
-            if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
-               PlayerActor->setImpulse(SVector2(7.f, 2.8f), 0.1f);
-            else
-               PlayerActor->setImpulse(SVector2(-7.f, 2.8f), 0.1f);
-            Level.getPlayer().setShaking(1.0f, 3.0f);
-         }
-      }
-   }
+   CElementEnemy::OnCollision(Event);
 }
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyPear::updatePhysicsEngineObject(float time) {
+   CElementEnemy::updatePhysicsEngineObject(time);
+   if(TimeToDeath > 0.0f)
+      return;
    float difference = Area.Position.X - OldPositionX;
 
    if (difference < .001f && difference > -.001f && !HitPlayer) {
@@ -90,11 +75,15 @@ void CElementEnemyPear::updatePhysicsEngineObject(float time) {
 
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyPear::updateSceneObject(float time) {
-   SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X,Area.getCenter().Y, 0));
    if(ParticleEngine) {
-      SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.Position.Y, 0));
-      SceneObject->setRotation(SVector3(-90, 0, 0));
-      SceneObject->setScale(SVector3(1.0f, 1.0f, 0.3f));
+      SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
+      SceneObject->setRotation(SVector3f(-90, 0, 0));
+      SceneObject->setScale(SVector3f(1.0f, 1.0f, 0.3f));
+      return;
+   }
+   if(TimeToDeath > 0.0f) {
+      CElementEnemy::updateSceneObject(time);
       return;
    }
 
@@ -102,15 +91,15 @@ void CElementEnemyPear::updateSceneObject(float time) {
 
    if (PhysicsEngineObject->getVelocity().Y < .01f && PhysicsEngineObject->getVelocity().Y > -.01f) {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)
-         SceneObject->setScale(SVector3(-Scale.X,Scale.X,Scale.Y));
+         SceneObject->setScale(SVector3f(-Scale.X,Scale.X,Scale.Y));
       else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-         SceneObject->setScale(SVector3(Scale.X,Scale.X,Scale.Y));
+         SceneObject->setScale(SVector3f(Scale.X,Scale.X,Scale.Y));
    }
    else {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)
-         SceneObject->setScale(SVector3(-1,1,1));
+         SceneObject->setScale(SVector3f(-1,1,1));
       else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-         SceneObject->setScale(SVector3(1,1,1));
+         SceneObject->setScale(SVector3f(1,1,1));
    }
 }
 
