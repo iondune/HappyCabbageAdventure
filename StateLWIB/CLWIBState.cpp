@@ -284,8 +284,10 @@ void CLWIBState::OnRenderStart(float const Elapsed)
        if (uniType == 12) {
           block2->setText("Placing strawberry\n");
        }
-       
-       if (uniType >= 13)
+       if (uniType == 13) {
+          block2->setText("Placing Lemons\n");
+       }
+       if (uniType >= 14)
            uniType = 0;
    }
    if (oneDown && !showHelp && !tDown && !twoDown && !threeDown&& !fourDown) {
@@ -525,7 +527,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                 if (uniType != 0) 
                     uniType--;
                 else
-                    uniType = 12;
+                    uniType = 13;
             } else if (threeDown) {
                 if (uniType == 1)
                     uniType--;
@@ -877,6 +879,8 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
            type = 15;
        else if (type == 12)
            type = 16;
+       else if (type == 13)
+           type = 17;
    }
    placeables.push_back(tempPlaceable = CEnemyLoader::LoadEnemy(SRect2f(x, y, (float)w, (float)h),(Enemies::EEnemyType) type));
    tempPlaceable->setupObjects(); 
@@ -1313,12 +1317,13 @@ void CLWIBState::changeTiles() {
             tileTwo->setImage(pineapple);
             tileThree->setImage(pomegrante);
             tileFour->setImage(strawberry);
-            for (int i = 0; i < 4; i++)
+            tileFive->setImage(lemon);
+            for (int i = 0; i < 5; i++)
             {
                 if (!Application.getGUIEngine().isWidgetIn(tileArray[i]))
                     Application.getGUIEngine().addWidget(tileArray[i]);
             }
-            for (int i = 4; i < 9; i++)
+            for (int i = 5; i < 9; i++)
             {
                 if (Application.getGUIEngine().isWidgetIn(tileArray[i]))
                     Application.getGUIEngine().removeWidget(tileArray[i]);
@@ -1521,7 +1526,14 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             cDown = 1;
         }
         if (change == 2) {
-            uniType = 4;
+            if(tileLoop == 0)
+            {
+                uniType = 4;
+            }
+            else if (tileLoop == 1)
+            {
+                uniType = 13;
+            }
         }
         if (change == 6)
             env = 2;
@@ -1739,6 +1751,7 @@ void CLWIBState::prepHud() {
     cabbageImage = new CTexture(CImageLoader::loadImage("ModelImages/cabbage_gray.bmp"));
     fire = new CTexture(CImageLoader::loadImage("ModelImages/flame.bmp"));
     grape = new CTexture(CImageLoader::loadImage("ModelImages/grapes_gray.bmp"));
+    lemon = new CTexture(CImageLoader::loadImage("ModelImages/lemon_gray.bmp"));
     leaf = new CTexture(CImageLoader::loadImage("ModelImages/leaf_gray.bmp"));
     heart = new CTexture(CImageLoader::loadImage("ModelImages/water_energy_gray.bmp"));
     flagImg = new CTexture(CImageLoader::loadImage("ModelImages/flag_gray.bmp"));

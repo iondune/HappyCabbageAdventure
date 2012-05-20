@@ -55,7 +55,7 @@ class CLWIBState : public CState<CLWIBState>
    CTexture *grass,*dirt,*rock,*ground,*cabbageImage,*apple,*orange,*kiwi,*fire,*blade, *alien;
    CTexture *leaf, *heart, *derp;
    CTexture *blockRight, *blockLeft, *blockUp, *blockDown, *blockIn, *blockOut, *flagImg;
-   CTexture *grape, *banana, *pear, *cherry, *pineapple, *strawberry, *pomegrante, *circleArrow;
+   CTexture *grape, *banana, *pear, *cherry, *pineapple, *strawberry, *pomegrante, *circleArrow, *lemon;
    // GUIImageWidget
    CGUIFontWidget *block1, *block2, *block3;
    CGUIFontWidget *help;
