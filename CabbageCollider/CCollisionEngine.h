@@ -61,8 +61,8 @@ public:
 
 	std::vector<CCollideable *> const getAllInBound(SRect2f const Bound) const;
 
-	void CCollisionEngine::setGravity(CollisionReal gravity);
-	CollisionReal const CCollisionEngine::getGravity() const;
+	void setGravity(CollisionReal gravity);
+	CollisionReal const getGravity() const;
 
 };
 
