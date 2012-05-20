@@ -55,12 +55,12 @@ void Draw()
 
 	glPointSize(10.f);
 	glBegin(GL_POINTS);
-		glVertex3f(0.f, 0.f, 0.f);
-		glVertex3f(0.f, 5.f, 0.f);
-		glVertex3f(0.f, 10.f, 0.f);
-		glVertex3f(0.f, 0.f, 0.f);
-		glVertex3f(5.f, 0.f, 0.f);
-		glVertex3f(10.f, 0.f, 0.f);
+	glVertex3f(0.f, 0.f, 0.f);
+	glVertex3f(0.f, 5.f, 0.f);
+	glVertex3f(0.f, 10.f, 0.f);
+	glVertex3f(0.f, 0.f, 0.f);
+	glVertex3f(5.f, 0.f, 0.f);
+	glVertex3f(10.f, 0.f, 0.f);
 	glEnd();
 }
 
@@ -69,40 +69,40 @@ int main(int argc, char * argv[])
 	int const WindowWidth = 1600, WindowHeight = 900;
 	SDL_VideoInfo const * video;
 
-    if ( SDL_Init(SDL_INIT_VIDEO) < 0 )
+	if ( SDL_Init(SDL_INIT_VIDEO) < 0 )
 	{
-        fprintf(stderr, "Couldn't initialize SDL: %s\n", SDL_GetError());
-        exit(1);
-    }
-        
-    /* Quit SDL properly on exit */
-    atexit(SDL_Quit);
+		fprintf(stderr, "Couldn't initialize SDL: %s\n", SDL_GetError());
+		exit(1);
+	}
 
-    /* Get the current video information */
-    video = SDL_GetVideoInfo( );
-    if( video == NULL )
+	/* Quit SDL properly on exit */
+	atexit(SDL_Quit);
+
+	/* Get the current video information */
+	video = SDL_GetVideoInfo( );
+	if( video == NULL )
 	{
-        fprintf(stderr, "Couldn't get video information: %s\n", SDL_GetError());
-        exit(1);
-    }
+		fprintf(stderr, "Couldn't get video information: %s\n", SDL_GetError());
+		exit(1);
+	}
 
-    /* Set the minimum requirements for the OpenGL window */
-    SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 5 );
-    SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 5 );
-    SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 5 );
-    SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 16 );
-    SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
+	/* Set the minimum requirements for the OpenGL window */
+	SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 5 );
+	SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 5 );
+	SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 5 );
+	SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 16 );
+	SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
 
-    /* Note the SDL_DOUBLEBUF flag is not required to enable double 
-     * buffering when setting an OpenGL video mode. 
-     * Double buffering is enabled or disabled using the 
-     * SDL_GL_DOUBLEBUFFER attribute.
-     */
-    if( SDL_SetVideoMode( WindowWidth, WindowHeight, video->vfmt->BitsPerPixel, SDL_OPENGL ) == 0 )
+	/* Note the SDL_DOUBLEBUF flag is not required to enable double 
+	* buffering when setting an OpenGL video mode. 
+	* Double buffering is enabled or disabled using the 
+	* SDL_GL_DOUBLEBUFFER attribute.
+	*/
+	if( SDL_SetVideoMode( WindowWidth, WindowHeight, video->vfmt->BitsPerPixel, SDL_OPENGL ) == 0 )
 	{
-        fprintf(stderr, "Couldn't set video mode: %s\n", SDL_GetError());
-        exit(1);
-    }
+		fprintf(stderr, "Couldn't set video mode: %s\n", SDL_GetError());
+		exit(1);
+	}
 
 #ifdef _WIN32
 	// Load OpenGL Extensions
@@ -115,7 +115,7 @@ int main(int argc, char * argv[])
 	}
 #endif
 
-   	Initialize();
+	Initialize();
 
 
 	bool IsKeyDown[SDLK_LAST];
@@ -144,27 +144,32 @@ int main(int argc, char * argv[])
 
 	}
 
-    CCollisionElevator * Elevator = Engine->addElevator();
-    Elevator->setArea(SArea(6, -3, 1, 1));
-	Elevator->Range *= 2.f;
+	CCollisionElevator * Elevator;
+	for (int t = 0; t < 5; ++ t)
+	{
+		Elevator = Engine->addElevator();
+		Elevator->setArea(SArea(6, 1 + t, 1, 0.5f));
+		Elevator->Range = t;
+	}
 
 	//Elevator->InitialDirection *= -1;
 
-    Elevator = Engine->addElevator();
-    Elevator->setArea(SArea(6, 1, 1, 1));
-	
+	Elevator = Engine->addElevator();
+	Elevator->setArea(SArea(6, -3, 1, 1));
+	Elevator->Range *= 2.f;
 
 
-    Elevator = Engine->addElevator();
-    Elevator->setArea(SArea(6, 2.5f, 1, 1));
+
+	Elevator = Engine->addElevator();
+	Elevator->setArea(SArea(4, 2.5f, 1, 1));
 	Elevator->Style = ELT_VERTICAL;
-	
-    Elevator = Engine->addElevator();
-    Elevator->setArea(SArea(10, 0.5f, 1, 1));
+
+	Elevator = Engine->addElevator();
+	Elevator->setArea(SArea(10, 0.5f, 1, 1));
 	Elevator->Style = ELT_CIRCULAR;
 
 	CCollisionActor * Derp = Engine->addActor();
-	Derp->setArea(SArea(4, 0, 1, 1));
+	Derp->setArea(SArea(-4, 0, 1, 1));
 
 
 	// Time-independent movement variables
@@ -173,18 +178,18 @@ int main(int argc, char * argv[])
 	// Start keeping track of time
 	Time0 = SDL_GetTicks();
 
-  	while (1)
+	while (1)
 	{
-        /* process pending events */
+		/* process pending events */
 		SDL_Event event;
-        while( SDL_PollEvent( &event ) )
+		while( SDL_PollEvent( &event ) )
 		{
-            switch( event.type )
+			switch( event.type )
 			{
 
-            case SDL_QUIT:
-                exit (0);
-                break;
+			case SDL_QUIT:
+				exit (0);
+				break;
 
 			case SDL_KEYDOWN:
 				IsKeyDown[event.key.keysym.sym] = true;
@@ -196,8 +201,8 @@ int main(int argc, char * argv[])
 				IsKeyDown[event.key.keysym.sym] = false;
 				break;
 
-            }
-        }
+			}
+		}
 
 		// Determine time since last draw
 		Time1 = SDL_GetTicks();
@@ -239,6 +244,6 @@ int main(int argc, char * argv[])
 		SDL_GL_SwapBuffers();
 	}
 
-   	return 0;
+	return 0;
 }
 

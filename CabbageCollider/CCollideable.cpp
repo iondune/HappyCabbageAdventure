@@ -34,6 +34,15 @@ SRect2<float> const CCollideable::getArea() const
 	return SRect2<float>(Area.Position, Area.Size);
 }
 
+void CCollideable::setArea(SRect2f const & area)
+{
+	Area = SArea(area.Position, area.Size);
+}
+void CCollideable::setArea(SRect2d const & area)
+{
+	Area = area;
+}
+
 CCollideable::SMaterial const & CCollideable::getMaterial() const
 {
 	return Material;

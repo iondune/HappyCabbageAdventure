@@ -6,6 +6,8 @@
 
 #define NUM_CABBAGE_MESH_STATES 5
 
+class CGameLevel;
+class CParticleEngine;
 class CPlayerView {
    private:
       ISceneObject *SceneObject; //Contains the next 4 things listed here
@@ -14,6 +16,8 @@ class CPlayerView {
       ISceneObject *CabbageSceneObject;
       ISceneObject *NormalCabbageContainer, *HurtCabbageContainer; //Contain all of the cabbage meshes
       CMeshSceneObject *ShadowLeft, *ShadowRight;
+
+      CParticleEngine *Bubbles;
 
       int CabbageIndex; //Current index of renderables array
       CMeshSceneObject *HurtCabbageRenderables[NUM_CABBAGE_MESH_STATES];
@@ -50,7 +54,7 @@ class CPlayerView {
       void translateCabbage(float time);
       void setTilt(float t);
       ISceneObject & getCabbageSceneObject();
-      CPlayerView(ISceneObject *, CElementPlayer::EDirection &, CElementPlayer::EAction &, int, SRect2f &, SVector3f & sf, CCollisionActor *, bool uC);
+      CPlayerView(ISceneObject *, CElementPlayer::EDirection &, CElementPlayer::EAction &, int, SRect2f &, SVector3f & sf, CCollisionActor *, bool uC, CGameLevel &Level);
 
       int getSubView();
       void useSubView(int subview);
