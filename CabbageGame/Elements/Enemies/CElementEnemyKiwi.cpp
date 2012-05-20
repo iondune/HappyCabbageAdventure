@@ -18,6 +18,13 @@ void CElementEnemyKiwi::setupPhysicsEngineObject() {
    PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
 
    CElementEnemy::setupPhysicsEngineObject();
+
+   PhysicsEngineObject->setTypeId(0);
+   PhysicsEngineObject->setCollisionMask(INTERACTOR_SUPERACTORS);
+   PhysicsEngineObject->setDetectionMask(INTERACTOR_BLOCKS | INTERACTOR_ACTORS);
+
+   PhysicsEngineObject->OnPhaseBegin.connect(this, &CElementEnemyKiwi::OnPhaseBegin);
+   PhysicsEngineObject->OnPhaseEnd.connect(this, &CElementEnemyKiwi::OnPhaseEnd);
 }
 
 void CElementEnemyKiwi::setupSceneObject() {
@@ -62,11 +69,10 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
    CElementEnemy::updatePhysicsEngineObject(time);
    if(TimeToDeath > 0.0f)
       return;
-   //TODO: Make some class singleton so we can get the player's location
-   //TODO:  Clean up KIWI z-axis code
    if (!Level.getPlayer().isDead())
    {
-      /*if(zTimer < 0.0f)
+      /*
+      if(zTimer < 0.0f)
          zTimer = 0.0f;
       if(inZ) {
          if(zTimer >= Z_SPEED)
@@ -80,7 +86,8 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
             zTimer -= time;
          else {
          }
-      }*/
+      }
+      */
 
       SineValue = 0.6f*sin(Area.Position.X - OldX);
       Area.Position.Y += SineValue;
@@ -88,27 +95,25 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
       SVector2f vel = PhysicsEngineObject->getVelocity();
       PhysicsEngineObject->setVelocity(SVector2f(vel.X, vel.Y > 0 ? vel.Y - 1.0f*time : 0));
 
-      //TODO: Check player direction
       if(Direction == 0)
          PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
       else
          PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
 
-      //TODO:  Z-Code
-      //TODO:  Player location
-      /*if(!inZ) {*/
 
-      float xDist = Area.Position.X - Level.getPlayer().getArea().Position.X;
+      //if(!inZ) {
+         float xDist = Area.Position.X - Level.getPlayer().getArea().Position.X;
 
-      //Drop bomb projectile
-      if (xDist < .2f && !bombDropped && Direction == 0) {
-         DropBomb();
-         bombDropped = true;
-      }
-      else if (xDist > -.2f && !bombDropped && Direction == 1) {
-         DropBomb();
-         bombDropped = true;
-      }
+         //Drop bomb projectile
+         if (xDist < .2f && !bombDropped && Direction == 0) {
+            DropBomb();
+            bombDropped = true;
+         }
+         else if (xDist > -.2f && !bombDropped && Direction == 1) {
+            DropBomb();
+            bombDropped = true;
+         }
+      //}
    }
 
    else
@@ -119,20 +124,16 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
 void CElementEnemyKiwi::updateSceneObject(float time) {
    rotateBird = -100.0f * SineValue;
    
-   SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, 0));
+   //SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, zTimer*0.9f*Depth*(1.0f/Z_SPEED)));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, 0.0f));
    SceneObject->setRotation(SVector3f(-90 + rotateBird, 0, -90));
 
-   //TODO:  Adjust Z-Collision?
-   //SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, zTimer*0.9f*Depth*(1.0f/Z_SPEED)));
-
+   /*
    if(PhysicsEngineObject->getVelocity().X < -0.01f)
-      //TODO: SEE ABOVE
-      //SceneObject->setScale(SVector3f(-1,1,1)*(zTimer + 1.0f));
-      true;
+      SceneObject->setScale(SVector3f(-1,1,1)*(zTimer + 1.0f));
    else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-      //TODO:  SEE ABOVE
-      true;
-      //SceneObject->setScale(SVector3f(1,1,1)*(zTimer + 1.0f));
+      SceneObject->setScale(SVector3f(1,1,1)*(zTimer + 1.0f));
+      */
 
    if(ParticleEngine) {
       SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
@@ -158,3 +159,13 @@ void CElementEnemyKiwi::DropBomb() {
    Level.addEnemy(CEnemyLoader::LoadEnemy(SRect2f(xLocation, yLocation, .2f, .2f), Enemies::KIWI_PROJECTILE));
 }
 
+void CElementEnemyKiwi::OnPhaseBegin(const SCollisionEvent& Event) {
+   printf("I touched a block!\n");
+   //zTimer = 1.0f;
+   //Depth = Event.Other
+}
+
+void CElementEnemyKiwi::OnPhaseEnd(const SCollisionEvent& Event) {
+   printf("I'm no longer touching a block!\n");
+   //zTimer = 0;
+}
