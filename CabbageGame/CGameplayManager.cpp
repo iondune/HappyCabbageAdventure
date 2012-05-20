@@ -14,7 +14,12 @@
 CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(level.getGameplayElements()) {
    srand((unsigned int) 52);
    PhysicsEngine = new CCollisionEngine();
+
    level.setPhysicsEngine(PhysicsEngine);
+
+   if (level.getEnvironment() == Env::WATER) {
+	   PhysicsEngine->setGravity(6.25f);
+   }
 
    CPerspectiveCamera *Camera = new CPerspectiveCamera(CApplication::getAspectRatio(), 0.01f, 100.0f, 60.0f);
    Camera->setPosition(SVector3f(0, 0, 20));
