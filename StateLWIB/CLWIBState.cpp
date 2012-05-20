@@ -200,6 +200,9 @@ void CLWIBState::OnRenderStart(float const Elapsed)
        if (cDown == 5){
           block2->setText("adding deathBlocks");
        }
+       if (cDown ==6) {
+          block2->setText("adding MovingBlocks");
+       }
    }
    if (twoDown && !showHelp && !tDown && !oneDown && !threeDown&& !fourDown) {
        block3->setVisible(false);
@@ -395,7 +398,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
         }
         if(Event.Key == SDLK_c){
             if (!oneDown && !twoDown && !threeDown && !tDown) {
-                if(cDown <= 5)
+                if(cDown <= 6)
                     cDown++;
                 else
                     cDown = 0;
@@ -604,7 +607,10 @@ void CLWIBState::loadWorld() {
                 moving = xml->getAttributeValueAsInt(6);
                 range = (int) xml->getAttributeValueAsFloat(7); //Range
                 speed = (int) xml->getAttributeValueAsFloat(8); //Speed
+                if (moving == 1)
+                    cDown = 6;
                 PrepBlock((float)x,(float)y,w,h,d,t,moving);
+                cDown = 0;
                 printf("texture is %d\n", t);
             }
             if(!strcmp("CEnemy", xml->getNodeName()))
@@ -649,7 +655,7 @@ void CLWIBState::loadWorld() {
                 w = xml->getAttributeValueAsInt(3);
                 cDown = 4;
                 printf("cDown is %d", cDown);
-                PrepBlock((float)x,(float)y,w,h,1,1,1);
+                PrepBlock((float)x,(float)y,w,h,1,1,0);
                 cDown = 0;
             }
             if(!strcmp("DeathBlock",xml->getNodeName()))
@@ -662,7 +668,7 @@ void CLWIBState::loadWorld() {
                 t = xml->getAttributeValueAsInt(5);
                 cDown = 5;
                 printf("deathblock x,y,h,w,d,t = %d, %d, %d, %d, %d, %d\n",x,y,h,w,d,t);
-                PrepBlock((float)x,(float)y,w,h,t,1,1);
+                PrepBlock((float)x,(float)y,w,h,t,1,0);
                 cDown = 0;
             }
             if (!strcmp("envVar", xml->getNodeName()))
@@ -918,7 +924,11 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
    }
    else if (cDown == 5)
        placeables.push_back(tempPlaceable = new CElementBlockDeath(SRect2f(x,y,1,1),1,t,1.0f,1.0f));
-   else
+   else if (cDown == 6) {
+       placeables.push_back(tempPlaceable = new CElementBlockElevator(SRect2f(x,y,1,1),1,t,2.0f, 1.0f));
+       printf("shit was here \n");
+   }
+   else if (cDown != 6)
        placeables.push_back(tempPlaceable = new CElementBlock(SRect2f(x,y,(float) w, (float) h),d,t));
 
    for(i = 0; i < w; i++) {

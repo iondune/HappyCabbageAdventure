@@ -8,6 +8,7 @@
 #include "../StateMainMenu/CMainMenuState.h"
 #include "../CabbageGame/Elements/Enemies/CElementEnemy.h"
 #include "../CabbageGame/Elements/Blocks/CElementBlock.h"
+#include "../CabbageGame/Elements/Blocks/CElementBlockElevator.h"
 #include "../CabbageGame/Elements/Player/CElementPlayer.h"
 #include "../CabbageGame/Elements/Blocks/CElementBlockBreakable.h"
 #include "../CabbageGame/Elements/Blocks/CElementBlockDeath.h"
