@@ -136,7 +136,6 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             newLevel->incrementXmlCount();
             x = xml->getAttributeValueAsInt(0);
             y = xml->getAttributeValueAsInt(1);
-#error THIS IS BAD
             h = xml->getAttributeValueAsFloat(2);
             w = xml->getAttributeValueAsFloat(3);
             t = xml->getAttributeValueAsInt(4);
