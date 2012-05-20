@@ -138,6 +138,8 @@ void CElementEnemy::dieWithSeeds() {
 
       ((CCollisionActor *)seed->getPhysicsEngineObject())->addImpulse(SVector2f(rand1*8.f - 4.f, rand2*4.5f + 1.0f));
    }
+   if (rand()%3 == 0)
+      dropItem();
    Area.Position.Y -= 0.3f;
    TempTime = 0.0f;
    removeFromPhysicsEngine();
@@ -146,18 +148,17 @@ void CElementEnemy::dieWithSeeds() {
 }
 
 void CElementEnemy::dropItem() {
-   int random = rand() % 3;
+   int random = rand() % 5;
    CElementItem *item;
 
    //Drop health
-   if (random == 0) {
+   if (random < 3) {
       Level.addItem(item = CItemLoader::LoadItem(Area, Items::HEALTH));
    }
 
    //Drop energy
-   else if (random > 0) {
+   else
       Level.addItem(item = CItemLoader::LoadItem(Area, Items::ENERGY));
-   }
 
    float rand1 = (float)rand()/(float)RAND_MAX;
    float rand2 = (float)rand()/(float)RAND_MAX;
@@ -280,8 +281,6 @@ int CElementEnemy::takeDamage(int amount) {
       dieWithSeeds();
       PlayerActor->addImpulse(SVector2f(0.0f, 3.0f));
 
-      if (rand()%3 == 0)
-         dropItem();
    }
 
    return CurHealth;
