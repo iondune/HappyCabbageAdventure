@@ -328,7 +328,7 @@ void CCollisionActor::onStanding(CCollideable * Object)
 
 
 	// Adjust to surface below
-	static float const MaxStandingAdjustThreshold = 2 * Attributes.MaxStep;
+	static CollisionReal const MaxStandingAdjustThreshold = 2 * Attributes.MaxStep;
 
 	if (abs(Area.Position.Y - Object->getArea().otherCorner().Y) < MaxStandingAdjustThreshold)
 		Area.Position.Y = Object->getArea().otherCorner().Y;
