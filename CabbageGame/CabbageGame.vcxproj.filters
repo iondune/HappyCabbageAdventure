@@ -129,6 +129,9 @@
     <ClInclude Include="Elements\Enemies\CElementEnemyLemon.h">
       <Filter>Elements\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="Elements\Player\CPlayerAbilityHeadbutt.h">
+      <Filter>Elements\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CBiggerBlock.cpp" />
@@ -263,6 +266,9 @@
     </ClCompile>
     <ClCompile Include="Elements\Enemies\CElementEnemyLemon.cpp">
       <Filter>Elements\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Elements\Player\CPlayerAbilityHeadbutt.cpp">
+      <Filter>Elements\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
