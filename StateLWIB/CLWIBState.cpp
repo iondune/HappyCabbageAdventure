@@ -1015,9 +1015,6 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
 
 void CLWIBState::PrepSky() {
 
-   CMeshSceneObject *tempBlock;
-   CMeshSceneObject *cutOffBlock;
-
    CMesh* ref = CMeshLoader::load3dsMesh("Base/Quad.3ds");
    ref->centerMeshByExtents(SVector3f(0.0f));
    ref->linearizeIndices();
@@ -1374,12 +1371,17 @@ void CLWIBState::changeTiles() {
         }
     }
     if (change == 6) {
-        for (int i = 0; i < 6; i++)
+        tileOne->setImage(sun);
+        tileTwo->setImage(moon);
+        tileThree->setImage(forest);
+        tileFour->setImage(desert);
+        tileFive->setImage(water);
+        for (int i = 0; i < 5; i++)
         {
             if (!Application.getGUIEngine().isWidgetIn(tileArray[i]))
                 Application.getGUIEngine().addWidget(tileArray[i]);
         }
-        for (int i = 6; i < 10; i++)
+        for (int i = 5; i < 10; i++)
         {
             if (Application.getGUIEngine().isWidgetIn(tileArray[i]))
                 Application.getGUIEngine().removeWidget(tileArray[i]);
@@ -1437,7 +1439,20 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             uniType = 0;
         }
         if (change == 6)
+        {
+            if (env == 0)
+            {
+                tempBlock->setTexture(forest);
+                cutOffBlock->setTexture(forest);
+            }
+            else if (env == 1)
+            {
+                tempBlock->setTexture(desert);
+                cutOffBlock->setTexture(desert);
+            
+            }
             dayNight = 0;
+        }
     }
     if (widget == tileTwo) {
         if (change == 0) {
@@ -1469,7 +1484,14 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             uniType =1; 
         }
         if (change == 6)
+        {
+            if (env != 2)
+            {
+                tempBlock->setTexture(night);
+                cutOffBlock->setTexture(night);
+            }
             dayNight = 1;
+        }
     }
     if (widget == tileThree) {
         if (change == 0) {
@@ -1494,7 +1516,18 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 4)
             uniType = 2;
         if (change == 6)
+        {
+            if(dayNight == 1)
+            {
+                tempBlock->setTexture(night);
+                cutOffBlock->setTexture(night);
+            }
+            else {
+                tempBlock->setTexture(forest);
+                cutOffBlock->setTexture(forest);
+            }
             env = 0;
+        }
     }
     if (widget == tileFour) {
         if (change == 0) {
@@ -1517,7 +1550,18 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
         if (change == 4)
             uniType = 3;
         if (change == 6)
+        {
+            if(dayNight == 1)
+            {
+                tempBlock->setTexture(night);
+                cutOffBlock->setTexture(night);
+            }
+            else {
+                tempBlock->setTexture(desert);
+                cutOffBlock->setTexture(desert);
+            }
             env = 1;
+        }
     }
     if (widget == tileFive) {
         if (change == 0) {
@@ -1536,7 +1580,11 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             }
         }
         if (change == 6)
+        {
+            tempBlock->setTexture(water);
+            cutOffBlock->setTexture(water);
             env = 2;
+        }
     }
     if (widget == tileSix) {
         if (change == 0) {
@@ -1758,6 +1806,15 @@ void CLWIBState::prepHud() {
     pineapple = new CTexture(CImageLoader::loadImage("ModelImages/pineapple_gray.bmp"));
     strawberry = new CTexture(CImageLoader::loadImage("ModelImages/strawberry_gray.bmp"));
     pomegrante = new CTexture(CImageLoader::loadImage("ModelImages/pomegranate_gray.bmp"));
+
+    //for enviroment stuf
+
+    sun = new CTexture(CImageLoader::loadImage("ModelImages/sun_gray.bmp"));
+    moon = new CTexture(CImageLoader::loadImage("ModelImages/moon_gray.bmp"));
+    forest = new CTexture(CImageLoader::loadImage("Base/ForestBackground.bmp"));
+    desert = new CTexture(CImageLoader::loadImage("Base/DesertBackground.bmp"));
+    water = new CTexture(CImageLoader::loadImage("Base/WaterBackground.bmp"));
+    night = new CTexture(CImageLoader::loadImage("Base/NightOverworld.bmp"));
 
     //arrows to cycle though the blocks, enemies, cabbage, flag etc.
     leftArrow = new CGUIImageWidget(imgLeft, norm);
