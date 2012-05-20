@@ -10,7 +10,7 @@ void CElementEnemyPear::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
 
-   PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
+   PhysicsEngineObject->getActorAttributes().MaxWalk = 2.2f;
    PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
 
    CElementEnemy::setupPhysicsEngineObject();

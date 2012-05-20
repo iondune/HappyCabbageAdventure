@@ -12,10 +12,10 @@ CElementEnemyProjectileCherry::CElementEnemyProjectileCherry(SRect2f nArea, floa
 void CElementEnemyProjectileCherry::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
 
-   PhysicsEngineObject->getAttributes().MaxWalk = 4.0f;
-   PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
-   PhysicsEngineObject->getAttributes().AirControl = 1.0f;
-   PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
+   PhysicsEngineObject->getActorAttributes().MaxWalk = 4.0f;
+   PhysicsEngineObject->getActorAttributes().WalkAccel = 20.0f;
+   PhysicsEngineObject->getActorAttributes().AirControl = 1.0f;
+   PhysicsEngineObject->getActorAttributes().AirSpeedFactor = 1.0f;
 
    CElementEnemy::setupPhysicsEngineObject();
 }

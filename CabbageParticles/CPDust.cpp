@@ -14,10 +14,10 @@ void CPDust::setEngine(CCollisionEngine *engine) {
    Actor = Engine->addActor();
    Actor->setTypeId(INTERACTOR_NONCOLLIDERS);
    Actor->setCollisionMask(INTERACTOR_BLOCKS);
-   Actor->getAttributes().AirSpeedFactor = 0.3f;
-   Actor->getAttributes().AirStandingFriction = 0.81f;
-   Actor->getAttributes().GroundStandingFriction = 0.81f;
-   Actor->getAttributes().GravityMultiplier = 0.4f;
+   Actor->getActorAttributes().AirSpeedFactor = 0.3f;
+   Actor->getActorAttributes().AirStandingFriction = 0.81f;
+   Actor->getActorAttributes().GroundStandingFriction = 0.81f;
+   Actor->getActorAttributes().GravityMultiplier = 0.4f;
 }
 
 void CPDust::setupActor() {

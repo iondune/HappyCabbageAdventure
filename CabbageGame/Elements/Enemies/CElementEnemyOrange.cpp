@@ -11,12 +11,12 @@ void CElementEnemyOrange::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
 
    //Set actor attributes
-   PhysicsEngineObject->getAttributes().MaxWalk = 5.0f;
-   PhysicsEngineObject->getAttributes().WalkAccel = 4.0f;
-   PhysicsEngineObject->getAttributes().JumpAccel = 6.4f;
-   PhysicsEngineObject->getAttributes().JumpLength = .1f;
-   PhysicsEngineObject->getAttributes().AirControl = 0.75f;
-   PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
+   PhysicsEngineObject->getActorAttributes().MaxWalk = 5.0f;
+   PhysicsEngineObject->getActorAttributes().WalkAccel = 4.0f;
+   PhysicsEngineObject->getActorAttributes().JumpAccel = 6.4f;
+   PhysicsEngineObject->getActorAttributes().JumpLength = .1f;
+   PhysicsEngineObject->getActorAttributes().AirControl = 0.75f;
+   PhysicsEngineObject->getActorAttributes().AirSpeedFactor = 1.0f;
 
 
    CElementEnemy::setupPhysicsEngineObject();

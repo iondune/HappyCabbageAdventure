@@ -49,6 +49,16 @@ void CCollisionActor::setJumping(bool const jumping)
 	WantsToJump = jumping;
 }
 
+CCollisionActor::SAttributes const & CCollisionActor::getActorAttributes() const
+{
+	return Attributes;
+}
+
+CCollisionActor::SAttributes & CCollisionActor::getActorAttributes()
+{
+	return Attributes;
+}
+
 void CCollisionActor::draw()
 {
 	if (! Standing && ! Jumping && ! AllowedMovement)

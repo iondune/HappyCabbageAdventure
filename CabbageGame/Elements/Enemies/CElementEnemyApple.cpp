@@ -8,7 +8,7 @@ CElementEnemyApple::CElementEnemyApple(SRect2f nArea) :
 
 void CElementEnemyApple::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
+   PhysicsEngineObject->getActorAttributes().MaxWalk = 2.2f;
 
    CElementEnemy::setupPhysicsEngineObject();
 }
@@ -71,9 +71,9 @@ void CElementEnemyApple::updatePhysicsEngineObject(float time) {
          else
             Roll = Right;
          if (Level.getEnv() != Env::WATER)
-                  PhysicsEngineObject->getAttributes().MaxWalk = 6.0f;
+                  PhysicsEngineObject->getActorAttributes().MaxWalk = 6.0f;
                else
-                  PhysicsEngineObject->getAttributes().MaxWalk = 3.0f;
+                  PhysicsEngineObject->getActorAttributes().MaxWalk = 3.0f;
       }
    }
 
@@ -81,9 +81,9 @@ void CElementEnemyApple::updatePhysicsEngineObject(float time) {
       Rotate = 0;
       Roll = None;
       if (Level.getEnv() != Env::WATER)
-         PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
+         PhysicsEngineObject->getActorAttributes().MaxWalk = 2.2f;
       else
-         PhysicsEngineObject->getAttributes().MaxWalk = 1.1f;
+         PhysicsEngineObject->getActorAttributes().MaxWalk = 1.1f;
       PhysicsEngineObject->setVelocity(SVector2f(2.2f, 0.0f));
    }
 }

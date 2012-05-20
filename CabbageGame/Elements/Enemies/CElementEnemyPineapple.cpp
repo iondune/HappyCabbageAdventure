@@ -11,7 +11,7 @@ CElementEnemyPineapple::CElementEnemyPineapple(SRect2f nArea) :
 void CElementEnemyPineapple::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
 
-   PhysicsEngineObject->getAttributes().MaxWalk = 1.2f;
+   PhysicsEngineObject->getActorAttributes().MaxWalk = 1.2f;
 
    CElementEnemy::setupPhysicsEngineObject();
 }
