@@ -45,7 +45,7 @@ class CDecorManager : public IUpdater {
             *blueFlwrMesh, *whiteFlwrMesh, *ficusMesh, *fernMesh, *enemyMesh, *flagMesh, *derpMesh,
             *purpleFlwrMesh, *yellowFlwrMesh, *tealFlwrMesh, *whiteSunflwrMesh, *cactus1Mesh,
             *cactusBushMesh, *cactusBush2Mesh, *cactus2Mesh, *coral1Mesh, *coral2Mesh, *coral3Mesh,
-            *coral4Mesh, *coral5Mesh, *coral6Mesh, *seaweed1Mesh, *seaweed2Mesh, *seaweed3Mesh, *seaweed4Mesh
+            *coral4Mesh, *coral5Mesh, *coral6Mesh, *seaweed1Mesh, *seaweed2Mesh, *seaweed3Mesh, *seaweed4Mesh,
             *searock1Mesh, *searock2Mesh;
 
       CShader *Shader, *Flat, *Diffuse, *BlackShader, *DiffuseTexture, *normalColor, *Toon, *ToonTexture, *ToonBright;
