@@ -329,9 +329,9 @@ void CCollisionActor::pushIfCollided(CCollisionObject * Object, SVec2 const Move
 void CCollisionActor::updatePhaseList()
 {
 	// Emit phase leaving events
-	for (std::set<CCollideable *>::iterator it = PhaseList.begin(); it != PhaseList.end(); ++ it)
+	for (std::set<CCollideable *>::iterator it = NewPhaseList.begin(); it != NewPhaseList.end(); ++ it)
 	{
-		if (NewPhaseList.find(* it) == NewPhaseList.end())
+		if (PhaseList.find(* it) == PhaseList.end())
 		{
 			SCollisionEvent Event;
 			Event.This = this;

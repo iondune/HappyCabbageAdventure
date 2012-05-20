@@ -55,6 +55,8 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
          if (Level->getEnv() == Env::DESERT)
             CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_HEAT_WAVE, false);
+         if (Level->getEnv() == Env::WATER)
+        	 CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_WATER_DISTORT, false);
       }
    }
    else  {
