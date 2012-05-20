@@ -23,7 +23,7 @@ void CElementEnemyProjectileKiwi::setupPhysicsEngineObject() {
    if (Level.getEnv() != Env::WATER)
       PhysicsEngineObject->setVelocity(SVector2f(0.f, -6.f));
    else
-      PhysicsEngineObject->setVelocity(SVector2f(0.f, -3.f));
+      PhysicsEngineObject->setVelocity(SVector2f(0.f, -1.f));
 
    CElementEnemy::setupPhysicsEngineObject();
 }

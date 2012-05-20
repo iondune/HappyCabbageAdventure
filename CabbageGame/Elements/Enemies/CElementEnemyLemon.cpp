@@ -30,9 +30,12 @@ void CElementEnemyLemon::setupSceneObject() {
       mesh = CMeshLoader::load3dsMesh("Base/lemon.3ds");
 
    if(mesh) {
-      mesh->resizeMesh(SVector3f(1));
-      mesh->centerMeshByExtents(SVector3f(0));
-      mesh->calculateNormalsPerFace();
+	   if (Level.getEnvironment() != Env::WATER)
+		   mesh->resizeMesh(SVector3f(1));
+	   else
+		   mesh->resizeMesh(SVector3f(2));
+	   mesh->centerMeshByExtents(SVector3f(0));
+	   mesh->calculateNormalsPerFace();
    }
 
    else
