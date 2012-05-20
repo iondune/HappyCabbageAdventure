@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <envVar env="0" dayNight="0">
 </envVar>
+<CBlock X ="-24" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-23" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
 <CBlock X ="-22" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
 </CBlock>
 <CBlock X ="-21" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
 </CBlock>
-<CCabbage X ="-22" Y ="2" height ="1" width ="1">
+<CBlock X ="-20" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CCabbage X ="-19" Y ="2" height ="1" width ="1">
 </CCabbage>
-<CBlock X ="-20" Y ="1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1" range ="2" speed ="2" Style="0">
+<CBlock X ="-16" Y ="2" height ="1" width ="1" depth ="1" texture ="0">
 </CBlock>
-<CBlock X ="-20" Y ="0" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1" range ="2" speed ="2" Style="0">
+<CBlock X ="-16" Y ="3" height ="1" width ="1" depth ="1" texture ="0">
 </CBlock>
-<CBlock X ="-20" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1" range ="2" speed ="2" Style="0">
+<CBlock X ="-16" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
 </CBlock>
-<CBlock X ="-20" Y ="-2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1" range ="2" speed ="2" Style="0">
+<CBlock X ="-16" Y ="5" height ="1" width ="1" depth ="1" texture ="0">
 </CBlock>
-<CBlock X ="-20" Y ="-3" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1" range ="2" speed ="2" Style="0">
+<CBlock X ="-16" Y ="6" height ="1" width ="1" depth ="1" texture ="0">
 </CBlock>
+<CEnemy X ="-13" Y ="5" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="-12" Y ="4" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="-14" Y ="6" height ="1" width ="1" type ="2">
+</CEnemy>
