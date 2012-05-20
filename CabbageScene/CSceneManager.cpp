@@ -271,7 +271,7 @@ ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
 
 	int iterations = 0, tNumObjects = 0;
 	// TODO: Fix the argument for this while loop
-	while(aList->size() != 1 && iterations < 4) {
+	while(aList->size() != 1) {
 		iterations++;
 		//printf("~~~~~~~~~~~~ NEW ITERATION (%d) ~~~~~~~~~~~~\n", iterations);
 		unsigned int j = 0;
@@ -321,6 +321,12 @@ ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
 			}
 			i += ARBITRARILY_INCREASING_VALUE;
 		}
+
+      /*
+      for (unsigned int k = 0; k < aList->size(); k++) {
+         assert((*aList)[k] != NULL);
+      }
+      */
 
       for (unsigned int k = 0; k < aList->size(); k++) {
          if((*aList)[k] != NULL) {

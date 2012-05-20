@@ -47,7 +47,7 @@ void CGameplayElement::setupObjects() {
    }
    else {
       Level.getPhysicsEngine().remove(PhysicsEngineObject);
-      Level.getPhysicsEngine().update(0.01f);
+      //Level.getPhysicsEngine().update(0.01f);
    }
    if(Level.shouldRender())
       setupSceneObject();

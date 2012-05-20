@@ -15,7 +15,7 @@ void CElementItem::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
    PhysicsEngineObject->setArea(Area);
-   PhysicsEngineObject->setVelocity(SVector2d(0.1, 2.0));
+   //PhysicsEngineObject->setVelocity(SVector2d(0.1, 2.0));
 
    //Set actor attributes
    PhysicsEngineObject->setTypeId(INTERACTOR_ITEMS);
