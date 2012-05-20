@@ -252,7 +252,8 @@ bool sortISOXY (ISceneObject* a, ISceneObject* b) {
 }
 
 ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
-	float ARBITRARILY_INCREASING_VALUE = (9.5f + 8.0f);
+   float STARTING_ARBITRARILY_INCREASING_VALUE = 17.5f;
+	float ARBITRARILY_INCREASING_VALUE = STARTING_ARBITRARILY_INCREASING_VALUE;
 	float const INF = std::numeric_limits<float>::infinity();
 	std::vector<ISceneObject *> dontUseMyName;
 	// aList is a list of children to be assigned to a parent
@@ -321,9 +322,11 @@ ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
 			i += ARBITRARILY_INCREASING_VALUE;
 		}
 
+      /*
 		for (unsigned int k = 0; k < aList->size(); k++) {
 			assert((*aList)[k] == NULL);
 		}
+      */
 		int numChildren = 0;
 		for (unsigned int k = 0; k < bList->size(); k++) {
 			numChildren += (*bList)[k]->getChildren().size();

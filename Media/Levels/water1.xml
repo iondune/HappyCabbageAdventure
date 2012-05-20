@@ -15,8 +15,6 @@
 </CBlock>
 <CBlock X ="7" Y ="1" height ="2" width ="5" depth ="5" texture ="-5">
 </CBlock>
-<CBlock X ="-25" Y ="0" height ="10" width ="4" depth ="1" texture ="0">
-</CBlock>
 <CBlock X ="-25" Y ="7" height ="10" width ="4" depth ="1" texture ="0">
 </CBlock>
 <CBlock X ="-22" Y ="6" height ="1" width ="3" depth ="1" texture ="0">
