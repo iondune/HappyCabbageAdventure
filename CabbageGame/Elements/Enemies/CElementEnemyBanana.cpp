@@ -72,7 +72,7 @@ void CElementEnemyBanana::updatePhysicsEngineObject(float time) {
       ShootTime = 0.0f;
 
       float x = Area.Position.X;
-      float y = Area.Position.Y;
+      float y = Area.Position.Y + .2f;
       CElementEnemy *projectile;
 
       if (PlayerPosition.X < Area.Position.X) {
