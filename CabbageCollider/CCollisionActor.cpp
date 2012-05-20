@@ -346,6 +346,7 @@ bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTim
 		Event.This = this;
 		Event.Other = Object;
 		Event.Direction = (ECollisionType::Domain) CollisionType;
+		Event.Receiver = false;
 
 		if (CollisionType & ECollisionType::Responded)
 		{
@@ -356,6 +357,7 @@ bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTim
 			Event.This = Object;
 			Event.Other = this;
 			Event.Direction = (ECollisionType::Domain) CollisionType;
+			Event.Receiver = true;
 
 			Object->OnCollision.emit(Event);
 		}
@@ -369,6 +371,7 @@ bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTim
 			Event.This = this;
 			Event.Other = Object;
 			Event.Direction = (ECollisionType::Domain) CollisionType;
+			Event.Receiver = true;
 
 			Object->OnPhaseBegin.emit(Event);
 		}
@@ -423,11 +426,13 @@ void CCollisionActor::updatePhaseList()
 			Event.This = this;
 			Event.Other = * it;
 			Event.Direction = (ECollisionType::Domain) ECollisionType::UnPhase;
+			Event.Receiver = false;
 			OnPhaseEnd.emit(Event);
 
 			Event.This = * it;
 			Event.Other = this;
 			Event.Direction = (ECollisionType::Domain) ECollisionType::UnPhase;
+			Event.Receiver = true;
 			(* it)->OnPhaseEnd.emit(Event);
 		}
 	}

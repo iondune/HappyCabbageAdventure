@@ -52,6 +52,8 @@ struct SCollisionEvent
 	CCollideable * Other;
 
 	ECollisionType::Domain Direction;
+
+	bool Receiver; // Is This the Pitcher or the Catcher in this "exchange"?
 };
 
 class CGameplayElement;
