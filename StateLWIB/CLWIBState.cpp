@@ -1285,9 +1285,9 @@ void CLWIBState::changeTiles() {
         tileSeven->setImage(blockDown);
         tileEight->setImage(blockUp);
         tileNine->setImage(blockIn);
-        //tileTen->setImage(blockOut);
+        tileTen->setImage(blockOut);
 
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < 10; i++)
         {
             if (!Application.getGUIEngine().isWidgetIn(tileArray[i]))
                 Application.getGUIEngine().addWidget(tileArray[i]);
@@ -1322,6 +1322,8 @@ void CLWIBState::changeTiles() {
             tileSeven->setImage(apple);
             tileEight->setImage(pear);
             tileNine->setImage(banana);
+            tileTen->setImage(circleArrow);
+
 
             for (int i = 0; i < 10; i++)
             {
@@ -1653,19 +1655,19 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
             uniType = 8;
     }
     if (widget == tileTen) {
-        if (tileLoop < 1)
-            tileLoop++;
-        else
-            tileLoop = 0;
-        /*if (change == 0) {
-        if (blockDepth < 5 && uniType != -5)
-        blockDepth++;
-        cDown = 3;
-        }
-        if (change == 1) {
+        if (change == 0) {
+            if (blockDepth < 5 && uniType != -5)
+                blockDepth++;
+            cDown = 3;
         }
         if (change == 2)
-        uniType = 9;*/
+        {
+            if (tileLoop < 1)
+                tileLoop++;
+            else
+                tileLoop = 0;
+        }
+//        uniType = 9;
     }
     if (widget == save ) {
         printXML();
@@ -1699,8 +1701,6 @@ void CLWIBState::OnWidgetClick(CGUIWidget *widget) {
 
         redoPlaceables.pop_back();
         }*/
-
-
     }
 }
 
