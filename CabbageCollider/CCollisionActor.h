@@ -42,6 +42,9 @@ public:
 		//! Ratio of velocity reflected during collisions
 		CollisionReal Bounce;
 
+		//! Ratio of gravity affecting this object
+		CollisionReal GravityMultiplier;
+
 		//! Default params ctor
 		SAttributes();
 	};

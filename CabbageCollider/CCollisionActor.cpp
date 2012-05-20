@@ -189,7 +189,7 @@ void CCollisionActor::updateVectors(CollisionReal const TickTime)
 
 	// zero-gravity hack (FIX)
 	if (GravityEnabled)
-		FallAcceleration -= CollisionEngine->getGravity() * TickTime;
+		FallAcceleration -= CollisionEngine->getGravity() * Attributes.GravityMultiplier * TickTime;
 	else
 		FallAcceleration = 0;
 
