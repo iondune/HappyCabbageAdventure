@@ -20,6 +20,7 @@ void CElementItemLife::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
+   SceneObject->setTranslation(SVector3f(PhysicsEngineObject->getArea().getCenter() + SVector2f(0.0f, 0.1f), 0));
    //SceneObject->setTranslation(SVector3f((x+(x+1))/2, (y+(y-1))/2 + 10.6f, 0));
    //SceneObject->setTranslation(SVector3f((x+(x+1))/2, (y+(y-1))/2, 0));
    SceneObject->setScale(SVector3f(.8f));
