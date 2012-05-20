@@ -13,8 +13,12 @@ CCollideable::SMaterial::SMaterial()
 	: Friction(1.f), Elasticity(0.f)
 {}
 
-CCollideable::CCollideable()
-	: TypeId(INTERACTOR_ALL), CollisionMask(0), DetectionMask(0), VisualDepth(0.f), GameplayElement(0)
+CCollideable::CCollideable(CCollisionEngine * collisionEngine)
+	: TypeId(INTERACTOR_ALL), 
+	CollisionMask(0), DetectionMask(0), 
+	VisualDepth(0.f), 
+	GameplayElement(0),
+	CollisionEngine(collisionEngine)
 {}
 
 CCollideable::~CCollideable()
@@ -116,7 +120,27 @@ CGameplayElement * CCollideable::getGameplayElement()
 	return GameplayElement;
 }
 
+CGameplayElement const * CCollideable::getGameplayElement() const
+{
+	return GameplayElement;
+}
+
 void CCollideable::setGameplayElement(CGameplayElement * Element)
 {
 	GameplayElement = Element;
+}
+
+CCollisionEngine * CCollideable::getCollisionEngine()
+{
+	return CollisionEngine;
+}
+
+CCollisionEngine const * CCollideable::getCollisionEngine() const
+{
+	return CollisionEngine;
+}
+
+void CCollideable::setCollisionEngine(CCollisionEngine * collisionEngine)
+{
+	CollisionEngine = collisionEngine;
 }

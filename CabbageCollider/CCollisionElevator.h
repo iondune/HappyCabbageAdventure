@@ -17,7 +17,7 @@ class CCollisionElevator : public CCollisionObject
 
 public:
 
-	CCollisionElevator();
+	CCollisionElevator(CCollisionEngine * collisionEngine);
 
 	virtual SVec2 performMovement(CollisionReal const TickTime);
 

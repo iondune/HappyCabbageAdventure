@@ -15,13 +15,17 @@
     <ClInclude Include="CCollideable.h" />
     <ClInclude Include="CCollisionElevator.h" />
     <ClInclude Include="CCollisionEngine.h" />
+    <ClInclude Include="CCollisionInteractor.h" />
     <ClInclude Include="CCollisionObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCollisionActor.cpp" />
     <ClCompile Include="CCollideable.cpp" />
+    <ClCompile Include="CCollisionActor.EActionType.cpp" />
+    <ClCompile Include="CCollisionActor.SAttributes.cpp" />
     <ClCompile Include="CCollisionElevator.cpp" />
     <ClCompile Include="CCollisionEngine.cpp" />
+    <ClCompile Include="CCollisionInteractor.cpp" />
     <ClCompile Include="CCollisionObject.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -1,7 +1,8 @@
 #include "CCollisionElevator.h"
 
 
-CCollisionElevator::CCollisionElevator()
+CCollisionElevator::CCollisionElevator(CCollisionEngine * collisionEngine)
+	: CCollisionObject(collisionEngine)
 {
 	CollisionMask = INTERACTOR_ALL;
 	Timer = 0.f;
