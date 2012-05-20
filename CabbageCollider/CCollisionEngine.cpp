@@ -65,7 +65,7 @@ void CCollisionEngine::removeCollideable(CCollideable * Collideable)
 }
 
 CCollisionEngine::CCollisionEngine()
-	: Timer(0.f)
+	: Timer(0.f), Gravity(100.f)
 {}
 
 CCollisionEngine::~CCollisionEngine()

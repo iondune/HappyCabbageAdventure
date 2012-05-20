@@ -15,7 +15,7 @@ CCollisionElevator::CCollisionElevator(CCollisionEngine * collisionEngine)
 SVec2 CCollisionElevator::performMovement(CollisionReal const TickTime)
 {
 	SVec2 Movement;
-	Timer += TickTime * Speed;
+	Timer += TickTime * Speed / Range;
 
 	switch (Style)
 	{
