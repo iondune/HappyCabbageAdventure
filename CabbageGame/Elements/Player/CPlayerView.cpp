@@ -5,7 +5,7 @@
 #include <sstream>
 CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2f & nArea, SVector3f & sf, CCollisionActor* peo, bool uC) :
    SceneObject(obj), CabbageIndex(CurHealth - 1), Direction(dir), Action(act), Hurt(false), Area(nArea), ShakeFactor(sf),
-   ySineValue(0.0f), PhysicsEngineObject(peo), UseCamera(uC), UseSubView(0) {
+   ySineValue(0.0f), PhysicsEngineObject(peo), UseCamera(uC), UseSubView(0), tiltValue(0.0f) {
 
    SceneObject->setCullingEnabled(false);
 
@@ -104,6 +104,11 @@ void CPlayerView::updateShadow(float time) {
    RightShadowCutoffValue = 1.0f;
 
    Light->setTranslation(CabbageSceneObject->getTranslation());
+}
+
+
+void CPlayerView::setTilt(float t) {
+   tiltValue = t;
 }
 
 void CPlayerView::addLeaf() {
@@ -241,7 +246,7 @@ void CPlayerView::updateView(float time) {
 
    float rotateX = 15*sin(ySineValue/2)-90.f;
 
-   CabbageSceneObject->setRotation(SVector3f(rotateX, 0, Direction == CElementPlayer::Right ? 80.0f : 0.0f));
+   CabbageSceneObject->setRotation(SVector3f(rotateX, Direction == CElementPlayer::Right ? tiltValue : -tiltValue , Direction == CElementPlayer::Right ? 80.0f : 0.0f));
 
    translateCabbage(time);
 

@@ -22,6 +22,7 @@ class CPlayerView {
       //Attributes relating to the player
       bool Hurt, UseCamera;
       int UseSubView;
+      float tiltValue;
       CElementPlayer::EDirection & Direction;
       CElementPlayer::EAction & Action;
       SRect2f & Area;
@@ -47,6 +48,7 @@ class CPlayerView {
       void setVisible(bool);
       void updateView(float time);
       void translateCabbage(float time);
+      void setTilt(float t);
       ISceneObject & getCabbageSceneObject();
       CPlayerView(ISceneObject *, CElementPlayer::EDirection &, CElementPlayer::EAction &, int, SRect2f &, SVector3f & sf, CCollisionActor *, bool uC);
 

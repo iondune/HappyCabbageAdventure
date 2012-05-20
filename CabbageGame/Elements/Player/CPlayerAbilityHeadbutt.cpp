@@ -94,6 +94,7 @@ void CPlayerAbilityHeadbutt::checkKey(bool keyDown) {
          ((CCollisionActor *)Player.getPhysicsEngineObject())->addImpulse(SVector2f((2*(Player.Direction == CElementPlayer::Right)-1) * 65.0f, 0.0f));
          ((CCollisionActor *)Player.getPhysicsEngineObject())->setCollisionMask(((CCollisionActor *)Player.getPhysicsEngineObject())->getCollisionMask() & ~INTERACTOR_ACTORS);
          ((CCollisionActor *)Player.getPhysicsEngineObject())->setDetectionMask(((CCollisionActor *)Player.getPhysicsEngineObject())->getDetectionMask() | INTERACTOR_ACTORS);
+         Player.View->setTilt(60.0f);
          return;
       }
    }
@@ -118,6 +119,10 @@ void CPlayerAbilityHeadbutt::checkKey(bool keyDown) {
          Player.Recovering = 0.0f;
          ((CCollisionActor *)Player.getPhysicsEngineObject())->setCollisionMask(((CCollisionActor *)Player.getPhysicsEngineObject())->getCollisionMask() | INTERACTOR_ACTORS);
          ((CCollisionActor *)Player.getPhysicsEngineObject())->setDetectionMask(((CCollisionActor *)Player.getPhysicsEngineObject())->getDetectionMask() & ~INTERACTOR_ACTORS);
+         Player.View->setTilt(0.0f);
+      }
+      else {
+         Player.View->setTilt((HEADBUTT_FIRING_DURATION - TemporaryTimeVariable)/HEADBUTT_FIRING_DURATION*60.0f);
       }
    }
    //This is NEVER RUNNING, FYI
