@@ -21,10 +21,7 @@ class CElementEnemyKiwi : public CElementEnemy
       void OnPhaseBegin(const SCollisionEvent& Event);
       void OnPhaseEnd(const SCollisionEvent& Event);
 
-         virtual void printInformation();
-
-      void OnPhaseBegin(const SCollisionEvent& Event);
-      void OnPhaseEnd(const SCollisionEvent& Event);
+      virtual void printInformation();
 
       void DropBomb();
 };
