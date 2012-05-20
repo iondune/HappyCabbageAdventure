@@ -15,11 +15,18 @@ class CCollisionElevator : public CCollisionObject
 
 	CollisionReal Timer;
 
+	SVec2 BasisArea;
+
 public:
 
 	CCollisionElevator(CCollisionEngine * collisionEngine);
 
 	virtual SVec2 performMovement(CollisionReal const TickTime);
+
+	
+	void setArea(SRect2f const & area);
+	void setArea(SRect2d const & area);
+	
 
 	CollisionReal Speed;
 
