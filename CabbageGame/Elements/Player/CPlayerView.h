@@ -7,6 +7,7 @@
 #define NUM_CABBAGE_MESH_STATES 5
 
 class CGameLevel;
+class CParticleEngine;
 class CPlayerView {
    private:
       ISceneObject *SceneObject; //Contains the next 4 things listed here
@@ -15,6 +16,8 @@ class CPlayerView {
       ISceneObject *CabbageSceneObject;
       ISceneObject *NormalCabbageContainer, *HurtCabbageContainer; //Contain all of the cabbage meshes
       CMeshSceneObject *ShadowLeft, *ShadowRight;
+
+      CParticleEngine *Bubbles;
 
       int CabbageIndex; //Current index of renderables array
       CMeshSceneObject *HurtCabbageRenderables[NUM_CABBAGE_MESH_STATES];

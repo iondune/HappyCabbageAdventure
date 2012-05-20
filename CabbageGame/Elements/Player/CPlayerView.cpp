@@ -4,7 +4,7 @@
 
 #include <sstream>
 CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2f & nArea, SVector3f & sf, CCollisionActor* peo, bool uC, CGameLevel &Level) :
-   SceneObject(obj), CabbageIndex(CurHealth - 1), Direction(dir), Action(act), Hurt(false), Area(nArea), ShakeFactor(sf),
+   SceneObject(obj), CabbageIndex(CurHealth - 1), Direction(dir), Action(act), Hurt(false), Area(nArea), ShakeFactor(sf), Bubbles(NULL),
    ySineValue(0.0f), PhysicsEngineObject(peo), UseCamera(uC), UseSubView(0), tiltValue(0.0f) {
 
    SceneObject->setCullingEnabled(false);
@@ -74,6 +74,9 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
 
       HurtCabbage->addChild(cabbageRenderable);
       HurtCabbageRenderables[i-1] = cabbageRenderable;
+   }
+   if(Level.getEnv() == Env::WATER) {
+      Bubbles = new CParticleEngine(SVector3f(0.0f), 15, -1, WIGGLE_PARTICLE, Level.isNight());
    }
 
    //Shadow renderables
@@ -227,6 +230,10 @@ void CPlayerView::useSubView(int subView) {
 
 void CPlayerView::updateView(float time) {
    updateCameraPosition(time);
+   if(Bubbles) {
+      Bubbles->setCenterPos(SVector3f(Area.getCenter(), 0.0f));
+      Bubbles->step(time);
+   }
 
    if(!UseCamera && UseSubView) {
       SVector3f camPos;
