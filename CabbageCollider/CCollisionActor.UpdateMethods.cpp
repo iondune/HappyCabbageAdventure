@@ -265,9 +265,7 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 				// Also, check whether it could have been a step up
 				if (! AllowedMovementForThisObject && i == 0)
 				{
-					static CollisionReal const MaxStep = 0.2;
-
-					if (Area.Position.Y - Object->getArea().otherCorner().Y > - MaxStep)
+					if (Area.Position.Y - Object->getArea().otherCorner().Y > - Attributes.MaxStep)
 					{
 						//std::cout << "Allowing step!" << std::endl;
 						AllowedMovement = true;
@@ -296,6 +294,35 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 	}
 
 	return Out;
+}
+
+
+void CCollisionActor::onStanding(CCollideable * Object)
+{
+	// Keep reference to object being stood on
+	Standing = Object;
+
+	// Cancel gravity acceleration
+	FallAcceleration = 0;
+
+	// Stop downwards movement (from impulse, etc.)
+	Velocity.Y = std::max(Velocity.Y, (CollisionReal) 0);
+
+
+	// Adjust to surface below
+	static float const MaxStandingAdjustThreshold = 2 * Attributes.MaxStep;
+
+	if (abs(Area.Position.Y - Object->getArea().otherCorner().Y) < MaxStandingAdjustThreshold)
+		Area.Position.Y = Object->getArea().otherCorner().Y;
+}
+
+
+void CCollisionActor::pushIfCollided(CCollisionObject * Object, SVec2 const Movement)
+{
+	if (! collidesWith(Object) && Object != Standing)
+		return;
+	
+	Area.Position += Movement;
 }
 
 

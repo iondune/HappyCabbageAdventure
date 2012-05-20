@@ -29,25 +29,6 @@ CCollisionActor::CCollisionActor(CCollisionEngine * collisionEngine)
 CCollisionActor::~CCollisionActor()
 {}
 
-void CCollisionActor::onStanding(CCollideable * Object)
-{
-	// Keep reference to object being stood on
-	Standing = Object;
-
-	// Cancel gravity acceleration
-	FallAcceleration = 0;
-
-	// Stop downwards movement (from impulse, etc.)
-	Velocity.Y = std::max(Velocity.Y, (CollisionReal) 0);
-
-
-	// Adjust to surface below
-	static float const MaxStandingAdjustThreshold = 0.1f;
-
-	if (abs(Area.Position.Y - Object->getArea().otherCorner().Y) < MaxStandingAdjustThreshold)
-		Area.Position.Y = Object->getArea().otherCorner().Y;
-}
-
 bool CCollisionActor::isAbove(CCollisionObject * Object, float & height) const
 {
 	if (Area.getCenter().Y < Object->getArea().otherCorner().Y)
@@ -69,14 +50,6 @@ void CCollisionActor::setGravityEnabled(bool const gravityEnabled)
 bool const CCollisionActor::isGravityEnabled() const
 {
 	return GravityEnabled;
-}
-
-void CCollisionActor::pushIfCollided(CCollisionObject * Object, SVec2 const Movement)
-{
-	if (! collidesWith(Object) && Object != Standing)
-		return;
-	
-	Area.Position += Movement;
 }
 
 bool const CCollisionActor::isStanding() const

@@ -45,6 +45,9 @@ public:
 		//! Ratio of gravity affecting this object
 		CollisionReal GravityMultiplier;
 
+		//! Maximum step up for actor
+		CollisionReal MaxStep;
+
 		//! Default params ctor
 		SAttributes();
 	};

@@ -10,5 +10,6 @@ CCollisionActor::SAttributes::SAttributes()
 	AirStandingFriction(0.99f),
 	GroundStandingFriction(0.95f),
 	Bounce(0.0f),
-	GravityMultiplier(1.0f)
+	GravityMultiplier(1.0f),
+	MaxStep(0.1)
 {}
