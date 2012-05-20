@@ -79,6 +79,10 @@ void CLWIBState::begin()
    env = 0;
    change = 0; //this determines
    aDown = dDown = spaceDown = wDown = sDown = gDown = fDown = tDown = eDown = mDown = oneDown = twoDown = threeDown = cDown = 0;
+   
+   eleSpeed = 1;
+   eleRange = 2;
+   eleStyle = 0;
 
    showHelp = false;
    blockCycle = 0;
@@ -167,8 +171,9 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    if (!twoDown && !showHelp && !tDown && !oneDown && !threeDown && !fourDown) {
        block2->setVisible(true);
        block1->setText("Placing Block");
+       if (cDown <9 )
+            block3->setVisible(false);
        if (cDown == 0) {
-           block3->setVisible(false);
            if (uniType == 0) {
                block2->setText("Placing grass block");
            }
@@ -200,8 +205,24 @@ void CLWIBState::OnRenderStart(float const Elapsed)
        if (cDown == 5){
           block2->setText("adding deathBlocks");
        }
-       if (cDown ==6) {
+       if (cDown == 6) {
           block2->setText("adding MovingBlocks");
+       }
+       if (cDown == 7) {
+          block2->setText("Change elevator Range");
+       }
+       if (cDown == 8) {
+          block2->setText("adding elevator Speed");
+       }
+       if (cDown == 9) {
+          block3->setVisible(true);
+          block2->setText("changing elevator type");
+          if (eleStyle == 0)
+              block3->setText("Horizontal Elevators");
+          if (eleStyle == 1)
+              block3->setText("Vertical Elevators");
+          if (eleStyle == 2)
+              block3->setText("Circular Elevators");
        }
    }
    if (twoDown && !showHelp && !tDown && !oneDown && !threeDown&& !fourDown) {
@@ -398,7 +419,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
         }
         if(Event.Key == SDLK_c){
             if (!oneDown && !twoDown && !threeDown && !tDown) {
-                if(cDown <= 6)
+                if(cDown < 9)
                     cDown++;
                 else
                     cDown = 0;
@@ -467,6 +488,20 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                     if(blockDepth < 6 && uniType != -5)
                         blockDepth++;
                 }
+                if (cDown == 7) { //adjustiing speed for elevators
+                    if (eleSpeed < 6)
+                        eleSpeed++;
+                }
+                if (cDown == 8) { //adjustiing range for elevators
+                    if (eleRange < 10)
+                        eleRange++;
+                }
+                if (cDown == 9) { // adjusting type
+                    if (eleStyle < 2)
+                        eleStyle++;
+                }
+
+
             }
         } 
         if (Event.Key == SDLK_z) { // subtracting generally
@@ -519,6 +554,19 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                     if(blockDepth > 1 && uniType != -5)
                         blockDepth--;
                 }
+                if (cDown == 7) { //adjustiing speed for elevators
+                    if (eleSpeed != 0)
+                        eleSpeed--;
+                }
+                if (cDown == 8) { //adjustiing range for elevators
+                    if (eleRange != 0)
+                        eleRange--;
+                }
+                if (cDown == 9) { // adjusting type
+                    if (eleStyle != 0)
+                        eleStyle--;
+                }
+
             }
 
         }
@@ -605,8 +653,9 @@ void CLWIBState::loadWorld() {
                 d = xml->getAttributeValueAsInt(4);
                 t = xml->getAttributeValueAsInt(5);
                 moving = xml->getAttributeValueAsInt(6);
-                range = (int) xml->getAttributeValueAsFloat(7); //Range
-                speed = (int) xml->getAttributeValueAsFloat(8); //Speed
+                eleRange = (int) xml->getAttributeValueAsFloat(7); //Range
+                eleSpeed = (int) xml->getAttributeValueAsFloat(8); //Speed
+                eleStyle = xml->getAttributeValueAsInt(9);
                 if (moving == 1)
                     cDown = 6;
                 PrepBlock((float)x,(float)y,w,h,d,t,moving);
@@ -925,7 +974,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
    else if (cDown == 5)
        placeables.push_back(tempPlaceable = new CElementBlockDeath(SRect2f(x,y,1,1),1,t,1.0f,1.0f));
    else if (cDown == 6) {
-       placeables.push_back(tempPlaceable = new CElementBlockElevator(SRect2f(x,y,1,1),1,t,2.0f, 1.0f));
+       placeables.push_back(tempPlaceable = new CElementBlockElevator(SRect2f(x,y,1,1),1,t,2.0f, 1.0f,0));
        printf("shit was here \n");
    }
    else if (cDown != 6)
