@@ -375,6 +375,7 @@ bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTim
 		{
 			OnCollision.emit(Event);
 
+			// Coupled event emission
 			SCollisionEvent Event;
 			Event.This = Object;
 			Event.Other = this;
@@ -386,6 +387,14 @@ bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTim
 		{
 			NewPhaseList.insert(Object);
 			OnPhaseBegin.emit(Event);
+
+			// Coupled event emission
+			SCollisionEvent Event;
+			Event.This = this;
+			Event.Other = Object;
+			Event.Direction = (ECollisionType::Domain) CollisionType;
+
+			Object->OnPhaseBegin.emit(Event);
 		}
 	}
 
@@ -454,6 +463,11 @@ void CCollisionActor::updatePhaseList()
 			Event.Other = * it;
 			Event.Direction = (ECollisionType::Domain) ECollisionType::UnPhase;
 			OnPhaseEnd.emit(Event);
+
+			Event.This = * it;
+			Event.Other = this;
+			Event.Direction = (ECollisionType::Domain) ECollisionType::UnPhase;
+			(* it)->OnPhaseEnd.emit(Event);
 		}
 	}
 }

@@ -376,6 +376,8 @@ void CElementPlayer::setupPhysicsEngineObject() {
       PhysicsEngineObject->getAttributes().AirSpeedFactor *= 0.5f;
 
       PhysicsEngineObject->setGravity(PhysicsEngineObject->getGravity()/16.0f);
+
+      printf("Gravity: %f\n", PhysicsEngineObject->getGravity());
    }
 }
 
