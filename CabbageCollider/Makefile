@@ -1,6 +1,6 @@
 FILES = CCollideable.cpp     CCollisionActor.EActionType.cpp  CCollisionElevator.cpp  CCollisionInteractor.cpp CCollisionActor.cpp  CCollisionActor.SAttributes.cpp  CCollisionEngine.cpp    CCollisionObject.cpp
 
-CC=g++ -O1 -s
+CC=g++ -g
 
 OFILES = $(FILES:%.cpp=%.o)
 
