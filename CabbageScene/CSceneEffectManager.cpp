@@ -68,7 +68,8 @@ void CSceneEffectManager::SPostProcessPass::doPass()
 
 CSceneEffectManager::CSceneEffectManager(CSceneManager * sceneManager)
 	: EnabledEffects(0), SceneManager(sceneManager), NormalPassTarget(0), NormalPassTexture(0), RandomNormalsTexture(0),
-	BlurHorizontal(0), BlurVertical(0), BlendShader(0), White(0), Black(0), Magenta(0)
+	BlurHorizontal(0), BlurVertical(0), BlendShader(0), White(0), Black(0), Magenta(0),
+	Timer(0.f)
 {
 	SSAOShader = CShaderLoader::loadShader("FBO/QuadCopyUV.glsl", "SSAO.frag");
 	BlendShader = CShaderLoader::loadShader("FBO/QuadCopyUV.glsl", "Blend.frag");
@@ -171,8 +172,6 @@ void CSceneEffectManager::apply()
 		BlendPass.Shader = BlendShader;
 
 		BlendPass.doPass();
-
-		static float Timer = 0.f;
 
 		Timer += CApplication::get().getElapsedTime();
 
