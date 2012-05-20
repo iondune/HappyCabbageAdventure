@@ -18,8 +18,13 @@ class CElementEnemyKiwi : public CElementEnemy
 
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);
+      void OnPhaseBegin(const SCollisionEvent& Event);
+      void OnPhaseEnd(const SCollisionEvent& Event);
 
-      virtual void printInformation();
+         virtual void printInformation();
+
+      void OnPhaseBegin(const SCollisionEvent& Event);
+      void OnPhaseEnd(const SCollisionEvent& Event);
 
       void DropBomb();
 };
