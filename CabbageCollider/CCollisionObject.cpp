@@ -1,7 +1,8 @@
 #include "CCollisionObject.h"
 
 
-CCollisionObject::CCollisionObject()
+CCollisionObject::CCollisionObject(CCollisionEngine * collisionEngine)
+	: CCollideable(collisionEngine)
 {
 	TypeId = INTERACTOR_BLOCKS; 
 	CollisionMask = INTERACTOR_ALL;

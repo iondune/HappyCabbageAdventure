@@ -195,21 +195,21 @@ float const CCollisionEngine::getHeightBelow( CCollisionActor * Actor )
 CCollisionObject * CCollisionEngine::addObject()
 {
 	CCollisionObject * a;
-	ObjectAddList.insert(a = new CCollisionObject());
+	ObjectAddList.insert(a = new CCollisionObject(this));
 	return a;
 }
 
 CCollisionElevator * CCollisionEngine::addElevator()
 {
 	CCollisionElevator * cen;
-	ObjectAddList.insert(cen = new CCollisionElevator());
+	ObjectAddList.insert(cen = new CCollisionElevator(this));
 	return cen;
 }
 
 CCollisionActor * CCollisionEngine::addActor()
 {
 	CCollisionActor *a;
-	ActorAddList.insert(a = new CCollisionActor());
+	ActorAddList.insert(a = new CCollisionActor(this));
 	return a;
 }
 
@@ -221,4 +221,14 @@ CCollisionEngine::ObjectList const & CCollisionEngine::getObjects() const
 CCollisionEngine::ActorList const & CCollisionEngine::getActors() const
 {
 	return Actors;
+}
+
+void CCollisionEngine::setGravity(CollisionReal gravity)
+{
+	Gravity = gravity;
+}
+
+CollisionReal const CCollisionEngine::getGravity() const
+{
+	return Gravity;
 }

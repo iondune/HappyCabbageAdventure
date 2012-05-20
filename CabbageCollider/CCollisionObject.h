@@ -10,7 +10,7 @@ protected:
 
 	friend class CCollisionEngine;
 
-	CCollisionObject();
+	CCollisionObject(CCollisionEngine * collisionEngine);
 
 public:
 

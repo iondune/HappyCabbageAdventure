@@ -1,12 +1,10 @@
-#ifndef _CABBAGECOLLIDER_CACTOR_H_INCLUDED_
-#define _CABBAGECOLLIDER_CACTOR_H_INCLUDED_
+#ifdef _CABBAGECOLLIDER_CINTERATOR_H_INCLUDED_
+#define _CABBAGECOLLIDER_CINTERATOR_H_INCLUDED_
 
 #include <SRect2.h>
 #include <vector>
 
 #include "CCollideable.h"
-
-class CCollisionObject;
 
 class CCollisionActor : public CCollideable
 {
@@ -15,60 +13,12 @@ public:
 
 	struct SAttributes
 	{
-		//! Initial acceleration given during a jump
-		CollisionReal JumpAccel;
-		
-		//! Duration in seconds that the actor can continuously jump for
-		CollisionReal JumpLength;
-
-		//! Maximum walking speed of this actor
-		CollisionReal MaxWalk;
-
-		//! Rate of acceleration for walking
-		CollisionReal WalkAccel;
-
-		//! Degree of movement control while falling (factors into max velocity)
-		CollisionReal AirControl;
-
-		//! Degree of movement control while falling (factors into acceleration)
-		CollisionReal AirSpeedFactor;
-
-		//! Rate at which horizontal velocity decreases while falling
-		CollisionReal AirStandingFriction;
-
-		//! Rate at which horizontal velocity decreases while falling
-		CollisionReal GroundStandingFriction;
 
 		//! Ratio of velocity reflected during collisions
 		CollisionReal Bounce;
 
 		//! Default params ctor
 		SAttributes();
-	};
-
-	//! Action type of this object, defines what movement the Actor is trying to perform
-	class EActionType
-	{
-
-	public:
-
-		enum Domain
-		{
-			None,
-			MoveLeft,
-			MoveRight
-		};
-
-	private:
-
-		Domain Value;
-
-	public:
-
-		EActionType();
-		EActionType(Domain const value);
-
-		bool const operator == (Domain const value) const;
 
 	};
 
@@ -85,16 +35,6 @@ protected:
 	//! Behavior attributes of this actor
 	SAttributes Attributes;
 
-	//! Current movement action of this actor
-	EActionType Action;
-
-	//! While jumping, holds the current duration of the jump in seconds
-	CollisionReal JumpTimer;
-
-	//! True while this object is in the middle of a jump
-	bool Jumping;
-	bool WantsToJump;
-
 	//! Sets whether this actor should be accelerated by gravity
 	bool GravityEnabled;
 
@@ -103,9 +43,6 @@ protected:
 
 	//! Impulse movement!
 	std::vector<std::pair<SVec2, float> > Impulses;
-
-	//! For debugging purposes, is true when the last update tick used an "allowed collision" movement
-	bool AllowedMovement;
 
 	//! Position held by this actor during last tick
 	SVec2 LastPosition;
