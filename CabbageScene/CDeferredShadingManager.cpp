@@ -57,15 +57,6 @@ CDeferredShadingManager::CDeferredShadingManager(CSceneManager * sceneManager)
 
 
 	FinalBlendShader = CShaderLoader::loadShader("Deferred/Blend");
-
-
-	CImage * WaterOffsetTextureImage = CTextureLoader::loadImage("WaterOffset.bmp");
-	STextureCreationFlags Flags2;
-	Flags2.Filter = GL_LINEAR;
-	Flags2.MipMaps = false;
-	Flags2.Wrap = GL_MIRRORED_REPEAT;
-
-	WaterOffsetTexture = new CTexture(WaterOffsetTextureImage, Flags2);
 }
 
 #include <CApplication.h>
