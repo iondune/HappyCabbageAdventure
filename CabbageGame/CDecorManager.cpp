@@ -361,37 +361,26 @@ void CDecorManager::GenerateWaterPlants(CGroundBlock* block) {
 
    //Draw flower-type plants in foreground
    for (int n = 0; n < w; n++) {
-      random = rand()%6;
-      float subrand = (float) (rand()%5);
+      random = rand()%8;
       randScale = (float) (rand()%10);
       randScale = randScale * 0.04f;
       randDepth = (float) (rand()%2);
       randDepth = randDepth*0.25f;
 
-      if (random == 0 || random == 1)
-         SetupObject(x + n + 0.5f, yVal + .2f, d/2.0f - 0.6f, 0.5f + randScale/2.0f, whiteFlwrMesh);
-      else if (random == 2 || random == 3 || random == 4) {
-         if (subrand == 0)
-            SetupObject(x + n + 0.5f, yVal + .3f, d/2.0f - 0.6f, 0.4f + randScale, blueFlwrMesh);
-         else if (subrand == 1)
-            SetupObject(x + n + 0.5f, yVal + .3f, d/2.0f - 0.6f, 0.4f + randScale, tealFlwrMesh);
-         else if (subrand == 2)
-            SetupObject(x + n + 0.5f, yVal + .3f, d/2.0f - 0.6f + .4f, 0.4f + randScale, purpleFlwrMesh);
-         else if (subrand == 3)
-            SetupObject(x + n + 0.5f, yVal + .3f, d/2.0f - 0.6f, 0.4f + randScale, yellowFlwrMesh);
-         else if (subrand == 3)
-            SetupObject(x + n + 0.5f, yVal + .3f, d/2.0f - 0.6f, 0.4f + randScale, whiteSunflwrMesh);
+      if (random == 0)
+         SetupObject(x + n + 0.5f, yVal + .1f, d/2.0f - 0.6f, 0.5f + randScale/2.0f, coral1Mesh);
+      else if (random == 1)
+    	  SetupObject(x + n + 0.5f, yVal + .1f, d/2.0f - 0.6f, 0.4f + randScale, coral2Mesh);
+      else if (random == 2)
+    	  SetupObject(x + n + 0.5f, yVal + .1f, d/2.0f - 0.6f + .4f, 0.4f + randScale, coral3Mesh);
+      else if (random == 3)
+    	  SetupObject(x + n + 0.5f, yVal + .1f, d/2.0f - 0.6f, 0.4f + randScale, coral4Mesh);
+      else if (random == 4)
+    	  SetupObject(x + n + 0.5f, yVal + .1f, d/2.0f - 0.6f, 0.4f + randScale, coral5Mesh);
+      else if (random == 5)
+          	  SetupObject(x + n + 0.5f, yVal + .1f, d/2.0f - 0.6f, 0.4f + randScale, coral5Mesh);
+      else if (random == 6 || random == 7) {
       }
-      else if (random == 5 && !oldFern) {
-         SetupObject(x + n + 0.5f, yVal + 0.2f, d/2.0f - 0.6f, 0.7f, fernMesh);
-         oldFern = true;
-      }
-      else if (random == 5 && oldFern) {
-         n--;
-      }
-
-      if (random != 5)
-         oldFern = false;
    }
 }
 

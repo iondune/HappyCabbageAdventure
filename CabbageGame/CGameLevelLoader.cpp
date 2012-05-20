@@ -78,10 +78,12 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
 
             if(xml->getAttributeValueAsInt(6)) {
                float range, speed;
+               int style;
                range = (float) xml->getAttributeValueAsInt(7);
                speed = (float) xml->getAttributeValueAsInt(8);
+               style = xml->getAttributeValueAsInt(9);
                CElementBlockElevator * ptr2;
-               newLevel->Elevators.push_back(ptr2 = new CElementBlockElevator(SRect2f((float)x, (float)y, (float)w, (float)h), d, t, range, speed));
+               newLevel->Elevators.push_back(ptr2 = new CElementBlockElevator(SRect2f((float)x, (float)y, (float)w, (float)h), d, t, range, speed, style));
                newLevel->Elements.push_back(ptr2);
             }
             else {

@@ -76,6 +76,10 @@ void CElementPlayer::doGodmode() {
 void CElementPlayer::updatePlayerAction() {
    if(Victory)
       return;
+   if(!nWasDown && CApplication::get().getEventManager().IsKeyDown[SDLK_n]) {
+      this->printInformation();
+   }
+   nWasDown = CApplication::get().getEventManager().IsKeyDown[SDLK_n];
    if(!hWasDown && CApplication::get().getEventManager().IsKeyDown[SDLK_h]) {
       Godmode = !Godmode;
       printf("Godmode toggled.\n");
@@ -274,10 +278,6 @@ void CElementPlayer::updateSceneObject(float time) {
       View->useSubView(newSubView);
    }
    jWasDown = CApplication::get().getEventManager().IsKeyDown[SDLK_j];
-   if(!nWasDown && CApplication::get().getEventManager().IsKeyDown[SDLK_n]) {
-      this->printInformation();
-   }
-   nWasDown = CApplication::get().getEventManager().IsKeyDown[SDLK_n];
 
    if(Recovering > 0.0f) {
       Recovering -= time;
@@ -352,6 +352,8 @@ void CElementPlayer::writeXML(xmlwriter *l) {
 
 void CElementPlayer::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
+
+   Area.Size *= .999f;
    PhysicsEngineObject->setArea(Area);
    PhysicsEngineObject->getAttributes().MaxWalk = 3.5f;
    printf("HERE!!! LOOK HEREs %d\n", PhysicsEngineObject->getTypeId());
@@ -656,5 +658,5 @@ void CElementPlayer::playLevelVictory(float time) {
 }
 
 void CElementPlayer::printInformation() {
-   printf("CElementPlayer; Area: [[%0.0f, %0.0f],[%0.0f, %0.0f]]; Stats: [[Health: %d, Energy: %d, Seeds: %d, Lives: %d]]\n", Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y, Stats.Health, Stats.Energy, Stats.Seeds, Stats.Lives);
+   printf("CElementPlayer; Area: [[%0.1f, %0.1f],[%0.0f, %0.0f]]; Stats: [[Health: %d, Energy: %d, Seeds: %d, Lives: %d]]\n", Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y, Stats.Health, Stats.Energy, Stats.Seeds, Stats.Lives);
 }

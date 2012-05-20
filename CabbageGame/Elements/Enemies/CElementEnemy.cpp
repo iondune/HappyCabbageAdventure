@@ -26,7 +26,8 @@
 
 //Generic enemy, for usage in the LWIB, I guess.
 CElementEnemy::CElementEnemy(SRect2f nArea, Enemies::EEnemyType type)
-: CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), PhysicsEngineObject(NULL), SceneObject(NULL), Type(type), MaxHealth(1), CurHealth(MaxHealth), TimeToDeath(-1.0f), OldRot(SVector3f(0.0f)) {
+: CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), PhysicsEngineObject(NULL),
+  SceneObject(NULL), Type(type), MaxHealth(1), CurHealth(MaxHealth), TimeToDeath(-1.0f), OldRot(SVector3f(0.0f)), InvincibilityTime(0.0f) {
 }
 
 //Enemy created by factory
@@ -138,6 +139,8 @@ void CElementEnemy::dieWithSeeds() {
 
       ((CCollisionActor *)seed->getPhysicsEngineObject())->addImpulse(SVector2f(rand1*8.f - 4.f, rand2*4.5f + 1.0f));
    }
+   if (rand()%3 == 0)
+      dropItem();
    Area.Position.Y -= 0.3f;
    TempTime = 0.0f;
    removeFromPhysicsEngine();
@@ -146,18 +149,17 @@ void CElementEnemy::dieWithSeeds() {
 }
 
 void CElementEnemy::dropItem() {
-   int random = rand() % 3;
+   int random = rand() % 5;
    CElementItem *item;
 
    //Drop health
-   if (random == 0) {
+   if (random < 3) {
       Level.addItem(item = CItemLoader::LoadItem(Area, Items::HEALTH));
    }
 
    //Drop energy
-   else if (random > 0) {
+   else
       Level.addItem(item = CItemLoader::LoadItem(Area, Items::ENERGY));
-   }
 
    float rand1 = (float)rand()/(float)RAND_MAX;
    float rand2 = (float)rand()/(float)RAND_MAX;
@@ -173,7 +175,11 @@ void CElementEnemy::OnCollision(const SCollisionEvent& Event) {
 
       //Check if jumped on top of enemy.
       if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {
-         takeDamage(1);
+    	  if (InvincibilityTime <= 0.0f) {
+    		  takeDamage(1);
+    		  printf("Took damage.\n");
+    		  InvincibilityTime = .2f;
+    	  }
       }
 
       //Did the player run into them?
@@ -190,13 +196,15 @@ void CElementEnemy::OnCollision(const SCollisionEvent& Event) {
 }
 
 void CElementEnemy::updatePhysicsEngineObject(float time) {
-   if(TimeToDeath > 0.0f) {
-      PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
-      TimeToDeath -= time;
-      if(TimeToDeath <= 0.0f) {
-         dieWithSeeds();
-      }
-   }
+	InvincibilityTime -= time;
+
+	if(TimeToDeath > 0.0f) {
+		PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
+		TimeToDeath -= time;
+		if(TimeToDeath <= 0.0f) {
+			dieWithSeeds();
+		}
+	}
 }
 
 void CElementEnemy::updateSceneObject(float time) {
@@ -264,8 +272,7 @@ int CElementEnemy::heal(int amount) {
 }
 
 int CElementEnemy::takeDamage(int amount) {
-   if(CurHealth <= 0)
-      return CurHealth;
+	printf("CurHealth: %d, amount: %d\n", CurHealth, amount);
    CurHealth = std::max(0, CurHealth - amount);
 
    CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
@@ -280,8 +287,6 @@ int CElementEnemy::takeDamage(int amount) {
       dieWithSeeds();
       PlayerActor->addImpulse(SVector2f(0.0f, 3.0f));
 
-      if (rand()%3 == 0)
-         dropItem();
    }
 
    return CurHealth;
