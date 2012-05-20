@@ -103,6 +103,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       void setVictoryFlag(bool value);
 
       void setAllowMovement(bool value);
+      EDirection getDirection();
 
       //Keyboard event functions
       void OnKeyboardEvent(SKeyboardEvent const & Event);

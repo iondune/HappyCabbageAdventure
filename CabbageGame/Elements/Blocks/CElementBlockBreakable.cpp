@@ -84,6 +84,7 @@ void CElementBlockBreakable::reactToAbility(Abilities::EAbilityType Ability) {
    switch(Ability) {
       case Abilities::HEADBUTT:
          Level.getPlayer().setShaking(0.45f, 0.7f);
+         ((CCollisionActor*)Level.getPlayer().getPhysicsEngineObject())->addImpulse(SVector2f(Level.getPlayer().getDirection() == CElementPlayer::Right ? -9.0f : 9.0f, 0.8f)*6.0f);
       case Abilities::LASER:
          if(!Dead)
             explode();

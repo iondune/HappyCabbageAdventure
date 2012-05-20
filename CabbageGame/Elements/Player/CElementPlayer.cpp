@@ -10,6 +10,9 @@ CElementPlayer::CElementPlayer(SRect2f nArea, bool useCamera)
 WinParticle1(NULL), WinParticle2(NULL), WinParticle3(NULL), glow(NULL), hWasDown(false), jWasDown(false), oldGrav(0.0f) {
    setupSoundEffects();
 }
+CElementPlayer::EDirection CElementPlayer::getDirection() {
+   return Direction;
+}
 
 #include "CEventManager.h"
 #include "CApplication.h"
