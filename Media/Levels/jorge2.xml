@@ -141,8 +141,6 @@
 </DeathBlock>
 <DeathBlock X ="-25" Y ="-5" height ="1" width ="1" depth ="1" texture ="1" isMoving ="1">
 </DeathBlock>
-<CBlock X ="-7" Y ="2" height ="1" width ="3" depth ="1" texture ="2">
-</CBlock>
 <DeathBlock X ="110" Y ="-3" height ="1" width ="1" depth ="1" texture ="1" isMoving ="1">
 </DeathBlock>
 <DeathBlock X ="110" Y ="-4" height ="1" width ="1" depth ="1" texture ="1" isMoving ="1">
@@ -205,9 +203,11 @@
 </CBlock>
 <CBlock X ="196" Y ="-2" height ="2" width ="5" depth ="5" texture ="-5">
 </CBlock>
-<CBlock X ="112" Y ="-3" height ="1" width ="3" depth ="1" texture ="0" isMoving ="6" range ="9" speed ="9" Style="2">
+<CBlock X ="112" Y ="-3" height ="1" width ="3" depth ="1" texture ="0" isMoving ="1" range ="9" speed ="9" Style="2">
 </CBlock>
-<CBlock X ="122" Y ="-0" height ="1" width ="3" depth ="1" texture ="0" isMoving ="6" range ="9" speed ="9" Style="1">
+<CBlock X ="122" Y ="0" height ="1" width ="3" depth ="1" texture ="0" isMoving ="1" range ="9" speed ="9" Style="1">
 </CBlock>
-<CBlock X ="127" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="6" range ="4" speed ="4" Style="2">
+<CBlock X ="127" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1" range ="4" speed ="4" Style="2">
+</CBlock>
+<CBlock X ="-7" Y ="2" height ="1" width ="3" depth ="1" texture ="2" isMoving ="1" range ="5" speed ="3" Style="0">
 </CBlock>
