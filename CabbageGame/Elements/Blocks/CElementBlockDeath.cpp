@@ -7,8 +7,8 @@ CElementBlockDeath::CElementBlockDeath(SRect2f nArea, int D, int T, float R, flo
 }
 
 void CElementBlockDeath::OnCollision(const SCollisionEvent& Event) {
-   Level.getPlayer().subtractHealth(Level.getPlayer().getStats().MaxHealth);
-   return;
+	if (Level.getPlayer().getPhysicsEngineObject() == Event.Other)
+		Level.getPlayer().subtractHealth(Level.getPlayer().getStats().MaxHealth);
 }
 
 void CElementBlockDeath::update(float t) {
