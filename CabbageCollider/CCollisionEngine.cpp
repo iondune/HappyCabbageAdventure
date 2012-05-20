@@ -35,6 +35,8 @@ void CCollisionEngine::performTick(float const TickTime)
 
 		if (Which)
 			(* it)->onStanding(Which);
+
+		(* it)->updatePhaseList();
 	}
 
 	for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
