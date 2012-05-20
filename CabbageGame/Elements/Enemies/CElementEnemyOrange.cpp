@@ -28,7 +28,7 @@ void CElementEnemyOrange::setupSceneObject() {
    if (Level.getEnvironment() == Env::FOREST)
       mesh = CMeshLoader::load3dsMesh("Base/orange.3ds");
 
-   else if (Level.getEnvironment() == Env::DESRT)
+   else if (Level.getEnvironment() == Env::DESERT)
       mesh = CMeshLoader::load3dsMesh("Base/desertorange.3ds");
    else if (Level.getEnvironment() == Env::WATER)
 	   mesh = CMeshLoader::load3dsMesh("Base/water_orange.3ds");
