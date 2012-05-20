@@ -110,3 +110,13 @@ bool const CCollideable::canDetectWith(CCollideable * Object) const
 	return (TypeId & Object->DetectionMask) ||
 		(Object->TypeId & DetectionMask);
 }
+
+CGameplayElement * CCollideable::getGameplayElement()
+{
+	return GameplayElement;
+}
+
+void CCollideable::setGameplayElement(CGameplayElement * Element)
+{
+	GameplayElement = Element;
+}
