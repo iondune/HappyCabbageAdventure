@@ -11,6 +11,7 @@ class CElementEnemyKiwi : public CElementEnemy
       int Direction;
 
       float ZDepth, ZTimer;
+      int ZNeg;
       bool InZ;
 
    public:

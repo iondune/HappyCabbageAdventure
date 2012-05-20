@@ -3,7 +3,7 @@
 
 CElementEnemyKiwi::CElementEnemyKiwi(SRect2f nArea, int direction) :
    CElementEnemy(nArea, Enemies::KIWI), Direction(direction), rotateBird(0.0f), SineValue(0.0f), OldX(Area.Position.X), bombDropped(false),
-   ZDepth(0.0f), ZTimer(0.0f), InZ(false)
+   ZDepth(0.0f), ZTimer(0.0f), InZ(false), ZNeg(1)
 {
 
 }
@@ -118,13 +118,13 @@ void CElementEnemyKiwi::updateSceneObject(float time) {
    
    if(InZ) {
       if(ZTimer > 0.0f)
-         SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, (Z_SPEED - ZTimer)*ZDepth*(0.9f/Z_SPEED)));
+         SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, ZNeg*(Z_SPEED - ZTimer)*ZDepth*(0.9f/Z_SPEED)));
       else
-         SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, ZDepth));
+         SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, ZNeg*ZDepth));
    }
    else {
       if(ZTimer > 0.0f)
-         SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, ZDepth - (Z_SPEED - ZTimer)*ZDepth*(0.9f/Z_SPEED)));
+         SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, ZNeg*(ZDepth - (Z_SPEED - ZTimer)*ZDepth*(0.9f/Z_SPEED))));
       else
          SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, 0));
    }
@@ -165,6 +165,7 @@ void CElementEnemyKiwi::OnPhaseBegin(const SCollisionEvent& Event) {
    ZTimer = Z_SPEED;
    ZDepth = Event.Other->getVisualDepth();
    InZ = true;
+   ZNeg *= -1;
 }
 
 void CElementEnemyKiwi::OnPhaseEnd(const SCollisionEvent& Event) {
