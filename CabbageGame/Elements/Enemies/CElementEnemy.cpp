@@ -266,11 +266,14 @@ int CElementEnemy::heal(int amount) {
 }
 
 int CElementEnemy::takeDamage(int amount) {
+   if(CurHealth <= 0)
+      return CurHealth;
    CurHealth = std::max(0, CurHealth - amount);
 
    CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
 
    PlayerActor->addImpulse(SVector2f(0.0f, 9.0f));
+
    Mix_PlayChannel(-1, Level.dmgEnemy, 0);
    Level.getPlayer().setShaking(0.4f, 3.0f);
 
