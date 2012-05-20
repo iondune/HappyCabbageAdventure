@@ -23,6 +23,7 @@
     <ClCompile Include="CCollideable.cpp" />
     <ClCompile Include="CCollisionActor.EActionType.cpp" />
     <ClCompile Include="CCollisionActor.SAttributes.cpp" />
+    <ClCompile Include="CCollisionActor.UpdateMethods.cpp" />
     <ClCompile Include="CCollisionElevator.cpp" />
     <ClCompile Include="CCollisionEngine.cpp" />
     <ClCompile Include="CCollisionInteractor.cpp" />
