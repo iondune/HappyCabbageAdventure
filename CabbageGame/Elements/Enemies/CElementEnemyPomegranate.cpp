@@ -55,18 +55,24 @@ void CElementEnemyPomegranate::setupSceneObject() {
 //CGameplayElement has an attribute called ElapsedTime, which is updated by CGameplayElement's update function.
 
 void CElementEnemyPomegranate::OnCollision(const SCollisionEvent& Event) {
+   if(TimeToDeath > 0.0f)
+      return;
    if(!Dead && Event.Other == Level.getPlayer().getPhysicsEngineObject()) {
       CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
       HitPlayer = true;
 
       //Check if jumped on top of enemy.
-      if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f && particleEngine->isVisible() == false) {
+      if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f && particleEngine && particleEngine->isVisible() == false) {
          if (CurHealth == 1) {
             particleEngine->deconstruct();
             delete particleEngine;
             particleEngine = NULL;
          }
-         takeDamage(1);
+         if (InvincibilityTime <= 0.0f) {
+            takeDamage(1);
+            printf("Took damage.\n");
+            InvincibilityTime = .2f;
+         }
       }
 
       //Did the player run into them?
