@@ -22,8 +22,9 @@ void CElementEnemyProjectileKiwi::setupPhysicsEngineObject() {
 
    if (Level.getEnv() != Env::WATER)
       PhysicsEngineObject->setVelocity(SVector2f(0.f, -6.f));
-   else
-      PhysicsEngineObject->setVelocity(SVector2f(0.f, -1.f));
+   else {
+      PhysicsEngineObject->setVelocity(SVector2f(0.f, -3.f));
+   }
 
    CElementEnemy::setupPhysicsEngineObject();
 }
@@ -86,7 +87,10 @@ void CElementEnemyProjectileKiwi::OnCollision(CCollideable *Object) {
 
 void CElementEnemyProjectileKiwi::updatePhysicsEngineObject(float time) {
    CElementEnemy::updatePhysicsEngineObject(time);
-   PhysicsEngineObject->setVelocity(SVector2f(0.f, -6.f));
+   if (Level.getEnv() != Env::WATER)
+	   PhysicsEngineObject->setVelocity(SVector2f(0.f, -6.f));
+   else
+	   PhysicsEngineObject->setVelocity(SVector2f(0.f, -3.f));
 }
 
 void CElementEnemyProjectileKiwi::updateSceneObject(float time) {
