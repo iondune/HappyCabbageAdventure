@@ -17,6 +17,14 @@ void CMeshSceneObject::update()
 }
 */
 
+bool CParticleObject::getRenderLights() {
+   return RenderLights;
+}
+
+void CParticleObject::setRenderLights(bool b) {
+   RenderLights = b;
+}
+
 bool CParticleObject::getOnlyRenderLights() {
    return OnlyRenderLights;
 }
@@ -37,7 +45,8 @@ void CParticleObject::update() {
       for(int j = 0; j < 3; j++) {
          PositionBuffer.push_back((*(positionsArr[i]))[j]);
       }
-      LightsArr[i]->setTranslation(*(positionsArr[i]));
+      if(RenderLights)
+         LightsArr[i]->setTranslation(*(positionsArr[i]));
       //LightsDArr[i]->setTranslation(*(positionsArr[i]));
    }
 }
@@ -98,14 +107,12 @@ void CParticleObject::setup(std::vector<SVector3f*> vectorArr, std::vector<SVect
          ColorBuffer.push_back((*(colorArr[i]))[j]);
          SizeBuffer.push_back(sizeArr[i]);
       }
-      CPointLightSceneObject *LightObj = new CPointLightSceneObject(sizeArr[i]/sizeFactor, *(colorArr[i]));
-      CDirectionalLightSceneObject *LightDObj = new CDirectionalLightSceneObject(SVector3f(0, 0, 1), *(colorArr[i]));
-      addChild(LightObj);
-      //addChild(LightDObj);
-      LightsArr.push_back(LightObj);
-      LightObj->setCullingEnabled(false);
-      //LightsDArr.push_back(LightDObj);
-
+      if(RenderLights) {
+         CPointLightSceneObject *LightObj = new CPointLightSceneObject(sizeArr[i]/sizeFactor, *(colorArr[i]));
+         addChild(LightObj);
+         LightsArr.push_back(LightObj);
+         LightObj->setCullingEnabled(false);
+      }
       IndexBuffer.push_back((unsigned short)i);
    }
    IndexBuffer.setIsIndexBuffer(true);

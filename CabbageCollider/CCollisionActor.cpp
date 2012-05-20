@@ -410,7 +410,7 @@ void CCollisionActor::draw()
 
 void CCollisionActor::addImpulse(SVec2 const & velocity, float const Duration)
 {
-	Impulses.push_back(std::pair<SVec2, float>(velocity, Duration));
+	Impulses.push_back(std::pair<SVec2, float>(velocity*CollisionEngine->getImpulseMultiplier(), Duration)); 
 }
 
 void CCollisionActor::updatePhaseList()

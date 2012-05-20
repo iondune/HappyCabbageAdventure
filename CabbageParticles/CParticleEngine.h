@@ -39,7 +39,7 @@ class CParticleEngine {
    public:
       int dead, lookRight;
       //Duration in milliseconds
-      CParticleEngine(SVector3f pos, int maxParticles, float duration, int);
+      CParticleEngine(SVector3f pos, int maxParticles, float duration, int, bool night = false);
       void setCenterPos(SVector3f cP);
       void UsePhysics(CCollisionEngine *engine, int env);
       void setLookRight(int pf);

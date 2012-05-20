@@ -15,10 +15,11 @@ CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(
    srand((unsigned int) 52);
    PhysicsEngine = new CCollisionEngine();
 
-   level.setPhysicsEngine(PhysicsEngine);
+   Level.setPhysicsEngine(PhysicsEngine);
 
    if (level.getEnvironment() == Env::WATER) {
 	   PhysicsEngine->setGravity(6.25f);
+      Level.getPhysicsEngine().setImpulseMultiplier(0.4);
    }
 
    CPerspectiveCamera *Camera = new CPerspectiveCamera(CApplication::getAspectRatio(), 0.01f, 100.0f, 60.0f);

@@ -68,7 +68,7 @@ CDecorManager::CDecorManager(CGameLevel & level) {
    SetupSky();
    StarEngine = NULL;
    if(night) {
-      StarEngine = new CParticleEngine(SVector3f(-30.0f, 15.0f, 0.0f), 100, -1, STAR_PARTICLE);
+      StarEngine = new CParticleEngine(SVector3f(-30.0f, 15.0f, 0.0f), 100, -1, STAR_PARTICLE, level.isNight());
       SetupClouds();
    }
    oldFern = false;
@@ -113,10 +113,10 @@ CDecorManager::CDecorManager(CGameLevel & level) {
             n++;
          }
 
-         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + curBlock->w / 3.0f, curBlock->y + curBlock->h, 1), 10, -1, WIGGLE_PARTICLE));
-         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + 2.0f*curBlock->w / 3.0f, curBlock->y + curBlock->h, 1), 10, -1, WIGGLE_PARTICLE));
-         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + curBlock->w / 3.0f, curBlock->y + curBlock->h, -1), 10, -1, WIGGLE_PARTICLE));
-         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + 2.0f*curBlock->w / 3.0f, curBlock->y + curBlock->h, -1), 10, -1, WIGGLE_PARTICLE));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + curBlock->w / 3.0f, curBlock->y + curBlock->h, 1), 10, -1, WIGGLE_PARTICLE, level.isNight()));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + 2.0f*curBlock->w / 3.0f, curBlock->y + curBlock->h, 1), 10, -1, WIGGLE_PARTICLE, level.isNight()));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + curBlock->w / 3.0f, curBlock->y + curBlock->h, -1), 10, -1, WIGGLE_PARTICLE, level.isNight()));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + 2.0f*curBlock->w / 3.0f, curBlock->y + curBlock->h, -1), 10, -1, WIGGLE_PARTICLE, level.isNight()));
       }
       delete curBlock;
    }

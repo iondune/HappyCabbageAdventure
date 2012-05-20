@@ -7,7 +7,7 @@
 class CParticleObject : public CSceneObject
 {
 protected:
-   bool OnlyRenderLights;
+   bool OnlyRenderLights, RenderLights;
    CRenderable * particlesRenderable;
    CBufferObject<float> PositionBuffer, ColorBuffer, SizeBuffer;
    CBufferObject<unsigned short> IndexBuffer;
@@ -32,6 +32,8 @@ public:
    void draw(CScene const * const scene, ERenderPass const Pass);
    void setOnlyRenderLights(bool);
    bool getOnlyRenderLights();
+   void setRenderLights(bool);
+   bool getRenderLights();
 };
 
 #endif

@@ -21,7 +21,7 @@
 </CBlock>
 <CBlock X ="-22" Y ="6" height ="1" width ="3" depth ="1" texture ="0">
 </CBlock>
-<CCabbage X ="-21" Y ="7" height ="0.999" width ="0.999">
+<CCabbage X ="-21" Y ="7" height ="1" width ="1">
 </CCabbage>
 <CBlock X ="12" Y ="1" height ="2" width ="5" depth ="5" texture ="-5">
 </CBlock>
