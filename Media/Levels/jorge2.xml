@@ -9,7 +9,15 @@
 </CBlock>
 <CBlock X ="-9" Y ="-2" height ="2" width ="5" depth ="5" texture ="-5" isMoving ="0" range ="0" speed ="0">
 </CBlock>
+<CEnemy X ="-13" Y ="4" height ="1" width ="1" type ="9">
+</CEnemy>
+<CEnemy X ="-12" Y ="4" height ="1" width ="1" type ="9">
+</CEnemy>
 <CEnemy X ="-11" Y ="4" height ="1" width ="1" type ="9">
+</CEnemy>
+<CEnemy X ="-10" Y ="4" height ="1" width ="1" type ="9">
+</CEnemy>
+<CEnemy X ="-9" Y ="4" height ="1" width ="1" type ="9">
 </CEnemy>
 <CBreakable X="-12" Y="0" height="1" width = "1">
 </CBreakable>
