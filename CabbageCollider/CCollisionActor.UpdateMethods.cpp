@@ -123,7 +123,7 @@ void CCollisionActor::updateVectors(CollisionReal const TickTime)
 	Area.Position += Movement;
 
 	// Update phase list
-	PhaseList = NewPhaseList;
+	PhaseList.swap(NewPhaseList);
 	NewPhaseList.clear();
 }
 
@@ -329,9 +329,9 @@ void CCollisionActor::pushIfCollided(CCollisionObject * Object, SVec2 const Move
 void CCollisionActor::updatePhaseList()
 {
 	// Emit phase leaving events
-	for (std::set<CCollideable *>::iterator it = NewPhaseList.begin(); it != NewPhaseList.end(); ++ it)
+	for (std::set<CCollideable *>::iterator it = PhaseList.begin(); it != PhaseList.end(); ++ it)
 	{
-		if (PhaseList.find(* it) == PhaseList.end())
+		if (NewPhaseList.find(* it) == NewPhaseList.end())
 		{
 			SCollisionEvent Event;
 			Event.This = this;
