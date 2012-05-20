@@ -62,6 +62,8 @@ protected:
 	std::vector<GLenum> RenderCapabilities;
 	std::vector<GLenum> RemovedRenderCapabilities;
 
+	int DebugCounterThing;
+
 public:
 
 	int Size;

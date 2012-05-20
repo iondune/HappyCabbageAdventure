@@ -12,7 +12,8 @@ CShader * CRenderable::NormalColorShader = 0;
 
 CRenderable::CRenderable(ISceneObject * parent)
 	: DrawType(GL_TRIANGLES), NormalObject(0), IndexBufferObject(0), Parent(parent),
-	BindModelMatrix(ModelMatrix), BindNormalMatrix(NormalMatrix)
+	BindModelMatrix(ModelMatrix), BindNormalMatrix(NormalMatrix),
+	DebugCounterThing(0)
 {
 	for (int i = 0; i < ERP_COUNT; ++ i)
 		Shader[i] = 0;
@@ -42,6 +43,21 @@ void CRenderable::loadShaderVariables(CShader const * const shader, CScene const
 {
 	if (! scene->SceneChanged && LastLoadedShader == shader && LastLoadedScene == scene)
 		return;
+	
+#ifdef DEBUG_THING
+	DebugCounterThing ++;
+
+	std::cout << "Resetting shader variables : ";
+
+	if (scene->SceneChanged)
+		std::cout << "Scene Changed ";
+	if (LastLoadedShader != shader)
+		std::cout << "New Shader ";
+	if (LastLoadedScene != scene)
+		std::cout << "New Scene ";
+	
+	std::cout << "@ " << DebugCounterThing << " [" << this << "])!" << std::endl;
+#endif
 
 	// Remove any handles a previous shader might have set
 	LoadedAttributes.clear();
@@ -125,13 +141,13 @@ CShader * CRenderable::updateShaderVariables(CScene const * const Scene, ERender
 void CRenderable::draw(CScene const * const Scene, ERenderPass const Pass)
 {
 	// If no ibo loaded, we can't draw anything
-	// If the ibo loaded hasn't been synced as an index buffer object, 
 	if (! IndexBufferObject)
 	{
 		std::cout << "Failed to draw object, no IBO." << std::endl;
 		return;
 	}
-
+	
+	// If the ibo loaded hasn't been synced as an index buffer object, we can't draw anything
 	if (! IndexBufferObject->isIndexBuffer())
 	{
 		std::cout << "Failed to draw object, IBO is not index buffer." << std::endl;
