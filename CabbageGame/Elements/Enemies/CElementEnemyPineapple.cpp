@@ -2,7 +2,7 @@
 #include "CGameLevel.h"
 
 CElementEnemyPineapple::CElementEnemyPineapple(SRect2f nArea) :
-   CElementEnemy(nArea, Enemies::PINEAPPLE), ISquishable(4.0f, 4.0f), HitPlayer(false), OldPositionX(nArea.Position.X) {
+   CElementEnemy(nArea, Enemies::PINEAPPLE), ISquishable(1.0f, 1.0f), HitPlayer(false), OldPositionX(nArea.Position.X) {
 
    MaxHealth = 4;
    CurHealth = MaxHealth;
@@ -31,7 +31,7 @@ void CElementEnemyPineapple::setupSceneObject() {
       mesh = CMeshLoader::load3dsMesh("Base/pineapple_stack.3ds");
 
    if(mesh) {
-      mesh->resizeMesh(SVector3f(1));
+      mesh->resizeMesh(SVector3f(Area.Size.Y, Area.Size.Y, Area.Size.Y));
       mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
@@ -42,11 +42,9 @@ void CElementEnemyPineapple::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setRotation(SVector3f(-90, 0, 180));
 
-   Scale = Area.Size;
-
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   SceneObject->setTranslation(SVector3f(Area.getCenter().X,Area.getCenter().Y, 0));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X,Area.Position.Y, 0));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
@@ -109,8 +107,6 @@ void CElementEnemyPineapple::updateSceneObject(float time) {
    }
 
    Scale = ISquishable::Squish(PhysicsEngineObject->getVelocity());
-
-   //printf("Scale: %f, %f\n", Scale.X, Scale.Y);
 
    if (PhysicsEngineObject->getVelocity().Y < .01f && PhysicsEngineObject->getVelocity().Y > -.01f) {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)

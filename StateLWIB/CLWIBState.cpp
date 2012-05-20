@@ -894,8 +894,10 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
             type = 10;
         else if (type == 9)
             type = 12;
-        else if (type == 10)
+        else if (type == 10) {
             type = 14;
+            h = 3;
+        }
         else if (type == 11)
             type = 15;
         else if (type == 12)
