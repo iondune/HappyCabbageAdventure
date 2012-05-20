@@ -14,8 +14,6 @@ void CElementEnemyStrawberry::setupPhysicsEngineObject() {
    PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
    PhysicsEngineObject->getAttributes().AirControl = 0.75f;
 
-   PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
-
    CElementEnemy::setupPhysicsEngineObject();
 }
 
@@ -70,10 +68,10 @@ void CElementEnemyStrawberry::updatePhysicsEngineObject(float time) {
    float difference = Area.Position.X - OldPositionX;
 
    if (difference < .00001f && difference > -.00001f && !HitPlayer) {
-      if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveLeft)
-         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
-      else if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveRight)
+      if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveRight)
          PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
+      else
+         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
    }
 
    JumpTimer -= time;

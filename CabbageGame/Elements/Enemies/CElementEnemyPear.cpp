@@ -2,7 +2,7 @@
 #include "CGameLevel.h"
 
 CElementEnemyPear::CElementEnemyPear(SRect2f nArea) :
-   CElementEnemy(nArea, Enemies::PEAR), ISquishable(nArea.Size.X, nArea.Size.Y), OldPositionX(nArea.Position.X), HitPlayer(false) {
+   CElementEnemy(nArea, Enemies::PEAR), ISquishable(nArea.Size.X, nArea.Size.Y), OldPositionX(nArea.Position.X), HitPlayer(false), Scale(SVector2f(0.0f)) {
    printf("Made a pear!\n");
 }
 
@@ -11,7 +11,7 @@ void CElementEnemyPear::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
 
    PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
-   PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
+   PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
 
    CElementEnemy::setupPhysicsEngineObject();
 }
@@ -42,8 +42,9 @@ void CElementEnemyPear::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   SceneObject->setTranslation(SVector3f((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y-1))/2, 0));
-   SceneObject->setScale(SVector3f(Area.Size.X, Area.Size.X, Area.Size.Y));
+   //SceneObject->setTranslation(SVector3f((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y-1))/2, 0));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X,Area.getCenter().Y, 0));
+   SceneObject->setScale(SVector3f(Scale.X,Scale.X,Scale.Y));
    SceneObject->setRotation(SVector3f(-90, 0, 20));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
@@ -63,10 +64,10 @@ void CElementEnemyPear::updatePhysicsEngineObject(float time) {
    float difference = Area.Position.X - OldPositionX;
 
    if (difference < .001f && difference > -.001f && !HitPlayer) {
-      if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveLeft)
-         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
-      else if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveRight)
+      if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveRight)
          PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
+      else
+         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
    }
 
    OldPositionX = Area.Position.X;

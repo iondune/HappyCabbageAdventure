@@ -12,7 +12,6 @@ void CElementEnemyPineapple::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
 
    PhysicsEngineObject->getAttributes().MaxWalk = 1.2f;
-   PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
 
    CElementEnemy::setupPhysicsEngineObject();
 }
@@ -85,10 +84,10 @@ void CElementEnemyPineapple::updatePhysicsEngineObject(float time) {
    float difference = Area.Position.X - OldPositionX;
 
    if (difference < .00001f && difference > -.00001f && !HitPlayer) {
-      if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveLeft)
-         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
-      else if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveRight)
+      if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveRight)
          PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
+      else
+         PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
    }
 
    OldPositionX = Area.Position.X;
