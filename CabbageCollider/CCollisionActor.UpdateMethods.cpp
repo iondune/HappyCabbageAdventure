@@ -123,8 +123,23 @@ void CCollisionActor::updateVectors(CollisionReal const TickTime)
 	Area.Position += Movement;
 
 	// Update phase list
+
+	/*if (PhaseList.size() || NewPhaseList.size())
+	{
+		std::cout << "Before: ";
+		std::cout << "Regular: " << PhaseList.size();
+		std::cout << " Post: " << NewPhaseList.size();
+		std::cout << std::endl;
+	}*/
 	PhaseList.swap(NewPhaseList);
 	NewPhaseList.clear();
+	/*if (PhaseList.size() || NewPhaseList.size())
+	{
+		std::cout << "After: ";
+		std::cout << "Regular: " << PhaseList.size();
+		std::cout << " Post: " << NewPhaseList.size();
+		std::cout << std::endl;
+	}*/
 }
 
 
@@ -155,19 +170,22 @@ bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTim
 
 			Object->OnCollision.emit(Event);
 		}
-		else if (PhaseList.find(Object) == PhaseList.end())
+		else
 		{
 			NewPhaseList.insert(Object);
-			OnPhaseBegin.emit(Event);
+			if (PhaseList.find(Object) == PhaseList.end())
+			{
+				OnPhaseBegin.emit(Event);
 
-			// Coupled event emission
-			SCollisionEvent Event;
-			Event.This = this;
-			Event.Other = Object;
-			Event.Direction = (ECollisionType::Domain) CollisionType;
-			Event.Receiver = true;
+				// Coupled event emission
+				SCollisionEvent Event;
+				Event.This = this;
+				Event.Other = Object;
+				Event.Direction = (ECollisionType::Domain) CollisionType;
+				Event.Receiver = true;
 
-			Object->OnPhaseBegin.emit(Event);
+				Object->OnPhaseBegin.emit(Event);
+			}
 		}
 	}
 
