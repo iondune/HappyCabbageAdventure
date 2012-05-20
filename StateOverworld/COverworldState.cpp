@@ -340,21 +340,44 @@ void COverworldState::end()
 void COverworldState::loadLevels()
 {
    //If you're adding more levels be sure to update COverworldState's NUM_LEVELS
-   levels[0].name = "water1.xml";//"jorge1.xml";
-   levels[0].loc = SVector3f(0.33f, -0.17f, 1.05f); //bit of green near sole orange hill
-   levels[1].name = "jorge2.xml";
-   levels[1].loc = SVector3f(0.83f, 0.00f, 0.65f); //Green hill
-   levels[2].name = "jorge3.xml";
-   levels[2].loc = SVector3f(0.9f, -0.12999999f, 0.3f);
-   levels[3].name = "chris-night.xml";
-   levels[3].loc = SVector3f(0.5f, -0.13f, 0.1f);
-   levels[4].name = "test.xml";
-   //levels[4].name = "chris2-night.xml";
-   levels[4].loc = SVector3f(0.98f, -0.27f, -0.19f); //Green beach
-   levels[5].name = "chrisDesert.xml";
-   levels[5].loc = SVector3f(0.94f, -0.25f, -0.38f); //Yellow beach
-   levels[6].name = "chrisDesert1-night.xml";
-   levels[6].loc = SVector3f(0.77f, -0.20f, -0.66f); //Yellow hills
+
+	//Grass Levels
+	levels[0].name = "jorge1.xml";//"jorge1.xml";
+	levels[0].loc = SVector3f(0.33f, -0.17f, 1.05f); //bit of green near sole orange hill
+	levels[1].name = "test.xml";
+	levels[1].loc = SVector3f(0.56, -0.29, 1.11);
+
+	//Single water level
+	levels[2].name = "water1.xml";
+	levels[2].loc = SVector3f(0.84, -0.33, 1.19);
+
+	//Moar Grass Levels!
+	levels[3].name = "test.xml";
+	levels[3].loc = SVector3f(0.68, -0.21, 1.01);
+	levels[4].name = "test.xml";
+	levels[4].loc = SVector3f(0.47, -0.16, 0.80);
+	levels[5].name = "test.xml";
+	levels[5].loc = SVector3f(0.30, -0.12, 0.60);
+	levels[6].name = "jorge2.xml";
+	levels[6].loc = SVector3f(0.83f, 0.00f, 0.65f); //Green hill
+	levels[7].name = "jorge3.xml";
+	levels[7].loc = SVector3f(0.9f, -0.12999999f, 0.3f);
+	levels[8].name = "chris-night.xml";
+	levels[8].loc = SVector3f(0.5f, -0.13f, 0.1f);
+	levels[9].name = "chris2-night.xml";
+	levels[9].loc = SVector3f(0.86, -0.16, -0.02);
+
+	//Desert Levels
+   levels[10].name = "chrisDesert.xml";
+   levels[10].loc = SVector3f(0.94f, -0.25f, -0.38f); //Yellow beach
+   levels[11].name = "chrisDesert1-night.xml";
+   levels[11].loc = SVector3f(0.77f, -0.20f, -0.66f); //Yellow hills
+   levels[12].name = "test.xml";
+   levels[12].loc = SVector3f(0.65, -0.20, -0.51);
+
+   //Water Levels
+   //levels[13].name = "water1.xml";
+   //levels[13].loc = SVector3f(1.27f, -.21f, -1.0f);
 
    for(int i = 0; i < NUM_LEVELS; i++)
    {
