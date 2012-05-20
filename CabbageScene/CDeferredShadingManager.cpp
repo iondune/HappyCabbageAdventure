@@ -3,6 +3,8 @@
 #include "CSceneManager.h"
 #include "CShaderLoader.h"
 
+#include <CTextureLoader.h>
+
 CDeferredShadingManager::CDeferredShadingManager(CSceneManager * sceneManager)
 	: CSceneEffectManager(sceneManager)
 {
@@ -55,7 +57,18 @@ CDeferredShadingManager::CDeferredShadingManager(CSceneManager * sceneManager)
 
 
 	FinalBlendShader = CShaderLoader::loadShader("Deferred/Blend");
+
+
+	CImage * WaterOffsetTextureImage = CTextureLoader::loadImage("WaterOffset.bmp");
+	STextureCreationFlags Flags2;
+	Flags2.Filter = GL_LINEAR;
+	Flags2.MipMaps = false;
+	Flags2.Wrap = GL_MIRRORED_REPEAT;
+
+	WaterOffsetTexture = new CTexture(WaterOffsetTextureImage, Flags2);
 }
+
+#include <CApplication.h>
 
 void CDeferredShadingManager::apply()
 {
@@ -69,10 +82,37 @@ void CDeferredShadingManager::apply()
 	SPostProcessPass BlendPass;
 	BlendPass.Textures["uSceneColor"] = DeferredColorOutput;
 	BlendPass.Textures["uLightPass"] = LightPassColorOutput;
-	BlendPass.Target = SceneManager->getSceneFrameBuffer();
+	BlendPass.Target = ScratchTarget1;
 	BlendPass.Shader = FinalBlendShader;
 #endif
+
 	BlendPass.doPass();
+
+	// Copy results back into scene
+	SPostProcessPass FinalPass;
+	FinalPass.Textures["uTexColor"] = ScratchTexture1;
+	FinalPass.Target = SceneManager->getSceneFrameBuffer();
+
+	if (isEffectEnabled(ESE_HEAT_WAVE) || isEffectEnabled(ESE_WATER_DISTORT))
+	{
+		Timer += CApplication::get().getElapsedTime();
+
+		if (isEffectEnabled(ESE_HEAT_WAVE))
+			FinalPass.Textures["uHeatOffset"] = HeatOffsetTexture;
+		else if (isEffectEnabled(ESE_WATER_DISTORT))
+			FinalPass.Textures["uHeatOffset"] = WaterOffsetTexture;
+
+		FinalPass.Floats["uTimer"] = Timer * 0.04f;
+		FinalPass.Target = SceneManager->getSceneFrameBuffer();
+		FinalPass.Shader = HeatCopy;
+	}
+	else
+	{
+		FinalPass.Shader = QuadCopy;
+	}
+
+	FinalPass.doPass();
+
 }
 
 void CDeferredShadingManager::setEffectEnabled(ESceneEffect const Effect, bool const Enabled)
