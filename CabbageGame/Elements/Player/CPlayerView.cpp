@@ -1,9 +1,9 @@
 #include "CPlayerView.h"
 #include "CabbageFramework.h"
-
+#include "CGameLevel.h"
 
 #include <sstream>
-CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2f & nArea, SVector3f & sf, CCollisionActor* peo, bool uC) :
+CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2f & nArea, SVector3f & sf, CCollisionActor* peo, bool uC, CGameLevel &Level) :
    SceneObject(obj), CabbageIndex(CurHealth - 1), Direction(dir), Action(act), Hurt(false), Area(nArea), ShakeFactor(sf),
    ySineValue(0.0f), PhysicsEngineObject(peo), UseCamera(uC), UseSubView(0), tiltValue(0.0f) {
 
@@ -24,7 +24,10 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
 
    for(int i = 1; i <= 5; i++) {
       std::ostringstream fileName;
-      fileName << "Base/cabbage/cabbage_" << i << ".3ds";
+      if(Level.getEnv() != Env::WATER)
+         fileName << "Base/cabbage/cabbage_" << i << ".3ds";
+      else
+         fileName << "Base/cabbage/water_cabbage_" << i << ".3ds";
       CMesh *cabbageMesh = CMeshLoader::load3dsMesh(fileName.str());
       if(cabbageMesh) {
          cabbageMesh->centerMeshByExtents(SVector3f(0.0f));
@@ -50,7 +53,10 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
 
    for(int i = 1; i <= 5; i++) {
       std::ostringstream fileName;
-      fileName << "Base/cabbage/cabbage_ouch_" << i << ".3ds";
+      if(Level.getEnv() != Env::WATER)
+         fileName << "Base/cabbage/cabbage_ouch_" << i << ".3ds";
+      else
+         fileName << "Base/cabbage/water_cabbage_ouch_" << i << ".3ds";
       CMesh *cabbageMesh = CMeshLoader::load3dsMesh(fileName.str());
       if(cabbageMesh) {
          cabbageMesh->centerMeshByExtents(SVector3f(0.0f));
