@@ -40,7 +40,6 @@ void CElementBlockDeath::writeXML(xmlwriter *l) {
 }
 
 void CElementBlockDeath::setupSceneObject() {
-   if (!Level.isLoaded()) {
      CMeshSceneObject *tempBlock = new CMeshSceneObject();
       CMesh *mesh;
 
@@ -67,6 +66,7 @@ void CElementBlockDeath::setupSceneObject() {
    tempBlock->setRotation(SVector3f(Texture==-5?-90.f:0, 0, 0));
 
       SceneObject = tempBlock;
+   if (!Level.isLoaded()) {
       CApplication::get().getSceneManager().addImmobileSceneObject(tempBlock, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
    }
 }
