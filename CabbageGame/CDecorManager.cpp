@@ -315,22 +315,22 @@ void CDecorManager::GenerateWaterPlants(CGroundBlock* block) {
 
    //Check how many tree-type objects we should draw in the background
    for (int n = 0; n < numBackground; n++) {
-      random = rand()%6;
-      randScale = (float) (rand()%40);
+      random = rand()%7;
+      randScale = (float) (rand()%60);
       randScale = randScale * .1f;
 
       if (random == 0)
-    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f, -d/2.0f + .4f, 2.0f, seaweed1Mesh, 4.0f + randScale);
+    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed1Mesh, 4.0f + randScale);
       else if (random == 1)
-    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f, -d/2.0f + .4f, 2.0f, seaweed2Mesh, 4.0f + randScale);
+    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed2Mesh, 4.0f + randScale);
       else if (random == 2)
-    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f, -d/2.0f + .4f, 2.0f, seaweed3Mesh, 4.0f + randScale);
+    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed3Mesh, 4.0f + randScale);
       else if (random == 3)
-    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f, -d/2.0f + .4f, 2.0f, seaweed4Mesh, 4.0f + randScale);
+    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed4Mesh, 4.0f + randScale);
       else if (random == 4)
-    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f, -d/2.0f + .4f, 2.0f, searock2Mesh);
-      else if (random == 5)
-    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f, -d/2.0f + .4f, 2.0f, searock1Mesh);
+    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed1Mesh, 4.0f + randScale);
+      else if (random == 5 || random == 6)
+    	  break;
    }
 
    //Draw flower-type plants in background
