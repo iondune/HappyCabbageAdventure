@@ -92,6 +92,8 @@ void CPlayerAbilityHeadbutt::checkKey(bool keyDown) {
          printf("Tempgrav: %0.2f\n", ((CCollisionActor *)Player.getPhysicsEngineObject())->getAttributes().AirStandingFriction);
          ((CCollisionActor *)Player.getPhysicsEngineObject())->getAttributes().AirStandingFriction = ((CCollisionActor *)Player.getPhysicsEngineObject())->getAttributes().GroundStandingFriction;
          ((CCollisionActor *)Player.getPhysicsEngineObject())->addImpulse(SVector2f((2*(Player.Direction == CElementPlayer::Right)-1) * 65.0f, 0.0f));
+         ((CCollisionActor *)Player.getPhysicsEngineObject())->setCollisionMask(((CCollisionActor *)Player.getPhysicsEngineObject())->getCollisionMask() & ~INTERACTOR_ACTORS);
+         ((CCollisionActor *)Player.getPhysicsEngineObject())->setDetectionMask(((CCollisionActor *)Player.getPhysicsEngineObject())->getDetectionMask() | INTERACTOR_ACTORS);
          return;
       }
    }
@@ -114,6 +116,8 @@ void CPlayerAbilityHeadbutt::checkKey(bool keyDown) {
          Player.View->setVisible(true);
          Player.View->setHurt(false);
          Player.Recovering = 0.0f;
+         ((CCollisionActor *)Player.getPhysicsEngineObject())->setCollisionMask(((CCollisionActor *)Player.getPhysicsEngineObject())->getCollisionMask() | INTERACTOR_ACTORS);
+         ((CCollisionActor *)Player.getPhysicsEngineObject())->setDetectionMask(((CCollisionActor *)Player.getPhysicsEngineObject())->getDetectionMask() & ~INTERACTOR_ACTORS);
       }
    }
    //This is NEVER RUNNING, FYI

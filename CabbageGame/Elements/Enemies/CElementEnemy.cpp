@@ -237,6 +237,10 @@ void CElementEnemy::reactToAbility(Abilities::EAbilityType Ability) {
             ((CCollisionActor*)PhysicsEngineObject)->addImpulse(endImpulse);
             ((CCollisionActor*)PhysicsEngineObject)->getAttributes().AirStandingFriction = 0.99f;
             ((CCollisionActor*)PhysicsEngineObject)->setControlFall(false);
+            ((CCollisionActor*)PhysicsEngineObject)->setTypeId(INTERACTOR_NONCOLLIDERS);
+            ((CCollisionActor*)PhysicsEngineObject)->setCollisionMask(INTERACTOR_BLOCKS);
+            ((CCollisionActor*)PhysicsEngineObject)->setDetectionMask(INTERACTOR_SUPERACTORS);
+            ((CCollisionActor*)PhysicsEngineObject)->OnPhaseBegin.connect(this, &CElementEnemy::OnCollision);
             OldRot = SceneObject->getRotation();
             TimeToDeath = 0.5f;
          }
