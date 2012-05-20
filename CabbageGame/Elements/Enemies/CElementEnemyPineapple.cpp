@@ -31,9 +31,9 @@ void CElementEnemyPineapple::setupSceneObject() {
       mesh = CMeshLoader::load3dsMesh("Base/pineapple_stack.3ds");
 
    if(mesh) {
-      mesh->resizeMesh(SVector3f(Area.Size.Y, Area.Size.Y, Area.Size.Y));
-      mesh->centerMeshByExtents(SVector3f(0));
-      mesh->calculateNormalsPerFace();
+	   mesh->resizeMesh(SVector3f(Area.Size.Y));
+	   mesh->centerMeshByExtents(SVector3f(0));
+	   mesh->calculateNormalsPerFace();
    }
 
    else
