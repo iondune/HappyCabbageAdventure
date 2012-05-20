@@ -41,13 +41,39 @@ ISceneObject *CDecorManager::SetupObject(float x, float y, float z, float xScale
    else if (model == cactus2Mesh || model == cactusBush2Mesh) {
       render->setRotation(SVector3f(-90, 0, rand()%179 - 90.f));
    }
+
+   CApplication::get().getSceneManager().addImmobileSceneObject(render, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
+   return render;
+}
+
+ISceneObject *CDecorManager::OceanSetupObject(float x, float y, float z, float xScale, CMesh* model, float yScale) {
+   if (y == -1)
+	   y = xScale / 2.0f;
+   if (yScale == -1.0f)
+	   yScale = xScale;
+
+   CMeshSceneObject *render;
+
+   render = new CMeshSceneObject();
+   render->setMesh(model);
+   render->setShader(ERP_DEFAULT, Toon);
+   render->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
+   render->setTranslation(SVector3f(x, y, z));
+   render->setScale(SVector3f(xScale, xScale, yScale));
+   render->setRotation(SVector3f(-90, 0, 0));
+
+   /*Special Case stuff*/
+   if (model == fernMesh) {
+      render->setRotation(SVector3f(-90, 0, -115));
+   }
+
    else if (model == seaweed1Mesh || model == seaweed2Mesh || model == seaweed3Mesh || model == seaweed4Mesh ||
 		    model == coral1Mesh || model == coral2Mesh || model == coral3Mesh || model == coral4Mesh || model == coral5Mesh ||
 		    model == coral6Mesh) {
 	   render->setRotation(SVector3f(-90, 0, (float) (rand()%360)));
    }
 
-   CApplication::get().getSceneManager().addImmobileSceneObject(render, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
+   CApplication::get().getSceneManager().addSceneObject(render);
    return render;
 }
 
@@ -322,15 +348,15 @@ void CDecorManager::GenerateWaterPlants(CGroundBlock* block) {
       randScale = randScale * .1f;
 
       if (random == 0)
-    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed1Mesh, 4.0f + randScale);
+    	  OceanSetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed1Mesh, 4.0f + randScale);
       else if (random == 1)
-    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed2Mesh, 4.0f + randScale);
+    	  OceanSetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed2Mesh, 4.0f + randScale);
       else if (random == 2)
-    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed3Mesh, 4.0f + randScale);
+    	  OceanSetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed3Mesh, 4.0f + randScale);
       else if (random == 3)
-    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed4Mesh, 4.0f + randScale);
+    	  OceanSetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed4Mesh, 4.0f + randScale);
       else if (random == 4)
-    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed2Mesh, 4.0f + randScale);
+    	  OceanSetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed2Mesh, 4.0f + randScale);
       else if (random == 5 || random == 6) {
       }
    }
@@ -344,17 +370,17 @@ void CDecorManager::GenerateWaterPlants(CGroundBlock* block) {
       randDepth = (float) randDepth*.25f;
 
       if (random == 0)
-    	  SetupObject(x + n + .5f, yVal + .2f, -d/2.0f + 1.6f + randDepth, .7f + randScale, coral1Mesh);
+    	  OceanSetupObject(x + n + .5f, yVal + .2f, -d/2.0f + 1.6f + randDepth, .7f + randScale, coral1Mesh);
       else if (random == 1)
-    	  SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, coral2Mesh);
+    	  OceanSetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, coral2Mesh);
       else if (random == 2)
-    	  SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, coral3Mesh);
+    	  OceanSetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, coral3Mesh);
       else if (random == 3)
-    	  SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, coral4Mesh);
+    	  OceanSetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, coral4Mesh);
       else if (random == 4)
-    	  SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, coral5Mesh);
+    	  OceanSetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, coral5Mesh);
       else if (random == 5)
-    	  SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, coral6Mesh);
+    	  OceanSetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, coral6Mesh);
       else if (random == 6 || random == 7) {
       }
    }
@@ -368,17 +394,17 @@ void CDecorManager::GenerateWaterPlants(CGroundBlock* block) {
       randDepth = randDepth*0.25f;
 
       if (random == 0)
-         SetupObject(x + n + 0.5f, yVal + .1f, d/2.0f - 0.6f, 0.5f + randScale/2.0f, coral1Mesh);
+         OceanSetupObject(x + n + 0.5f, yVal + .1f, d/2.0f - 0.6f, 0.5f + randScale/2.0f, coral1Mesh);
       else if (random == 1)
-    	  SetupObject(x + n + 0.5f, yVal + .1f, d/2.0f - 0.6f, 0.4f + randScale, coral2Mesh);
+    	  OceanSetupObject(x + n + 0.5f, yVal + .1f, d/2.0f - 0.6f, 0.4f + randScale, coral2Mesh);
       else if (random == 2)
-    	  SetupObject(x + n + 0.5f, yVal + .1f, d/2.0f - 0.6f + .4f, 0.4f + randScale, coral3Mesh);
+    	  OceanSetupObject(x + n + 0.5f, yVal + .1f, d/2.0f - 0.6f + .4f, 0.4f + randScale, coral3Mesh);
       else if (random == 3)
-    	  SetupObject(x + n + 0.5f, yVal + .1f, d/2.0f - 0.6f, 0.4f + randScale, coral4Mesh);
+    	  OceanSetupObject(x + n + 0.5f, yVal + .1f, d/2.0f - 0.6f, 0.4f + randScale, coral4Mesh);
       else if (random == 4)
-    	  SetupObject(x + n + 0.5f, yVal + .1f, d/2.0f - 0.6f, 0.4f + randScale, coral5Mesh);
+    	  OceanSetupObject(x + n + 0.5f, yVal + .1f, d/2.0f - 0.6f, 0.4f + randScale, coral5Mesh);
       else if (random == 5)
-          	  SetupObject(x + n + 0.5f, yVal + .1f, d/2.0f - 0.6f, 0.4f + randScale, coral5Mesh);
+    	  OceanSetupObject(x + n + 0.5f, yVal + .1f, d/2.0f - 0.6f, 0.4f + randScale, coral5Mesh);
       else if (random == 6 || random == 7) {
       }
    }
