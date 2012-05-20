@@ -10,6 +10,7 @@ CElementPlayer::CElementPlayer(SRect2f nArea, bool useCamera)
 WinParticle1(NULL), WinParticle2(NULL), WinParticle3(NULL), glow(NULL), hWasDown(false), jWasDown(false), oldGrav(0.0f) {
    setupSoundEffects();
 }
+
 CElementPlayer::EDirection CElementPlayer::getDirection() {
    return Direction;
 }
@@ -72,7 +73,6 @@ void CElementPlayer::doGodmode() {
    }
 }
 
-// GLOBAL VARIABLES WHAT THE FFFFUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCCCCCCCCCCCCCCKKKKKKKKKKKKKKKKKK
 void CElementPlayer::updatePlayerAction() {
    if(Victory)
       return;
@@ -80,7 +80,6 @@ void CElementPlayer::updatePlayerAction() {
       Godmode = !Godmode;
       printf("Godmode toggled.\n");
       if(Godmode) {
-         PhysicsEngineObject->setTypeId(0);//INTERACTOR_NULL_BLOCK;
          PhysicsEngineObject->setCollisionMask(0);
          PhysicsEngineObject->setControlFall(false);
          oldGrav = PhysicsEngineObject->getGravity();
@@ -93,13 +92,9 @@ void CElementPlayer::updatePlayerAction() {
          return;
       }
       else {
-         PhysicsEngineObject->setTypeId(INTERACTOR_SUPERACTORS);
-         PhysicsEngineObject->setCollisionMask((INTERACTOR_SUPERACTORS | INTERACTOR_ITEMS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS) & ~INTERACTOR_SUPERNONCOLLIDERS);
-         PhysicsEngineObject->setDetectionMask(0);
-         /* Correct version. Leaving this out for now so Ian/I can play with the collision stuff.
+         PhysicsEngineObject->setTypeId(INTERACTOR_ACTORS | INTERACTOR_SUPERACTORS);
          PhysicsEngineObject->setCollisionMask((INTERACTOR_SUPERACTORS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS) & ~INTERACTOR_SUPERNONCOLLIDERS);
          PhysicsEngineObject->setDetectionMask(INTERACTOR_ITEMS);
-         */
          PhysicsEngineObject->setControlFall(true);
          PhysicsEngineObject->setGravity(oldGrav);
          PhysicsEngineObject->setFallAcceleration(0.0f);
