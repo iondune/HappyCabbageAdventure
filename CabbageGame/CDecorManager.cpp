@@ -75,14 +75,20 @@ CDecorManager::CDecorManager(CGameLevel & level) {
       if (env == Env::FOREST)
          GenerateForestPlants(curBlock);
       else if (env == Env::DESERT) {
-         drawTree--;
-         if (drawTree == 0) {
-            drawTree = rand()%2 + 1;
-            GenerateDesertPlants(curBlock, true);
-         }
-         else
-            GenerateDesertPlants(curBlock, false);
+    	  drawTree--;
+    	  if (drawTree == 0) {
+    		  drawTree = rand()%2 + 1;
+    		  GenerateDesertPlants(curBlock, true);
+    	  }
+
+    	  else
+    		  GenerateDesertPlants(curBlock, false);
       }
+
+      else if (env == Env::WATER) {
+    	  GenerateWaterPlants(curBlock);
+      }
+
       int n=0;
       if(night) {
          CPointLightSceneObject * point;
