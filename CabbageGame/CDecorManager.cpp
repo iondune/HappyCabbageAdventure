@@ -41,7 +41,9 @@ ISceneObject *CDecorManager::SetupObject(float x, float y, float z, float xScale
    else if (model == cactus2Mesh || model == cactusBush2Mesh) {
       render->setRotation(SVector3f(-90, 0, rand()%179 - 90.f));
    }
-   else if (model == seaweed1Mesh || model == seaweed2Mesh || model == seaweed3Mesh || model == seaweed4Mesh) {
+   else if (model == seaweed1Mesh || model == seaweed2Mesh || model == seaweed3Mesh || model == seaweed4Mesh ||
+		    model == coral1Mesh || model == coral2Mesh || model == coral3Mesh || model == coral4Mesh || model == coral5Mesh ||
+		    model == coral6Mesh) {
 	   render->setRotation(SVector3f(-90, 0, rand()%360));
    }
 
@@ -328,15 +330,15 @@ void CDecorManager::GenerateWaterPlants(CGroundBlock* block) {
       else if (random == 3)
     	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed4Mesh, 4.0f + randScale);
       else if (random == 4)
-    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed1Mesh, 4.0f + randScale);
-      else if (random == 5 || random == 6)
-    	  break;
+    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed2Mesh, 4.0f + randScale);
+      else if (random == 5 || random == 6) {
+      }
    }
 
    //Draw flower-type plants in background
    for (int n = 0; n < w; n++) {
-      random = rand()%6;
-      randScale = (float) (rand()%20);
+      random = rand()%8;
+      randScale = (float) (rand()%50);
       randScale = randScale * .025f;
       randDepth = (float) (rand()%2);
       randDepth = (float) randDepth*.25f;
@@ -353,6 +355,8 @@ void CDecorManager::GenerateWaterPlants(CGroundBlock* block) {
     	  SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, coral5Mesh);
       else if (random == 5)
     	  SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, coral6Mesh);
+      else if (random == 6 || random == 7) {
+      }
    }
 
    //Draw flower-type plants in foreground
