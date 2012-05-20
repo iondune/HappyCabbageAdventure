@@ -31,6 +31,7 @@ class CDecorManager : public IUpdater {
 
       //These functions setup and add things to the scene manager
       ISceneObject *SetupObject(float,float,float,float, CMesh*, float = -1.0f);
+      ISceneObject *OceanSetupObject(float,float,float,float, CMesh*, float = -1.0f);
 
       void GenerateForestPlants(CGroundBlock*);
       void GenerateDesertPlants(CGroundBlock*, bool genTree);
