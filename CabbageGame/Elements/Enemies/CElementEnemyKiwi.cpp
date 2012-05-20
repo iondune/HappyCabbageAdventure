@@ -2,7 +2,9 @@
 #include "CGameLevel.h"
 
 CElementEnemyKiwi::CElementEnemyKiwi(SRect2f nArea, int direction) :
-   CElementEnemy(nArea, Enemies::KIWI), Direction(direction), rotateBird(0.0f), SineValue(0.0f), OldX(Area.Position.X), bombDropped(false) {
+   CElementEnemy(nArea, Enemies::KIWI), Direction(direction), rotateBird(0.0f), SineValue(0.0f), OldX(Area.Position.X), bombDropped(false),
+   ZDepth(0.0f), ZTimer(0.0f), InZ(false), ZNeg(1)
+{
 
 }
 
@@ -64,6 +66,8 @@ void CElementEnemyKiwi::setupSceneObject() {
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
+#define Z_SPEED 0.2f
+
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
    CElementEnemy::updatePhysicsEngineObject(time);
@@ -71,23 +75,11 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
       return;
    if (!Level.getPlayer().isDead())
    {
-      /*
-      if(zTimer < 0.0f)
-         zTimer = 0.0f;
-      if(inZ) {
-         if(zTimer >= Z_SPEED)
-            zTimer = Z_SPEED;
-         else {
-            zTimer += time;
-         }
+      if(ZTimer > 0.0f) {
+         ZTimer -= time;
       }
-      else {
-         if(zTimer > 0.0f)
-            zTimer -= time;
-         else {
-         }
-      }
-      */
+      if(ZTimer < 0.0f)
+         ZTimer = 0.0f;
 
       SineValue = 0.6f*sin(Area.Position.X - OldX);
       Area.Position.Y += SineValue;
@@ -101,7 +93,7 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
          PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
 
 
-      //if(!inZ) {
+      if(!InZ) {
          float xDist = Area.Position.X - Level.getPlayer().getArea().Position.X;
 
          //Drop bomb projectile
@@ -113,7 +105,7 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
             DropBomb();
             bombDropped = true;
          }
-      //}
+      }
    }
 
    else
@@ -124,16 +116,25 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
 void CElementEnemyKiwi::updateSceneObject(float time) {
    rotateBird = -100.0f * SineValue;
    
-   //SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, zTimer*0.9f*Depth*(1.0f/Z_SPEED)));
-   SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, 0.0f));
+   if(InZ) {
+      if(ZTimer > 0.0f)
+         SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, ZNeg*(Z_SPEED - ZTimer)*ZDepth*(0.9f/Z_SPEED)));
+      else
+         SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, ZNeg*ZDepth));
+   }
+   else {
+      if(ZTimer > 0.0f)
+         SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, ZNeg*(ZDepth - (Z_SPEED - ZTimer)*ZDepth*(0.9f/Z_SPEED))));
+      else
+         SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, 0));
+   }
+   //SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, 0.0f));
    SceneObject->setRotation(SVector3f(-90 + rotateBird, 0, -90));
 
-   /*
    if(PhysicsEngineObject->getVelocity().X < -0.01f)
-      SceneObject->setScale(SVector3f(-1,1,1)*(zTimer + 1.0f));
+      SceneObject->setScale(SVector3f(-1,1,1)*(ZTimer + 1.0f));
    else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-      SceneObject->setScale(SVector3f(1,1,1)*(zTimer + 1.0f));
-      */
+      SceneObject->setScale(SVector3f(1,1,1)*(ZTimer + 1.0f));
 
    if(ParticleEngine) {
       SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
@@ -161,11 +162,14 @@ void CElementEnemyKiwi::DropBomb() {
 
 void CElementEnemyKiwi::OnPhaseBegin(const SCollisionEvent& Event) {
    printf("I touched a block!\n");
-   //zTimer = 1.0f;
-   //Depth = Event.Other
+   ZTimer = Z_SPEED;
+   ZDepth = Event.Other->getVisualDepth();
+   InZ = true;
+   ZNeg *= -1;
 }
 
 void CElementEnemyKiwi::OnPhaseEnd(const SCollisionEvent& Event) {
    printf("I'm no longer touching a block!\n");
-   //zTimer = 0;
+   ZTimer = Z_SPEED;
+   InZ = false;
 }
