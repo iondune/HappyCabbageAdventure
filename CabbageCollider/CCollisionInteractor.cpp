@@ -1,66 +1,142 @@
-#if 0
+#include "CCollisionInteractor.h"
 
-#include "CCollisionActor.h"
-
-#include <algorithm>
-
-#include "../CabbageCore/Utils.h"
 #include "CCollisionEngine.h"
 
-#ifdef __unix__
-#include <GL/gl.h>
-#endif
 
-#ifdef _WIN32
-#include <GL/glew.h>
-#endif
-
-
-CCollisionActor::SAttributes::SAttributes()
-	: MaxWalk(4.5f),
-	WalkAccel(60.f),
-	JumpAccel(6.4f),
-	JumpLength(0.6f),
-	AirControl(0.75f),
-	AirSpeedFactor(0.7f),
-	AirStandingFriction(0.99f),
-	GroundStandingFriction(0.95f),
-	Reacts(1),
-	Bounce(0.0f)
-{}
-
-
-CCollisionActor::EActionType::EActionType()
-	: Value(None)
-{}
-
-CCollisionActor::EActionType::EActionType(Domain const value)
-	: Value(value)
-{}
-
-bool const CCollisionActor::EActionType::operator == (Domain const value) const
+void CCollisionInteractor::updateVectors(CollisionReal const TickTime)
 {
-	return Value == value;
+
+	// Friction
+	if (Standing)
+		Velocity.X *= Attributes.GroundStandingFriction; // Slowdown factor
+	else
+		Velocity.X *= Attributes.AirStandingFriction; // Air Slowdown factor
+
+	////////////////////
+	// Impulse Update //
+	////////////////////
+
+	// Perform impulse
+	for (std::vector<std::pair<SVec2, float> >::iterator it = Impulses.begin(); it != Impulses.end();)
+	{
+		if (it->second > 0)
+        {
+			Velocity += it->first;
+            it->second -= (float) TickTime;
+        }
+
+        if (it->second <= 0)
+            it = Impulses.erase(it);
+	}
+
+
+	////////////////////
+	// Gravity Update //
+	////////////////////
+
+	// Cease falling if gravity is off
+	if (GravityEnabled)
+		FallAcceleration -= CollisionEngine->getGravity() * Attributes.GravityMultiplier * TickTime;
+	else
+		FallAcceleration = 0;
+
+	// Add velocity from gravity
+	Velocity.Y += FallAcceleration * TickTime;
+
+
+	//////////////////
+	// Housekeeping //
+	//////////////////
+
+	// Keep track of whether actor is standing on a surface
+	Standing = 0;
+
+	// Keep track of last position for movement reversal
+	LastPosition = Area.Position;
+
+	// Perform test movement
+	Movement = Velocity * TickTime;
+	Area.Position += Movement;
+
+	// Update phase list
+	PhaseList.swap(NewPhaseList);
+	NewPhaseList.clear();
 }
 
 
-CCollisionActor::CCollisionActor()
-	: Standing(0), JumpTimer(0.f), FallAcceleration(0), ControlFall(true), WantsToJump(false), Jumping(false)
+bool CCollisionInteractor::updateCollision(CCollideable * Object, float const TickTime)
 {
-	TypeId = INTERACTOR_ACTORS;
-	CollisionMask = INTERACTOR_BLOCKS | INTERACTOR_ACTORS;
+	// Determine what sort of collision occurred
+	int CollisionType = checkCollision(Object, TickTime);
 
-	Gravity = (CollisionReal) 100.0;
+	// Determine events to emit
+	if (CollisionType)
+	{
+		SCollisionEvent Event;
+		Event.This = this;
+		Event.Other = Object;
+		Event.Direction = (ECollisionType::Domain) CollisionType;
+		Event.Receiver = false;
 
-	AllowedMovement = false;
+		if (CollisionType & ECollisionType::Responded)
+		{
+			OnCollision.emit(Event);
+
+			// Coupled event emission
+			SCollisionEvent Event;
+			Event.This = Object;
+			Event.Other = this;
+			Event.Direction = (ECollisionType::Domain) CollisionType;
+			Event.Receiver = true;
+
+			Object->OnCollision.emit(Event);
+		}
+		else
+		{
+			NewPhaseList.insert(Object);
+			if (PhaseList.find(Object) == PhaseList.end())
+			{
+				OnPhaseBegin.emit(Event);
+
+				// Coupled event emission
+				SCollisionEvent Event;
+				Event.This = this;
+				Event.Other = Object;
+				Event.Direction = (ECollisionType::Domain) CollisionType;
+				Event.Receiver = true;
+
+				Object->OnPhaseBegin.emit(Event);
+			}
+		}
+	}
+
+	// Elasticity for vertical collisions
+	if (CollisionType & ECollisionType::Up && CollisionType & ECollisionType::Responded)
+	{
+		Velocity.Y *= -Object->getMaterial().Elasticity;
+	}
+
+	// Bounce for vertical collisions
+	if (CollisionType & ECollisionType::Down && CollisionType & ECollisionType::Responded)
+	{
+		/*if(Attributes.Bounce > 0.01f)
+		{
+			Velocity.Y = Attributes.Bounce;
+			Attributes.Bounce *= 0.5f;
+		}*/
+		//Jumping = false;
+	}
+
+	// Wtf is this
+	//if (Attributes.Reacts && (CollisionType & ECollisionType::Left || CollisionType & ECollisionType::Right))
+	//	Velocity.X *= -Object->getMaterial().Elasticity;
+
+	// Return true if this object landed on something
+	return (CollisionType & ECollisionType::Down) && (CollisionType & ECollisionType::Responded);
 }
 
-CCollisionActor::~CCollisionActor()
-{}
 
-
-/*FLAMES AND BLADES NOT COLLIDING BECAUSE OF THIS I THINK*/
-int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const TickTime)
+int CCollisionInteractor::checkCollision(CCollideable * Object, CollisionReal const TickTime)
 {
 	int Out = ECollisionType::None;
 
@@ -81,8 +157,6 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 			// Try this movement
 			Area.Position[i] = LastPosition[i] + Movement[i];
 
-			bool AllowedMovementForThisObject = false;
-
 			// If collision caused...
 			if (Area.intersects(Object->getInternalArea()))
 			{
@@ -97,46 +171,6 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 				// Remove movement
 				Movement[i] = (CollisionReal) 0.0;
 				Area.Position[i] = LastPosition[i];
-
-				// If still collided... (persistent collision)
-				if (Area.intersects(Object->getInternalArea())) // If still collision after revert...
-				{
-					// Determine minimal intersection
-					CollisionReal Intersections[2];
-					Intersections[0] = Area.getIntersection(Object->getInternalArea()).getArea(); // 0 - old position
-
-					Area.Position[i] = LastPosition[i] + OriginalMovement;
-					Intersections[1] = Area.getIntersection(Object->getInternalArea()).getArea(); // 1 - new position
-
-					// If movement causes a reduced intersection...
-					if (Intersections[1] < Intersections[0] && ! equals(Intersections[0], Intersections[1]))
-					{
-						// If new position is better or equal
-
-						//std::cout << "Allowed collision movement (" << (i ? 'y' : 'x') << "): (" << Intersections[0] << " -> " << Intersections[1] << ")" << std::endl;
-						AllowedMovement = true;
-						AllowedMovementForThisObject = true;
-						Movement[i] = OriginalMovement;
-					}
-					else
-					{
-						Area.Position[i] = LastPosition[i];
-					}
-				}
-				
-				// Also, check whether it could have been a step up
-				if (! AllowedMovementForThisObject && i == 0)
-				{
-					static CollisionReal const MaxStep = 0.2;
-
-					if (Area.Position.Y - Object->getArea().otherCorner().Y > - MaxStep)
-					{
-						//std::cout << "Allowing step!" << std::endl;
-						AllowedMovement = true;
-						AllowedMovementForThisObject = true;
-						Movement[i] = OriginalMovement;
-					}
-				}
 			}
 		}
 
@@ -160,7 +194,8 @@ int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const T
 	return Out;
 }
 
-void CCollisionActor::onStanding(CCollideable * Object)
+
+void CCollisionInteractor::onStanding(CCollideable * Object)
 {
 	// Keep reference to object being stood on
 	Standing = Object;
@@ -170,16 +205,79 @@ void CCollisionActor::onStanding(CCollideable * Object)
 
 	// Stop downwards movement (from impulse, etc.)
 	Velocity.Y = std::max(Velocity.Y, (CollisionReal) 0);
-
-
-	// Adjust to surface below
-	static float const MaxStandingAdjustThreshold = 0.1f;
-
-	if (abs(Area.Position.Y - Object->getArea().otherCorner().Y) < MaxStandingAdjustThreshold)
-		Area.Position.Y = Object->getArea().otherCorner().Y;
 }
 
-bool CCollisionActor::isAbove(CCollisionObject * Object, float & height) const
+
+void CCollisionInteractor::pushIfCollided(CCollisionObject * Object, SVec2 const Movement)
+{
+	if (! collidesWith(Object) && Object != Standing)
+		return;
+	
+	Area.Position += Movement;
+}
+
+
+void CCollisionInteractor::updatePhaseList()
+{
+	// Emit phase leaving events
+	for (std::set<CCollideable *>::iterator it = PhaseList.begin(); it != PhaseList.end(); ++ it)
+	{
+		if (NewPhaseList.find(* it) == NewPhaseList.end())
+		{
+			SCollisionEvent Event;
+			Event.This = this;
+			Event.Other = * it;
+			Event.Direction = (ECollisionType::Domain) ECollisionType::UnPhase;
+			Event.Receiver = false;
+			OnPhaseEnd.emit(Event);
+
+			Event.This = * it;
+			Event.Other = this;
+			Event.Direction = (ECollisionType::Domain) ECollisionType::UnPhase;
+			Event.Receiver = true;
+			(* it)->OnPhaseEnd.emit(Event);
+		}
+	}
+}
+
+#include "CCollisionInteractor.h"
+
+CCollisionInteractor::SAttributes::SAttributes()
+	: Bounce(0.0f),
+	GravityMultiplier(1.0f),
+	MaxStep(0.1)
+{}
+
+#include "CCollisionInteractor.h"
+
+#include <algorithm>
+#include <Utils.h>
+
+#include "CCollisionObject.h"
+#include "CCollisionEngine.h"
+
+#ifdef __unix__
+#include <GL/gl.h>
+#endif
+
+#ifdef _WIN32
+#include <GL/glew.h>
+#endif
+
+
+CCollisionInteractor::CCollisionInteractor(CCollisionEngine * collisionEngine)
+	: Standing(0), FallAcceleration(0.f),
+	GravityEnabled(true), 
+	CCollideable(collisionEngine)
+{
+	TypeId = INTERACTOR_ACTORS;
+	CollisionMask = INTERACTOR_BLOCKS | INTERACTOR_ACTORS;
+}
+
+CCollisionInteractor::~CCollisionInteractor()
+{}
+
+bool CCollisionInteractor::isAbove(CCollisionObject * Object, float & height) const
 {
 	if (Area.getCenter().Y < Object->getArea().otherCorner().Y)
 		return false;
@@ -192,286 +290,51 @@ bool CCollisionActor::isAbove(CCollisionObject * Object, float & height) const
 	return true;
 }
 
-bool CCollisionActor::getControlFall()
+void CCollisionInteractor::setGravityEnabled(bool const gravityEnabled)
 {
-	return ControlFall;
+	GravityEnabled = gravityEnabled;
 }
 
-void CCollisionActor::setFallAcceleration(float fa) {
-   FallAcceleration = fa;
-}
-
-void CCollisionActor::updateVectors(CollisionReal const TickTime)
+bool const CCollisionInteractor::isGravityEnabled() const
 {
-	// Manage jumping action
-	if (Jumping || Standing) // Can't start jumping unless we are standing
-	{
-		if (! Jumping && WantsToJump)
-			JumpTimer = Attributes.JumpLength; // Start jumping
-
-		Jumping = WantsToJump;
-	}
-
-	// zero-gravity hack (FIX)
-	if (ControlFall)
-		FallAcceleration -= Gravity * TickTime;
-
-
-	// Walking/Running movement update
-
-	// Determine maximum walking velocity
-	CollisionReal MaxVelocity = Attributes.MaxWalk * (Standing ? 1.f : Attributes.AirSpeedFactor);
-
-	bool Moving = false;
-	if (Action == EActionType::MoveLeft)
-	{
-		if (Velocity.X > -MaxVelocity)
-		{
-			Velocity.X -= Attributes.WalkAccel * TickTime * (Standing ? 1.f : Attributes.AirControl);
-			if (Velocity.X < -MaxVelocity)
-				Velocity.X = -MaxVelocity;
-		}
-		Moving = true;
-	}
-	else if (Action == EActionType::MoveRight)
-	{
-		if (Velocity.X < MaxVelocity)
-		{
-			Velocity.X += Attributes.WalkAccel * TickTime * (Standing ? 1.f : Attributes.AirControl);
-			if (Velocity.X > MaxVelocity)
-				Velocity.X = MaxVelocity;
-		}
-		Moving = true;
-	}
-	else if (Action == EActionType::None)
-	{
-	}
-
-	// Friction when not moving
-	if (! Moving)
-	{
-		if (Standing)
-			Velocity.X *= Attributes.GroundStandingFriction; // Slowdown factor
-		else
-			Velocity.X *= Attributes.AirStandingFriction; // Air Slowdown factor
-	}
-
-
-	// Perform jump
-	if (Jumping)
-	{
-		if (JumpTimer > 0)
-		{
-			Velocity.Y = Attributes.JumpAccel;
-			JumpTimer -= TickTime;
-		}
-
-		if (JumpTimer <= 0)
-			Jumping = false;
-	}
-
-	// Perform impulse
-
-	for (std::vector<std::pair<SVec2, float> >::iterator it = Impulses.begin(); it != Impulses.end();)
-	{
-		if (it->second > 0)
-        {
-			Velocity += it->first;
-            it->second -= (float) TickTime;
-        }
-
-        if (it->second <= 0)
-            it = Impulses.erase(it);
-	}
-
-	// Add velocity from gravity
-	Velocity.Y += FallAcceleration * TickTime;
-
-	// Keep track of whether a collision-movement was allowed
-	AllowedMovement = false;
-	// Keep track of whether actor is standing on a surface
-	Standing = false;
-
-	// Keep track of last position for movement reversal
-	LastPosition = Area.Position;
-
-	// Perform test movement
-	Movement = Velocity * TickTime;
-	Area.Position += Movement;
-
-	// update phase list
-	PhaseList = NewPhaseList;
-	NewPhaseList.clear();
+	return GravityEnabled;
 }
 
-void CCollisionActor::pushIfCollided(CCollisionObject * Object, SVec2 const Movement)
-{
-	if (! collidesWith(Object) && Object != Standing)
-		return;
-	
-	Area.Position += Movement;
-}
-
-bool const CCollisionActor::isStanding() const
+bool const CCollisionInteractor::isStanding() const
 {
 	return Standing != 0;
 }
 
-void CCollisionActor::setVelocity(SVec2 const & vel)
+void CCollisionInteractor::setVelocity(SVec2 const & vel)
 {
 	Velocity = vel;
 }
 
-SVec2 const & CCollisionActor::getVelocity() const
+SVec2 const & CCollisionInteractor::getVelocity() const
 {
 	return Velocity;
 }
 
-CCollisionActor::SAttributes const & CCollisionActor::getAttributes() const
+CCollisionInteractor::SAttributes const & CCollisionInteractor::getAttributes() const
 {
 	return Attributes;
 }
 
-CCollisionActor::SAttributes & CCollisionActor::getAttributes()
+CCollisionInteractor::SAttributes & CCollisionInteractor::getAttributes()
 {
 	return Attributes;
 }
 
-void CCollisionActor::setAction(EActionType const & action)
+void CCollisionInteractor::draw()
 {
-	Action = action;
-}
-
-bool const CCollisionActor::isJumping() const
-{
-	return Jumping;
-}
-
-CCollisionActor::EActionType const CCollisionActor::getAction() const
-{
-	return Action;
-}
-
-void CCollisionActor::setJumping(bool const jumping)
-{
-	WantsToJump = jumping;
-}
-
-void CCollisionActor::setControlFall(bool const fall)
-{
-	ControlFall = fall;
-}
-
-bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTime)
-{
-	int CollisionType = checkCollision(Object, TickTime);
-
-	if (CollisionType)
-	{
-		SCollisionEvent Event;
-		Event.This = this;
-		Event.Other = Object;
-		Event.Direction = (ECollisionType::Domain) CollisionType;
-
-		if (CollisionType & ECollisionType::Responded)
-		{
-			OnCollision.emit(Event);
-
-			// Coupled event emission
-			SCollisionEvent Event;
-			Event.This = Object;
-			Event.Other = this;
-			Event.Direction = (ECollisionType::Domain) CollisionType;
-
-			Object->OnCollision.emit(Event);
-		}
-		else if (PhaseList.find(Object) == PhaseList.end())
-		{
-			NewPhaseList.insert(Object);
-			OnPhaseBegin.emit(Event);
-
-			// Coupled event emission
-			SCollisionEvent Event;
-			Event.This = this;
-			Event.Other = Object;
-			Event.Direction = (ECollisionType::Domain) CollisionType;
-
-			Object->OnPhaseBegin.emit(Event);
-		}
-	}
-
-	if (CollisionType & ECollisionType::Up && CollisionType & ECollisionType::Responded)
-	{
-		Velocity.Y *= -Object->getMaterial().Elasticity;
-		Jumping = false;
-	}
-
-	if (CollisionType & ECollisionType::Down && CollisionType & ECollisionType::Responded)
-	{
-		/*if(Attributes.Bounce > 0.01f)
-		{
-			Velocity.Y = Attributes.Bounce;
-			Attributes.Bounce *= 0.5f;
-		}*/
-		//Jumping = false;
-	}
-
-	//if (Attributes.Reacts && (CollisionType & ECollisionType::Left || CollisionType & ECollisionType::Right))
-	//	Velocity.X *= -Object->getMaterial().Elasticity;
-
-	return (CollisionType & ECollisionType::Down) && (CollisionType & ECollisionType::Responded);
-}
-
-void CCollisionActor::draw()
-{
-	if (! Standing && ! Jumping && ! AllowedMovement)
-		glColor3f(1, 1, 1);
-	else
-		glColor3f(Standing ? 1.f : 0.f, AllowedMovement ? 1.f : 0.f, Jumping ? 1.f : 0.f);
+	glColor3f(Standing ? 1.f : 0.f, 0.f, 0.f);
 
 	CCollideable::draw();
 
 	glColor3f(1, 1, 1);
 }
 
-void CCollisionActor::addImpulse(SVec2 const & velocity, float const Duration)
+void CCollisionInteractor::addImpulse(SVec2 const & velocity, float const Duration)
 {
-	Impulses.push_back(std::pair<SVec2, float>(velocity, Duration));
+	Impulses.push_back(std::pair<SVec2, float>(velocity * CollisionEngine->getImpulseMultiplier(), Duration)); 
 }
-
-void CCollisionActor::setFallAcceleration(CollisionReal speed)
-{
-	FallAcceleration = speed;
-}
-
-void CCollisionActor::setGravity(CollisionReal speed)
-{
-	setFallAcceleration(speed);
-}
-
-CollisionReal const CCollisionActor::getGravity() const
-{
-	return FallAcceleration;
-}
-
-void CCollisionActor::updatePhaseList()
-{
-	for (std::set<CCollideable *>::iterator it = PhaseList.begin(); it != PhaseList.end(); ++ it)
-	{
-		if (NewPhaseList.find(* it) == NewPhaseList.end())
-		{
-			SCollisionEvent Event;
-			Event.This = this;
-			Event.Other = * it;
-			Event.Direction = (ECollisionType::Domain) ECollisionType::UnPhase;
-			OnPhaseEnd.emit(Event);
-
-			Event.This = * it;
-			Event.Other = this;
-			Event.Direction = (ECollisionType::Domain) ECollisionType::UnPhase;
-			(* it)->OnPhaseEnd.emit(Event);
-		}
-	}
-}
-
-#endif
