@@ -21,6 +21,7 @@ void CElementItem::setupPhysicsEngineObject() {
    PhysicsEngineObject->setTypeId(INTERACTOR_ITEMS);
    PhysicsEngineObject->setCollisionMask(INTERACTOR_BLOCKS);
    PhysicsEngineObject->setDetectionMask(INTERACTOR_SUPERACTORS);
+   PhysicsEngineObject->setVelocity(SVector2d(0.01, 0.01));
 
    //Connect Phase to OnCollision :(
    PhysicsEngineObject->OnPhaseBegin.connect(this, &CElementItem::OnCollision);
