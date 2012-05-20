@@ -1,7 +1,8 @@
 #include "CCollisionElevator.h"
 
 
-CCollisionElevator::CCollisionElevator()
+CCollisionElevator::CCollisionElevator(CCollisionEngine * collisionEngine)
+	: CCollisionObject(collisionEngine)
 {
 	CollisionMask = INTERACTOR_ALL;
 	Timer = 0.f;
@@ -14,7 +15,7 @@ CCollisionElevator::CCollisionElevator()
 SVec2 CCollisionElevator::performMovement(CollisionReal const TickTime)
 {
 	SVec2 Movement;
-	Timer += TickTime * Speed;
+	Timer += TickTime * Speed / Range;
 
 	switch (Style)
 	{

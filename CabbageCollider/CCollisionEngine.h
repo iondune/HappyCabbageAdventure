@@ -5,12 +5,10 @@
 #include <set>
 #include <limits>
 
+#include "CCollideable.h"
 #include "CCollisionObject.h"
 #include "CCollisionActor.h"
 #include "CCollisionElevator.h"
-
-
-#define INTERACTOR_NON 128
 
 class CCollisionEngine
 {
@@ -33,6 +31,8 @@ private:
 	void performTick(float const TickTime);
 
 	float Timer;
+
+	CollisionReal Gravity;
 
 	void runLists();
 
@@ -60,6 +60,9 @@ public:
 	ActorList const & getActors() const;
 
 	std::vector<CCollideable *> const getAllInBound(SRect2f const Bound) const;
+
+	void CCollisionEngine::setGravity(CollisionReal gravity);
+	CollisionReal const CCollisionEngine::getGravity() const;
 
 };
 

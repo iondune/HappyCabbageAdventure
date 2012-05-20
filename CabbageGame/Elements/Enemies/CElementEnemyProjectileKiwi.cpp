@@ -11,8 +11,7 @@ void CElementEnemyProjectileKiwi::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
 
    //Set actor attributes
-   PhysicsEngineObject->setControlFall(false);
-   PhysicsEngineObject->setGravity(0.0f);
+   PhysicsEngineObject->setGravityEnabled(false);
 
    PhysicsEngineObject->getAttributes().MaxWalk = 4.0f;
    PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;

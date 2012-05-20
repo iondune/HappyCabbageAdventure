@@ -14,7 +14,6 @@ void CPhysicsParticle::setEngine(CCollisionEngine *engine, int env) {
       Actor->getAttributes().JumpLength *= 2.0f;
       Actor->getAttributes().AirControl *= 8.0f;
       Actor->getAttributes().AirSpeedFactor *= 0.5f;
-      Actor->setGravity(Actor->getGravity()/16.0f);
       }
 
    //Actor->setImpulse(SVector2((float)(rand() % 2 * 2 - 1)*((float)rand()/(float)RAND_MAX*2.6f + 0.8f), (float)rand()/(float)RAND_MAX*3.6f + 0.6f), 0.1f);

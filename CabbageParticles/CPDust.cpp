@@ -17,7 +17,7 @@ void CPDust::setEngine(CCollisionEngine *engine) {
    Actor->getAttributes().AirSpeedFactor = 0.3f;
    Actor->getAttributes().AirStandingFriction = 0.81f;
    Actor->getAttributes().GroundStandingFriction = 0.81f;
-   Actor->Gravity = 40.0f;
+   Actor->getAttributes().GravityMultiplier = 0.4f;
 }
 
 void CPDust::setupActor() {

@@ -30,7 +30,8 @@ class CDecorManager : public IUpdater {
       std::vector<CParticleEngine*> DecorativeParticleEngines;
 
       //These functions setup and add things to the scene manager
-      ISceneObject *SetupObject(float,float,float,float,CMesh*);
+      ISceneObject *SetupObject(float,float,float,float, CMesh*, float = -1.0f);
+
       void GenerateForestPlants(CGroundBlock*);
       void GenerateDesertPlants(CGroundBlock*, bool genTree);
       void GenerateWaterPlants(CGroundBlock*);

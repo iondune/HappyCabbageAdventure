@@ -1,3 +1,5 @@
+#if 0
+
 #include "CCollisionActor.h"
 
 #include <algorithm>
@@ -14,18 +16,41 @@
 #endif
 
 
+CCollisionActor::SAttributes::SAttributes()
+	: MaxWalk(4.5f),
+	WalkAccel(60.f),
+	JumpAccel(6.4f),
+	JumpLength(0.6f),
+	AirControl(0.75f),
+	AirSpeedFactor(0.7f),
+	AirStandingFriction(0.99f),
+	GroundStandingFriction(0.95f),
+	Reacts(1),
+	Bounce(0.0f)
+{}
 
 
+CCollisionActor::EActionType::EActionType()
+	: Value(None)
+{}
+
+CCollisionActor::EActionType::EActionType(Domain const value)
+	: Value(value)
+{}
+
+bool const CCollisionActor::EActionType::operator == (Domain const value) const
+{
+	return Value == value;
+}
 
 
-
-CCollisionActor::CCollisionActor(CCollisionEngine * collisionEngine)
-	: Standing(0), JumpTimer(0.f), FallAcceleration(0.f),
-	GravityEnabled(true), WantsToJump(false), Jumping(false),
-	CCollideable(collisionEngine)
+CCollisionActor::CCollisionActor()
+	: Standing(0), JumpTimer(0.f), FallAcceleration(0), ControlFall(true), WantsToJump(false), Jumping(false)
 {
 	TypeId = INTERACTOR_ACTORS;
 	CollisionMask = INTERACTOR_BLOCKS | INTERACTOR_ACTORS;
+
+	Gravity = (CollisionReal) 100.0;
 
 	AllowedMovement = false;
 }
@@ -34,6 +59,7 @@ CCollisionActor::~CCollisionActor()
 {}
 
 
+/*FLAMES AND BLADES NOT COLLIDING BECAUSE OF THIS I THINK*/
 int CCollisionActor::checkCollision(CCollideable * Object, CollisionReal const TickTime)
 {
 	int Out = ECollisionType::None;
@@ -166,16 +192,13 @@ bool CCollisionActor::isAbove(CCollisionObject * Object, float & height) const
 	return true;
 }
 
-void CCollisionActor::setGravityEnabled(bool const gravityEnabled)
+bool CCollisionActor::getControlFall()
 {
-	GravityEnabled = gravityEnabled;
-	if (! GravityEnabled)
-		FallAcceleration = 0.f;
+	return ControlFall;
 }
 
-bool const CCollisionActor::isGravityEnabled() const
-{
-	return GravityEnabled;
+void CCollisionActor::setFallAcceleration(float fa) {
+   FallAcceleration = fa;
 }
 
 void CCollisionActor::updateVectors(CollisionReal const TickTime)
@@ -190,10 +213,8 @@ void CCollisionActor::updateVectors(CollisionReal const TickTime)
 	}
 
 	// zero-gravity hack (FIX)
-	if (GravityEnabled)
-		FallAcceleration -= CollisionEngine->getGravity() * Attributes.GravityMultiplier * TickTime;
-	else
-		FallAcceleration = 0;
+	if (ControlFall)
+		FallAcceleration -= Gravity * TickTime;
 
 
 	// Walking/Running movement update
@@ -336,6 +357,11 @@ void CCollisionActor::setJumping(bool const jumping)
 	WantsToJump = jumping;
 }
 
+void CCollisionActor::setControlFall(bool const fall)
+{
+	ControlFall = fall;
+}
+
 bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTime)
 {
 	int CollisionType = checkCollision(Object, TickTime);
@@ -413,6 +439,21 @@ void CCollisionActor::addImpulse(SVec2 const & velocity, float const Duration)
 	Impulses.push_back(std::pair<SVec2, float>(velocity, Duration));
 }
 
+void CCollisionActor::setFallAcceleration(CollisionReal speed)
+{
+	FallAcceleration = speed;
+}
+
+void CCollisionActor::setGravity(CollisionReal speed)
+{
+	setFallAcceleration(speed);
+}
+
+CollisionReal const CCollisionActor::getGravity() const
+{
+	return FallAcceleration;
+}
+
 void CCollisionActor::updatePhaseList()
 {
 	for (std::set<CCollideable *>::iterator it = PhaseList.begin(); it != PhaseList.end(); ++ it)
@@ -432,3 +473,5 @@ void CCollisionActor::updatePhaseList()
 		}
 	}
 }
+
+#endif

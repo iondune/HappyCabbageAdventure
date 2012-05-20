@@ -14,6 +14,7 @@
 #define INTERACTOR_NONCOLLIDERS 16
 #define INTERACTOR_SUPERNONCOLLIDERS 32
 #define INTERACTOR_ALL_ALL -1
+#define INTERACTOR_NON 128
 
 // Collision types
 typedef double CollisionReal;
@@ -54,6 +55,7 @@ struct SCollisionEvent
 };
 
 class CGameplayElement;
+class CCollisionEngine;
 
 //! Base collision object
 class CCollideable
@@ -72,8 +74,7 @@ public:
 
 protected:
 
-	//friend class CCollisionEngine;
-	CCollideable();
+	CCollideable(CCollisionEngine * collisionEngine);
 
 	//! Material properties
 	SMaterial Material;
@@ -92,7 +93,11 @@ protected:
 	//! Bitfield for determining which objects this object can detect an intersection with
 	int DetectionMask;
 
+	//! Associate a GameplayElement with this object
 	CGameplayElement * GameplayElement;
+
+	//! Keep reference to the encapsulating CollisionEngine
+	CCollisionEngine * CollisionEngine;
 
 public:
 
@@ -140,8 +145,12 @@ public:
 	bool const canDetectWith(CCollideable * Object) const;
 
 	CGameplayElement * getGameplayElement();
-
+	CGameplayElement const * getGameplayElement() const;
 	void setGameplayElement(CGameplayElement * Element);
+
+	CCollisionEngine * getCollisionEngine();
+	CCollisionEngine const * getCollisionEngine() const;
+	void setCollisionEngine(CCollisionEngine * collisionEngine);
 
 	sigslot::signal1<SCollisionEvent const &> OnCollision;
 	sigslot::signal1<SCollisionEvent const &> OnPhaseBegin;

@@ -138,11 +138,15 @@ int main(int argc, char * argv[])
 
     CCollisionElevator * Elevator = Engine->addElevator();
     Elevator->setArea(SArea(6, -3, 1, 1));
+	Elevator->Range *= 2.f;
+
 	//Elevator->InitialDirection *= -1;
 
     Elevator = Engine->addElevator();
     Elevator->setArea(SArea(6, 1, 1, 1));
 	
+
+
     Elevator = Engine->addElevator();
     Elevator->setArea(SArea(6, 2.5f, 1, 1));
 	Elevator->Style = ELT_VERTICAL;

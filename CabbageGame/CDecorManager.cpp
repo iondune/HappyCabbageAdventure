@@ -8,10 +8,11 @@
 CGroundBlock::CGroundBlock(float nx, float ny, float nw, float nh, float nd) : x(nx), y(ny), w(nw), h(nh), d(nd) {
 }
 
-ISceneObject *CDecorManager::SetupObject(float x, float y, float z, float scale, CMesh* model) {
-   if (y == -1) {
-      y = scale / 2.0f;
-   }
+ISceneObject *CDecorManager::SetupObject(float x, float y, float z, float xScale, CMesh* model, float yScale) {
+   if (y == -1)
+	   y = xScale / 2.0f;
+   if (yScale == -1.0f)
+	   yScale = xScale;
 
    CMeshSceneObject *render;
 
@@ -20,9 +21,10 @@ ISceneObject *CDecorManager::SetupObject(float x, float y, float z, float scale,
    render->setShader(ERP_DEFAULT, Toon);
    render->setShader(ERP_DEFERRED_OBJECTS, DeferredToon);
    render->setTranslation(SVector3f(x, y, z));
-   render->setScale(SVector3f(scale));
+   render->setScale(SVector3f(xScale, xScale, yScale));
    render->setRotation(SVector3f(-90, 0, 0));
 
+   /*Special Case stuff*/
    if (model == fernMesh) {
       render->setRotation(SVector3f(-90, 0, -115));
    }
@@ -38,6 +40,9 @@ ISceneObject *CDecorManager::SetupObject(float x, float y, float z, float scale,
    }
    else if (model == cactus2Mesh || model == cactusBush2Mesh) {
       render->setRotation(SVector3f(-90, 0, rand()%179 - 90.f));
+   }
+   else if (model == seaweed1Mesh || model == seaweed2Mesh || model == seaweed3Mesh || model == seaweed4Mesh) {
+	   render->setRotation(SVector3f(-90, 0, rand()%360));
    }
 
    CApplication::get().getSceneManager().addImmobileSceneObject(render, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
@@ -303,53 +308,51 @@ void CDecorManager::GenerateWaterPlants(CGroundBlock* block) {
       numForeground = numBackground = 0;
    else {
       numForeground = (int) w / 2;
-      numBackground = (int) w / 2;
+      numBackground = (int) w / 1.25;
    }
 
    div =  w/(float)numBackground;
 
    //Check how many tree-type objects we should draw in the background
    for (int n = 0; n < numBackground; n++) {
-      random = rand()%2;
+      random = rand()%7;
+      randScale = (float) (rand()%60);
+      randScale = randScale * .1f;
 
       if (random == 0)
-         SetupObject(x + (n)*div + div/2.0f, yVal + 1.8f, -d/2.0f + .4f, 8.0f, basicTreeMesh);
+    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed1Mesh, 4.0f + randScale);
       else if (random == 1)
-         SetupObject(x + (n)*div + div/2.0f, yVal + 1.4f, -d/2.0f + .4f, 6.0f, christmasTreeMesh);
+    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed2Mesh, 4.0f + randScale);
+      else if (random == 2)
+    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed3Mesh, 4.0f + randScale);
+      else if (random == 3)
+    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed4Mesh, 4.0f + randScale);
+      else if (random == 4)
+    	  SetupObject(x + (n)*div + div/2.0f, yVal + 1.0f + randScale/5, -d/2.0f + .4f, 2.0f, seaweed1Mesh, 4.0f + randScale);
+      else if (random == 5 || random == 6)
+    	  break;
    }
 
    //Draw flower-type plants in background
    for (int n = 0; n < w; n++) {
       random = rand()%6;
-      float subrand = (float) (rand()%5);
       randScale = (float) (rand()%20);
       randScale = randScale * .025f;
       randDepth = (float) (rand()%2);
       randDepth = (float) randDepth*.25f;
 
-      if (random == 0 || random == 1)
-         SetupObject(x + n + .5f, yVal + .2f, -d/2.0f + 1.6f + randDepth, .7f, whiteFlwrMesh);
-      else if (random == 2 || random == 3 || random == 4) {
-         if (subrand == 0)
-            SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, yellowFlwrMesh);
-         else if (subrand == 1)
-            SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, blueFlwrMesh);
-         else if (subrand == 2)
-            SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, whiteSunflwrMesh);
-         else if (subrand == 3)
-            SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, tealFlwrMesh);
-         else if (subrand == 4)
-            SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, purpleFlwrMesh);
-      }
-      else if (random == 5 && !oldFern) {
-         SetupObject(x + n + .5f, yVal + .2f, -d/2.0f + 1.5f + randDepth, 1.f + randScale, fernMesh);
-         oldFern = true;
-      }
-      else if (random == 5 && oldFern)
-         n--;
-
-      if (random != 5)
-         oldFern = false;
+      if (random == 0)
+    	  SetupObject(x + n + .5f, yVal + .2f, -d/2.0f + 1.6f + randDepth, .7f + randScale, coral1Mesh);
+      else if (random == 1)
+    	  SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, coral2Mesh);
+      else if (random == 2)
+    	  SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, coral3Mesh);
+      else if (random == 3)
+    	  SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, coral4Mesh);
+      else if (random == 4)
+    	  SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, coral5Mesh);
+      else if (random == 5)
+    	  SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, coral6Mesh);
    }
 
    //Draw flower-type plants in foreground
@@ -532,6 +535,128 @@ void CDecorManager::PrepMeshes()
    }
    else {
       fprintf(stderr, "Failed to load cactus bush mesh.\n");
+   }
+
+
+   //Water Meshes
+   coral1Mesh = CMeshLoader::load3dsMesh("Base/waterlevel/coral1.3ds");
+   if (coral1Mesh) {
+      coral1Mesh->centerMeshByExtents(SVector3f(0));
+      coral1Mesh->resizeMesh(SVector3f(.8f));
+      coral1Mesh->calculateNormalsPerFace();
+   }
+   else {
+      fprintf(stderr, "Failed to load coral1 mesh.\n");
+   }
+
+   coral2Mesh = CMeshLoader::load3dsMesh("Base/waterlevel/coral2.3ds");
+   if (coral2Mesh) {
+      coral2Mesh->centerMeshByExtents(SVector3f(0));
+      coral2Mesh->resizeMesh(SVector3f(.8f));
+      coral2Mesh->calculateNormalsPerFace();
+   }
+   else {
+      fprintf(stderr, "Failed to load coral2 mesh.\n");
+   }
+
+   coral3Mesh = CMeshLoader::load3dsMesh("Base/waterlevel/coral3.3ds");
+   if (coral3Mesh) {
+      coral3Mesh->centerMeshByExtents(SVector3f(0));
+      coral3Mesh->resizeMesh(SVector3f(.8f));
+      coral3Mesh->calculateNormalsPerFace();
+   }
+   else {
+      fprintf(stderr, "Failed to load coral3 mesh.\n");
+   }
+
+   coral4Mesh = CMeshLoader::load3dsMesh("Base/waterlevel/coral4.3ds");
+   if (coral4Mesh) {
+      coral4Mesh->centerMeshByExtents(SVector3f(0));
+      coral4Mesh->resizeMesh(SVector3f(.8f));
+      coral4Mesh->calculateNormalsPerFace();
+   }
+   else {
+      fprintf(stderr, "Failed to load coral4 mesh.\n");
+   }
+
+   coral5Mesh = CMeshLoader::load3dsMesh("Base/waterlevel/coral5.3ds");
+   if (coral5Mesh) {
+      coral5Mesh->centerMeshByExtents(SVector3f(0));
+      coral5Mesh->resizeMesh(SVector3f(.8f));
+      coral5Mesh->calculateNormalsPerFace();
+   }
+   else {
+      fprintf(stderr, "Failed to load coral5 mesh.\n");
+   }
+
+   coral6Mesh = CMeshLoader::load3dsMesh("Base/waterlevel/coral6.3ds");
+   if (coral6Mesh) {
+      coral6Mesh->centerMeshByExtents(SVector3f(0));
+      coral6Mesh->resizeMesh(SVector3f(.8f));
+      coral6Mesh->calculateNormalsPerFace();
+   }
+   else {
+      fprintf(stderr, "Failed to load coral6 mesh.\n");
+   }
+
+   seaweed1Mesh = CMeshLoader::load3dsMesh("Base/waterlevel/seaweed1.3ds");
+   if (seaweed1Mesh) {
+	   seaweed1Mesh->centerMeshByExtents(SVector3f(0));
+	   seaweed1Mesh->resizeMesh(SVector3f(.8f));
+	   seaweed1Mesh->calculateNormalsPerFace();
+   }
+   else {
+	   fprintf(stderr, "Failed to load seaweed1 mesh.\n");
+   }
+
+   seaweed2Mesh = CMeshLoader::load3dsMesh("Base/waterlevel/seaweed2.3ds");
+   if (seaweed2Mesh) {
+	   seaweed2Mesh->centerMeshByExtents(SVector3f(0));
+	   seaweed2Mesh->resizeMesh(SVector3f(.8f));
+	   seaweed2Mesh->calculateNormalsPerFace();
+   }
+   else {
+	   fprintf(stderr, "Failed to load seaweed2 mesh.\n");
+   }
+
+   seaweed3Mesh = CMeshLoader::load3dsMesh("Base/waterlevel/seaweed3.3ds");
+   if (seaweed3Mesh) {
+	   seaweed3Mesh->centerMeshByExtents(SVector3f(0));
+	   seaweed3Mesh->resizeMesh(SVector3f(.8f));
+	   seaweed3Mesh->calculateNormalsPerFace();
+   }
+   else {
+	   fprintf(stderr, "Failed to load seaweed3 mesh.\n");
+   }
+
+   seaweed4Mesh = CMeshLoader::load3dsMesh("Base/waterlevel/seaweed4.3ds");
+   if (seaweed4Mesh) {
+	   seaweed4Mesh->centerMeshByExtents(SVector3f(0));
+	   seaweed4Mesh->resizeMesh(SVector3f(.8f));
+	   seaweed4Mesh->calculateNormalsPerFace();
+   }
+   else {
+	   fprintf(stderr, "Failed to load seaweed4 mesh.\n");
+   }
+
+   searock1Mesh = CMeshLoader::load3dsMesh("Base/waterlevel/rock1.3ds");
+   if (searock1Mesh) {
+	   searock1Mesh->centerMeshByExtents(SVector3f(0));
+	   searock1Mesh->resizeMesh(SVector3f(.8f));
+	   searock1Mesh->calculateNormalsPerFace();
+   }
+   else {
+	   fprintf(stderr, "Failed to load rock1 mesh.\n");
+   }
+
+   searock2Mesh = CMeshLoader::load3dsMesh("Base/waterlevel/rock2.3ds");
+   if (searock2Mesh) {
+	   searock2Mesh->centerMeshByExtents(SVector3f(0));
+	   searock2Mesh->resizeMesh(SVector3f(.8f));
+	   searock2Mesh->calculateNormalsPerFace();
+   }
+   else {
+	   fprintf(stderr, "Failed to load rock2 mesh.\n");
    }
 }
 

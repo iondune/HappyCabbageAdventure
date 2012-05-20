@@ -83,10 +83,7 @@ void CElementPlayer::updatePlayerAction() {
          PhysicsEngineObject->setTypeId(0);
          PhysicsEngineObject->setCollisionMask(0);
          PhysicsEngineObject->setDetectionMask(0);
-         PhysicsEngineObject->setControlFall(false);
-         oldGrav = PhysicsEngineObject->getGravity();
-         PhysicsEngineObject->setGravity(0.0f);
-         PhysicsEngineObject->setFallAcceleration(0.0f);
+         PhysicsEngineObject->setGravityEnabled(false);
          PhysicsEngineObject->setJumping(false);
          PhysicsEngineObject->setVelocity(SVec2(PhysicsEngineObject->getVelocity().X, 0.0));
          hWasDown = CApplication::get().getEventManager().IsKeyDown[SDLK_h];
@@ -97,9 +94,7 @@ void CElementPlayer::updatePlayerAction() {
          PhysicsEngineObject->setTypeId(INTERACTOR_ACTORS | INTERACTOR_SUPERACTORS);
          PhysicsEngineObject->setCollisionMask((INTERACTOR_SUPERACTORS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS) & ~INTERACTOR_SUPERNONCOLLIDERS);
          PhysicsEngineObject->setDetectionMask(INTERACTOR_ITEMS);
-         PhysicsEngineObject->setControlFall(true);
-         PhysicsEngineObject->setGravity(oldGrav);
-         PhysicsEngineObject->setFallAcceleration(0.0f);
+         PhysicsEngineObject->setGravityEnabled(true);
          PhysicsEngineObject->setJumping(false);
          PhysicsEngineObject->setVelocity(SVec2(PhysicsEngineObject->getVelocity().X, 0.0));
       }
@@ -374,10 +369,6 @@ void CElementPlayer::setupPhysicsEngineObject() {
       PhysicsEngineObject->getAttributes().JumpLength *= 2.0f;
       PhysicsEngineObject->getAttributes().AirControl *= 8.0f;
       PhysicsEngineObject->getAttributes().AirSpeedFactor *= 0.5f;
-
-      PhysicsEngineObject->setGravity(PhysicsEngineObject->getGravity()/16.0f);
-
-      printf("Gravity: %f\n", PhysicsEngineObject->getGravity());
    }
 }
 
