@@ -9,8 +9,14 @@ void CElementBlockElevator::OnCollision(const SCollisionEvent& Event) {
    return;
 }
 
-void CElementBlockElevator::update(float t) {
-   CGameplayElement::update(t);
+void CElementBlockElevator::update(float time) {
+   ElapsedTime += time;
+   if(!Dead) {
+      Area = PhysicsEngineObject->getArea();
+      if(Level.shouldRender()) {
+         updateSceneObject(time);
+      }
+   }
 }
 
 void CElementBlockElevator::writeXML(xmlwriter *l) {
@@ -51,6 +57,8 @@ void CElementBlockElevator::updateSceneObject(float time) {
 }
 
 void CElementBlockElevator::setupSceneObject() {
+   if(!Level.isLoaded())
+      setupPhysicsEngineObject();
    CElementBlock::setupSceneObject();
    CApplication::get().getSceneManager().removeSceneObject(SceneObject);
    CApplication::get().getSceneManager().addSceneObject(SceneObject);

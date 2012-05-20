@@ -6,6 +6,10 @@ SceneObject(s), PhysicsEngineObject(c), Level(CGameLevelLoader::getLatestLevel()
 {
 }
 
+CGameLevel & CGameplayElement::getLevel() {
+   return Level;
+}
+
 SRect2f & CGameplayElement::getArea() {
    return Area;
 }

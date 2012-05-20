@@ -56,6 +56,8 @@ class CGameplayElement : public IUpdater, public sigslot::has_slots<> {
       virtual void printInformation();
       bool isDead();
 
+      CGameLevel & getLevel();
+
       CCollideable *& getPhysicsEngineObject();
 };
 

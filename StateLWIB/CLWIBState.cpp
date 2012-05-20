@@ -332,6 +332,8 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    //PreviewBlock->setupObjects();
    for (unsigned int i = 0 ; i < placeables.size(); i++)
        placeables[i]->update(Elapsed);
+   if(placeables.size() > 0)
+      placeables[0]->getLevel().getPhysicsEngine().update(Elapsed);
 
    Application.getSceneManager().drawAll();
 
