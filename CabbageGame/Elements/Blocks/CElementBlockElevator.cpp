@@ -2,7 +2,7 @@
 #include "CGameLevel.h"
 
 CElementBlockElevator::CElementBlockElevator(SRect2f nArea, int D, int T, float R, float S, int style)
-: CElementBlock(nArea, D, T), Range(R), Speed(S), Style(style) {
+: CElementBlock(nArea, D, T), Range(R), Speed(S), Style(style), OriginalArea(nArea.Position, nArea.Size) {
 }
 
 void CElementBlockElevator::OnCollision(const SCollisionEvent& Event) {
@@ -21,10 +21,10 @@ void CElementBlockElevator::update(float time) {
 
 void CElementBlockElevator::writeXML(xmlwriter *l) {
    std::stringstream xValue, yValue, widthValue, heightValue, tagValue, rangeValue, speedValue, depthValue, textureType, eleType;
-   xValue << Area.Position.X;
-   yValue << Area.Position.Y;
-   widthValue << Area.Size.X;
-   heightValue << Area.Size.Y;
+   xValue << OriginalArea.Position.X;
+   yValue << OriginalArea.Position.Y;
+   widthValue << OriginalArea.Size.X;
+   heightValue << OriginalArea.Size.Y;
    depthValue << Depth;
    textureType << Texture;
    speedValue << Speed;

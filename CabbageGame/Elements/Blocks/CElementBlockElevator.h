@@ -9,6 +9,7 @@ class CElementBlockElevator : public CElementBlock {
    public:
    private:
       float Range, Speed;
+      SRect2f OriginalArea;
       int Style;
 
    public:
