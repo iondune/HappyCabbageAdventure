@@ -2,7 +2,7 @@
 #include "CGameLevel.h"
 
 CElementEnemyPear::CElementEnemyPear(SRect2f nArea) :
-   CElementEnemy(nArea, Enemies::PEAR), ISquishable(nArea.Size.X, nArea.Size.Y), OldPositionX(nArea.Position.X), HitPlayer(false), Scale(SVector2f(0.0f)) {
+   CElementEnemy(nArea, Enemies::PEAR), ISquishable(nArea.Size.X, nArea.Size.Y), OldPositionX(nArea.Position.X), HitPlayer(false), Scale(SVector2f(1.0f)) {
    printf("Made a pear!\n");
 }
 
@@ -42,8 +42,8 @@ void CElementEnemyPear::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   //SceneObject->setTranslation(SVector3f((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y-1))/2, 0));
-   SceneObject->setTranslation(SVector3f(Area.getCenter().X,Area.getCenter().Y, 0));
+   SceneObject->setTranslation(SVector3f((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y-1))/2, 0));
+   //SceneObject->setTranslation(SVector3f(Area.getCenter().X,Area.getCenter().Y, 0));
    SceneObject->setScale(SVector3f(Scale.X,Scale.X,Scale.Y));
    SceneObject->setRotation(SVector3f(-90, 0, 20));
 
