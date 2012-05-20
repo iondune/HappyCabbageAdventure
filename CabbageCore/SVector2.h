@@ -10,6 +10,9 @@ class SVector2;
 
 class SVector2Reference
 {
+	
+	SVector2Reference();
+	SVector2Reference & operator = (SVector2Reference const &);
 
 public:
 

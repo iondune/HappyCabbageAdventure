@@ -13,6 +13,9 @@ class SVector3;
 class SVector3Reference
 {
 
+	SVector3Reference();
+	SVector3Reference & operator = (SVector3Reference const &);
+
 public:
 
     float & X, & Y, & Z;
