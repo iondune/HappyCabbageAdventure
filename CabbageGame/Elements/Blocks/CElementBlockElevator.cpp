@@ -1,8 +1,8 @@
 #include "CElementBlockElevator.h"
 #include "CGameLevel.h"
 
-CElementBlockElevator::CElementBlockElevator(SRect2f nArea, int D, int T, float R, float S)
-: CElementBlock(nArea, D, T), Range(R), Speed(S) {
+CElementBlockElevator::CElementBlockElevator(SRect2f nArea, int D, int T, float R, float S, int style)
+: CElementBlock(nArea, D, T), Range(R), Speed(S), Style(style) {
 }
 
 void CElementBlockElevator::OnCollision(const SCollisionEvent& Event) {
@@ -20,18 +20,21 @@ void CElementBlockElevator::update(float time) {
 }
 
 void CElementBlockElevator::writeXML(xmlwriter *l) {
-   std::stringstream xValue, yValue, widthValue, heightValue, tagValue, rangeValue, speedValue, depthValue, textureType;
+   std::stringstream xValue, yValue, widthValue, heightValue, tagValue, rangeValue, speedValue, depthValue, textureType, eleType;
    xValue << Area.Position.X;
    yValue << Area.Position.Y;
    widthValue << Area.Size.X;
    heightValue << Area.Size.Y;
    depthValue << Depth;
    textureType << Texture;
-   speedValue << 1;
-
+   speedValue << Speed;
+   rangeValue << Range;
+   eleType << Style;
 
    tagValue << "CBlock";
-
+   l->AddAtributes("Style", eleType.str());
+   l->AddAtributes("speed ", rangeValue.str());
+   l->AddAtributes("range ", rangeValue.str());
    l->AddAtributes("isMoving ", speedValue.str());
    l->AddAtributes("texture ", textureType.str());
    l->AddAtributes("depth ", depthValue.str());
@@ -47,7 +50,8 @@ void CElementBlockElevator::setupPhysicsEngineObject() {
    CCollisionElevator *Ele;
    PhysicsEngineObject = Ele = Level.getPhysicsEngine().addElevator();
    PhysicsEngineObject->setArea(Area);
-
+   
+   Ele->Style = (EElevatorType)Style; // 0 horizontal, 1 vertical, 2 circular  
    Ele->Range = Range;
    Ele->Speed = Speed;
 }

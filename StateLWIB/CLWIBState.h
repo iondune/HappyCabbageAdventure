@@ -49,6 +49,8 @@ class CLWIBState : public CState<CLWIBState>
    int enemyType, textureType, itemType, friendType;
    int uniType;
    int WindowWidth, WindowHeight;
+   int eleStyle;
+   int eleSpeed, eleRange;
    //stuff for textures
    CTexture *grass,*dirt,*rock,*ground,*cabbageImage,*apple,*orange,*kiwi,*fire,*blade, *alien;
    CTexture *leaf, *heart, *derp;
