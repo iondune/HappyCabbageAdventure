@@ -109,12 +109,9 @@ public:
 	//! Returns the floating point Area of this object
 	SRect2<float> const getArea() const;
 
-	//! Templated area-set method for using either float or double Areas
-	template <typename T>
-	void setArea(SRect2<T> const & area)
-	{
-		Area = SArea(area.Position, area.Size);
-	}
+	//! Area-set method for using either float or double Areas
+	virtual void setArea(SRect2f const & area);
+	virtual void setArea(SRect2d const & area);
 
 	//! Used to check the Material parameters of this object
 	SMaterial const & getMaterial() const;
