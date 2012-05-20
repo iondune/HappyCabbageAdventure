@@ -43,7 +43,7 @@ class CElementEnemy : public CGameplayElement {
       void deathAnimation();
       void dropItem();
 
-      float TempTime;
+      float TempTime, InvincibilityTime;
 
       bool AnimatingDeath;
 
