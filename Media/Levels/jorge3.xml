@@ -143,18 +143,6 @@
 </CEnemy>
 <CEnemy X ="36" Y ="7" height ="1" width ="1" type ="1">
 </CEnemy>
-<CPItem X ="38" Y ="0" texture ="0" isMoving ="0">
-</CPItem>
-<CPItem X ="39" Y ="0" texture ="0" isMoving ="0">
-</CPItem>
-<CPItem X ="40" Y ="0" texture ="0" isMoving ="0">
-</CPItem>
-<CPItem X ="42" Y ="0" texture ="1" isMoving ="0">
-</CPItem>
-<CPItem X ="43" Y ="0" texture ="1" isMoving ="0">
-</CPItem>
-<CPItem X ="44" Y ="0" texture ="1" isMoving ="0">
-</CPItem>
 <CEnemy X ="55" Y ="0" height ="1" width ="1" type ="4">
 </CEnemy>
 <CEnemy X ="56" Y ="0" height ="1" width ="1" type ="4">
@@ -205,10 +193,6 @@
 </CBlock>
 <CBlock X ="101" Y ="6" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CPItem X ="100" Y ="6" texture ="0" isMoving ="0">
-</CPItem>
-<CPItem X ="99" Y ="7" texture ="1" isMoving ="0">
-</CPItem>
 <CEnemy X ="100" Y ="4" height ="1" width ="1" type ="2">
 </CEnemy>
 <CEnemy X ="93" Y ="3" height ="1" width ="1" type ="1">
@@ -277,10 +261,6 @@
 </CBlock>
 <CBlock X ="162" Y ="2" height ="1" width ="1" depth ="1" texture ="2" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CPItem X ="169" Y ="0" texture ="0" isMoving ="0">
-</CPItem>
-<CPItem X ="170" Y ="0" texture ="0" isMoving ="0">
-</CPItem>
 <CPItem X ="171" Y ="0" texture ="0" isMoving ="0">
 </CPItem>
 <CEnemy X ="177" Y ="0" height ="1" width ="1" type ="0">

@@ -38,6 +38,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       bool Godmode;
       bool hWasDown;
       bool jWasDown;
+      bool nWasDown;
       CollisionReal oldGrav;
 
 
@@ -111,5 +112,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       void setCanUseAbility(Abilities::EAbilityType t);
       void setStats(Cabbage::PlayerInformation st);
       EAction getAction();
+
+      void printInformation();
 };
 #endif

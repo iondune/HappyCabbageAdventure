@@ -7,7 +7,7 @@
 CElementPlayer::CElementPlayer(SRect2f nArea, bool useCamera)
 : CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f), Shaking(0.0f), ShakeFactor(SVector3f(0.0f)),
   ISquishable(2.0f, 2.0f), AllowMovement(true), PlayJump(true), Victory(false), VictoryTime(0.0f), ShakeFactorFactor(1000.0f), MoveKeyDelay(0.0f), UseCamera(useCamera), Godmode(false),
-WinParticle1(NULL), WinParticle2(NULL), WinParticle3(NULL), glow(NULL), hWasDown(false), jWasDown(false), oldGrav(0.0f) {
+WinParticle1(NULL), WinParticle2(NULL), WinParticle3(NULL), glow(NULL), hWasDown(false), jWasDown(false), nWasDown(false), oldGrav(0.0f) {
    setupSoundEffects();
 }
 
@@ -274,6 +274,10 @@ void CElementPlayer::updateSceneObject(float time) {
       View->useSubView(newSubView);
    }
    jWasDown = CApplication::get().getEventManager().IsKeyDown[SDLK_j];
+   if(!nWasDown && CApplication::get().getEventManager().IsKeyDown[SDLK_n]) {
+      this->printInformation();
+   }
+   nWasDown = CApplication::get().getEventManager().IsKeyDown[SDLK_n];
 
    if(Recovering > 0.0f) {
       Recovering -= time;
@@ -649,4 +653,8 @@ void CElementPlayer::playLevelVictory(float time) {
    VictoryTime += time;
 
    printf("End of victory\n");
+}
+
+void CElementPlayer::printInformation() {
+   printf("CElementPlayer; Area: [[%0.0f, %0.0f],[%0.0f, %0.0f]]; Stats: [[Health: %d, Energy: %d, Seeds: %d, Lives: %d]]\n", Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y, Stats.Health, Stats.Energy, Stats.Seeds, Stats.Lives);
 }
