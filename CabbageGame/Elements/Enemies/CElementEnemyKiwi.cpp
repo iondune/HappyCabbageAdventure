@@ -10,14 +10,12 @@ void CElementEnemyKiwi::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
 
-   PhysicsEngineObject->setControlFall(false);
-   PhysicsEngineObject->setGravity(0.0f);
+   PhysicsEngineObject->setGravityEnabled(false);
 
    PhysicsEngineObject->getAttributes().MaxWalk = 3.0f;
    PhysicsEngineObject->getAttributes().WalkAccel = 20.0f;
    PhysicsEngineObject->getAttributes().AirControl = 1.0f;
    PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
-   PhysicsEngineObject->getAttributes().Reacts = 0;
 
    CElementEnemy::setupPhysicsEngineObject();
 }

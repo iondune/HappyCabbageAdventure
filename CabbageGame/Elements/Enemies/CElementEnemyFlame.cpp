@@ -10,8 +10,7 @@ void CElementEnemyFlame::setupPhysicsEngineObject() {
    /* Set up the actor (not actually an actor, since this one doesn't move its position) */
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
 
-   PhysicsEngineObject->setControlFall(false);
-   PhysicsEngineObject->setGravity(0.0f);
+   PhysicsEngineObject->setGravityEnabled(false);
 
    CElementEnemy::setupPhysicsEngineObject();
 }

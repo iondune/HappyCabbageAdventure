@@ -98,7 +98,6 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
          TemporaryTimeVariable = 0;
          TemporaryArea = Player.getArea();
          Player.setShaking(1.2f, 0.3f);
-         tempGrav = (int) ((CCollisionActor *)Player.getPhysicsEngineObject())->getGravity();
          return;
       }
    }
@@ -109,7 +108,7 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
       Player.View->setHurt(false);
       Player.getPhysicsEngineObject()->setArea(TemporaryArea);
       ((CCollisionActor *)Player.getPhysicsEngineObject())->setVelocity(SVector2f(0.0f));
-      ((CCollisionActor *)Player.getPhysicsEngineObject())->setGravity(0.0f);
+	  ((CCollisionActor *)Player.getPhysicsEngineObject())->setGravityEnabled(false);
       Player.AllowMovement = false;
       if(TemporaryTimeVariable >= LASER_FIRING_DURATION) {
          ParticleEngine->deconstruct();
@@ -118,7 +117,7 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
          LaserState = FIRED;
          ((CCollisionActor *)Player.getPhysicsEngineObject())->addImpulse(SVector2f((Player.Direction == CElementPlayer::Right ? -1.0f : 1.0f)*15.0f, 0.0f));
          Player.AllowMovement = true;
-         ((CCollisionActor *)Player.getPhysicsEngineObject())->setGravity(tempGrav);
+         ((CCollisionActor *)Player.getPhysicsEngineObject())->setGravityEnabled(true);
          Player.View->setVisible(true);
          Player.View->setHurt(false);
          Player.Recovering = 0.0f;

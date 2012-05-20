@@ -103,8 +103,6 @@ void CElementEnemy::setupPhysicsEngineObject() {
       PhysicsEngineObject->getAttributes().JumpLength *= 2.0f;
       PhysicsEngineObject->getAttributes().AirControl *= 8.0f;
       PhysicsEngineObject->getAttributes().AirSpeedFactor *= 0.5f;
-
-      PhysicsEngineObject->setGravity(PhysicsEngineObject->getGravity()/16.0f);
    }
 }
 
@@ -236,7 +234,7 @@ void CElementEnemy::reactToAbility(Abilities::EAbilityType Ability) {
             Level.getPlayer().setShaking(0.25f, 0.7f);
             ((CCollisionActor*)PhysicsEngineObject)->addImpulse(endImpulse);
             ((CCollisionActor*)PhysicsEngineObject)->getAttributes().AirStandingFriction = 0.99f;
-            ((CCollisionActor*)PhysicsEngineObject)->setControlFall(false);
+			((CCollisionActor*)PhysicsEngineObject)->setGravityEnabled(false);
             ((CCollisionActor*)PhysicsEngineObject)->setTypeId(INTERACTOR_NONCOLLIDERS);
             ((CCollisionActor*)PhysicsEngineObject)->setCollisionMask(INTERACTOR_BLOCKS);
             ((CCollisionActor*)PhysicsEngineObject)->setDetectionMask(INTERACTOR_SUPERACTORS);

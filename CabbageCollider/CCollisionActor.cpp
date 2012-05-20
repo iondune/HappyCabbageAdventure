@@ -169,6 +169,8 @@ bool CCollisionActor::isAbove(CCollisionObject * Object, float & height) const
 void CCollisionActor::setGravityEnabled(bool const gravityEnabled)
 {
 	GravityEnabled = gravityEnabled;
+	if (! GravityEnabled)
+		FallAcceleration = 0.f;
 }
 
 bool const CCollisionActor::isGravityEnabled() const
