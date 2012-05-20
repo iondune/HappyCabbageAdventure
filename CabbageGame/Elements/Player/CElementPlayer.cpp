@@ -80,7 +80,9 @@ void CElementPlayer::updatePlayerAction() {
       Godmode = !Godmode;
       printf("Godmode toggled.\n");
       if(Godmode) {
+         PhysicsEngineObject->setTypeId(0);
          PhysicsEngineObject->setCollisionMask(0);
+         PhysicsEngineObject->setDetectionMask(0);
          PhysicsEngineObject->setControlFall(false);
          oldGrav = PhysicsEngineObject->getGravity();
          PhysicsEngineObject->setGravity(0.0f);
