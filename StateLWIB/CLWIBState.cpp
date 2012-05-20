@@ -903,6 +903,14 @@ void CLWIBState::PrepEnemy(float x, float y, int type) {
         else if (type == 13)
             type = 17;
     }
+    else 
+    {
+        if (type == 8)
+        {
+            h = 3;
+            w = 3;
+        }
+    }
     placeables.push_back(tempPlaceable = CEnemyLoader::LoadEnemy(SRect2f(x, y, (float)w, (float)h),(Enemies::EEnemyType) type));
     tempPlaceable->setupObjects(); 
     tempPlaceable->printInformation();
