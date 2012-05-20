@@ -210,20 +210,22 @@ void CLWIBState::OnRenderStart(float const Elapsed)
           block2->setText("adding MovingBlocks");
        }
        if (cDown == 7) {
+           block2->setText("adding MovingBlocks");
            block3->setVisible(true);
            thing << "Elevator Speed is ";
            thing << eleSpeed;
-           block2->setText(thing.str());
+           block3->setText(thing.str());
        }
        if (cDown == 8) {
+          block2->setText("adding MovingBlocks");
            block3->setVisible(true);
            thing << "Elevator Range is ";
            thing << eleRange;
-           block2->setText(thing.str());
+           block3->setText(thing.str());
        }
        if (cDown == 9) {
           block3->setVisible(true);
-          block2->setText("changing elevator type");
+          block2->setText("changing elevator type/adding MovingBocks");
           if (eleStyle == 0)
               block3->setText("Horizontal Elevators");
           if (eleStyle == 1)
@@ -344,10 +346,10 @@ void CLWIBState::OnRenderStart(float const Elapsed)
             block3->setText("Desert");
         }
         else if (env == 2) { 
-            block3->setText("mountains");
+            block3->setText("Water");
         }
         else if (env == 3) { 
-            block3->setText("Space");
+            block3->setText("Ice Mountain");
         }
    }
    if (tDown && !showHelp ){
@@ -670,6 +672,9 @@ void CLWIBState::loadWorld() {
                 PrepBlock((float)x,(float)y,w,h,d,t,moving);
                 cDown = 0;
                 printf("texture is %d\n", t);
+                eleRange = 2;
+                eleSpeed = 1;
+                eleStyle = 0;
             }
             if(!strcmp("CEnemy", xml->getNodeName()))
             {
@@ -737,6 +742,9 @@ void CLWIBState::loadWorld() {
             break;
         }
     }
+    eleRange = 2;
+    eleSpeed = 1;
+    eleStyle = 0;
 }
 
 void CLWIBState::printXML() {
@@ -982,7 +990,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
    }
    else if (cDown == 5)
        placeables.push_back(tempPlaceable = new CElementBlockDeath(SRect2f(x,y,1,1),1,t,1.0f,1.0f));
-   else if (cDown < 10 && cDown >=6) {
+   else if (cDown < 10 && cDown >=6 && uniType != -5) {
        placeables.push_back(tempPlaceable = new CElementBlockElevator(SRect2f(x,y,w,h),1,t,eleRange, eleSpeed ,eleStyle));
        printf("shit was here \n");
    }
