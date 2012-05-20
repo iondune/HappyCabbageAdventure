@@ -1315,6 +1315,8 @@ void CLWIBState::changeTiles() {
                 if (Application.getGUIEngine().isWidgetIn(tileArray[i]))
                     Application.getGUIEngine().removeWidget(tileArray[i]);
             }
+            if (!Application.getGUIEngine().isWidgetIn(tileArray[9]))
+                 Application.getGUIEngine().addWidget(tileArray[9]);
         }
         else 
             tileLoop = 0;
