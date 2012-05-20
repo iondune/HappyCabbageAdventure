@@ -1,7 +1,7 @@
 #include "CElementBlockElevator.h"
 #include "CGameLevel.h"
 
-CElementBlockElevator::CElementBlockElevator(SRect2f nArea, int D, int T, float R, float S, int style)
+CElementBlockElevator::CElementBlockElevator(SRect2f nArea, int D, int T,float R, float S, int style)
 : CElementBlock(nArea, D, T), Range(R), Speed(S), Style(style), OriginalArea(nArea.Position, nArea.Size) {
 }
 
@@ -20,7 +20,7 @@ void CElementBlockElevator::update(float time) {
 }
 
 void CElementBlockElevator::writeXML(xmlwriter *l) {
-   std::stringstream xValue, yValue, widthValue, heightValue, tagValue, rangeValue, speedValue, depthValue, textureType, eleType;
+   std::stringstream xValue, yValue, widthValue, heightValue, tagValue, rangeValue, speedValue, depthValue, textureType, eleType,moving;
    xValue << OriginalArea.Position.X;
    yValue << OriginalArea.Position.Y;
    widthValue << OriginalArea.Size.X;
@@ -30,12 +30,13 @@ void CElementBlockElevator::writeXML(xmlwriter *l) {
    speedValue << Speed;
    rangeValue << Range;
    eleType << Style;
+   moving << 1;
 
    tagValue << "CBlock";
    l->AddAtributes("Style", eleType.str());
-   l->AddAtributes("speed ", rangeValue.str());
+   l->AddAtributes("speed ", speedValue.str());
    l->AddAtributes("range ", rangeValue.str());
-   l->AddAtributes("isMoving ", speedValue.str());
+   l->AddAtributes("isMoving ", moving.str());
    l->AddAtributes("texture ", textureType.str());
    l->AddAtributes("depth ", depthValue.str());
    l->AddAtributes("width ", widthValue.str());
