@@ -1,4 +1,5 @@
 #include "CPlayerAbilityLaser.h"
+#include "CGameLevel.h"
 #include "CElementPlayer.h"
 #include "CPlayerView.h"
 float const CPlayerAbilityLaser::LASER_CHARGE_DURATION = 1.0f;
@@ -53,7 +54,7 @@ CPlayerAbilityLaser::CPlayerAbilityLaser(CElementPlayer & p) : CPlayerAbility(p,
    EnergyUsed = 33;
 
    if (Player.Stats.Energy >= EnergyUsed)
-      ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), LASER_CHARGE_PARTICLE_COUNT, LASER_CHARGE_DURATION, LASER_CHARGING_PARTICLE);
+      ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), LASER_CHARGE_PARTICLE_COUNT, LASER_CHARGE_DURATION, LASER_CHARGING_PARTICLE, Player.Level.isNight());
    else
       Dead = true;
 }
@@ -82,7 +83,7 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
          Player.AllowMovement = true;
          ParticleEngine->deconstruct();
          delete ParticleEngine;
-         ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), 20, -1, LASER_CHARGED_PARTICLE);
+         ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), 20, -1, LASER_CHARGED_PARTICLE, Player.Level.isNight());
          LaserState = CHARGED;
          return;
       }
@@ -92,7 +93,7 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
          ParticleEngine->deconstruct();
          delete ParticleEngine;
          Player.AllowMovement = false;
-         ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), LASER_FIRING_PARTICLE_COUNT, LASER_FIRING_DURATION, LASER_FIRING_PARTICLE);
+         ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), LASER_FIRING_PARTICLE_COUNT, LASER_FIRING_DURATION, LASER_FIRING_PARTICLE, Player.Level.isNight());
          ParticleEngine->setLookRight(Player.Direction == CElementPlayer::Right);
          LaserState = FIRING;
          TemporaryTimeVariable = 0;

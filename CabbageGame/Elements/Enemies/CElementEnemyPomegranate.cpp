@@ -4,7 +4,7 @@
 CElementEnemyPomegranate::CElementEnemyPomegranate(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::POMEGRANATE), ISquishable(nArea.Size.X, nArea.Size.Y), OldPositionX(nArea.Position.X), HitPlayer(false), FlameTimer(0.0f) {
 
-   particleEngine = new CParticleEngine(SVector3f(Area.getCenter().X - nArea.Size.X, Area.getCenter().Y + nArea.Size.Y/2.f, 0), 100, -1, FLAME_PARTICLE);
+   particleEngine = new CParticleEngine(SVector3f(Area.getCenter().X - nArea.Size.X, Area.getCenter().Y + nArea.Size.Y/2.f, 0), 100, -1, FLAME_PARTICLE, Level.isNight());
    particleEngine->setVisible(false);
 }
 
