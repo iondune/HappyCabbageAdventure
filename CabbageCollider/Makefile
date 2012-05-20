@@ -1,4 +1,4 @@
-FILES = CCollideable.cpp     CCollisionActor.EActionType.cpp  CCollisionElevator.cpp  CCollisionInteractor.cpp CCollisionActor.cpp  CCollisionActor.SAttributes.cpp  CCollisionEngine.cpp    CCollisionObject.cpp
+FILES = CCollideable.cpp    CCollisionActor.UpdateMethods.cpp CCollisionActor.EActionType.cpp  CCollisionElevator.cpp  CCollisionInteractor.cpp CCollisionActor.cpp  CCollisionActor.SAttributes.cpp  CCollisionEngine.cpp    CCollisionObject.cpp
 
 CC=g++ -g
 

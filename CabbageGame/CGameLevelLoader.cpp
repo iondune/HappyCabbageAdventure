@@ -136,11 +136,9 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
             newLevel->incrementXmlCount();
             x = xml->getAttributeValueAsInt(0);
             y = xml->getAttributeValueAsInt(1);
-            h = xml->getAttributeValueAsFloat(2);
-            w = xml->getAttributeValueAsFloat(3);
             t = xml->getAttributeValueAsInt(4);
 
-            CElementPlayer *player = new CElementPlayer(SRect2f((float)x, (float)y, (float)h, (float)w));
+            CElementPlayer *player = new CElementPlayer(SRect2f((float)x, (float)y, xml->getAttributeValueAsFloat(2), xml->getAttributeValueAsFloat(3)));
             newLevel->Elements.push_back(player);
             newLevel->PlayerElement = player;
          }

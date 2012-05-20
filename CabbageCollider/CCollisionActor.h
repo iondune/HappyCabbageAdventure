@@ -45,6 +45,9 @@ public:
 		//! Ratio of gravity affecting this object
 		CollisionReal GravityMultiplier;
 
+		//! Maximum step up for actor
+		CollisionReal MaxStep;
+
 		//! Default params ctor
 		SAttributes();
 	};
@@ -130,10 +133,12 @@ protected:
 
 	//! Updates the movement vectors of this actor
 	//! Called once per tick
+	//! Called first before initial update!
 	void updateVectors(CollisionReal const TickTime);
 
 	//! Peforms a collision check between this actor and a collideable object
 	//! Returns true if a standing event occured
+	//! 
 	bool updateCollision(CCollideable * Object, float const TickTime);
 
 	//! Performs a discrete collision check between this actor and a collideable object
