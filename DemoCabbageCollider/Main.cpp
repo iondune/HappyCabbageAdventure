@@ -124,7 +124,7 @@ int main(int argc, char * argv[])
 
 	CCollisionEngine * Engine = new CCollisionEngine();
 	Player = Engine->addActor();
-	Player->setArea(SArea(0, 3, 1, 1));
+	Player->setArea(SArea(0, 3, 0.999, 0.999));
 
 	CCollisionObject * Block2 = Engine->addObject();
 	Block2->setArea(SArea(2, 1.1f, 1, 1.f));
@@ -135,6 +135,14 @@ int main(int argc, char * argv[])
 	Block = Engine->addObject();
 	Block->setArea(SArea(-6.5, -1, 5, 0.9f));
 	Block->getMaterial().Friction = 0.4f;
+
+	for (int t = 0; t < 5; ++ t)
+	{
+		Block = Engine->addObject();
+		Block->setArea(SArea(-8 + t*1.2f, 3, 1, 1));
+		Block->getMaterial().Friction = 0.4f;
+
+	}
 
     CCollisionElevator * Elevator = Engine->addElevator();
     Elevator->setArea(SArea(6, -3, 1, 1));
