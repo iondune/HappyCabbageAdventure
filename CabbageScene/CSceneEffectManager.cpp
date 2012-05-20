@@ -89,6 +89,10 @@ CSceneEffectManager::CSceneEffectManager(CSceneManager * sceneManager)
 
 	HeatOffsetTexture = new CTexture(HeatOffsetTextureImage, Flags);
 
+
+	CImage * WaterOffsetTextureImage = CTextureLoader::loadImage("WaterOffset.bmp");
+	WaterOffsetTexture = new CTexture(WaterOffsetTextureImage, Flags);
+
 	ScratchTarget1 = new CFrameBufferObject();
 	ScratchTexture1 = new CTexture(SceneManager->getScreenSize(), true, Flags);
 	ScratchTarget1->attach(ScratchTexture1, GL_COLOR_ATTACHMENT0);
@@ -173,15 +177,19 @@ void CSceneEffectManager::apply()
 
 		BlendPass.doPass();
 
-		Timer += CApplication::get().getElapsedTime();
-
 		// Copy results back into scene
 		SPostProcessPass FinalPass;
 		FinalPass.Textures["uTexColor"] = ScratchTexture1;
 		FinalPass.Target = SceneManager->getSceneFrameBuffer();
-		if (isEffectEnabled(ESE_HEAT_WAVE))
+		if (isEffectEnabled(ESE_HEAT_WAVE) || isEffectEnabled(ESE_WATER_DISTORT))
 		{
-			FinalPass.Textures["uHeatOffset"] = HeatOffsetTexture;
+			Timer += CApplication::get().getElapsedTime();
+
+			if (isEffectEnabled(ESE_HEAT_WAVE))
+				FinalPass.Textures["uHeatOffset"] = HeatOffsetTexture;
+			else if (isEffectEnabled(ESE_WATER_DISTORT))
+				FinalPass.Textures["uHeatOffset"] = WaterOffsetTexture;
+
 			FinalPass.Floats["uTimer"] = Timer * 0.04f;
 			FinalPass.Target = SceneManager->getSceneFrameBuffer();
 			FinalPass.Shader = HeatCopy;

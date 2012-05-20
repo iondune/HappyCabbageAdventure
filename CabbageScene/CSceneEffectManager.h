@@ -57,6 +57,8 @@ protected:
 	CTexture * HeatOffsetTexture;
 	CShader * HeatCopy;
 
+	CTexture * WaterOffsetTexture;
+
 	float Timer;
 
 public:
