@@ -73,14 +73,6 @@ CCollisionEngine::~CCollisionEngine()
 
 void CCollisionEngine::runLists()
 {
-	for (CollideableList::iterator it = RemoveList.begin(); it != RemoveList.end(); ++ it)
-	{
-		Objects.erase((CCollisionObject *) * it);
-		Actors.erase((CCollisionActor *) * it);
-	}
-
-	RemoveList.clear();
-
 	for (ActorList::iterator it = ActorAddList.begin(); it != ActorAddList.end(); ++ it)
 		Actors.insert(* it);
 
@@ -90,6 +82,14 @@ void CCollisionEngine::runLists()
 		Objects.insert(* it);
 
 	ObjectAddList.clear();
+
+	for (CollideableList::iterator it = RemoveList.begin(); it != RemoveList.end(); ++ it)
+	{
+		Objects.erase((CCollisionObject *) * it);
+		Actors.erase((CCollisionActor *) * it);
+	}
+
+	RemoveList.clear();
 }
 
 void CCollisionEngine::update(float const Elapsed)
