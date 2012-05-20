@@ -26,7 +26,8 @@
 
 //Generic enemy, for usage in the LWIB, I guess.
 CElementEnemy::CElementEnemy(SRect2f nArea, Enemies::EEnemyType type)
-: CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), PhysicsEngineObject(NULL), SceneObject(NULL), Type(type), MaxHealth(1), CurHealth(MaxHealth), TimeToDeath(-1.0f), OldRot(SVector3f(0.0f)) {
+: CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), PhysicsEngineObject(NULL),
+  SceneObject(NULL), Type(type), MaxHealth(1), CurHealth(MaxHealth), TimeToDeath(-1.0f), OldRot(SVector3f(0.0f)), InvincibilityTime(0.0f) {
 }
 
 //Enemy created by factory
@@ -174,7 +175,11 @@ void CElementEnemy::OnCollision(const SCollisionEvent& Event) {
 
       //Check if jumped on top of enemy.
       if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {
-         takeDamage(1);
+    	  if (InvincibilityTime <= 0.0f) {
+    		  takeDamage(1);
+    		  printf("Took damage.\n");
+    		  InvincibilityTime = .2f;
+    	  }
       }
 
       //Did the player run into them?
@@ -191,13 +196,15 @@ void CElementEnemy::OnCollision(const SCollisionEvent& Event) {
 }
 
 void CElementEnemy::updatePhysicsEngineObject(float time) {
-   if(TimeToDeath > 0.0f) {
-      PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
-      TimeToDeath -= time;
-      if(TimeToDeath <= 0.0f) {
-         dieWithSeeds();
-      }
-   }
+	InvincibilityTime -= time;
+
+	if(TimeToDeath > 0.0f) {
+		PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
+		TimeToDeath -= time;
+		if(TimeToDeath <= 0.0f) {
+			dieWithSeeds();
+		}
+	}
 }
 
 void CElementEnemy::updateSceneObject(float time) {
@@ -265,8 +272,7 @@ int CElementEnemy::heal(int amount) {
 }
 
 int CElementEnemy::takeDamage(int amount) {
-   if(CurHealth <= 0)
-      return CurHealth;
+	printf("CurHealth: %d, amount: %d\n", CurHealth, amount);
    CurHealth = std::max(0, CurHealth - amount);
 
    CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();

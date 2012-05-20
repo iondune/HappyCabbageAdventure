@@ -26,7 +26,7 @@ void CElementEnemyPineapple::setupSceneObject() {
    else if (Level.getEnvironment() == Env::DESERT)
       mesh = CMeshLoader::load3dsMesh("Base/pineapple_stack.3ds");
    else if (Level.getEnvironment() == Env::WATER)
-	   mesh = CMeshLoader::load3dsMesh("Base/water_pineapple.3ds");
+	   mesh = CMeshLoader::load3dsMesh("Base/water_pineapple_stack.3ds");
    //LevelEditor has no environment
    else
       mesh = CMeshLoader::load3dsMesh("Base/pineapple_stack.3ds");

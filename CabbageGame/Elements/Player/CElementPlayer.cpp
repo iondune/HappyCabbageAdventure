@@ -352,6 +352,8 @@ void CElementPlayer::writeXML(xmlwriter *l) {
 
 void CElementPlayer::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
+
+   Area.Size *= .999f;
    PhysicsEngineObject->setArea(Area);
    PhysicsEngineObject->getAttributes().MaxWalk = 3.5f;
    printf("HERE!!! LOOK HEREs %d\n", PhysicsEngineObject->getTypeId());
