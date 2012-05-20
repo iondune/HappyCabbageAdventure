@@ -65,7 +65,7 @@ void CCollisionEngine::removeCollideable(CCollideable * Collideable)
 }
 
 CCollisionEngine::CCollisionEngine()
-	: Timer(0.f), Gravity(100.f)
+	: Timer(0.f), Gravity(100.f), ImpulseMultiplier(1.0)
 {}
 
 CCollisionEngine::~CCollisionEngine()
@@ -231,4 +231,12 @@ void CCollisionEngine::setGravity(CollisionReal gravity)
 CollisionReal const CCollisionEngine::getGravity() const
 {
 	return Gravity;
+}
+
+void CCollisionEngine::setImpulseMultiplier(CollisionReal p) {
+   ImpulseMultiplier = p;
+}
+
+CollisionReal CCollisionEngine::getImpulseMultiplier() {
+   return ImpulseMultiplier;
 }

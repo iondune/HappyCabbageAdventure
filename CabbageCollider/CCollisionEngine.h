@@ -20,6 +20,7 @@ public:
 	typedef std::set<CCollisionActor *> ActorList;
 
 private:
+   CollisionReal ImpulseMultiplier;
 
 	ObjectList Objects;
 	ActorList Actors;
@@ -64,6 +65,8 @@ public:
 	void setGravity(CollisionReal gravity);
 	CollisionReal const getGravity() const;
 
+   void setImpulseMultiplier(CollisionReal p);
+   CollisionReal getImpulseMultiplier();
 };
 
 #endif

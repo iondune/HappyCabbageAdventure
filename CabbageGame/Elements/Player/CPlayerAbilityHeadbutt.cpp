@@ -91,7 +91,7 @@ void CPlayerAbilityHeadbutt::checkKey(bool keyDown) {
          tempGrav = ((CCollisionActor *)Player.getPhysicsEngineObject())->getAttributes().AirStandingFriction;
          printf("Tempgrav: %0.2f\n", ((CCollisionActor *)Player.getPhysicsEngineObject())->getAttributes().AirStandingFriction);
          ((CCollisionActor *)Player.getPhysicsEngineObject())->getAttributes().AirStandingFriction = ((CCollisionActor *)Player.getPhysicsEngineObject())->getAttributes().GroundStandingFriction;
-         ((CCollisionActor *)Player.getPhysicsEngineObject())->addImpulse(SVector2f((2*(Player.Direction == CElementPlayer::Right ? 1 : 0)-1) * (Player.getLevel().getEnv() == 2 ? 32.5f : 65.0f), 0.0f));
+         ((CCollisionActor *)Player.getPhysicsEngineObject())->addImpulse(SVector2f((Player.Direction == CElementPlayer::Right ? 1 : -1) * 65.0f, 0.0f));
          ((CCollisionActor *)Player.getPhysicsEngineObject())->setCollisionMask(((CCollisionActor *)Player.getPhysicsEngineObject())->getCollisionMask() & ~INTERACTOR_ACTORS);
          ((CCollisionActor *)Player.getPhysicsEngineObject())->setDetectionMask(((CCollisionActor *)Player.getPhysicsEngineObject())->getDetectionMask() | INTERACTOR_ACTORS);
          Player.View->setTilt(60.0f);
