@@ -738,8 +738,31 @@ void CLWIBState::loadWorld() {
             }
             if (!strcmp("envVar", xml->getNodeName()))
             {
-                env= xml->getAttributeValueAsInt(0);
+                env = xml->getAttributeValueAsInt(0);
                 dayNight = xml->getAttributeValueAsInt(1);
+                if (dayNight == 1)
+                {
+                    tempBlock->setTexture(night);
+                    cutOffBlock->setTexture(night);
+                }
+                else if (dayNight == 0 && env != 2)
+                {
+                    if (env == 0)
+                    {
+                        tempBlock->setTexture(forest);
+                        cutOffBlock->setTexture(forest);
+                    }
+                    else if (env == 1)
+                    {
+                        tempBlock->setTexture(desert);
+                        cutOffBlock->setTexture(desert);
+                    }
+                }
+                else 
+                {
+                    tempBlock->setTexture(water);
+                    cutOffBlock->setTexture(water);
+                }
             }
             break;
         }
