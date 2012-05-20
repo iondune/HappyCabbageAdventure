@@ -282,6 +282,106 @@ void CDecorManager::GenerateForestPlants(CGroundBlock* block) {
    }
 }
 
+void CDecorManager::GenerateWaterPlants(CGroundBlock* block) {
+   float x = block->x,
+         y = block->y,
+         w = block->w,
+         h = block->h,
+         d = block->d;
+   int numForeground, numBackground;
+   int random;
+   float randScale, randDepth;
+   float div, yVal = y + h;
+
+   if (w > 0.5f && w < 1.5f)  //If block size roughly 1, don't draw any trees
+      numForeground = numBackground = 0;
+   else {
+      numForeground = (int) w / 2;
+      numBackground = (int) w / 2;
+   }
+
+   div =  w/(float)numBackground;
+
+   //Check how many tree-type objects we should draw in the background
+   for (int n = 0; n < numBackground; n++) {
+      random = rand()%2;
+
+      if (random == 0)
+         SetupObject(x + (n)*div + div/2.0f, yVal + 1.8f, -d/2.0f + .4f, 8.0f, basicTreeMesh);
+      else if (random == 1)
+         SetupObject(x + (n)*div + div/2.0f, yVal + 1.4f, -d/2.0f + .4f, 6.0f, christmasTreeMesh);
+   }
+
+   //Draw flower-type plants in background
+   for (int n = 0; n < w; n++) {
+      random = rand()%6;
+      float subrand = (float) (rand()%5);
+      randScale = (float) (rand()%20);
+      randScale = randScale * .025f;
+      randDepth = (float) (rand()%2);
+      randDepth = (float) randDepth*.25f;
+
+      if (random == 0 || random == 1)
+         SetupObject(x + n + .5f, yVal + .2f, -d/2.0f + 1.6f + randDepth, .7f, whiteFlwrMesh);
+      else if (random == 2 || random == 3 || random == 4) {
+         if (subrand == 0)
+            SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, yellowFlwrMesh);
+         else if (subrand == 1)
+            SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, blueFlwrMesh);
+         else if (subrand == 2)
+            SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, whiteSunflwrMesh);
+         else if (subrand == 3)
+            SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, tealFlwrMesh);
+         else if (subrand == 4)
+            SetupObject(x + n + .5f, yVal + .3f, -d/2.0f + 1.5f + randDepth, .7f + randScale, purpleFlwrMesh);
+      }
+      else if (random == 5 && !oldFern) {
+         SetupObject(x + n + .5f, yVal + .2f, -d/2.0f + 1.5f + randDepth, 1.f + randScale, fernMesh);
+         oldFern = true;
+      }
+      else if (random == 5 && oldFern)
+         n--;
+
+      if (random != 5)
+         oldFern = false;
+   }
+
+   //Draw flower-type plants in foreground
+   for (int n = 0; n < w; n++) {
+      random = rand()%6;
+      float subrand = (float) (rand()%5);
+      randScale = (float) (rand()%10);
+      randScale = randScale * 0.04f;
+      randDepth = (float) (rand()%2);
+      randDepth = randDepth*0.25f;
+
+      if (random == 0 || random == 1)
+         SetupObject(x + n + 0.5f, yVal + .2f, d/2.0f - 0.6f, 0.5f + randScale/2.0f, whiteFlwrMesh);
+      else if (random == 2 || random == 3 || random == 4) {
+         if (subrand == 0)
+            SetupObject(x + n + 0.5f, yVal + .3f, d/2.0f - 0.6f, 0.4f + randScale, blueFlwrMesh);
+         else if (subrand == 1)
+            SetupObject(x + n + 0.5f, yVal + .3f, d/2.0f - 0.6f, 0.4f + randScale, tealFlwrMesh);
+         else if (subrand == 2)
+            SetupObject(x + n + 0.5f, yVal + .3f, d/2.0f - 0.6f + .4f, 0.4f + randScale, purpleFlwrMesh);
+         else if (subrand == 3)
+            SetupObject(x + n + 0.5f, yVal + .3f, d/2.0f - 0.6f, 0.4f + randScale, yellowFlwrMesh);
+         else if (subrand == 3)
+            SetupObject(x + n + 0.5f, yVal + .3f, d/2.0f - 0.6f, 0.4f + randScale, whiteSunflwrMesh);
+      }
+      else if (random == 5 && !oldFern) {
+         SetupObject(x + n + 0.5f, yVal + 0.2f, d/2.0f - 0.6f, 0.7f, fernMesh);
+         oldFern = true;
+      }
+      else if (random == 5 && oldFern) {
+         n--;
+      }
+
+      if (random != 5)
+         oldFern = false;
+   }
+}
+
 void CDecorManager::PrepShaders() {
    DeferredFlat = CShaderLoader::loadShader("Deferred/Diffuse");
    DeferredDiffuse = CShaderLoader::loadShader("Deferred/Diffuse");

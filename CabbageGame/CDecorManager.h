@@ -33,6 +33,7 @@ class CDecorManager : public IUpdater {
       ISceneObject *SetupObject(float,float,float,float,CMesh*);
       void GenerateForestPlants(CGroundBlock*);
       void GenerateDesertPlants(CGroundBlock*, bool genTree);
+      void GenerateWaterPlants(CGroundBlock*);
       void SetupSky();
       void SetupClouds();
 
