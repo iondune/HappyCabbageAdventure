@@ -22,14 +22,12 @@ void CElementEnemyPomegranate::setupSceneObject() {
    SceneObject = new CMeshSceneObject();
    CMesh *mesh;
 
-   if (Level.getEnvironment() == 0) {
-      mesh = CMeshLoader::load3dsMesh("Base/pomegranate.3ds");
-   }
-
-   else if (Level.getEnvironment() == 1) {
-      mesh = CMeshLoader::load3dsMesh("Base/pomegranate.3ds");
-   }
-   //LevelEditor has no environment
+   if (Level.getEnvironment() == Env::FOREST)
+	   mesh = CMeshLoader::load3dsMesh("Base/pomegranate.3ds");
+   else if (Level.getEnvironment() == Env::DESERT)
+	   mesh = CMeshLoader::load3dsMesh("Base/pomegranate.3ds");
+   else if (Level.getEnvironment() == Env::WATER)
+	   mesh = CMeshLoader::load3dsMesh("Base/water_pomegranate.3ds");
    else
       mesh = CMeshLoader::load3dsMesh("Base/pomegranate.3ds");
 

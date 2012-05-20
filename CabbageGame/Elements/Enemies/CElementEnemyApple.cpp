@@ -26,7 +26,6 @@ void CElementEnemyApple::setupSceneObject() {
    }
    else if (Level.getEnvironment() == Env::WATER)
       mesh = CMeshLoader::load3dsMesh("Base/water_apple.3ds");
-   //LevelEditor has no environment
    else
       mesh = CMeshLoader::load3dsMesh("Base/appleEnemy.3ds");
 

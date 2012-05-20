@@ -25,7 +25,14 @@ void CElementEnemyProjectileBanana::setupSceneObject() {
    SceneObject = new CMeshSceneObject();
    CMesh *mesh;
 
-      mesh = CMeshLoader::load3dsMesh("Base/banana_projectile.3ds");
+   if (Level.getEnvironment() == Env::FOREST)
+	   mesh = CMeshLoader::load3dsMesh("Base/banana_projectile.3ds");
+   else if (Level.getEnvironment() == Env::DESERT)
+	   mesh = CMeshLoader::load3dsMesh("Base/banana_projectile.3ds");
+   else if (Level.getEnvironment() == Env::WATER)
+	   mesh = CMeshLoader::load3dsMesh("Base/water_banana_projectile.3ds");
+   else
+	   mesh = CMeshLoader::load3dsMesh("Base/banana_projectile.3ds");
 
    if (mesh) {
       mesh->resizeMesh(SVector3f(1.0f));

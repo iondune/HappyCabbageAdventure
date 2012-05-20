@@ -33,17 +33,18 @@ void CElementEnemyProjectileKiwi::setupSceneObject() {
    SceneObject = new CMeshSceneObject();
    CMesh *mesh;
 
-   if (Level.getEnvironment() == 0) {
-      mesh = CMeshLoader::load3dsMesh("Base/kiwi_seed.3ds");
+   if (Level.getEnvironment() == Env::FOREST)
+	   mesh = CMeshLoader::load3dsMesh("Base/kiwi_seed.3ds");
+
+   else if (Level.getEnvironment() == Env::DESERT)
+	   mesh = CMeshLoader::load3dsMesh("Base/kiwi_seed.3ds");
+
+   else if (Level.getEnvironment() == Env::WATER) {
+	   mesh = CMeshLoader::load3dsMesh("Base/kiwi_seed.3ds");
    }
 
-   else if (Level.getEnvironment() == 1) {
+   else
       mesh = CMeshLoader::load3dsMesh("Base/kiwi_seed.3ds");
-   }
-
-   else {
-      mesh = CMeshLoader::load3dsMesh("Base/kiwi_seed.3ds");
-   }
 
    if (mesh) {
       mesh->resizeMesh(SVector3f(.4f));

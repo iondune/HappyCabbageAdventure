@@ -24,13 +24,14 @@ void CElementEnemyProjectileCherry::setupSceneObject() {
    SceneObject = new CMeshSceneObject();
    CMesh *mesh;
 
-   if (Level.getEnvironment() == 0) {
-      mesh = CMeshLoader::load3dsMesh("Base/single_cherry.3ds");
-   }
+   if (Level.getEnvironment() == 0)
+	   mesh = CMeshLoader::load3dsMesh("Base/single_cherry.3ds");
 
-   else if (Level.getEnvironment() == 1) {
-      mesh = CMeshLoader::load3dsMesh("Base/desert_single_cherry.3ds");
-   }
+   else if (Level.getEnvironment() == 1)
+	   mesh = CMeshLoader::load3dsMesh("Base/desert_single_cherry.3ds");
+
+   else if (Level.getEnvironment() == Env::WATER)
+	   mesh = CMeshLoader::load3dsMesh("Base/water_single_cherry.3ds");
 
    else {
       mesh = CMeshLoader::load3dsMesh("Base/single_cherry.3ds");
