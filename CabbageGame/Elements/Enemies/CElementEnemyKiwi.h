@@ -10,6 +10,9 @@ class CElementEnemyKiwi : public CElementEnemy
       bool bombDropped;
       int Direction;
 
+      float ZDepth, ZTimer;
+      bool InZ;
+
    public:
       CElementEnemyKiwi(SRect2f nArea, int direction);
 
