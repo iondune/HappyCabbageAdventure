@@ -50,7 +50,7 @@ class CLWIBState : public CState<CLWIBState>
    int uniType;
    int WindowWidth, WindowHeight;
    int eleStyle;
-   float eleSpeed, eleRange;
+   int eleSpeed, eleRange;
    //stuff for textures
    CTexture *grass,*dirt,*rock,*ground,*cabbageImage,*apple,*orange,*kiwi,*fire,*blade, *alien;
    CTexture *leaf, *heart, *derp;

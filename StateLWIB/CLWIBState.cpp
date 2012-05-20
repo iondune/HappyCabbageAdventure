@@ -135,7 +135,8 @@ void CLWIBState::begin()
 void CLWIBState::OnRenderStart(float const Elapsed)
 {
 
-   glViewport(0, 0, WindowWidth, WindowHeight);
+    std::stringstream thing;
+    glViewport(0, 0, WindowWidth, WindowHeight);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    glMatrixMode(GL_MODELVIEW);
@@ -171,7 +172,7 @@ void CLWIBState::OnRenderStart(float const Elapsed)
    if (!twoDown && !showHelp && !tDown && !oneDown && !threeDown && !fourDown) {
        block2->setVisible(true);
        block1->setText("Placing Block");
-       if (cDown <9 )
+       if (cDown <7 )
             block3->setVisible(false);
        if (cDown == 0) {
            if (uniType == 0) {
@@ -209,10 +210,16 @@ void CLWIBState::OnRenderStart(float const Elapsed)
           block2->setText("adding MovingBlocks");
        }
        if (cDown == 7) {
-          block2->setText("Change elevator Range");
+           block3->setVisible(true);
+           thing << "Elevator Speed is ";
+           thing << eleSpeed;
+           block2->setText(thing.str());
        }
        if (cDown == 8) {
-          block2->setText("adding elevator Speed");
+           block3->setVisible(true);
+           thing << "Elevator Range is ";
+           thing << eleRange;
+           block2->setText(thing.str());
        }
        if (cDown == 9) {
           block3->setVisible(true);
@@ -532,7 +539,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                     else if (uniType == 0) {
                         uniType = -5;
                         blockWidth = 5;
-                        blockHeight = 5;
+                        blockHeight = 2;
                         blockDepth = 5;
                     }
                     else if (uniType == -5) {
@@ -555,11 +562,11 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                         blockDepth--;
                 }
                 if (cDown == 7) { //adjustiing speed for elevators
-                    if (eleSpeed != 0)
+                    if (eleSpeed != 1)
                         eleSpeed--;
                 }
                 if (cDown == 8) { //adjustiing range for elevators
-                    if (eleRange != 0)
+                    if (eleRange != 2)
                         eleRange--;
                 }
                 if (cDown == 9) { // adjusting type
@@ -973,8 +980,8 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
    }
    else if (cDown == 5)
        placeables.push_back(tempPlaceable = new CElementBlockDeath(SRect2f(x,y,1,1),1,t,1.0f,1.0f));
-   else if (cDown == 6) {
-       placeables.push_back(tempPlaceable = new CElementBlockElevator(SRect2f(x,y,1,1),1,t,2.0f, 1.0f,0));
+   else if (cDown < 10 && cDown >=6) {
+       placeables.push_back(tempPlaceable = new CElementBlockElevator(SRect2f(x,y,w,h),1,t,eleRange, eleSpeed ,eleStyle));
        printf("shit was here \n");
    }
    else if (cDown != 6)
