@@ -18,8 +18,6 @@ public:
 
 	CShader * FinalBlendShader;
 
-	CTexture * WaterOffsetTexture;
-
 	CDeferredShadingManager(CSceneManager * sceneManager);
 
 	virtual void apply();
