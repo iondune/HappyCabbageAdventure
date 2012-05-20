@@ -19,7 +19,7 @@ void CParticleEngine::UsePhysics(CCollisionEngine *engine, int env) {
    }
 }
 
-CParticleEngine::CParticleEngine(SVector3f pos, int max, float duration, int pT) {
+CParticleEngine::CParticleEngine(SVector3f pos, int max, float duration, int pT, bool atNight) {
    centerPos = pos;
    numParticles = max;
    totalDuration = duration;
@@ -203,6 +203,7 @@ CParticleEngine::CParticleEngine(SVector3f pos, int max, float duration, int pT)
       }
    }
    myObj = new CParticleObject();
+   myObj->setRenderLights(atNight);
    //Default bounding box to 0,0,0 to 1,1,1. All of our particle effects at this point (i.e. flame) are 1x1x1
    myObj->setBoundingBox(SBoundingBox3(centerPos - 0.7f, centerPos + 0.7f));
 

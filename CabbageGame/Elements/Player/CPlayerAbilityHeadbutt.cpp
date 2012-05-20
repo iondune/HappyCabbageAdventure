@@ -1,4 +1,5 @@
 #include "CPlayerAbilityHeadbutt.h"
+#include "CGameLevel.h"
 #include "CElementPlayer.h"
 #include "CPlayerView.h"
 float const CPlayerAbilityHeadbutt::HEADBUTT_CHARGE_DURATION = 0.5f;
@@ -42,7 +43,7 @@ CPlayerAbilityHeadbutt::CPlayerAbilityHeadbutt(CElementPlayer & p) : CPlayerAbil
    EnergyUsed = 5;
 
    if (Player.Stats.Energy >= EnergyUsed)
-      ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), HEADBUTT_CHARGE_PARTICLE_COUNT, HEADBUTT_CHARGE_DURATION, LASER_CHARGING_PARTICLE);
+      ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), HEADBUTT_CHARGE_PARTICLE_COUNT, HEADBUTT_CHARGE_DURATION, LASER_CHARGING_PARTICLE, Player.Level.isNight());
    else
       Dead = true;
 }
@@ -71,7 +72,7 @@ void CPlayerAbilityHeadbutt::checkKey(bool keyDown) {
          Player.AllowMovement = true;
          ParticleEngine->deconstruct();
          delete ParticleEngine;
-         ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), 20, -1, LASER_CHARGED_PARTICLE);
+         ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), 20, -1, LASER_CHARGED_PARTICLE, Player.Level.isNight());
          HeadbuttState = CHARGED;
          return;
       }
@@ -82,7 +83,7 @@ void CPlayerAbilityHeadbutt::checkKey(bool keyDown) {
          delete ParticleEngine;
          Player.AllowMovement = false;
          /*
-         ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), HEADBUTT_FIRING_PARTICLE_COUNT, HEADBUTT_FIRING_DURATION, LASER_FIRING_PARTICLE);
+         ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), HEADBUTT_FIRING_PARTICLE_COUNT, HEADBUTT_FIRING_DURATION, LASER_FIRING_PARTICLE, Player.Level.isNight());
          ParticleEngine->setLookRight(Player.Direction == CElementPlayer::Right);
          */
          ParticleEngine = NULL;

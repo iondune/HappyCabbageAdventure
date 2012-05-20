@@ -548,11 +548,11 @@ void CElementPlayer::playLevelVictory(float time) {
       Mix_PlayMusic(victoryMusic, 1);
 
       if (!WinParticle1)
-         WinParticle1 = new CParticleEngine(SVector3f(curLocation.X, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
+         WinParticle1 = new CParticleEngine(SVector3f(curLocation.X, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE, Level.isNight());
       if (!WinParticle2)
-         WinParticle2 = new CParticleEngine(SVector3f(curLocation.X + 4.f, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
+         WinParticle2 = new CParticleEngine(SVector3f(curLocation.X + 4.f, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE, Level.isNight());
       if (!WinParticle3)
-         WinParticle3 = new CParticleEngine(SVector3f(curLocation.X + 8.f, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE);
+         WinParticle3 = new CParticleEngine(SVector3f(curLocation.X + 8.f, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE, Level.isNight());
    }
 
 
@@ -620,7 +620,7 @@ void CElementPlayer::playLevelVictory(float time) {
    }
    else if (VictoryTime > 4.9f && VictoryTime < 6.4f) {
       if (!glow) {
-         glow = new CParticleEngine(SVector3f(Area.getCenter().X, Area.getCenter().Y, 0), 400, 2.f, LASER_CHARGING_PARTICLE);
+         glow = new CParticleEngine(SVector3f(Area.getCenter().X, Area.getCenter().Y, 0), 400, 2.f, LASER_CHARGING_PARTICLE, Level.isNight());
       }
       Action = Standing;
       PhysicsEngineObject->setJumping(false);

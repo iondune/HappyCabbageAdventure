@@ -144,7 +144,7 @@ void CElementEnemy::dieWithSeeds() {
    Area.Position.Y -= 0.3f;
    TempTime = 0.0f;
    removeFromPhysicsEngine();
-   ParticleEngine = new CParticleEngine(SceneObject->getTranslation(), 20, 4, BURST_PARTICLE);
+   ParticleEngine = new CParticleEngine(SceneObject->getTranslation(), 20, 4, BURST_PARTICLE, Level.isNight());
    ParticleEngine->UsePhysics(&Level.getPhysicsEngine(), Level.getEnv());
 }
 
@@ -229,6 +229,9 @@ void CElementEnemy::printInformation() {
 }
 
 void CElementEnemy::reactToAbility(Abilities::EAbilityType Ability) {
+   if (InvincibilityTime <= 0.0f) {
+      InvincibilityTime = .1f;
+   }
    SVector2f PlayerVelocity = ((CCollisionActor*)Level.getPlayer().getPhysicsEngineObject())->getVelocity();
    SVector2f endImpulse = (SVector2f(PlayerVelocity.X > 0.0f ? 6.0f : -6.0f, 2.0f) * 3.0f);
    switch(Ability) {

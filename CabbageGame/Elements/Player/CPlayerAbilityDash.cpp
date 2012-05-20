@@ -1,6 +1,7 @@
 #include "CPlayerAbilityDash.h"
 #include "CGameLevel.h"
 #include "CElementPlayer.h"
+#include "CGameLevel.h"
 #include "CPlayerView.h"
 int const CPlayerAbilityDash::DASH_PARTICLE_COUNT = 70;
 
@@ -27,7 +28,7 @@ void CPlayerAbilityDash::inOnCollision(CCollideable * collider) {
 */
 
 CPlayerAbilityDash::CPlayerAbilityDash(CElementPlayer & p, bool doGodmode) : CPlayerAbility(p, Abilities::DASH), Godmode(doGodmode) {
-   ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), DASH_PARTICLE_COUNT, -1, DUST_PARTICLE);
+   ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), DASH_PARTICLE_COUNT, -1, DUST_PARTICLE, Player.Level.isNight());
    ParticleEngine->UsePhysics(&Player.Level.getPhysicsEngine(), Player.Level.getEnv());
    if(!Godmode && Player.Level.getEnv() != Env::WATER)
       ((CCollisionActor*)Player.getPhysicsEngineObject())->getAttributes().MaxWalk = 7.5f;
