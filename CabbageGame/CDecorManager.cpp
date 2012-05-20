@@ -44,7 +44,7 @@ ISceneObject *CDecorManager::SetupObject(float x, float y, float z, float xScale
    else if (model == seaweed1Mesh || model == seaweed2Mesh || model == seaweed3Mesh || model == seaweed4Mesh ||
 		    model == coral1Mesh || model == coral2Mesh || model == coral3Mesh || model == coral4Mesh || model == coral5Mesh ||
 		    model == coral6Mesh) {
-	   render->setRotation(SVector3f(-90, 0, rand()%360));
+	   render->setRotation(SVector3f(-90, 0, (float) (rand()%360)));
    }
 
    CApplication::get().getSceneManager().addImmobileSceneObject(render, THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT);
@@ -309,8 +309,8 @@ void CDecorManager::GenerateWaterPlants(CGroundBlock* block) {
    if (w > 0.5f && w < 1.5f)  //If block size roughly 1, don't draw any trees
       numForeground = numBackground = 0;
    else {
-      numForeground = (int) w / 2;
-      numBackground = (int) w / 1.25;
+      numForeground = (int) (w / 2);
+      numBackground = (int) (w / 1.25);
    }
 
    div =  w/(float)numBackground;
