@@ -177,7 +177,6 @@ void CElementEnemy::OnCollision(const SCollisionEvent& Event) {
       if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {
     	  if (InvincibilityTime <= 0.0f) {
     		  takeDamage(1);
-    		  printf("Took damage.\n");
     		  InvincibilityTime = .2f;
     	  }
       }

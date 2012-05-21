@@ -52,14 +52,6 @@ void CElementEnemyStrawberry::setupSceneObject() {
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
-/*
-void CElementEnemyStrawberry::OnCollision(CCollideable *Object) {
-   if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject())
-      HitPlayer = true;
-   CElementEnemy::OnCollision(Object);
-}
-*/
-
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyStrawberry::updatePhysicsEngineObject(float time) {
    CElementEnemy::updatePhysicsEngineObject(time);
