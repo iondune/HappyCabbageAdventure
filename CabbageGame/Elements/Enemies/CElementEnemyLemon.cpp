@@ -68,7 +68,7 @@ void CElementEnemyLemon::updatePhysicsEngineObject(float time) {
       takeDamage(1);
    }
 
-   else if (abs(Difference.X) < 5.f) {
+   else if (abs(Difference.X) < 5.f && abs(Difference.Y) < 5.f) {
       if (Difference.X < 0.f) {
          PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
       }
