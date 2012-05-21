@@ -103,7 +103,7 @@ protected:
 public:
 
 	//! Destructor
-	~CCollisionInteractor();
+	virtual ~CCollisionInteractor();
 
 	//! Checks if this actor is directly above an object, and if so, returns the height between them
 	bool isAbove(CCollisionObject * Object, float & height) const;
