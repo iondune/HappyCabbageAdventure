@@ -34,25 +34,29 @@ int const ISceneObject::getCullChecks()
 	return CullChecks;
 }
 
+
 ISceneObject::ISceneObject()
-	: DebugDataFlags(0), Visible(true), Parent(0), UseCulling(true), Immobile(false)
+	: DebugDataFlags(0), Visible(true), Parent(0), UseCulling(true), TransformationDirty(false)
 {}
+
+void ISceneObject::checkAbsoluteTransformation()
+{
+	if (TransformationDirty)
+		updateAbsoluteTransformation();
+	else
+		for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
+			(* it)->checkAbsoluteTransformation();
+}
 
 void ISceneObject::updateAbsoluteTransformation()
 {
-	if (Immobile)
-		return;
-
 	AbsoluteTransformation = Transformation;
+
 	if (Parent)
-	{
 		AbsoluteTransformation = Parent->AbsoluteTransformation* AbsoluteTransformation;
-	}
 
 	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
-	{
 		(* it)->updateAbsoluteTransformation();
-	}
 }
 
 glm::mat4 const & ISceneObject::getAbsoluteTransformation() const
@@ -62,57 +66,59 @@ glm::mat4 const & ISceneObject::getAbsoluteTransformation() const
 
 void ISceneObject::setTranslation(SVector3f const & translation)
 {
-	if (Immobile)
-		return;
-
 	Translation = translation;
 	Transformation.setTranslation(translation);
+
+	TransformationDirty = true;
 }
 
 void ISceneObject::setRotation(SVector3f const & rotation)
 {
 	Rotation = rotation;
 	Transformation.setRotation(rotation);
+
+	TransformationDirty = true;
 }
 
 void ISceneObject::setRotation(glm::mat4 const & matrix)
 {
 	Transformation.setRotation(matrix);
+
+	TransformationDirty = true;
 }
 
 void ISceneObject::setScale(SVector3f const & scale)
 {
-	//assert(!Immobile);
 	Scale = scale;
 	Transformation.setScale(scale);
+
+	TransformationDirty = true;
 }
 
 void ISceneObject::update()
 {
-	if(Immobile)
-		return;
 	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
 		(* it)->update();
+}
+
+void ISceneObject::load(CScene const * const Scene, ERenderPass const Pass)
+{
+	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
+		(* it)->load(Scene, Pass);
 }
 
 void ISceneObject::draw(CScene const * const scene, ERenderPass const Pass)
 {
 	if (! Visible)
 		return;
+	
+	++ TotalObjects;
 
-	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it) {
-		if (! (* it)->isCulled(scene)) {
+	if (isCulled(scene))
+		++ ObjectsCulled;
+	else
+		for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
 			(* it)->draw(scene, Pass);
-		}
-		else {
-			/*
-			if((* it)->isImmobile())
-			printf("Culled an immobile ISO\n");
-			*/
-			++ ObjectsCulled;
-		}
-		++ TotalObjects;
-	}
 }
 
 SBoundingBox3 const & ISceneObject::getBoundingBox() const
@@ -120,12 +126,11 @@ SBoundingBox3 const & ISceneObject::getBoundingBox() const
 	return BoundingBox;
 }
 
-SBoundingBox3 & ISceneObject::getBoundingBox()
+void ISceneObject::setBoundingBox(SBoundingBox3 const & boundingBox)
 {
-	return BoundingBox;
-}
-void ISceneObject::setBoundingBox(SBoundingBox3 const & boundingBox) {
 	BoundingBox = boundingBox;
+
+	BoundingBoxDirty = true;
 }
 
 bool const ISceneObject::isDebugDataEnabled(EDebugData::Domain const type) const
@@ -138,8 +143,8 @@ void ISceneObject::enableDebugData(EDebugData::Domain const type)
 	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
 		(* it)->enableDebugData(type);
 
-	if (type == EDebugData::None)
-		DebugDataFlags = 0;
+	if (type == EDebugData::All)
+		DebugDataFlags = -1;
 	else
 		DebugDataFlags |= type;
 }
@@ -149,7 +154,7 @@ void ISceneObject::disableDebugData(EDebugData::Domain const type)
 	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
 		(* it)->disableDebugData(type);
 
-	if (type == EDebugData::None)
+	if (type == EDebugData::All)
 		DebugDataFlags = 0;
 	else
 		DebugDataFlags ^= type;
@@ -167,6 +172,7 @@ bool const ISceneObject::isVisible() const
 
 void ISceneObject::setVisible(bool const isVisible)
 {
+	// TO DO: Non visible objects should not be a part of hiearchies, so this should trigger a rebuild
 	Visible = isVisible;
 }
 
@@ -201,6 +207,7 @@ void ISceneObject::setParent(ISceneObject * parent)
 {
 	if (Parent)
 		Parent->removeChild(this);
+
 	if (parent)
 		parent->addChild(this);
 }
@@ -250,11 +257,7 @@ bool const ISceneObject::isCulled(CScene const * const Scene) const
 		SVector3f const Center = getBoundingBox().getCorner(i);
 		glm::vec4 Center4(Center.X, Center.Y, Center.Z, 1.f);
 
-		glm::mat4 PVM;
-		if(!Immobile)
-			PVM = (Scene->getActiveCamera()->getProjectionMatrix()*Scene->getActiveCamera()->getViewMatrix()*Transformation());
-		else
-			PVM = Scene->getActiveCamera()->getProjectionMatrix()*Scene->getActiveCamera()->getViewMatrix()*glm::mat4(1.);
+		glm::mat4 PVM = (Scene->getActiveCamera()->getProjectionMatrix()*Scene->getActiveCamera()->getViewMatrix()*Transformation());
 		glm::vec4 prime = PVM * Center4;
 
 		float length = glm::length(glm::vec3(prime.x, prime.y, prime.z));
@@ -300,56 +303,40 @@ bool const ISceneObject::isCulled(CScene const * const Scene) const
 	return Inside;
 }
 
-bool const ISceneObject::isImmobile() const
-{
-	return Immobile;
-}
-
-void ISceneObject::setImmobile(bool isImmobile) 
-{
-		Immobile = isImmobile;
-}
-
+// What does this do?
 SVector3f ISceneObject::getWorldBoundingBoxMinPoint()
 {
-	if (!Immobile)
-	{
-		SVector3f p = getBoundingBox().MinCorner; 
-		glm::vec4 p4(p.X, p.Y, p.Z, 1.f);
-		glm::vec4 temp = Transformation() * p4; 
+	SVector3f p = getBoundingBox().MinCorner; 
+	glm::vec4 p4(p.X, p.Y, p.Z, 1.f);
+	glm::vec4 temp = Transformation() * p4; 
 
-		//printf("Min: %0.2f %0.2f %0.2f\n", temp.x, temp.y, temp.z);
-		return SVector3f(temp.x, temp.y, temp.z);
-	}
-	else
-		return getBoundingBox().MinCorner;
+	//printf("Min: %0.2f %0.2f %0.2f\n", temp.x, temp.y, temp.z);
+	return SVector3f(temp.x, temp.y, temp.z);
 }
 
+// What does this do?
 SBoundingBox3 ISceneObject::getWorldBoundingBox()
 {
-	if(!Immobile)
-	{
-		SVector3f min = getBoundingBox().MinCorner; 
-		glm::vec4 min4(min.X, min.Y, min.Z, 1.f);
-		glm::vec4 temp = Transformation() * min4; 
-		//printf("Min: %0.2f %0.2f %0.2f\n", temp.x, temp.y, temp.z);
+	SVector3f min = getBoundingBox().MinCorner; 
+	glm::vec4 min4(min.X, min.Y, min.Z, 1.f);
+	glm::vec4 temp = Transformation() * min4; 
+	//printf("Min: %0.2f %0.2f %0.2f\n", temp.x, temp.y, temp.z);
 
-		SVector3f max = getBoundingBox().MaxCorner; 
-		glm::vec4 max4(max.X, max.Y, max.Z, 1.f);
-		glm::vec4 temp2 = Transformation() * max4; 
-		//printf("Max: %0.2f %0.2f %0.2f\n", temp2.x, temp2.y, temp2.z);
+	SVector3f max = getBoundingBox().MaxCorner; 
+	glm::vec4 max4(max.X, max.Y, max.Z, 1.f);
+	glm::vec4 temp2 = Transformation() * max4; 
+	//printf("Max: %0.2f %0.2f %0.2f\n", temp2.x, temp2.y, temp2.z);
 
-		return SBoundingBox3(SVector3f(temp.x, temp.y, temp.z), SVector3f(temp2.x, temp2.y, temp2.z));
-	}
-	else
-		return getBoundingBox();
+	return SBoundingBox3(SVector3f(temp.x, temp.y, temp.z), SVector3f(temp2.x, temp2.y, temp2.z));
 }
 
-bool sortByZTranslation(ISceneObject *a, ISceneObject *b) {
+bool sortByZTranslation(ISceneObject *a, ISceneObject *b)
+{
    return a->getTranslation().Z > b->getTranslation().Z;
 }
 
-void ISceneObject::sortChildrenByZTranslation() {
+void ISceneObject::sortChildrenByZTranslation()
+{
    Children.sort(sortByZTranslation);
 }
 
@@ -363,19 +350,8 @@ void ISceneObject::setCullingEnabled(bool const culling)
 	UseCulling = culling;
 }
 
-void ISceneObject::load(CScene const * const Scene, ERenderPass const Pass)
+int ISceneObject::getNumLeaves()
 {
-	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
-		(* it)->load(Scene, Pass);
-}
-
-void ISceneObject::setTreeImmobile(bool value) {
-	Immobile = value;
-	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
-		(* it)->setTreeImmobile(value);
-}
-
-int ISceneObject::getNumLeaves() {
 	if(Children.size() == 0)
 		return 1;
 	int toRet = 0;
