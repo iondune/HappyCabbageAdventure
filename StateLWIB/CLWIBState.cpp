@@ -620,7 +620,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 void CLWIBState::loadWorld() {
     int x,y,h,w,d,t;
-    int moving, range, speed;
+    int moving;
     std::string name;
     //float spd, rng;
     while (placeables.size() > 0)    
