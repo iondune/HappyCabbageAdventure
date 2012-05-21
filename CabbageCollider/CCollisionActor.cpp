@@ -16,9 +16,9 @@
 
 
 CCollisionActor::CCollisionActor(CCollisionEngine * collisionEngine)
-	: Standing(0), JumpTimer(0.f), FallAcceleration(0.f),
-	GravityEnabled(true), WantsToJump(false), Jumping(false),
-	CCollideable(collisionEngine)
+	: JumpTimer(0.f), 
+	WantsToJump(false), Jumping(false),
+	CCollisionInteractor(collisionEngine)
 {
 	TypeId = INTERACTOR_ACTORS;
 	CollisionMask = INTERACTOR_BLOCKS | INTERACTOR_ACTORS;
@@ -28,54 +28,6 @@ CCollisionActor::CCollisionActor(CCollisionEngine * collisionEngine)
 
 CCollisionActor::~CCollisionActor()
 {}
-
-bool CCollisionActor::isAbove(CCollisionObject * Object, float & height) const
-{
-	if (Area.getCenter().Y < Object->getArea().otherCorner().Y)
-		return false;
-
-	if (Area.getCenter().X < Object->getArea().Position.X || Area.getCenter().X > Object->getArea().otherCorner().X)
-		return false;
-
-	height = (float) Object->getArea().otherCorner().Y;
-
-	return true;
-}
-
-void CCollisionActor::setGravityEnabled(bool const gravityEnabled)
-{
-	GravityEnabled = gravityEnabled;
-}
-
-bool const CCollisionActor::isGravityEnabled() const
-{
-	return GravityEnabled;
-}
-
-bool const CCollisionActor::isStanding() const
-{
-	return Standing != 0;
-}
-
-void CCollisionActor::setVelocity(SVec2 const & vel)
-{
-	Velocity = vel;
-}
-
-SVec2 const & CCollisionActor::getVelocity() const
-{
-	return Velocity;
-}
-
-CCollisionActor::SAttributes const & CCollisionActor::getAttributes() const
-{
-	return Attributes;
-}
-
-CCollisionActor::SAttributes & CCollisionActor::getAttributes()
-{
-	return Attributes;
-}
 
 void CCollisionActor::setAction(EActionType const & action)
 {
@@ -97,6 +49,16 @@ void CCollisionActor::setJumping(bool const jumping)
 	WantsToJump = jumping;
 }
 
+CCollisionActor::SAttributes const & CCollisionActor::getActorAttributes() const
+{
+	return Attributes;
+}
+
+CCollisionActor::SAttributes & CCollisionActor::getActorAttributes()
+{
+	return Attributes;
+}
+
 void CCollisionActor::draw()
 {
 	if (! Standing && ! Jumping && ! AllowedMovement)
@@ -107,9 +69,4 @@ void CCollisionActor::draw()
 	CCollideable::draw();
 
 	glColor3f(1, 1, 1);
-}
-
-void CCollisionActor::addImpulse(SVec2 const & velocity, float const Duration)
-{
-	Impulses.push_back(std::pair<SVec2, float>(velocity * CollisionEngine->getImpulseMultiplier(), Duration)); 
 }

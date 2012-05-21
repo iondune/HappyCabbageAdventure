@@ -214,15 +214,15 @@ void CSceneManager::addPostOpaqueSceneObject(ISceneObject *sceneObject) {
 
 void CSceneManager::addImmobileSceneObject(ISceneObject * sceneObject, unsigned int agreement)
 {
-   if(UseHierarchy) {
-      if(agreement != THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT) {
-         fprintf(stderr, "addImmobileSceneObject failure! The agreement argument was not accepted.\nEntered: %d. Expected: THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT\n", agreement);
-         exit(1);
-      }
-      ImmobileSceneObjects.push_back(sceneObject);
-   }
-   else
-      addSceneObject(sceneObject);
+	if(UseHierarchy) {
+		if(agreement != THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT) {
+			fprintf(stderr, "addImmobileSceneObject failure! The agreement argument was not accepted.\nEntered: %d. Expected: THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT\n", agreement);
+			exit(1);
+		}
+		ImmobileSceneObjects.push_back(sceneObject);
+	}
+	else
+		addSceneObject(sceneObject);
 }
 
 void CSceneManager::removeSceneObject(ISceneObject * sceneObject)
@@ -252,7 +252,7 @@ bool sortISOXY (ISceneObject* a, ISceneObject* b) {
 }
 
 ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
-   float STARTING_ARBITRARILY_INCREASING_VALUE = 17.5f;
+	float STARTING_ARBITRARILY_INCREASING_VALUE = 17.5f;
 	float ARBITRARILY_INCREASING_VALUE = STARTING_ARBITRARILY_INCREASING_VALUE;
 	float const INF = std::numeric_limits<float>::infinity();
 	std::vector<ISceneObject *> dontUseMyName;
@@ -322,17 +322,17 @@ ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
 			i += ARBITRARILY_INCREASING_VALUE;
 		}
 
-      /*
-      for (unsigned int k = 0; k < aList->size(); k++) {
-         assert((*aList)[k] != NULL);
-      }
-      */
+		/*
+		for (unsigned int k = 0; k < aList->size(); k++) {
+		assert((*aList)[k] != NULL);
+		}
+		*/
 
-      for (unsigned int k = 0; k < aList->size(); k++) {
-         if((*aList)[k] != NULL) {
-            bList->push_back((*aList)[k]);
-         }
-      }
+		for (unsigned int k = 0; k < aList->size(); k++) {
+			if((*aList)[k] != NULL) {
+				bList->push_back((*aList)[k]);
+			}
+		}
 
 		int numChildren = 0;
 		for (unsigned int k = 0; k < bList->size(); k++) {
@@ -370,7 +370,7 @@ void CSceneManager::drawAll()
 	ISceneObject::resetObjectCounts();
 	CurrentScene->update();
 
-   PostOpaqueRootObject.sortChildrenByZTranslation();
+	PostOpaqueRootObject.sortChildrenByZTranslation();
 
 	if (EffectManager)
 	{
@@ -397,15 +397,15 @@ void CSceneManager::drawAll()
 				glEnable(GL_ALPHA);
 				glEnable(GL_BLEND);
 				glEnable(GL_DEPTH_TEST);
-            glDepthMask(GL_FALSE);
+				glDepthMask(GL_FALSE);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			}
-         else {
-         }
+			else {
+			}
 			PostOpaqueRootObject.draw(CurrentScene, it->Pass);
 			if (it->Pass != ERP_DEFERRED_LIGHTS) {
 				glBlendFunc(GL_ONE, GL_MAX);
-            glDepthMask(GL_TRUE);
+				glDepthMask(GL_TRUE);
 				glDisable(GL_BLEND);
 				glDisable(GL_ALPHA);
 			}
@@ -437,7 +437,7 @@ void CSceneManager::drawAll()
 	SceneChanged = false;
 
 	SceneFrameBuffer->bind();
-   //printf("Num objects: %d\n", numObjects);
+	//printf("Num objects: %d\n", numObjects);
 }
 
 void CSceneManager::blurSceneIn(float seconds, float const RunTime)

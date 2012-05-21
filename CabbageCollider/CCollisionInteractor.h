@@ -1,4 +1,4 @@
-#ifdef _CABBAGECOLLIDER_CINTERATOR_H_INCLUDED_
+#ifndef _CABBAGECOLLIDER_CINTERATOR_H_INCLUDED_
 #define _CABBAGECOLLIDER_CINTERATOR_H_INCLUDED_
 
 #include <SRect2.h>
@@ -6,7 +6,9 @@
 
 #include "CCollideable.h"
 
-class CCollisionActor : public CCollideable
+class CCollisionObject;
+
+class CCollisionInteractor : public CCollideable
 {
 
 public:
@@ -17,14 +19,24 @@ public:
 		//! Ratio of velocity reflected during collisions
 		CollisionReal Bounce;
 
+		//! Ratio of gravity affecting this object
+		CollisionReal GravityMultiplier;
+
+		//! Maximum step up for actor
+		CollisionReal MaxStep;
+
+		//! Rate at which horizontal velocity decreases while falling
+		CollisionReal AirStandingFriction;
+
+		//! Rate at which horizontal velocity decreases while falling
+		CollisionReal GroundStandingFriction;
+
 		//! Default params ctor
 		SAttributes();
 
 	};
 
 protected:
-
-	friend class CCollisionEngine;
 
 	//! Current velocity of this actor
 	SVec2 Velocity;
@@ -55,7 +67,8 @@ protected:
 
 
 	//! Constructor
-	CCollisionActor(CCollisionEngine * collisionEngine);
+	friend class CCollisionEngine;
+	CCollisionInteractor(CCollisionEngine * collisionEngine);
 
 
 	//////////////////////////////////////
@@ -64,31 +77,33 @@ protected:
 
 	//! Updates the movement vectors of this actor
 	//! Called once per tick
-	void updateVectors(CollisionReal const TickTime);
+	//! Called first before initial update!
+	virtual void updateVectors(CollisionReal const TickTime);
 
 	//! Peforms a collision check between this actor and a collideable object
 	//! Returns true if a standing event occured
-	bool updateCollision(CCollideable * Object, float const TickTime);
+	//! 
+	virtual bool updateCollision(CCollideable * Object, float const TickTime);
 
 	//! Performs a discrete collision check between this actor and a collideable object
 	//! Called by updateCollision
 	//! Returns the direction collisions that occured, if any
 	//! Adjusts movement to prevent collision
-	int checkCollision(CCollideable * Object, CollisionReal const TickTime);
+	virtual int checkCollision(CCollideable * Object, CollisionReal const TickTime);
 
 	//! Called by updateCollision when a downwards collision occurs
-	void onStanding(CCollideable * Object);
+	virtual void onStanding(CCollideable * Object);
 
 	//! Moves this object if a moveable Object caused a collision and push
-	void pushIfCollided(CCollisionObject * Object, SVec2 const Movement);
+	virtual void pushIfCollided(CCollisionObject * Object, SVec2 const Movement);
 
 	//! After update, sends event responses for objects which left phase state
-	void updatePhaseList();
+	virtual void updatePhaseList();
 
 public:
 
 	//! Destructor
-	~CCollisionActor();
+	~CCollisionInteractor();
 
 	//! Checks if this actor is directly above an object, and if so, returns the height between them
 	bool isAbove(CCollisionObject * Object, float & height) const;
@@ -105,16 +120,6 @@ public:
 	SAttributes const & getAttributes() const;
 	//! See Attributes
 	SAttributes & getAttributes();
-
-	//! Sets the current movement action of this Actor
-	void setAction(EActionType const & action);
-	//! Gets the current movement action of this Actor
-	EActionType const getAction() const;
-
-	//! see Jumping
-	bool const isJumping() const;
-	//! Used to set jumping action
-	void setJumping(bool const jumping);
 
 	//! Sets whether this object is affected by Gravity
 	void setGravityEnabled(bool const gravityEnabled);

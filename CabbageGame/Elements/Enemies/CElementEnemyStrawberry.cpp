@@ -8,11 +8,11 @@ CElementEnemyStrawberry::CElementEnemyStrawberry(SRect2f nArea) :
 void CElementEnemyStrawberry::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
 
-   PhysicsEngineObject->getAttributes().MaxWalk = 1.0f;//2.8f;
-   PhysicsEngineObject->getAttributes().JumpLength = .01f;
-   PhysicsEngineObject->getAttributes().JumpAccel = 7.0f;
-   PhysicsEngineObject->getAttributes().AirSpeedFactor = 1.0f;
-   PhysicsEngineObject->getAttributes().AirControl = 0.75f;
+   PhysicsEngineObject->getActorAttributes().MaxWalk = 1.0f;//2.8f;
+   PhysicsEngineObject->getActorAttributes().JumpLength = .01f;
+   PhysicsEngineObject->getActorAttributes().JumpAccel = 7.0f;
+   PhysicsEngineObject->getActorAttributes().AirSpeedFactor = 1.0f;
+   PhysicsEngineObject->getActorAttributes().AirControl = 0.75f;
 
    CElementEnemy::setupPhysicsEngineObject();
 }
@@ -80,7 +80,7 @@ void CElementEnemyStrawberry::updatePhysicsEngineObject(float time) {
       if (JumpNum == Strawberry::NO_JUMP) {
          JumpNum = Strawberry::FIRST_JUMP;
 
-         PhysicsEngineObject->getAttributes().JumpAccel = 3.5f;
+         PhysicsEngineObject->getActorAttributes().JumpAccel = 3.5f;
          PhysicsEngineObject->setJumping(true);
          JumpTimer = .8f;
       }
@@ -95,7 +95,7 @@ void CElementEnemyStrawberry::updatePhysicsEngineObject(float time) {
       else if (JumpNum == Strawberry::SECOND_JUMP) {
          JumpNum = Strawberry::THIRD_JUMP;
 
-         PhysicsEngineObject->getAttributes().JumpAccel = 8.5f;
+         PhysicsEngineObject->getActorAttributes().JumpAccel = 8.5f;
          PhysicsEngineObject->setJumping(true);
          JumpTimer = 2.0f;
       }
@@ -103,28 +103,28 @@ void CElementEnemyStrawberry::updatePhysicsEngineObject(float time) {
       else if (JumpNum == Strawberry::THIRD_JUMP) {
          JumpNum = Strawberry::FOURTH_JUMP;
 
-         PhysicsEngineObject->getAttributes().JumpAccel = 5.5f;
+         PhysicsEngineObject->getActorAttributes().JumpAccel = 5.5f;
          PhysicsEngineObject->setJumping(true);
          JumpTimer = 1.2f;
       }
       else if (JumpNum == Strawberry::FOURTH_JUMP) {
          JumpNum = Strawberry::FIFTH_JUMP;
 
-         PhysicsEngineObject->getAttributes().JumpAccel = 7.0f;
+         PhysicsEngineObject->getActorAttributes().JumpAccel = 7.0f;
          PhysicsEngineObject->setJumping(true);
          JumpTimer = .8f;
       }
       else if (JumpNum == Strawberry::FIFTH_JUMP) {
          JumpNum = Strawberry::SIXTH_JUMP;
 
-         PhysicsEngineObject->getAttributes().JumpAccel = 9.0f;
+         PhysicsEngineObject->getActorAttributes().JumpAccel = 9.0f;
          PhysicsEngineObject->setJumping(true);
          JumpTimer = 2.0f;
       }
       else if (JumpNum == Strawberry::SIXTH_JUMP) {
          JumpNum = Strawberry::NO_JUMP;
 
-         PhysicsEngineObject->getAttributes().JumpAccel = 12.0f;
+         PhysicsEngineObject->getActorAttributes().JumpAccel = 12.0f;
          PhysicsEngineObject->setJumping(true);
          JumpTimer = 6.0f;
       }

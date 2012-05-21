@@ -98,12 +98,12 @@ void CElementEnemy::setupPhysicsEngineObject() {
    PhysicsEngineObject->setArea(Area);
 
    if (Level.getEnv() == Env::WATER) {
-      PhysicsEngineObject->getAttributes().MaxWalk *= 0.5f;
-      PhysicsEngineObject->getAttributes().WalkAccel *= 0.25f;
-      PhysicsEngineObject->getAttributes().JumpAccel *= 0.75f;
-      PhysicsEngineObject->getAttributes().JumpLength *= 2.0f;
-      PhysicsEngineObject->getAttributes().AirControl *= 8.0f;
-      PhysicsEngineObject->getAttributes().AirSpeedFactor *= 0.5f;
+      PhysicsEngineObject->getActorAttributes().MaxWalk *= 0.5f;
+      PhysicsEngineObject->getActorAttributes().WalkAccel *= 0.25f;
+      PhysicsEngineObject->getActorAttributes().JumpAccel *= 0.75f;
+      PhysicsEngineObject->getActorAttributes().JumpLength *= 2.0f;
+      PhysicsEngineObject->getActorAttributes().AirControl *= 8.0f;
+      PhysicsEngineObject->getActorAttributes().AirSpeedFactor *= 0.5f;
    }
 }
 

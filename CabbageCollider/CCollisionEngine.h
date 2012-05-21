@@ -17,7 +17,7 @@ public:
 	
 	typedef std::set<CCollideable *> CollideableList;
 	typedef std::set<CCollisionObject *> ObjectList;
-	typedef std::set<CCollisionActor *> ActorList;
+	typedef std::set<CCollisionInteractor *> ActorList;
 
 private:
    CollisionReal ImpulseMultiplier;

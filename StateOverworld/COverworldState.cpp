@@ -356,7 +356,7 @@ void COverworldState::loadLevels()
 	levels[3].loc = SVector3f(0.68, -0.21, 1.01);
 	levels[4].name = "test.xml";
 	levels[4].loc = SVector3f(0.47, -0.16, 0.80);
-	levels[5].name = "test.xml";
+	levels[5].name = "jorge6-night.xml";
 	levels[5].loc = SVector3f(0.30, -0.12, 0.60);
 	levels[6].name = "jorge2.xml";
 	levels[6].loc = SVector3f(0.83f, 0.00f, 0.65f); //Green hill

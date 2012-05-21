@@ -11,7 +11,7 @@ CElementEnemyGiantApple::CElementEnemyGiantApple(SRect2f nArea) :
 void CElementEnemyGiantApple::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
 
-   PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
+   PhysicsEngineObject->getActorAttributes().MaxWalk = 2.2f;
 
    CElementEnemy::setupPhysicsEngineObject();
 }
