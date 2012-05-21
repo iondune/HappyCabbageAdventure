@@ -22,7 +22,7 @@ public:
 
 	enum Domain
 	{
-		None = 0,
+		All = 0,
 		Normals = 1,
 		NormalColors = 2
 	};
@@ -50,27 +50,34 @@ protected:
 	// Model Transformation
 	STransformation3 Transformation;
 	glm::mat4 AbsoluteTransformation;
-	glm::mat4 RotationMatrix;
-	SBoundingBox3 BoundingBox;
 
+	SBoundingBox3 BoundingBox;
+	SBoundingBox3 AbsoluteBoundingBox;
+
+	// Keep vector form of transformations for easy access
 	SVector3f Rotation, Translation, Scale;
 
+	// Keep track of changes that require updates
+	bool TransformationDirty;
+	bool BoundingBoxDirty;
+
+	// Bitfield of different debug-purposed data should be shown
 	int DebugDataFlags;
 
+	// Whether or not to draw this object and all its children
 	bool Visible;
 
 	std::list<ISceneObject *> Children;
 	ISceneObject * Parent;
 
+	// Should this object be checked for trivial rejection
 	bool UseCulling;
-	bool Immobile; // Its transforms will never change after the algorithm has ran
 
 public:
 
-	bool const isImmobile() const;
-	void setImmobile(bool isImmobile);
 	ISceneObject();
 
+	void checkAbsoluteTransformation();
 	void updateAbsoluteTransformation();
 	glm::mat4 const & getAbsoluteTransformation() const;
 
@@ -85,7 +92,6 @@ public:
 	int getNumLeaves();
 
 	SBoundingBox3 const & getBoundingBox() const;
-	SBoundingBox3 & getBoundingBox();
 	void setBoundingBox(SBoundingBox3 const & boundingBox);
 
 	bool const isDebugDataEnabled(EDebugData::Domain const type) const;
