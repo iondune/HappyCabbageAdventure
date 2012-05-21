@@ -78,8 +78,6 @@ void CElementEnemyProjectileGrape::setupSceneObject() {
    }
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
-
-   printf("YEEEEEEEEEEEEEEEEEEEEE!\n");
 }
 
 void CElementEnemyProjectileGrape::updateSceneObject(float time) {

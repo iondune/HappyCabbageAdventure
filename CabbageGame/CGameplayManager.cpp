@@ -34,6 +34,13 @@ CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(
    CApplication::get().getSceneManager().Lights.back()->Position = SVector3f(-5.f, 200.f, 500.f);
 
    CApplication::get().getSceneManager().setDeferred(level.isNight());
+
+   if (Level.getEnvironment() == Env::DESERT && ! Level.isNight())
+      CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_HEAT_WAVE, true);
+
+   if (Level.getEnvironment() == Env::WATER)
+      CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_WATER_DISTORT, true);
+
    //level.setNoRender();
    //Set up each object
    for(unsigned int i = 0; i < level.getGameplayElements().size(); i++) {

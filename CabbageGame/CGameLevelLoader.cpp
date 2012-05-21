@@ -211,12 +211,6 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
          {
              newLevel->env = env = xml->getAttributeValueAsInt(0);
              newLevel->night = xml->getAttributeValueAsInt(1) != 0;
-
-			 if (newLevel->getEnvironment() == Env::DESERT && ! newLevel->isNight())
-             CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_HEAT_WAVE, true);
-			 			 
-			 if (newLevel->getEnvironment() == Env::WATER)
-				CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_WATER_DISTORT, true);
          }
          break;
       }
