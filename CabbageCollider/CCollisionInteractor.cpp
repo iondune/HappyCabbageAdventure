@@ -245,7 +245,9 @@ void CCollisionInteractor::updatePhaseList()
 CCollisionInteractor::SAttributes::SAttributes()
 	: Bounce(0.0f),
 	GravityMultiplier(1.0f),
-	MaxStep(0.1)
+	MaxStep(0.1),
+	AirStandingFriction(0.99f),
+	GroundStandingFriction(0.95f)
 {}
 
 #include "CCollisionInteractor.h"
