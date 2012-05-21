@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<envVar env="0" dayNight="1">
+</envVar>
+<CBlock X ="-20" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="-15" Y ="-0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="-10" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="-5" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="0" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="5" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="10" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="15" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="20" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="25" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="30" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="35" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="40" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="45" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="50" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="55" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="60" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="65" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="70" Y ="-1" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="75" Y ="-2" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="80" Y ="-3" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="85" Y ="-4" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="90" Y ="-5" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="95" Y ="-6" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="100" Y ="-6" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="105" Y ="-6" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="110" Y ="-6" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="115" Y ="-6" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="122" Y ="-3" height ="1" width ="3" depth ="1" texture ="0" isMoving ="1" range ="8" speed ="6" Style="0">
+</CBlock>
+<CBlock X ="133" Y ="-3" height ="1" width ="3" depth ="1" texture ="0" isMoving ="1" range ="8" speed ="6" Style="0">
+</CBlock>
+<CBlock X ="144" Y ="-3" height ="1" width ="3" depth ="1" texture ="0" isMoving ="1" range ="8" speed ="6" Style="1">
+</CBlock>
+<CBlock X ="147" Y ="1" height ="1" width ="3" depth ="1" texture ="0" isMoving ="1" range ="8" speed ="6" Style="1">
+</CBlock>
+<CBlock X ="152" Y ="3" height ="1" width ="3" depth ="1" texture ="0" isMoving ="1" range ="8" speed ="6" Style="2">
+</CBlock>
+<CBlock X ="161" Y ="3" height ="1" width ="3" depth ="1" texture ="0" isMoving ="1" range ="15" speed ="6" Style="2">
+</CBlock>
+<CBlock X ="171" Y ="5" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="176" Y ="5" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="181" Y ="5" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="186" Y ="5" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="191" Y ="5" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="196" Y ="5" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="201" Y ="5" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="206" Y ="5" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CFlag X ="197" Y ="7.5" height ="1" width ="1" secret ="0">
+</CFlag>
+<CEnemy X ="126" Y ="1" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="127" Y ="1" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="128" Y ="1" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="129" Y ="1" height ="1" width ="1" type ="2">
+</CEnemy>
+<CBlock X ="133" Y ="-2" height ="1" width ="1" depth ="1" texture ="2">
+</CBlock>
+<CEnemy X ="133" Y ="-1" height ="1" width ="1" type ="12">
+</CEnemy>
+<CBlock X ="143" Y ="-2" height ="1" width ="1" depth ="1" texture ="2">
+</CBlock>
+<CEnemy X ="151" Y ="7" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="150" Y ="7" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="149" Y ="7" height ="1" width ="1" type ="2">
+</CEnemy>
+<CEnemy X ="172" Y ="7" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="179" Y ="7" height ="1" width ="1" type ="1">
+</CEnemy>
+<CEnemy X ="188" Y ="7" height ="1" width ="1" type ="0">
+</CEnemy>
+<CEnemy X ="184" Y ="11" height ="1" width ="1" type ="2">
+</CEnemy>
+<DeathBlock X ="-20" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="-20" Y ="-2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="-20" Y ="-3" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="-21" Y ="-3" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="-22" Y ="-3" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="-23" Y ="-3" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="-24" Y ="-3" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="-25" Y ="-3" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="119" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="120" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="121" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="122" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="123" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="124" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="125" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="126" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="127" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="128" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="129" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="130" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="131" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="132" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="133" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="134" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="135" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="136" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="137" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="138" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="139" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="140" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="141" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="142" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="143" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="144" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="145" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="146" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="147" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="148" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="149" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="150" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="151" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="152" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="153" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="154" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="155" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="156" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="157" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="158" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="159" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="160" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="161" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="162" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="163" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="164" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="165" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="166" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="167" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="168" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="169" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="170" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="171" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="172" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="173" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="174" Y ="-7" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="174" Y ="4" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="174" Y ="3" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="174" Y ="2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="174" Y ="1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="174" Y ="0" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="174" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="174" Y ="-2" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="174" Y ="-3" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="174" Y ="-4" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="174" Y ="-5" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<DeathBlock X ="174" Y ="-6" height ="1" width ="1" depth ="1" texture ="0" isMoving ="1">
+</DeathBlock>
+<CBlock X ="146" Y ="3" height ="1" width ="1" depth ="1" texture ="2">
+</CBlock>
+<CBlock X ="151" Y ="5" height ="1" width ="1" depth ="1" texture ="2">
+</CBlock>
+<CBlock X ="160" Y ="5" height ="1" width ="1" depth ="1" texture ="2">
+</CBlock>
+<CCabbage X ="-18" Y ="2" height ="1" width ="1">
+</CCabbage>
+<CEnemy X ="-7" Y ="2" height ="1" width ="1" type ="9">
+</CEnemy>
+<CEnemy X ="1" Y ="2" height ="1" width ="1" type ="1">
+</CEnemy>
+<CEnemy X ="9" Y ="2" height ="1" width ="1" type ="1">
+</CEnemy>
+<CBlock X ="17" Y ="2" height ="1" width ="1" depth ="1" texture ="2">
+</CBlock>
+<CBlock X ="18" Y ="3" height ="1" width ="1" depth ="1" texture ="2">
+</CBlock>
+<CBlock X ="19" Y ="4" height ="1" width ="1" depth ="1" texture ="2">
+</CBlock>
+<CEnemy X ="19" Y ="5" height ="1" width ="1" type ="3">
+</CEnemy>
+<CEnemy X ="30" Y ="2" height ="1" width ="1" type ="15">
+</CEnemy>
+<CEnemy X ="42" Y ="2" height ="3" width ="1" type ="14">
+</CEnemy>
+<CBlock X ="24" Y ="4" height ="1" width ="1" depth ="1" texture ="2">
+</CBlock>
+<CBlock X ="25" Y ="3" height ="1" width ="1" depth ="1" texture ="2">
+</CBlock>
+<CBlock X ="26" Y ="2" height ="1" width ="1" depth ="1" texture ="2">
+</CBlock>
+<CEnemy X ="18" Y ="2" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="20" Y ="2" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="20" Y ="4" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="23" Y ="4" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="23" Y ="2" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="25" Y ="2" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="21" Y ="3" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="22" Y ="3" height ="1" width ="1" type ="4">
+</CEnemy>
+<CBreakable X ="20" Y ="5" height ="1" width ="1">
+</CBreakable>
+<CBreakable X ="21" Y ="6" height ="1" width ="1">
+</CBreakable>
+<CBreakable X ="22" Y ="6" height ="1" width ="1">
+</CBreakable>
+<CBreakable X ="23" Y ="5" height ="1" width ="1">
+</CBreakable>
+<CBlock X ="34" Y ="1" height ="4" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CEnemy X ="58" Y ="2" height ="1" width ="1" type ="16">
+</CEnemy>
+<CEnemy X ="61" Y ="2" height ="1" width ="1" type ="16">
+</CEnemy>
+<CEnemy X ="65" Y ="2" height ="1" width ="1" type ="16">
+</CEnemy>
+<CEnemy X ="102" Y ="-4" height ="1" width ="1" type ="17">
+</CEnemy>
+<CEnemy X ="114" Y ="-4" height ="1" width ="1" type ="17">
+</CEnemy>
+<CBreakable X ="100" Y ="-4" height ="1" width ="1">
+</CBreakable>
+<CBreakable X ="100" Y ="-3" height ="1" width ="1">
+</CBreakable>
+<CBreakable X ="100" Y ="-2" height ="1" width ="1">
+</CBreakable>
+<CBreakable X ="113" Y ="-4" height ="1" width ="1">
+</CBreakable>
+<CBreakable X ="113" Y ="-3" height ="1" width ="1">
+</CBreakable>
+<CBreakable X ="114" Y ="-2" height ="1" width ="1">
+</CBreakable>
+<CEnemy X ="77" Y ="0" height ="1" width ="1" type ="12">
+</CEnemy>
+<CEnemy X ="82" Y ="-1" height ="1" width ="1" type ="12">
+</CEnemy>
+<CEnemy X ="72" Y ="1" height ="1" width ="1" type ="12">
+</CEnemy>
