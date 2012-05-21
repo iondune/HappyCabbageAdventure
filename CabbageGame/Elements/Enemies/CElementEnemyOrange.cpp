@@ -71,6 +71,9 @@ void CElementEnemyOrange::updatePhysicsEngineObject(float time) {
          PhysicsEngineObject->setJumping(true);
          Jumped = false;
       }
+
+      else
+    	  PhysicsEngineObject->setJumping(false);
    }
    else
       Jumped = true;
