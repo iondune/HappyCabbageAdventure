@@ -97,6 +97,7 @@
     <ClCompile Include="CPLaser2.cpp" />
     <ClCompile Include="CPLaserCharged.cpp" />
     <ClCompile Include="CPLeaf.cpp" />
+    <ClCompile Include="CPRBubble.cpp" />
     <ClCompile Include="CPRWiggle.cpp" />
     <ClCompile Include="CPStar.cpp" />
   </ItemGroup>
@@ -116,6 +117,7 @@
     <ClInclude Include="CPLaser2.h" />
     <ClInclude Include="CPLaserCharged.h" />
     <ClInclude Include="CPLeaf.h" />
+    <ClInclude Include="CPRBubble.h" />
     <ClInclude Include="CPRWiggle.h" />
   </ItemGroup>
   <ItemGroup>

@@ -83,7 +83,7 @@ void CDeferredShadingManager::apply()
 	// Copy results back into scene
 	SPostProcessPass FinalPass;
 	FinalPass.Textures["uTexColor"] = ScratchTexture1;
-	FinalPass.Target = SceneManager->getSceneFrameBuffer();
+	FinalPass.Target = BloomResultTarget; // heehee
 
 	if (isEffectEnabled(ESE_HEAT_WAVE) || isEffectEnabled(ESE_WATER_DISTORT))
 	{
@@ -95,7 +95,6 @@ void CDeferredShadingManager::apply()
 			FinalPass.Textures["uHeatOffset"] = WaterOffsetTexture;
 
 		FinalPass.Floats["uTimer"] = Timer * 0.04f;
-		FinalPass.Target = BloomResultTarget; // heehee
 		FinalPass.Shader = HeatCopy;
 	}
 	else
