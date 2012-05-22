@@ -7,12 +7,12 @@
 CSceneObject::CSceneObject()
 {}
 
-void CSceneObject::addSceneObject(CRenderable * Renderable)
+void CSceneObject::addRenderable(CRenderable * Renderable)
 {
 	Renderables.push_back(Renderable);
 }
 
-void CSceneObject::removeSceneObject(CRenderable * Renderable)
+void CSceneObject::removeRenderable(CRenderable * Renderable)
 {
 	Renderables.erase(std::remove(Renderables.begin(), Renderables.end(), Renderable), Renderables.end());
 }
@@ -32,7 +32,7 @@ void CSceneObject::draw(CScene const * const scene, ERenderPass const Pass)
 			(* it)->draw(scene, Pass);
 		break;
 
-	case ERP_MODEL_NORMALS:
+	case ERP_MODELSPACE_NORMALS:
 		for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
 			(* it)->drawNormals(scene);
 		break;

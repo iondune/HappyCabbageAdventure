@@ -11,9 +11,7 @@
 CShader * CRenderable::NormalColorShader = 0;
 
 CRenderable::CRenderable(ISceneObject * parent)
-	: DrawType(GL_TRIANGLES), NormalObject(0), IndexBufferObject(0), Parent(parent),
-	BindModelMatrix(ModelMatrix), BindNormalMatrix(NormalMatrix),
-	DebugCounterThing(0)
+	: DrawType(GL_TRIANGLES), NormalObject(0), IndexBufferObject(0), Parent(parent)
 {
 	for (int i = 0; i < ERP_COUNT; ++ i)
 		Shader[i] = 0;

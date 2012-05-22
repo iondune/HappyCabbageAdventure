@@ -8,8 +8,8 @@
 
 struct IAttribute
 {
-	virtual void bind(GLint const handle, CShaderContext & shaderContext) const =0;
-	virtual void load() const =0;
+	virtual void bind(GLint const handle, CShaderContext & shaderContext) const = 0;
+	virtual void load() const = 0;
 };
 
 template <typename T>

@@ -7,23 +7,23 @@
 
 struct IUniform
 {
-	virtual void bind(GLuint const handle, CShaderContext & shaderContext) const =0;
+	virtual void bind(GLuint const handle, CShaderContext & shaderContext) const = 0;
 };
 
 template <typename T>
-struct SUniform : public IUniform
+struct SUniformReference : public IUniform
 {
 	T const * Value;
 
-	SUniform()
+	SUniformReference()
 		: Value(0)
 	{}
 
-	SUniform(T const * value)
+	SUniformReference(T const * value)
 		: Value(value)
 	{}
 
-	SUniform(T const & value)
+	SUniformReference(T const & value)
 		: Value(& value)
 	{}
 
@@ -33,6 +33,23 @@ struct SUniform : public IUniform
 			shaderContext.uniform(handle, * Value);
 	}
 };
+
+template <typename T>
+struct SUniformValue : public IUniform
+{
+	T Value;
+
+	SUniformValue(T const & value)
+		: Value(value)
+	{}
+
+	void bind(GLuint const handle, CShaderContext & shaderContext) const
+	{
+		if (Value)
+			shaderContext.uniform(handle, Value);
+	}
+};
+
 
 template <typename T>
 static boost::shared_ptr<IUniform const> BindUniform(T const & uniform)
