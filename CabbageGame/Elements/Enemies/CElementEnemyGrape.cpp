@@ -59,7 +59,7 @@ void CElementEnemyGrape::updatePhysicsEngineObject(float time) {
    shootTime += time;
 
    //TODO: Check the player is alive
-   if ((Level.getEnv() != Env:: WATER && shootTime >= 1.5f) || (Level.getEnv() == Env::WATER && shootTime >= 3.0f)) {
+   if ((Level.getEnv() != Env:: WATER && shootTime >= 2.f) || (Level.getEnv() == Env::WATER && shootTime >= 3.0f)) {
       shootTime = 0.f;
 
       //fire projectile
