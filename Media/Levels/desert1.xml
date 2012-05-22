@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<envVar env="1" dayNight="0">
+</envVar>
+<CBlock X ="-8" Y ="-1" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CCabbage X ="-6" Y ="1" height ="1" width ="1">
+</CCabbage>
+<CBlock X ="-3" Y ="-1" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="2" Y ="-1" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="7" Y ="-1" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="12" Y ="-1" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="17" Y ="-1" height ="2" width ="3" depth ="1" texture ="0" isMoving ="1" range ="30" speed ="6" Style="0">
+</CBlock>
+<CBlock X ="50" Y ="-1" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="55" Y ="-1" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="60" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="65" Y ="1" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="70" Y ="1" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="75" Y ="2" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="80" Y ="3" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="85" Y ="7" height ="1" width ="4" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="88" Y ="7" height ="4" width ="4" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="91" Y ="10" height ="1" width ="4" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="99" Y ="10" height ="1" width ="4" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="106" Y ="10" height ="1" width ="4" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="113" Y ="10" height ="1" width ="4" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="116" Y ="10" height ="1" width ="2" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="117" Y ="10" height ="2" width ="2" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="118" Y ="11" height ="2" width ="2" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="119" Y ="12" height ="2" width ="2" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="120" Y ="13" height ="2" width ="2" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="121" Y ="14" height ="2" width ="2" depth ="1" texture ="0">
+</CBlock>
+<CFlag X ="122" Y ="18" height ="4" width ="1" secret ="0">
+</CFlag>
+<CBlock X ="123" Y ="14" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="128" Y ="14" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="133" Y ="14" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="138" Y ="14" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>

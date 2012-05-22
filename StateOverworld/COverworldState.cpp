@@ -352,9 +352,9 @@ void COverworldState::loadLevels()
 	levels[2].loc = SVector3f(0.84, -0.33, 1.19);
 
 	//Moar Grass Levels!
-	levels[3].name = "test.xml";
+	levels[3].name = "exhibition.xml";
 	levels[3].loc = SVector3f(0.68, -0.21, 1.01);
-	levels[4].name = "test.xml";
+	levels[4].name = "waterexhibition.xml";
 	levels[4].loc = SVector3f(0.47, -0.16, 0.80);
 	levels[5].name = "jorge6-night.xml";
 	levels[5].loc = SVector3f(0.30, -0.12, 0.60);
@@ -372,7 +372,7 @@ void COverworldState::loadLevels()
    levels[10].loc = SVector3f(0.94f, -0.25f, -0.38f); //Yellow beach
    levels[11].name = "chrisDesert1-night.xml";
    levels[11].loc = SVector3f(0.77f, -0.20f, -0.66f); //Yellow hills
-   levels[12].name = "test.xml";
+   levels[12].name = "desertexhibition.xml";
    levels[12].loc = SVector3f(0.65, -0.20, -0.51);
 
    //Water Levels
