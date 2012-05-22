@@ -9,6 +9,7 @@ void CElementEnemyStrawberry::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
 
    PhysicsEngineObject->getActorAttributes().MaxWalk = 1.0f;//2.8f;
+   PhysicsEngineObject->getActorAttributes().WalkAccel = 600.f;
    PhysicsEngineObject->getActorAttributes().JumpLength = .01f;
    PhysicsEngineObject->getActorAttributes().JumpAccel = 7.0f;
    PhysicsEngineObject->getActorAttributes().AirSpeedFactor = 1.0f;

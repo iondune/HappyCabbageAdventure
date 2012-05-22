@@ -11,6 +11,7 @@ void CElementEnemyPear::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
 
    PhysicsEngineObject->getActorAttributes().MaxWalk = 2.2f;
+   PhysicsEngineObject->getActorAttributes().WalkAccel = 600.f;
    PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
 
    CElementEnemy::setupPhysicsEngineObject();
@@ -53,6 +54,7 @@ void CElementEnemyPear::setupSceneObject() {
 void CElementEnemyPear::OnCollision(const SCollisionEvent& Event) {
    if(!Dead && Event.Other == Level.getPlayer().getPhysicsEngineObject())
       HitPlayer = true;
+
    CElementEnemy::OnCollision(Event);
 }
 
@@ -63,9 +65,10 @@ void CElementEnemyPear::updatePhysicsEngineObject(float time) {
       return;
    float difference = Area.Position.X - OldPositionX;
 
-   if (difference < .001f && difference > -.001f && !HitPlayer) {
-      if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveRight)
+   if (std::abs(difference) < .001f && !HitPlayer) {
+      if (PhysicsEngineObject->getAction() == CCollisionActor::EActionType::MoveRight) {
          PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
+      }
       else
          PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
    }
