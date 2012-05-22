@@ -92,6 +92,7 @@ void CDeferredShadingManager::apply()
 			FinalPass.Textures["uHeatOffset"] = HeatOffsetTexture;
 		else if (isEffectEnabled(ESE_WATER_DISTORT))
 			FinalPass.Textures["uHeatOffset"] = WaterOffsetTexture;
+      printf("A printf right here\n");
 
 		FinalPass.Floats["uTimer"] = Timer * 0.04f;
 		FinalPass.Target = SceneManager->getSceneFrameBuffer();
@@ -104,14 +105,4 @@ void CDeferredShadingManager::apply()
 
 	FinalPass.doPass();
 
-}
-
-void CDeferredShadingManager::setEffectEnabled(ESceneEffect const Effect, bool const Enabled)
-{
-	return;
-}
-
-bool const CDeferredShadingManager::isEffectEnabled(ESceneEffect const Effect)
-{
-	return false;
 }

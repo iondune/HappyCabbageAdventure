@@ -58,7 +58,12 @@ void CElementEnemyPineapple::OnCollision(const SCollisionEvent& Event) {
 
       //Check if jumped on top of enemy.
       if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {
-         takeDamage(1);
+    	  if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {
+    		  if (InvincibilityTime <= 0.0f) {
+    			  takeDamage(1);
+    			  InvincibilityTime = .2f;
+    		  }
+    	  }
       }
 
       //Did the player run into them?
