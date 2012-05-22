@@ -344,7 +344,7 @@ void COverworldState::loadLevels()
 	//Grass Levels
 	levels[0].name = "jorge1.xml";//"jorge1.xml";
 	levels[0].loc = SVector3f(0.33f, -0.17f, 1.05f); //bit of green near sole orange hill
-	levels[1].name = "test.xml";
+	levels[1].name = "dash.xml";
 	levels[1].loc = SVector3f(0.56, -0.29, 1.11);
 
 	//Single water level
