@@ -22,8 +22,10 @@ public:
 
 	virtual void apply();
 
+   /*
 	virtual void setEffectEnabled(ESceneEffect const Effect, bool const Enabled);
 	virtual bool const isEffectEnabled(ESceneEffect const Effect);
+   */
 
 };
 
