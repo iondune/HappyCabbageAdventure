@@ -83,6 +83,9 @@
     <ClInclude Include="CDirectionalLightSceneObject.h">
       <Filter>Scene Objects</Filter>
     </ClInclude>
+    <ClInclude Include="CShaderBinding.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CImage.cpp">
@@ -150,6 +153,9 @@
     </ClCompile>
     <ClCompile Include="CDirectionalLightSceneObject.cpp">
       <Filter>Scene Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CShaderBinding.cpp">
+      <Filter>Shaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

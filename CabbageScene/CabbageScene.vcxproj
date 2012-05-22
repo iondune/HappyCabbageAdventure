@@ -91,6 +91,7 @@
     <ClInclude Include="CSceneManager.h" />
     <ClInclude Include="CSceneObject.h" />
     <ClInclude Include="CShader.h" />
+    <ClInclude Include="CShaderBinding.h" />
     <ClInclude Include="CShaderContext.h" />
     <ClInclude Include="CShaderLoader.h" />
     <ClInclude Include="CTexture.h" />
@@ -119,6 +120,7 @@
     <ClCompile Include="CSceneManager.cpp" />
     <ClCompile Include="CSceneObject.cpp" />
     <ClCompile Include="CShader.cpp" />
+    <ClCompile Include="CShaderBinding.cpp" />
     <ClCompile Include="CShaderContext.cpp" />
     <ClCompile Include="CShaderLoader.cpp" />
     <ClCompile Include="CTexture.cpp" />

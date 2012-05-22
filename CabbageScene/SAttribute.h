@@ -6,15 +6,23 @@
 #include "CBufferObject.h"
 
 
-struct IAttribute
+class IAttribute
 {
-	virtual void bind(GLint const handle, CShaderContext & shaderContext) const = 0;
+
+public:
+	
 	virtual void load() const = 0;
+	virtual void bind(GLint const handle) const = 0;
+	virtual void bind(GLint const handle, CShaderContext & shaderContext) const = 0;
+
 };
 
 template <typename T>
-struct SAttribute : public IAttribute
+class SAttribute : public IAttribute
 {
+
+public:
+
 	CBufferObject<T> * Buffer;
 	int ElementSize;
 
@@ -32,16 +40,20 @@ struct SAttribute : public IAttribute
 			Buffer->syncData();
 	}
 
+	void bind(GLint const handle)
+	{
+		glEnableVertexAttribArray(Handle);
+		glBindBuffer(GL_ARRAY_BUFFER, Buffer->getHandle());
+		glVertexAttribPointer(Handle, ElementSize, GL_FLOAT, GL_FALSE, 0, 0);
+	}
+
 	void bind(GLint const handle, CShaderContext & shaderContext) const
 	{
+		load();
 		if (Buffer)
-		{
-			if (Buffer->isDirty())
-				Buffer->syncData();
-
 			shaderContext.bindBufferObject(handle, Buffer->getHandle(), ElementSize);
-		}
 	}
+
 };
 
 template <typename T>
