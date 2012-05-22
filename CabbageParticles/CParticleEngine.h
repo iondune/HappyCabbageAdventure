@@ -23,6 +23,7 @@
 #define LASER_CHARGED_PARTICLE 10
 #define WIGGLE_PARTICLE 11
 #define BUBBLE_PARTICLE 12
+#define UNDERWATER_STAR_PARTICLE 13
 
 class CParticleEngine {
    std::vector<CParticle*> particles;

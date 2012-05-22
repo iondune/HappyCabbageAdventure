@@ -82,6 +82,7 @@ CParticleEngine::CParticleEngine(SVector3f pos, int max, float duration, int pT,
             cPtr->setAppearRate(2.0f);
             cPtr->useCenterPos = 0;
             break;
+         case UNDERWATER_STAR_PARTICLE:
          case STAR_PARTICLE:
             particles.push_back(cPtr = new CPStar());
             cPtr->setAppearRate(0);
@@ -203,6 +204,11 @@ CParticleEngine::CParticleEngine(SVector3f pos, int max, float duration, int pT,
 
             sizeArr.push_back((float)rand()/(float)RAND_MAX*10 + 10);
             break;
+         case UNDERWATER_STAR_PARTICLE:
+            temp = 0.2f;
+            colorArr.push_back(new SVector3f(0.5f, 1.0f - (float)rand()/(float)RAND_MAX*temp, 1.0f - (float)rand()/(float)RAND_MAX*temp));
+            sizeArr.push_back((float)rand()/(float)RAND_MAX*60 + 200);
+            break;
          case STAR_PARTICLE:
             temp = 0.2f;
             colorArr.push_back(new SVector3f(1.0f - (float)rand()/(float)RAND_MAX*temp, 1.0f - (float)rand()/(float)RAND_MAX*temp, 1.0f - (float)rand()/(float)RAND_MAX*temp));
@@ -244,7 +250,12 @@ CParticleEngine::CParticleEngine(SVector3f pos, int max, float duration, int pT,
       }
    }
    myObj = new CParticleObject();
-   myObj->setRenderLights(atNight);
+   if(particleType == UNDERWATER_STAR_PARTICLE) {
+      myObj->setOnlyRenderLights(true);
+      myObj->setRenderLights(true);
+   }
+   else
+      myObj->setRenderLights(atNight);
    //Default bounding box to 0,0,0 to 1,1,1. All of our particle effects at this point (i.e. flame) are 1x1x1
    myObj->setBoundingBox(SBoundingBox3(centerPos - 0.7f, centerPos + 0.7f));
 
@@ -278,6 +289,7 @@ CParticleEngine::CParticleEngine(SVector3f pos, int max, float duration, int pT,
       textureToUse = "Base/particleStar.bmp";
       break;
    case STAR_PARTICLE:
+   case UNDERWATER_STAR_PARTICLE:
       textureToUse = "Base/particleStar.bmp";
       myObj->setAlwaysRender();
       myObj->setSizeFactor(38.0f);

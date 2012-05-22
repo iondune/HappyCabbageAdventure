@@ -93,9 +93,13 @@ CDecorManager::CDecorManager(CGameLevel & level) {
    PrepMeshes();
    SetupSky();
    StarEngine = NULL;
-   if(night) {
+   if(night && env != Env::WATER) {
       StarEngine = new CParticleEngine(SVector3f(-30.0f, 15.0f, 0.0f), 100, -1, STAR_PARTICLE, level.isNight());
       SetupClouds();
+   }
+   else if(env == Env::WATER) {
+      StarEngine = new CParticleEngine(SVector3f(-30.0f, 15.0f, 0.0f), 100, -1, UNDERWATER_STAR_PARTICLE, level.isNight());
+      //SetupClouds();
    }
    oldFern = false;
 
