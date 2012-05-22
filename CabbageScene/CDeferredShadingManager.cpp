@@ -6,7 +6,7 @@
 #include <CTextureLoader.h>
 
 CDeferredShadingManager::CDeferredShadingManager(CSceneManager * sceneManager)
-	: CSceneEffectManager(sceneManager)
+	: CSceneEffectManager(sceneManager), OverlayColor(1.f, 1.f, 1.f)
 {
 
 	DeferredOutputTarget = new CFrameBufferObject();
@@ -57,6 +57,7 @@ CDeferredShadingManager::CDeferredShadingManager(CSceneManager * sceneManager)
 
 
 	FinalBlendShader = CShaderLoader::loadShader("Deferred/Blend");
+	OverlayShader = CShaderLoader::loadShader("FBO/QuadCopyUV.glsl", "FBO/OverlayCopy.frag");
 }
 
 #include <CApplication.h>
@@ -94,7 +95,7 @@ void CDeferredShadingManager::apply()
 			FinalPass.Textures["uHeatOffset"] = WaterOffsetTexture;
 
 		FinalPass.Floats["uTimer"] = Timer * 0.04f;
-		FinalPass.Target = SceneManager->getSceneFrameBuffer();
+		FinalPass.Target = BloomResultTarget; // heehee
 		FinalPass.Shader = HeatCopy;
 	}
 	else
@@ -103,5 +104,12 @@ void CDeferredShadingManager::apply()
 	}
 
 	FinalPass.doPass();
+
+	SPostProcessPass ActualFinalPass;
+	ActualFinalPass.Textures["uTexColor"] = BloomResultTexture;
+	ActualFinalPass.Target = SceneManager->getSceneFrameBuffer();
+	ActualFinalPass.Colors["uOverlayColor"] = OverlayColor;
+	ActualFinalPass.Shader = OverlayShader;
+	ActualFinalPass.doPass();
 
 }

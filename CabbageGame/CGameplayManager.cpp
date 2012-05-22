@@ -39,8 +39,15 @@ CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(
       CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_HEAT_WAVE, true);
 
    if (Level.getEnvironment() == Env::WATER)
+   {
       CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_WATER_DISTORT, true);
-
+	  CApplication::get().getSceneManager().addSceneObject(new CDirectionalLightSceneObject(SVector3f(0, -1, 0), SColor(0.2f, 0.4f, 0.7f)));
+	  ((CDeferredShadingManager *)CApplication::get().getSceneManager().getEffectManager())->OverlayColor = SColor(0.8f, 1.2f, 1.6f);
+   }
+   else
+   { 
+	  CApplication::get().getSceneManager().addSceneObject(new CDirectionalLightSceneObject(SVector3f(0, -1, 0), SColor(0.3f, 0.4f, 0.7f)));
+   }
    //level.setNoRender();
    //Set up each object
    for(unsigned int i = 0; i < level.getGameplayElements().size(); i++) {
