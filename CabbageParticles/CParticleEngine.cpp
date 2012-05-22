@@ -12,6 +12,7 @@
 #include "CPStar.h"
 #include "CPLaserCharged.h"
 #include "CPRWiggle.h"
+#include "CPRBubble.h"
 
 void CParticleEngine::UsePhysics(CCollisionEngine *engine, int env) {
    for(int i = 0; i < numParticles; i++) {
@@ -91,12 +92,23 @@ CParticleEngine::CParticleEngine(SVector3f pos, int max, float duration, int pT,
             cPtr->setAppearRate(1.0f);
             cPtr->useCenterPos = 1;
             break;
+         case BUBBLE_PARTICLE:
+            particles.push_back(cPtr = new CPRBubble());
+            cPtr->setAppearRate(20.0f);
+            cPtr->useCenterPos = 0;
+            break;
       }
       cPtr->setCenterPos(&centerPos);
       cPtr->setLookRight(&lookRight);
       cPtr->TotalDuration = duration;
       cPtr->setupRenderable();
    }
+
+   int cRand;
+   if(particleType == WIGGLE_PARTICLE)
+     cRand = rand() % 4;
+   else if(particleType == BUBBLE_PARTICLE)
+     cRand = rand() % 4;
 
    float temp;
    for(int i = 0; i < max; i++) {
@@ -197,8 +209,37 @@ CParticleEngine::CParticleEngine(SVector3f pos, int max, float duration, int pT,
             sizeArr.push_back((float)rand()/(float)RAND_MAX*60 + 30);
             break;
          case WIGGLE_PARTICLE:
-            colorArr.push_back(new SVector3f(0.0f, frand()*4 + 0.6f, frand()*0.2f + 0.8f));
+            switch(cRand) {
+            case 0:
+               colorArr.push_back(new SVector3f(0.0f, frand()*4 + 0.6f, frand()*0.2f + 0.8f));
+               break;
+            case 1:
+               colorArr.push_back(new SVector3f(frand()*0.2f + 0.8f, frand()*4 + 0.6f, 0.0f));
+               break;
+            case 2:
+               colorArr.push_back(new SVector3f(frand()*4 + 0.6f, frand()*0.2f + 0.8f, 0.0f));
+               break;
+            case 3:
+               if(rand() % 3 == 0)
+                  colorArr.push_back(new SVector3f(1.0f));
+               else
+                  colorArr.push_back(new SVector3f(frand()*4 + 0.6f, frand()*0.2f + 0.8f, frand()*4 + 0.6f));
+               break;
+            }
             sizeArr.push_back((float)rand()/(float)RAND_MAX*5.0f + 0.5f);
+            break;
+         case BUBBLE_PARTICLE:
+            switch(cRand) {
+            case 0:
+            case 1:
+            case 2:
+               colorArr.push_back(new SVector3f(0.0f, frand()*4 + 0.6f, frand()*0.2f + 0.8f));
+               break;
+            case 3:
+               colorArr.push_back(new SVector3f(1.0f));
+               break;
+            }
+            sizeArr.push_back((float)rand()/(float)RAND_MAX*5.0f + 2.5f);
             break;
       }
    }
@@ -242,6 +283,7 @@ CParticleEngine::CParticleEngine(SVector3f pos, int max, float duration, int pT,
       myObj->setSizeFactor(38.0f);
       break;
    case WIGGLE_PARTICLE:
+   case BUBBLE_PARTICLE:
       textureToUse = "Base/particleCircle.bmp";
       myObj->setSizeFactor(25.0f);
       myObj->setBoundingBox(SBoundingBox3(SVector3f(0.0f) + centerPos, SVector3f(1.5f, 3.0f, 1.0f) + centerPos));
@@ -289,7 +331,6 @@ void CParticleEngine::step(float const elapsedTime) {
          for(int j = 0; j < 3; j++) {
             if((*it)->useCenterPos == 1) {
                (*(positionArr[i]))[j] = (* it)->translate[j] + centerPos[j];
-               
             }
             else {
                (*(positionArr[i]))[j] = (* it)->translate[j];

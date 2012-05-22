@@ -76,7 +76,7 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
       HurtCabbageRenderables[i-1] = cabbageRenderable;
    }
    if(Level.getEnv() == Env::WATER) {
-      Bubbles = new CParticleEngine(SVector3f(0.0f), 15, -1, WIGGLE_PARTICLE, Level.isNight());
+      Bubbles = new CParticleEngine(SVector3f(Area.getCenter(), 0.0f) + SVector3f(0.3f, 0.5, 0.4f), 60, -1, BUBBLE_PARTICLE, Level.isNight());
    }
 
    //Shadow renderables
@@ -231,7 +231,7 @@ void CPlayerView::useSubView(int subView) {
 void CPlayerView::updateView(float time) {
    updateCameraPosition(time);
    if(Bubbles) {
-      Bubbles->setCenterPos(SVector3f(Area.getCenter(), 0.0f));
+      Bubbles->setCenterPos(SVector3f(Area.getCenter(), 0.0f) + (Direction == CElementPlayer::Right ? SVector3f(0.4f, 0.3f, -0.2f) : SVector3f(0.3f, 0.3f, 0.3f)));
       Bubbles->step(time);
    }
 
