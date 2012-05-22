@@ -4,8 +4,6 @@
 #include "ISceneObject.h"
 #include "CRenderable.h"
 
-#include <boost/any.hpp>
-
 /*!
  * Standard implementation of ISceneObject, renders a set of CRenderables
  */
