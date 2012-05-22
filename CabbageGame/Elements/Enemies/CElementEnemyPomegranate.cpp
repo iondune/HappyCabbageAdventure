@@ -61,7 +61,7 @@ void CElementEnemyPomegranate::OnCollision(const SCollisionEvent& Event) {
       HitPlayer = true;
 
       //Check if jumped on top of enemy.
-      if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.1f && particleEngine && particleEngine->isVisible() == false) {
+      if(!Dead && Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.1f && particleEngine && particleEngine->isVisible() == false) {
          if (CurHealth == 1) {
             particleEngine->deconstruct();
             delete particleEngine;
@@ -75,7 +75,7 @@ void CElementEnemyPomegranate::OnCollision(const SCollisionEvent& Event) {
       }
 
       //Did the player run into them?
-      else {
+      else if (CurHealth > 0){
          if(Level.getPlayer().decrementHealth()) {
             if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
                PlayerActor->addImpulse(SVector2f(7.f, 2.8f));
