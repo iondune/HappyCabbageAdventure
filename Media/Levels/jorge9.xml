@@ -391,8 +391,6 @@
 </CBlock>
 <CBlock X ="190" Y ="-1" height ="1" width ="1" depth ="1" texture ="2">
 </CBlock>
-<CFlag X ="199" Y ="-1.5" height ="1" width ="1" secret ="0">
-</CFlag>
 <CBlock X ="208" Y ="-5" height ="1" width ="1" depth ="1" texture ="2">
 </CBlock>
 <CBlock X ="209" Y ="-5" height ="1" width ="1" depth ="1" texture ="2">
@@ -447,7 +445,7 @@
 </CBlock>
 <CBlock X ="230" Y ="-1" height ="1" width ="1" depth ="1" texture ="2">
 </CBlock>
-<CBlock X ="230" Y ="-0" height ="1" width ="1" depth ="1" texture ="2">
+<CBlock X ="230" Y ="0" height ="1" width ="1" depth ="1" texture ="2">
 </CBlock>
 <CBlock X ="231" Y ="0" height ="1" width ="1" depth ="1" texture ="2">
 </CBlock>
@@ -591,3 +589,5 @@
 </CPItem>
 <CPItem X ="245" Y ="3" type ="2">
 </CPItem>
+<CFlag X ="199" Y ="-1.5" height ="1" width ="1" secret ="0">
+</CFlag>
