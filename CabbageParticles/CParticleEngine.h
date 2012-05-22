@@ -24,6 +24,7 @@
 #define WIGGLE_PARTICLE 11
 #define BUBBLE_PARTICLE 12
 #define UNDERWATER_STAR_PARTICLE 13
+#define WIGGLE_PARTICLE_WATER 14
 
 class CParticleEngine {
    std::vector<CParticle*> particles;

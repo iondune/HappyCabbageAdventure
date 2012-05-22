@@ -88,6 +88,7 @@ CParticleEngine::CParticleEngine(SVector3f pos, int max, float duration, int pT,
             cPtr->setAppearRate(0);
             cPtr->useCenterPos = 0;
             break;
+         case WIGGLE_PARTICLE_WATER:
          case WIGGLE_PARTICLE:
             particles.push_back(cPtr = new CPRWiggle());
             cPtr->setAppearRate(1.0f);
@@ -214,6 +215,10 @@ CParticleEngine::CParticleEngine(SVector3f pos, int max, float duration, int pT,
             colorArr.push_back(new SVector3f(1.0f - (float)rand()/(float)RAND_MAX*temp, 1.0f - (float)rand()/(float)RAND_MAX*temp, 1.0f - (float)rand()/(float)RAND_MAX*temp));
             sizeArr.push_back((float)rand()/(float)RAND_MAX*60 + 30);
             break;
+         case WIGGLE_PARTICLE_WATER:
+            colorArr.push_back(new SVector3f(0.0f, frand()*4 + 0.6f, frand()*0.2f + 0.8f));
+            sizeArr.push_back((float)rand()/(float)RAND_MAX*5.0f + 4.5f);
+            break;
          case WIGGLE_PARTICLE:
             switch(cRand) {
             case 0:
@@ -295,6 +300,7 @@ CParticleEngine::CParticleEngine(SVector3f pos, int max, float duration, int pT,
       myObj->setSizeFactor(38.0f);
       break;
    case WIGGLE_PARTICLE:
+   case WIGGLE_PARTICLE_WATER:
    case BUBBLE_PARTICLE:
       textureToUse = "Base/particleCircle.bmp";
       myObj->setSizeFactor(25.0f);

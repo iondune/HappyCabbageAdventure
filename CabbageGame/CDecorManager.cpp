@@ -143,10 +143,10 @@ CDecorManager::CDecorManager(CGameLevel & level) {
             n++;
          }
 
-         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + curBlock->w / 3.0f, curBlock->y + curBlock->h, 1), 10, -1, WIGGLE_PARTICLE, level.isNight()));
-         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + 2.0f*curBlock->w / 3.0f, curBlock->y + curBlock->h, 1), 10, -1, WIGGLE_PARTICLE, level.isNight()));
-         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + curBlock->w / 3.0f, curBlock->y + curBlock->h, -1), 10, -1, WIGGLE_PARTICLE, level.isNight()));
-         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + 2.0f*curBlock->w / 3.0f, curBlock->y + curBlock->h, -1), 10, -1, WIGGLE_PARTICLE, level.isNight()));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + curBlock->w / 3.0f, curBlock->y + curBlock->h, 1), 10, -1, env == Env::WATER ? WIGGLE_PARTICLE_WATER : WIGGLE_PARTICLE, level.isNight()));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + 2.0f*curBlock->w / 3.0f, curBlock->y + curBlock->h, 1), 10, -1, env == Env::WATER ? WIGGLE_PARTICLE_WATER : WIGGLE_PARTICLE, level.isNight()));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + curBlock->w / 3.0f, curBlock->y + curBlock->h, -1), 10, -1, env == Env::WATER ? WIGGLE_PARTICLE_WATER : WIGGLE_PARTICLE, level.isNight()));
+         DecorativeParticleEngines.push_back(new CParticleEngine(SVector3f(curBlock->x + 2.0f*curBlock->w / 3.0f, curBlock->y + curBlock->h, -1), 10, -1, env == Env::WATER ? WIGGLE_PARTICLE_WATER : WIGGLE_PARTICLE, level.isNight()));
       }
       delete curBlock;
    }
