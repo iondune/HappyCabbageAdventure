@@ -61,7 +61,7 @@ void CElementEnemyPomegranate::OnCollision(const SCollisionEvent& Event) {
       HitPlayer = true;
 
       //Check if jumped on top of enemy.
-      if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f && particleEngine && particleEngine->isVisible() == false) {
+      if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.1f && particleEngine && particleEngine->isVisible() == false) {
          if (CurHealth == 1) {
             particleEngine->deconstruct();
             delete particleEngine;
@@ -110,7 +110,7 @@ void CElementEnemyPomegranate::updatePhysicsEngineObject(float time) {
 
       else {
          particleEngine->setVisible(true);
-         PhysicsEngineObject->setArea(SRect2f(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y + 1.0f));
+         PhysicsEngineObject->setArea(SRect2f(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y + 1.000f));
       }
 
       FlameTimer = 0.0f;
@@ -180,7 +180,7 @@ void CElementEnemyPomegranate::updateSceneObject(float time) {
 void CElementEnemyPomegranate::HideFlame() {
    particleEngine->setVisible(false);
 
-   PhysicsEngineObject->setArea(SRect2f(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y - 1.0f));
+   PhysicsEngineObject->setArea(SRect2f(Area.Position.X, Area.Position.Y, Area.Size.X, Area.Size.Y - 1.000f));
 }
 
 void CElementEnemyPomegranate::printInformation() {
