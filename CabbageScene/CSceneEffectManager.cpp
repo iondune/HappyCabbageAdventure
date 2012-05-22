@@ -47,6 +47,9 @@ void CSceneEffectManager::SPostProcessPass::end()
 	for (std::map<std::string, int>::iterator it = Ints.begin(); it != Ints.end(); ++ it)
 		Context->uniform(it->first, it->second);
 
+	for (std::map<std::string, SColor>::iterator it = Colors.begin(); it != Colors.end(); ++ it)
+		Context->uniform(it->first, it->second);
+
 	Context->bindBufferObject("aPosition", CSceneManager::getQuadHandle(), 2);
 
 	glDrawArrays(GL_QUADS, 0, 4);

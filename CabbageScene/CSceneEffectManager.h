@@ -90,6 +90,7 @@ public:
 		std::map<std::string, float> Floats;
 		std::map<std::string, int> Ints;
 		std::map<std::string, CTexture *> Textures;
+		std::map<std::string, SColor> Colors;
 
 		void doPass();
 

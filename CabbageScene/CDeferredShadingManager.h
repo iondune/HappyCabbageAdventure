@@ -17,10 +17,13 @@ public:
 	CTexture * LightPassColorOutput;
 
 	CShader * FinalBlendShader;
+	CShader * OverlayShader;
 
 	CDeferredShadingManager(CSceneManager * sceneManager);
 
 	virtual void apply();
+
+	SColor OverlayColor;
 
    /*
 	virtual void setEffectEnabled(ESceneEffect const Effect, bool const Enabled);

@@ -20,7 +20,6 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
 
    Light = new CPointLightSceneObject(4.f);
    CApplication::get().getSceneManager().addSceneObject(Light);
-   CApplication::get().getSceneManager().addSceneObject(new CDirectionalLightSceneObject(SVector3f(0, -1, 0), SColor(0.3f, 0.4f, 0.7f)));
 
    for(int i = 1; i <= 5; i++) {
       std::ostringstream fileName;
