@@ -77,8 +77,6 @@
 </CBlock>
 <CBlock X ="-25" Y ="-1" height ="10" width ="4" depth ="1" texture ="0">
 </CBlock>
-<CEnemy X ="63" Y ="11" height ="1" width ="1" type ="8">
-</CEnemy>
 <CBlock X ="55" Y ="21" height ="2" width ="5" depth ="5" texture ="-5">
 </CBlock>
 <CBlock X ="50" Y ="21" height ="2" width ="5" depth ="5" texture ="-5">
@@ -129,7 +127,7 @@
 </CEnemy>
 <CEnemy X ="32" Y ="23" height ="1" width ="1" type ="12">
 </CEnemy>
-<CEnemy X ="82" Y ="26" height ="1" width ="1" type ="8">
+<CEnemy X ="82" Y ="26" height ="3" width ="3" type ="8">
 </CEnemy>
 <CEnemy X ="78" Y ="29" height ="1" width ="1" type ="5">
 </CEnemy>
@@ -139,7 +137,33 @@
 </CBlock>
 <CEnemy X ="74" Y ="17" height ="1" width ="1" type ="3">
 </CEnemy>
-<CEnemy X ="43" Y ="30" height ="3" width ="1" type ="14">
+<CEnemy X ="43" Y ="30" height ="1" width ="1" type ="14">
 </CEnemy>
-<CEnemy X ="42" Y ="30" height ="3" width ="1" type ="14">
+<CEnemy X ="42" Y ="30" height ="1" width ="1" type ="14">
+</CEnemy>
+<CBlock X ="56" Y ="-1" height ="1" width ="10" depth ="5" texture ="0">
+</CBlock>
+<CBlock X ="64" Y ="-1" height ="1" width ="10" depth ="5" texture ="0">
+</CBlock>
+<CBlock X ="71" Y ="-1" height ="1" width ="10" depth ="5" texture ="0">
+</CBlock>
+<CBlock X ="79" Y ="-1" height ="1" width ="10" depth ="5" texture ="0">
+</CBlock>
+<CBlock X ="87" Y ="-1" height ="1" width ="10" depth ="5" texture ="0">
+</CBlock>
+<CBlock X ="95" Y ="-1" height ="1" width ="10" depth ="5" texture ="0">
+</CBlock>
+<CBlock X ="103" Y ="-1" height ="1" width ="10" depth ="5" texture ="0">
+</CBlock>
+<CBlock X ="111" Y ="-1" height ="1" width ="10" depth ="5" texture ="0">
+</CBlock>
+<CBlock X ="119" Y ="-1" height ="1" width ="10" depth ="5" texture ="0">
+</CBlock>
+<CBlock X ="127" Y ="-1" height ="1" width ="10" depth ="5" texture ="0">
+</CBlock>
+<CBlock X ="135" Y ="-1" height ="1" width ="10" depth ="5" texture ="0">
+</CBlock>
+<CBlock X ="143" Y ="-1" height ="1" width ="10" depth ="5" texture ="0">
+</CBlock>
+<CEnemy X ="62" Y ="11" height ="3" width ="3" type ="8">
 </CEnemy>

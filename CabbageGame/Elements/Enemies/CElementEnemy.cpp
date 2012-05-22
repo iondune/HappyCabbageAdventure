@@ -95,7 +95,7 @@ CElementEnemy *CEnemyLoader::LoadEnemy(SRect2f nArea, Enemies::EEnemyType type) 
 }
 
 void CElementEnemy::setupPhysicsEngineObject() {
-   PhysicsEngineObject->setArea(Area);
+   PhysicsEngineObject->setArea(SRect2f(Area.Position.X, Area.Position.Y, Area.Size.X - .11f, Area.Size.Y - .11f));
 
    if (Level.getEnv() == Env::WATER) {
       PhysicsEngineObject->getActorAttributes().MaxWalk *= 0.5f;
