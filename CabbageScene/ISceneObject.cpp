@@ -303,43 +303,6 @@ bool const ISceneObject::isCulled(CScene const * const Scene) const
 	return Inside;
 }
 
-// What does this do?
-SVector3f ISceneObject::getWorldBoundingBoxMinPoint()
-{
-	SVector3f p = getBoundingBox().MinCorner; 
-	glm::vec4 p4(p.X, p.Y, p.Z, 1.f);
-	glm::vec4 temp = Transformation() * p4; 
-
-	//printf("Min: %0.2f %0.2f %0.2f\n", temp.x, temp.y, temp.z);
-	return SVector3f(temp.x, temp.y, temp.z);
-}
-
-// What does this do?
-SBoundingBox3 ISceneObject::getWorldBoundingBox()
-{
-	SVector3f min = getBoundingBox().MinCorner; 
-	glm::vec4 min4(min.X, min.Y, min.Z, 1.f);
-	glm::vec4 temp = Transformation() * min4; 
-	//printf("Min: %0.2f %0.2f %0.2f\n", temp.x, temp.y, temp.z);
-
-	SVector3f max = getBoundingBox().MaxCorner; 
-	glm::vec4 max4(max.X, max.Y, max.Z, 1.f);
-	glm::vec4 temp2 = Transformation() * max4; 
-	//printf("Max: %0.2f %0.2f %0.2f\n", temp2.x, temp2.y, temp2.z);
-
-	return SBoundingBox3(SVector3f(temp.x, temp.y, temp.z), SVector3f(temp2.x, temp2.y, temp2.z));
-}
-
-bool sortByZTranslation(ISceneObject *a, ISceneObject *b)
-{
-   return a->getTranslation().Z > b->getTranslation().Z;
-}
-
-void ISceneObject::sortChildrenByZTranslation()
-{
-   Children.sort(sortByZTranslation);
-}
-
 bool const ISceneObject::isCullingEnabled() const
 {
 	return UseCulling;

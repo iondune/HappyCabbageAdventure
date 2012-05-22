@@ -38,6 +38,14 @@ enum ERenderPass
 	ERP_COUNT
 };
 
+enum ERenderCategory
+{
+	ERC_SKY_BOX,
+	ERC_STANDARD,
+	ERC_TRANSPARENT,
+	ERC_POST_PROCESS
+};
+
 class CScene;
 
 class ISceneObject
@@ -72,6 +80,8 @@ protected:
 
 	// Should this object be checked for trivial rejection
 	bool UseCulling;
+
+	ERenderCategory RenderCategory;
 
 public:
 
@@ -112,7 +122,6 @@ public:
 	void addChild(ISceneObject * child);
 	void setParent(ISceneObject * parent);
 	void removeChildren();
-	void sortChildrenByZTranslation();
 
 	SVector3f const & getRotation() const;
 	SVector3f const & getTranslation() const;
@@ -123,8 +132,9 @@ public:
 	void setCullingEnabled(bool const culling);
 
 	virtual void load(CScene const * const Scene, ERenderPass const Pass);
-	SVector3f getWorldBoundingBoxMinPoint();
-	SBoundingBox3 getWorldBoundingBox();
+
+	ERenderCategory const getRenderCategory() const;
+	void setRenderCategory(ERenderCategory const RenderCategory);
 
 	static void resetObjectCounts();
 
