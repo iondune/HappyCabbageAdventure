@@ -168,8 +168,8 @@ void CElementBlock::setupSceneObject() {
                fprintf(stderr, "Failed to load the mesh\n");
             }
             tempBlock->setMesh(mesh);
-            tempBlock->setTexture("Base/GrassyGrass.bmp", 2);
-            tempBlock->setTexture("Base/DirtyDirt.bmp", 3);
+            tempBlock->setTexture("Base/WateryWater.bmp", 2);
+            tempBlock->setTexture("Base/WetRocksMmmmm.bmp", 3);
             break;
          default:
             fprintf(stderr, "Unknown texture type %d\n", Texture);
