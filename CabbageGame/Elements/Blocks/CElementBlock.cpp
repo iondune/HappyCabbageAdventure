@@ -176,7 +176,7 @@ void CElementBlock::setupSceneObject() {
 				mesh = CMeshLoader::load3dsMesh("Base/waterLevelBlock_5.3ds");
 				break;
 			 case 7:
-				mesh = CMeshLoader::load3dsMesh("Base/levelBlock_5.3ds");
+				mesh = CMeshLoader::load3dsMesh("Base/levelBlock.3ds");
 				break;
 			 }
             if (mesh) {
@@ -188,6 +188,8 @@ void CElementBlock::setupSceneObject() {
                fprintf(stderr, "Failed to load the mesh\n");
             }
             tempBlock->setMesh(mesh);
+
+			// If you want to get these textures to work properly, you'll need to sort out which indices to use for each model
             tempBlock->setTexture("Colors/White.bmp");
             tempBlock->setTexture("Base/WateryWater.bmp", 2);
             tempBlock->setTexture("Base/WetRocksMmmmm.bmp", 3);
@@ -209,11 +211,16 @@ void CElementBlock::setupSceneObject() {
       tempBlock->setScale(SVector3f(5.0f)); //Area.Size.X, Area.Size.Y, Depth
    }
 
+   // Don't ask me
    bool You_Want_The_Program_To_Crash = false;
    if (You_Want_The_Program_To_Crash)
-      tempBlock->setRotation(SVector3f(Texture==-5?-90.f:0, 0, 90));//(Level.getEnvironment() == Env::WATER ? 90.f : 0.f)));
+      tempBlock->setRotation(SVector3f(Texture==-5?-90.f:0, 0, 90));
    else
 	  tempBlock->setRotation(SVector3f(Texture==-5?-90.f:0, 0, 0));
+
+   // I was trying to rotate the block's Z axis to find which side has stuff on them
+   // like this:
+   // tempBlock->setRotation(SVector3f(Texture==-5?-90.f:0, 0, (Level.getEnvironment() == Env::WATER ? 90.f : 0.f)));
 
    SceneObject = tempBlock;
    if(Level.isLoaded())
