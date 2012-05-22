@@ -158,7 +158,27 @@ void CElementBlock::setupSceneObject() {
             tempBlock->setTexture("Base/rock.bmp");
             break;
          case -5:
-            mesh = CMeshLoader::load3dsMesh("Base/levelBlock.3ds");
+			 switch (7)//rand() % 7)
+			 {
+			 case 0:
+				mesh = CMeshLoader::load3dsMesh("Base/waterLevelBlock_1.3ds");
+				break;
+			 case 1:
+				mesh = CMeshLoader::load3dsMesh("Base/waterLevelBlock_2.3ds");
+				break;
+			 case 2:
+				mesh = CMeshLoader::load3dsMesh("Base/waterLevelBlock_3.3ds");
+				break;
+			 case 3:
+				mesh = CMeshLoader::load3dsMesh("Base/waterLevelBlock_4.3ds");
+				break;
+			 case 4: case 5: case 6:
+				mesh = CMeshLoader::load3dsMesh("Base/waterLevelBlock_5.3ds");
+				break;
+			 case 7:
+				mesh = CMeshLoader::load3dsMesh("Base/levelBlock_5.3ds");
+				break;
+			 }
             if (mesh) {
                mesh->resizeMesh(SVector3f(1));
                mesh->centerMeshByExtents(SVector3f(0));
@@ -168,6 +188,7 @@ void CElementBlock::setupSceneObject() {
                fprintf(stderr, "Failed to load the mesh\n");
             }
             tempBlock->setMesh(mesh);
+            tempBlock->setTexture("Colors/White.bmp");
             tempBlock->setTexture("Base/WateryWater.bmp", 2);
             tempBlock->setTexture("Base/WetRocksMmmmm.bmp", 3);
             break;
@@ -188,7 +209,11 @@ void CElementBlock::setupSceneObject() {
       tempBlock->setScale(SVector3f(5.0f)); //Area.Size.X, Area.Size.Y, Depth
    }
 
-   tempBlock->setRotation(SVector3f(Texture==-5?-90.f:0, 0, 0));
+   bool You_Want_The_Program_To_Crash = false;
+   if (You_Want_The_Program_To_Crash)
+      tempBlock->setRotation(SVector3f(Texture==-5?-90.f:0, 0, 90));//(Level.getEnvironment() == Env::WATER ? 90.f : 0.f)));
+   else
+	  tempBlock->setRotation(SVector3f(Texture==-5?-90.f:0, 0, 0));
 
    SceneObject = tempBlock;
    if(Level.isLoaded())
