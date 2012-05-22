@@ -15,9 +15,6 @@
     <ClInclude Include="sigslot\sigslot.h">
       <Filter>sigslot</Filter>
     </ClInclude>
-    <ClInclude Include="boost\any.hpp">
-      <Filter>boost</Filter>
-    </ClInclude>
     <ClInclude Include="boost\assert.hpp">
       <Filter>boost</Filter>
     </ClInclude>

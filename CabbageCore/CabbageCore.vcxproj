@@ -64,7 +64,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="boost\any.hpp" />
     <ClInclude Include="boost\assert.hpp" />
     <ClInclude Include="boost\checked_delete.hpp" />
     <ClInclude Include="boost\config.hpp" />

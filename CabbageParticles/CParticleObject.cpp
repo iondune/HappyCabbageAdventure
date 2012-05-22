@@ -76,7 +76,7 @@ void CParticleObject::draw(CScene const * const scene, ERenderPass const Pass)
          glDepthFunc(GL_LESS);
       }
       break;
-   case ERP_MODEL_NORMALS:
+   case ERP_MODELSPACE_NORMALS:
    case ERP_DEFERRED_LIGHTS:
       break;
    }
