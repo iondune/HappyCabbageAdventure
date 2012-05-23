@@ -37,7 +37,7 @@ int const ISceneObject::getCullChecks()
 
 ISceneObject::ISceneObject()
 	: DebugDataFlags(0), Visible(true), Parent(0), UseCulling(true), TransformationDirty(false),
-	RenderCategory(ERenderCategory::Standard)
+	RenderCategory(ERenderCategory::Default)
 {}
 
 void ISceneObject::checkAbsoluteTransformation()
@@ -108,18 +108,25 @@ void ISceneObject::load(CScene const * const Scene, ERenderPass const Pass)
 		(* it)->load(Scene, Pass);
 }
 
-void ISceneObject::draw(CScene const * const scene, ERenderPass const Pass)
+bool ISceneObject::draw(CScene const * const scene, ERenderPass const Pass)
 {
 	if (! Visible)
-		return;
+		return false;
 	
 	++ TotalObjects;
 
-	if (isCulled(scene)) // check absolute
+	if (isCulled(scene, true))
+	{
 		++ ObjectsCulled;
+		return false;
+	}
 	else
+	{
 		for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
 			(* it)->draw(scene, Pass);
+
+		return ! isCulled(scene, false);
+	}
 }
 
 SBoundingBox3 const & ISceneObject::getBoundingBox() const
@@ -132,6 +139,11 @@ void ISceneObject::setBoundingBox(SBoundingBox3 const & boundingBox)
 	BoundingBox = boundingBox;
 
 	BoundingBoxDirty = true;
+}
+
+SBoundingBox3 const & ISceneObject::getAbsoluteBoundingBox() const
+{
+	return AbsoluteBoundingBox;
 }
 
 bool const ISceneObject::isDebugDataEnabled(EDebugData const type) const
@@ -235,7 +247,7 @@ SVector3f const & ISceneObject::getScale() const
 
 #include "CCamera.h"
 
-bool const ISceneObject::isCulled(CScene const * const Scene) const
+bool const ISceneObject::isCulled(CScene const * const Scene, bool const Absolute) const
 {
 	static bool const Inside = false;
 	static bool const Outside = true;
@@ -252,6 +264,8 @@ bool const ISceneObject::isCulled(CScene const * const Scene) const
 		in[i] = 0;
 		out[i] = 0;
 	}
+
+	SBoundingBox3 const & BoundingBox = Absolute ? getAbsoluteBoundingBox() : getBoundingBox();
 
 	for (int i = 0; i < 8; ++ i) 
 	{

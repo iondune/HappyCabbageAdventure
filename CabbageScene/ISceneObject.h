@@ -61,9 +61,7 @@ struct ERenderCategoryValues
 	};
 };
 
-class ERenderCategory : public Enum<ERenderCategoryValues>
-{};
-
+typedef Enum<ERenderCategoryValues> ERenderCategory;
 
 class CScene;
 
@@ -122,6 +120,8 @@ public:
 	SBoundingBox3 const & getBoundingBox() const;
 	void setBoundingBox(SBoundingBox3 const & boundingBox);
 
+	SBoundingBox3 const & getAbsoluteBoundingBox() const;
+
 	bool const isDebugDataEnabled(EDebugData const type) const;
 	void enableDebugData(EDebugData const type);
 	void disableDebugData(EDebugData const type);
@@ -144,7 +144,7 @@ public:
 	void removeChildren();
 
 	
-	bool const isCulled(CScene const * const Scene) const;
+	bool const isCulled(CScene const * const Scene, bool const Absolute) const;
 	bool const isCullingEnabled() const;
 	void setCullingEnabled(bool const culling);
 
@@ -153,7 +153,7 @@ public:
 
 	virtual void update();
 	virtual void load(CScene const * const Scene, ERenderPass const Pass);
-	virtual void draw(CScene const * const scene, ERenderPass const Pass);
+	virtual bool draw(CScene const * const scene, ERenderPass const Pass);
 
 
 	static void resetObjectCounts();
