@@ -92,7 +92,6 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
       else
          PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
 
-
       if(!InZ) {
          float xDist = Area.Position.X - Level.getPlayer().getArea().Position.X;
 
@@ -114,38 +113,39 @@ void CElementEnemyKiwi::updatePhysicsEngineObject(float time) {
 
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyKiwi::updateSceneObject(float time) {
-   rotateBird = -100.0f * SineValue;
+	//Area = PhysicsEngineObject->getArea();
+	rotateBird = -100.0f * SineValue;
    
-   if(InZ) {
-      if(ZTimer > 0.0f)
-         SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, ZNeg*(Z_SPEED - ZTimer)*ZDepth*(0.9f/Z_SPEED)));
-      else
-         SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, ZNeg*ZDepth));
-   }
-   else {
-      if(ZTimer > 0.0f)
-         SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, ZNeg*(ZDepth - (Z_SPEED - ZTimer)*ZDepth*(0.9f/Z_SPEED))));
-      else
-         SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, 0));
-   }
-   //SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, 0.0f));
-   SceneObject->setRotation(SVector3f(-90 + rotateBird, 0, -90));
+	if(InZ) {
+		if(ZTimer > 0.0f)
+			SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, ZNeg*(Z_SPEED - ZTimer)*ZDepth*(0.9f/Z_SPEED)));
+		else
+			SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, ZNeg*ZDepth));
+	}
+	else {
+		if(ZTimer > 0.0f)
+			SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, ZNeg*(ZDepth - (Z_SPEED - ZTimer)*ZDepth*(0.9f/Z_SPEED))));
+		else
+			SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y, 0));
+	}
 
-   if(PhysicsEngineObject->getVelocity().X < -0.01f)
-      SceneObject->setScale(SVector3f(-1,1,1)*(ZTimer + 1.0f));
-   else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-      SceneObject->setScale(SVector3f(1,1,1)*(ZTimer + 1.0f));
+	SceneObject->setRotation(SVector3f(-90 + rotateBird, 0, -90));
 
-   if(ParticleEngine) {
-      SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
-      SceneObject->setRotation(SVector3f(-90, 0, -90));
-      SceneObject->setScale(SVector3f(Area.Size.X, Area.Size.X, 0.3f));
-      return;
-   }
-   if(TimeToDeath > 0.0f) {
-      CElementEnemy::updateSceneObject(time);
-      return;
-   }
+	if(PhysicsEngineObject->getVelocity().X < -0.01f)
+		SceneObject->setScale(SVector3f(-1,1,1)*(ZTimer + 1.0f));
+	else if(PhysicsEngineObject->getVelocity().X > 0.01f)
+		SceneObject->setScale(SVector3f(1,1,1)*(ZTimer + 1.0f));
+
+	if(ParticleEngine) {
+		SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
+		SceneObject->setRotation(SVector3f(-90, 0, -90));
+		SceneObject->setScale(SVector3f(Area.Size.X, Area.Size.X, 0.3f));
+		return;
+	}
+	if(TimeToDeath > 0.0f) {
+		CElementEnemy::updateSceneObject(time);
+		return;
+	}
 }
 
 void CElementEnemyKiwi::printInformation() {
@@ -153,7 +153,6 @@ void CElementEnemyKiwi::printInformation() {
 }
 
 void CElementEnemyKiwi::DropBomb() {
-
    float xLocation = Area.Position.X + Area.Size.X - .05f;
    float yLocation = Area.getCenter().Y - Area.Size.Y - .5f;
 
@@ -161,7 +160,6 @@ void CElementEnemyKiwi::DropBomb() {
 }
 
 void CElementEnemyKiwi::OnPhaseBegin(const SCollisionEvent& Event) {
-   printf("I touched a block!\n");
    ZTimer = Z_SPEED;
    ZDepth = Event.Other->getVisualDepth();
    InZ = true;
@@ -169,7 +167,6 @@ void CElementEnemyKiwi::OnPhaseBegin(const SCollisionEvent& Event) {
 }
 
 void CElementEnemyKiwi::OnPhaseEnd(const SCollisionEvent& Event) {
-   printf("I'm no longer touching a block!\n");
    ZTimer = Z_SPEED;
    InZ = false;
 }
