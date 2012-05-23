@@ -146,6 +146,7 @@ void CElementEnemy::dieWithSeeds() {
    removeFromPhysicsEngine();
    ParticleEngine = new CParticleEngine(SceneObject->getTranslation(), 20, 4, BURST_PARTICLE, Level.isNight());
    ParticleEngine->UsePhysics(&Level.getPhysicsEngine(), Level.getEnv());
+   die();
 }
 
 void CElementEnemy::dropItem() {
@@ -271,6 +272,10 @@ int CElementEnemy::heal(int amount) {
    CurHealth = std::min(MaxHealth, CurHealth + amount);
 
    return CurHealth;
+}
+
+void CElementEnemy::die() {
+
 }
 
 int CElementEnemy::takeDamage(int amount) {

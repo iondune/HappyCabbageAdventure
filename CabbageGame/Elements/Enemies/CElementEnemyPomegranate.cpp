@@ -53,6 +53,15 @@ void CElementEnemyPomegranate::setupSceneObject() {
 }
                                                             
 //CGameplayElement has an attribute called ElapsedTime, which is updated by CGameplayElement's update function.
+//
+
+void CElementEnemyPomegranate::die() {
+   if(particleEngine) {
+      particleEngine->deconstruct();
+      delete particleEngine;
+      particleEngine = NULL;
+   }
+}
 
 void CElementEnemyPomegranate::OnCollision(const SCollisionEvent& Event) {
    if(TimeToDeath > 0.0f)
@@ -64,9 +73,11 @@ void CElementEnemyPomegranate::OnCollision(const SCollisionEvent& Event) {
       //Check if jumped on top of enemy.
       if(!Dead && Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.1f && particleEngine && particleEngine->isVisible() == false) {
          if (CurHealth == 1) {
-            particleEngine->deconstruct();
-            delete particleEngine;
-            particleEngine = NULL;
+            if(particleEngine) {
+               particleEngine->deconstruct();
+               delete particleEngine;
+               particleEngine = NULL;
+            }
          }
          if (InvincibilityTime <= 0.0f) {
             takeDamage(1);
@@ -76,7 +87,7 @@ void CElementEnemyPomegranate::OnCollision(const SCollisionEvent& Event) {
       }
 
       //Did the player run into them?
-      else if (CurHealth > 0){
+      else if (CurHealth > 0) {
          if(Level.getPlayer().decrementHealth()) {
             if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
                PlayerActor->addImpulse(SVector2f(7.f, 2.8f));
@@ -91,8 +102,14 @@ void CElementEnemyPomegranate::OnCollision(const SCollisionEvent& Event) {
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyPomegranate::updatePhysicsEngineObject(float time) {
    CElementEnemy::updatePhysicsEngineObject(time);
-   if(TimeToDeath > 0.0f)
+   if(TimeToDeath > 0.0f) {
+      if(particleEngine) {
+         particleEngine->deconstruct();
+         delete particleEngine;
+         particleEngine = NULL;
+      }
       return;
+   }
    float difference = Area.Position.X - OldPositionX;
 
    FlameTimer += time;

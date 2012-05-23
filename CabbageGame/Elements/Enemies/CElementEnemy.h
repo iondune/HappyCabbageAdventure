@@ -59,6 +59,7 @@ class CElementEnemy : public CGameplayElement {
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);
       virtual void reactToAbility(Abilities::EAbilityType);
+      virtual void die();
 
       Enemies::EEnemyType getEnemyType();
 
