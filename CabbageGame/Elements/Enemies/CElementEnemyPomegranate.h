@@ -24,6 +24,7 @@ class CElementEnemyPomegranate : public CElementEnemy, ISquishable
       virtual void updateSceneObject(float time);
 
       virtual void printInformation();
+      void die();
 
       void HideFlame();
 };
