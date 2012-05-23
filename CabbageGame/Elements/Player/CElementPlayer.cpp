@@ -162,8 +162,8 @@ void CElementPlayer::updatePlayerAction() {
       PhysicsEngineObject->setJumping(true);
 
       //Check if jumping should be enabled.
-      if (PhysicsEngineObject->getVelocity().Y == 0.f)
-               PlayJump = true;
+      if (PhysicsEngineObject->getVelocity().Y == 0.f && !PhysicsEngineObject->isJumping())
+    	  PlayJump = true;
       if (PlayJump) {
          Mix_PlayChannel(-1, jump, 0);
          PlayJump = false;

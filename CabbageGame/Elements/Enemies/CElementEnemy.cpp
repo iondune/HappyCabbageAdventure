@@ -288,7 +288,6 @@ int CElementEnemy::takeDamage(int amount) {
    if (CurHealth <= 0) {
       dieWithSeeds();
       PlayerActor->addImpulse(SVector2f(0.0f, 3.0f));
-
    }
 
    return CurHealth;
