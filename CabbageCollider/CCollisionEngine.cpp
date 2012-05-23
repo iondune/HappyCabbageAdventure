@@ -172,6 +172,9 @@ float const CCollisionEngine::getHeightBelow(SVector2f pos)
 		if (pos.X < Object->getArea().Position.X || pos.X > Object->getArea().otherCorner().X)
 			continue;
 
+      if((* it)->getTypeId() == 0)
+         continue;
+
 		if(Object->getArea().otherCorner().Y > height)
 			height = (float) Object->getArea().otherCorner().Y;
 	}
@@ -186,7 +189,7 @@ float const CCollisionEngine::getHeightBelow( CCollisionActor * Actor )
 
 	for (ObjectList::iterator it = Objects.begin(); it != Objects.end(); ++ it)
 	{
-		if ((* it)->canCollideWith(Actor) && Actor->isAbove(* it, checkHeight))
+		if ((* it)->canCollideWith(Actor) && ((* it)->getTypeId() > 0) && Actor->isAbove(* it, checkHeight))
 			if (checkHeight > height)
 				height = checkHeight;
 	}
