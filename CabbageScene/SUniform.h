@@ -3,6 +3,7 @@
 
 // Core
 #include <boost/shared_ptr.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 // Scene
 #include "CShaderContext.h"
@@ -28,7 +29,7 @@ private:
 
 public:
 
-	virtual T const & getValue() = 0;
+	virtual T const & getValue() const = 0;
 
 	void bind(GLuint const handle, CShaderContext & shaderContext) const
 	{
@@ -55,7 +56,7 @@ void SUniform<SVector2Reference<GLfloat> >::bind(GLuint const handle) const
 
 void SUniform<SVector3Reference<GLfloat> >::bind(GLuint const handle) const
 {
-	glUniform2f(handle, getValue().X, getValue().Y, getValue().Z);
+	glUniform3f(handle, getValue().X, getValue().Y, getValue().Z);
 }
 
 void SUniform<SColor>::bind(GLuint const handle) const
@@ -108,6 +109,11 @@ public:
 		: Value(& value)
 	{}
 
+	T const & getValue() const
+	{
+		return * Value;
+	}
+
 };
 
 template <typename T>
@@ -121,6 +127,11 @@ public:
 	SUniformValue(T const & value)
 		: Value(value)
 	{}
+
+	T const & getValue() const 
+	{
+		return Value;
+	}
 
 };
 

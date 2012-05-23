@@ -2,10 +2,10 @@
 
 #include <iostream>
 
-#include "../CabbageCore/glm/gtc/matrix_transform.hpp"
+#include <glm/gtc/matrix_transform.hpp>
 
-#include "CShaderLoader.h"
-#include "CSceneManager.h"
+//#include "CShaderLoader.h"
+//#include "CSceneManager.h"
 
 
 int ISceneObject::ObjectsCulled = 0;
@@ -36,7 +36,8 @@ int const ISceneObject::getCullChecks()
 
 
 ISceneObject::ISceneObject()
-	: DebugDataFlags(0), Visible(true), Parent(0), UseCulling(true), TransformationDirty(false)
+	: DebugDataFlags(0), Visible(true), Parent(0), UseCulling(true), TransformationDirty(false),
+	RenderCategory(ERenderCategory::Standard)
 {}
 
 void ISceneObject::checkAbsoluteTransformation()
@@ -114,7 +115,7 @@ void ISceneObject::draw(CScene const * const scene, ERenderPass const Pass)
 	
 	++ TotalObjects;
 
-	if (isCulled(scene))
+	if (isCulled(scene)) // check absolute
 		++ ObjectsCulled;
 	else
 		for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
@@ -133,12 +134,12 @@ void ISceneObject::setBoundingBox(SBoundingBox3 const & boundingBox)
 	BoundingBoxDirty = true;
 }
 
-bool const ISceneObject::isDebugDataEnabled(EDebugData::Domain const type) const
+bool const ISceneObject::isDebugDataEnabled(EDebugData const type) const
 {
 	return (type & DebugDataFlags) != 0;
 }
 
-void ISceneObject::enableDebugData(EDebugData::Domain const type)
+void ISceneObject::enableDebugData(EDebugData const type)
 {
 	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
 		(* it)->enableDebugData(type);
@@ -149,7 +150,7 @@ void ISceneObject::enableDebugData(EDebugData::Domain const type)
 		DebugDataFlags |= type;
 }
 
-void ISceneObject::disableDebugData(EDebugData::Domain const type)
+void ISceneObject::disableDebugData(EDebugData const type)
 {
 	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
 		(* it)->disableDebugData(type);
@@ -311,15 +312,4 @@ bool const ISceneObject::isCullingEnabled() const
 void ISceneObject::setCullingEnabled(bool const culling)
 {
 	UseCulling = culling;
-}
-
-int ISceneObject::getNumLeaves()
-{
-	if(Children.size() == 0)
-		return 1;
-	int toRet = 0;
-	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it) {
-		toRet += (* it)->getNumLeaves();
-	}
-	return toRet;
 }

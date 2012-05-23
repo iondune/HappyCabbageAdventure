@@ -51,6 +51,7 @@
     <ClInclude Include="boost\version.hpp">
       <Filter>boost</Filter>
     </ClInclude>
+    <ClInclude Include="ionEnum.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="sigslot">

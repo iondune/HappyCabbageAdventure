@@ -15,8 +15,8 @@ public:
 	SColor AmbientColor, DiffuseColor;
 	float Shininess;
 
-	SUniform<SColor> BindAmbientColor, BindDiffuseColor;
-	SUniform<float> BindShininess;
+	SUniformReference<SColor> BindAmbientColor, BindDiffuseColor;
+	SUniformReference<float> BindShininess;
 
     CMaterial();
 	CMaterial(CMaterial const & other);
