@@ -77,6 +77,9 @@ void CElementBlockDeath::updateSceneObject(float time) {
 void CElementBlockDeath::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addObject();
    PhysicsEngineObject->setArea(Area);
+   PhysicsEngineObject->setTypeId(0);
+   PhysicsEngineObject->setCollisionMask(INTERACTOR_SUPERACTORS);
+   PhysicsEngineObject->setDetectionMask(0);
 }
 
 void CElementBlockDeath::printInformation() {
