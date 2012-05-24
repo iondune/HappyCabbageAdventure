@@ -9,6 +9,7 @@
 
 enum ESceneEffect
 {
+	ESE_ALL = 0,
 	ESE_SSAO = 1,
 	ESE_SSAO_BLUR = 2,
 	ESE_BLOOM = 4,

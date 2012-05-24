@@ -209,9 +209,19 @@ void CSceneEffectManager::apply()
 void CSceneEffectManager::setEffectEnabled(ESceneEffect const Effect, bool const Enabled)
 {
 	if (Enabled)
-		EnabledEffects |= Effect;
+	{
+		if (Effect)
+			EnabledEffects |= Effect;
+		else
+			EnabledEffects = -1;
+	}
 	else
-		EnabledEffects ^= Effect;
+	{
+		if (Effect)
+			EnabledEffects ^= Effect;
+		else
+			EnabledEffects = 0;
+	}
 
 	switch (Effect)
 	{
