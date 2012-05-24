@@ -342,7 +342,7 @@ void COverworldState::loadLevels()
    //If you're adding more levels be sure to update COverworldState's NUM_LEVELS
 
 	//Grass Levels
-	levels[0].name = "jorge7.xml";//"jorge1.xml";
+	levels[0].name = "test.xml";//"jorge1.xml";
 	levels[0].loc = SVector3f(0.33f, -0.17f, 1.05f); //bit of green near sole orange hill
 	levels[1].name = "dash.xml";
 	levels[1].loc = SVector3f(0.56, -0.29, 1.11);

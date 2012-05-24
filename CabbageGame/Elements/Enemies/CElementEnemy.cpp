@@ -146,6 +146,7 @@ void CElementEnemy::dieWithSeeds() {
    removeFromPhysicsEngine();
    ParticleEngine = new CParticleEngine(SceneObject->getTranslation(), 20, 4, BURST_PARTICLE, Level.isNight());
    ParticleEngine->UsePhysics(&Level.getPhysicsEngine(), Level.getEnv());
+   die();
 }
 
 void CElementEnemy::dropItem() {
@@ -174,7 +175,7 @@ void CElementEnemy::OnCollision(const SCollisionEvent& Event) {
       CCollisionActor * PlayerActor = (CCollisionActor *)Level.getPlayer().getPhysicsEngineObject();
 
       //Check if jumped on top of enemy.
-      if(Level.getPlayer().getArea().Position.Y > Area.otherCorner().Y - 0.05f) {
+      if(Level.getPlayer().getArea().Position.Y > PhysicsEngineObject->getArea().otherCorner().Y - 0.05f) {
     	  if (InvincibilityTime <= 0.0f) {
     		  takeDamage(1);
     		  InvincibilityTime = .2f;
@@ -271,6 +272,10 @@ int CElementEnemy::heal(int amount) {
    CurHealth = std::min(MaxHealth, CurHealth + amount);
 
    return CurHealth;
+}
+
+void CElementEnemy::die() {
+
 }
 
 int CElementEnemy::takeDamage(int amount) {
