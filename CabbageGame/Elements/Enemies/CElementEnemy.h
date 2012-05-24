@@ -70,6 +70,8 @@ class CElementEnemy : public CGameplayElement {
       virtual int heal(int amount);
 
       virtual void printInformation();
+
+      void setTimeToDeath(float t);
 };
 
 class CEnemyLoader {

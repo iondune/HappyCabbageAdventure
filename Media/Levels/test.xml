@@ -39,3 +39,17 @@
 </CEnemy>
 <CEnemy X ="-19" Y ="0" height ="3" width ="1" type ="14">
 </CEnemy>
+<CFlag X ="-19" Y ="6" height ="4" width ="1" secret ="0">
+</CFlag>
+<CFlag X ="-16" Y ="6" height ="4" width ="1" secret ="0">
+</CFlag>
+<CFlag X ="-16" Y ="5" height ="4" width ="1" secret ="0">
+</CFlag>
+<CFlag X ="-21" Y ="5" height ="4" width ="1" secret ="0">
+</CFlag>
+<CFlag X ="-22" Y ="4" height ="4" width ="1" secret ="0">
+</CFlag>
+<CFlag X ="-23" Y ="4" height ="4" width ="1" secret ="0">
+</CFlag>
+<CFlag X ="-24" Y ="3" height ="4" width ="1" secret ="0">
+</CFlag>
