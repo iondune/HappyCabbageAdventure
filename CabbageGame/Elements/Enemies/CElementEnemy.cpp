@@ -298,3 +298,6 @@ int CElementEnemy::takeDamage(int amount) {
    return CurHealth;
 }
 
+void CElementEnemy::setTimeToDeath(float t) {
+   TimeToDeath = t;
+}
