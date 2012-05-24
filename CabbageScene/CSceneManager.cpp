@@ -585,7 +585,7 @@ SSize2 const & CSceneManager::getScreenSize() const
 
 void CSceneManager::setDeferred(bool const isDeferred)
 {
-	EffectManager->setEffectEnabled(ESceneEffect::ESE_ALL, false);
+	EffectManager->setEffectEnabled(ESE_ALL, false);
 	if (isDeferred)
 		EffectManager = DeferredManager;
 	else
