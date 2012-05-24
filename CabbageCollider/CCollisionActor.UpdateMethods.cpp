@@ -207,9 +207,8 @@ bool CCollisionActor::updateCollision(CCollideable * Object, float const TickTim
 		//Jumping = false;
 	}
 
-	// Wtf is this
-	//if (Attributes.Reacts && (CollisionType & ECollisionType::Left || CollisionType & ECollisionType::Right))
-	//	Velocity.X *= -Object->getMaterial().Elasticity;
+	if (CollisionType & ECollisionType::Left || CollisionType & ECollisionType::Right)
+		Velocity.X *= -Object->getMaterial().Elasticity;
 
 	// Return true if this object landed on something
 	return (CollisionType & ECollisionType::Down) && (CollisionType & ECollisionType::Responded);
