@@ -218,6 +218,13 @@ CCollisionActor * CCollisionEngine::addActor()
 	return a;
 }
 
+CCollisionInteractor * CCollisionEngine::addInteractor()
+{
+	CCollisionInteractor *a;
+	ActorAddList.insert(a = new CCollisionInteractor(this));
+	return a;
+}
+
 CCollisionEngine::ObjectList const & CCollisionEngine::getObjects() const
 {
 	return Objects;

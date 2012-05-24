@@ -56,6 +56,7 @@ public:
 	CCollisionObject * addObject();
 	CCollisionElevator * addElevator();
 	CCollisionActor * addActor();
+	CCollisionInteractor * addInteractor();
 
 	ObjectList const & getObjects() const;
 	ActorList const & getActors() const;

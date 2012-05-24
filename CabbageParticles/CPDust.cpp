@@ -11,13 +11,12 @@ void CPDust::setupRenderable() {
 void CPDust::setEngine(CCollisionEngine *engine) {
    ready = 0;
    Engine = engine;
-   Actor = Engine->addActor();
+   Actor = Engine->addInteractor();
    Actor->setTypeId(INTERACTOR_NONCOLLIDERS);
    Actor->setCollisionMask(INTERACTOR_BLOCKS);
-   Actor->getActorAttributes().AirSpeedFactor = 0.3f;
-   Actor->getActorAttributes().AirStandingFriction = 0.81f;
-   Actor->getActorAttributes().GroundStandingFriction = 0.81f;
-   Actor->getActorAttributes().GravityMultiplier = 0.4f;
+   Actor->getAttributes().AirStandingFriction = 0.81f;
+   Actor->getAttributes().GroundStandingFriction = 0.81f;
+   Actor->getAttributes().GravityMultiplier = 0.4f;
 }
 
 void CPDust::setupActor() {
