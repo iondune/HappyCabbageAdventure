@@ -27,7 +27,7 @@ void CDirectionalLightSceneObject::draw(CScene const * const scene, ERenderPass 
 	{
 	case ERP_DEFAULT:
 	case ERP_DEFERRED_OBJECTS:
-	case ERP_MODEL_NORMALS:
+	case ERP_MODELSPACE_NORMALS:
 		break;
 
 	case ERP_DEFERRED_LIGHTS:

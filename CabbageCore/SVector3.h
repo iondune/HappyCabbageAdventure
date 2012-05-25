@@ -20,7 +20,7 @@ class SVector3Reference
 
 public:
 
-	float & X, & Y, & Z;
+	T & X, & Y, & Z;
 
 	SVector3Reference(float & x, float & y, float & z)
 		: X(x), Y(y), Z(z)
@@ -35,7 +35,7 @@ public:
 		return glm::vec3(X, Y, Z);
 	}
 
-	float const operator[] (unsigned int i) const
+	T const operator[] (unsigned int i) const
 	{
 		switch (i)
 		{
@@ -49,7 +49,7 @@ public:
 		}
 	}
 
-	float & operator[] (unsigned int i)
+	T & operator[] (unsigned int i)
 	{
 		switch (i)
 		{
@@ -79,7 +79,7 @@ public:
 
 	SVector3<T> operator / (T const s) const;
 
-	float dotProduct(SVector3Reference const & v) const
+	T dotProduct(SVector3Reference const & v) const
 	{
 		return X*v.X + Y*v.Y + Z*v.Z;
 	}
@@ -93,7 +93,7 @@ public:
 		Z /= len;
 	}
 
-	float length() const
+	T length() const
 	{
 		return sqrtf(X*X + Y*Y + Z*Z);
 	}
@@ -200,7 +200,7 @@ class SVector3 : public SVector3Reference<T>
 
 public:
 
-	float X, Y, Z;
+	T X, Y, Z;
 
 	SVector3()
 		: X(0), Y(0), Z(0), SVector3Reference<T>(X, Y, Z)

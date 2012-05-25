@@ -64,7 +64,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="boost\assert.hpp" />
+    <ClInclude Include="boost\checked_delete.hpp" />
+    <ClInclude Include="boost\config.hpp" />
+    <ClInclude Include="boost\current_function.hpp" />
+    <ClInclude Include="boost\enable_shared_from_this.hpp" />
+    <ClInclude Include="boost\memory_order.hpp" />
+    <ClInclude Include="boost\non_type.hpp" />
+    <ClInclude Include="boost\shared_ptr.hpp" />
+    <ClInclude Include="boost\static_assert.hpp" />
+    <ClInclude Include="boost\throw_exception.hpp" />
+    <ClInclude Include="boost\type.hpp" />
+    <ClInclude Include="boost\version.hpp" />
     <ClInclude Include="CabbageCore.h" />
+    <ClInclude Include="ionEnum.h" />
     <ClInclude Include="SBoundingBox3.h" />
     <ClInclude Include="SColor.h" />
     <ClInclude Include="sigslot\sigslot.h" />

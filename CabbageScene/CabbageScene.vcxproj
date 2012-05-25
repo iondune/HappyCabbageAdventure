@@ -91,13 +91,17 @@
     <ClInclude Include="CSceneManager.h" />
     <ClInclude Include="CSceneObject.h" />
     <ClInclude Include="CShader.h" />
+    <ClInclude Include="CShaderBinding.h" />
     <ClInclude Include="CShaderContext.h" />
     <ClInclude Include="CShaderLoader.h" />
     <ClInclude Include="CTexture.h" />
     <ClInclude Include="CImageLoader.h" />
     <ClInclude Include="CRenderable.h" />
     <ClInclude Include="CTextureLoader.h" />
+    <ClInclude Include="ICameraSceneObject.h" />
     <ClInclude Include="ImageLoaders\Texture.h" />
+    <ClInclude Include="IScene.h" />
+    <ClInclude Include="ISceneObject.Enumerations.h" />
     <ClInclude Include="ISceneObject.h" />
     <ClInclude Include="SAttribute.h" />
     <ClInclude Include="SVertex.h" />
@@ -119,6 +123,7 @@
     <ClCompile Include="CSceneManager.cpp" />
     <ClCompile Include="CSceneObject.cpp" />
     <ClCompile Include="CShader.cpp" />
+    <ClCompile Include="CShaderBinding.cpp" />
     <ClCompile Include="CShaderContext.cpp" />
     <ClCompile Include="CShaderLoader.cpp" />
     <ClCompile Include="CTexture.cpp" />
@@ -126,6 +131,9 @@
     <ClCompile Include="CRenderable.cpp" />
     <ClCompile Include="ImageLoaders\Texture.cpp" />
     <ClCompile Include="ISceneObject.cpp" />
+    <ClCompile Include="ISceneObject.CullingMethods.cpp" />
+    <ClCompile Include="ISceneObject.StaticMethods.cpp" />
+    <ClCompile Include="ISceneObject.UpdateMethods.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />

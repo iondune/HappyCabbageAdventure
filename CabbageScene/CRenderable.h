@@ -30,39 +30,18 @@ protected:
 
     // Implicit shader variables
     glm::mat4 ModelMatrix, NormalMatrix;
-	SUniform<glm::mat4> BindModelMatrix, BindNormalMatrix;
-
-	// Local shader variables
-    std::map<std::string, boost::shared_ptr<IAttribute const> > Attributes;
-    std::map<std::string, boost::shared_ptr<IUniform const> > Uniforms;
-
-	// Loaded shader variables
-	std::map<GLint, boost::shared_ptr<IAttribute const> > LoadedAttributes;
-    std::map<GLint, boost::shared_ptr<IUniform const> > LoadedUniforms;
 
 	// Required data for drawing
-	CShader * Shader[ERP_COUNT];
     CBufferObject<GLushort> * IndexBufferObject;
 
 	// Material attribute used by phong light, etc.
     CMaterial Material;
 	STransformation3 Transformation;
 
-    static CShader * NormalColorShader;
+	// Used for debug data rendering
     CRenderable * NormalObject;
 
-    GLenum DrawType;
-
-    void loadShaderVariables(CShader const * const shader, CScene const * const scene);
-    CScene const * LastLoadedScene;
-    CShader const * LastLoadedShader;
-
-	ISceneObject * Parent;
-
-	std::vector<GLenum> RenderCapabilities;
-	std::vector<GLenum> RemovedRenderCapabilities;
-
-	int DebugCounterThing;
+	ISceneObject * ParentObject;
 
 public:
 

@@ -228,7 +228,7 @@ void CSceneEffectManager::setEffectEnabled(ESceneEffect const Effect, bool const
 	case ESE_SSAO:
 		{
 			SRenderPass normalsPass;
-			normalsPass.Pass = ERP_MODEL_NORMALS;
+			normalsPass.Pass = ERP_MODELSPACE_NORMALS;
 			normalsPass.Target = NormalPassTarget;
 
 			if (Enabled)

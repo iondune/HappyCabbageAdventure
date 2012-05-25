@@ -15,10 +15,50 @@
     <ClInclude Include="sigslot\sigslot.h">
       <Filter>sigslot</Filter>
     </ClInclude>
+    <ClInclude Include="boost\assert.hpp">
+      <Filter>boost</Filter>
+    </ClInclude>
+    <ClInclude Include="boost\checked_delete.hpp">
+      <Filter>boost</Filter>
+    </ClInclude>
+    <ClInclude Include="boost\config.hpp">
+      <Filter>boost</Filter>
+    </ClInclude>
+    <ClInclude Include="boost\current_function.hpp">
+      <Filter>boost</Filter>
+    </ClInclude>
+    <ClInclude Include="boost\enable_shared_from_this.hpp">
+      <Filter>boost</Filter>
+    </ClInclude>
+    <ClInclude Include="boost\memory_order.hpp">
+      <Filter>boost</Filter>
+    </ClInclude>
+    <ClInclude Include="boost\non_type.hpp">
+      <Filter>boost</Filter>
+    </ClInclude>
+    <ClInclude Include="boost\shared_ptr.hpp">
+      <Filter>boost</Filter>
+    </ClInclude>
+    <ClInclude Include="boost\static_assert.hpp">
+      <Filter>boost</Filter>
+    </ClInclude>
+    <ClInclude Include="boost\throw_exception.hpp">
+      <Filter>boost</Filter>
+    </ClInclude>
+    <ClInclude Include="boost\type.hpp">
+      <Filter>boost</Filter>
+    </ClInclude>
+    <ClInclude Include="boost\version.hpp">
+      <Filter>boost</Filter>
+    </ClInclude>
+    <ClInclude Include="ionEnum.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="sigslot">
       <UniqueIdentifier>{521faae6-9fa1-4f3a-8f9b-a619282e221e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="boost">
+      <UniqueIdentifier>{2d87a3e6-92a3-482c-8694-344c29688d79}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
