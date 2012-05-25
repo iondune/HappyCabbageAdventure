@@ -1,39 +1,5 @@
 #include "ISceneObject.h"
 
-#include <iostream>
-
-#include <glm/gtc/matrix_transform.hpp>
-
-//#include "CShaderLoader.h"
-//#include "CSceneManager.h"
-
-
-int ISceneObject::ObjectsCulled = 0;
-int ISceneObject::TotalObjects = 0;
-int ISceneObject::CullChecks = 0;
-
-void ISceneObject::resetObjectCounts()
-{
-	ObjectsCulled = 0;
-	TotalObjects = 0;
-	CullChecks = 0;
-}
-
-int const ISceneObject::getObjectsCulled()
-{
-	return ObjectsCulled;
-}
-
-int const ISceneObject::getTotalObjects()
-{
-	return TotalObjects;
-}
-
-int const ISceneObject::getCullChecks()
-{
-	return CullChecks;
-}
-
 
 ISceneObject::ISceneObject()
 	: DebugDataFlags(0), Visible(true), Parent(0), UseCulling(true), TransformationDirty(false),
@@ -47,17 +13,6 @@ void ISceneObject::checkAbsoluteTransformation()
 	else
 		for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
 			(* it)->checkAbsoluteTransformation();
-}
-
-void ISceneObject::updateAbsoluteTransformation()
-{
-	AbsoluteTransformation = Transformation;
-
-	if (Parent)
-		AbsoluteTransformation = Parent->AbsoluteTransformation* AbsoluteTransformation;
-
-	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
-		(* it)->updateAbsoluteTransformation();
 }
 
 glm::mat4 const & ISceneObject::getAbsoluteTransformation() const
@@ -94,39 +49,6 @@ void ISceneObject::setScale(SVector3f const & scale)
 	Transformation.setScale(scale);
 
 	TransformationDirty = true;
-}
-
-void ISceneObject::update()
-{
-	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
-		(* it)->update();
-}
-
-void ISceneObject::load(CScene const * const Scene, ERenderPass const Pass)
-{
-	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
-		(* it)->load(Scene, Pass);
-}
-
-bool ISceneObject::draw(CScene const * const scene, ERenderPass const Pass)
-{
-	if (! Visible)
-		return false;
-	
-	++ TotalObjects;
-
-	if (isCulled(scene, true))
-	{
-		++ ObjectsCulled;
-		return false;
-	}
-	else
-	{
-		for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
-			(* it)->draw(scene, Pass);
-
-		return ! isCulled(scene, false);
-	}
 }
 
 SBoundingBox3 const & ISceneObject::getBoundingBox() const
@@ -243,87 +165,4 @@ SVector3f const & ISceneObject::getTranslation() const
 SVector3f const & ISceneObject::getScale() const
 {
 	return Scale;
-}
-
-#include "CCamera.h"
-
-bool const ISceneObject::isCulled(CScene const * const Scene, bool const Absolute) const
-{
-	static bool const Inside = false;
-	static bool const Outside = true;
-	++ CullChecks;
-
-	if (! UseCulling || ! Scene->isCullingEnabled())
-		return false;
-
-	int i = 0;
-	int in[6], out[6];
-
-	for (int i = 0; i < 6; ++ i) 
-	{
-		in[i] = 0;
-		out[i] = 0;
-	}
-
-	SBoundingBox3 const & BoundingBox = Absolute ? getAbsoluteBoundingBox() : getBoundingBox();
-
-	for (int i = 0; i < 8; ++ i) 
-	{
-		SVector3f const Center = getBoundingBox().getCorner(i);
-		glm::vec4 Center4(Center.X, Center.Y, Center.Z, 1.f);
-
-		glm::mat4 PVM = (Scene->getActiveCamera()->getProjectionMatrix()*Scene->getActiveCamera()->getViewMatrix()*Transformation());
-		glm::vec4 prime = PVM * Center4;
-
-		float length = glm::length(glm::vec3(prime.x, prime.y, prime.z));
-
-		if (-prime.w < prime.x)
-			in[0] ++;
-		else
-			out[0] ++;
-
-		if (prime.w > prime.x)
-			in[1] ++;
-		else
-			out[1] ++;
-
-		if (-prime.w < prime.y)
-			in[2] ++;
-		else
-			out[2] ++;
-
-		if (prime.w > prime.y)
-			in[3] ++;
-		else
-			out[3] ++;
-
-		if (-prime.w < prime.z)
-			in[4] ++;
-		else
-			out[4] ++;
-
-		if (prime.w > prime.z)
-			in[5] ++;
-		else
-			out[5] ++;
-	}
-
-	for (int i = 0; i < 6; ++ i) 
-	{
-		if (! in[i])
-			return Outside;
-		else if (out[i])
-			return Inside;
-	}
-	return Inside;
-}
-
-bool const ISceneObject::isCullingEnabled() const
-{
-	return UseCulling;
-}
-
-void ISceneObject::setCullingEnabled(bool const culling)
-{
-	UseCulling = culling;
 }

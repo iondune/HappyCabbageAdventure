@@ -63,6 +63,7 @@ struct ERenderCategoryValues
 
 typedef Enum<ERenderCategoryValues> ERenderCategory;
 
+
 class CScene;
 
 class ISceneObject
@@ -143,18 +144,34 @@ public:
 	void setParent(ISceneObject * parent);
 	void removeChildren();
 
+
+	/////////////////////
+	// Culling Methods //
+	/////////////////////
 	
 	bool const isCulled(CScene const * const Scene, bool const Absolute) const;
 	bool const isCullingEnabled() const;
 	void setCullingEnabled(bool const culling);
 
+
+	////////////////////
+	// Update Methods //
+	////////////////////
+
 	void checkAbsoluteTransformation();
 	void updateAbsoluteTransformation();
+
+	bool checkAbsoluteBoundingBox();
+	void updateAbsoluteBoundingBox();
 
 	virtual void update();
 	virtual void load(CScene const * const Scene, ERenderPass const Pass);
 	virtual bool draw(CScene const * const scene, ERenderPass const Pass);
 
+
+	////////////////////
+	// Static Methods //
+	////////////////////
 
 	static void resetObjectCounts();
 

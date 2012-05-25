@@ -157,6 +157,15 @@
     <ClCompile Include="CShaderBinding.cpp">
       <Filter>Shaders</Filter>
     </ClCompile>
+    <ClCompile Include="ISceneObject.UpdateMethods.cpp">
+      <Filter>Scene Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ISceneObject.StaticMethods.cpp">
+      <Filter>Scene Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ISceneObject.CullingMethods.cpp">
+      <Filter>Scene Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Textures">

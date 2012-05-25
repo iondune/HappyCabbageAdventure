@@ -128,6 +128,9 @@
     <ClCompile Include="CRenderable.cpp" />
     <ClCompile Include="ImageLoaders\Texture.cpp" />
     <ClCompile Include="ISceneObject.cpp" />
+    <ClCompile Include="ISceneObject.CullingMethods.cpp" />
+    <ClCompile Include="ISceneObject.StaticMethods.cpp" />
+    <ClCompile Include="ISceneObject.UpdateMethods.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
