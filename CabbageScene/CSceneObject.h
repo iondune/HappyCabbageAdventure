@@ -19,7 +19,7 @@ protected:
 
     GLenum DrawType;
 	
-	CShader * Shader[ERP_COUNT];
+	CShader * Shader[ERenderPass::Count];
 
     void loadShaderVariables(CShader const * const shader, CScene const * const scene);
     CScene const * LastLoadedScene;
