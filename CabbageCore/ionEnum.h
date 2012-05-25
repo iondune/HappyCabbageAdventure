@@ -57,7 +57,7 @@ class Enum : public Domain, public EnumImplementation<Domain>
 public:
 
 	Enum(Element const value)
-		: EnumImplementation<Domain>(value)
+		: EnumImplementation(value)
 	{}
 
 };
