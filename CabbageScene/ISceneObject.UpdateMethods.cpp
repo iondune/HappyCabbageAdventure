@@ -60,14 +60,14 @@ void ISceneObject::load(CScene const * const Scene, ERenderPass const Pass)
 		(* it)->load(Scene, Pass);
 }
 
-bool ISceneObject::draw(CScene const * const scene, ERenderPass const Pass)
+bool ISceneObject::draw(CScene const * const scene, ERenderPass const Pass, bool const CullingEnabled)
 {
 	if (! Visible)
 		return false;
 	
 	++ TotalObjects;
 
-	if (isCulled(scene, true))
+	if (CullingEnabled && UseCulling && isCulled(scene, true))
 	{
 		++ ObjectsCulled;
 		return false;

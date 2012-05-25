@@ -19,52 +19,13 @@
 #include "CTexture.h"
 #include "CShaderContext.h"
 
-struct EDebugDataValues
-{
-	enum Domain
-	{
-		All = 0,
-		Normals = 1,
-		NormalColors = 2
-	};
-};
-
-class EDebugData : public Enum<EDebugDataValues>
-{};
+#include "ISceneObject.Enumerations.h"
 
 
-struct ERenderPassValues
-{
-	enum Domain
-	{
-		Default,
-		ModelSpaceNormals,
-		DeferredColors,
-		DeferredLights,
-		Count
-	};
-};
-
-class ERenderPass : public Enum<ERenderPassValues>
-{};
-
-
-struct ERenderCategoryValues
-{
-	enum Domain
-	{
-		SkyBox,
-		Default,
-		Transparent,
-		PostProcess,
-		Count
-	};
-};
-
-typedef Enum<ERenderCategoryValues> ERenderCategory;
-
-
+// Forward Declarations
 class CScene;
+class ICameraSceneObject;
+
 
 class ISceneObject
 {
@@ -109,12 +70,14 @@ public:
 	STransformation3 const & getTransformation() const;
 
 	void setTranslation(SVector3f const & translation);
+	void setPosition(SVector3f const & translation);
 	void setRotation(SVector3f const & rotation);
 	void setRotation(glm::mat4 const & matrix);
 	void setScale(SVector3f const & scale);
 	
 	SVector3f const & getRotation() const;
 	SVector3f const & getTranslation() const;
+	SVector3f const & getPosition() const;
 	SVector3f const & getScale() const;
 
 
@@ -149,7 +112,7 @@ public:
 	// Culling Methods //
 	/////////////////////
 	
-	bool const isCulled(CScene const * const Scene, bool const Absolute) const;
+	bool const isCulled(ICameraSceneObject const * const Camera, bool const Absolute) const;
 	bool const isCullingEnabled() const;
 	void setCullingEnabled(bool const culling);
 
@@ -166,7 +129,7 @@ public:
 
 	virtual void update();
 	virtual void load(CScene const * const Scene, ERenderPass const Pass);
-	virtual bool draw(CScene const * const scene, ERenderPass const Pass);
+	virtual bool draw(CScene const * const scene, ERenderPass const Pass, bool const CullingEnabled);
 
 
 	////////////////////

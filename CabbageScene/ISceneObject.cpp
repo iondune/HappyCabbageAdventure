@@ -28,6 +28,11 @@ void ISceneObject::setTranslation(SVector3f const & translation)
 	TransformationDirty = true;
 }
 
+void ISceneObject::setPosition(SVector3f const & translation)
+{
+	setTranslation(translation);
+}
+
 void ISceneObject::setRotation(SVector3f const & rotation)
 {
 	Rotation = rotation;
@@ -158,6 +163,11 @@ SVector3f const & ISceneObject::getRotation() const
 }
 
 SVector3f const & ISceneObject::getTranslation() const
+{
+	return Translation;
+}
+
+SVector3f const & ISceneObject::getPosition() const
 {
 	return Translation;
 }

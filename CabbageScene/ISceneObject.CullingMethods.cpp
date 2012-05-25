@@ -1,16 +1,13 @@
 #include "ISceneObject.h"
 
-#include "CCamera.h"
+#include "ICameraSceneObject.h"
 
 
-bool const ISceneObject::isCulled(CScene const * const Scene, bool const Absolute) const
+bool const ISceneObject::isCulled(ICameraSceneObject const * const Camera, bool const Absolute) const
 {
 	static bool const Inside = false;
 	static bool const Outside = true;
 	++ CullChecks;
-
-	if (! UseCulling || ! Scene->isCullingEnabled())
-		return false;
 
 	int i = 0;
 	int in[6], out[6];
@@ -28,7 +25,7 @@ bool const ISceneObject::isCulled(CScene const * const Scene, bool const Absolut
 		SVector3f const Center = getBoundingBox().getCorner(i);
 		glm::vec4 Center4(Center.X, Center.Y, Center.Z, 1.f);
 
-		glm::mat4 PVM = (Scene->getActiveCamera()->getProjectionMatrix()*Scene->getActiveCamera()->getViewMatrix()*Transformation());
+		glm::mat4 PVM = (Camera->getProjectionMatrix()*Camera->getViewMatrix()*Transformation());
 		glm::vec4 prime = PVM * Center4;
 
 		float length = glm::length(glm::vec3(prime.x, prime.y, prime.z));

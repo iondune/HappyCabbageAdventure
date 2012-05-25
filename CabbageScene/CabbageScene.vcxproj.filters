@@ -35,9 +35,6 @@
     <ClInclude Include="CRenderable.h">
       <Filter>Scene Objects</Filter>
     </ClInclude>
-    <ClInclude Include="ISceneObject.h">
-      <Filter>Scene Objects</Filter>
-    </ClInclude>
     <ClInclude Include="CMaterial.h">
       <Filter>Scene Objects</Filter>
     </ClInclude>
@@ -86,6 +83,15 @@
     <ClInclude Include="CShaderBinding.h">
       <Filter>Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="ISceneObject.h">
+      <Filter>Scene Objects\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="ICameraSceneObject.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="ISceneObject.Enumerations.h">
+      <Filter>Scene Objects\Base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CImage.cpp">
@@ -116,9 +122,6 @@
       <Filter>Camera</Filter>
     </ClCompile>
     <ClCompile Include="CRenderable.cpp">
-      <Filter>Scene Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="ISceneObject.cpp">
       <Filter>Scene Objects</Filter>
     </ClCompile>
     <ClCompile Include="CMaterial.cpp">
@@ -157,14 +160,17 @@
     <ClCompile Include="CShaderBinding.cpp">
       <Filter>Shaders</Filter>
     </ClCompile>
-    <ClCompile Include="ISceneObject.UpdateMethods.cpp">
-      <Filter>Scene Objects</Filter>
+    <ClCompile Include="ISceneObject.cpp">
+      <Filter>Scene Objects\Base</Filter>
     </ClCompile>
-    <ClCompile Include="ISceneObject.StaticMethods.cpp">
-      <Filter>Scene Objects</Filter>
+    <ClCompile Include="ISceneObject.UpdateMethods.cpp">
+      <Filter>Scene Objects\Base</Filter>
     </ClCompile>
     <ClCompile Include="ISceneObject.CullingMethods.cpp">
-      <Filter>Scene Objects</Filter>
+      <Filter>Scene Objects\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="ISceneObject.StaticMethods.cpp">
+      <Filter>Scene Objects\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -194,6 +200,9 @@
     </Filter>
     <Filter Include="Util">
       <UniqueIdentifier>{3f98cf25-4926-4d0e-80e9-f6042c52c4a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene Objects\Base">
+      <UniqueIdentifier>{2179d2ba-5262-4cdd-b1b1-425607020ae7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
