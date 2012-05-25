@@ -92,6 +92,9 @@
     <ClInclude Include="ISceneObject.Enumerations.h">
       <Filter>Scene Objects\Base</Filter>
     </ClInclude>
+    <ClInclude Include="IScene.h">
+      <Filter>Scene Management</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CImage.cpp">

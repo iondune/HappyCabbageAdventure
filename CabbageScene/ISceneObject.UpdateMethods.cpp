@@ -1,5 +1,7 @@
 #include "ISceneObject.h"
 
+#include "IScene.h"
+
 
 void ISceneObject::checkAbsoluteTransformation()
 {
@@ -54,20 +56,22 @@ void ISceneObject::update()
 		(* it)->update();
 }
 
-void ISceneObject::load(CScene const * const Scene, ERenderPass const Pass)
+void ISceneObject::load(IScene const * const Scene, ERenderPass const Pass)
 {
 	for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
 		(* it)->load(Scene, Pass);
 }
 
-bool ISceneObject::draw(CScene const * const scene, ERenderPass const Pass, bool const CullingEnabled)
+bool ISceneObject::draw(IScene const * const Scene, ERenderPass const Pass, bool const CullingEnabled)
 {
+	// Non-visible objects and all children are culled
 	if (! Visible)
 		return false;
 	
 	++ TotalObjects;
 
-	if (CullingEnabled && UseCulling && isCulled(scene, true))
+	// If culling is enabled both globally and locally, do an absolute culling check
+	if (CullingEnabled && UseCulling && isCulled(Scene->getActiveCamera(), true))
 	{
 		++ ObjectsCulled;
 		return false;
@@ -75,8 +79,9 @@ bool ISceneObject::draw(CScene const * const scene, ERenderPass const Pass, bool
 	else
 	{
 		for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
-			(* it)->draw(scene, Pass);
+			(* it)->draw(Scene, Pass, CullingEnabled);
 
-		return ! isCulled(scene, false);
+		// Relative culling check (this object only)
+		return ! isCulled(Scene->getActiveCamera(), false);
 	}
 }

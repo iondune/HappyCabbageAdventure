@@ -14,8 +14,8 @@ public:
 	virtual SVector3f const & getLookDirecton() const =0;
 	virtual SVector3f const getLookAtTarget() const =0;
 
-	void setLookDirection(SVector3f const & lookDirection) =0;
-	void setLookAtTarget(SVector3f const & lookAtTarget) =0;
+	virtual void setLookDirection(SVector3f const & lookDirection) =0;
+	virtual void setLookAtTarget(SVector3f const & lookAtTarget) =0;
 
 	virtual glm::mat4 const & getViewMatrix() const =0;
 	virtual glm::mat4 const & getProjectionMatrix() const =0;

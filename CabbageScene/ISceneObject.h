@@ -23,7 +23,7 @@
 
 
 // Forward Declarations
-class CScene;
+class IScene;
 class ICameraSceneObject;
 
 
@@ -128,8 +128,8 @@ public:
 	void updateAbsoluteBoundingBox();
 
 	virtual void update();
-	virtual void load(CScene const * const Scene, ERenderPass const Pass);
-	virtual bool draw(CScene const * const scene, ERenderPass const Pass, bool const CullingEnabled);
+	virtual void load(IScene const * const Scene, ERenderPass const Pass);
+	virtual bool draw(IScene const * const scene, ERenderPass const Pass, bool const CullingEnabled);
 
 
 	////////////////////

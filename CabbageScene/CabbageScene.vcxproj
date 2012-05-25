@@ -100,6 +100,7 @@
     <ClInclude Include="CTextureLoader.h" />
     <ClInclude Include="ICameraSceneObject.h" />
     <ClInclude Include="ImageLoaders\Texture.h" />
+    <ClInclude Include="IScene.h" />
     <ClInclude Include="ISceneObject.Enumerations.h" />
     <ClInclude Include="ISceneObject.h" />
     <ClInclude Include="SAttribute.h" />
