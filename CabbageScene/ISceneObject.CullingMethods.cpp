@@ -5,6 +5,8 @@
 
 bool const ISceneObject::isCulled(ICameraSceneObject const * const Camera, bool const Absolute) const
 {
+	// TODO: Improve this' performance A LOT
+
 	static bool const Inside = false;
 	static bool const Outside = true;
 	++ CullChecks;
