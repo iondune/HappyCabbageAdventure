@@ -502,7 +502,7 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                         blockDepth++;
                 }
                 if (cDown == 7) { //adjustiing speed for elevators
-                    if (eleSpeed < 6)
+                    if (eleSpeed < 20)
                         eleSpeed++;
                 }
                 if (cDown == 8) { //adjustiing range for elevators
@@ -1028,7 +1028,7 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
         printf("making breakable blocks\n");
     }
     else if (cDown == 5)
-        placeables.push_back(tempPlaceable = new CElementBlockDeath(SRect2f(x,y,1,1),1,t,0.0f,0.0f));
+        placeables.push_back(tempPlaceable = new CElementBlockDeath(SRect2f(x,y,w,h),1,t,0.0f,0.0f));
     else if (cDown < 10 && cDown >=6 && uniType != -5) {
         placeables.push_back(tempPlaceable = new CElementBlockElevator(SRect2f(x,y,w,h),1,t,eleRange, eleSpeed ,eleStyle));
         printf("shit was here \n");
