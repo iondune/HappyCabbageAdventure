@@ -33,8 +33,7 @@ public:
 
 	void bind(GLuint const handle, CShaderContext & shaderContext) const
 	{
-		if (Value)
-			shaderContext.uniform(handle, * Value);
+		shaderContext.uniform(handle, getValue());
 	}
 
 	void bind(GLuint const handle) const
@@ -69,6 +68,7 @@ void SUniform<GLint>::bind(GLuint const handle) const
 	glUniform1i(handle, getValue());
 }
 
+/*
 void SUniform<SVector2Reference<GLint> >::bind(GLuint const handle) const
 {
 	glUniform2i(handle, getValue().X, getValue().Y);
@@ -78,6 +78,7 @@ void SUniform<SVector3Reference<GLint> >::bind(GLuint const handle) const
 {
 	glUniform3i(handle, getValue().X, getValue().Y, getValue().Z);
 }
+*/ // Temporarily removed because of compiler warnings (needs to be implemented in ShaderContext as well)
 
 void SUniform<glm::mat4>::bind(GLuint const handle) const
 {
@@ -138,7 +139,7 @@ public:
 template <typename T>
 static boost::shared_ptr<IUniform const> BindUniform(T const & uniform)
 {
-	return boost::shared_ptr<IUniform const>(new SUniform<T>(uniform));
+	return boost::shared_ptr<IUniform const>(new SUniformReference<T>(uniform));
 }
 
 #endif

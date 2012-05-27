@@ -85,6 +85,21 @@ void CShaderContext::uniform(GLuint const uniformHandle, STransformation3 const 
 	glUniformMatrix4fv(uniformHandle, 1, GL_FALSE, glm::value_ptr(uniform()));
 }
 
+void CShaderContext::uniform(GLuint const uniformHandle, SVector2f const & uniform)
+{
+    glUniform3f(uniformHandle, uniform.X, uniform.Y, uniform.Z);
+}
+
+void CShaderContext::uniform(GLuint const uniformHandle, SVector3f const & uniform)
+{
+    glUniform3f(uniformHandle, uniform.X, uniform.Y, uniform.Z);
+}
+
+void CShaderContext::uniform(GLuint const uniformHandle, SVector2f const & uniform)
+{
+    glUniform3f(uniformHandle, uniform.X, uniform.Y, uniform.Z);
+}
+
 void CShaderContext::uniform(GLuint const uniformHandle, SVector3f const & uniform)
 {
     glUniform3f(uniformHandle, uniform.X, uniform.Y, uniform.Z);

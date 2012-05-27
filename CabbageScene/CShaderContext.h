@@ -50,7 +50,10 @@ public:
     void uniform(GLuint const uniformHandle, int const uniform);
     void uniform(GLuint const uniformHandle, glm::mat4 const & uniform);
     void uniform(GLuint const uniformHandle, STransformation3 const & uniform);
+    void uniform(GLuint const uniformHandle, SVector2f const & uniform);
     void uniform(GLuint const uniformHandle, SVector3f const & uniform);
+    void uniform(GLuint const uniformHandle, SVector2Reference<float> const & uniform);
+    void uniform(GLuint const uniformHandle, SVector3Reference<float> const & uniform);
     void uniform(GLuint const uniformHandle, SColor const & uniform);
 
 	template <typename T>

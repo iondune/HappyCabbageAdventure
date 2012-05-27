@@ -32,20 +32,11 @@
     <ClInclude Include="CBufferObject.h">
       <Filter>Meshes</Filter>
     </ClInclude>
-    <ClInclude Include="CRenderable.h">
-      <Filter>Scene Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="CMaterial.h">
-      <Filter>Scene Objects</Filter>
-    </ClInclude>
     <ClInclude Include="SUniform.h">
       <Filter>Shaders</Filter>
     </ClInclude>
     <ClInclude Include="SAttribute.h">
       <Filter>Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="CSceneObject.h">
-      <Filter>Scene Objects</Filter>
     </ClInclude>
     <ClInclude Include="CMeshSceneObject.h">
       <Filter>Scene Objects</Filter>
@@ -74,26 +65,35 @@
     <ClInclude Include="CDeferredShadingManager.h">
       <Filter>Scene Management</Filter>
     </ClInclude>
-    <ClInclude Include="CPointLightSceneObject.h">
-      <Filter>Scene Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="CDirectionalLightSceneObject.h">
-      <Filter>Scene Objects</Filter>
-    </ClInclude>
     <ClInclude Include="CShaderBinding.h">
       <Filter>Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="ISceneObject.h">
-      <Filter>Scene Objects\Base</Filter>
     </ClInclude>
     <ClInclude Include="ICameraSceneObject.h">
       <Filter>Camera</Filter>
     </ClInclude>
-    <ClInclude Include="ISceneObject.Enumerations.h">
-      <Filter>Scene Objects\Base</Filter>
-    </ClInclude>
     <ClInclude Include="IScene.h">
       <Filter>Scene Management</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneObject.h">
+      <Filter>Scene Objects\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CPointLightSceneObject.h">
+      <Filter>Scene Objects\Deferred</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirectionalLightSceneObject.h">
+      <Filter>Scene Objects\Deferred</Filter>
+    </ClInclude>
+    <ClInclude Include="CMaterial.h">
+      <Filter>Scene Objects\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="ISceneObject.Enumerations.h">
+      <Filter>Scene Objects\Base\ISceneObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ISceneObject.h">
+      <Filter>Scene Objects\Base\ISceneObject</Filter>
+    </ClInclude>
+    <ClInclude Include="CRenderable.h">
+      <Filter>Scene Objects\Base\CRenderable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -124,15 +124,6 @@
     <ClCompile Include="CCamera.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
-    <ClCompile Include="CRenderable.cpp">
-      <Filter>Scene Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="CMaterial.cpp">
-      <Filter>Scene Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="CSceneObject.cpp">
-      <Filter>Scene Objects</Filter>
-    </ClCompile>
     <ClCompile Include="CMeshSceneObject.cpp">
       <Filter>Scene Objects</Filter>
     </ClCompile>
@@ -154,26 +145,38 @@
     <ClCompile Include="CDeferredShadingManager.cpp">
       <Filter>Scene Management</Filter>
     </ClCompile>
-    <ClCompile Include="CPointLightSceneObject.cpp">
-      <Filter>Scene Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="CDirectionalLightSceneObject.cpp">
-      <Filter>Scene Objects</Filter>
-    </ClCompile>
     <ClCompile Include="CShaderBinding.cpp">
       <Filter>Shaders</Filter>
     </ClCompile>
-    <ClCompile Include="ISceneObject.cpp">
+    <ClCompile Include="CSceneObject.cpp">
       <Filter>Scene Objects\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CPointLightSceneObject.cpp">
+      <Filter>Scene Objects\Deferred</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirectionalLightSceneObject.cpp">
+      <Filter>Scene Objects\Deferred</Filter>
+    </ClCompile>
+    <ClCompile Include="CMaterial.cpp">
+      <Filter>Scene Objects\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="ISceneObject.cpp">
+      <Filter>Scene Objects\Base\ISceneObject</Filter>
     </ClCompile>
     <ClCompile Include="ISceneObject.UpdateMethods.cpp">
-      <Filter>Scene Objects\Base</Filter>
+      <Filter>Scene Objects\Base\ISceneObject</Filter>
     </ClCompile>
     <ClCompile Include="ISceneObject.CullingMethods.cpp">
-      <Filter>Scene Objects\Base</Filter>
+      <Filter>Scene Objects\Base\ISceneObject</Filter>
     </ClCompile>
     <ClCompile Include="ISceneObject.StaticMethods.cpp">
-      <Filter>Scene Objects\Base</Filter>
+      <Filter>Scene Objects\Base\ISceneObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CRenderable.cpp">
+      <Filter>Scene Objects\Base\CRenderable</Filter>
+    </ClCompile>
+    <ClCompile Include="CRenderable.UpdateMethods.cpp">
+      <Filter>Scene Objects\Base\CRenderable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +209,15 @@
     </Filter>
     <Filter Include="Scene Objects\Base">
       <UniqueIdentifier>{2179d2ba-5262-4cdd-b1b1-425607020ae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene Objects\Deferred">
+      <UniqueIdentifier>{93fd6dde-66ff-446c-a6f0-699f6aa5f62a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene Objects\Base\ISceneObject">
+      <UniqueIdentifier>{243642ab-b5ea-4f0c-b9ad-df5774f2cba1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene Objects\Base\CRenderable">
+      <UniqueIdentifier>{acacb4b1-a4f2-40c3-9606-8d7c3816a405}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

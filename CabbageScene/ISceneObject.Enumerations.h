@@ -15,8 +15,7 @@ struct EDebugDataValues
 	};
 };
 
-class EDebugData : public Enum<EDebugDataValues>
-{};
+typedef Enum<EDebugDataValues> EDebugData;
 
 
 struct ERenderPassValues
@@ -31,8 +30,8 @@ struct ERenderPassValues
 	};
 };
 
-class ERenderPass : public Enum<ERenderPassValues>
-{};
+typedef Enum<ERenderPassValues> ERenderPass;
+
 
 
 struct ERenderCategoryValues

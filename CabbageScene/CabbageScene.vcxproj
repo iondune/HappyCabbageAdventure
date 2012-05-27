@@ -118,6 +118,7 @@
     <ClCompile Include="CMeshLoader.cpp" />
     <ClCompile Include="CMeshSceneObject.cpp" />
     <ClCompile Include="CPointLightSceneObject.cpp" />
+    <ClCompile Include="CRenderable.UpdateMethods.cpp" />
     <ClCompile Include="CRenderBufferObject.cpp" />
     <ClCompile Include="CSceneEffectManager.cpp" />
     <ClCompile Include="CSceneManager.cpp" />

@@ -10,20 +10,13 @@
 class CSceneObject : public ISceneObject
 {
 
+public:
+
 protected:
 
 	std::vector<CRenderable *> Renderables;
-
-	std::vector<GLenum> RenderCapabilities;
-	std::vector<GLenum> RemovedRenderCapabilities;
-
-    GLenum DrawType;
 	
 	CShader * Shader[ERenderPass::Count];
-
-    void loadShaderVariables(CShader const * const shader, CScene const * const scene);
-    CScene const * LastLoadedScene;
-    CShader const * LastLoadedShader;
 
 	// Local shader variables
     std::map<std::string, boost::shared_ptr<IAttribute const> > Attributes;
@@ -51,13 +44,6 @@ public:
 	void setTexture(unsigned int const Layer, CTexture * Texture, unsigned int const Renderable);
 	void setTexture(unsigned int const Layer, std::string const & Texture);
 	void setTexture(unsigned int const Layer, std::string const & Texture, unsigned int const Renderable);
-
-	template <typename T>
-	void addUniform(std::string const & label, T const & uniform)
-	{
-		for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
-			(* it)->addUniform(label, uniform);
-	}
 
 	void addAttribute(std::string const & label, boost::shared_ptr<IAttribute const> const attribute);
     void addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform);
