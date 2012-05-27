@@ -353,7 +353,7 @@
 </CBlock>
 <CEnemy X ="70" Y ="3" height ="1" width ="1" type ="17">
 </CEnemy>
-<CFlag X ="192" Y ="2" height ="4" width ="1" secret ="0">
+<CFlag X ="192" Y ="4" height ="4" width ="1" secret ="0">
 </CFlag>
 <CEnemy X ="76" Y ="3" height ="1" width ="1" type ="17">
 </CEnemy>
@@ -533,8 +533,6 @@
 </CEnemy>
 <CEnemy X ="28" Y ="27" height ="1" width ="1" type ="0">
 </CEnemy>
-<CBlock X ="29" Y ="27" height ="1" width ="1" depth ="1" texture ="0">
-</CBlock>
 <CEnemy X ="30" Y ="27" height ="1" width ="1" type ="9">
 </CEnemy>
 <CEnemy X ="31" Y ="27" height ="1" width ="1" type ="9">
@@ -603,16 +601,6 @@
 </CEnemy>
 <CEnemy X ="63" Y ="27" height ="1" width ="1" type ="9">
 </CEnemy>
-<CBlock X ="64" Y ="27" height ="1" width ="1" depth ="1" texture ="0">
-</CBlock>
-<CPItem X ="65" Y ="27" type ="2">
-</CPItem>
-<CPItem X ="66" Y ="27" type ="2">
-</CPItem>
-<CPItem X ="67" Y ="27" type ="2">
-</CPItem>
-<CPItem X ="68" Y ="27" type ="2">
-</CPItem>
 <CPItem X ="69" Y ="27" type ="2">
 </CPItem>
 <CPItem X ="70" Y ="27" type ="2">
@@ -653,68 +641,10 @@
 </CPItem>
 <CBlock X ="88" Y ="27" height ="1" width ="1" depth ="1" texture ="2">
 </CBlock>
-<CFlag X ="190" Y ="29" height ="4" width ="1" secret ="1">
+<CFlag X ="190" Y ="31" height ="4" width ="1" secret ="1">
 </CFlag>
-<CBlock X ="0" Y ="27" height ="1" width ="1" depth ="1" texture ="2">
-</CBlock>
 <CEnemy X ="2" Y ="27" height ="1" width ="1" type ="0">
 </CEnemy>
-<CEnemy X ="90" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="89" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="92" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="91" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="93" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="97" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="99" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="101" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="94" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="96" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="95" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="98" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="100" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="102" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="105" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="107" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="108" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="109" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="104" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="103" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="106" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="110" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="114" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="115" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="112" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="113" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CEnemy X ="111" Y ="27" height ="1" width ="1" type ="3">
-</CEnemy>
-<CBlock X ="117" Y ="27" height ="1" width ="1" depth ="1" texture ="2">
-</CBlock>
 <CBlock X ="117" Y ="28" height ="1" width ="1" depth ="1" texture ="2">
 </CBlock>
 <CBlock X ="117" Y ="29" height ="1" width ="1" depth ="1" texture ="2">
@@ -833,3 +763,11 @@
 </CBlock>
 <CBlock X ="155" Y ="31" height ="1" width ="1" depth ="1" texture ="1">
 </CBlock>
+<CBreakable X ="0" Y ="27" height ="1" width ="1">
+</CBreakable>
+<CBreakable X ="29" Y ="27" height ="1" width ="1">
+</CBreakable>
+<CBreakable X ="64" Y ="27" height ="1" width ="1">
+</CBreakable>
+<CBreakable X ="117" Y ="27" height ="1" width ="1">
+</CBreakable>
