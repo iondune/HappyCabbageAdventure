@@ -121,6 +121,7 @@
     <ClCompile Include="CSceneEffectManager.cpp" />
     <ClCompile Include="CSceneManager.cpp" />
     <ClCompile Include="CSceneObject.cpp" />
+    <ClCompile Include="CSceneObject.UpdateMethods.cpp" />
     <ClCompile Include="CShader.cpp" />
     <ClCompile Include="CShaderBinding.cpp" />
     <ClCompile Include="CShaderContext.cpp" />

@@ -17,31 +17,6 @@ void CSceneObject::removeRenderable(CRenderable * Renderable)
 	Renderables.erase(std::remove(Renderables.begin(), Renderables.end(), Renderable), Renderables.end());
 }
 
-void CSceneObject::draw(CScene const * const scene, ERenderPass const Pass)
-{
-	if (! Visible)
-		return;
-
-	ISceneObject::draw(scene, Pass);
-
-	switch (Pass)
-	{
-	case ERP_DEFAULT:
-	case ERP_DEFERRED_OBJECTS:
-		for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
-			(* it)->draw(scene, Pass);
-		break;
-
-	case ERP_MODELSPACE_NORMALS:
-		for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
-			(* it)->drawNormals(scene);
-		break;
-
-	case ERP_DEFERRED_LIGHTS:
-		break;
-	}
-}
-
 void CSceneObject::setShader(ERenderPass const Pass, CShader * shader)
 {
 	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
@@ -158,30 +133,4 @@ CShader * CSceneObject::getShader(ERenderPass const Pass)
 			return 0;
 	}
 	return Shader;
-}
-
-void CSceneObject::load(CScene const * const Scene, ERenderPass const Pass)
-{
-	ISceneObject::load(Scene, Pass);
-
-	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
-	{
-		(* it)->load(Scene, Pass);
-	}
-}
-
-void CSceneObject::addRenderCapability(GLenum const capability)
-{
-	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
-	{
-		(* it)->addRenderCapability(capability);
-	}
-}
-
-void CSceneObject::removeRenderCapability(GLenum const capability)
-{
-	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
-	{
-		(* it)->removeRenderCapability(capability);
-	}
 }

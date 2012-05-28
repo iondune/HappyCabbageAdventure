@@ -4,9 +4,9 @@
 #include "ISceneObject.h"
 #include "CRenderable.h"
 
-/*!
-* Standard implementation of ISceneObject, renders a set of CRenderables
-*/
+//! 
+//! Standard implementation of ISceneObject, renders a set of CRenderables
+//! 
 class CSceneObject : public ISceneObject
 {
 
@@ -93,9 +93,9 @@ public:
 	////////////////////
 	// Update Methods //
 	////////////////////
-
-	virtual void draw(CScene const * const scene, ERenderPass const Pass);
-	virtual void load(CScene const * const Scene, ERenderPass const Pass);
+	
+	virtual void load(IScene const * const Scene, ERenderPass const Pass);
+	virtual bool draw(IScene const * const Scene, ERenderPass const Pass, bool const CullingEnabled);
 
 };
 

@@ -74,9 +74,6 @@
     <ClInclude Include="IScene.h">
       <Filter>Scene Management</Filter>
     </ClInclude>
-    <ClInclude Include="CSceneObject.h">
-      <Filter>Scene Objects\Base</Filter>
-    </ClInclude>
     <ClInclude Include="CPointLightSceneObject.h">
       <Filter>Scene Objects\Deferred</Filter>
     </ClInclude>
@@ -91,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="CRenderable.h">
       <Filter>Scene Objects\Base\CRenderable</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneObject.h">
+      <Filter>Scene Objects\Base\CSceneObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -145,9 +145,6 @@
     <ClCompile Include="CShaderBinding.cpp">
       <Filter>Shaders</Filter>
     </ClCompile>
-    <ClCompile Include="CSceneObject.cpp">
-      <Filter>Scene Objects\Base</Filter>
-    </ClCompile>
     <ClCompile Include="CPointLightSceneObject.cpp">
       <Filter>Scene Objects\Deferred</Filter>
     </ClCompile>
@@ -171,6 +168,12 @@
     </ClCompile>
     <ClCompile Include="CRenderable.UpdateMethods.cpp">
       <Filter>Scene Objects\Base\CRenderable</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneObject.cpp">
+      <Filter>Scene Objects\Base\CSceneObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneObject.UpdateMethods.cpp">
+      <Filter>Scene Objects\Base\CSceneObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -212,6 +215,9 @@
     </Filter>
     <Filter Include="Scene Objects\Base\CRenderable">
       <UniqueIdentifier>{acacb4b1-a4f2-40c3-9606-8d7c3816a405}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene Objects\Base\CSceneObject">
+      <UniqueIdentifier>{ee1a521f-7810-46bb-af48-018e984be2e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
