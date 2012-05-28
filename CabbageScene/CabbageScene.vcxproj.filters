@@ -83,9 +83,6 @@
     <ClInclude Include="CDirectionalLightSceneObject.h">
       <Filter>Scene Objects\Deferred</Filter>
     </ClInclude>
-    <ClInclude Include="CMaterial.h">
-      <Filter>Scene Objects\Base</Filter>
-    </ClInclude>
     <ClInclude Include="ISceneObject.Enumerations.h">
       <Filter>Scene Objects\Base\ISceneObject</Filter>
     </ClInclude>
@@ -156,9 +153,6 @@
     </ClCompile>
     <ClCompile Include="CDirectionalLightSceneObject.cpp">
       <Filter>Scene Objects\Deferred</Filter>
-    </ClCompile>
-    <ClCompile Include="CMaterial.cpp">
-      <Filter>Scene Objects\Base</Filter>
     </ClCompile>
     <ClCompile Include="ISceneObject.cpp">
       <Filter>Scene Objects\Base\ISceneObject</Filter>
