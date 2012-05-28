@@ -82,4 +82,7 @@ void CRenderable::load(IScene const * const Scene, ERenderPass const Pass)
 
 	for (std::map<std::string, boost::shared_ptr<IAttribute const> >::iterator it = Attributes.begin(); it != Attributes.end(); ++ it)
 		LoadedAttributes[std::pair<std::string, GLuint>(it->first, ParentObject->getShader(Pass))] = it->second;
+
+	for (std::map<std::string, boost::shared_ptr<IUniform const> >::iterator it = Uniforms.begin(); it != Uniforms.end(); ++ it)
+		LoadedUniforms[std::pair<std::string, GLuint>(it->first, ParentObject->getShader(Pass))] = it->second;
 }
