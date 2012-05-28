@@ -11,8 +11,8 @@
 #include "SUniform.h"
 
 
-CRenderable::CRenderable(ISceneObject * parent)
-	: DrawElementType(EDrawElementType::Triangles), NormalObject(0), IndexBufferObject(0), ParentObject(parent)
+CRenderable::CRenderable(CSceneObject * parent)
+	: DrawElementType(EDrawElementType::Triangles), NormalObject(0), IndexBufferObject(0), ParentObject(parent), ElementCount(0)
 {}
 
 CRenderable::SMaterial const & CRenderable::getMaterial() const

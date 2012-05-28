@@ -35,7 +35,7 @@
 #include <GL\glew.h>
 #endif
 
-#include "ISceneObject.h"
+#include "ISceneObject.Enumerations.h"
 
 
 struct EDrawElementTypeValues
@@ -58,7 +58,8 @@ class CBufferObject;
 class CTexture;
 class IAttribute;
 class IUniform;
-
+class IScene;
+class CSceneObject;
 
 //! 
 //! A CRenderable is some collection of buffer objects which can be drawn by a single OpenGL draw call.
@@ -85,12 +86,12 @@ public:
 	};
 
 	// Local shader variables
-    std::map<std::string, boost::shared_ptr<IAttribute const> > Attributes;
-    std::map<std::string, boost::shared_ptr<IUniform const> > Uniforms;
+	std::map<std::string, boost::shared_ptr<IAttribute const> > Attributes;
+	std::map<std::string, boost::shared_ptr<IUniform const> > Uniforms;
 
 	// Loaded shader variables
-	std::map<std::pair<GLint, std::string>, boost::shared_ptr<IAttribute const> > LoadedAttributes;
-    std::map<std::pair<GLint, std::string>, boost::shared_ptr<IUniform const> > LoadedUniforms;
+	std::map<std::pair<GLuint, std::string>, boost::shared_ptr<IAttribute const> > LoadedAttributes;
+	std::map<std::pair<GLuint, std::string>, boost::shared_ptr<IUniform const> > LoadedUniforms;
 
 protected:
 
@@ -99,6 +100,9 @@ protected:
 
 	//! Index buffer for indexed drawing
 	CBufferObject<GLushort> * IndexBufferObject; // TODO: Appropriate type names for this! (or abstraction)
+
+	//! Number of elements drawn when no IndexBufferObject specified
+	unsigned int ElementCount;
 
 	//! Material attribute used by phong light, etc.
 	SMaterial Material;
@@ -110,7 +114,7 @@ protected:
 	CRenderable * NormalObject;
 
 	//! Encapsulating Scene Object
-	ISceneObject * ParentObject;
+	CSceneObject * ParentObject;
 
 	//! Type of elements to draw
 	EDrawElementType DrawElementType;
@@ -118,7 +122,7 @@ protected:
 public:
 
 	//! Constructor
-	CRenderable(ISceneObject * parent);
+	CRenderable(CSceneObject * parent);
 
 
 	////////////////
