@@ -7,16 +7,6 @@
 CSceneObject::CSceneObject()
 {}
 
-void CSceneObject::addRenderable(CRenderable * Renderable)
-{
-	Renderables.push_back(Renderable);
-}
-
-void CSceneObject::removeRenderable(CRenderable * Renderable)
-{
-	Renderables.erase(std::remove(Renderables.begin(), Renderables.end(), Renderable), Renderables.end());
-}
-
 void CSceneObject::setShader(ERenderPass const Pass, CShader * shader)
 {
 	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)

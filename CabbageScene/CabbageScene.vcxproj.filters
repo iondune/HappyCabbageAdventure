@@ -175,6 +175,9 @@
     <ClCompile Include="CSceneObject.UpdateMethods.cpp">
       <Filter>Scene Objects\Base\CSceneObject</Filter>
     </ClCompile>
+    <ClCompile Include="CSceneObject.RenderableManagement.cpp">
+      <Filter>Scene Objects\Base\CSceneObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Textures">
