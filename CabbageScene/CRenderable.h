@@ -132,6 +132,8 @@ public:
 	SMaterial const & getMaterial() const;
 	void setMaterial(SMaterial const &);
 
+	void setTexture(unsigned int const Layer, CTexture * const Texture);
+
 	CBufferObject<GLushort> * getIndexBufferObject();
 	void setIndexBufferObject(CBufferObject<GLushort> * indexBufferObject);
 

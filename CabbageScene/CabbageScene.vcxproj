@@ -120,6 +120,7 @@
     <ClCompile Include="CRenderBufferObject.cpp" />
     <ClCompile Include="CSceneEffectManager.cpp" />
     <ClCompile Include="CSceneManager.cpp" />
+    <ClCompile Include="CSceneObject.ContextManagement.cpp" />
     <ClCompile Include="CSceneObject.cpp" />
     <ClCompile Include="CSceneObject.RenderableManagement.cpp" />
     <ClCompile Include="CSceneObject.UpdateMethods.cpp" />

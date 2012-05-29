@@ -20,6 +20,15 @@ CRenderable::SMaterial const & CRenderable::getMaterial() const
 	return Material;
 }
 
+void CRenderable::setTexture(unsigned int const Layer, CTexture * const Texture)
+{
+	if (Layer >= Material.Textures.size())
+		Material.Textures.resize(Layer + 1, 0);
+	Material.Textures[Layer] = Texture;
+
+	// TO DO : Cull Nulls from the end
+}
+
 EDrawElementType const CRenderable::getDrawType() const
 {
 	return DrawElementType;
