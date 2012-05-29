@@ -157,7 +157,7 @@ void CElementPlayer::updatePlayerAction() {
       Action = Standing;
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::None);
    }
-   if(CApplication::get().getEventManager().IsKeyDown[SDLK_SPACE]) {
+   if(CApplication::get().getEventManager().IsKeyDown[SDLK_SPACE] || CApplication::get().getEventManager().IsKeyDown[SDLK_w]) {
       Action = Jumping;
       PhysicsEngineObject->setJumping(true);
 
@@ -270,13 +270,13 @@ void CElementPlayer::updatePhysicsEngineObject(float time) {
 }
 
 void CElementPlayer::updateSceneObject(float time) {
-   if(!jWasDown && CApplication::get().getEventManager().IsKeyDown[SDLK_j]) {
+   /*if(!jWasDown && CApplication::get().getEventManager().IsKeyDown[SDLK_j]) {
       int newSubView = View->getSubView();
       newSubView++;
       if(newSubView > 4)
          newSubView = 0;
       View->useSubView(newSubView);
-   }
+   }*/
    jWasDown = CApplication::get().getEventManager().IsKeyDown[SDLK_j];
 
    if(Recovering > 0.0f) {
