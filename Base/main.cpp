@@ -28,7 +28,7 @@ int main(int argc, char * argv[])
 {
    CApplication & Application = CApplication::get();
    //Application.init(SPosition2(800, 600));
-   Application.init(SPosition2(1200, 900));
+   Application.init(SPosition2(1280, 800));
 
    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
