@@ -53,9 +53,9 @@ void CShaderContext::bindBufferObject(std::string const & label, GLuint const Bu
 
 void CShaderContext::bindBufferObject(GLuint const attribHandle, GLuint const bufferHandle, GLuint const elementSize)
 {
-    glEnableVertexAttribArray(attribHandle);
-    glBindBuffer(GL_ARRAY_BUFFER, bufferHandle);
-    glVertexAttribPointer(attribHandle, elementSize, GL_FLOAT, GL_FALSE, 0, 0);
+    glEnableVertexAttribArray(attribHandle); // Select Shader Attribute
+    glBindBuffer(GL_ARRAY_BUFFER, bufferHandle); // Bind Attribute Buffer
+    glVertexAttribPointer(attribHandle, elementSize, GL_FLOAT, GL_FALSE, 0, 0); // Sync Buffer Data
 
     EnabledVertexAttribArrays.push_back(attribHandle);
 }
@@ -131,10 +131,12 @@ void CShaderContext::bindTexture(std::string const & Label, CTexture const * con
 
 void CShaderContext::bindTexture(GLuint const uniformHandle, GLuint const TextureHandle)
 {
-	glEnable(GL_TEXTURE_2D);
-	glActiveTexture(GL_TEXTURE0 + TextureCounter);
-	glBindTexture(GL_TEXTURE_2D, TextureHandle);
-	glUniform1i(uniformHandle, TextureCounter ++);
+	if (! TextureCounter)
+		glEnable(GL_TEXTURE_2D);
+
+	glActiveTexture(GL_TEXTURE0 + TextureCounter); // Select Active Texture Slot
+	glBindTexture(GL_TEXTURE_2D, TextureHandle); // Bind Texture Handle
+	glUniform1i(uniformHandle, TextureCounter ++); // Bind Sampler for Texture Uniform
 }
 
 void CShaderContext::bindTexture(std::string const & Label, GLuint const TextureHandle)
