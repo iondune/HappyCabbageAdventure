@@ -25,7 +25,6 @@ class CSceneEffectManager
 protected:
 
 	CSceneManager * SceneManager;
-
 	int EnabledEffects;
 
 	// SSAO Stuff
@@ -76,6 +75,9 @@ public:
 
 		bool const operator == (SRenderPass const & rhs);
 	
+      SRenderPass() : Target(0), Pass(ERP_DEFAULT) {
+         
+      }
 	};
 
 	class SPostProcessPass
