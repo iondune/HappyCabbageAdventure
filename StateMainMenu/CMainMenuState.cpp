@@ -123,6 +123,7 @@ void CMainMenuState::setupSoundtrack() {
    Mix_PlayMusic(Soundtrack, -1);
 }
 
+#include "CSceneEffectManager.h"
 void CMainMenuState::begin()
 {
    SPosition2 size = Application.getWindowSize();
@@ -149,6 +150,7 @@ void CMainMenuState::begin()
 
    RenderLogo->setCullingEnabled(false);
    RenderBackground->setCullingEnabled(false);
+   CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_BLOOM, true);
 }
 
 void CMainMenuState::end()

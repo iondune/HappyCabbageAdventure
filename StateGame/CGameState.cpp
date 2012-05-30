@@ -5,8 +5,8 @@ CGameState::CGameState() {
 
 }
 
+#include "CSceneEffectManager.h"
 void CGameState::begin() {
-   printf("Here in begin\n");
    Level = &CGameLevelLoader::loadLevel(LevelName);
    Level->setPlayerInformation(Stats);
 
@@ -16,6 +16,7 @@ void CGameState::begin() {
    Level->printInformation();
 
    Level->setupSoundtrack();
+   CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_BLOOM, true);
 }
 
 void CGameState::OnRenderStart(float const Elapsed) {
