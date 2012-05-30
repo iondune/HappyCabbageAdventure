@@ -60,6 +60,7 @@ class IAttribute;
 class IUniform;
 class IScene;
 class CSceneObject;
+class CShaderContext;
 
 //! 
 //! A CRenderable is some collection of buffer objects which can be drawn by a single OpenGL draw call.
@@ -145,7 +146,7 @@ public:
 	// Update Methods //
 	////////////////////
 
-	void draw(IScene const * const scene, ERenderPass const Pass);
+	void draw(IScene const * const scene, ERenderPass const Pass, CShaderContext & Context);
 	void load(IScene const * const Scene, ERenderPass const Pass);
 
 

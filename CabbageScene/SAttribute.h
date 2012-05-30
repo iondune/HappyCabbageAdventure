@@ -54,6 +54,11 @@ public:
 			shaderContext.bindBufferObject(handle, Buffer->getHandle(), ElementSize);
 	}
 
+	void unbind(GLuint const handle)
+	{
+        glDisableVertexAttribArray(handle);
+	}
+
 };
 
 template <typename T>

@@ -3,9 +3,10 @@
 #include "CSceneObject.h"
 #include "SUniform.h"
 #include "SAttribute.h"
+#include "CShaderContext.h"
 
 
-void CRenderable::draw(IScene const * const Scene, ERenderPass const Pass)
+void CRenderable::draw(IScene const * const Scene, ERenderPass const Pass, CShaderContext & ShaderContext)
 {	
 	// If the ibo loaded hasn't been synced as an index buffer object, we can't draw anything
 	if (IndexBufferObject && ! IndexBufferObject->isIndexBuffer())
@@ -16,19 +17,13 @@ void CRenderable::draw(IScene const * const Scene, ERenderPass const Pass)
 
 	// Set up transform matrices
 	ModelMatrix = Transformation() * ParentObject->getAbsoluteTransformation();
-
-	// Pass transform matrices to shader
 	NormalMatrix = glm::transpose(glm::inverse(ModelMatrix));
 
 	// Pass local values to shader
 	for (std::map<std::pair<GLuint, std::string>, boost::shared_ptr<IAttribute const> >::iterator it = LoadedAttributes.begin(); it != LoadedAttributes.end(); ++ it)
-	{
 		it->second->bind(it->first.first);
-	}
 	for (std::map<std::pair<GLuint, std::string>, boost::shared_ptr<IUniform const> >::iterator it = LoadedUniforms.begin(); it != LoadedUniforms.end(); ++ it)
-	{
 		it->second->bind(it->first.first);
-	}
 
 	// Set up texturing if a texture was supplied
 	if (Material.Textures.size())
@@ -62,13 +57,25 @@ void CRenderable::draw(IScene const * const Scene, ERenderPass const Pass)
 	if (ParentObject->isDebugDataEnabled(EDebugData::Normals) && NormalObject)
 	{
 		NormalObject->Transformation = Transformation;
-		NormalObject->draw(Scene, Pass);
+		NormalObject->draw(Scene, Pass, ShaderContext);
 	}
+
+	// Cleanup shader variables
+	for (std::map<std::pair<GLuint, std::string>, boost::shared_ptr<IAttribute const> >::iterator it = LoadedAttributes.begin(); it != LoadedAttributes.end(); ++ it)
+		it->second->unbind(it->first.first);
+	for (std::map<std::pair<GLuint, std::string>, boost::shared_ptr<IUniform const> >::iterator it = LoadedUniforms.begin(); it != LoadedUniforms.end(); ++ it)
+		it->second->unbind(it->first.first);
 
 	// Cleanup the texture if it was used
 	if (Material.Textures.size())
 	{
 		glDisable(GL_TEXTURE_2D);
+
+		for (unsigned int i = 0; i < Material.Textures.size(); ++ i)
+		{
+			glActiveTexture(GL_TEXTURE0 + i);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
 	}
 }
 
