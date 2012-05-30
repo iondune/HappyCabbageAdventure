@@ -35,7 +35,7 @@ bool CSceneObject::draw(IScene const * const Scene, ERenderPass const Pass, bool
 	case ERenderPass::DeferredColors:
 	case ERenderPass::ModelSpaceNormals:
 		for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
-			(* it)->draw(Scene, Pass);
+			(* it)->draw(Scene, Pass, ShaderContext);
 		break;
 
 	case ERenderPass::DeferredLights:

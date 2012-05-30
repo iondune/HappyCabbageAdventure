@@ -65,6 +65,9 @@ public:
 	virtual void addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform);
 	virtual void addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform, unsigned int const Renderable);
 	virtual void addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform, CRenderable * const Renderable);
+	
+	virtual boost::shared_ptr<IAttribute const> getAttribute(std::string const & label);
+	virtual boost::shared_ptr<IUniform const> getUniform(std::string const & label);
 
 	virtual void removeAttribute(std::string const & label);
 	virtual void removeAttribute(std::string const & label, unsigned int const Renderable);

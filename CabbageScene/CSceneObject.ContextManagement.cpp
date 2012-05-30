@@ -84,6 +84,24 @@ void CSceneObject::addUniform(std::string const & label, boost::shared_ptr<IUnif
 {
 	Renderable->addUniform(label, uniform);
 }
+	
+boost::shared_ptr<IAttribute const> CSceneObject::getAttribute(std::string const & label)
+{
+	std::map<std::string, boost::shared_ptr<IAttribute const> >::iterator it = Attributes.find(label);
+	if (it != Attributes.end())
+		return it->second;
+
+	return boost::shared_ptr<IAttribute const>();
+}
+
+boost::shared_ptr<IUniform const> CSceneObject::getUniform(std::string const & label)
+{
+	std::map<std::string, boost::shared_ptr<IUniform const> >::iterator it = Uniforms.find(label);
+	if (it != Uniforms.end())
+		return it->second;
+
+	return boost::shared_ptr<IUniform const>();
+}
 
 void CSceneObject::removeAttribute(std::string const & label)
 {
