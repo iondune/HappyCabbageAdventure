@@ -19,12 +19,12 @@ public:
 
 	CDirectionalLightSceneObject(SVector3f const direction, SColor const & color = SColor(1,1,1));
 
-    void draw(CScene const * const scene, ERenderPass const Pass);
+	virtual bool draw(IScene const * const scene, ERenderPass const Pass, bool const CullingEnabled);
 
-	virtual void load(CScene const * const Scene);
+	virtual void load(IScene const * const Scene, ERenderPass const Pass);
 
-	void setDirection(SVector3f const & direction);
-	void setColor(SVector3f const & color);
+	virtual void setDirection(SVector3f const & direction);
+	virtual void setColor(SVector3f const & color);
 
 };
 

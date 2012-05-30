@@ -4,8 +4,8 @@
 #include "CShaderContext.h"
 
 #include "CSceneEffectManager.h"
-#include "CSceneManager.h"
-#include "CDeferredShadingManager.h"
+//#include "CSceneManager.h"
+//#include "CDeferredShadingManager.h"
 
 
 CDirectionalLightSceneObject::CDirectionalLightSceneObject(SVector3f const direction, SColor const & color)
@@ -16,27 +16,26 @@ CDirectionalLightSceneObject::CDirectionalLightSceneObject(SVector3f const direc
 	setCullingEnabled(false);
 }
 
-void CDirectionalLightSceneObject::draw(CScene const * const scene, ERenderPass const Pass)
+bool CDirectionalLightSceneObject::draw(IScene const * const scene, ERenderPass const Pass, bool const CullingEnabled)
 {
-	if (! Visible)
-		return;
-
-	ISceneObject::draw(scene, Pass);
+	if (! ISceneObject::draw(scene, Pass, CullingEnabled))
+		return false;
 
 	switch (Pass)
 	{
-	case ERP_DEFAULT:
-	case ERP_DEFERRED_OBJECTS:
-	case ERP_MODELSPACE_NORMALS:
+	case ERenderPass::Default:
+	case ERenderPass::DeferredColors:
+	case ERenderPass::ModelSpaceNormals:
 		break;
 
-	case ERP_DEFERRED_LIGHTS:
+	case ERenderPass::DeferredLights:
 		{
 			if (! Shader)
 				break;
 
 			CSceneEffectManager::SPostProcessPass Pass;
-			Pass.Textures["uNormal"] = ((CDeferredShadingManager *) ((CSceneManager *)scene)->getEffectManager())->DeferredNormalOutput;
+			// TODO: find a way to manage this, perhaps by scene-managed uniforms?
+			//Pass.Textures["uNormal"] = ((CDeferredShadingManager *) ((CSceneManager *)scene)->getEffectManager())->DeferredNormalOutput;
 			Pass.SetTarget = false;
 			Pass.Shader = Shader;
 
@@ -48,9 +47,11 @@ void CDirectionalLightSceneObject::draw(CScene const * const scene, ERenderPass 
 			break;
 		}
 	}
+
+	return true;
 }
 
-void CDirectionalLightSceneObject::load(CScene const * const Scene)
+void CDirectionalLightSceneObject::load(IScene const * const Scene, ERenderPass const Pass)
 {
 }
 
