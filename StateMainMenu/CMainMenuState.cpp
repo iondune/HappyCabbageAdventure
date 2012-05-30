@@ -35,17 +35,17 @@ void CMainMenuState::setupButtons() {
 
    SColor FontColor(1.0f, 1.0f, 1.0f);
 
-	StartFont = new CGUIFontWidget("JustAnotherFont.TTF", 32.f);
+	StartFont = new CGUIFontWidget("JustAnotherFont.TTF", 24.f);
 	StartFont->setText("Start Game");
 	StartFont->setColor(FontColor);
 	StartFont->setPosition(SVector2f(ratio/2.f - 0.175f, 0.5f + 0.05f));
 
-	EditorFont = new CGUIFontWidget("JustAnotherFont.TTF", 32.f);
+	EditorFont = new CGUIFontWidget("JustAnotherFont.TTF", 24.f);
 	EditorFont->setText("Level Editor");
 	EditorFont->setColor(FontColor);
 	EditorFont->setPosition(SVector2f(ratio/2.f - 0.179f, 0.32f + 0.05f));
 
-	ExitFont = new CGUIFontWidget("JustAnotherFont.TTF", 32.f);
+	ExitFont = new CGUIFontWidget("JustAnotherFont.TTF", 24.f);
 	ExitFont->setText("Exit Game");
 	ExitFont->setColor(FontColor);
 	ExitFont->setPosition(SVector2f(ratio/2.f - .162f, .14f + .05f));
