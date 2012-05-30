@@ -59,10 +59,30 @@ void CSceneObject::addAttribute(std::string const & label, boost::shared_ptr<IAt
 		(* it)->addAttribute(label, attribute);
 }
 
+void CSceneObject::addAttribute(std::string const & label, boost::shared_ptr<IAttribute const> const attribute, unsigned int const renderable)
+{
+	Renderables[renderable]->addAttribute(label, attribute);
+}
+
+void CSceneObject::addAttribute(std::string const & label, boost::shared_ptr<IAttribute const> const attribute, CRenderable * const Renderable)
+{
+	Renderable->addAttribute(label, attribute);
+}
+
 void CSceneObject::addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform)
 {
 	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
 		(* it)->addUniform(label, uniform);
+}
+
+void CSceneObject::addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform, unsigned int const renderable)
+{
+	Renderables[renderable]->addUniform(label, uniform);
+}
+
+void CSceneObject::addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform, CRenderable * const Renderable)
+{
+	Renderable->addUniform(label, uniform);
 }
 
 void CSceneObject::removeAttribute(std::string const & label)
@@ -71,8 +91,28 @@ void CSceneObject::removeAttribute(std::string const & label)
 		(* it)->removeAttribute(label);
 }
 
+void CSceneObject::removeAttribute(std::string const & label, unsigned int const renderable)
+{
+	Renderables[renderable]->removeAttribute(label);
+}
+
+void CSceneObject::removeAttribute(std::string const & label, CRenderable * const Renderable)
+{
+	Renderable->removeAttribute(label);
+}
+
 void CSceneObject::removeUniform(std::string const & label)
 {
 	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
 		(* it)->removeUniform(label);
+}
+
+void CSceneObject::removeUniform(std::string const & label, unsigned int const renderable)
+{
+	Renderables[renderable]->removeUniform(label);
+}
+
+void CSceneObject::removeUniform(std::string const & label, CRenderable * const Renderable)
+{
+	Renderable->removeUniform(label);
 }
