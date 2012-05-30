@@ -35,43 +35,43 @@ public:
 	// Renderable Management //
 	///////////////////////////
 
-	void addRenderable(CRenderable * Renderable);
-	void removeRenderable(CRenderable * Renderable);
-	void removeRenderable(unsigned int const index);
+	virtual void addRenderable(CRenderable * Renderable);
+	virtual void removeRenderable(CRenderable * Renderable);
+	virtual void removeRenderable(unsigned int const index);
 
-	unsigned int const getRenderableCount();
-	CRenderable * const getRenderable(unsigned int const index);
-	CRenderable const * const getRenderable(unsigned int const index) const;
+	virtual unsigned int const getRenderableCount();
+	virtual CRenderable * const getRenderable(unsigned int const index);
+	virtual CRenderable const * const getRenderable(unsigned int const index) const;
 
 
 	//////////////////////////////////
 	// Rendering Context Management //
 	//////////////////////////////////
 
-	void setMaterial(CRenderable::SMaterial const & Material);
-	void setMaterial(CRenderable::SMaterial const & Material, unsigned int const Renderable);
-	void setMaterial(CRenderable::SMaterial const & Material, CRenderable * const Renderable);
+	virtual void setMaterial(CRenderable::SMaterial const & Material);
+	virtual void setMaterial(CRenderable::SMaterial const & Material, unsigned int const Renderable);
+	virtual void setMaterial(CRenderable::SMaterial const & Material, CRenderable * const Renderable);
 
-	void setTexture(unsigned int const Layer, CTexture * Texture);
-	void setTexture(unsigned int const Layer, CTexture * Texture, unsigned int const Renderable);
-	void setTexture(unsigned int const Layer, CTexture * Texture, CRenderable * const Renderable);
-	void setTexture(unsigned int const Layer, std::string const & Texture);
-	void setTexture(unsigned int const Layer, std::string const & Texture, unsigned int const Renderable);
-	void setTexture(unsigned int const Layer, std::string const & Texture, CRenderable * const Renderable);
+	virtual void setTexture(unsigned int const Layer, CTexture * Texture);
+	virtual void setTexture(unsigned int const Layer, CTexture * Texture, unsigned int const Renderable);
+	virtual void setTexture(unsigned int const Layer, CTexture * Texture, CRenderable * const Renderable);
+	virtual void setTexture(unsigned int const Layer, std::string const & Texture);
+	virtual void setTexture(unsigned int const Layer, std::string const & Texture, unsigned int const Renderable);
+	virtual void setTexture(unsigned int const Layer, std::string const & Texture, CRenderable * const Renderable);
 
-	void addAttribute(std::string const & label, boost::shared_ptr<IAttribute const> const attribute);
-	void addAttribute(std::string const & label, boost::shared_ptr<IAttribute const> const attribute, unsigned int const Renderable);
-	void addAttribute(std::string const & label, boost::shared_ptr<IAttribute const> const attribute, CRenderable * const Renderable);
-	void addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform);
-	void addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform, unsigned int const Renderable);
-	void addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform, CRenderable * const Renderable);
+	virtual void addAttribute(std::string const & label, boost::shared_ptr<IAttribute const> const attribute);
+	virtual void addAttribute(std::string const & label, boost::shared_ptr<IAttribute const> const attribute, unsigned int const Renderable);
+	virtual void addAttribute(std::string const & label, boost::shared_ptr<IAttribute const> const attribute, CRenderable * const Renderable);
+	virtual void addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform);
+	virtual void addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform, unsigned int const Renderable);
+	virtual void addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform, CRenderable * const Renderable);
 
-	void removeAttribute(std::string const & label);
-	void removeAttribute(std::string const & label, unsigned int const Renderable);
-	void removeAttribute(std::string const & label, CRenderable * const Renderable);
-	void removeUniform(std::string const & label);
-	void removeUniform(std::string const & label, unsigned int const Renderable);
-	void removeUniform(std::string const & label, CRenderable * const Renderable);
+	virtual void removeAttribute(std::string const & label);
+	virtual void removeAttribute(std::string const & label, unsigned int const Renderable);
+	virtual void removeAttribute(std::string const & label, CRenderable * const Renderable);
+	virtual void removeUniform(std::string const & label);
+	virtual void removeUniform(std::string const & label, unsigned int const Renderable);
+	virtual void removeUniform(std::string const & label, CRenderable * const Renderable);
 
 
 	///////////////////////
@@ -79,15 +79,15 @@ public:
 	///////////////////////
 
 	//! Deprecated. Returns Default Render Pass shader
-	CShader const * const getShader() const;
+	virtual CShader const * const getShader() const;
 	//! Deprecated. Returns Default Render Pass shader
-	CShader * getShader();
+	virtual CShader * getShader();
 
-	CShader const * const getShader(ERenderPass const Pass) const;
-	CShader * getShader(ERenderPass const Pass);
+	virtual CShader const * const getShader(ERenderPass const Pass) const;
+	virtual CShader * getShader(ERenderPass const Pass);
 
-	void setShader(ERenderPass const Pass, CShader * Shader);
-	void setShader(ERenderPass const Pass, std::string const & Shader);
+	virtual void setShader(ERenderPass const Pass, CShader * Shader);
+	virtual void setShader(ERenderPass const Pass, std::string const & Shader);
 
 
 	////////////////////
