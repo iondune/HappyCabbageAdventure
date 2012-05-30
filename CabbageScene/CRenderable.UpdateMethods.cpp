@@ -63,8 +63,6 @@ void CRenderable::draw(IScene const * const Scene, ERenderPass const Pass, CShad
 	// Cleanup shader variables
 	for (std::map<std::pair<GLuint, std::string>, boost::shared_ptr<IAttribute const> >::iterator it = LoadedAttributes.begin(); it != LoadedAttributes.end(); ++ it)
 		it->second->unbind(it->first.first);
-	for (std::map<std::pair<GLuint, std::string>, boost::shared_ptr<IUniform const> >::iterator it = LoadedUniforms.begin(); it != LoadedUniforms.end(); ++ it)
-		it->second->unbind(it->first.first);
 
 	// Cleanup the texture if it was used
 	if (Material.Textures.size())
@@ -87,11 +85,5 @@ void CRenderable::load(IScene const * const Scene, ERenderPass const Pass)
 	LoadedAttributes.clear();
 	LoadedUniforms.clear();
 
-	// TODO: Load only attributes and unfiroms used by shader
 
-	for (std::map<std::string, boost::shared_ptr<IAttribute const> >::iterator it = Attributes.begin(); it != Attributes.end(); ++ it)
-		LoadedAttributes[std::pair<std::string, GLuint>(it->first, ParentObject->getShader(Pass))] = it->second;
-
-	for (std::map<std::string, boost::shared_ptr<IUniform const> >::iterator it = Uniforms.begin(); it != Uniforms.end(); ++ it)
-		LoadedUniforms[std::pair<std::string, GLuint>(it->first, ParentObject->getShader(Pass))] = it->second;
 }

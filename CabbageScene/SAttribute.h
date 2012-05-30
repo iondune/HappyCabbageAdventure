@@ -14,6 +14,7 @@ public:
 	virtual void load() const = 0;
 	virtual void bind(GLint const handle) const = 0;
 	virtual void bind(GLint const handle, CShaderContext & shaderContext) const = 0;
+	virtual void unbind(GLuint const handle) const = 0;
 
 };
 
@@ -54,7 +55,7 @@ public:
 			shaderContext.bindBufferObject(handle, Buffer->getHandle(), ElementSize);
 	}
 
-	void unbind(GLuint const handle)
+	void unbind(GLuint const handle) const
 	{
         glDisableVertexAttribArray(handle);
 	}
