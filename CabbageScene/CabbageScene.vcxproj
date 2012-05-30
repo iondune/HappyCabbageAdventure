@@ -76,7 +76,8 @@
   <ItemGroup>
     <ClInclude Include="CabbageScene.h" />
     <ClInclude Include="CBufferObject.h" />
-    <ClInclude Include="CCamera.h" />
+    <ClInclude Include="CPerspectiveCameraSceneObject.h" />
+    <ClInclude Include="CCameraSceneObject.h" />
     <ClInclude Include="CDeferredShadingManager.h" />
     <ClInclude Include="CDirectionalLightSceneObject.h" />
     <ClInclude Include="CFrameBufferObject.h" />
@@ -106,7 +107,8 @@
     <ClInclude Include="SUniform.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CCamera.cpp" />
+    <ClCompile Include="CPerspectiveCameraSceneObject.cpp" />
+    <ClCompile Include="CCameraSceneObject.cpp" />
     <ClCompile Include="CDeferredShadingManager.cpp" />
     <ClCompile Include="CDirectionalLightSceneObject.cpp" />
     <ClCompile Include="CFrameBufferObject.cpp" />

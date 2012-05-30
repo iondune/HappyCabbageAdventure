@@ -14,7 +14,6 @@
 
 // Scene
 #include "CBufferObject.h"
-#include "CCamera.h"
 #include "CShader.h"
 #include "CTexture.h"
 #include "CShaderContext.h"

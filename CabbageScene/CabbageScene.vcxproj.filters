@@ -26,9 +26,6 @@
     <ClInclude Include="CShaderContext.h">
       <Filter>Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="CCamera.h">
-      <Filter>Camera</Filter>
-    </ClInclude>
     <ClInclude Include="CBufferObject.h">
       <Filter>Meshes</Filter>
     </ClInclude>
@@ -89,6 +86,12 @@
     <ClInclude Include="CSceneObject.h">
       <Filter>Scene Objects\Base\CSceneObject</Filter>
     </ClInclude>
+    <ClInclude Include="CCameraSceneObject.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CPerspectiveCameraSceneObject.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CImage.cpp">
@@ -114,9 +117,6 @@
     </ClCompile>
     <ClCompile Include="CShaderContext.cpp">
       <Filter>Shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="CCamera.cpp">
-      <Filter>Camera</Filter>
     </ClCompile>
     <ClCompile Include="CMeshSceneObject.cpp">
       <Filter>Scene Objects</Filter>
@@ -177,6 +177,12 @@
     </ClCompile>
     <ClCompile Include="CSceneObject.ShaderManagement.cpp">
       <Filter>Scene Objects\Base\CSceneObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CCameraSceneObject.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CPerspectiveCameraSceneObject.cpp">
+      <Filter>Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

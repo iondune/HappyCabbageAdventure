@@ -4,7 +4,7 @@
 #include "ISceneObject.h"
 
 
-class ICameraSceneObject
+class ICameraSceneObject : public ISceneObject
 {
 
 public:
