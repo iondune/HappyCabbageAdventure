@@ -249,7 +249,12 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
          printf("Look coords: %0.2f %0.2f %0.2f\n", look.X, look.Y, look.Z);
       }
       if(Event.Key == SDLK_SPACE && transitionTimer == 0.0f) {
-         CGameState::get().LevelName = levels[curNode].name;
+         if(!CApplication::get().getEventManager().IsKeyDown[SDLK_t]) {
+            CGameState::get().LevelName = levels[curNode].name;
+         }
+         else {
+            CGameState::get().LevelName = "test.xml";
+         }
          CGameState::get().Stats = Stats; 
          Stats.Health = Stats.MaxHealth;
          Stats.Energy = Stats.MaxEnergy;
@@ -342,7 +347,7 @@ void COverworldState::loadLevels()
    //If you're adding more levels be sure to update COverworldState's NUM_LEVELS
 
 	//Grass Levels
-	levels[0].name = "jorge1.xml";//"jorge1.xml";
+	levels[0].name = "jorge1.xml";
 	levels[0].loc = SVector3f(0.33f, -0.17f, 1.05f); //bit of green near sole orange hill
 	levels[1].name = "jorge2.xml";
 	levels[1].loc = SVector3f(0.56, -0.29, 1.11);
