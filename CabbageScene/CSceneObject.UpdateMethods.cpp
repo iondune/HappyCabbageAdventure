@@ -6,9 +6,7 @@ void CSceneObject::load(IScene const * const Scene, ERenderPass const Pass)
 	ISceneObject::load(Scene, Pass);
 
 	for (std::vector<CRenderable *>::iterator it = Renderables.begin(); it != Renderables.end(); ++ it)
-	{
 		(* it)->load(Scene, Pass);
-	}
 }
 
 bool CSceneObject::draw(IScene const * const Scene, ERenderPass const Pass, bool const CullingEnabled)
