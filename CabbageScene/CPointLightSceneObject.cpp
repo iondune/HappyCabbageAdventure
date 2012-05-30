@@ -3,9 +3,11 @@
 #include "CShaderLoader.h"
 #include "CShaderContext.h"
 
-#include "CSceneEffectManager.h"
-#include "CSceneManager.h"
-#include "CDeferredShadingManager.h"
+//#include "CSceneEffectManager.h"
+//#include "CSceneManager.h"
+//#include "CDeferredShadingManager.h"
+
+#include "IScene.h"
 
 
 CPointLightSceneObject::CPointLightSceneObject(float const radius, SColor const & color)
@@ -27,21 +29,19 @@ CPointLightSceneObject::CPointLightSceneObject(float const radius, SColor const 
 	setBoundingBox(SphereMesh->getBoundingBox());
 }
 
-void CPointLightSceneObject::draw(CScene const * const scene, ERenderPass const Pass)
+bool CPointLightSceneObject::draw(IScene const * const scene, ERenderPass const Pass, bool const CullingEnabled)
 {
-	if (! Visible)
-		return;
-
-	ISceneObject::draw(scene, Pass);
+	if (! ISceneObject::draw(scene, Pass, CullingEnabled))
+		return false;
 
 	switch (Pass)
 	{
-	case ERP_DEFAULT:
-	case ERP_DEFERRED_OBJECTS:
-	case ERP_MODELSPACE_NORMALS:
+	case ERenderPass::Default:
+	case ERenderPass::DeferredColors:
+	case ERenderPass::ModelSpaceNormals:
 		break;
 
-	case ERP_DEFERRED_LIGHTS:
+	case ERenderPass::DeferredLights:
 		{
 			if (MeshBuffer->IndexBuffer.isDirty())
 				MeshBuffer->IndexBuffer.syncData();
@@ -61,16 +61,19 @@ void CPointLightSceneObject::draw(CScene const * const scene, ERenderPass const 
 			Context.uniform("uColor", Color);
 			Context.uniform("uRadius", Scale.X);
 
-			Context.bindTexture("uNormal", ((CDeferredShadingManager *) ((CSceneManager *)scene)->getEffectManager())->DeferredNormalOutput);
-			Context.bindTexture("uPosition", ((CDeferredShadingManager *) ((CSceneManager *)scene)->getEffectManager())->DeferredPositionOutput);
+			// TODO: Re-Enable
+			//Context.bindTexture("uNormal", ((CDeferredShadingManager *) ((CSceneManager *)scene)->getEffectManager())->DeferredNormalOutput);
+			//Context.bindTexture("uPosition", ((CDeferredShadingManager *) ((CSceneManager *)scene)->getEffectManager())->DeferredPositionOutput);
 
 			glDrawElements(GL_TRIANGLES, MeshBuffer->IndexBuffer.getElements().size(), GL_UNSIGNED_SHORT, 0);
 			break;
 		}
 	}
+
+	return true;
 }
 
-void CPointLightSceneObject::load(CScene const * const Scene)
+void CPointLightSceneObject::load(IScene const * const Scene, ERenderPass const Pass)
 {
 }
 

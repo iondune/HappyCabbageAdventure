@@ -5,7 +5,7 @@
 
 #include "SVertex.h"
 #include "CBufferObject.h"
-#include "CMaterial.h"
+#include "CRenderable.h"
 
 #include <vector>
 
@@ -33,7 +33,7 @@ public:
 
 		void updateBuffers();
 
-        CMaterial Material;
+		CRenderable::SMaterial Material;
     };
 
     std::vector<SMeshBuffer *> MeshBuffers;
