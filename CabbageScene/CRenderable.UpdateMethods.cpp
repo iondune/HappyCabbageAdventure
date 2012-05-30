@@ -4,6 +4,7 @@
 #include "SUniform.h"
 #include "SAttribute.h"
 #include "CShaderContext.h"
+#include "IScene.h"
 
 
 void CRenderable::draw(IScene const * const Scene, ERenderPass const Pass, CShaderContext & ShaderContext)
@@ -85,5 +86,39 @@ void CRenderable::load(IScene const * const Scene, ERenderPass const Pass)
 	LoadedAttributes.clear();
 	LoadedUniforms.clear();
 
+	CShader * Shader = ParentObject->getShader(Pass);
+	if (! Shader)
+		return;
 
+	for (std::map<std::string, SShaderVariable>::const_iterator it = Shader->getAttributeHandles().begin(); it != Shader->getAttributeHandles().end(); ++ it)
+	{
+		std::string const & Label = it->first;
+
+		boost::shared_ptr<IAttribute const> Attribute = getAttribute(Label);
+
+		if (! Attribute)
+			Attribute = ParentObject->getAttribute(Label);
+
+		if (! Attribute)
+			Attribute = Scene->getAttribute(Label);
+
+		if (! Attribute)
+			std::cout << "Shader-required attribute '" << Label << "' was not provided for object " << this << "." << std::endl;
+	}
+
+	for (std::map<std::string, SShaderVariable>::const_iterator it = Shader->getUniformHandles().begin(); it != Shader->getUniformHandles().end(); ++ it)
+	{
+		std::string const & Label = it->first;
+
+		boost::shared_ptr<IUniform const> Uniform = getUniform(Label);
+
+		if (! Uniform)
+			Uniform = ParentObject->getUniform(Label);
+
+		if (! Uniform)
+			Uniform = Scene->getUniform(Label);
+
+		if (! Uniform)
+			std::cout << "Shader-required uniform '" << Label << "' was not provided for object " << this << "." << std::endl;
+	}
 }
