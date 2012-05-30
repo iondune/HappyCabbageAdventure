@@ -65,9 +65,6 @@
     <ClInclude Include="CDeferredShadingManager.h">
       <Filter>Scene Management</Filter>
     </ClInclude>
-    <ClInclude Include="CShaderBinding.h">
-      <Filter>Shaders</Filter>
-    </ClInclude>
     <ClInclude Include="ICameraSceneObject.h">
       <Filter>Camera</Filter>
     </ClInclude>
@@ -142,9 +139,6 @@
     <ClCompile Include="CDeferredShadingManager.cpp">
       <Filter>Scene Management</Filter>
     </ClCompile>
-    <ClCompile Include="CShaderBinding.cpp">
-      <Filter>Shaders</Filter>
-    </ClCompile>
     <ClCompile Include="CPointLightSceneObject.cpp">
       <Filter>Scene Objects\Deferred</Filter>
     </ClCompile>
@@ -179,6 +173,9 @@
       <Filter>Scene Objects\Base\CSceneObject</Filter>
     </ClCompile>
     <ClCompile Include="CSceneObject.ContextManagement.cpp">
+      <Filter>Scene Objects\Base\CSceneObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneObject.ShaderManagement.cpp">
       <Filter>Scene Objects\Base\CSceneObject</Filter>
     </ClCompile>
   </ItemGroup>
