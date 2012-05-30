@@ -5,6 +5,9 @@
 
 #include "../CabbageCore/glm/gtc/matrix_transform.hpp"
 
+#include <SAttribute.h>
+#include <SUniform.h>
+
 
 CMeshSceneObject::CMeshSceneObject()
 	: LoadedRevision(-1), Mesh(0)
@@ -54,9 +57,9 @@ void CMeshSceneObject::setMesh(CMesh * mesh)
 			Child->addAttribute("aNormal", boost::shared_ptr<IAttribute>(new SAttribute<float>(& Mesh->MeshBuffers[i]->NormalBuffer, 3)));
 			Child->addAttribute("aTexCoord", boost::shared_ptr<IAttribute>(new SAttribute<float>(& Mesh->MeshBuffers[i]->TexCoordBuffer, 2)));
 			static int const TexLevel = 0;
-			Child->addUniform("uTexColor", TexLevel);
+			Child->addUniform("uTexColor", boost::shared_ptr<IUniform const>(new SUniformReference<int>(TexLevel)));
 
-			Child->getMaterial() = Mesh->MeshBuffers[i]->Material;
+			Child->setMaterial(Mesh->MeshBuffers[i]->Material);
 
 			// Add mesh index buffer
 			Child->setIndexBufferObject(& Mesh->MeshBuffers[i]->IndexBuffer);
@@ -72,15 +75,16 @@ void CMeshSceneObject::setMesh(CMesh * mesh)
 			}
 
 			// Add normal debugging object
-			Child->getDebuggingNormalObject() = new CRenderable(this);
+			// TODO: Find a better way to make this work
+			/*Child->getDebuggingNormalObject() = new CRenderable(this);
 			Child->getDebuggingNormalObject()->addAttribute("aPosition", boost::shared_ptr<IAttribute>(new SAttribute<float>(& Mesh->MeshBuffers[i]->NormalLineBuffer, 3)));
 			Child->getDebuggingNormalObject()->addAttribute("aColor", boost::shared_ptr<IAttribute>(new SAttribute<float>(& Mesh->MeshBuffers[i]->NormalColorBuffer, 3)));
 			Child->getDebuggingNormalObject()->setIndexBufferObject(& Mesh->MeshBuffers[i]->NormalIndexBuffer);
 			Child->getDebuggingNormalObject()->setShader(ERP_DEFAULT, CShaderLoader::loadShader("Simple"));
-			Child->getDebuggingNormalObject()->setDrawType(GL_LINES);
+			Child->getDebuggingNormalObject()->setDrawType(GL_LINES);*/
 
 			// Reset the shader to load attributes again
-			Child->reloadVariablesOnNextDraw();
+			//Child->reloadVariablesOnNextDraw();
 		}
 
 		LoadedRevision = Mesh->getRevision();

@@ -41,7 +41,7 @@ public:
 			Buffer->syncData();
 	}
 
-	void bind(GLint const handle)
+	void bind(GLint const Handle) const
 	{
 		glEnableVertexAttribArray(Handle);
 		glBindBuffer(GL_ARRAY_BUFFER, Buffer->getHandle());
