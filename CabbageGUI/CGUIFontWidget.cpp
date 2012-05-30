@@ -106,7 +106,7 @@ void CGUIFontWidget::removeDropShadow() {
 }
 
 bool const CGUIFontWidget::hasDropShadow() {
-   return !!DropShadow;
+   return DropShadow != 0;
 }
 
 void CGUIFontWidget::setVisible(bool const visible)
