@@ -16,7 +16,7 @@ protected:
 	std::vector<CRenderable *> Renderables;
 
 	//! Shader for each render pass
-	CShader * Shader[ERenderPass::Count];
+	CShader * Shaders[ERenderPass::Count];
 
 	//! Local shader variables
 	std::map<std::string, boost::shared_ptr<IAttribute const> > Attributes;
