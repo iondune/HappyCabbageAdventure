@@ -111,7 +111,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageGame", "CabbageGame\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StateGame", "StateGame\StateGame.vcxproj", "{19F4292D-FC1B-4F96-8033-5C723595C473}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageLib", "CabbageLib\CabbageLib.vcxproj", "{CCB70F51-7189-CB6D-8393-5EF2C5E74952}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CabbageLib", "CabbageLib\CabbageLib.vcxproj", "{7BB38772-4998-A404-4B4E-ED9D24DF86D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -176,10 +176,10 @@ Global
 		{19F4292D-FC1B-4F96-8033-5C723595C473}.Debug|Win32.Build.0 = Debug|Win32
 		{19F4292D-FC1B-4F96-8033-5C723595C473}.Release|Win32.ActiveCfg = Release|Win32
 		{19F4292D-FC1B-4F96-8033-5C723595C473}.Release|Win32.Build.0 = Release|Win32
-		{CCB70F51-7189-CB6D-8393-5EF2C5E74952}.Debug|Win32.ActiveCfg = Debug|Win32
-		{CCB70F51-7189-CB6D-8393-5EF2C5E74952}.Debug|Win32.Build.0 = Debug|Win32
-		{CCB70F51-7189-CB6D-8393-5EF2C5E74952}.Release|Win32.ActiveCfg = Release|Win32
-		{CCB70F51-7189-CB6D-8393-5EF2C5E74952}.Release|Win32.Build.0 = Release|Win32
+		{7BB38772-4998-A404-4B4E-ED9D24DF86D6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7BB38772-4998-A404-4B4E-ED9D24DF86D6}.Debug|Win32.Build.0 = Debug|Win32
+		{7BB38772-4998-A404-4B4E-ED9D24DF86D6}.Release|Win32.ActiveCfg = Release|Win32
+		{7BB38772-4998-A404-4B4E-ED9D24DF86D6}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
