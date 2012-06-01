@@ -68,6 +68,11 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		  CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_SSAO, ! CApplication::get().getSceneManager().getEffectManager()->isEffectEnabled(ESE_SSAO));
 	   CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_SSAO_BLUR, ! CApplication::get().getSceneManager().getEffectManager()->isEffectEnabled(ESE_SSAO_BLUR));
 	  }
+	  else if (Event.Key == SDLK_PERIOD)
+	  {
+		  if (CApplication::get().getSceneManager().getEffectManager()->isDeferred())
+			  ((CDeferredShadingManager *)CApplication::get().getSceneManager().getEffectManager())->cycleDebug();
+	  }
    }
    else  {
    }
