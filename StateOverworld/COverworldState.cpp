@@ -352,19 +352,19 @@ void COverworldState::loadLevels()
 	levels[0].name = "jorge1.xml";
 	levels[0].loc = SVector3f(0.33f, -0.17f, 1.05f); //bit of green near sole orange hill
 	levels[1].name = "jorge2.xml";
-	levels[1].loc = SVector3f(0.56, -0.29, 1.11);
+	levels[1].loc = SVector3f(0.56f, -0.29f, 1.11f);
 
 	//Single water level
 	levels[2].name = "water1.xml";
-	levels[2].loc = SVector3f(0.84, -0.33, 1.19);
+	levels[2].loc = SVector3f(0.84f, -0.33f, 1.19f);
 
 	//Moar Grass Levels!
 	levels[3].name = "jorge3.xml";
-	levels[3].loc = SVector3f(0.68, -0.21, 1.01);
+	levels[3].loc = SVector3f(0.68f, -0.21f, 1.01f);
 	levels[4].name = "jorge5.xml";
-	levels[4].loc = SVector3f(0.47, -0.16, 0.80);
+	levels[4].loc = SVector3f(0.47f, -0.16f, 0.80f);
 	levels[5].name = "jorge6-night.xml";
-	levels[5].loc = SVector3f(0.30, -0.12, 0.60);
+	levels[5].loc = SVector3f(0.30f, -0.12f, 0.60f);
 	levels[6].name = "jorge7.xml";
 	levels[6].loc = SVector3f(0.83f, 0.00f, 0.65f); //Green hill
 	levels[7].name = "jorge8.xml";
@@ -372,7 +372,7 @@ void COverworldState::loadLevels()
 	levels[8].name = "chris-night.xml";
 	levels[8].loc = SVector3f(0.5f, -0.13f, 0.1f);
 	levels[9].name = "jorge9.xml";
-	levels[9].loc = SVector3f(0.86, -0.16, -0.02);
+	levels[9].loc = SVector3f(0.86f, -0.16f, -0.02f);
 
 	//Desert Levels
    levels[10].name = "chrisDesert.xml";
@@ -380,7 +380,7 @@ void COverworldState::loadLevels()
    levels[11].name = "chrisDesert1-night.xml";
    levels[11].loc = SVector3f(0.77f, -0.20f, -0.66f); //Yellow hills
    levels[12].name = "desertexhibition.xml";
-   levels[12].loc = SVector3f(0.65, -0.20, -0.51);
+   levels[12].loc = SVector3f(0.65f, -0.20f, -0.51f);
 
    //Water Levels
    //levels[13].name = "water1.xml";
