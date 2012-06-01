@@ -112,7 +112,7 @@ CSceneEffectManager::CSceneEffectManager(CSceneManager * sceneManager)
 	SRenderPass DefaultPass;
 	DefaultPass.Pass = ERP_DEFAULT;
 	DefaultPass.Target = SceneManager->getSceneFrameBuffer();
-   assert(DefaultPass.Target != NULL);
+   //assert(DefaultPass.Target != NULL);
 
 	RenderPasses.push_back(DefaultPass);
 }
