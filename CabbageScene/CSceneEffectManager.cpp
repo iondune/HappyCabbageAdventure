@@ -131,6 +131,7 @@ void CSceneEffectManager::apply()
 		SSAOPass.Shader = SSAOShader;
 
 		SSAOPass.doPass();
+		//printf("doing ssao pass\n");
 
 		if (isEffectEnabled(ESE_SSAO_BLUR))
 		{
@@ -178,7 +179,7 @@ void CSceneEffectManager::apply()
 	{
 		// Final Blend
 		SPostProcessPass BlendPass;
-		BlendPass.Textures["scene"] = SceneManager->getSceneFrameTexture();
+		BlendPass.Textures["scene"] = isEffectEnabled(ESE_SSAO) ? White : SceneManager->getSceneFrameTexture();
 		BlendPass.Textures["ssao"] = isEffectEnabled(ESE_SSAO) ? SSAOResultTexture : White;
 		BlendPass.Textures["bloom"] =  isEffectEnabled(ESE_BLOOM) ? BloomResultTexture : Magenta;
 		BlendPass.Target = ScratchTarget1;
@@ -239,7 +240,6 @@ void CSceneEffectManager::setEffectEnabled(ESceneEffect const Effect, bool const
 
 			if (Enabled)
 			{
-				RenderPasses.push_back(normalsPass);
 
 				if (! NormalPassTarget)
 				{
@@ -254,6 +254,9 @@ void CSceneEffectManager::setEffectEnabled(ESceneEffect const Effect, bool const
 
 					RandomNormalsTexture = CTextureLoader::loadTexture("SSAO/RandNormals.bmp");
 				}
+
+				normalsPass.Target = NormalPassTarget;
+				RenderPasses.push_back(normalsPass);
 			}
 			else
 			{

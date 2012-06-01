@@ -391,6 +391,11 @@ void CSceneManager::drawAll()
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+			/*if (it->Pass == ::ERP_MODEL_NORMALS)
+			{
+				//printf("doing normal pass!\n");
+			}*/
+
 			RootObject.draw(CurrentScene, it->Pass);
 
 			if (it->Pass != ERP_DEFERRED_LIGHTS) {
