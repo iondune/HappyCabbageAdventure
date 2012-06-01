@@ -23,7 +23,7 @@ void CElementEnemyLemon::setupSceneObject() {
    if (Level.getEnvironment() == Env::FOREST)
 	   mesh = CMeshLoader::load3dsMesh("Base/lemon.3ds");
    else if (Level.getEnvironment() == Env::DESERT)
-	   mesh = CMeshLoader::load3dsMesh("Base/lemon.3ds");
+	   mesh = CMeshLoader::load3dsMesh("Base/desert_lemon.3ds");
    else if (Level.getEnvironment() == Env::WATER)
 	   mesh = CMeshLoader::load3dsMesh("Base/water_lemon.3ds");
    else

@@ -23,7 +23,7 @@ void CElementEnemyGrape::setupSceneObject() {
    }
 
    else if (Level.getEnvironment() == Env::DESERT) {
-      mesh = CMeshLoader::load3dsMesh("Base/grape_bunch.3ds");
+      mesh = CMeshLoader::load3dsMesh("Base/desert_grape_bunch.3ds");
    }
 
    else if (Level.getEnvironment() == Env::WATER)

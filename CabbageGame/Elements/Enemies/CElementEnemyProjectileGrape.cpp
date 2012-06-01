@@ -37,11 +37,11 @@ void CElementEnemyProjectileGrape::setupSceneObject() {
 
    else if (Level.getEnvironment() == Env::DESERT) {
       if (random == 0)
-         mesh = CMeshLoader::load3dsMesh("Base/grape1.3ds");
+         mesh = CMeshLoader::load3dsMesh("Base/desert_grape1.3ds");
       else if (random == 1)
-         mesh = CMeshLoader::load3dsMesh("Base/grape2.3ds");
+         mesh = CMeshLoader::load3dsMesh("Base/desert_grape2.3ds");
       else
-         mesh = CMeshLoader::load3dsMesh("Base/grape3.3ds");
+         mesh = CMeshLoader::load3dsMesh("Base/desert_grape3.3ds");
    }
 
    else if (Level.getEnvironment() == Env::WATER) {
