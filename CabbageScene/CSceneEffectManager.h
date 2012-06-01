@@ -25,7 +25,6 @@ class CSceneEffectManager
 protected:
 
 	CSceneManager * SceneManager;
-
 	int EnabledEffects;
 
 	// SSAO Stuff
@@ -76,6 +75,9 @@ public:
 
 		bool const operator == (SRenderPass const & rhs);
 	
+      SRenderPass() : Target(0), Pass(ERP_DEFAULT) {
+         
+      }
 	};
 
 	class SPostProcessPass
@@ -110,6 +112,11 @@ public:
 
 	virtual void setEffectEnabled(ESceneEffect const Effect, bool const Enabled);
 	virtual bool const isEffectEnabled(ESceneEffect const Effect);
+
+	virtual bool const isDeferred() const
+	{
+		return false;
+	}
 
 };
 

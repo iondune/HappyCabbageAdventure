@@ -24,7 +24,7 @@ void CElementEnemyPear::setupSceneObject() {
    if (Level.getEnvironment() == Env::FOREST)
 	   mesh = CMeshLoader::load3dsMesh("Base/pear.3ds");
    else if (Level.getEnvironment() == Env::DESERT)
-	   mesh = CMeshLoader::load3dsMesh("Base/pear.3ds");
+	   mesh = CMeshLoader::load3dsMesh("Base/desert_pear.3ds");
    else if (Level.getEnvironment() == Env::WATER) {
 	   mesh = CMeshLoader::load3dsMesh("Base/water_pear.3ds");
    }

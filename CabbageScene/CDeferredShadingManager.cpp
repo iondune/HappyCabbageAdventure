@@ -6,7 +6,7 @@
 #include <CTextureLoader.h>
 
 CDeferredShadingManager::CDeferredShadingManager(CSceneManager * sceneManager)
-	: CSceneEffectManager(sceneManager), OverlayColor(1.f, 1.f, 1.f)
+	: CSceneEffectManager(sceneManager), OverlayColor(1.f, 1.f, 1.f), DebugCounter(0)
 {
 
 	DeferredOutputTarget = new CFrameBufferObject();
@@ -64,19 +64,36 @@ CDeferredShadingManager::CDeferredShadingManager(CSceneManager * sceneManager)
 
 void CDeferredShadingManager::apply()
 {
-#if 0
 	SPostProcessPass BlendPass;
-	BlendPass.Textures["uTexColor"] = DeferredPositionOutput;
-	//BlendPass.Textures["uLightPass"] = LightPassColorOutput;
-	BlendPass.Target = SceneManager->getSceneFrameBuffer();
-	BlendPass.Shader = CShaderLoader::loadShader("FBO/QuadCopy");//FinalBlendShader;
-#else
-	SPostProcessPass BlendPass;
-	BlendPass.Textures["uSceneColor"] = DeferredColorOutput;
-	BlendPass.Textures["uLightPass"] = LightPassColorOutput;
-	BlendPass.Target = ScratchTarget1;
-	BlendPass.Shader = FinalBlendShader;
-#endif
+
+	if (DebugCounter)
+	{
+		switch (DebugCounter)
+		{
+		default:
+		case 1:
+			BlendPass.Textures["uTexColor"] = DeferredColorOutput;
+			break;
+		case 2:
+			BlendPass.Textures["uTexColor"] = DeferredPositionOutput;
+			break;
+		case 3:
+			BlendPass.Textures["uTexColor"] = DeferredNormalOutput;
+			break;
+		case 4:
+			BlendPass.Textures["uTexColor"] = LightPassColorOutput;
+			break;
+		}
+		BlendPass.Target = ScratchTarget1;
+		BlendPass.Shader = CShaderLoader::loadShader("FBO/QuadCopy");
+	}
+	else
+	{
+		BlendPass.Textures["uSceneColor"] = DeferredColorOutput;
+		BlendPass.Textures["uLightPass"] = LightPassColorOutput;
+		BlendPass.Target = ScratchTarget1;
+		BlendPass.Shader = FinalBlendShader;
+	}
 
 	BlendPass.doPass();
 
@@ -111,4 +128,11 @@ void CDeferredShadingManager::apply()
 	ActualFinalPass.Shader = OverlayShader;
 	ActualFinalPass.doPass();
 
+}
+
+void CDeferredShadingManager::cycleDebug()
+{
+	DebugCounter ++;
+	if (DebugCounter > 4)
+		DebugCounter = 0;
 }

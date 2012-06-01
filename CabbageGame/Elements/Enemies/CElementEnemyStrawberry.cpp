@@ -26,7 +26,7 @@ void CElementEnemyStrawberry::setupSceneObject() {
       mesh = CMeshLoader::load3dsMesh("Base/strawberry.3ds");
 
    else if (Level.getEnvironment() == Env::DESERT)
-      mesh = CMeshLoader::load3dsMesh("Base/strawberry.3ds");
+      mesh = CMeshLoader::load3dsMesh("Base/desert_strawberry.3ds");
 
    else if (Level.getEnvironment() == Env::WATER)
 	   mesh = CMeshLoader::load3dsMesh("Base/water_strawberry.3ds");

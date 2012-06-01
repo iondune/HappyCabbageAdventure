@@ -35,6 +35,9 @@ void CApplication::setupRenderContext()
         exit(2);
     }
 
+	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 5);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);

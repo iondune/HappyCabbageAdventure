@@ -96,9 +96,11 @@ int CGameLevel::getXmlCount() {
    return XmlCount;
 }
 
+#ifdef _ENABLED_CABBAGE_SOUND_
 Mix_Music* CGameLevel::getSoundtrack() {
    return Soundtrack;
 }
+#endif
 
 std::vector<CBiggerBlock*> & CGameLevel::getConsolidatedBlocks() {
    return blocksFinal;
@@ -173,6 +175,7 @@ void CGameLevel::addObject(CGameplayElement* Object) {
 
 
 void CGameLevel::setupSoundtrack() {
+#ifdef _ENABLED_CABBAGE_SOUND_
    std::string temp;
 
    if(Mix_OpenAudio(22050, AUDIO_S16, 2, 4096))
@@ -182,22 +185,21 @@ void CGameLevel::setupSoundtrack() {
 
 
    //Pre-load pointers
-
    if (env == Env::FOREST) {
       if (!night)
-         temp = MusicDirectory + "Soundtracks/Forest.wav";
+         temp = MusicDirectory + "Soundtracks/Forest.ogg";
       else
-         temp = MusicDirectory + "Soundtracks/ForestNight.mp3";
+         temp = MusicDirectory + "Soundtracks/ForestNight.ogg";
    }
 
    else if (env == Env::DESERT) {
       if (!night)
-         temp = MusicDirectory + "Soundtracks/Desert.mp3";
+         temp = MusicDirectory + "Soundtracks/Desert.ogg";
       else
-         temp = MusicDirectory + "Soundtracks/DesertNight.mp3";
+         temp = MusicDirectory + "Soundtracks/DesertNight.ogg";
    }
    else if (env == Env::WATER)
-      temp = MusicDirectory + "Soundtracks/Water.mp3";
+      temp = MusicDirectory + "Soundtracks/Water.ogg";
 
    Soundtrack = Mix_LoadMUS(temp.c_str());
 
@@ -220,6 +222,7 @@ void CGameLevel::setupSoundtrack() {
 
       temp = MusicDirectory + "smb2_cherry.wav";
       projectile = Mix_LoadWAV(temp.c_str());
+#endif
 }
 
 void CGameLevel::setPlayerInformation(Cabbage::PlayerInformation info) {

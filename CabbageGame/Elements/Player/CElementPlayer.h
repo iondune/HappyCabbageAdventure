@@ -4,7 +4,9 @@
 #include "../CGameplayElement.h"
 #include "CEventManager.h"
 #include "../ISquishable.h"
+#ifdef _ENABLED_CABBAGE_SOUND_
 #include "sound.h"
+#endif
 class CPlayerAbility;
 
 #include "CabbageGameInformation.h"
@@ -55,6 +57,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       SVector3f ShakeFactor;
 
       //Sound Variables
+#ifdef _ENABLED_CABBAGE_SOUND_
       Mix_Chunk *takeDmg;
       Mix_Chunk *jump;
       Mix_Chunk *chargeLaser1;
@@ -62,6 +65,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       Mix_Chunk *fireLaser;
       Mix_Music *victoryMusic;
       Mix_Music *deathMusic;
+#endif
       bool PlayJump, UseCamera;
 
       std::vector<CPlayerAbility*> Abilities;

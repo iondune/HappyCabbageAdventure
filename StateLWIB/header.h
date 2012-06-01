@@ -37,7 +37,9 @@
 #include "../CabbageCollider/CCollisionEngine.h"
 
 #include "Materials.h"
+#ifdef _ENABLED_CABBAGE_SOUND_
 #include "../CabbageSound/sound.h"
+#endif
 
 //Global Defines
 #define NUM_TREES 10

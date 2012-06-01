@@ -103,7 +103,9 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
       }
    }
    else if(LaserState == FIRING) {
+#ifdef _ENABLED_CABBAGE_SOUND_
       Mix_PlayChannel(-1, Player.fireLaser, 0);
+#endif
       Player.Recovering = 5.0f;
       Player.View->setVisible(true);
       Player.View->setHurt(false);

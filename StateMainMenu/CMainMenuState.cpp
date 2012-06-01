@@ -105,6 +105,7 @@ void CMainMenuState::setupMeshes()
 }
 
 void CMainMenuState::setupSoundtrack() {
+#ifdef _ENABLED_CABBAGE_SOUND_
    std::string temp;
 
    if(Mix_OpenAudio(22050, AUDIO_S16, 2, 4096))
@@ -121,6 +122,7 @@ void CMainMenuState::setupSoundtrack() {
          fprintf(stderr, "Soundtrack, Mix_LoadMUS: %s\n", Mix_GetError());
 
    Mix_PlayMusic(Soundtrack, -1);
+#endif
 }
 
 #include "CSceneEffectManager.h"
@@ -337,7 +339,9 @@ void CMainMenuState::OnWidgetClick(CGUIWidget * Widget)
    if(Widget == StartGame) {
       COverworldState::get().newGame = true;
       COverworldState::get().Stats = Cabbage::PlayerInformation();
+#ifdef _ENABLED_CABBAGE_SOUND_
       Mix_FadeOutMusic(2000);
+#endif
       CApplication::get().getStateManager().setState(new CFadeOutState(& COverworldState::get(), 0.3f));
       //CGameplayManager::setLives(3);
       //printf("NumLives: %d\n", CGameplayManager::getNumLives());
@@ -345,7 +349,9 @@ void CMainMenuState::OnWidgetClick(CGUIWidget * Widget)
    else if(Widget == StartEditor) {
       //stopSoundtrack();
       CApplication::get().getStateManager().setState(new CFadeOutState(& CLWIBState::get(), 0.3f));
+#ifdef _ENABLED_CABBAGE_SOUND_
       Mix_FadeOutMusic(2000);
+#endif
    }
    else if(Widget == ExitGame) {
       CApplication::get().close();

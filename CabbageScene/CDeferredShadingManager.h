@@ -6,6 +6,8 @@
 class CDeferredShadingManager : public CSceneEffectManager
 {
 
+	int DebugCounter;
+
 public:
 
 	CFrameBufferObject * DeferredOutputTarget;
@@ -29,6 +31,13 @@ public:
 	virtual void setEffectEnabled(ESceneEffect const Effect, bool const Enabled);
 	virtual bool const isEffectEnabled(ESceneEffect const Effect);
    */
+
+	void cycleDebug();
+
+	virtual bool const isDeferred() const
+	{
+		return true;
+	}
 
 };
 
