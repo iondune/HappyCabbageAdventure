@@ -169,7 +169,9 @@ void CElementPlayer::updatePlayerAction() {
       if (PhysicsEngineObject->getVelocity().Y == 0.f && !PhysicsEngineObject->isJumping())
     	  PlayJump = true;
       if (PlayJump) {
+#ifdef _ENABLED_CABBAGE_SOUND_
          Mix_PlayChannel(-1, jump, 0);
+#endif
          PlayJump = false;
       }
    }
@@ -407,7 +409,9 @@ bool CElementPlayer::decrementHealth() {
    View->setHurt(true);
    Recovering = 1.0f;
 
+#ifdef _ENABLED_CABBAGE_SOUND_
    Mix_PlayChannel(-1, takeDmg, 0);
+#endif
 
    return true;
 }
@@ -438,7 +442,9 @@ bool CElementPlayer::subtractHealth(int amount) {
    View->removeLeaf();
    View->setHurt(true);
    Recovering = 1.0f;
+#ifdef _ENABLED_CABBAGE_SOUND_
    Mix_PlayChannel(-1, takeDmg, 0);
+#endif
    return true;
 }
 
@@ -449,7 +455,9 @@ void CElementPlayer::incrementLives() {
 #include "COverworldState.h"
 #include "../../StateGame/CGameState.h"
 void CElementPlayer::decrementLives() {
+#ifdef _ENABLED_CABBAGE_SOUND_
    Mix_PlayMusic(deathMusic, 1);
+#endif
 
    //Reset stage
    if (Stats.Lives > 0) {
@@ -498,7 +506,7 @@ std::map<Abilities::EAbilityType, int> &CElementPlayer::getAbilityStatus() {
 }
 
 void CElementPlayer::setupSoundEffects() {
-
+#ifdef _ENABLED_CABBAGE_SOUND_
    string MusicDirectory = "../Media/Music/";
    string temp;
 
@@ -530,6 +538,7 @@ void CElementPlayer::setupSoundEffects() {
       printf("Mix_LoadWAV: %s\n", Mix_GetError());
       exit(1);
    }
+#endif
 }
 
 #include "CElementEnemy.h"
@@ -554,7 +563,9 @@ void CElementPlayer::playLevelVictory(float time) {
 
    //Start Victory Music
    if (VictoryTime == 0.0f) {
+#ifdef _ENABLED_CABBAGE_SOUND_
       Mix_PlayMusic(victoryMusic, 1);
+#endif
 
       if (!WinParticle1)
          WinParticle1 = new CParticleEngine(SVector3f(curLocation.X, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE, Level.isNight());

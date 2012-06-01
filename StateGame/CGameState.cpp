@@ -49,7 +49,9 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
    if(Event.Pressed){
       if(Event.Key == SDLK_ESCAPE) {
+#ifdef _ENABLED_CABBAGE_SOUND_
          Mix_FadeOutMusic(2000);
+#endif
          COverworldState::get().levelCompleted = false;
          COverworldState::get().NewStats = Level->getPlayer().getStats();
          CApplication::get().getStateManager().setState(new CFadeOutState(& COverworldState::get()));

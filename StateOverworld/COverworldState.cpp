@@ -1,5 +1,7 @@
 #include "COverworldState.h"
+#ifdef _ENABLED_CABBAGE_SOUND_
 #include "../CabbageSound/sound.h"
+#endif
 #include "CGameState.h"
 #include "CMainMenuState.h"
 
