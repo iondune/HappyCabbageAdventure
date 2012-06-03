@@ -106,6 +106,11 @@ unsigned int const digitCount(int n)
 	return count;
 }
 
+boost::shared_ptr<IAttribute const> const CScene::getAttribute(std::string const & label) const
+{
+	return boost::shared_ptr<IAttribute const>();
+}
+
 boost::shared_ptr<IUniform const> const CScene::getUniform(std::string const & label) const
 {
 	if (label.substr(0, 8) == "uLights[")

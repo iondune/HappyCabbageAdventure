@@ -81,6 +81,8 @@ public:
 	}
 	void addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform);
 	void removeUniform(std::string const & label);
+	
+	virtual boost::shared_ptr<IAttribute const> const getAttribute(std::string const & label) const;
 
 	boost::shared_ptr<IUniform const> const getUniform(std::string const & label) const;
 
