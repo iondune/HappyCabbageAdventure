@@ -24,4 +24,6 @@
 #include "CPointLightSceneObject.h"
 #include "CDirectionalLightSceneObject.h"
 
+#include "CPerspectiveCameraSceneObject.h"
+
 #endif

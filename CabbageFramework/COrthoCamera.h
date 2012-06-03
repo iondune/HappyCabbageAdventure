@@ -4,9 +4,9 @@
 #include <SVector3.h>
 #include <glm/glm.hpp>
 
-#include <CCamera.h>
+#include <CCameraSceneObject.h>
 
-class COrthoCamera : public ICamera
+class COrthoCamera : public CCameraSceneObject
 {
 
 public:
