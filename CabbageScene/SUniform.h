@@ -58,6 +58,11 @@ void SUniform<SVector3Reference<GLfloat> >::bind(GLuint const handle) const
 	glUniform3f(handle, getValue().X, getValue().Y, getValue().Z);
 }
 
+void SUniform<SVector3<GLfloat> >::bind(GLuint const handle) const
+{
+	glUniform3f(handle, getValue().X, getValue().Y, getValue().Z);
+}
+
 void SUniform<SColor>::bind(GLuint const handle) const
 {
 	glUniform3f(handle, getValue().Red, getValue().Green, getValue().Blue);
