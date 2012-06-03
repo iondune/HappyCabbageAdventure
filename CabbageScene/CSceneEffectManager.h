@@ -74,6 +74,8 @@ public:
 		CFrameBufferObject * Target;
 		ERenderPass Pass;
 
+		SRenderPass();
+
 		bool const operator == (SRenderPass const & rhs);
 	
 	};

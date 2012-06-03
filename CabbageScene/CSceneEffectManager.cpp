@@ -7,6 +7,10 @@
 #include <algorithm>
 
 
+CSceneEffectManager::SRenderPass::SRenderPass()
+	: Pass(ERenderPass::Default)
+{}
+
 bool const CSceneEffectManager::SRenderPass::operator == (SRenderPass const & rhs)
 {
 	return Target == rhs.Target && Pass == rhs.Pass;
@@ -105,7 +109,7 @@ CSceneEffectManager::CSceneEffectManager(CSceneManager * sceneManager)
 	BloomResultTarget->attach(BloomResultTexture, GL_COLOR_ATTACHMENT0);
 
 	SRenderPass DefaultPass;
-	DefaultPass.Pass = ERP_DEFAULT;
+	DefaultPass.Pass = ERenderPass::Default;
 	DefaultPass.Target = SceneManager->getSceneFrameBuffer();
 
 	RenderPasses.push_back(DefaultPass);
@@ -228,7 +232,7 @@ void CSceneEffectManager::setEffectEnabled(ESceneEffect const Effect, bool const
 	case ESE_SSAO:
 		{
 			SRenderPass normalsPass;
-			normalsPass.Pass = ERP_MODELSPACE_NORMALS;
+			normalsPass.Pass = ERenderPass::ModelSpaceNormals;
 			normalsPass.Target = NormalPassTarget;
 
 			if (Enabled)
