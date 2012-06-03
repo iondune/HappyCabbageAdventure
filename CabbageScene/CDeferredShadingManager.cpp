@@ -43,14 +43,14 @@ CDeferredShadingManager::CDeferredShadingManager(CSceneManager * sceneManager)
 	RenderPasses.clear();
 
 	SRenderPass DeferredPass;
-	DeferredPass.Pass = ERP_DEFERRED_OBJECTS;
+	DeferredPass.Pass = ERenderPass::DeferredColors;
 	DeferredPass.Target = DeferredOutputTarget;
 
 	RenderPasses.push_back(DeferredPass);
 
 
 	SRenderPass LightPass;
-	LightPass.Pass = ERP_DEFERRED_LIGHTS;
+	LightPass.Pass = ERenderPass::DeferredLights;
 	LightPass.Target = LightPassOutputTarget;
 
 	RenderPasses.push_back(LightPass);
