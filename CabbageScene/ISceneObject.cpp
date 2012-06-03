@@ -6,15 +6,6 @@ ISceneObject::ISceneObject()
 	RenderCategory(ERenderCategory::Default)
 {}
 
-void ISceneObject::checkAbsoluteTransformation()
-{
-	if (TransformationDirty)
-		updateAbsoluteTransformation();
-	else
-		for (std::list<ISceneObject *>::iterator it = Children.begin(); it != Children.end(); ++ it)
-			(* it)->checkAbsoluteTransformation();
-}
-
 glm::mat4 const & ISceneObject::getAbsoluteTransformation() const
 {
 	return AbsoluteTransformation;
