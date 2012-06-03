@@ -36,17 +36,17 @@ void CScene::removeUniform(std::string const & label)
 		Uniforms.erase(it);
 }
 
-ICamera * const CScene::getActiveCamera()
+ICameraSceneObject * const CScene::getActiveCamera()
 {
 	return ActiveCamera;
 }
 
-ICamera const * const CScene::getActiveCamera() const
+ICameraSceneObject const * const CScene::getActiveCamera() const
 {
 	return ActiveCamera;
 }
 
-void CScene::setActiveCamera(ICamera * const activeCamera)
+void CScene::setActiveCamera(ICameraSceneObject * const activeCamera)
 {
 	ActiveCamera = activeCamera;
 }
@@ -243,8 +243,8 @@ void CSceneManager::removeAllSceneObjects()
 }
 
 bool sortISOXY (ISceneObject* a, ISceneObject* b) {
-	SVector3f av = a->getWorldBoundingBoxMinPoint();
-	SVector3f bv = b->getWorldBoundingBoxMinPoint();
+	SVector3f av = a->getAbsoluteBoundingBox().MinCorner;//getWorldBoundingBoxMinPoint();
+	SVector3f bv = b->getAbsoluteBoundingBox().MaxCorner;//
 	if(av.X == bv.X) {
 		return av.Y < bv.Y;
 	}
@@ -276,22 +276,22 @@ ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
 		//printf("~~~~~~~~~~~~ NEW ITERATION (%d) ~~~~~~~~~~~~\n", iterations);
 		unsigned int j = 0;
 		// From the smallest X to the largest X in aList, do:
-		for (float i = (*aList)[0]->getWorldBoundingBoxMinPoint().X; j < aList->size() && i <= (*aList)[aList->size()-1]->getWorldBoundingBoxMinPoint().X + ARBITRARILY_INCREASING_VALUE;) {
+		for (float i = (*aList)[0]->getAbsoluteBoundingBox().MinCorner.X; j < aList->size() && i <= (*aList)[aList->size()-1]->getAbsoluteBoundingBox().MinCorner.X + ARBITRARILY_INCREASING_VALUE;) {
 			ISceneObject * parentNode = new ISceneObject();
-			parentNode->setImmobile(true);
+			//parentNode->setImmobile(true);
 			parentNode->setBoundingBox(SBoundingBox3(SVector3f(i, -INF, -INF), SVector3f(i + ARBITRARILY_INCREASING_VALUE, INF, INF)));
 			// TODO: See if I can get away with not setting any transforms for the nodes in the algorithm. Reasoning: if each object has its own transforms, they'll draw correctly, and if the parent has the correct bounding box, it will cull correctly (since its transforms will be 0).
 
 			int oldJ = j;
 			while (j < aList->size()) {
-				if ((*aList)[j]->getWorldBoundingBox().intersects(parentNode->getBoundingBox())) {
+				if ((*aList)[j]->getAbsoluteBoundingBox().intersects(parentNode->getBoundingBox())) {
 					if (iterations == 1) {
-						tNumObjects += (*aList)[j]->getNumLeaves();
+						tNumObjects += 1;//(*aList)[j]->getNumLeaves();
 					}
 					//(*aList)[j]->setImmobile(true);
 					parentNode->addChild((*aList)[j]);
-					parentNode->getBoundingBox().addInternalPoint((*aList)[j]->getWorldBoundingBox().MinCorner);
-					parentNode->getBoundingBox().addInternalPoint((*aList)[j]->getWorldBoundingBox().MaxCorner);
+					//parentNode->getBoundingBox().addInternalPoint((*aList)[j]->getAbsoluteBoundingBox().MinCorner);
+					//parentNode->getBoundingBox().addInternalPoint((*aList)[j]->getAbsoluteBoundingBox().MaxCorner);
 					(*aList)[j] = NULL;
 					j++;
 				}
@@ -316,7 +316,7 @@ ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
 			}
 			else {
 				//printf("Added a node that contains %d children\n", parentNode->getChildren().size());
-				parentNode->getBoundingBox().shrink();
+				//parentNode->getBoundingBox().shrink();
 				bList->push_back(parentNode);
 			}
 			i += ARBITRARILY_INCREASING_VALUE;
@@ -370,7 +370,7 @@ void CSceneManager::drawAll()
 	ISceneObject::resetObjectCounts();
 	CurrentScene->update();
 
-	PostOpaqueRootObject.sortChildrenByZTranslation();
+	//PostOpaqueRootObject.sortChildrenByZTranslation();
 
 	if (EffectManager)
 	{
@@ -381,7 +381,7 @@ void CSceneManager::drawAll()
 			else
 				glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-			if (it->Pass == ERP_DEFERRED_LIGHTS)
+			if (it->Pass == ERenderPass::DeferredLights)
 			{
 				glClearColor(0.f,0.f,0.f,0.f);
 				glDisable(GL_DEPTH_TEST);
@@ -391,9 +391,9 @@ void CSceneManager::drawAll()
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-			RootObject.draw(CurrentScene, it->Pass);
+			RootObject.draw(CurrentScene, it->Pass, true);
 
-			if (it->Pass != ERP_DEFERRED_LIGHTS) {
+			if (it->Pass != ERenderPass::DeferredLights) {
 				glEnable(GL_ALPHA);
 				glEnable(GL_BLEND);
 				glEnable(GL_DEPTH_TEST);
@@ -402,15 +402,15 @@ void CSceneManager::drawAll()
 			}
 			else {
 			}
-			PostOpaqueRootObject.draw(CurrentScene, it->Pass);
-			if (it->Pass != ERP_DEFERRED_LIGHTS) {
+			PostOpaqueRootObject.draw(CurrentScene, it->Pass, true);
+			if (it->Pass != ERenderPass::DeferredLights) {
 				glBlendFunc(GL_ONE, GL_MAX);
 				glDepthMask(GL_TRUE);
 				glDisable(GL_BLEND);
 				glDisable(GL_ALPHA);
 			}
 
-			if (it->Pass == ERP_DEFERRED_LIGHTS)
+			if (it->Pass == ERenderPass::DeferredLights)
 			{
 				glDisable(GL_BLEND);
 				glEnable(GL_DEPTH_TEST);
@@ -427,8 +427,8 @@ void CSceneManager::drawAll()
 		glEnable(GL_ALPHA);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-		RootObject.draw(CurrentScene, ERP_DEFAULT);
-		PostOpaqueRootObject.draw(CurrentScene, ERP_DEFAULT);
+		RootObject.draw(CurrentScene, ERenderPass::Default, true);
+		PostOpaqueRootObject.draw(CurrentScene, ERenderPass::Default, true);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 		glDisable(GL_BLEND);
 		glDisable(GL_ALPHA);
@@ -499,29 +499,29 @@ CMeshSceneObject * CSceneManager::addMeshSceneObject(CMesh * Mesh, CShader * Sha
 {
 	CMeshSceneObject * Object = new CMeshSceneObject();
 	Object->setMesh(Mesh);
-	Object->setShader(ERP_DEFAULT, Shader);
-	Object->setShader(ERP_DEFERRED_OBJECTS, DeferredShader);
+	Object->setShader(ERenderPass::Default, Shader);
+	Object->setShader(ERenderPass::DeferredColors, DeferredShader);
 	addSceneObject(Object);
 	return Object;
 }
 
-CMeshSceneObject * CSceneManager::addMeshSceneObject(CMesh * Mesh, CShader * Shader, CShader * DeferredShader, CMaterial const & Material)
+CMeshSceneObject * CSceneManager::addMeshSceneObject(CMesh * Mesh, CShader * Shader, CShader * DeferredShader, CRenderable::SMaterial const & Material)
 {
 	CMeshSceneObject * Object = new CMeshSceneObject();
 	Object->setMesh(Mesh);
-	Object->setShader(ERP_DEFAULT, Shader);
-	Object->setShader(ERP_DEFERRED_OBJECTS, DeferredShader);
+	Object->setShader(ERenderPass::Default, Shader);
+	Object->setShader(ERenderPass::DeferredColors, DeferredShader);
 	Object->setMaterial(Material);
 	addSceneObject(Object);
 	return Object;
 }
 
-CMeshSceneObject * CSceneManager::addMeshSceneObject(std::string const & Mesh, std::string const & Shader, std::string const & DeferredShader, CMaterial const & Material)
+CMeshSceneObject * CSceneManager::addMeshSceneObject(std::string const & Mesh, std::string const & Shader, std::string const & DeferredShader, CRenderable::SMaterial const & Material)
 {
 	CMeshSceneObject * Object = new CMeshSceneObject();
 	Object->setMesh(CMeshLoader::load3dsMesh(Mesh));
-	Object->setShader(ERP_DEFAULT, CShaderLoader::loadShader(Shader));
-	Object->setShader(ERP_DEFERRED_OBJECTS, CShaderLoader::loadShader(DeferredShader));
+	Object->setShader(ERenderPass::Default, CShaderLoader::loadShader(Shader));
+	Object->setShader(ERenderPass::DeferredColors, CShaderLoader::loadShader(DeferredShader));
 	Object->setMaterial(Material);
 	addSceneObject(Object);
 	return Object;
@@ -544,8 +544,8 @@ void CScene::disableDebugData(EDebugData::Domain const type)
 
 void CSceneManager::load()
 {
-	RootObject.load(this, ERP_DEFAULT);
-	PostOpaqueRootObject.load(this, ERP_DEFAULT);
+	RootObject.load(this, ERenderPass::Default);
+	PostOpaqueRootObject.load(this, ERenderPass::Default);
 }
 
 CFrameBufferObject * CSceneManager::getSceneFrameBuffer()

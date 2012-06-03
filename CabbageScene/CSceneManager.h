@@ -7,11 +7,17 @@
 #include "CMeshSceneObject.h"
 #include "CFrameBufferObject.h"
 #include "CSceneEffectManager.h"
+#include "CPerspectiveCameraSceneObject.h"
+
+#include "IScene.h"
 
 #include <SLine3.h>
 #include <SColor.h>
 #include <SPosition2.h>
 #define THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT 3945210
+
+#include <SUniform.h>
+#include <SAttribute.h>
 
 
 class CLight
@@ -25,8 +31,8 @@ public:
 	SColor Color;
 	SVector3f Position;
 
-	SUniform<SColor> BindColor;
-	SUniform<SVector3f> BindPosition;
+	SUniformReference<SColor> BindColor;
+	SUniformReference<SVector3f> BindPosition;
 
 	// Todo: change values only through get/set, set scene changed when so
 
@@ -36,21 +42,21 @@ public:
 
 };
 
-class CScene
+class CScene : public IScene
 {
 
 	static CLight const NullLight;
 
 protected:
 
-	CPerspectiveCamera DefaultCamera;
-	ICamera * ActiveCamera;
+	CPerspectiveCameraSceneObject DefaultCamera;
+	ICameraSceneObject * ActiveCamera;
 
 	glm::mat4 ViewMatrix, ProjMatrix;
 	int LightCount;
 
-	SUniform<glm::mat4> BindViewMatrix, BindProjMatrix;
-	SUniform<int> BindLightCount;
+	SUniformReference<glm::mat4> BindViewMatrix, BindProjMatrix;
+	SUniformReference<int> BindLightCount;
 
 	std::map<std::string, boost::shared_ptr<IUniform const> > Uniforms;
 
@@ -64,14 +70,14 @@ public:
 
 	CScene();
 
-	ICamera * const getActiveCamera();
-	ICamera const * const getActiveCamera() const;
-	void setActiveCamera(ICamera * const activeCamera);
+	ICameraSceneObject * const getActiveCamera();
+	ICameraSceneObject const * const getActiveCamera() const;
+	void setActiveCamera(ICameraSceneObject * const activeCamera);
 
 	template <typename T>
 	void addUniform(std::string const & label, T const & uniform)
 	{
-		Uniforms[label] = boost::shared_ptr<SUniform<T> >(new SUniform<T>(uniform));
+		Uniforms[label] = boost::shared_ptr<SUniform<T> >(new SUniformReference<T>(uniform));
 	}
 	void addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform);
 	void removeUniform(std::string const & label);
@@ -132,8 +138,8 @@ public:
 
 	CMeshSceneObject * addMeshSceneObject(CMesh * Mesh);
 	CMeshSceneObject * addMeshSceneObject(CMesh * Mesh, CShader * Shader, CShader * DeferredShader);
-	CMeshSceneObject * addMeshSceneObject(CMesh * Mesh, CShader * Shader, CShader * DeferredShader, CMaterial const & Material);
-	CMeshSceneObject * addMeshSceneObject(std::string const & Mesh, std::string const & Shader, std::string const & DeferredShader, CMaterial const & Material);
+	CMeshSceneObject * addMeshSceneObject(CMesh * Mesh, CShader * Shader, CShader * DeferredShader, CRenderable::SMaterial const & Material);
+	CMeshSceneObject * addMeshSceneObject(std::string const & Mesh, std::string const & Shader, std::string const & DeferredShader, CRenderable::SMaterial const & Material);
 
 	void drawAll();
 	void endDraw();
