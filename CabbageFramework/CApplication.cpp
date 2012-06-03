@@ -44,7 +44,7 @@ void CApplication::setupRenderContext()
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-    if(! SDL_SetVideoMode(WindowSize.X, WindowSize.Y, video->vfmt->BitsPerPixel, SDL_OPENGL | SDL_FULLSCREEN))
+    if(! SDL_SetVideoMode(WindowSize.X, WindowSize.Y, video->vfmt->BitsPerPixel, SDL_OPENGL/* | SDL_FULLSCREEN*/))
     {
         fprintf(stderr, "Couldn't set video mode: %s\n", SDL_GetError());
         waitForUser();
