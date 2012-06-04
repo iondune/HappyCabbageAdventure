@@ -101,7 +101,7 @@ public:
         }
 
         // Attempt to load mesh
-        MeshFace = CMeshLoader::load3dsMesh("../Base/Models/crappycabbage2.3ds", false);
+        MeshFace = CMeshLoader::load3dsMesh("crappycabbage.3ds", false);
         if (MeshFace)
         {
             MeshFace->linearizeIndices();
@@ -110,7 +110,7 @@ public:
             MeshFace->calculateNormalsPerFace();
         }
 
-        MeshVertex = CMeshLoader::load3dsMesh("../Base/Models/crappycabbage2.3ds", false);
+        MeshVertex = CMeshLoader::load3dsMesh("crappycabbage.3ds", false);
         if (MeshVertex)
         {
             MeshVertex->resizeMesh(SVector3f(1.5));
@@ -121,23 +121,23 @@ public:
 
         Renderable = new CMeshSceneObject();
         Renderable->setMesh(MeshFace);
-        Renderable->setShader(Shader);
+		Renderable->setShader(ERenderPass::Default, Shader);
         setMaterial(3);
 
 		WingMan = new CMeshSceneObject();
 		WingMan->setMesh(MeshVertex);
-		WingMan->setShader("DiffuseTexture");
-		WingMan->setTexture("Base/GrassyGrass.bmp", 2);
-		WingMan->setTexture("Base/DirtyDirt.bmp", 3);
+		WingMan->setShader(ERenderPass::Default, "DiffuseTexture");
+		WingMan->setTexture(0, "Base/GrassyGrass.bmp", 2);
+		WingMan->setTexture(0, "Base/DirtyDirt.bmp", 3);
 		ISceneObject * Dummy = new ISceneObject();
 		Dummy->setTranslation(SVector3f(1.5f,0,0));
 		WingMan->setParent(Dummy);
 		Dummy->setParent(Renderable);
 
 		CMesh * Cube = CMeshLoader::createCubeMesh();
-		CMeshSceneObject * SkyBox = SceneManager.addMeshSceneObject(Cube, CShaderLoader::loadShader("DiffuseTexture"));
+		CMeshSceneObject * SkyBox = SceneManager.addMeshSceneObject(Cube, CShaderLoader::loadShader("DiffuseTexture"), CShaderLoader::loadShader("DiffuseTexture"));
 		SkyBox->setScale(SVector3f(20.f));
-		SkyBox->setTexture("../../DemoMeshLoader/stars.bmp");
+		SkyBox->setTexture(0, "../../DemoMeshLoader/stars.bmp");
 		SkyBox->setCullingEnabled(false);
 
 		CApplication::get().getSceneManager().addSceneObject(Renderable);
@@ -145,7 +145,7 @@ public:
 		Image = new CGUIImageWidget("../../DemoMeshLoader/spaceshiptexture.bmp", SVector2f(0.2f, 0.2f));
 		GUIEngine.addWidget(Image);
 
-		Image = new CGUIImageWidget(CImageLoader::loadTexture("Base/sky.bmp"), SVector2f(0.2f, 0.2f));
+		Image = new CGUIImageWidget(CImageLoader::loadTexture("Base/DayOverworld.bmp"), SVector2f(0.2f, 0.2f));
 		Image->setPosition(SVector2f(0.2f, 0.f));
 		Image->setRotation(45.f);
 		GUIEngine.addWidget(Image);
@@ -155,7 +155,7 @@ public:
 		GUIEngine.addWidget(Image);
 
 
-		Font = new CGUIFontWidget("Fonts/DejaVuSansMono.ttf", 36.f);
+		Font = new CGUIFontWidget("../../DemoMeshLoader/Fonts/DejaVuSansMono.ttf", 36.f);
 		Font->setPosition(SVector2f(0, 0.25f));
 		Font->setText("Hello, world!");
 		Font->setColor(SColor(1, 1, 1));
@@ -172,8 +172,8 @@ public:
     void setMaterial(int const i)
     {
 		currentMat = i;
-		CMaterial mat;
-		mat.Texture = CImageLoader::loadTexture("spaceshiptexture.bmp");
+		CRenderable::SMaterial mat;
+		mat.setTexture(0, CImageLoader::loadTexture("../../DemoMeshLoader/spaceshiptexture.bmp"));
         switch (i)
         {
         default:
@@ -298,17 +298,17 @@ public:
 
         case SDLK_z:
             if (! Event.Pressed)
-                Renderable->setShader(CShaderLoader::loadShader("DiffuseTexture_2"));
+                Renderable->setShader(ERenderPass::Default, CShaderLoader::loadShader("DiffuseTexture_2"));
             break;
 
         case SDLK_x:
             if (! Event.Pressed)
-                Renderable->setShader(CShaderLoader::loadShader("DiffuseTexture"));
+                Renderable->setShader(ERenderPass::Default, CShaderLoader::loadShader("DiffuseTexture"));
             break;
 
         case SDLK_c:
             if (! Event.Pressed)
-                Renderable->setShader(CShaderLoader::loadShader("Specular"));
+                Renderable->setShader(ERenderPass::Default, CShaderLoader::loadShader("Specular"));
             break;
 
         case SDLK_j:
