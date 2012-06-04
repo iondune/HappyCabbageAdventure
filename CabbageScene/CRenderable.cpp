@@ -33,6 +33,17 @@ void CRenderable::SMaterial::setTexture(unsigned int const Layer, CTexture * con
 	// TO DO : Cull Nulls from the end
 }
 
+CRenderable::SShaderContext::SShaderContext()
+	: Loaded(false)
+{}
+
+void CRenderable::SShaderContext::unload()
+{
+	Loaded = false;
+	LoadedAttributes.clear();
+	LoadedUniforms.clear();
+}
+
 CRenderable::CRenderable(CSceneObject * parent)
 	: DrawElementType(EDrawElementType::Triangles), NormalObject(0), IndexBufferObject(0), ParentObject(parent), ElementCount(0)
 {}

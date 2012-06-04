@@ -137,7 +137,8 @@ public:
 	void endDraw();
 	void blurSceneIn(float seconds, float const RunTime);
 
-	void load();
+	void load(); // Deprecated
+	void load(ERenderPass const Pass);
 
 	CFrameBufferObject * getSceneFrameBuffer();
 	CTexture * getSceneFrameTexture();

@@ -71,7 +71,7 @@ class CRenderable
 public:
 
 	//! Material attributes used for rendering (typically as uniform shader variables)
-	struct SMaterial
+	class SMaterial
 	{
 
 	public:
@@ -88,15 +88,28 @@ public:
 
 	};
 
-	// Local shader variables
-	std::map<std::string, boost::shared_ptr<IAttribute const> > Attributes;
-	std::map<std::string, boost::shared_ptr<IUniform const> > Uniforms;
 
-	// Loaded shader variables
-	std::map<std::pair<GLuint, std::string>, boost::shared_ptr<IAttribute const> > LoadedAttributes;
-	std::map<std::pair<GLuint, std::string>, boost::shared_ptr<IUniform const> > LoadedUniforms;
+	//! Loaded shader variables
+	class SShaderContext
+	{
+
+	public:
+
+		std::map<std::pair<GLuint, std::string>, boost::shared_ptr<IAttribute const> > LoadedAttributes;
+		std::map<std::pair<GLuint, std::string>, boost::shared_ptr<IUniform const> > LoadedUniforms;
+		bool Loaded;
+
+		SShaderContext();
+
+		void unload();
+
+	};
 
 protected:
+
+	//! Local shader variables
+	std::map<std::string, boost::shared_ptr<IAttribute const> > Attributes;
+	std::map<std::string, boost::shared_ptr<IUniform const> > Uniforms;
 
 	//! Implicit shader variables
 	glm::mat4 ModelMatrix, NormalMatrix;
@@ -121,6 +134,8 @@ protected:
 
 	//! Type of elements to draw
 	EDrawElementType DrawElementType;
+
+	SShaderContext ShaderContexts[ERenderPass::Count];
 
 public:
 

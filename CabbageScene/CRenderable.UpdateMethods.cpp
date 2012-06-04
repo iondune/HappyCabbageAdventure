@@ -21,9 +21,9 @@ void CRenderable::draw(IScene const * const Scene, ERenderPass const Pass, CShad
 	NormalMatrix = glm::transpose(glm::inverse(ModelMatrix));
 
 	// Pass local values to shader
-	for (std::map<std::pair<GLuint, std::string>, boost::shared_ptr<IAttribute const> >::iterator it = LoadedAttributes.begin(); it != LoadedAttributes.end(); ++ it)
+	for (std::map<std::pair<GLuint, std::string>, boost::shared_ptr<IAttribute const> >::iterator it = ShaderContexts[Pass].LoadedAttributes.begin(); it != ShaderContexts[Pass].LoadedAttributes.end(); ++ it)
 		it->second->bind(it->first.first);
-	for (std::map<std::pair<GLuint, std::string>, boost::shared_ptr<IUniform const> >::iterator it = LoadedUniforms.begin(); it != LoadedUniforms.end(); ++ it)
+	for (std::map<std::pair<GLuint, std::string>, boost::shared_ptr<IUniform const> >::iterator it = ShaderContexts[Pass].LoadedUniforms.begin(); it != ShaderContexts[Pass].LoadedUniforms.end(); ++ it)
 		it->second->bind(it->first.first);
 
 	// Set up texturing if a texture was supplied
@@ -62,7 +62,7 @@ void CRenderable::draw(IScene const * const Scene, ERenderPass const Pass, CShad
 	}
 
 	// Cleanup shader variables
-	for (std::map<std::pair<GLuint, std::string>, boost::shared_ptr<IAttribute const> >::iterator it = LoadedAttributes.begin(); it != LoadedAttributes.end(); ++ it)
+	for (std::map<std::pair<GLuint, std::string>, boost::shared_ptr<IAttribute const> >::iterator it = ShaderContexts[Pass].LoadedAttributes.begin(); it != ShaderContexts[Pass].LoadedAttributes.end(); ++ it)
 		it->second->unbind(it->first.first);
 
 	// Cleanup the texture if it was used
@@ -83,46 +83,50 @@ void CRenderable::load(IScene const * const Scene, ERenderPass const Pass)
 	if (IndexBufferObject && IndexBufferObject->isDirty())
 		IndexBufferObject->syncData();
 
-	LoadedAttributes.clear();
-	LoadedUniforms.clear();
-
-	CShader * Shader = ParentObject->getShader(Pass);
-	if (! Shader)
-		return;
-
-	for (std::map<std::string, SShaderVariable>::const_iterator it = Shader->getAttributeHandles().begin(); it != Shader->getAttributeHandles().end(); ++ it)
+	if (! ShaderContexts[Pass].Loaded)
 	{
-		std::string const & Label = it->first;
+		ShaderContexts[Pass].unload();
 
-		boost::shared_ptr<IAttribute const> Attribute = getAttribute(Label);
+		CShader * Shader = ParentObject->getShader(Pass);
+		if (! Shader)
+			return;
 
-		if (! Attribute)
-			Attribute = ParentObject->getAttribute(Label);
+		for (std::map<std::string, SShaderVariable>::const_iterator it = Shader->getAttributeHandles().begin(); it != Shader->getAttributeHandles().end(); ++ it)
+		{
+			std::string const & Label = it->first;
 
-		if (! Attribute)
-			Attribute = Scene->getAttribute(Label);
+			boost::shared_ptr<IAttribute const> Attribute = getAttribute(Label);
 
-		if (! Attribute)
-			std::cout << "Shader-required attribute '" << Label << "' was not provided for object " << this << "." << std::endl;
-		else
-			LoadedAttributes[std::pair<GLuint, std::string>(it->second.Handle, Label)] = Attribute;
-	}
+			if (! Attribute)
+				Attribute = ParentObject->getAttribute(Label);
 
-	for (std::map<std::string, SShaderVariable>::const_iterator it = Shader->getUniformHandles().begin(); it != Shader->getUniformHandles().end(); ++ it)
-	{
-		std::string const & Label = it->first;
+			if (! Attribute)
+				Attribute = Scene->getAttribute(Label);
 
-		boost::shared_ptr<IUniform const> Uniform = getUniform(Label);
+			if (! Attribute)
+				std::cout << "Shader-required attribute '" << Label << "' was not provided for object " << this << "." << std::endl;
+			else
+				ShaderContexts[Pass].LoadedAttributes[std::pair<GLuint, std::string>(it->second.Handle, Label)] = Attribute;
+		}
 
-		if (! Uniform)
-			Uniform = ParentObject->getUniform(Label);
+		for (std::map<std::string, SShaderVariable>::const_iterator it = Shader->getUniformHandles().begin(); it != Shader->getUniformHandles().end(); ++ it)
+		{
+			std::string const & Label = it->first;
 
-		if (! Uniform)
-			Uniform = Scene->getUniform(Label);
+			boost::shared_ptr<IUniform const> Uniform = getUniform(Label);
 
-		if (! Uniform)
-			std::cout << "Shader-required uniform '" << Label << "' was not provided for object " << this << "." << std::endl;
-		else
-			LoadedUniforms[std::pair<GLuint, std::string>(it->second.Handle, Label)] = Uniform;
+			if (! Uniform)
+				Uniform = ParentObject->getUniform(Label);
+
+			if (! Uniform)
+				Uniform = Scene->getUniform(Label);
+
+			if (! Uniform)
+				std::cout << "Shader-required uniform '" << Label << "' was not provided for object " << this << "." << std::endl;
+			else
+				ShaderContexts[Pass].LoadedUniforms[std::pair<GLuint, std::string>(it->second.Handle, Label)] = Uniform;
+		}
+
+		ShaderContexts[Pass].Loaded = true;
 	}
 }

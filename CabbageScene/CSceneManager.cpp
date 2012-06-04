@@ -229,6 +229,7 @@ void CSceneManager::drawAll()
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+			load(it->Pass);
 			RootObject.draw(CurrentScene, it->Pass, UseCulling);
 
 			if (it->Pass != ERenderPass::DeferredLights) {
@@ -379,6 +380,11 @@ void CScene::disableDebugData(EDebugData::Domain const type)
 void CSceneManager::load()
 {
 	RootObject.load(this, ERenderPass::Default);
+}
+
+void CSceneManager::load(ERenderPass const Pass)
+{
+	RootObject.load(this, Pass);
 }
 
 CFrameBufferObject * CSceneManager::getSceneFrameBuffer()
