@@ -104,6 +104,8 @@ void CRenderable::load(IScene const * const Scene, ERenderPass const Pass)
 
 		if (! Attribute)
 			std::cout << "Shader-required attribute '" << Label << "' was not provided for object " << this << "." << std::endl;
+		else
+			LoadedAttributes[it->second.Handle] = Attribute;
 	}
 
 	for (std::map<std::string, SShaderVariable>::const_iterator it = Shader->getUniformHandles().begin(); it != Shader->getUniformHandles().end(); ++ it)
@@ -120,5 +122,7 @@ void CRenderable::load(IScene const * const Scene, ERenderPass const Pass)
 
 		if (! Uniform)
 			std::cout << "Shader-required uniform '" << Label << "' was not provided for object " << this << "." << std::endl;
+		else
+			LoadedUniforms[it->second.Handle] = Uniform;
 	}
 }
