@@ -165,6 +165,8 @@ public:
         //Font.init("Fonts/DejaVuSansMono.ttf", 14);
 		
 		Timer = 0.f;
+
+		SceneManager.load();
     }
 
 	int currentMat;
