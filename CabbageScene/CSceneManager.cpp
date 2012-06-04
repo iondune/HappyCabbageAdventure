@@ -265,6 +265,7 @@ void CSceneManager::drawAll()
 		glEnable(GL_ALPHA);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+		RootObject.load(CurrentScene, ERenderPass::Default);
 		RootObject.draw(CurrentScene, ERenderPass::Default, UseCulling);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 		glDisable(GL_BLEND);
