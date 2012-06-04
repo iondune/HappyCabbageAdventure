@@ -23,7 +23,7 @@ CGUIImageWidget::CGUIImageWidget(std::string const & imagePath, SVector2f const 
 
 void CGUIImageWidget::draw()
 {
-	if (! Visible)
+	if (! Visible || ! Image)
 		return;
 
 	glEnable(GL_TEXTURE_2D);

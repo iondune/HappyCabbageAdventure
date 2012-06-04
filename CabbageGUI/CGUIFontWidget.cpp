@@ -22,7 +22,7 @@ void CGUIFontWidget::makeRenderer(std::string const & FileName, float const Size
 		std::cerr << "Failed to open ttf font file: '" << (FontDirectory + FileName) << "'." << std::endl;
 	}
 
-	if (Renderer == 0 || ! Renderer->isValid())
+	if (! Renderer || ! Renderer->isValid())
 	{
 		if (Renderer)
 		{
