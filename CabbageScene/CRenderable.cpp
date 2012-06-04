@@ -11,6 +11,28 @@
 #include "SUniform.h"
 
 
+
+CRenderable::SMaterial::SMaterial()
+{
+	loadDefaults();
+}
+
+void CRenderable::SMaterial::loadDefaults()
+{
+	Shininess = 1000.0f;
+	AmbientColor = SColor(0.15f, 0.15f, 0.15f);
+	DiffuseColor = SColor(0.8f, 0.8f, 0.8f);
+}
+
+void CRenderable::SMaterial::setTexture(unsigned int const Layer, CTexture * const Texture)
+{
+	if (Layer >= Textures.size())
+		Textures.resize(Layer + 1, 0);
+	Textures[Layer] = Texture;
+
+	// TO DO : Cull Nulls from the end
+}
+
 CRenderable::CRenderable(CSceneObject * parent)
 	: DrawElementType(EDrawElementType::Triangles), NormalObject(0), IndexBufferObject(0), ParentObject(parent), ElementCount(0)
 {}
@@ -20,13 +42,14 @@ CRenderable::SMaterial const & CRenderable::getMaterial() const
 	return Material;
 }
 
+void CRenderable::setMaterial(CRenderable::SMaterial const & material)
+{
+	Material = material;
+}
+
 void CRenderable::setTexture(unsigned int const Layer, CTexture * const Texture)
 {
-	if (Layer >= Material.Textures.size())
-		Material.Textures.resize(Layer + 1, 0);
-	Material.Textures[Layer] = Texture;
-
-	// TO DO : Cull Nulls from the end
+	Material.setTexture(Layer, Texture);
 }
 
 EDrawElementType const CRenderable::getDrawType() const

@@ -84,6 +84,8 @@ public:
 		SMaterial();
 		void loadDefaults();
 
+		void setTexture(unsigned int const Layer, CTexture * const Texture);
+
 	};
 
 	// Local shader variables
