@@ -21,6 +21,8 @@ CScene::CScene()
 	addUniform("uProjMatrix", ProjMatrix);
 	addUniform("uViewMatrix", ViewMatrix);
 	addUniform("uLightCount", LightCount);
+
+	RootObject.setCullingEnabled(false);
 }
 
 void CScene::addUniform(std::string const & label, boost::shared_ptr<IUniform const> const uniform)
