@@ -35,7 +35,8 @@ void CSceneObject::setTexture(unsigned int const Layer, std::string const & text
 
 void CSceneObject::setTexture(unsigned int const Layer, CTexture * Texture, unsigned int const renderable)
 {
-	Renderables[renderable]->setTexture(Layer, Texture);
+	if (Renderables.size() > renderable)
+		Renderables[renderable]->setTexture(Layer, Texture);
 }
 
 void CSceneObject::setTexture(unsigned int const Layer, std::string const & texture, unsigned int const renderable)
@@ -111,7 +112,8 @@ void CSceneObject::removeAttribute(std::string const & label)
 
 void CSceneObject::removeAttribute(std::string const & label, unsigned int const renderable)
 {
-	Renderables[renderable]->removeAttribute(label);
+	if (Renderables.size() > renderable)
+		Renderables[renderable]->removeAttribute(label);
 }
 
 void CSceneObject::removeAttribute(std::string const & label, CRenderable * const Renderable)
@@ -127,7 +129,8 @@ void CSceneObject::removeUniform(std::string const & label)
 
 void CSceneObject::removeUniform(std::string const & label, unsigned int const renderable)
 {
-	Renderables[renderable]->removeUniform(label);
+	if (Renderables.size() > renderable)
+		Renderables[renderable]->removeUniform(label);
 }
 
 void CSceneObject::removeUniform(std::string const & label, CRenderable * const Renderable)
