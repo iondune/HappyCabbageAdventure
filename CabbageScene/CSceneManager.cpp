@@ -14,7 +14,7 @@ CLight const CScene::NullLight;
 
 
 CScene::CScene()
-	: BindProjMatrix(ProjMatrix), BindViewMatrix(ViewMatrix), BindLightCount(LightCount), UseCulling(true), HierarchyObject(0), NonHierarchyObject(0), UseHierarchy(true)
+	: BindProjMatrix(ProjMatrix), BindViewMatrix(ViewMatrix), BindLightCount(LightCount), UseCulling(true)
 {
 	ActiveCamera = & DefaultCamera;
 
@@ -61,31 +61,9 @@ void CScene::setCullingEnabled(bool const culling)
 	UseCulling = culling;
 }
 
-void CScene::toggleUseHierarchy()
+boost::shared_ptr<IAttribute const> const CScene::getAttribute(std::string const & label) const
 {
-	setUseHierarchy(!UseHierarchy);
-}
-
-bool CScene::getUseHierarchy()
-{
-	return UseHierarchy;
-}
-
-void CScene::setUseHierarchy(bool h) {
-	if(h != UseHierarchy) {
-		UseHierarchy = h;
-		if(HierarchyObject && NonHierarchyObject) {
-			if(h) {
-				RootObject.removeChild(NonHierarchyObject);
-				RootObject.addChild(HierarchyObject);
-			}
-			else {
-				RootObject.removeChild(HierarchyObject);
-				RootObject.addChild(NonHierarchyObject);
-			}
-			//printf("RootObject #: %d\n", RootObject.getChildren().size());
-		}
-	}
+	return boost::shared_ptr<IAttribute const>();
 }
 
 unsigned int const digitCount(int n)
@@ -104,11 +82,6 @@ unsigned int const digitCount(int n)
 	}
 
 	return count;
-}
-
-boost::shared_ptr<IAttribute const> const CScene::getAttribute(std::string const & label) const
-{
-	return boost::shared_ptr<IAttribute const>();
 }
 
 boost::shared_ptr<IUniform const> const CScene::getUniform(std::string const & label) const
@@ -158,9 +131,7 @@ void CScene::update()
 	}
 
 	RootObject.updateAbsoluteTransformation();
-	PostOpaqueRootObject.updateAbsoluteTransformation();
 	RootObject.update();
-	PostOpaqueRootObject.update();
 }
 
 GLuint CSceneManager::QuadHandle = 0;
@@ -213,38 +184,14 @@ void CSceneManager::addSceneObject(ISceneObject * sceneObject)
 	RootObject.addChild(sceneObject);
 }
 
-void CSceneManager::addPostOpaqueSceneObject(ISceneObject *sceneObject) {
-	PostOpaqueRootObject.addChild(sceneObject);
-}
-
-void CSceneManager::addImmobileSceneObject(ISceneObject * sceneObject, unsigned int agreement)
-{
-	if(UseHierarchy) {
-		if(agreement != THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT) {
-			fprintf(stderr, "addImmobileSceneObject failure! The agreement argument was not accepted.\nEntered: %d. Expected: THIS_OBJECT_WILL_NEVER_MOVE_AND_ITS_BOUNDING_BOX_IS_CORRECT\n", agreement);
-			exit(1);
-		}
-		ImmobileSceneObjects.push_back(sceneObject);
-	}
-	else
-		addSceneObject(sceneObject);
-}
-
 void CSceneManager::removeSceneObject(ISceneObject * sceneObject)
 {
 	RootObject.removeChild(sceneObject);
-	PostOpaqueRootObject.removeChild(sceneObject);
-	//Because you're always gonna want it removed, even if you don't specify the correct location
-}
-
-void CSceneManager::removePostOpaqueSceneObject(ISceneObject * sceneObject) {
-	PostOpaqueRootObject.removeChild(sceneObject);
 }
 
 void CSceneManager::removeAllSceneObjects()
 {
 	RootObject.removeChildren();
-	PostOpaqueRootObject.removeChildren();
 }
 
 bool sortISOXY (ISceneObject* a, ISceneObject* b) {
@@ -256,126 +203,10 @@ bool sortISOXY (ISceneObject* a, ISceneObject* b) {
 	else return av.X < bv.X;
 }
 
-ISceneObject* CSceneManager::runImmobileObjectsThroughHierarchyAlgorithm() {
-	float STARTING_ARBITRARILY_INCREASING_VALUE = 17.5f;
-	float ARBITRARILY_INCREASING_VALUE = STARTING_ARBITRARILY_INCREASING_VALUE;
-	float const INF = std::numeric_limits<float>::infinity();
-	std::vector<ISceneObject *> dontUseMyName;
-	// aList is a list of children to be assigned to a parent
-	// bList is a list of parents that were just created
-	std::vector<ISceneObject *> *aList = &ImmobileSceneObjects, *bList = &dontUseMyName;
-
-	NonHierarchyObject = new ISceneObject();
-	NonHierarchyObject->setCullingEnabled(false);
-	for (unsigned int i = 0; i < ImmobileSceneObjects.size(); i++) {
-		NonHierarchyObject->addChild(ImmobileSceneObjects[i]);
-	}
-
-	// Sort ImmobileSceneObjects by bounding box min X point
-	sort(aList->begin(), aList->end(), sortISOXY);
-
-	int iterations = 0, tNumObjects = 0;
-	// TODO: Fix the argument for this while loop
-	while(aList->size() != 1) {
-		iterations++;
-		//printf("~~~~~~~~~~~~ NEW ITERATION (%d) ~~~~~~~~~~~~\n", iterations);
-		unsigned int j = 0;
-		// From the smallest X to the largest X in aList, do:
-		for (float i = (*aList)[0]->getAbsoluteBoundingBox().MinCorner.X; j < aList->size() && i <= (*aList)[aList->size()-1]->getAbsoluteBoundingBox().MinCorner.X + ARBITRARILY_INCREASING_VALUE;) {
-			ISceneObject * parentNode = new ISceneObject();
-			//parentNode->setImmobile(true);
-			parentNode->setBoundingBox(SBoundingBox3(SVector3f(i, -INF, -INF), SVector3f(i + ARBITRARILY_INCREASING_VALUE, INF, INF)));
-			// TODO: See if I can get away with not setting any transforms for the nodes in the algorithm. Reasoning: if each object has its own transforms, they'll draw correctly, and if the parent has the correct bounding box, it will cull correctly (since its transforms will be 0).
-
-			int oldJ = j;
-			while (j < aList->size()) {
-				if ((*aList)[j]->getAbsoluteBoundingBox().intersects(parentNode->getBoundingBox())) {
-					if (iterations == 1) {
-						tNumObjects += 1;//(*aList)[j]->getNumLeaves();
-					}
-					//(*aList)[j]->setImmobile(true);
-					parentNode->addChild((*aList)[j]);
-					//parentNode->getBoundingBox().addInternalPoint((*aList)[j]->getAbsoluteBoundingBox().MinCorner);
-					//parentNode->getBoundingBox().addInternalPoint((*aList)[j]->getAbsoluteBoundingBox().MaxCorner);
-					(*aList)[j] = NULL;
-					j++;
-				}
-				else
-					break;
-			}
-			if(j == oldJ) {
-				/*printf("Didn't add. Bounding box: (%0.2f,%0.2f,%0.2f),(%0.2f,%0.2f,%0.2f)\n",
-				parentNode->getBoundingBox().MinCorner.X,
-				parentNode->getBoundingBox().MinCorner.Y,
-				parentNode->getBoundingBox().MinCorner.Z,
-				parentNode->getBoundingBox().MaxCorner.X,
-				parentNode->getBoundingBox().MaxCorner.Y,
-				parentNode->getBoundingBox().MaxCorner.Z
-				);
-				*/
-			}
-			else if(j == oldJ + 1) {
-				//printf("Size of children list (should be 1): %d\n", parentNode->getChildren().size());
-				bList->push_back(parentNode->getChildren().front());
-				//bList->push_back(parentNode);
-			}
-			else {
-				//printf("Added a node that contains %d children\n", parentNode->getChildren().size());
-				//parentNode->getBoundingBox().shrink();
-				bList->push_back(parentNode);
-			}
-			i += ARBITRARILY_INCREASING_VALUE;
-		}
-
-		/*
-		for (unsigned int k = 0; k < aList->size(); k++) {
-		assert((*aList)[k] != NULL);
-		}
-		*/
-
-		for (unsigned int k = 0; k < aList->size(); k++) {
-			if((*aList)[k] != NULL) {
-				bList->push_back((*aList)[k]);
-			}
-		}
-
-		int numChildren = 0;
-		for (unsigned int k = 0; k < bList->size(); k++) {
-			numChildren += (*bList)[k]->getChildren().size();
-		}
-		//printf("Num children in bList: %d\n", numChildren);
-
-		ARBITRARILY_INCREASING_VALUE *= ARBITRARILY_INCREASING_VALUE*ARBITRARILY_INCREASING_VALUE;
-		std::vector<ISceneObject *> *cList = aList; 
-		aList = bList;
-		bList = cList;
-		bList->clear();
-	}
-	ISceneObject *toReturn = (*aList)[0];
-	ImmobileSceneObjects.clear();
-	//printf("There are a total of %d leaves.\n", tNumObjects);
-	return toReturn;
-}
-
 void CSceneManager::drawAll()
 {
-	if (UseHierarchy && ImmobileSceneObjects.size() > 0) {
-		for (unsigned int i = 0; i < ImmobileSceneObjects.size(); ++ i) {
-			ImmobileSceneObjects[i]->updateAbsoluteTransformation();
-			ImmobileSceneObjects[i]->update();
-		}
-
-		HierarchyObject = runImmobileObjectsThroughHierarchyAlgorithm();
-		//std::list<ISceneObject *> & toAdd = toAddObj->getChildren();
-		RootObject.addChild(HierarchyObject);
-		//for (std::list<ISceneObject *>::const_iterator it = toAdd->getChildren().begin(); it != toAdd->getChildren().end(); ++ it)
-		//   RootObject.addChild((*it));
-		//printf("There are a total of %d leaves.\n", RootObject.getNumLeaves());
-	}
 	ISceneObject::resetObjectCounts();
 	CurrentScene->update();
-
-	//PostOpaqueRootObject.sortChildrenByZTranslation();
 
 	if (EffectManager)
 	{
@@ -396,7 +227,7 @@ void CSceneManager::drawAll()
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-			RootObject.draw(CurrentScene, it->Pass, true);
+			RootObject.draw(CurrentScene, it->Pass, UseCulling);
 
 			if (it->Pass != ERenderPass::DeferredLights) {
 				glEnable(GL_ALPHA);
@@ -407,7 +238,6 @@ void CSceneManager::drawAll()
 			}
 			else {
 			}
-			PostOpaqueRootObject.draw(CurrentScene, it->Pass, true);
 			if (it->Pass != ERenderPass::DeferredLights) {
 				glBlendFunc(GL_ONE, GL_MAX);
 				glDepthMask(GL_TRUE);
@@ -432,8 +262,7 @@ void CSceneManager::drawAll()
 		glEnable(GL_ALPHA);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-		RootObject.draw(CurrentScene, ERenderPass::Default, true);
-		PostOpaqueRootObject.draw(CurrentScene, ERenderPass::Default, true);
+		RootObject.draw(CurrentScene, ERenderPass::Default, UseCulling);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 		glDisable(GL_BLEND);
 		glDisable(GL_ALPHA);
@@ -537,20 +366,17 @@ CMeshSceneObject * CSceneManager::addMeshSceneObject(std::string const & Mesh, s
 void CScene::enableDebugData(EDebugData::Domain const type)
 {
 	RootObject.enableDebugData(type);
-	PostOpaqueRootObject.enableDebugData(type);
 }
 
 void CScene::disableDebugData(EDebugData::Domain const type)
 {
 	RootObject.disableDebugData(type);
-	PostOpaqueRootObject.disableDebugData(type);
 }
 
 
 void CSceneManager::load()
 {
 	RootObject.load(this, ERenderPass::Default);
-	PostOpaqueRootObject.load(this, ERenderPass::Default);
 }
 
 CFrameBufferObject * CSceneManager::getSceneFrameBuffer()

@@ -61,10 +61,8 @@ protected:
 	std::map<std::string, boost::shared_ptr<IUniform const> > Uniforms;
 
 	ISceneObject RootObject;
-	ISceneObject PostOpaqueRootObject;
-	ISceneObject *HierarchyObject, *NonHierarchyObject;
 
-	bool UseCulling, UseHierarchy;
+	bool UseCulling;
 
 public:
 
@@ -119,21 +117,13 @@ class CSceneManager : public CScene
 
 	SSize2 ScreenSize;
 
-	// Immobile scene objects: to be combined in a hierarchy and culled based on X location 
-	std::vector<ISceneObject *> ImmobileSceneObjects;
-
-	ISceneObject* runImmobileObjectsThroughHierarchyAlgorithm();
-
 public:
 	
 	static GLuint QuadHandle;
 
 	CSceneManager(SPosition2 const & screenSize);
 
-	void removePostOpaqueSceneObject(ISceneObject * sceneObject);
-	void addPostOpaqueSceneObject(ISceneObject *sceneObject);
 	void addSceneObject(ISceneObject * sceneObject);
-	void addImmobileSceneObject(ISceneObject * sceneObject, unsigned int agreement);
 	void removeSceneObject(ISceneObject * sceneObject);
 
 	void removeAllSceneObjects();
