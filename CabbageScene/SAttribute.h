@@ -43,6 +43,7 @@ public:
 
 	void bind(GLint const Handle) const
 	{
+		load();
 		glEnableVertexAttribArray(Handle);
 		glBindBuffer(GL_ARRAY_BUFFER, Buffer->getHandle());
 		glVertexAttribPointer(Handle, ElementSize, GL_FLOAT, GL_FALSE, 0, 0);
