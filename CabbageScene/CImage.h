@@ -16,23 +16,23 @@
 class CImage
 {
 
-    friend class CImageLoader;
+	friend class CImageLoader;
 
-    char * ImageData;
-    int Width;
-    int Height;
+	unsigned char * ImageData;
+	int Width;
+	int Height;
 
 	bool Alpha;
 
 
 public:
-	
-    CImage(char * imageData, int width, int height, bool const alpha = false);
-    ~CImage();
 
-    int const getWidth() const;
-    int const getHeight() const;
-    char const * const getImageData() const;
+	CImage(unsigned char * imageData, int width, int height, bool const alpha = false);
+	~CImage();
+
+	int const getWidth() const;
+	int const getHeight() const;
+	unsigned char const * const getImageData() const;
 	bool const hasAlpha() const;
 
 };
