@@ -1,6 +1,6 @@
 #include "CImage.h"
 
-CImage::CImage(char * const imageData, int const width, int const height, bool const alpha)
+CImage::CImage(unsigned char * const imageData, int const width, int const height, bool const alpha)
     : ImageData(imageData), Width(width), Height(height), Alpha(alpha)
 {}
 
@@ -19,7 +19,7 @@ int const CImage::getHeight() const
     return Height;
 }
 
-char const * const CImage::getImageData() const
+unsigned char const * const CImage::getImageData() const
 {
     return ImageData;
 }

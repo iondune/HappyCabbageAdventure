@@ -123,7 +123,7 @@ CImage * const CImageLoader::loadImage(std::string const & fileName, bool const 
 
     fclose(file); // Closes the file stream
 
-    CImage * Image = new CImage(infoheader.data, infoheader.biWidth, infoheader.biHeight);
+    CImage * Image = new CImage((unsigned char *) infoheader.data, infoheader.biWidth, infoheader.biHeight);
 
 	if (useCache)
 		LoadedImages[fileName] = Image;
@@ -142,7 +142,7 @@ CImage * const CImageLoader::loadTGAImage(std::string const & fileName)
 		return 0;
 	}
 
-	CImage * Image = new CImage((char *)tex.imageData, tex.width, tex.height, tex.bpp == 32);
+	CImage * Image = new CImage((unsigned char *)tex.imageData, tex.width, tex.height, tex.bpp == 32);
 	char Data[1000];
 	memcpy(Data, tex.imageData, 1000);
 
