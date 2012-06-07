@@ -4,6 +4,7 @@ CCameraControl::CCameraControl(SVector3f const position)
 	: Application(CApplication::get()), EventManager(CApplication::get().getEventManager()), Phi(0), Theta(-1.5708f), Tracking(false), MoveSpeed(20.5f)
 {
 	Application.getEventManager().OnMouseEvent.connect(this, & CCameraControl::OnMouseEvent);
+	setPosition(position);
 }
 
 void CCameraControl::OnMouseEvent(SMouseEvent const & Event)
