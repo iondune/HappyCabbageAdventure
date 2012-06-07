@@ -163,6 +163,7 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 
 	STextureCreationFlags Flags;
 	Flags.MipMaps = false;
+	Flags.Wrap = GL_CLAMP_TO_EDGE;
 	SceneFrameTexture = new CTexture(ScreenSize, true, Flags);
 	SceneDepthBuffer = new CRenderBufferObject(GL_DEPTH_COMPONENT, ScreenSize);
 
@@ -227,7 +228,7 @@ void CSceneManager::drawAll()
 				glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_COLOR);
 			}
 
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			load(it->Pass);
 			RootObject.draw(CurrentScene, it->Pass, UseCulling);
