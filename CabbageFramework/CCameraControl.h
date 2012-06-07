@@ -33,4 +33,9 @@ public:
 
 	SVector3f const & getPosition();
 
+	void setVelocity(float const velocity)
+	{
+		MoveSpeed = velocity;
+	}
+
 };
