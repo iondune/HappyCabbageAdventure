@@ -165,11 +165,12 @@ CSceneManager::CSceneManager(SPosition2 const & screenSize)
 	Flags.MipMaps = false;
 	Flags.Wrap = GL_CLAMP_TO_EDGE;
 	SceneFrameTexture = new CTexture(ScreenSize, true, Flags);
-	SceneDepthBuffer = new CRenderBufferObject(GL_DEPTH_COMPONENT, ScreenSize);
+	SceneDepthBuffer = new CRenderBufferObject(GL_DEPTH_COMPONENT24, ScreenSize);
 
 	SceneFrameBuffer = new CFrameBufferObject();
 	SceneFrameBuffer->attach(SceneDepthBuffer, GL_DEPTH_ATTACHMENT);
 	SceneFrameBuffer->attach(SceneFrameTexture, GL_COLOR_ATTACHMENT0);
+	//SceneFrameBuffer->attach(SceneFrameTexture, GL_COLOR_ATTACHMENT1);
 
 	if (! SceneFrameBuffer->isValid())
 		std::cerr << "Failed to make FBO for scene drawing!!!!!!" << std::endl  << std::endl  << std::endl;
@@ -228,7 +229,8 @@ void CSceneManager::drawAll()
 				glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_COLOR);
 			}
 
-			//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			if (it->Pass != ERenderPass::Default)
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			load(it->Pass);
 			RootObject.draw(CurrentScene, it->Pass, UseCulling);

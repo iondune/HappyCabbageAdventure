@@ -58,6 +58,7 @@ public:
 	bool const isValid() const;
 
 	void setImage(CImage * Image);
+	void setImage(unsigned char const * const Data, bool const hasAlpha);
 
 };
 

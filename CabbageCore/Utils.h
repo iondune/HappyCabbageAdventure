@@ -34,7 +34,7 @@ static float frand()
 template <typename T>
 static T const clamp(T const v, T const min, T const max)
 {
-	return v > max ? max : v < min ? min : v;
+	return ((v > max) ? max : ((v < min) ? min : v));
 }
 
 template <typename T>
