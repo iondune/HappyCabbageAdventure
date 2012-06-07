@@ -38,28 +38,28 @@ void CCameraControl::update(float const TickTime)
 
 	if (EventManager.IsKeyDown[SDLK_w] || EventManager.IsKeyDown[SDLK_UP])
 	{
-		Position += LookDirection*MoveSpeed*TickTime;
+		Translation += LookDirection*MoveSpeed*TickTime;
 	}
 
 	if (EventManager.IsKeyDown[SDLK_a] || EventManager.IsKeyDown[SDLK_LEFT])
 	{
-		Position.X += cos(Theta - 1.57079633f)*MoveSpeed*TickTime;
-		Position.Z += sin(Theta - 1.57079633f)*MoveSpeed*TickTime;
+		Translation.X += cos(Theta - 1.57079633f)*MoveSpeed*TickTime;
+		Translation.Z += sin(Theta - 1.57079633f)*MoveSpeed*TickTime;
 	}
 
 	if (EventManager.IsKeyDown[SDLK_d] || EventManager.IsKeyDown[SDLK_RIGHT])
 	{
-		Position.X += cos(Theta + 1.57079633f)*MoveSpeed*TickTime;
-		Position.Z += sin(Theta + 1.57079633f)*MoveSpeed*TickTime;
+		Translation.X += cos(Theta + 1.57079633f)*MoveSpeed*TickTime;
+		Translation.Z += sin(Theta + 1.57079633f)*MoveSpeed*TickTime;
 	}
 
 	if (EventManager.IsKeyDown[SDLK_s] || EventManager.IsKeyDown[SDLK_DOWN])
 	{
-		Position -= LookDirection*MoveSpeed*TickTime;
+		Translation -= LookDirection*MoveSpeed*TickTime;
 	}
 }
 
 SVector3f const & CCameraControl::getPosition()
 {
-	return Position;
+	return Translation;
 }

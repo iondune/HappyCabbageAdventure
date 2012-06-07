@@ -9,7 +9,6 @@ class CCameraSceneObject : public ICameraSceneObject
 
 protected:
 
-	SVector3f Position;
 	SVector3f LookDirection;
 
 	glm::mat4 ViewMatrix;

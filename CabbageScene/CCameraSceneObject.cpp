@@ -4,7 +4,7 @@
 
 
 CCameraSceneObject::CCameraSceneObject()
-    : LookDirection(0, 0, 1), Position(0, 0, 0)
+    : LookDirection(0, 0, 1)
 {
     recalculateViewMatrix();
 }
@@ -12,7 +12,7 @@ CCameraSceneObject::CCameraSceneObject()
 void CCameraSceneObject::recalculateViewMatrix()
 {
     //printf("Camera position: <%0.2f, %0.2f, %0.2f>; Camera lookat: <%0.2f, %0.2f, %0.2f>\n", Position.X, Position.Y, Position.Z, LookDirection.X, LookDirection.Y, LookDirection.Z);
-    ViewMatrix = glm::lookAt(Position.getGLMVector(), (Position + LookDirection).getGLMVector(), glm::vec3(0, 1, 0));
+    ViewMatrix = glm::lookAt(getPosition().getGLMVector(), (getPosition() + LookDirection).getGLMVector(), glm::vec3(0, 1, 0));
 }
 
 SVector3f const & CCameraSceneObject::getLookDirecton() const
