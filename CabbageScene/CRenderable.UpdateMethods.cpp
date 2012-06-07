@@ -38,6 +38,31 @@ void CRenderable::draw(IScene const * const Scene, ERenderPass const Pass, CShad
 		}
 	}
 
+	GLenum ElementType;
+
+	switch (DrawElementType)
+	{
+	case EDrawElementType::Lines:
+		ElementType = GL_LINES;
+		//printf("Drawing Lines.\n");
+		break;
+	case EDrawElementType::Points:
+		ElementType = GL_POINTS;
+		//printf("Drawing Points.\n");
+		break;
+	case EDrawElementType::Triangles:
+		ElementType = GL_TRIANGLES;
+		//printf("Drawing Triangles.\n");
+		break;
+	case EDrawElementType::Quads:
+		ElementType = GL_QUADS;
+		//printf("Drawing Quads.\n");
+		break;
+	default:
+		printf("Error! Unknown Draw Type Specified.\n");
+		break;
+	};
+
 	if (IndexBufferObject)
 	{
 		// If the ibo is dirty, sync it!
@@ -47,11 +72,11 @@ void CRenderable::draw(IScene const * const Scene, ERenderPass const Pass, CShad
 		// And bind the synced buffer object to shader...
 		ShaderContext.bindIndexBufferObject(IndexBufferObject->getHandle());
 
-		glDrawElements(DrawElementType, IndexBufferObject->getElements().size(), GL_UNSIGNED_SHORT, 0);
+		glDrawElements(ElementType, IndexBufferObject->getElements().size(), GL_UNSIGNED_SHORT, 0);
 	}
 	else
 	{
-		glDrawArrays(DrawElementType, 0, ElementCount);
+		glDrawArrays(ElementType, 0, ElementCount);
 	}
 
 	// Draw the normal object if it is enabled
