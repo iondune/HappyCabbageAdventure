@@ -46,6 +46,11 @@ public:
 		return (i == 0 ? X : Y);
 	}
 
+	bool const operator < (SPosition2 const & oth) const
+	{
+		return oth.X == X ? Y < oth.Y : X < oth.X;
+	}
+
 	void reset()
 	{
 		X = 0;
