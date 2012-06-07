@@ -33,8 +33,8 @@ void STextureCreationFlags::apply() const
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, Filter);
 }
 
-CTexture::CTexture(CImage * Image, STextureCreationFlags const Flags)
-	: TextureHandle(0), Size()
+CTexture::CTexture(CImage * Image, STextureCreationFlags const flags)
+	: TextureHandle(0), Size(), Flags(flags)
 {
 	if (Image)
 	{
@@ -56,8 +56,19 @@ CTexture::CTexture(CImage * Image, STextureCreationFlags const Flags)
 	}
 }
 
-CTexture::CTexture(int const width, int const height, bool const Alpha, STextureCreationFlags const Flags)
-	: TextureHandle(0), Size(width, height)
+void CTexture::setImage(CImage * Image)
+{
+	if (Size.Width != Image->getWidth() || Size.Height != Image->getHeight())
+		return;
+
+	glBindTexture(GL_TEXTURE_2D, TextureHandle);
+	glTexImage2D(GL_TEXTURE_2D, 0, Image->hasAlpha() ? GL_RGBA8 : GL_RGB8, Size.Width, Size.Height, 0, 
+		Image->hasAlpha() ? GL_RGBA : GL_RGB, Flags.PixelType, Image->getImageData());
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+CTexture::CTexture(int const width, int const height, bool const Alpha, STextureCreationFlags const flags)
+	: TextureHandle(0), Size(width, height), Flags(flags)
 {
 	glGenTextures(1, & TextureHandle);
 	glBindTexture(GL_TEXTURE_2D, TextureHandle);
@@ -70,8 +81,8 @@ CTexture::CTexture(int const width, int const height, bool const Alpha, STexture
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-CTexture::CTexture(SPosition2 const & size, bool const Alpha, STextureCreationFlags const Flags)
-	: TextureHandle(0), Size(size)
+CTexture::CTexture(SPosition2 const & size, bool const Alpha, STextureCreationFlags const flags)
+	: TextureHandle(0), Size(size), Flags(flags)
 {
 	glGenTextures(1, & TextureHandle);
 	glBindTexture(GL_TEXTURE_2D, TextureHandle);

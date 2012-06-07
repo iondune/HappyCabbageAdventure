@@ -33,6 +33,7 @@ public:
 	int const getWidth() const;
 	int const getHeight() const;
 	unsigned char const * const getImageData() const;
+	unsigned char * getImageData();
 	bool const hasAlpha() const;
 
 };

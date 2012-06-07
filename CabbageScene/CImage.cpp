@@ -24,6 +24,11 @@ unsigned char const * const CImage::getImageData() const
     return ImageData;
 }
 
+unsigned char * CImage::getImageData()
+{
+    return ImageData;
+}
+
 bool const CImage::hasAlpha() const
 {
 	return Alpha;

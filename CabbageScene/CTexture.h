@@ -38,6 +38,8 @@ class CTexture
     GLuint TextureHandle;
 	SSize2 Size;
 
+	STextureCreationFlags Flags;
+
 public:
 
     CTexture(CImage * Image, STextureCreationFlags const Flags = STextureCreationFlags());
@@ -54,6 +56,8 @@ public:
     int const getHeight() const;
 
 	bool const isValid() const;
+
+	void setImage(CImage * Image);
 
 };
 
