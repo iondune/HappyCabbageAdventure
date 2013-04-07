@@ -111,6 +111,8 @@ void CShaderContext::bindTexture(std::string const & Label, CTexture const * con
 		return;
 	}
 
+	if(Texture == 0)
+		return;
 	bindTexture(it->second.Handle, Texture->getTextureHandle());
 }
 
