@@ -30,7 +30,7 @@ namespace Env {
 }
 
 class CGameLevel {
-   friend CGameLevel & CGameLevelLoader::loadLevel(std::string, bool);
+   friend CGameLevelLoader;
 
    public:
 #ifdef _ENABLED_CABBAGE_SOUND_
@@ -46,6 +46,11 @@ class CGameLevel {
       Mix_Music *Soundtrack;
 #endif
 
+
+
+      CCollisionEngine *PhysicsEngine;
+
+      CElementPlayer *PlayerElement;
       std::vector<CGameplayElement*> ToDelete;
       std::vector<CGameplayElement*> Elements;
       std::vector<CElementBlock*> Blocks;
@@ -56,16 +61,8 @@ class CGameLevel {
       std::vector<CElementItem*> Items;
       std::vector<CElementBlockFlag*> Flags; 
       std::vector<CElementBlockElevator*> Elevators; 
-      /*
-      std::vector<CFriends*> Friends;
-      */
-
       void toggleLoaded(); // Only available for CGameLevelLoader::loadLevel().
       void incrementXmlCount();
-      CElementPlayer *PlayerElement;
-
-      CCollisionEngine *PhysicsEngine;
-
    public:
 
       std::vector<CGameplayElement*> & getElements();

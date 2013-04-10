@@ -227,8 +227,8 @@ CGameLevel &CGameLevelLoader::loadLevel(std::string levelName, bool useCache) {
       exit(1);
    }
    newLevel->blocksFinal = CGameLevelLoader::consolidateBlocks(blocksY);
-   if (useCache)
-      LoadedLevels[levelName] = newLevel;
+   //if (useCache)
+   //   LoadedLevels[levelName] = newLevel;
    newLevel->toggleLoaded();
 
    return *newLevel;
