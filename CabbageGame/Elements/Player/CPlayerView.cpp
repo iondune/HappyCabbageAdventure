@@ -55,11 +55,11 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
    for(int i = 1; i <= 5; i++) {
       std::ostringstream fileName;
       if(Level.getEnv() == Env::FOREST)
-         fileName << "Base/cabbage/cabbage_ouch" << i << ".3ds";
+         fileName << "Base/cabbage/cabbage_ouch_" << i << ".3ds";
       else if (Level.getEnv() == Env::WATER)
-         fileName << "Base/cabbage/water_cabbage_ouch" << i << ".3ds";
+         fileName << "Base/cabbage/water_cabbage_ouch_" << i << ".3ds";
       else if (Level.getEnv() == Env::DESERT)
-         fileName << "Base/cabbage/desert_cabbage_ouch" << i << ".3ds";
+         fileName << "Base/cabbage/desert_cabbage_ouch_" << i << ".3ds";
       CMesh *cabbageMesh = CMeshLoader::load3dsMesh(fileName.str());
       if(cabbageMesh) {
          cabbageMesh->centerMeshByExtents(SVector3f(0.0f));
