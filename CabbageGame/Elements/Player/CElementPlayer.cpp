@@ -544,7 +544,7 @@ void CElementPlayer::setupSoundEffects() {
 #include "CElementEnemy.h"
 void CElementPlayer::setVictoryFlag(bool value) {
    Victory = value;
-   for(int i = 0; i < Level.getEnemies().size(); i++) {
+   for(unsigned int i = 0; i < Level.getEnemies().size(); i++) {
       Level.getEnemies()[i]->setTimeToDeath(0.3f);
    }
 }

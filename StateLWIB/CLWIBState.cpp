@@ -1028,9 +1028,9 @@ void CLWIBState::PrepBlock(float x, float y, int w, int h, int d, int t, int mov
         printf("making breakable blocks\n");
     }
     else if (cDown == 5)
-        placeables.push_back(tempPlaceable = new CElementBlockDeath(SRect2f(x,y,w,h),1,t,0.0f,0.0f));
+        placeables.push_back(tempPlaceable = new CElementBlockDeath(SRect2f(x,y,(float)w,(float)h),1,t,0.0f,0.0f));
     else if (cDown < 10 && cDown >=6 && uniType != -5) {
-        placeables.push_back(tempPlaceable = new CElementBlockElevator(SRect2f(x,y,w,h),1,t,eleRange, eleSpeed ,eleStyle));
+        placeables.push_back(tempPlaceable = new CElementBlockElevator(SRect2f(x,y,(float)w,(float)h),1,t,(float)eleRange, (float)eleSpeed ,eleStyle));
         printf("shit was here \n");
     }
     else if (cDown != 6)
