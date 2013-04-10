@@ -22,10 +22,6 @@ void CElementBlock::updatePhysicsEngineObject(float time) {
 }
 
 void CElementBlock::updateSceneObject(float time) {
-   if(Texture != -5) {
-      SceneObject->setTranslation(SVector3f((Area.Position.X+(Area.Position.X+Area.Size.X))/2, (Area.Position.Y+(Area.Position.Y+Area.Size.Y))/2, 0));
-      SceneObject->setScale(SVector3f(Area.Size.X, Area.Size.Y, (float) Depth));
-   }
 }
 
 void CElementBlock::OnCollision(const SCollisionEvent& Event) {
@@ -75,7 +71,7 @@ void CElementBlock::setupSceneObject() {
    CMeshSceneObject *tempBlock = new CMeshSceneObject();
    CMesh *mesh;
 
-   mesh = CMeshLoader::load3dsMesh("Base/cuberock.3ds");
+   mesh = CMeshLoader::load3dsMesh("Base/cuberock3.3ds");
 
    if(mesh) {
          mesh->resizeMesh(SVector3f(1));
@@ -204,7 +200,11 @@ void CElementBlock::setupSceneObject() {
    tempBlock->setShader(ERP_DEFERRED_OBJECTS, CShaderLoader::loadShader("Deferred/Textured"));
    if(Texture != -5) {
       tempBlock->setTranslation(SVector3f((Area.Position.X+(Area.Position.X+Area.Size.X))/2, (Area.Position.Y+(Area.Position.Y+Area.Size.Y))/2, 0));
-      tempBlock->setScale(SVector3f(Area.Size.X, Area.Size.Y, (float) Depth));
+      
+      //if(Area.Size.Y > 1)
+         tempBlock->setScale(SVector3f(Area.Size.X*1.075f, Area.Size.Y*1.075f, (float) Depth));
+      //else
+      //   tempBlock->setScale(SVector3f(Area.Size.X, Area.Size.Y, (float) Depth));
    }
    else /* For ground blocks */{
       tempBlock->setTranslation(SVector3f((Area.Position.X+(Area.Position.X+Area.Size.X))/2, Area.Position.Y+.6f*Area.Size.Y, 0));
