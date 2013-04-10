@@ -47,7 +47,8 @@ CGameplayManager::CGameplayManager(CGameLevel & level) : Level(level), Elements(
    else
    { 
 	  CApplication::get().getSceneManager().addSceneObject(new CDirectionalLightSceneObject(SVector3f(0, -1, 0), SColor(0.3f, 0.4f, 0.7f)));
-	  ((CDeferredShadingManager *)CApplication::get().getSceneManager().getEffectManager())->OverlayColor = SColor(1.f, 1.f, 1.f);
+     if(Level.isNight())
+	      ((CDeferredShadingManager *)CApplication::get().getSceneManager().getEffectManager())->OverlayColor = SColor(1.f, 1.f, 1.f);
    }
    //level.setNoRender();
    //Set up each object
