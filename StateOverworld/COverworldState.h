@@ -50,6 +50,7 @@ class COverworldState : public CState<COverworldState>
    float transitionTimer;
 
    SomeLevel levels [NUM_LEVELS];
+   int levelSections[NUM_LEVELS];
    SVector3f cameraPos [NUM_CAMERAS];
    bool levelsUnlocked;
 

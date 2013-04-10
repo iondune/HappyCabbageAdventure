@@ -390,7 +390,14 @@ void COverworldState::loadLevels()
    {
       levels[i].completed = false;
    }
-}
+
+   for(int i = 0; i < 7; i++) {
+      levelSections[i] = 0;
+   }
+   for(int i = 7; i < NUM_LEVELS; i++) {
+      levelSections[i] = 1;
+   }
+}  
 
 void COverworldState::setCameraTrans()
 {
@@ -560,8 +567,7 @@ void COverworldState::movePlayer() {
    if(transitionTimer != 0.0f)
       return;
 
-   if(aDown && curNode > 0 )
-   {
+   if(aDown && curNode > 0 ) {
       curNode--;
       if(strstr(levels[curNode].name, "night") == NULL) {
          //Day
@@ -610,30 +616,8 @@ void COverworldState::movePlayer() {
       lookTarget = levels[curNode].loc;
       shiftSetter(look, lookShift, lookTarget);
 
-      if(curNode == 1 && aDown)
-      {
-         eyeTarget = cameraPos[0];
-         curCamera = 0;
-         shiftSetter(eye, eyeShift, eyeTarget);
-      }
-      else if(curNode == 2 && dDown)
-      {
-         eyeTarget = cameraPos[1];
-         curCamera = 1;
-         shiftSetter(eye, eyeShift, eyeTarget);
-      }
-      else if(curNode == 5 && aDown)
-      {
-         eyeTarget = cameraPos[1];
-         curCamera = 1;
-         shiftSetter(eye, eyeShift, eyeTarget);
-      }
-      else if(curNode == 6 && dDown)
-      {
-         eyeTarget = cameraPos[2];
-         curCamera = 2;
-         shiftSetter(eye, eyeShift, eyeTarget);
-      }
+      eyeTarget = cameraPos[curCamera = levelSections[curNode]];
+      shiftSetter(eye, eyeShift, eyeTarget);
    }
 }
 
