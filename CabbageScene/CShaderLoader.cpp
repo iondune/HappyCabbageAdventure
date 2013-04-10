@@ -52,7 +52,7 @@ static inline void printProgramInfoLog(GLuint programHandle)
         GLchar * infoLog = new GLchar[infoLogLength];
         GLint charsWritten = 0;
         glGetProgramInfoLog(programHandle, infoLogLength, & charsWritten, infoLog);
-        std::cout << "Program Info Log:" << std::endl << infoLog << std::endl;
+        //std::cout << "Program Info Log:" << std::endl << infoLog << std::endl;
         delete infoLog;
     }
 }
@@ -134,6 +134,7 @@ CShader * const CShaderLoader::loadShader(std::string const & vertName, std::str
     // Compile Shader
 	std::cout << "--- Compiling Shader ----------------------------------------------------------" << std::endl;
     {
+		std::cout << "Vertex shader: " << vertFileName << std::endl;
         glCompileShader(VS);
         GLint vCompiled;
         glGetShaderiv(VS, GL_COMPILE_STATUS, & vCompiled);
@@ -150,6 +151,7 @@ CShader * const CShaderLoader::loadShader(std::string const & vertName, std::str
     }
 
     {
+		std::cout << "Frag shader: " << fragFileName << std::endl;
         glCompileShader(FS);
         GLint fCompiled;
         glGetShaderiv(FS, GL_COMPILE_STATUS, & fCompiled);
