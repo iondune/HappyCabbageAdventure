@@ -391,19 +391,27 @@ void COverworldState::loadLevels()
       levels[i].completed = false;
    }
 
-   for(int i = 0; i < 7; i++) {
+   for(int i = 0; i < 3; i++) {
       levelSections[i] = 0;
    }
-   for(int i = 7; i < NUM_LEVELS; i++) {
+   for(int i = 3; i < 6; i++) {
       levelSections[i] = 1;
+   }
+   for(int i = 6; i < 10; i++) {
+      levelSections[i] = 2;
+   }
+   for(int i = 10; i < NUM_LEVELS; i++) {
+      levelSections[i] = 3;
    }
 }  
 
 void COverworldState::setCameraTrans()
 {
    cameraPos[0] = SVector3f(0.21f, 0.36f, 1.76f);
-   cameraPos[1] = SVector3f(1.47f, 0.33f, 0.0f);
-   cameraPos[2] = SVector3f(1.11f, 0.45f, -2.16f);
+   cameraPos[1] = SVector3f(1.0f, 0.8f, 1.2f);
+   cameraPos[2] = SVector3f(1.47f, 0.33f, 0.0f);
+   cameraPos[3] = SVector3f(1.11f, 0.45f, -2.16f);
+   //cameraPos[1] = SVector3f(1.47f, 0.33f, 0.0f);
 
 }
 
