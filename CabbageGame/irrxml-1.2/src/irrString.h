@@ -100,11 +100,11 @@ public:
    string(const B* c, s32 lenght)
    : allocated(0), used(0), array(0)
    {
-      if (!c)
+      if (!c || lenght == -1)
          return;
 
         allocated = used = lenght+1;
-      array = new T[used];
+      array = new T[lenght + 1];
 
       for (s32 l = 0; l<lenght; ++l)
          array[l] = (T)c[l];

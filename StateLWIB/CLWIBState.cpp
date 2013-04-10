@@ -836,7 +836,7 @@ void CLWIBState::PrepItem(float x, float y, int item) {
         tempPlaceable = CItemLoader::LoadItem(SRect2f(x, y, 1, 1),(Items::EItemType) item);
     else if (item == 2)
         tempPlaceable = CItemLoader::LoadItem(SRect2f(x, y, 1, 1),(Items::EItemType) item);
-    else if (item == 3)
+    else 
         tempPlaceable = CItemLoader::LoadItem(SRect2f(x, y, 1, 1),(Items::EItemType) item);
     placeables.push_back(tempPlaceable);
     tempPlaceable->setupObjects();

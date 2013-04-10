@@ -13,7 +13,24 @@ void CGUIDialogWidget::loadDialogFile(std::string const & FileName) {
 
    std::string line;
    CTextSection *current = NULL;
-   std::vector<std::string> * currentText;
+   std::vector<std::string> * currentText = NULL;
+   
+      std::getline(input, line);
+
+      if(line.compare("SECTION") == 0) {
+         if(current) {
+            TextSections.push_back(current);
+            current = NULL;
+         }
+         current = new CTextSection();
+         currentText = &(current->Text);
+         current->End = current->Current = 0;
+         printf("Started a new section\n");
+      }
+	  else {
+			return;
+	  }
+
    while(input.good()) {
       std::getline(input, line);
 
