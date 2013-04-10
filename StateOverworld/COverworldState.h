@@ -9,7 +9,7 @@
 #include "../CabbageGame/CabbageGameInformation.h"
 
 #define NUM_LEVELS 13
-#define NUM_CAMERAS 3
+#define NUM_CAMERAS 4
 #define TRANSITION_PERIOD 0.45f
 #define RAD_TO_DEG 180.0f/3.145f
 #define DEG_TO_RAD 3.145f/180.0f

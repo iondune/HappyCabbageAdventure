@@ -46,6 +46,8 @@ void COverworldState::begin()
    }
    else if(!levelCompleted)
    {
+      cout << "Camera: " << curCamera << endl;
+      cout << "Camera[3]: " << cameraPos[3].X << ", " << cameraPos[3].Y << ", " << cameraPos[3].Z << endl;
       printf("Level failed\n");
       if(NewStats.Lives <= 0) {
          printf("Game over\n");
@@ -410,7 +412,7 @@ void COverworldState::setCameraTrans()
    cameraPos[0] = SVector3f(0.21f, 0.36f, 1.76f);
    cameraPos[1] = SVector3f(1.0f, 0.8f, 1.2f);
    cameraPos[2] = SVector3f(1.47f, 0.33f, 0.0f);
-   cameraPos[3] = SVector3f(1.11f, 0.45f, -2.16f);
+   cameraPos[3] = SVector3f(0.8f, 0.33f, -1.5f);
    //cameraPos[1] = SVector3f(1.47f, 0.33f, 0.0f);
 
 }
@@ -674,12 +676,4 @@ float COverworldState::angleMaker(SVector3f start, SVector3f toPoint)
       */
    lookat = lookat < 0 ? lookat + 55 : lookat;
    return lookat;
-}
-void COverworldState::testFun()
-{
-   SVector3f temp = cameraPos[1] -levels[2].loc;
-   temp.normalize();
-
-   printf("TEST %f\n", (atan2(temp.X,temp.Z) * RAD_TO_DEG));
-
 }
