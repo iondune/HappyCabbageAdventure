@@ -103,7 +103,7 @@ void CShaderContext::bindTexture(GLuint const uniformHandle, CTexture const * co
 void CShaderContext::bindTexture(std::string const & Label, CTexture const * const Texture)
 {
 	std::map<std::string, SShaderVariable>::const_iterator it = Shader.UniformHandles.find(Label);
-   std::cout << "Label: " << Label << std::endl;
+   //std::cout << "Label: " << Label << std::endl;
 
 	if (it == Shader.UniformHandles.end())
 	{
