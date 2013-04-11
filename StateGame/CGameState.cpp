@@ -60,8 +60,10 @@ void CGameState::OnKeyboardEvent(SKeyboardEvent const & Event)
             CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_HEAT_WAVE, false);
          if (Level->getEnv() == Env::WATER)
         	 CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_WATER_DISTORT, false);
-		 CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_SSAO, false);
-		 CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_SSAO_BLUR, false);
+         if(CApplication::get().getSceneManager().getEffectManager()->isEffectEnabled(ESE_SSAO))
+		      CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_SSAO, false);
+         if(CApplication::get().getSceneManager().getEffectManager()->isEffectEnabled(ESE_SSAO_BLUR))
+		      CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_SSAO_BLUR, false);
       }
 	  else if (Event.Key == SDLK_COMMA)
 	  {
