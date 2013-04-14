@@ -10,9 +10,9 @@ CMainMenuState::CMainMenuState()
 	maxY = (float) size.Y;
 	sineValue = 0.0f;
 	buttonNum = 0;
-printf("Before warp\n");
-   SDL_WarpMouse(Uint16(0.5f*maxX), Uint16(0.4f*maxY));
-   printf("After warp\n");
+//printf("Before warp\n");
+//   SDL_WarpMouse(Uint16(0.5f*maxX), Uint16(0.4f*maxY));
+//   printf("After warp\n");
 }
 
 void CMainMenuState::setupTextures()
@@ -114,12 +114,14 @@ void CMainMenuState::setupSoundtrack() {
    std::string MusicDirectory = "../Media/Music/";
 
 
-   temp = MusicDirectory + "Soundtracks/MainMenu.mp3";
+   temp = MusicDirectory + "Soundtracks/MainMenu.ogg";
 
    Soundtrack = Mix_LoadMUS(temp.c_str());
 
-   if (!Soundtrack)
+   if (!Soundtrack) {
          fprintf(stderr, "Soundtrack, Mix_LoadMUS: %s\n", Mix_GetError());
+         return;
+   }
 
    Mix_PlayMusic(Soundtrack, -1);
 #endif
