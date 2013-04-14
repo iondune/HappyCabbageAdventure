@@ -119,11 +119,11 @@
 </CBlock>
 <CEnemy X ="15" Y ="0" height ="1" width ="1" type ="0">
 </CEnemy>
-<CBlock X ="17" Y ="-2" height ="2" width ="3" depth ="1" texture ="2" isMoving ="1" range ="2" speed ="1">
+<CBlock X ="17" Y ="-2" height ="2" width ="3" depth ="1" texture ="2" isMoving ="1" range ="2" speed ="5">
 </CBlock>
 <CBlock X ="33" Y ="-1" height ="1" width ="1" depth ="1" texture ="0" isMoving ="0" range ="0" speed ="0">
 </CBlock>
-<CBlock X ="26" Y ="-2" height ="2" width ="3" depth ="1" texture ="2" isMoving ="1" range ="2" speed ="1">
+<CBlock X ="26" Y ="-2" height ="2" width ="3" depth ="1" texture ="2" isMoving ="1" range ="2" speed ="5">
 </CBlock>
 <CBlock X ="25" Y ="-7" height ="1" width ="1" depth ="1" texture ="1" isMoving ="0" range ="0" speed ="0">
 </CBlock>
