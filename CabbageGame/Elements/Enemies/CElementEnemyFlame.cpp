@@ -16,7 +16,7 @@ void CElementEnemyFlame::setupPhysicsEngineObject() {
 }
 
 void CElementEnemyFlame::setupSceneObject() {
-   particleEngine = new CParticleEngine(SVector3f(0.0f), 100, -1, FLAME_PARTICLE, Level.isNight());
+   particleEngine = new CParticleEngine(SVector3f(0.0f), 50, -1, FLAME_PARTICLE, Level.isNight());
    //particleEngine = new CParticleEngine(SVector3(Area.Position.X, Area.Position.Y, 0), 100, -1, FLAME_PARTICLE, Level.isNight());
    SceneObject = (CMeshSceneObject*) particleEngine->getSceneObject();
    SceneObject->setTranslation(SVector3f(Area.Position.X, Area.Position.Y, 0));
