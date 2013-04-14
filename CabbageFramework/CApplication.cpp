@@ -45,6 +45,9 @@ void CApplication::setupRenderContext()
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
+    SDL_Surface *icon = SDL_LoadBMP("../Media/cabbage icon.bmp");
+    SDL_WM_SetIcon(icon, NULL);
+
     if(! SDL_SetVideoMode(WindowSize.X, WindowSize.Y, video->vfmt->BitsPerPixel, SDL_OPENGL/* | SDL_FULLSCREEN*/))
     {
         fprintf(stderr, "Couldn't set video mode: %s\n", SDL_GetError());
