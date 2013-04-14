@@ -362,8 +362,11 @@ void CElementPlayer::setupPhysicsEngineObject() {
    if(Level.isLoaded())
       Area.Size *= .999f;
    PhysicsEngineObject->setArea(Area);
-   PhysicsEngineObject->getActorAttributes().MaxWalk = 3.5f;
-   printf("HERE!!! LOOK HEREs %d\n", PhysicsEngineObject->getTypeId());
+   PhysicsEngineObject->getActorAttributes().MaxWalk = 5.0f;
+      PhysicsEngineObject->getActorAttributes().AirControl *= 4.0f;
+      PhysicsEngineObject->getActorAttributes().JumpAccel *= 2.0f;
+      PhysicsEngineObject->getActorAttributes().JumpLength *= 0.3f;
+   //printf("HERE!!! LOOK HEREs %d\n", PhysicsEngineObject->getTypeId());
    PhysicsEngineObject->setTypeId(PhysicsEngineObject->getTypeId() | INTERACTOR_SUPERACTORS);
    PhysicsEngineObject->setCollisionMask(PhysicsEngineObject->getCollisionMask() | INTERACTOR_SUPERACTORS);
    PhysicsEngineObject->setDetectionMask(INTERACTOR_ITEMS);
@@ -376,11 +379,11 @@ void CElementPlayer::setupPhysicsEngineObject() {
    }
 
    if (Level.getEnv() == Env::WATER) {
-      PhysicsEngineObject->getActorAttributes().MaxWalk *= 0.5f;
-      PhysicsEngineObject->getActorAttributes().WalkAccel *= 0.25f;
+      PhysicsEngineObject->getActorAttributes().MaxWalk = 3.5f;
+      //PhysicsEngineObject->getActorAttributes().WalkAccel *= 0.25f;
       PhysicsEngineObject->getActorAttributes().JumpAccel *= 0.75f;
-      PhysicsEngineObject->getActorAttributes().JumpLength *= 2.0f;
-      PhysicsEngineObject->getActorAttributes().AirControl *= 8.0f;
+      PhysicsEngineObject->getActorAttributes().JumpLength *= 0.8f;
+      PhysicsEngineObject->getActorAttributes().AirControl *= 2.0f;
       PhysicsEngineObject->getActorAttributes().AirSpeedFactor *= 0.5f;
    }
 }

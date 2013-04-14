@@ -97,13 +97,17 @@ void CCollisionActor::updateVectors(CollisionReal const TickTime)
 	////////////////////
 
 	// Cease falling if gravity is off
-	if (GravityEnabled)
+	if (GravityEnabled) {
 		FallAcceleration -= CollisionEngine->getGravity() * Attributes.GravityMultiplier * TickTime;
+
+	   // Add velocity from gravity
+	   Velocity.Y += FallAcceleration * TickTime;
+   }
 	else
 		FallAcceleration = 0;
 
-	// Add velocity from gravity
-	Velocity.Y += FallAcceleration * TickTime;
+   if(Velocity.Y < GLOBAL_TERMINAL_VELOCITY)
+      Velocity.Y = GLOBAL_TERMINAL_VELOCITY;
 
 
 	//////////////////

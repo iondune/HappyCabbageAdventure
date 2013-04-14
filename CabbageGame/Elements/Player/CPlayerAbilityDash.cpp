@@ -31,11 +31,11 @@ CPlayerAbilityDash::CPlayerAbilityDash(CElementPlayer & p, bool doGodmode) : CPl
    ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), DASH_PARTICLE_COUNT, -1, DUST_PARTICLE, Player.Level.isNight());
    ParticleEngine->UsePhysics(&Player.Level.getPhysicsEngine(), Player.Level.getEnv());
    if(!Godmode && Player.Level.getEnv() != Env::WATER)
-      ((CCollisionActor*)Player.getPhysicsEngineObject())->getActorAttributes().MaxWalk = 7.5f;
+      ((CCollisionActor*)Player.getPhysicsEngineObject())->getActorAttributes().MaxWalk = 8.0f;
    else if (!Godmode && Player.Level.getEnv() == Env::WATER)
-      ((CCollisionActor*)Player.getPhysicsEngineObject())->getActorAttributes().MaxWalk = 3.75f;
+      ((CCollisionActor*)Player.getPhysicsEngineObject())->getActorAttributes().MaxWalk = 5.0f;
    else {
-      ((CCollisionActor*)Player.getPhysicsEngineObject())->getActorAttributes().MaxWalk = 34.5f;
+      ((CCollisionActor*)Player.getPhysicsEngineObject())->getActorAttributes().MaxWalk = 50.0f;
    }
 
    EnergyTime = .5f;
@@ -46,9 +46,9 @@ void CPlayerAbilityDash::checkKey(bool keyDown) {
       ParticleEngine->deconstruct();
       delete ParticleEngine;
       if(Player.Level.getEnv() != Env::WATER)
-         ((CCollisionActor*)Player.getPhysicsEngineObject())->getActorAttributes().MaxWalk = 3.5f;
+         ((CCollisionActor*)Player.getPhysicsEngineObject())->getActorAttributes().MaxWalk = 5.0f;
       else
-         ((CCollisionActor*)Player.getPhysicsEngineObject())->getActorAttributes().MaxWalk = 1.75f;
+         ((CCollisionActor*)Player.getPhysicsEngineObject())->getActorAttributes().MaxWalk = 3.5f;
       Dead = true;
       if(Godmode) {
       }

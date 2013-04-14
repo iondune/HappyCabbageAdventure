@@ -3,6 +3,8 @@
 
 #include "CCollisionInteractor.h"
 
+#define GLOBAL_TERMINAL_VELOCITY -25.0f
+
 class CCollisionActor : public CCollisionInteractor
 {
 
