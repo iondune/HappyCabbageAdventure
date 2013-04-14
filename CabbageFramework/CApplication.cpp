@@ -18,6 +18,7 @@ void CApplication::setupRenderContext()
 {
     SDL_VideoInfo const * video;
 
+
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
         fprintf(stderr, "Couldn't initialize SDL: %s\n", SDL_GetError());
@@ -73,6 +74,8 @@ void CApplication::setupRenderContext()
     std::cerr << "Your OpenGL Version Number: " << std::setprecision(2) << VersionNumber << std::endl << std::endl;
 
     glViewport(0, 0, (GLsizei)(WindowSize.X), (GLsizei)(WindowSize.Y));
+
+    SDL_WM_SetCaption("Happy Cabbage Adventure", "Happy Cabbage Adventure");
 }
 
 
@@ -85,7 +88,7 @@ void CApplication::init(SPosition2 const & windowSize)
     EventManager = new CEventManager();
     StateManager = new CStateManager();
     SceneManager = new CSceneManager(windowSize);
-	GUIEngine = new CGUIEngine(windowSize);
+	 GUIEngine = new CGUIEngine(windowSize);
 }
 
 CApplication & CApplication::get()
@@ -130,7 +133,7 @@ void CApplication::updateTime()
 
 void CApplication::run()
 {
-    Running = true;
+   Running = true;
 
 	Time0 = SDL_GetTicks();
 
