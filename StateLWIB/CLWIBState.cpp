@@ -438,6 +438,14 @@ void CLWIBState::OnKeyboardEvent(SKeyboardEvent const & Event)
                     cDown = 0;
             }
         }
+        if(Event.Key == SDLK_v){
+            if (!oneDown && !twoDown && !threeDown && !tDown) {
+                if(cDown > 0)
+                    cDown--;
+                else
+                    cDown = 9;
+            }
+        }
         if(Event.Key == SDLK_SPACE) {
             spaceDown = 1;
         }
