@@ -9,13 +9,13 @@ CGameState::CGameState() {
 void CGameState::begin() {
    Level = &CGameLevelLoader::loadLevel(LevelName);
    Level->setPlayerInformation(Stats);
+   Level->setupSoundtrack();
 
    GameplayManager = new CGameplayManager(*Level);
    DecorManager = new CDecorManager(*Level);
 
    Level->printInformation();
 
-   Level->setupSoundtrack();
    CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_BLOOM, true);
 }
 
