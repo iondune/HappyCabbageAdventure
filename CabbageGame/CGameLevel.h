@@ -14,6 +14,7 @@ class CBiggerBlock;
 
 class CCollisionEngine;
 
+#include "../CabbageCore/CabbageCore.h"
 #include "CabbageGameInformation.h"
 #include "CGameLevelLoader.h"
 #ifdef _ENABLED_CABBAGE_SOUND_
