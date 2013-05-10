@@ -2,6 +2,8 @@
 
 #include "CCollisionEngine.h"
 
+#include <iomanip>
+
 
 void CCollisionActor::updateVectors(CollisionReal const TickTime)
 {
@@ -11,6 +13,7 @@ void CCollisionActor::updateVectors(CollisionReal const TickTime)
 
 	// Determine maximum walking velocity
 	CollisionReal MaxVelocity = Attributes.MaxWalk * (Standing ? 1.f : Attributes.AirSpeedFactor);
+   //std::cout << "CurrentVel: " << std::setiosflags(std::ios::fixed) << std::setprecision(2) << Velocity.X << "; MaxVel: " << MaxVelocity << "; Standing: " << Standing << "; MaxWalk: " << Attributes.MaxWalk << std::endl;
 
 	bool Moving = false;
 	if (Action == EActionType::MoveLeft)
@@ -21,6 +24,9 @@ void CCollisionActor::updateVectors(CollisionReal const TickTime)
 			if (Velocity.X < -MaxVelocity)
 				Velocity.X = -MaxVelocity;
 		}
+      else if(Velocity.X < 0) {
+         Velocity.X = -MaxVelocity;
+      }
 		Moving = true;
 	}
 	else if (Action == EActionType::MoveRight)
@@ -31,6 +37,10 @@ void CCollisionActor::updateVectors(CollisionReal const TickTime)
 			if (Velocity.X > MaxVelocity)
 				Velocity.X = MaxVelocity;
 		}
+      else if(Velocity.X > 0) {
+         Velocity.X = MaxVelocity;
+      }
+
 		Moving = true;
 	}
 	else if (Action == EActionType::None)
