@@ -7,9 +7,7 @@
 //Generic enemy, for usage in the LWIB, I guess.
 CElementEnemyProjectile::CElementEnemyProjectile(SRect2f nArea, Enemies::EEnemyType type)
 : CElementEnemy(nArea, type) {
-#ifdef _ENABLED_CABBAGE_SOUND_
-   Mix_PlayChannel(-1, Level.projectile, 0);
-#endif
+   CApplication::get().getSoundManager().registerAndPlaySound(PROJECTILE_SOUND);
 }
 
 void CElementEnemyProjectile::OnCollision(const SCollisionEvent& Event) {

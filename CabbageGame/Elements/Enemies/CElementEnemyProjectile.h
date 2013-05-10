@@ -4,6 +4,8 @@
 #include "CElementPlayer.h"
 #include "CElementEnemy.h"
 
+#define PROJECTILE_SOUND "smb2_cherry.wav"
+
 namespace Projectile {
    enum EDirection {
       LEFT, RIGHT

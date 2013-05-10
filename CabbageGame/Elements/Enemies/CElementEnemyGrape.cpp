@@ -17,7 +17,18 @@ void CElementEnemyGrape::setupPhysicsEngineObject() {
 void CElementEnemyGrape::setupSceneObject() {
    SceneObject = new CMeshSceneObject();
    CMesh *mesh;
+   
 
+   if (Level.getEnvironment() == Env::FOREST) {
+      mesh = CMeshLoader::load3dsMesh("Base/appleEnemy.3ds");
+   }
+
+   else if (Level.getEnvironment() == Env::DESERT) {
+      mesh = CMeshLoader::load3dsMesh("Base/desertapple.3ds");
+   }
+   else if (Level.getEnvironment() == Env::WATER)
+      mesh = CMeshLoader::load3dsMesh("Base/water_apple.3ds");
+   /*
    if (Level.getEnvironment() == Env::FOREST) {
       mesh = CMeshLoader::load3dsMesh("Base/grape_bunch.3ds");
    }
@@ -27,7 +38,7 @@ void CElementEnemyGrape::setupSceneObject() {
    }
 
    else if (Level.getEnvironment() == Env::WATER)
-      mesh = CMeshLoader::load3dsMesh("Base/water_grape_bunch.3ds");
+      mesh = CMeshLoader::load3dsMesh("Base/water_grape_bunch.3ds");*/
 
    else
       mesh = CMeshLoader::load3dsMesh("Base/grape_bunch.3ds");

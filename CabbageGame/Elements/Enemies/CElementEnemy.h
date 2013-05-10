@@ -2,9 +2,8 @@
 #define ____CELEMENTENEMY_HEADER_
 #include "../CGameplayElement.h"
 #include "CElementPlayer.h"
-#ifdef _ENABLED_CABBAGE_SOUND_
-#include "sound.h"
-#endif
+
+#define HIT_ENEMY_SOUND "hitEnemy.wav"
 
 namespace Enemies {
    enum EEnemyType {

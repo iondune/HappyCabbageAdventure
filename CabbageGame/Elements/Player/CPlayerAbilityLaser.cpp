@@ -8,6 +8,10 @@ int const CPlayerAbilityLaser::LASER_CHARGE_PARTICLE_COUNT =  700;
 int const CPlayerAbilityLaser::LASER_FIRING_PARTICLE_COUNT = 1000;
 
 #include "CGameLevel.h"
+
+#define CHARGE_LASER_1_SOUND "chargeLaser1.wav"
+#define CHARGE_LASER_2_SOUND "chargeLaser2.wav"
+#define FIRE_LASER_SOUND "fireLaser3.wav"
 void CPlayerAbilityLaser::inUpdatePhysicsEngineObject(float time) {
    if(Dead)
       return;
@@ -103,9 +107,7 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
       }
    }
    else if(LaserState == FIRING) {
-#ifdef _ENABLED_CABBAGE_SOUND_
-      Mix_PlayChannel(-1, Player.fireLaser, 0);
-#endif
+      CApplication::get().getSoundManager().registerAndPlaySound(FIRE_LASER_SOUND);
       Player.Recovering = 5.0f;
       Player.View->setVisible(true);
       Player.View->setHurt(false);

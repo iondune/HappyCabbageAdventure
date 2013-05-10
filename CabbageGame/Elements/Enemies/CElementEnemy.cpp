@@ -286,9 +286,7 @@ int CElementEnemy::takeDamage(int amount) {
 
    PlayerActor->addImpulse(SVector2f(0.0f, 9.0f));
 
-#ifdef _ENABLED_CABBAGE_SOUND_
-   Mix_PlayChannel(-1, Level.dmgEnemy, 0);
-#endif
+   CApplication::get().getSoundManager().registerAndPlaySound(HIT_ENEMY_SOUND);
    Level.getPlayer().setShaking(0.4f, 3.0f);
 
    //The enemy was killed.

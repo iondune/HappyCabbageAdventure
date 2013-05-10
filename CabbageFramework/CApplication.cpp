@@ -92,6 +92,7 @@ void CApplication::init(SPosition2 const & windowSize)
     StateManager = new CStateManager();
     SceneManager = new CSceneManager(windowSize);
 	 GUIEngine = new CGUIEngine(windowSize);
+    SoundManager = new CSoundManager();
 }
 
 CApplication & CApplication::get()
@@ -119,6 +120,10 @@ CSceneManager & CApplication::getSceneManager()
 CGUIEngine & CApplication::getGUIEngine()
 {
 	return * GUIEngine;
+}
+
+CSoundManager & CApplication::getSoundManager() {
+   return * SoundManager;
 }
 
 void CApplication::skipElapsedTime()

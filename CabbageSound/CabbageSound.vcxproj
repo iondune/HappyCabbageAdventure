@@ -120,13 +120,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="SDL_mixer.h" />
-    <ClInclude Include="sound.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="sound.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Makefile" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

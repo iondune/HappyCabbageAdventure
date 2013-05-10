@@ -4,6 +4,7 @@
 #include <CabbageCore.h>
 #include <CabbageScene.h>
 #include <CabbageGUI.h>
+#include "CSoundManager.h"
 
 class CEventManager;
 class CStateManager;
@@ -12,6 +13,7 @@ class CApplication
 {
 
     // Managers
+    CSoundManager * SoundManager;
     CEventManager * EventManager;
     CStateManager * StateManager;
     CSceneManager * SceneManager;
@@ -42,6 +44,7 @@ public:
     CEventManager & getEventManager();
     CStateManager & getStateManager();
     CSceneManager & getSceneManager();
+    CSoundManager & getSoundManager();
 	CGUIEngine & getGUIEngine();
 
     void run();

@@ -127,15 +127,18 @@
     <ClCompile Include="CEventManager.cpp" />
     <ClCompile Include="CFadeOutState.cpp" />
     <ClCompile Include="COrthoCamera.cpp" />
+    <ClCompile Include="CSoundManager.cpp" />
     <ClCompile Include="CStateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\CabbageSound\SDL_mixer.h" />
     <ClInclude Include="CabbageFramework.h" />
     <ClInclude Include="CApplication.h" />
     <ClInclude Include="CCameraControl.h" />
     <ClInclude Include="CEventManager.h" />
     <ClInclude Include="CFadeOutState.h" />
     <ClInclude Include="COrthoCamera.h" />
+    <ClInclude Include="CSoundManager.h" />
     <ClInclude Include="CStateManager.h" />
   </ItemGroup>
   <ItemGroup>

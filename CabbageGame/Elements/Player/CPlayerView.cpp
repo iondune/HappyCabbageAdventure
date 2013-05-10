@@ -253,6 +253,9 @@ void CPlayerView::updateView(float time) {
       case 4: //Quarterover
          camPos = SVector3f(Area.getCenter().X, Area.getCenter().Y + 2.5f, 2.5f);
          break;
+      case 5: //Quarterlevel
+         camPos = SVector3f(Area.getCenter().X, Area.getCenter().Y, 2.5f);
+         break;
       }
       CApplication::get().getSceneManager().getActiveCamera()->setPosition(camPos + ShakeFactor);
       CApplication::get().getSceneManager().getActiveCamera()->setLookDirection((SVector3f(Area.getCenter(), 0.0f) - camPos).getNormalized());
@@ -268,7 +271,7 @@ void CPlayerView::updateView(float time) {
 
    float ySineAmount = 0.065f*sin(ySineValue);
 
-   CabbageSceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y + ySineAmount, 0));
+   CabbageSceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y + ySineAmount - 0.02f, 0));
 }
 
 void CPlayerView::setHurt(bool b) {

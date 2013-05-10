@@ -29,31 +29,31 @@ void CElementPlayer::setStats(Cabbage::PlayerInformation st) {
 
 void CElementPlayer::doGodmode() {
    if(CApplication::get().getEventManager().IsKeyDown[SDLK_a] || CApplication::get().getEventManager().IsKeyDown[SDLK_LEFT]) {
-      if(MoveKeyDelay > 0.0f) {
-         if(!used(Abilities::DASH)) {
-            Abilities.push_back(new CPlayerAbilityDash(*this, true));
-         }
-      }
-      else
-         MoveKeyDelay = 0.3f;
-      if(MoveKeyDelay < 0.0f) {
-         MoveKeyDelay = 0.0f;
-      }
+      //if(MoveKeyDelay > 0.0f) {
+      //   if(!used(Abilities::DASH)) {
+      //      Abilities.push_back(new CPlayerAbilityDash(*this, true));
+      //   }
+      //}
+      //else
+      //   MoveKeyDelay = 0.3f;
+      //if(MoveKeyDelay < 0.0f) {
+      //   MoveKeyDelay = 0.0f;
+      //}
       Direction = Left;
       Action = Walking;
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
    }
    else if(CApplication::get().getEventManager().IsKeyDown[SDLK_d] || CApplication::get().getEventManager().IsKeyDown[SDLK_RIGHT]) {
-      if(MoveKeyDelay > 0.0f) {
-         if(!used(Abilities::DASH)) {
-            Abilities.push_back(new CPlayerAbilityDash(*this, true));
-         }
-      }
-      else
-         MoveKeyDelay = 0.3f;
-      if(MoveKeyDelay < 0.0f) {
-         MoveKeyDelay = 0.0f;
-      }
+      //if(MoveKeyDelay > 0.0f) {
+      //   if(!used(Abilities::DASH)) {
+      //      Abilities.push_back(new CPlayerAbilityDash(*this, true));
+      //   }
+      //}
+      //else
+      //   MoveKeyDelay = 0.3f;
+      //if(MoveKeyDelay < 0.0f) {
+      //   MoveKeyDelay = 0.0f;
+      //}
       Direction = Right;
       Action = Walking;
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveRight);
@@ -75,6 +75,7 @@ void CElementPlayer::doGodmode() {
 
 #include "CSceneEffectManager.h"
 
+float oldMaxWalk = 0;
 void CElementPlayer::updatePlayerAction() {
    if(Victory)
       return;
@@ -88,6 +89,8 @@ void CElementPlayer::updatePlayerAction() {
       Godmode = !Godmode;
       printf("Godmode toggled.\n");
       if(Godmode) {
+         oldMaxWalk = PhysicsEngineObject->getActorAttributes().MaxWalk;
+         PhysicsEngineObject->getActorAttributes().MaxWalk  = 50;
          PhysicsEngineObject->setTypeId(0);
          PhysicsEngineObject->setCollisionMask(0);
          PhysicsEngineObject->setDetectionMask(0);
@@ -99,6 +102,7 @@ void CElementPlayer::updatePlayerAction() {
          return;
       }
       else {
+         PhysicsEngineObject->getActorAttributes().MaxWalk  = oldMaxWalk;
          PhysicsEngineObject->setTypeId(INTERACTOR_ACTORS | INTERACTOR_SUPERACTORS);
          PhysicsEngineObject->setCollisionMask((INTERACTOR_SUPERACTORS | INTERACTOR_ACTORS | INTERACTOR_BLOCKS) & ~INTERACTOR_SUPERNONCOLLIDERS);
          PhysicsEngineObject->setDetectionMask(INTERACTOR_ITEMS);
@@ -169,9 +173,9 @@ void CElementPlayer::updatePlayerAction() {
       if (PhysicsEngineObject->getVelocity().Y == 0.f && !PhysicsEngineObject->isJumping())
     	  PlayJump = true;
       if (PlayJump) {
-#ifdef _ENABLED_CABBAGE_SOUND_
-         Mix_PlayChannel(-1, jump, 0);
-#endif
+         
+
+         CApplication::get().getSoundManager().registerAndPlaySound(JUMP_SOUND);
          PlayJump = false;
       }
    }
@@ -279,7 +283,7 @@ void CElementPlayer::updateSceneObject(float time) {
    if(!jWasDown && CApplication::get().getEventManager().IsKeyDown[SDLK_j]) {
       int newSubView = View->getSubView();
       newSubView++;
-      if(newSubView > 4)
+      if(newSubView > 5)
          newSubView = 0;
       View->useSubView(newSubView);
    }
@@ -361,9 +365,10 @@ void CElementPlayer::setupPhysicsEngineObject() {
 
    if(Level.isLoaded())
       Area.Size *= .999f;
-   PhysicsEngineObject->setArea(Area);
-   PhysicsEngineObject->getActorAttributes().MaxWalk = 5.0f;
+      PhysicsEngineObject->setArea(Area);
+      oldMaxWalk = PhysicsEngineObject->getActorAttributes().MaxWalk = 5.0f;
       PhysicsEngineObject->getActorAttributes().AirControl *= 4.0f;
+      PhysicsEngineObject->getActorAttributes().AirSpeedFactor  = 1.3f;
       PhysicsEngineObject->getActorAttributes().JumpAccel *= 2.0f;
       PhysicsEngineObject->getActorAttributes().JumpLength *= 0.3f;
    //printf("HERE!!! LOOK HEREs %d\n", PhysicsEngineObject->getTypeId());
@@ -379,12 +384,16 @@ void CElementPlayer::setupPhysicsEngineObject() {
    }
 
    if (Level.getEnv() == Env::WATER) {
-      PhysicsEngineObject->getActorAttributes().MaxWalk = 3.5f;
-      //PhysicsEngineObject->getActorAttributes().WalkAccel *= 0.25f;
-      PhysicsEngineObject->getActorAttributes().JumpAccel *= 0.75f;
-      PhysicsEngineObject->getActorAttributes().JumpLength *= 0.8f;
-      PhysicsEngineObject->getActorAttributes().AirControl *= 2.0f;
+      oldMaxWalk = PhysicsEngineObject->getActorAttributes().MaxWalk *= 0.5f;
+      PhysicsEngineObject->getActorAttributes().AirControl *= 0.5f;
       PhysicsEngineObject->getActorAttributes().AirSpeedFactor *= 0.5f;
+      PhysicsEngineObject->getActorAttributes().JumpAccel *= 0.5f;
+      PhysicsEngineObject->getActorAttributes().JumpLength *= 0.5f;
+      ////PhysicsEngineObject->getActorAttributes().WalkAccel *= 0.25f;
+      //PhysicsEngineObject->getActorAttributes().JumpAccel *= 0.75f;
+      //PhysicsEngineObject->getActorAttributes().JumpLength *= 0.8f;
+      //PhysicsEngineObject->getActorAttributes().AirControl *= 2.0f;
+      //PhysicsEngineObject->getActorAttributes().AirSpeedFactor *= 0.5f;
    }
 }
 
@@ -412,9 +421,8 @@ bool CElementPlayer::decrementHealth() {
    View->setHurt(true);
    Recovering = 1.0f;
 
-#ifdef _ENABLED_CABBAGE_SOUND_
-   Mix_PlayChannel(-1, takeDmg, 0);
-#endif
+   
+   CApplication::get().getSoundManager().playSound(DAMAGE_TAKEN_SOUND);
 
    return true;
 }
@@ -445,9 +453,7 @@ bool CElementPlayer::subtractHealth(int amount) {
    View->removeLeaf();
    View->setHurt(true);
    Recovering = 1.0f;
-#ifdef _ENABLED_CABBAGE_SOUND_
-   Mix_PlayChannel(-1, takeDmg, 0);
-#endif
+   CApplication::get().getSoundManager().playSound(DAMAGE_TAKEN_SOUND);
    return true;
 }
 
@@ -458,9 +464,7 @@ void CElementPlayer::incrementLives() {
 #include "COverworldState.h"
 #include "../../StateGame/CGameState.h"
 void CElementPlayer::decrementLives() {
-#ifdef _ENABLED_CABBAGE_SOUND_
-   Mix_PlayMusic(deathMusic, 1);
-#endif
+   CApplication::get().getSoundManager().swapTrack(DEATH_MUSIC);
 
    //Reset stage
    if (Stats.Lives > 0) {
@@ -509,39 +513,10 @@ std::map<Abilities::EAbilityType, int> &CElementPlayer::getAbilityStatus() {
 }
 
 void CElementPlayer::setupSoundEffects() {
-#ifdef _ENABLED_CABBAGE_SOUND_
-   string MusicDirectory = "../Media/Music/";
-   string temp;
-
-   if(Mix_OpenAudio(22050, AUDIO_S16, 2, 2048))
-      fprintf(stderr, "Could not open audio!\n");
-
-   temp = MusicDirectory + "jump.wav";
-   jump = Mix_LoadWAV(temp.c_str());
-
-   temp = MusicDirectory + "takeDmg.wav";
-   takeDmg = Mix_LoadWAV(temp.c_str());
-
-   temp = MusicDirectory + "chargeLaser1.wav";
-   chargeLaser1 = Mix_LoadWAV(temp.c_str());
-
-   temp = MusicDirectory + "chargeLaser2.wav";
-   chargeLaser2 = Mix_LoadWAV(temp.c_str());
-
-   temp = MusicDirectory + "fireLaser3.wav";
-   fireLaser = Mix_LoadWAV(temp.c_str());
-
-   temp = MusicDirectory + "Soundtracks/Win.ogg";
-   victoryMusic = Mix_LoadMUS(temp.c_str());
-
-   temp = MusicDirectory + "Soundtracks/Death.ogg";
-   deathMusic = Mix_LoadMUS(temp.c_str());
-
-   if (!victoryMusic) {
-      printf("Mix_LoadWAV: %s\n", Mix_GetError());
-      exit(1);
-   }
-#endif
+   CApplication::get().getSoundManager().registerSound(JUMP_SOUND);
+   CApplication::get().getSoundManager().registerSound(DAMAGE_TAKEN_SOUND);
+   CApplication::get().getSoundManager().registerTrack(WIN_MUSIC);
+   CApplication::get().getSoundManager().registerTrack(DEATH_MUSIC);
 }
 
 #include "CElementEnemy.h"
@@ -566,9 +541,7 @@ void CElementPlayer::playLevelVictory(float time) {
 
    //Start Victory Music
    if (VictoryTime == 0.0f) {
-#ifdef _ENABLED_CABBAGE_SOUND_
-      Mix_PlayMusic(victoryMusic, 1);
-#endif
+      CApplication::get().getSoundManager().swapTrack(WIN_MUSIC);
 
       if (!WinParticle1)
          WinParticle1 = new CParticleEngine(SVector3f(curLocation.X, curLocation.Y, .5f), 40, 2.f, HURT_PARTICLE, Level.isNight());

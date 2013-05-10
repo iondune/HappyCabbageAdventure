@@ -4,12 +4,14 @@
 #include "../CGameplayElement.h"
 #include "CEventManager.h"
 #include "../ISquishable.h"
-#ifdef _ENABLED_CABBAGE_SOUND_
-#include "sound.h"
-#endif
 class CPlayerAbility;
 
 #include "CabbageGameInformation.h"
+
+#define JUMP_SOUND "jump.wav"
+#define DAMAGE_TAKEN_SOUND "takeDmg.wav"
+#define WIN_MUSIC "Soundtracks/Win.ogg"
+#define DEATH_MUSIC "Soundtracks/Death.ogg"
 
 class CPlayerView;
 

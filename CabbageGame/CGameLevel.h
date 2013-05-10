@@ -17,9 +17,6 @@ class CCollisionEngine;
 #include "../CabbageCore/CabbageCore.h"
 #include "CabbageGameInformation.h"
 #include "CGameLevelLoader.h"
-#ifdef _ENABLED_CABBAGE_SOUND_
-#include "sound.h"
-#endif
 
 namespace Env {
    enum Type {
@@ -34,20 +31,11 @@ class CGameLevel {
    friend CGameLevelLoader;
 
    public:
-#ifdef _ENABLED_CABBAGE_SOUND_
-      Mix_Chunk *dmgEnemy;
-      Mix_Chunk *projectile;
-#endif
 
    private:
       bool night, Loaded, Render;
       int env, numBlocks;
       int XmlCount;
-#ifdef _ENABLED_CABBAGE_SOUND_
-      Mix_Music *Soundtrack;
-#endif
-
-
 
       CCollisionEngine *PhysicsEngine;
 
@@ -92,9 +80,6 @@ class CGameLevel {
       int getEnvironment();
       int getEnv();
       int  getXmlCount();
-#ifdef _ENABLED_CABBAGE_SOUND_
-      Mix_Music* getSoundtrack();
-#endif
 
       CElementPlayer & getPlayer();
       void setPlayerInformation(Cabbage::PlayerInformation info);
