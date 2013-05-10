@@ -290,18 +290,19 @@ void CPlayerView::setVisible(bool b) {
    SceneObject->setVisible(b);
 }
 
+#define SASHAY_FACTOR 1.5f
 
 void CPlayerView::translateCabbage(float time) {
    //Verify we aren't moving vertically.
    if (PhysicsEngineObject->getVelocity().Y < .01f && PhysicsEngineObject->getVelocity().Y > -.01f) {
       if (Action == CElementPlayer::Standing)
-         ySineValue += 5.f*time;
+         ySineValue += (SASHAY_FACTOR*5.f)*time;
 
       else if (Action == CElementPlayer::Walking && Direction == CElementPlayer::Left)
-         ySineValue +=10.f*time;
+         ySineValue += (SASHAY_FACTOR*10.f)*time;
 
       else if (Action == CElementPlayer::Walking && Direction == CElementPlayer::Right)
-         ySineValue -=10.f*time;
+         ySineValue -= (SASHAY_FACTOR*10.f)*time;
    }
 
    //If we are moving vertically, stop dancing and revert to our normal position.
