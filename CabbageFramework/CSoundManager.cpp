@@ -2,6 +2,7 @@
 #include "../CabbageSound/SDL_mixer.h"
 #include <algorithm>
 #include <stdexcept>
+#include <iostream>
 
 
 CSoundManager::CSoundManager() : audioInitialized(false) {
@@ -19,6 +20,9 @@ void CSoundManager::initAudio() {
       fprintf(stderr, "Could not open audio!\n");
       audioInitialized = false;
    }
+
+   int numChans = Mix_AllocateChannels(8);
+   std::cout << "Num audio channels: " << numChans << std::endl;
 }
 
 void CSoundManager::closeAudio() {
@@ -109,6 +113,7 @@ void CSoundManager::registerSound(std::string name) {
 
    if(CSoundManager::toLower(name).find(".wav") != std::string::npos) {
       Mix_Chunk *newSound = Mix_LoadWAV((MUSIC_DIR + name).c_str());
+
       if(newSound) {
          sounds->emplace(name, newSound);
       }
