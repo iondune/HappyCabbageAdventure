@@ -129,6 +129,7 @@ void CLWIBState::begin()
 
     printf("END OF BEGIN\n");
 
+    Application.getSoundManager().registerAndSwapTrack("Soundtracks/533744_Balloon-Medley1.ogg");
 }
 
 //Runs at very start of display

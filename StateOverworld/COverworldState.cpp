@@ -106,6 +106,7 @@ void COverworldState::begin()
    fps = timeTotal = 0;
    numFrames = 0;
 
+   Application.getSoundManager().registerAndSwapTrack("Soundtracks/513066_Idealistic_Ambience_smallcut.ogg");
 }
 
 void COverworldState::PrepSkySphere() {
