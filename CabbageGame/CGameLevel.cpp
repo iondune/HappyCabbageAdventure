@@ -172,19 +172,19 @@ void CGameLevel::setupSoundtrack() {
    //Pre-load pointers
    if (env == Env::FOREST) {
       if (!night)
-         CApplication::get().getSoundManager().registerAndSwapTrack("Soundtracks/WiL Whitlark - Snapshot OST - 01 - Leafborn.ogg");
+         CApplication::get().getSoundManager().registerAndSwapTrack("Soundtracks/510318_happy-days-final-ed.ogg");
       else
-         CApplication::get().getSoundManager().registerAndSwapTrack("Soundtracks/ForestNight.ogg");
+         CApplication::get().getSoundManager().registerAndSwapTrack("Soundtracks/533863_Parasite-Maya.ogg");
    }
 
    else if (env == Env::DESERT) {
       if (!night)
-         CApplication::get().getSoundManager().registerAndSwapTrack("Soundtracks/Desert.ogg");
+         CApplication::get().getSoundManager().registerAndSwapTrack("Soundtracks/465983_Impossibility.ogg");
       else
-         CApplication::get().getSoundManager().registerAndSwapTrack("Soundtracks/DesertNight.ogg");
+         CApplication::get().getSoundManager().registerAndSwapTrack("Soundtracks/533887_Lost-In-The-Sands.ogg");
    }
    else if (env == Env::WATER)
-      CApplication::get().getSoundManager().registerAndSwapTrack("Soundtracks/Water.ogg");
+      CApplication::get().getSoundManager().registerAndSwapTrack("Soundtracks/177697_underwaterdraft1.ogg");
 }
 
 void CGameLevel::setPlayerInformation(Cabbage::PlayerInformation info) {

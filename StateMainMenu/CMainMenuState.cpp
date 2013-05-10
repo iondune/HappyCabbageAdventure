@@ -107,8 +107,7 @@ void CMainMenuState::setupMeshes()
 void CMainMenuState::setupSoundtrack() {
    CSoundManager & SoundManager = Application.getSoundManager();
 
-   SoundManager.registerTrack("Soundtracks/MainMenu.ogg");
-   SoundManager.swapTrack("Soundtracks/MainMenu.ogg");
+   SoundManager.registerAndSwapTrack("Soundtracks/517936_Happy-Land-Loops.ogg");
 }
 
 #include "CSceneEffectManager.h"
