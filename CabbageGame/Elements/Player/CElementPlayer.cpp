@@ -4,6 +4,12 @@
 #include "CElementPlayer.h"
 #include "CPlayerAbility.h"
 
+#define JUMP_SOUND "61847__simon-rue__boink-v3.wav"
+//#define JUMP_SOUND "172205__fins__jumping.wav"
+#define DAMAGE_TAKEN_SOUND "135460__joelaudio__lettuce-crunch-quick-001.wav"
+#define WIN_MUSIC "Soundtracks/531842_Victory-Dance.ogg"
+#define DEATH_MUSIC "Soundtracks/Death.ogg"
+
 CElementPlayer::CElementPlayer(SRect2f nArea, bool useCamera)
 : CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Direction(Right), Action(Standing), Recovering(0.0f), Shaking(0.0f), ShakeFactor(SVector3f(0.0f)),
   ISquishable(2.0f, 2.0f), AllowMovement(true), PlayJump(true), Victory(false), VictoryTime(0.0f), ShakeFactorFactor(1000.0f), MoveKeyDelay(0.0f), UseCamera(useCamera), Godmode(false),

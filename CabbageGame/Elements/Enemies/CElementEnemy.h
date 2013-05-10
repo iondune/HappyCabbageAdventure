@@ -3,8 +3,6 @@
 #include "../CGameplayElement.h"
 #include "CElementPlayer.h"
 
-#define HIT_ENEMY_SOUND "hitEnemy.wav"
-
 namespace Enemies {
    enum EEnemyType {
       APPLE                = 0,

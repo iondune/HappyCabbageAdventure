@@ -24,6 +24,9 @@
 #include "CElementItemLife.h"
 #include "CElementItemEnergy.h"
 
+//#define HIT_ENEMY_SOUND "159669__lolamadeus__watermelon-squelch4.wav"
+#define HIT_ENEMY_SOUND "170417__eelke__bang-03-clean.wav"
+
 //Generic enemy, for usage in the LWIB, I guess.
 CElementEnemy::CElementEnemy(SRect2f nArea, Enemies::EEnemyType type)
 : CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), PhysicsEngineObject(NULL),
@@ -287,7 +290,7 @@ int CElementEnemy::takeDamage(int amount) {
    PlayerActor->addImpulse(SVector2f(0.0f, 9.0f));
 
    CApplication::get().getSoundManager().registerAndPlaySound(HIT_ENEMY_SOUND);
-   Level.getPlayer().setShaking(0.4f, 3.0f);
+   //Level.getPlayer().setShaking(0.2f, 1.0f);
 
    //The enemy was killed.
    if (CurHealth <= 0) {

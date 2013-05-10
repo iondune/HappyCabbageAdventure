@@ -8,11 +8,6 @@ class CPlayerAbility;
 
 #include "CabbageGameInformation.h"
 
-#define JUMP_SOUND "jump.wav"
-#define DAMAGE_TAKEN_SOUND "takeDmg.wav"
-#define WIN_MUSIC "Soundtracks/Win.ogg"
-#define DEATH_MUSIC "Soundtracks/Death.ogg"
-
 class CPlayerView;
 
 class CElementPlayer : public CGameplayElement, public ISquishable {
