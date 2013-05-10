@@ -109,7 +109,12 @@ void CSoundManager::registerSound(std::string name) {
 
    if(CSoundManager::toLower(name).find(".wav") != std::string::npos) {
       Mix_Chunk *newSound = Mix_LoadWAV((MUSIC_DIR + name).c_str());
-      sounds->emplace(name, newSound);
+      if(newSound) {
+         sounds->emplace(name, newSound);
+      }
+      else {
+         fprintf(stderr, "Couldn't open audio file. Error: %s.\n", Mix_GetError());
+      }
    }
    else {
       fprintf(stderr, "Given sound file was not type WAV. Didn't register %s.\n", name);
@@ -131,7 +136,12 @@ void CSoundManager::registerTrack(std::string name) {
          CSoundManager::toLower(name).find(".mp3") != std::string::npos ||
          CSoundManager::toLower(name).find(".wav") != std::string::npos) {
       Mix_Music *newTrack = Mix_LoadMUS((MUSIC_DIR + name).c_str());
-      tracks->emplace(name, newTrack);
+      if(newTrack) {
+         tracks->emplace(name, newTrack);
+      }
+      else {
+         fprintf(stderr, "Couldn't open audio file. Error: %s.\n", Mix_GetError());
+      }
    }
    else {
       fprintf(stderr, "Given track file was not a recognized type. Didn't register %s.\n", name);
