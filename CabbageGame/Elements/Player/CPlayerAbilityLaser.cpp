@@ -57,8 +57,10 @@ void CPlayerAbilityLaser::inOnCollision(const SCollisionEvent& Event) {
 CPlayerAbilityLaser::CPlayerAbilityLaser(CElementPlayer & p) : CPlayerAbility(p, Abilities::LASER), LaserState(CHARGING), TemporaryTimeVariable(0.0f) {
    EnergyUsed = 33;
 
-   if (Player.Stats.Energy >= EnergyUsed)
+   if (Player.Stats.Energy >= EnergyUsed) {
       ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), LASER_CHARGE_PARTICLE_COUNT, LASER_CHARGE_DURATION, LASER_CHARGING_PARTICLE, Player.Level.isNight());
+      CApplication::get().getSoundManager().registerAndPlaySound(CHARGE_LASER_1_SOUND);
+   }
    else
       Dead = true;
 }
@@ -83,17 +85,21 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
          return;
       }
       if(TemporaryTimeVariable >= LASER_CHARGE_DURATION) {
+         CApplication::get().getSoundManager().stopSound(CHARGE_LASER_1_SOUND);
          Player.Stats.Energy -= EnergyUsed;
          Player.AllowMovement = true;
          ParticleEngine->deconstruct();
          delete ParticleEngine;
          ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), 20, -1, LASER_CHARGED_PARTICLE, Player.Level.isNight());
          LaserState = CHARGED;
+         CApplication::get().getSoundManager().registerAndPlaySound(CHARGE_LASER_2_SOUND, -1);
          return;
       }
    }
    else if(LaserState == CHARGED) {
       if(!keyDown) {
+         CApplication::get().getSoundManager().stopSound(CHARGE_LASER_2_SOUND);
+         CApplication::get().getSoundManager().registerAndPlaySound(FIRE_LASER_SOUND);
          ParticleEngine->deconstruct();
          delete ParticleEngine;
          Player.AllowMovement = false;
@@ -107,7 +113,6 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
       }
    }
    else if(LaserState == FIRING) {
-      CApplication::get().getSoundManager().registerAndPlaySound(FIRE_LASER_SOUND);
       Player.Recovering = 5.0f;
       Player.View->setVisible(true);
       Player.View->setHurt(false);

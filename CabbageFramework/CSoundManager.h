@@ -19,10 +19,11 @@ public:
    CSoundManager();
    void initAudio();
    void swapTrack(std::string);
-   void playSound(std::string);
+   void playSound(std::string, int = 0);
+   void stopSound(std::string);
    void closeAudio();
 
-   void registerAndPlaySound(std::string);
+   void registerAndPlaySound(std::string, int = 0);
    void registerAndSwapTrack(std::string);
    
    void registerSound(std::string);

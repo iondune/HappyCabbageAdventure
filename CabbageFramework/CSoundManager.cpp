@@ -9,12 +9,30 @@ CSoundManager::CSoundManager() : audioInitialized(false) {
    initAudio();
 }
 
+// Who cares about globals :(  (necessary for the ChannelFinished callback).
+std::map<std::string, int> *soundChannels;
+
+void channelFinished(int channel) {
+   std::string toDel = "";
+   for(std::map<std::string, int>::iterator it = soundChannels->begin(); it != soundChannels->end(); ++it) {
+      if(it->second == channel) {
+         toDel = it->first;
+         break;
+      }
+   }
+
+   if(toDel.length() > 0) {
+      soundChannels->erase(toDel);
+   }
+}
+
 void CSoundManager::initAudio() {
    if(audioInitialized)
       return;
    audioInitialized = true;
    sounds = new std::map<std::string, Mix_Chunk*>();
    tracks = new std::map<std::string, Mix_Music*>();
+   soundChannels = new std::map<std::string, int>();
 
    if(Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 2048) < 0) {
       fprintf(stderr, "Could not open audio!\n");
@@ -23,6 +41,8 @@ void CSoundManager::initAudio() {
 
    int numChans = Mix_AllocateChannels(8);
    std::cout << "Num audio channels: " << numChans << std::endl;
+
+   Mix_ChannelFinished(channelFinished);
 }
 
 void CSoundManager::closeAudio() {
@@ -43,14 +63,26 @@ void CSoundManager::closeAudio() {
    delete tracks;
 }
 
-void CSoundManager::playSound(std::string name) {
+
+void CSoundManager::playSound(std::string name, int numLoops) {
    if(!isRegisteredSound(name)) {
       fprintf(stderr, "Sound %s was not registered. Not playing.\n", name);
       return;
    }
    
    Mix_Chunk *sound = sounds->at(name);
-   Mix_PlayChannel(-1, sound, 0);
+   soundChannels->emplace(name, Mix_PlayChannel(-1, sound, numLoops));
+}
+
+void CSoundManager::stopSound(std::string name) {
+   try {
+      int currChannel = soundChannels->at(name);
+      Mix_HaltChannel(currChannel);
+   }
+   catch(std::out_of_range err) {
+      // Sound finished playing on its own!
+      return;
+   }
 }
 
 void CSoundManager::swapTrack(std::string name) {
@@ -65,9 +97,9 @@ void CSoundManager::swapTrack(std::string name) {
    //Mix_PlayMusic(track, -1);
 }
 
-void CSoundManager::registerAndPlaySound(std::string name) {
+void CSoundManager::registerAndPlaySound(std::string name, int numLoops) {
    registerSound(name);
-   playSound(name);
+   playSound(name, numLoops);
 }
 
 void CSoundManager::registerAndSwapTrack(std::string name) {
