@@ -3,6 +3,8 @@
 #include "../CGameplayElement.h"
 #include "CElementPlayer.h"
 
+#define ITEM_PICKUP_SOUND "smb2_cherry.wav"
+
 namespace Items {
    enum EItemType {
       HEALTH            = 0,

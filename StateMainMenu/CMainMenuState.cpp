@@ -1,5 +1,8 @@
 #include "CMainMenuState.h"
 
+#define CHANGE_SELECTION_SOUND "124537__stereostereo__st-toctoc-wood.wav"
+#define SELECT_SOUND "158973__cgeffex__chopping-wood-01 (initial).wav"
+
 CMainMenuState::CMainMenuState() 
 	: Application (CApplication::get())
 {
@@ -313,7 +316,11 @@ void CMainMenuState::OnKeyboardEvent(SKeyboardEvent const & Event)
 }
 
 void CMainMenuState::OnWidgetHover(CGUIWidget * Widget)
-{}
+{
+   if(Widget == StartGame || Widget == StartEditor || Widget == ExitGame) {
+      CApplication::get().getSoundManager().registerAndPlaySound(CHANGE_SELECTION_SOUND);
+   }
+}
 
 void CMainMenuState::OnWidgetUnHover(CGUIWidget * Widget)
 {}
@@ -322,6 +329,7 @@ void CMainMenuState::OnWidgetUnHover(CGUIWidget * Widget)
 void CMainMenuState::OnWidgetClick(CGUIWidget * Widget)
 {
    if(Widget == StartGame) {
+      CApplication::get().getSoundManager().registerAndPlaySound(SELECT_SOUND);
       COverworldState::get().newGame = true;
       COverworldState::get().Stats = Cabbage::PlayerInformation();
       CApplication::get().getStateManager().setState(new CFadeOutState(& COverworldState::get(), 0.3f));
@@ -329,10 +337,12 @@ void CMainMenuState::OnWidgetClick(CGUIWidget * Widget)
       //printf("NumLives: %d\n", CGameplayManager::getNumLives());
    }
    else if(Widget == StartEditor) {
+      CApplication::get().getSoundManager().registerAndPlaySound(SELECT_SOUND);
       //stopSoundtrack();
       CApplication::get().getStateManager().setState(new CFadeOutState(& CLWIBState::get(), 0.3f));
    }
    else if(Widget == ExitGame) {
+      CApplication::get().getSoundManager().registerAndPlaySound(SELECT_SOUND);
       CApplication::get().close();
    }
 }

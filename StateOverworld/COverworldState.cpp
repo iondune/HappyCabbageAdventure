@@ -2,6 +2,8 @@
 #include "CGameState.h"
 #include "CMainMenuState.h"
 
+#define CHANGE_LEVEL_SELECTION_SOUND "158973__cgeffex__chopping-wood-01 (lift).wav"
+#define SELECT_SOUND "158973__cgeffex__chopping-wood-01 (initial).wav"
 
 COverworldState::COverworldState()
 : Application (CApplication::get())
@@ -251,6 +253,7 @@ void COverworldState::OnKeyboardEvent(SKeyboardEvent const & Event)
          printf("Look coords: %0.2f %0.2f %0.2f\n", look.X, look.Y, look.Z);
       }
       if(Event.Key == SDLK_SPACE && transitionTimer == 0.0f) {
+         CApplication::get().getSoundManager().registerAndPlaySound(SELECT_SOUND);
          if(!CApplication::get().getEventManager().IsKeyDown[SDLK_t]) {
             CGameState::get().LevelName = levels[curNode].name;
          }
@@ -615,6 +618,7 @@ void COverworldState::movePlayer() {
 
    if(moved)
    {
+      CApplication::get().getSoundManager().registerAndPlaySound(CHANGE_LEVEL_SELECTION_SOUND);
       transitionTimer = TRANSITION_PERIOD;
 
       playerVecTarget = levels[curNode].loc;

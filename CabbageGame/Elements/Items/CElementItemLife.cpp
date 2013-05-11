@@ -30,6 +30,7 @@ void CElementItemLife::setupSceneObject() {
 
 void CElementItemLife::OnCollision(const SCollisionEvent& Event) {
    if(!Dead && Event.Other == Level.getPlayer().getPhysicsEngineObject() && !Level.getPlayer().used(Abilities::SHIELD)) {
+         CApplication::get().getSoundManager().registerAndPlaySound(ITEM_PICKUP_SOUND);
          Level.getPlayer().incrementLives();
          removeFromGame();
          Dead = true;

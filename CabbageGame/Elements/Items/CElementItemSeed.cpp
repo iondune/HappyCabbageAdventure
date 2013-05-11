@@ -36,6 +36,7 @@ void CElementItemSeed::setupSceneObject() {
 
 void CElementItemSeed::OnCollision(const SCollisionEvent& Event) {
    if(!Dead && Event.Other == Level.getPlayer().getPhysicsEngineObject() && !Level.getPlayer().used(Abilities::SHIELD)) {
+      CApplication::get().getSoundManager().registerAndPlaySound(ITEM_PICKUP_SOUND);
       printf("Seed collision with the player (Seed == %d)\n", (int)this);
       Level.getPlayer().incrementSeeds();
       removeFromGame();
