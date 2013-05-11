@@ -100,6 +100,8 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
    SceneObject->addChild(ShadowRight);
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
+
+   CurrentLookPosition = SVector2f(0.0f, 0.0f);
 } 
 
 void CPlayerView::setCabbageScale(SVector3f sc) {
@@ -196,17 +198,31 @@ T CubicInterpolate(
 
 #define MIN(x,y) (x < y ? x : y)
 #define MAX(x,y) (x > y ? x : y)
-#define NEWTON_CAMERA_LOOKAHEAD 0.35f
+#define NEWTON_CAMERA_TILT 0.35f
+#define NEWTON_CAMERA_LOOKAHEAD 1.0f
+
+////CurrentCameraPosition.X += newtonianAdjustment/2.0f; // The target has opposite newtonian as the camera pos, so subtract.
+   //SVector2f camTargetXY(Area.getCenter().X, MAX(Area.getCenter().Y/1.5f, Area.getCenter().Y - 2.5f));
+   //camTargetXY = (camTargetXY + CurrentCameraPosition)/2.0f;
+
+   //SVector3f camPos = SVector3f(CurrentCameraPosition, 10);
+   //SVector3f camTargetPos = SVector3f(camTargetXY, 0.0f);
+
+   //camPos.X += newtonianLookahead;//3.0f*newtonianAdjustment;
+   //camTargetPos.X += newtonianLookahead;//3.0f*newtonianAdjustment;
+   ////SVector3f(CurrentCameraPosition.X, CurrentCameraPosition.Y/2.0f, 10)
+
+   //SVector3f targetPos(CurrentCameraPosition, 0.0f);
 
 void CPlayerView::updateCameraPosition(float const ElapsedTime)
 {
+   float newtonianAdjustment = (Direction == CElementPlayer::Left ? NEWTON_CAMERA_TILT : -NEWTON_CAMERA_TILT);
    if(!UseCamera)
       return;
-   TargetCameraPosition = SVector2f(Area.getCenter().X + (Direction == CElementPlayer::Left ? NEWTON_CAMERA_LOOKAHEAD : -NEWTON_CAMERA_LOOKAHEAD), Area.getCenter().Y + 0.7f + MIN(Area.getCenter().Y * 0.2f, 2.0f));
+   TargetCameraPosition = SVector2f(Area.getCenter().X + newtonianAdjustment, Area.getCenter().Y + 0.7f + MIN(Area.getCenter().Y * 0.2f, 2.0f));
 
-   if (TargetCameraPosition != CurrentCameraPosition)
-   {
-      float const DistanceToGo = TargetCameraPosition.getDistanceFrom(CurrentCameraPosition);
+   if (TargetCameraPosition != CurrentCameraPosition) {
+        float const DistanceToGo = TargetCameraPosition.getDistanceFrom(CurrentCameraPosition);
         float const MoveVelocity = max(2.f * DistanceToGo + 0.2f, 1.f * DistanceToGo * DistanceToGo);
         float const Movement = MoveVelocity * ElapsedTime;
         
@@ -214,16 +230,29 @@ void CPlayerView::updateCameraPosition(float const ElapsedTime)
                 CurrentCameraPosition = TargetCameraPosition.getInterpolated(CurrentCameraPosition, Movement/DistanceToGo);
         else
                 CurrentCameraPosition = TargetCameraPosition;
-
    }
-   SVector2f camTargetXY(Area.getCenter().X, MAX(Area.getCenter().Y/1.5f, Area.getCenter().Y - 2.5f));
-   camTargetXY = (camTargetXY + CurrentCameraPosition)/2.0f;
 
-   SVector3f camPos = SVector3f(CurrentCameraPosition, 10);
-   SVector3f camTargetPos = SVector3f(camTargetXY, 0.0f);
-   //SVector3f(CurrentCameraPosition.X, CurrentCameraPosition.Y/2.0f, 10)
+   float newtonianLookahead = (Direction == CElementPlayer::Right ? NEWTON_CAMERA_LOOKAHEAD : -NEWTON_CAMERA_LOOKAHEAD);
+    TargetLookPosition = SVector2f(Area.getCenter().X + newtonianLookahead, MAX(Area.getCenter().Y/1.5f, Area.getCenter().Y));
+
+   if (TargetLookPosition != CurrentLookPosition) {
+        float const DistanceToGo = TargetLookPosition.getDistanceFrom(CurrentLookPosition);
+        float const MoveVelocity = max(1.f * DistanceToGo + 0.2f, 1.f * DistanceToGo * DistanceToGo);
+        float const Movement = MoveVelocity * ElapsedTime;
+        
+        if (DistanceToGo > Movement)
+                CurrentLookPosition = TargetLookPosition.getInterpolated(CurrentLookPosition, Movement/DistanceToGo);
+        else
+                CurrentLookPosition = TargetLookPosition;
+   }
+
+   //cout << "LookPosition: " << CurrentLookPosition.X << ", " << CurrentLookPosition.Y << "; Dir: " << endl;
+   
+   SVector3f camPos(SVector3f(CurrentCameraPosition, 10.0f));
+   SVector3f lookPos(SVector3f(CurrentLookPosition, 0.0f));
+
    CApplication::get().getSceneManager().getActiveCamera()->setPosition(camPos + ShakeFactor);
-   CApplication::get().getSceneManager().getActiveCamera()->setLookDirection((camTargetPos - camPos).getNormalized()/* + ShakeFactor*/);
+   CApplication::get().getSceneManager().getActiveCamera()->setLookDirection((lookPos - camPos).getNormalized()/* + ShakeFactor*/);
 }
 
 int CPlayerView::getSubView() {
