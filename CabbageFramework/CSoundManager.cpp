@@ -94,6 +94,7 @@ void CSoundManager::swapTrack(std::string name) {
    Mix_FadeOutMusic(250);
    Mix_Music *track = tracks->at(name);
    Mix_FadeInMusic(track, -1, 250);
+   Mix_VolumeMusic(15);
    //Mix_PlayMusic(track, -1);
 }
 
