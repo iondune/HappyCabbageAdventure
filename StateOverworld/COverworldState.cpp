@@ -380,7 +380,7 @@ void COverworldState::loadLevels()
 	//Desert Levels
    levels[10].name = "chrisDesert.xml";
    levels[10].loc = SVector3f(0.94f, -0.25f, -0.38f); //Yellow beach
-   levels[11].name = "chrisDesert1-night.xml";
+   levels[11].name = "aldenDesert-night.xml";
    levels[11].loc = SVector3f(0.77f, -0.20f, -0.66f); //Yellow hills
    levels[12].name = "desertexhibition.xml";
    levels[12].loc = SVector3f(0.65f, -0.20f, -0.51f);
