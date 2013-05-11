@@ -390,11 +390,11 @@ void CElementPlayer::setupPhysicsEngineObject() {
    }
 
    if (Level.getEnv() == Env::WATER) {
-      oldMaxWalk = PhysicsEngineObject->getActorAttributes().MaxWalk *= 0.5f;
-      PhysicsEngineObject->getActorAttributes().AirControl *= 0.5f;
-      PhysicsEngineObject->getActorAttributes().AirSpeedFactor *= 0.5f;
+      oldMaxWalk = PhysicsEngineObject->getActorAttributes().MaxWalk *= 0.75f;
+      PhysicsEngineObject->getActorAttributes().AirControl *= 0.75f;
+      PhysicsEngineObject->getActorAttributes().AirSpeedFactor *= 0.75f;
       PhysicsEngineObject->getActorAttributes().JumpAccel *= 0.5f;
-      PhysicsEngineObject->getActorAttributes().JumpLength *= 0.5f;
+      PhysicsEngineObject->getActorAttributes().JumpLength *= 0.75f;
       ////PhysicsEngineObject->getActorAttributes().WalkAccel *= 0.25f;
       //PhysicsEngineObject->getActorAttributes().JumpAccel *= 0.75f;
       //PhysicsEngineObject->getActorAttributes().JumpLength *= 0.8f;
