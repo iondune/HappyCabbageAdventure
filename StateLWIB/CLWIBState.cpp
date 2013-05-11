@@ -869,7 +869,7 @@ void CLWIBState::PrepFlag(float x, float y, int t) {
 
     printf("Placed flag starting at %0.2f, %0.2f\n", x, y);
     CGameplayElement *tempPlaceable;
-    placeables.push_back(tempPlaceable = new CElementBlockFlag(SRect2f(x, y, 1, 4),t));//add flag
+    placeables.push_back(tempPlaceable = new CElementBlockFlag(SRect2f(x, y, 1, 1),t));//add flag
     tempPlaceable->setupObjects();
 
     blockMap[(int)x+25][(int)(y-0.5+25)].o = true;
