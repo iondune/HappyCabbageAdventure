@@ -411,9 +411,9 @@ void COverworldState::loadLevels()
 void COverworldState::setCameraTrans()
 {
    cameraPos[0] = SVector3f(0.21f, 0.36f, 1.76f);
-   cameraPos[1] = SVector3f(1.0f, 0.8f, 1.2f);
+   cameraPos[1] = SVector3f(1.0f, 0.4f, 1.2f);
    cameraPos[2] = SVector3f(1.47f, 0.33f, 0.0f);
-   cameraPos[3] = SVector3f(0.8f, 0.33f, -1.5f);
+   cameraPos[3] = SVector3f(0.8f, 0.1f, -1.5f);
    //cameraPos[1] = SVector3f(1.47f, 0.33f, 0.0f);
 
 }
