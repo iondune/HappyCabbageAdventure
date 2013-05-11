@@ -194,11 +194,15 @@ T CubicInterpolate(
    return (a0*mu*mu2+a1*mu2+a2*mu+a3);
 }
 
+#define MIN(x,y) (x < y ? x : y)
+#define MAX(x,y) (x > y ? x : y)
+#define NEWTON_CAMERA_LOOKAHEAD 0.35f
+
 void CPlayerView::updateCameraPosition(float const ElapsedTime)
 {
    if(!UseCamera)
       return;
-   TargetCameraPosition = SVector2f(Area.getCenter().X + (Direction == CElementPlayer::Right ? 1.75f : -1.75f), Area.getCenter().Y + 1.3f);
+   TargetCameraPosition = SVector2f(Area.getCenter().X + (Direction == CElementPlayer::Left ? NEWTON_CAMERA_LOOKAHEAD : -NEWTON_CAMERA_LOOKAHEAD), Area.getCenter().Y + 0.7f + MIN(Area.getCenter().Y * 0.2f, 2.0f));
 
    if (TargetCameraPosition != CurrentCameraPosition)
    {
@@ -212,8 +216,14 @@ void CPlayerView::updateCameraPosition(float const ElapsedTime)
                 CurrentCameraPosition = TargetCameraPosition;
 
    }
+   SVector2f camTargetXY(Area.getCenter().X, MAX(Area.getCenter().Y/1.5f, Area.getCenter().Y - 2.5f));
+   camTargetXY = (camTargetXY + CurrentCameraPosition)/2.0f;
 
-   CApplication::get().getSceneManager().getActiveCamera()->setPosition(SVector3f(CurrentCameraPosition, 10) + ShakeFactor);
+   SVector3f camPos = SVector3f(CurrentCameraPosition, 10);
+   SVector3f camTargetPos = SVector3f(camTargetXY, 0.0f);
+   //SVector3f(CurrentCameraPosition.X, CurrentCameraPosition.Y/2.0f, 10)
+   CApplication::get().getSceneManager().getActiveCamera()->setPosition(camPos + ShakeFactor);
+   CApplication::get().getSceneManager().getActiveCamera()->setLookDirection((camTargetPos - camPos).getNormalized()/* + ShakeFactor*/);
 }
 
 int CPlayerView::getSubView() {
@@ -257,8 +267,10 @@ void CPlayerView::updateView(float time) {
          camPos = SVector3f(Area.getCenter().X, Area.getCenter().Y, 2.5f);
          break;
       }
+      SVector3f lookTarget = SVector3f(Area.getCenter(), 0.0f);
       CApplication::get().getSceneManager().getActiveCamera()->setPosition(camPos + ShakeFactor);
-      CApplication::get().getSceneManager().getActiveCamera()->setLookDirection((SVector3f(Area.getCenter(), 0.0f) - camPos).getNormalized());
+      //CApplication::get().getSceneManager().getActiveCamera()->setPosition(camPos + ShakeFactor);
+      CApplication::get().getSceneManager().getActiveCamera()->setLookDirection((lookTarget - camPos).getNormalized());
    }
 
    updateShadow(time);
