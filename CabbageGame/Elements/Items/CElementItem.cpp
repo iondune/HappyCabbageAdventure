@@ -7,12 +7,28 @@
 #include "CElementItemSeed.h"
 
 //Generic item, for usage in the LWIB, I guess.
-CElementItem::CElementItem(SRect2 nArea, Items::EItemType type)
+CElementItem::CElementItem(SRect2f nArea, Items::EItemType type)
 : CGameplayElement((CCollideable *&)PhysicsEngineObject, (ISceneObject *&)SceneObject, nArea), Type(type) {
 }
 
+void CElementItem::setupPhysicsEngineObject() {
+   /* Set up the actor (not actually an actor, since this one doesn't move its position) */
+   PhysicsEngineObject = Level.getPhysicsEngine().addActor();
+   PhysicsEngineObject->setArea(Area);
+   //PhysicsEngineObject->setVelocity(SVector2d(0.1, 2.0));
+
+   //Set actor attributes
+   PhysicsEngineObject->setTypeId(INTERACTOR_ITEMS);
+   PhysicsEngineObject->setCollisionMask(INTERACTOR_BLOCKS);
+   PhysicsEngineObject->setDetectionMask(INTERACTOR_SUPERACTORS);
+   PhysicsEngineObject->setVelocity(SVector2d(0.01, 0.01));
+
+   //Connect Phase to OnCollision :(
+   PhysicsEngineObject->OnPhaseBegin.connect(this, &CElementItem::OnCollision);
+}
+
 //Item created by factory
-CElementItem *CItemLoader::LoadItem(SRect2 nArea, Items::EItemType type) {
+CElementItem *CItemLoader::LoadItem(SRect2f nArea, Items::EItemType type) {
    switch(type) {
    case Items::HEALTH:
       return new CElementItemHealth(nArea);
@@ -48,7 +64,7 @@ void CElementItem::writeXML(xmlwriter *l) {
     l->CloseLasttag();
 }
 
-void CElementItem::OnCollision(CCollideable *Object) {
+void CElementItem::OnCollision(const SCollisionEvent& Event) {
    fprintf(stderr, "Error: collision on generic item type %d (perhaps the CElementItem::OnCollision function wasn't overridden?).\n", Type);
    exit(1);
 }
@@ -71,10 +87,10 @@ void CElementItem::printInformation() {
 }
 
 void CElementItem::reactToAbility(Abilities::EAbilityType Ability) {
-   SVector2 PlayerVelocity = ((CCollisionActor*)Level.getPlayer().getPhysicsEngineObject())->getVelocity();
+   SVector2f PlayerVelocity = ((CCollisionActor*)Level.getPlayer().getPhysicsEngineObject())->getVelocity();
    switch(Ability) {
       case Abilities::SHIELD:
-         ((CCollisionActor*)PhysicsEngineObject)->setImpulse((PlayerVelocity + SVector2(0.0f, 2.5f)) * 3.0f, 0.01f);
+         ((CCollisionActor*)PhysicsEngineObject)->addImpulse((PlayerVelocity + SVector2f(0.0f, 2.5f)) * 3.0f);
          //dieWithSeeds();
          break;
       default:

@@ -8,7 +8,7 @@
 #include "CDeferredShadingManager.h"
 
 
-CDirectionalLightSceneObject::CDirectionalLightSceneObject(SVector3 const direction, SColor const & color)
+CDirectionalLightSceneObject::CDirectionalLightSceneObject(SVector3f const direction, SColor const & color)
 	: Color(color), Direction(direction)
 {
 	Shader = CShaderLoader::loadShader("Deferred/DirectionalLight");
@@ -54,12 +54,12 @@ void CDirectionalLightSceneObject::load(CScene const * const Scene)
 {
 }
 
-void CDirectionalLightSceneObject::setDirection(SVector3 const & direction)
+void CDirectionalLightSceneObject::setDirection(SVector3f const & direction)
 {
 	Direction = direction;
 }
 
-void CDirectionalLightSceneObject::setColor(SVector3 const & color)
+void CDirectionalLightSceneObject::setColor(SVector3f const & color)
 {
 	Color = color;
 }

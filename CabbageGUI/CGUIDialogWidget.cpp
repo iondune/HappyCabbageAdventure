@@ -13,7 +13,24 @@ void CGUIDialogWidget::loadDialogFile(std::string const & FileName) {
 
    std::string line;
    CTextSection *current = NULL;
-   std::vector<std::string> * currentText;
+   std::vector<std::string> * currentText = NULL;
+   
+      std::getline(input, line);
+
+      if(line.compare("SECTION") == 0) {
+         if(current) {
+            TextSections.push_back(current);
+            current = NULL;
+         }
+         current = new CTextSection();
+         currentText = &(current->Text);
+         current->End = current->Current = 0;
+         printf("Started a new section\n");
+      }
+	  else {
+			return;
+	  }
+
    while(input.good()) {
       std::getline(input, line);
 
@@ -52,16 +69,16 @@ CGUIDialogWidget::CGUIDialogWidget(std::string const & DialogFileName) {
    float widthOfBoard = 1.0f;
    float heightOfBoard = 0.3f*widthOfBoard;
    float padding = widthOfBoard*0.05f;
-   Board = new CGUIImageWidget(new CTexture(CImageLoader::loadTGAImage("MainMenu/wood.tga")), SVector2(widthOfBoard, heightOfBoard));
-   Board->setPosition(SVector2((aspectRatio - widthOfBoard)/2.0f, padding));
+   Board = new CGUIImageWidget(new CTexture(CImageLoader::loadTGAImage("MainMenu/wood.tga")), SVector2f(widthOfBoard, heightOfBoard));
+   Board->setPosition(SVector2f((aspectRatio - widthOfBoard)/2.0f, padding));
    Board->setVisible(false);
    Engine->addWidget(Board);
 
-   SVector2 bottomLeftOfBoard((aspectRatio - widthOfBoard)/2.0f, padding);
+   SVector2f bottomLeftOfBoard((aspectRatio - widthOfBoard)/2.0f, padding);
 
    int i;
    for(i = 0; i < 3; i++) {
-      SVector2 textPosition = bottomLeftOfBoard + SVector2(padding, (float)(2 - i)/(4.0f/heightOfBoard) + padding*1.5f);
+      SVector2f textPosition = bottomLeftOfBoard + SVector2f(padding, (float)(2 - i)/(4.0f/heightOfBoard) + padding*1.5f);
       CGUIFontWidget *t = new CGUIFontWidget("WIFFLES_.TTF", 14.f/heightOfBoard);
       t->setVisible(false);
       t->setText("unset");

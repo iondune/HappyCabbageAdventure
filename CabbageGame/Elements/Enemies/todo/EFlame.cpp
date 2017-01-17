@@ -13,7 +13,7 @@ EFlame::EFlame(float x, float y, float w, float h, CGameplayManager* manager) {
 
 //Loads and moves the mesh
 void EFlame::loadMesh() {
-   particleEngine = new CParticleEngine(SVector3(x, y, 0), 100, -1, FLAME_PARTICLE);
+   particleEngine = new CParticleEngine(SVector3f(x, y, 0), 100, -1, FLAME_PARTICLE);
 }
 
 //Adds actor to engine and preps engine
@@ -24,7 +24,7 @@ void EFlame::loadActor() {
    Actor->setControlFall(false);
    Actor->setGravity(0.0f);
 
-   Actor->setArea(SRect2(SVector2(x, y), SVector2(w, h)));
+   Actor->setArea(SRect2f(SVector2f(x, y), SVector2f(w, h)));
 
    //Set actor attributes
    Actor->getAttributes().MaxWalk = 3.0f;
@@ -32,7 +32,6 @@ void EFlame::loadActor() {
 
    Actor->getAttributes().AirControl = 1.0f;
    Actor->getAttributes().AirSpeedFactor = 1.0f;
-   Actor->CollideableType = COLLIDEABLE_TYPE_FLAME;
 }
 
 void EFlame::doRenderable() {

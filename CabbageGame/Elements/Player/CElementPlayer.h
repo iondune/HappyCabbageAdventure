@@ -4,7 +4,6 @@
 #include "../CGameplayElement.h"
 #include "CEventManager.h"
 #include "../ISquishable.h"
-#include "sound.h"
 class CPlayerAbility;
 
 #include "CabbageGameInformation.h"
@@ -17,6 +16,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
    friend class CPlayerAbilityBlink;
    friend class CPlayerAbilityLaser;
    friend class CPlayerAbilityDash;
+   friend class CPlayerAbilityHeadbutt;
    public:
       enum EDirection {
          Left = 0,
@@ -37,7 +37,8 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       bool Godmode;
       bool hWasDown;
       bool jWasDown;
-      float oldGrav;
+      bool nWasDown;
+      CollisionReal oldGrav;
 
 
       Cabbage::PlayerInformation Stats;
@@ -49,10 +50,11 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       void updatePlayerAction();
       float Recovering, Shaking, ShakeFactorFactor, VictoryTime;
       float MoveKeyDelay;
-      SVector2 Scale;
-      SVector3 ShakeFactor;
+      SVector2f Scale;
+      SVector3f ShakeFactor;
 
       //Sound Variables
+#ifdef _ENABLED_CABBAGE_SOUND_
       Mix_Chunk *takeDmg;
       Mix_Chunk *jump;
       Mix_Chunk *chargeLaser1;
@@ -60,6 +62,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       Mix_Chunk *fireLaser;
       Mix_Music *victoryMusic;
       Mix_Music *deathMusic;
+#endif
       bool PlayJump, UseCamera;
 
       std::vector<CPlayerAbility*> Abilities;
@@ -69,10 +72,10 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       std::map<Abilities::EAbilityType, int> usedAbility;
 
    public:
-      CElementPlayer(SRect2 nArea, bool useCamera = true);
+      CElementPlayer(SRect2f nArea, bool useCamera = true);
 
       //CGameplayElement functions
-      virtual void OnCollision(CCollideable *Object);
+      virtual void OnCollision(const SCollisionEvent& Event);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
@@ -102,6 +105,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       void setVictoryFlag(bool value);
 
       void setAllowMovement(bool value);
+      EDirection getDirection();
 
       //Keyboard event functions
       void OnKeyboardEvent(SKeyboardEvent const & Event);
@@ -109,5 +113,7 @@ class CElementPlayer : public CGameplayElement, public ISquishable {
       void setCanUseAbility(Abilities::EAbilityType t);
       void setStats(Cabbage::PlayerInformation st);
       EAction getAction();
+
+      void printInformation();
 };
 #endif

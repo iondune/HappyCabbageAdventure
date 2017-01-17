@@ -24,10 +24,10 @@ class CImage
 
 	bool Alpha;
 
-    CImage(char * imageData, int width, int height, bool const alpha = false);
 
 public:
-
+	
+    CImage(char * imageData, int width, int height, bool const alpha = false);
     ~CImage();
 
     int const getWidth() const;

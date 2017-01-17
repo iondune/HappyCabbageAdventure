@@ -1,3 +1,5 @@
+#version 120
+
 uniform sampler2D uTexColor;
 
 varying vec4 vColor;

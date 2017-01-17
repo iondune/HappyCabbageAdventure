@@ -15,22 +15,22 @@
     <ClCompile Include="CFadeOutState.cpp">
       <Filter>State Management</Filter>
     </ClCompile>
+    <ClCompile Include="CSoundManager.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="sigslot">
-      <UniqueIdentifier>{cefff7c2-b7cf-4b35-bd49-ea9be8b7279d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Cameras">
       <UniqueIdentifier>{28db67e1-a733-4fab-a6d0-7e9c1dfa0e4a}</UniqueIdentifier>
     </Filter>
     <Filter Include="State Management">
       <UniqueIdentifier>{11862c19-eebf-4dfd-aa0f-d9b6a42527c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{5c7ddec5-b06c-498b-8227-cd2724c9104d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="sigslot\sigslot.h">
-      <Filter>sigslot</Filter>
-    </ClInclude>
     <ClInclude Include="CApplication.h" />
     <ClInclude Include="CEventManager.h" />
     <ClInclude Include="CabbageFramework.h" />
@@ -45,6 +45,12 @@
     </ClInclude>
     <ClInclude Include="CFadeOutState.h">
       <Filter>State Management</Filter>
+    </ClInclude>
+    <ClInclude Include="CSoundManager.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CabbageSound\SDL_mixer.h">
+      <Filter>Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

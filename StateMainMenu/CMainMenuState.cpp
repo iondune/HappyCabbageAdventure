@@ -1,5 +1,8 @@
 #include "CMainMenuState.h"
 
+#define CHANGE_SELECTION_SOUND "124537__stereostereo__st-toctoc-wood.wav"
+#define SELECT_SOUND "158973__cgeffex__chopping-wood-01 (initial).wav"
+
 CMainMenuState::CMainMenuState() 
 	: Application (CApplication::get())
 {
@@ -10,9 +13,9 @@ CMainMenuState::CMainMenuState()
 	maxY = (float) size.Y;
 	sineValue = 0.0f;
 	buttonNum = 0;
-printf("Before warp\n");
-   SDL_WarpMouse(.5*maxX, .4*maxY);
-   printf("After warp\n");
+//printf("Before warp\n");
+//   SDL_WarpMouse(Uint16(0.5f*maxX), Uint16(0.4f*maxY));
+//   printf("After warp\n");
 }
 
 void CMainMenuState::setupTextures()
@@ -24,33 +27,33 @@ void CMainMenuState::setupTextures()
 void CMainMenuState::setupButtons() {
 	float ratio = (float)size.X/(float) size.Y;
 
-	StartGame = new CGUIImageWidget(WoodTexture, SVector2(.4f, .12f));
-	StartGame->setPosition(SVector2(ratio/2.f - 0.2f, 0.5f));
+	StartGame = new CGUIImageWidget(WoodTexture, SVector2f(.4f, .12f));
+	StartGame->setPosition(SVector2f(ratio/2.f - 0.2f, 0.5f));
 
-	StartEditor = new CGUIImageWidget(WoodTexture, SVector2(.4f, .12f));
-	StartEditor->setPosition(SVector2(ratio/2.f - 0.2f, 0.32f));
+	StartEditor = new CGUIImageWidget(WoodTexture, SVector2f(.4f, .12f));
+	StartEditor->setPosition(SVector2f(ratio/2.f - 0.2f, 0.32f));
 
-	ExitGame = new CGUIImageWidget(WoodTexture, SVector2(.4f, .12f));
-	ExitGame->setPosition(SVector2(ratio/2.f - 0.2f, 0.14f));
+	ExitGame = new CGUIImageWidget(WoodTexture, SVector2f(.4f, .12f));
+	ExitGame->setPosition(SVector2f(ratio/2.f - 0.2f, 0.14f));
 
    SColor FontColor(1.0f, 1.0f, 1.0f);
 
-	StartFont = new CGUIFontWidget("JustAnotherFont.TTF", 32.f);
+	StartFont = new CGUIFontWidget("JustAnotherFont.TTF", 24.f);
 	StartFont->setText("Start Game");
 	StartFont->setColor(FontColor);
-	StartFont->setPosition(SVector2(ratio/2.f - 0.175f, 0.5f + 0.05f));
+	StartFont->setPosition(SVector2f(ratio/2.f - 0.175f, 0.5f + 0.05f));
 
-	EditorFont = new CGUIFontWidget("JustAnotherFont.TTF", 32.f);
+	EditorFont = new CGUIFontWidget("JustAnotherFont.TTF", 24.f);
 	EditorFont->setText("Level Editor");
 	EditorFont->setColor(FontColor);
-	EditorFont->setPosition(SVector2(ratio/2.f - 0.179f, 0.32f + 0.05f));
+	EditorFont->setPosition(SVector2f(ratio/2.f - 0.179f, 0.32f + 0.05f));
 
-	ExitFont = new CGUIFontWidget("JustAnotherFont.TTF", 32.f);
+	ExitFont = new CGUIFontWidget("JustAnotherFont.TTF", 24.f);
 	ExitFont->setText("Exit Game");
 	ExitFont->setColor(FontColor);
-	ExitFont->setPosition(SVector2(ratio/2.f - .162f, .14f + .05f));
+	ExitFont->setPosition(SVector2f(ratio/2.f - .162f, .14f + .05f));
 
-	//StartEditor = new CGUIImageWidget(WoodTexture, SVector2(0.65f, .25f));
+	//StartEditor = new CGUIImageWidget(WoodTexture, SVector2f(0.65f, .25f));
 	Application.getGUIEngine().addWidget(StartGame);
 	Application.getGUIEngine().addWidget(StartEditor);
 	Application.getGUIEngine().addWidget(ExitGame);
@@ -71,8 +74,8 @@ void CMainMenuState::setupMeshes()
   LogoMesh = CMeshLoader::load3dsMesh("Base/HappyLogo3.3ds");
   if (LogoMesh)
   {
-    LogoMesh->resizeMesh(SVector3(0.4f));
-    LogoMesh->centerMeshByExtents(SVector3(0));
+    LogoMesh->resizeMesh(SVector3f(0.4f));
+    LogoMesh->centerMeshByExtents(SVector3f(0));
     LogoMesh->calculateNormalsPerFace();
   }
   else 
@@ -82,8 +85,8 @@ void CMainMenuState::setupMeshes()
 
   CubeMesh = CMeshLoader::createCubeMesh();
   if (CubeMesh) {
-	  CubeMesh->resizeMesh(SVector3(0.4f));
-	  CubeMesh->centerMeshByExtents(SVector3(0));
+	  CubeMesh->resizeMesh(SVector3f(0.4f));
+	  CubeMesh->centerMeshByExtents(SVector3f(0));
 	  CubeMesh->calculateNormalsPerFace();
   }
   else
@@ -91,38 +94,26 @@ void CMainMenuState::setupMeshes()
 
 
   RenderLogo = CApplication::get().getSceneManager().addMeshSceneObject(LogoMesh, Toon, DeferredToon);
-  RenderLogo->setTranslation(SVector3(0.00, 0.07f, .2f));
-  RenderLogo->setScale(SVector3(.3f));
-  RenderLogo->setRotation(SVector3(75, 180, 0));
+  RenderLogo->setTranslation(SVector3f(0.00, 0.07f, .2f));
+  RenderLogo->setScale(SVector3f(.3f));
+  RenderLogo->setRotation(SVector3f(75, 180, 0));
 
 
 
   RenderBackground = CApplication::get().getSceneManager().addMeshSceneObject(CubeMesh, Texture, DeferredTexture);
-  RenderBackground->setTranslation(SVector3(.0f, .0f, .3f));
-  RenderBackground->setRotation(SVector3(0.f, 0.f, 180.f));
-  RenderBackground->setScale(SVector3(1.23f, .92f, .1f));
+  RenderBackground->setTranslation(SVector3f(.0f, .0f, .3f));
+  RenderBackground->setRotation(SVector3f(0.f, 0.f, 180.f));
+  RenderBackground->setScale(SVector3f(1.23f, .92f, .1f));
   RenderBackground->setTexture(BackgroundTexture);
 }
 
 void CMainMenuState::setupSoundtrack() {
-   std::string temp;
+   CSoundManager & SoundManager = Application.getSoundManager();
 
-   if(Mix_OpenAudio(22050, AUDIO_S16, 2, 4096))
-      printf("Could not open audio!\n");
-
-   std::string MusicDirectory = "../Media/Music/";
-
-
-   temp = MusicDirectory + "Soundtracks/MainMenu.mp3";
-
-   Soundtrack = Mix_LoadMUS(temp.c_str());
-
-   if (!Soundtrack)
-         fprintf(stderr, "Soundtrack, Mix_LoadMUS: %s\n", Mix_GetError());
-
-   Mix_PlayMusic(Soundtrack, -1);
+   SoundManager.registerAndSwapTrack("Soundtracks/517936_Happy-Land-Loops.ogg");
 }
 
+#include "CSceneEffectManager.h"
 void CMainMenuState::begin()
 {
    SPosition2 size = Application.getWindowSize();
@@ -135,8 +126,8 @@ void CMainMenuState::begin()
    Application.getSceneManager().setActiveCamera(Camera);
 
    Application.getSceneManager().Lights.push_back(new CLight());
-   Application.getSceneManager().Lights.back()->Color = SVector3(1.f);
-   Application.getSceneManager().Lights.back()->Position = SVector3(0.f, 0.f, -1.f);
+   Application.getSceneManager().Lights.back()->Color = SVector3f(1.f);
+   Application.getSceneManager().Lights.back()->Position = SVector3f(0.f, 0.f, -1.f);
 
    setupSoundtrack();
    setupTextures();
@@ -149,6 +140,7 @@ void CMainMenuState::begin()
 
    RenderLogo->setCullingEnabled(false);
    RenderBackground->setCullingEnabled(false);
+   CApplication::get().getSceneManager().getEffectManager()->setEffectEnabled(ESE_BLOOM, true);
 }
 
 void CMainMenuState::end()
@@ -315,16 +307,20 @@ void CMainMenuState::OnKeyboardEvent(SKeyboardEvent const & Event)
       }
 
       if (buttonNum == 0)
-         SDL_WarpMouse(.5*maxX, .4*maxY);
+         SDL_WarpMouse(Uint16(0.5f*maxX), Uint16(0.4f*maxY));
       else if (buttonNum == 1)
-         SDL_WarpMouse(.5*maxX, .6*maxY);
+         SDL_WarpMouse(Uint16(0.5f*maxX), Uint16(0.6f*maxY));
       else if (buttonNum == 2)
-         SDL_WarpMouse(.5*maxX, .8*maxY);
+         SDL_WarpMouse(Uint16(0.5f*maxX), Uint16(0.8f*maxY));
    }
 }
 
 void CMainMenuState::OnWidgetHover(CGUIWidget * Widget)
-{}
+{
+   if(Widget == StartGame || Widget == StartEditor || Widget == ExitGame) {
+      CApplication::get().getSoundManager().registerAndPlaySound(CHANGE_SELECTION_SOUND);
+   }
+}
 
 void CMainMenuState::OnWidgetUnHover(CGUIWidget * Widget)
 {}
@@ -333,19 +329,20 @@ void CMainMenuState::OnWidgetUnHover(CGUIWidget * Widget)
 void CMainMenuState::OnWidgetClick(CGUIWidget * Widget)
 {
    if(Widget == StartGame) {
+      CApplication::get().getSoundManager().registerAndPlaySound(SELECT_SOUND);
       COverworldState::get().newGame = true;
       COverworldState::get().Stats = Cabbage::PlayerInformation();
-      Mix_FadeOutMusic(2000);
       CApplication::get().getStateManager().setState(new CFadeOutState(& COverworldState::get(), 0.3f));
       //CGameplayManager::setLives(3);
       //printf("NumLives: %d\n", CGameplayManager::getNumLives());
    }
    else if(Widget == StartEditor) {
+      CApplication::get().getSoundManager().registerAndPlaySound(SELECT_SOUND);
       //stopSoundtrack();
       CApplication::get().getStateManager().setState(new CFadeOutState(& CLWIBState::get(), 0.3f));
-      Mix_FadeOutMusic(2000);
    }
    else if(Widget == ExitGame) {
+      CApplication::get().getSoundManager().registerAndPlaySound(SELECT_SOUND);
       CApplication::get().close();
    }
 }

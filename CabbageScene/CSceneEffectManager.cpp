@@ -47,6 +47,9 @@ void CSceneEffectManager::SPostProcessPass::end()
 	for (std::map<std::string, int>::iterator it = Ints.begin(); it != Ints.end(); ++ it)
 		Context->uniform(it->first, it->second);
 
+	for (std::map<std::string, SColor>::iterator it = Colors.begin(); it != Colors.end(); ++ it)
+		Context->uniform(it->first, it->second);
+
 	Context->bindBufferObject("aPosition", CSceneManager::getQuadHandle(), 2);
 
 	glDrawArrays(GL_QUADS, 0, 4);
@@ -68,7 +71,13 @@ void CSceneEffectManager::SPostProcessPass::doPass()
 
 CSceneEffectManager::CSceneEffectManager(CSceneManager * sceneManager)
 	: EnabledEffects(0), SceneManager(sceneManager), NormalPassTarget(0), NormalPassTexture(0), RandomNormalsTexture(0),
-	BlurHorizontal(0), BlurVertical(0), BlendShader(0), White(0), Black(0), Magenta(0)
+   SSAOResultTarget(0), SSAOResultTexture(0), SSAOShader(0),
+	BlurHorizontal(0), BlurVertical(0), BloomResultTarget(0), BloomResultTexture(0), QuadCopy(0), ScratchTarget1(0),
+   ScratchTexture1(0),
+   HeatOffsetTexture(0), HeatCopy(0),
+   WaterOffsetTexture(0),
+   BlendShader(0), White(0), Black(0), Magenta(0),
+	Timer(0.f)
 {
 	SSAOShader = CShaderLoader::loadShader("FBO/QuadCopyUV.glsl", "SSAO.frag");
 	BlendShader = CShaderLoader::loadShader("FBO/QuadCopyUV.glsl", "Blend.frag");
@@ -88,6 +97,10 @@ CSceneEffectManager::CSceneEffectManager(CSceneManager * sceneManager)
 
 	HeatOffsetTexture = new CTexture(HeatOffsetTextureImage, Flags);
 
+
+	CImage * WaterOffsetTextureImage = CTextureLoader::loadImage("WaterOffset.bmp");
+	WaterOffsetTexture = new CTexture(WaterOffsetTextureImage, Flags);
+
 	ScratchTarget1 = new CFrameBufferObject();
 	ScratchTexture1 = new CTexture(SceneManager->getScreenSize(), true, Flags);
 	ScratchTarget1->attach(ScratchTexture1, GL_COLOR_ATTACHMENT0);
@@ -99,6 +112,7 @@ CSceneEffectManager::CSceneEffectManager(CSceneManager * sceneManager)
 	SRenderPass DefaultPass;
 	DefaultPass.Pass = ERP_DEFAULT;
 	DefaultPass.Target = SceneManager->getSceneFrameBuffer();
+   //assert(DefaultPass.Target != NULL);
 
 	RenderPasses.push_back(DefaultPass);
 }
@@ -117,6 +131,7 @@ void CSceneEffectManager::apply()
 		SSAOPass.Shader = SSAOShader;
 
 		SSAOPass.doPass();
+		//printf("doing ssao pass\n");
 
 		if (isEffectEnabled(ESE_SSAO_BLUR))
 		{
@@ -164,7 +179,7 @@ void CSceneEffectManager::apply()
 	{
 		// Final Blend
 		SPostProcessPass BlendPass;
-		BlendPass.Textures["scene"] = SceneManager->getSceneFrameTexture();
+		BlendPass.Textures["scene"] = isEffectEnabled(ESE_SSAO) ? White : SceneManager->getSceneFrameTexture();
 		BlendPass.Textures["ssao"] = isEffectEnabled(ESE_SSAO) ? SSAOResultTexture : White;
 		BlendPass.Textures["bloom"] =  isEffectEnabled(ESE_BLOOM) ? BloomResultTexture : Magenta;
 		BlendPass.Target = ScratchTarget1;
@@ -172,17 +187,19 @@ void CSceneEffectManager::apply()
 
 		BlendPass.doPass();
 
-		static float Timer = 0.f;
-
-		Timer += CApplication::get().getElapsedTime();
-
 		// Copy results back into scene
 		SPostProcessPass FinalPass;
 		FinalPass.Textures["uTexColor"] = ScratchTexture1;
 		FinalPass.Target = SceneManager->getSceneFrameBuffer();
-		if (isEffectEnabled(ESE_HEAT_WAVE))
+		if (isEffectEnabled(ESE_HEAT_WAVE) || isEffectEnabled(ESE_WATER_DISTORT))
 		{
-			FinalPass.Textures["uHeatOffset"] = HeatOffsetTexture;
+			Timer += CApplication::get().getElapsedTime();
+
+			if (isEffectEnabled(ESE_HEAT_WAVE))
+				FinalPass.Textures["uHeatOffset"] = HeatOffsetTexture;
+			else if (isEffectEnabled(ESE_WATER_DISTORT))
+				FinalPass.Textures["uHeatOffset"] = WaterOffsetTexture;
+
 			FinalPass.Floats["uTimer"] = Timer * 0.04f;
 			FinalPass.Target = SceneManager->getSceneFrameBuffer();
 			FinalPass.Shader = HeatCopy;
@@ -199,9 +216,19 @@ void CSceneEffectManager::apply()
 void CSceneEffectManager::setEffectEnabled(ESceneEffect const Effect, bool const Enabled)
 {
 	if (Enabled)
-		EnabledEffects |= Effect;
+	{
+		if (Effect)
+			EnabledEffects |= Effect;
+		else
+			EnabledEffects = -1;
+	}
 	else
-		EnabledEffects ^= Effect;
+	{
+		if (Effect)
+			EnabledEffects ^= Effect;
+		else
+			EnabledEffects = 0;
+	}
 
 	switch (Effect)
 	{
@@ -213,7 +240,6 @@ void CSceneEffectManager::setEffectEnabled(ESceneEffect const Effect, bool const
 
 			if (Enabled)
 			{
-				RenderPasses.push_back(normalsPass);
 
 				if (! NormalPassTarget)
 				{
@@ -228,6 +254,9 @@ void CSceneEffectManager::setEffectEnabled(ESceneEffect const Effect, bool const
 
 					RandomNormalsTexture = CTextureLoader::loadTexture("SSAO/RandNormals.bmp");
 				}
+
+				normalsPass.Target = NormalPassTarget;
+				RenderPasses.push_back(normalsPass);
 			}
 			else
 			{

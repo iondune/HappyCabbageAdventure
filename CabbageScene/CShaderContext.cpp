@@ -85,7 +85,7 @@ void CShaderContext::uniform(GLuint const uniformHandle, STransformation3 const 
 	glUniformMatrix4fv(uniformHandle, 1, GL_FALSE, glm::value_ptr(uniform()));
 }
 
-void CShaderContext::uniform(GLuint const uniformHandle, SVector3 const & uniform)
+void CShaderContext::uniform(GLuint const uniformHandle, SVector3f const & uniform)
 {
     glUniform3f(uniformHandle, uniform.X, uniform.Y, uniform.Z);
 }
@@ -103,6 +103,7 @@ void CShaderContext::bindTexture(GLuint const uniformHandle, CTexture const * co
 void CShaderContext::bindTexture(std::string const & Label, CTexture const * const Texture)
 {
 	std::map<std::string, SShaderVariable>::const_iterator it = Shader.UniformHandles.find(Label);
+   //std::cout << "Label: " << Label << std::endl;
 
 	if (it == Shader.UniformHandles.end())
 	{
@@ -110,6 +111,8 @@ void CShaderContext::bindTexture(std::string const & Label, CTexture const * con
 		Valid = false;
 		return;
 	}
+
+   assert(Texture != 0);
 
 	bindTexture(it->second.Handle, Texture->getTextureHandle());
 }

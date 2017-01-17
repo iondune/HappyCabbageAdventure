@@ -1,4 +1,5 @@
 #include "CPlayerAbilityShield.h"
+#include "CGameLevel.h"
 #include "CElementPlayer.h"
 #include "CPlayerView.h"
 float const CPlayerAbilityShield::LEAF_SHIELD_DURATION = 60.0f;
@@ -27,7 +28,7 @@ void CPlayerAbilityShield::inUpdateSceneObject(float time) {
       return;
    }
    //Update the particles
-   ParticleEngine->setCenterPos(SVector3(Player.getArea().getCenter(), 0.0f));
+   ParticleEngine->setCenterPos(SVector3f(Player.getArea().getCenter(), 0.0f));
    ParticleEngine->step(time);
    Player.View->setVisible(true);
 
@@ -46,7 +47,7 @@ void CPlayerAbilityShield::inOnCollision(CCollideable * collider) {
 */
 
 CPlayerAbilityShield::CPlayerAbilityShield(CElementPlayer & p) : CPlayerAbility(p, Abilities::SHIELD) {
-   ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), LEAF_SHIELD_PARTICLE_COUNT, -1, LEAF_PARTICLE);
+   ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), LEAF_SHIELD_PARTICLE_COUNT, -1, LEAF_PARTICLE, Player.Level.isNight());
 
    if (Player.Stats.Energy <= 0) {
       Dead = true;

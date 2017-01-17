@@ -22,25 +22,28 @@
 #define STAR_PARTICLE 9
 #define LASER_CHARGED_PARTICLE 10
 #define WIGGLE_PARTICLE 11
+#define BUBBLE_PARTICLE 12
+#define UNDERWATER_STAR_PARTICLE 13
+#define WIGGLE_PARTICLE_WATER 14
 
 class CParticleEngine {
    std::vector<CParticle*> particles;
-   SVector3 centerPos;
+   SVector3f centerPos;
    int numParticles;
    float totalDuration;
    float currentDuration;
    int particleType;
 
-   std::vector<SVector3*> positionArr;
-   std::vector<SVector3*> colorArr;
+   std::vector<SVector3f*> positionArr;
+   std::vector<SVector3f*> colorArr;
    std::vector<float> sizeArr;
    CParticleObject * myObj; 
 
    public:
       int dead, lookRight;
       //Duration in milliseconds
-      CParticleEngine(SVector3 pos, int maxParticles, float duration, int);
-      void setCenterPos(SVector3 cP);
+      CParticleEngine(SVector3f pos, int maxParticles, float duration, int, bool night = false);
+      void setCenterPos(SVector3f cP);
       void UsePhysics(CCollisionEngine *engine, int env);
       void setLookRight(int pf);
       void step(float const elapsedTime);

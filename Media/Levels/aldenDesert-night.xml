@@ -1,0 +1,2181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<envVar env="1" dayNight="1">
+</envVar>
+<CCabbage X ="-22" Y ="3" height ="1" width ="1">
+</CCabbage>
+<CBlock X ="-24" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="-19" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="-14" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="-9" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="-4" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="1" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="1" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="1" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-23" Y ="-2" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-23" Y ="-3" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-23" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-23" Y ="-5" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-23" Y ="-6" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-23" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-22" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-21" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-20" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-18" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-17" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-16" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-15" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-14" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-13" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-12" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-11" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-10" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-9" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-8" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-7" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-6" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-5" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-4" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-3" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-2" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-1" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="0" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="1" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="2" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="3" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="4" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="5" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="6" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="7" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="8" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="9" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="10" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="11" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="12" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="13" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="14" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="15" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="16" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="17" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="18" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="19" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="20" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="21" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="22" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="23" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="24" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="25" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="27" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="28" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="29" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="30" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="31" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="32" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="33" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="34" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="35" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="36" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="37" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="38" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="39" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="40" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="41" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="42" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="43" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="44" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="45" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="46" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="47" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="48" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="49" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="50" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="51" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="52" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="53" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="54" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="55" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="56" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="57" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="58" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="59" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="60" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="61" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="62" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="63" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="64" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="65" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="-7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="-6" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="-5" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="-3" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="-2" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="2" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="3" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="5" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="6" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="8" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="9" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="11" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="12" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="13" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="15" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="16" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="17" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="18" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="19" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="20" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="22" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="23" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="25" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="26" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="27" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="30" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="32" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="33" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="34" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="66" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="65" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="64" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="63" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="62" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="61" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="60" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="59" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="58" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="57" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="56" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="55" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="54" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="53" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="52" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="51" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="50" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="49" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="48" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="47" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="46" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="45" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="44" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="43" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="42" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="41" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="40" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="39" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="38" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="37" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="36" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="35" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="34" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="33" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="32" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="31" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="30" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="29" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="28" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="27" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="25" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="24" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="23" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="22" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="21" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="20" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="19" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="18" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="17" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="16" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="15" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="14" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="13" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="12" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="11" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="10" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="9" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="8" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="7" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="6" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="5" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="4" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="3" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="2" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="1" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="0" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-1" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-2" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-3" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-4" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-5" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-6" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-7" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-8" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-9" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-10" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-11" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-12" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-13" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-14" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-15" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-16" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-17" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-18" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-20" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-21" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-22" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-23" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-24" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="35" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="34" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="33" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="32" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="30" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="27" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="26" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="25" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="23" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="22" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="20" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="19" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="18" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="17" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="16" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="15" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="13" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="12" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="11" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="9" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="8" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="6" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="5" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="3" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="2" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-24" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-23" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="0" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-1" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-2" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-3" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-4" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-5" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-6" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-7" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-8" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-9" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-10" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-11" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-12" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-13" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-14" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-15" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-16" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-17" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-18" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-20" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-21" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-22" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-20" Y ="3" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-20" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-20" Y ="5" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-18" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-17" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-15" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-14" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-13" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-12" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-11" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-10" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-9" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-8" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-7" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-6" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-5" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-4" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-3" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-2" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-1" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="0" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="1" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="2" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="3" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="4" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="4" Y ="-2" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="4" Y ="-3" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="5" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="5" Y ="3" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="5" Y ="2" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="5" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="5" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="5" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="5" Y ="-2" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="4" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="3" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="2" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="1" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="0" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-1" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-2" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-3" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-4" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-5" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-6" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-7" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-8" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-9" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-10" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-11" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-12" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-13" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-14" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-15" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-16" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-17" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-18" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-20" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-21" Y ="5" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-22" Y ="5" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="6" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="8" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-24" Y ="9" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-23" Y ="9" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-22" Y ="9" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="9" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="11" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="12" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="13" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="15" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="16" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="17" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="18" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="19" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="20" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="22" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="23" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="25" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="26" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="27" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="30" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-19" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-20" Y ="13" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-21" Y ="13" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-22" Y ="13" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-24" Y ="18" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-23" Y ="18" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-22" Y ="18" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-20" Y ="23" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-21" Y ="23" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-22" Y ="23" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-23" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-24" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-22" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-20" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-21" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-22" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CEnemy X ="-24" Y ="19" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="-20" Y ="24" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="-20" Y ="14" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="-24" Y ="10" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="-20" Y ="6" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="-24" Y ="2" height ="1" width ="1" type ="4">
+</CEnemy>
+<CPItem X ="-23" Y ="29" type ="0">
+</CPItem>
+<CPItem X ="-24" Y ="29" type ="0">
+</CPItem>
+<CBlock X ="-18" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-17" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-16" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-15" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-14" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-13" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-15" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-15" Y ="30" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-15" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-12" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-11" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-11" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-11" Y ="30" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-11" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-10" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-9" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-8" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-7" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-7" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-7" Y ="30" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-7" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-6" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-5" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-4" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-3" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-3" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-3" Y ="30" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-3" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-2" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-1" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="0" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="1" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="1" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="1" Y ="30" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="1" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="2" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="3" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="4" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="5" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="5" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="5" Y ="30" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="5" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="6" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="7" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="8" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="9" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="9" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="9" Y ="30" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="9" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="10" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="11" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="12" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="13" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="13" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="13" Y ="30" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="13" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="14" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="15" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="16" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="17" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="17" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="17" Y ="30" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="17" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="18" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="19" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="20" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="21" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="21" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="21" Y ="30" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="21" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="22" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="23" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="24" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="25" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="25" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="25" Y ="30" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="25" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CEnemy X ="-17" Y ="29" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="-13" Y ="29" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="-9" Y ="29" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="-5" Y ="29" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="-1" Y ="29" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="3" Y ="29" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="7" Y ="29" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="11" Y ="29" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="15" Y ="29" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="19" Y ="29" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="23" Y ="29" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="-18" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="-16" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="-14" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="-12" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="-10" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="-8" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="-6" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="-4" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="0" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="-2" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="4" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="2" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="8" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="6" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="10" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="12" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="14" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="16" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="18" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="22" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="20" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="24" Y ="29" height ="1" width ="1" type ="5">
+</CEnemy>
+<CBlock X ="29" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="29" Y ="30" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="29" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="29" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="6" Y ="-2" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="7" Y ="-2" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="8" Y ="-2" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="8" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="8" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="8" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="8" Y ="2" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="8" Y ="3" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="8" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="8" Y ="5" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="8" Y ="6" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="8" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="7" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="6" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="5" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="4" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="3" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="2" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="1" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="0" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-1" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-2" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-3" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-4" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-5" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-6" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-7" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-8" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-9" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-10" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-11" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-12" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-13" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-14" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-15" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="7" Y ="2" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-18" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-17" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-16" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-15" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-14" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-13" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-12" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-11" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-10" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-9" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-8" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-7" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-6" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-5" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-4" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-3" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-2" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-1" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="0" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="1" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="2" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="3" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="4" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="5" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="6" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="7" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="8" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="9" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="10" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="11" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="12" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="12" Y ="9" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="12" Y ="8" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="12" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="12" Y ="6" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="12" Y ="5" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="12" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="9" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="10" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="11" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="12" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="13" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="14" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="15" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="16" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="16" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="16" Y ="11" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="16" Y ="12" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="16" Y ="13" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="16" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="13" Y ="6" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="14" Y ="6" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="15" Y ="6" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="16" Y ="6" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="17" Y ="6" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="18" Y ="6" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="19" Y ="6" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="19" Y ="5" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="19" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="19" Y ="3" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="19" Y ="2" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="19" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="19" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="16" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="16" Y ="-2" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="16" Y ="-3" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="17" Y ="-3" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="18" Y ="-3" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="19" Y ="-3" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="20" Y ="-3" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="21" Y ="-3" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="22" Y ="-3" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="22" Y ="-2" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="22" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="22" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="22" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="22" Y ="2" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="22" Y ="3" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="22" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="22" Y ="5" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="22" Y ="6" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="22" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="22" Y ="8" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="22" Y ="9" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="22" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="21" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="20" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="17" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="18" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="19" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="20" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="21" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="22" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="23" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="24" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="25" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="13" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="12" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="11" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="10" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="9" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="8" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="7" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="6" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="27" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="28" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="29" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="30" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="31" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="32" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="33" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="34" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="25" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="24" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="23" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="22" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="21" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="20" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="19" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="18" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="17" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="16" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="15" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="14" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="13" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="12" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="11" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="10" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="9" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="8" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="7" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="6" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="5" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="4" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="3" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="2" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="1" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="0" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-1" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-2" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-3" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-4" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-5" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-6" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-7" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-8" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-9" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-10" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-11" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-12" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-13" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-14" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-15" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-18" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-17" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-16" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-15" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-14" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-13" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-12" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-11" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-10" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-9" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-8" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-7" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-6" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-5" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-4" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-3" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-2" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-1" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="0" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="1" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="2" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="3" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="4" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="5" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="6" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="7" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="8" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="9" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="10" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="11" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="12" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="13" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="14" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="15" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="16" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="17" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="18" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="19" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="20" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="21" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="22" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="23" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="24" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="25" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="27" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="28" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="29" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="30" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="31" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="32" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="33" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="34" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="35" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="36" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="37" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="38" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="39" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="40" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="41" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="42" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="43" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="44" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="45" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="46" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="47" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="48" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="49" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="50" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="51" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="52" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="53" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="54" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="55" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="56" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="57" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="58" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="59" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="60" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="61" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="62" Y ="21" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="35" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="36" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="37" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="38" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="39" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="40" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="41" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="42" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="43" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="44" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="45" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="46" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="47" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="48" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="49" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="50" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="51" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="52" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="53" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="54" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="55" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="56" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="57" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="58" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="59" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="60" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="61" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="62" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="29" Y ="27" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="29" Y ="26" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="29" Y ="25" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="62" Y ="23" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="62" Y ="22" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="5" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="3" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="2" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="0" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="-1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="-2" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="-3" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="-4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="-5" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="-6" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="58" Y ="17" height ="1" width ="1" depth ="1" texture ="2" isMoving ="1" range ="5" speed ="10" Style="0">
+</CBlock>
+<CBlock X ="55" Y ="14" height ="1" width ="3" depth ="1" texture ="2" isMoving ="1" range ="5" speed ="10" Style="1">
+</CBlock>
+<CBlock X ="49" Y ="16" height ="1" width ="1" depth ="1" texture ="2" isMoving ="1" range ="5" speed ="10" Style="0">
+</CBlock>
+<CBlock X ="40" Y ="12" height ="1" width ="3" depth ="1" texture ="2" isMoving ="1" range ="10" speed ="20" Style="2">
+</CBlock>
+<CBlock X ="37" Y ="12" height ="2" width ="2" depth ="1" texture ="2" isMoving ="1" range ="10" speed ="20" Style="1">
+</CBlock>
+<CBlock X ="27" Y ="14" height ="1" width ="1" depth ="1" texture ="2" isMoving ="1" range ="10" speed ="20" Style="0">
+</CBlock>
+<CEnemy X ="27" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="28" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="29" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="30" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="31" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="32" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="36" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="35" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="34" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="33" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="37" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="38" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="39" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="40" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="41" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="42" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="43" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="44" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="46" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="45" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="47" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="48" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="49" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="50" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="51" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="52" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="53" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="54" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="55" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="56" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="58" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="57" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="59" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="60" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="61" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="62" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="63" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="65" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CEnemy X ="64" Y ="-6" height ="1" width ="1" type ="5">
+</CEnemy>
+<CBlock X ="61" Y ="-5" height ="1" width ="5" depth ="1" texture ="1">
+</CBlock>
+<CBlock X ="62" Y ="-1" height ="1" width ="4" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="63" Y ="3" height ="1" width ="3" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="64" Y ="7" height ="1" width ="2" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="65" Y ="11" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="63" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="62" Y ="15" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="62" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CEnemy X ="-18" Y ="11" height ="1" width ="1" type ="9">
+</CEnemy>
+<CEnemy X ="-12" Y ="11" height ="1" width ="1" type ="9">
+</CEnemy>
+<CEnemy X ="-6" Y ="11" height ="1" width ="1" type ="9">
+</CEnemy>
+<CEnemy X ="0" Y ="11" height ="1" width ="1" type ="9">
+</CEnemy>
+<CEnemy X ="6" Y ="11" height ="1" width ="1" type ="9">
+</CEnemy>
+<CBlock X ="-13" Y ="11" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-13" Y ="12" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-7" Y ="11" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-7" Y ="12" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-1" Y ="11" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-1" Y ="12" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="5" Y ="11" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="5" Y ="12" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="12" Y ="11" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="12" Y ="12" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="11" Y ="12" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="11" Y ="11" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="15" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="14" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="13" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="12" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="11" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="10" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="9" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="8" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="7" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="6" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="5" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="4" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="3" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="2" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="1" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="0" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-1" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-2" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-3" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-4" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-5" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-6" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-7" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-8" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-9" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-10" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-11" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-12" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-13" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-14" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-15" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-16" Y ="14" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="15" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="16" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="17" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CEnemy X ="22" Y ="15" height ="1" width ="1" type ="12">
+</CEnemy>
+<CEnemy X ="17" Y ="15" height ="1" width ="1" type ="12">
+</CEnemy>
+<CEnemy X ="12" Y ="15" height ="1" width ="1" type ="12">
+</CEnemy>
+<CEnemy X ="7" Y ="15" height ="1" width ="1" type ="12">
+</CEnemy>
+<CEnemy X ="2" Y ="15" height ="1" width ="1" type ="12">
+</CEnemy>
+<CEnemy X ="-4" Y ="15" height ="1" width ="1" type ="12">
+</CEnemy>
+<CEnemy X ="-9" Y ="15" height ="1" width ="1" type ="12">
+</CEnemy>
+<CEnemy X ="-14" Y ="15" height ="1" width ="1" type ="12">
+</CEnemy>
+<CBlock X ="-16" Y ="15" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-16" Y ="16" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-16" Y ="17" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CPItem X ="6" Y ="-1" type ="2">
+</CPItem>
+<CPItem X ="7" Y ="-1" type ="2">
+</CPItem>
+<CBlock X ="20" Y ="2" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="15" Y ="1" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="15" Y ="2" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="15" Y ="3" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CPItem X ="21" Y ="11" type ="0">
+</CPItem>
+<CPItem X ="20" Y ="3" type ="0">
+</CPItem>
+<CBlock X ="-19" Y ="5" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-16" Y ="4" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="26" Y ="28" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CFlag X ="-19" Y ="2.5" height ="1" width ="1" secret ="0">
+</CFlag>
+<CEnemy X ="31" Y ="30" height ="3" width ="3" type ="8">
+</CEnemy>
+<CBlock X ="30" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="31" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="32" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="33" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="34" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="35" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="36" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="37" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="38" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="39" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="40" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="41" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="42" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="43" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="44" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="45" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="46" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="47" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="48" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="49" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="50" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="51" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="52" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="53" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="54" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="55" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="56" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="57" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="58" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="59" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="60" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="61" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="62" Y ="29" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="65" Y ="24" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="31" Y ="34" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="31" Y ="33" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="32" Y ="33" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="33" Y ="33" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="34" Y ="33" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="34" Y ="34" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="37" Y ="30" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="38" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="37" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="39" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="40" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="40" Y ="30" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="43" Y ="33" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="43" Y ="34" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="46" Y ="34" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="46" Y ="33" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="45" Y ="33" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="44" Y ="33" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="49" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="49" Y ="30" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="52" Y ="30" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="52" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="51" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="50" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="55" Y ="34" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="56" Y ="33" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="55" Y ="33" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="57" Y ="33" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="58" Y ="34" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="58" Y ="33" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="61" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="61" Y ="30" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="62" Y ="30" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="62" Y ="31" height ="1" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CEnemy X ="38" Y ="32" height ="3" width ="3" type ="8">
+</CEnemy>
+<CEnemy X ="44" Y ="30" height ="3" width ="3" type ="8">
+</CEnemy>
+<CEnemy X ="49" Y ="32" height ="3" width ="3" type ="8">
+</CEnemy>
+<CEnemy X ="56" Y ="30" height ="3" width ="3" type ="8">
+</CEnemy>
+<CPItem X ="36" Y ="30" type ="1">
+</CPItem>
+<CPItem X ="41" Y ="30" type ="1">
+</CPItem>
+<CPItem X ="30" Y ="30" type ="1">
+</CPItem>
+<CPItem X ="48" Y ="30" type ="1">
+</CPItem>
+<CPItem X ="53" Y ="30" type ="1">
+</CPItem>
+<CPItem X ="60" Y ="30" type ="1">
+</CPItem>
+<CEnemy X ="33" Y ="34" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="32" Y ="34" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="38" Y ="30" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="39" Y ="30" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="45" Y ="34" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="44" Y ="34" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="50" Y ="30" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="51" Y ="30" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="57" Y ="34" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="56" Y ="34" height ="1" width ="1" type ="4">
+</CEnemy>
+<CEnemy X ="-20" Y ="2" height ="1" width ="1" type ="4">
+</CEnemy>
+<CPItem X ="61" Y ="22" type ="0">
+</CPItem>
+<CPItem X ="60" Y ="22" type ="0">
+</CPItem>
+<CPItem X ="59" Y ="22" type ="0">
+</CPItem>
+<CPItem X ="58" Y ="22" type ="0">
+</CPItem>
+<CPItem X ="57" Y ="22" type ="0">
+</CPItem>
+<CPItem X ="30" Y ="25" type ="0">
+</CPItem>
+<CPItem X ="31" Y ="25" type ="0">
+</CPItem>
+<CPItem X ="32" Y ="25" type ="0">
+</CPItem>
+<CPItem X ="33" Y ="25" type ="0">
+</CPItem>
+<CPItem X ="34" Y ="25" type ="0">
+</CPItem>
+<CPItem X ="35" Y ="25" type ="1">
+</CPItem>
+<CPItem X ="36" Y ="25" type ="1">
+</CPItem>
+<CPItem X ="37" Y ="25" type ="1">
+</CPItem>
+<CPItem X ="38" Y ="25" type ="1">
+</CPItem>
+<CPItem X ="39" Y ="25" type ="1">
+</CPItem>
+<CPItem X ="56" Y ="22" type ="1">
+</CPItem>
+<CPItem X ="55" Y ="22" type ="1">
+</CPItem>
+<CPItem X ="54" Y ="22" type ="1">
+</CPItem>
+<CPItem X ="53" Y ="22" type ="1">
+</CPItem>
+<CPItem X ="52" Y ="22" type ="1">
+</CPItem>
+<CBlock X ="27" Y ="-4" height ="1" width ="3" depth ="1" texture ="2" isMoving ="1" range ="5" speed ="20" Style="0">
+</CBlock>
+<CBlock X ="35" Y ="-4" height ="1" width ="3" depth ="1" texture ="2" isMoving ="1" range ="5" speed ="20" Style="0">
+</CBlock>
+<CBlock X ="43" Y ="-4" height ="1" width ="3" depth ="1" texture ="2" isMoving ="1" range ="5" speed ="20" Style="0">
+</CBlock>
+<CBlock X ="51" Y ="-4" height ="1" width ="3" depth ="1" texture ="2" isMoving ="1" range ="5" speed ="20" Style="0">
+</CBlock>
+<CBlock X ="38" Y ="4" height ="1" width ="3" depth ="1" texture ="2" isMoving ="1" range ="5" speed ="20" Style="0">
+</CBlock>
+<CPItem X ="28" Y ="-3" type ="0">
+</CPItem>
+<CPItem X ="29" Y ="-3" type ="0">
+</CPItem>
+<CPItem X ="27" Y ="-3" type ="0">
+</CPItem>

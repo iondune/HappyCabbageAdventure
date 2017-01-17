@@ -1,11 +1,11 @@
 #include "CPlayerView.h"
 #include "CabbageFramework.h"
-
+#include "CGameLevel.h"
 
 #include <sstream>
-CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2 & nArea, SVector3 & sf, CCollisionActor* peo, bool uC) :
-   SceneObject(obj), CabbageIndex(CurHealth - 1), Direction(dir), Action(act), Hurt(false), Area(nArea), ShakeFactor(sf),
-   ySineValue(0.0f), PhysicsEngineObject(peo), UseCamera(uC), UseSubView(0) {
+CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, CElementPlayer::EAction & act, int CurHealth, SRect2f & nArea, SVector3f & sf, CCollisionActor* peo, bool uC, CGameLevel &Level) :
+   SceneObject(obj), CabbageIndex(CurHealth - 1), Direction(dir), Action(act), Hurt(false), Area(nArea), ShakeFactor(sf), Bubbles(NULL),
+   ySineValue(0.0f), PhysicsEngineObject(peo), UseCamera(uC), UseSubView(0), tiltValue(0.0f) {
 
    SceneObject->setCullingEnabled(false);
 
@@ -20,16 +20,20 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
 
    Light = new CPointLightSceneObject(4.f);
    CApplication::get().getSceneManager().addSceneObject(Light);
-   CApplication::get().getSceneManager().addSceneObject(new CDirectionalLightSceneObject(SVector3(0, -1, 0), SColor(0.3f, 0.4f, 0.7f)));
 
    for(int i = 1; i <= 5; i++) {
       std::ostringstream fileName;
-      fileName << "Base/cabbage/cabbage_" << i << ".3ds";
+      if(Level.getEnv() == Env::FOREST)
+         fileName << "Base/cabbage/cabbage_" << i << ".3ds";
+      else if (Level.getEnv() == Env::WATER)
+         fileName << "Base/cabbage/water_cabbage_" << i << ".3ds";
+      else if (Level.getEnv() == Env::DESERT)
+         fileName << "Base/cabbage/desert_cabbage_" << i << ".3ds";
       CMesh *cabbageMesh = CMeshLoader::load3dsMesh(fileName.str());
       if(cabbageMesh) {
-         cabbageMesh->centerMeshByExtents(SVector3(0.0f));
+         cabbageMesh->centerMeshByExtents(SVector3f(0.0f));
          cabbageMesh->calculateNormalsPerFace();
-         cabbageMesh->resizeMesh(SVector3(0.45f));
+         cabbageMesh->resizeMesh(SVector3f(0.45f));
       }
 
       CMeshSceneObject *cabbageRenderable = new CMeshSceneObject();
@@ -50,12 +54,17 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
 
    for(int i = 1; i <= 5; i++) {
       std::ostringstream fileName;
-      fileName << "Base/cabbage/cabbage_ouch_" << i << ".3ds";
+      if(Level.getEnv() == Env::FOREST)
+         fileName << "Base/cabbage/cabbage_ouch_" << i << ".3ds";
+      else if (Level.getEnv() == Env::WATER)
+         fileName << "Base/cabbage/water_cabbage_ouch_" << i << ".3ds";
+      else if (Level.getEnv() == Env::DESERT)
+         fileName << "Base/cabbage/desert_cabbage_ouch_" << i << ".3ds";
       CMesh *cabbageMesh = CMeshLoader::load3dsMesh(fileName.str());
       if(cabbageMesh) {
-         cabbageMesh->centerMeshByExtents(SVector3(0.0f));
+         cabbageMesh->centerMeshByExtents(SVector3f(0.0f));
          cabbageMesh->calculateNormalsPerFace();
-         cabbageMesh->resizeMesh(SVector3(0.85f));
+         cabbageMesh->resizeMesh(SVector3f(0.85f));
       }
 
       CMeshSceneObject *cabbageRenderable = new CMeshSceneObject();
@@ -64,10 +73,13 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
       cabbageRenderable->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
       cabbageRenderable->setCullingEnabled(false);
       cabbageRenderable->setVisible(false);
-      cabbageRenderable->setTranslation(SVector3(0.0f, 0.0f, 0.2f));
+      cabbageRenderable->setTranslation(SVector3f(0.0f, 0.0f, 0.2f));
 
       HurtCabbage->addChild(cabbageRenderable);
       HurtCabbageRenderables[i-1] = cabbageRenderable;
+   }
+   if(Level.getEnv() == Env::WATER) {
+      Bubbles = new CParticleEngine(SVector3f(Area.getCenter(), 0.0f) + SVector3f(0.3f, 0.5, 0.4f), 60, -1, BUBBLE_PARTICLE, Level.isNight());
    }
 
    //Shadow renderables
@@ -88,22 +100,29 @@ CPlayerView::CPlayerView(ISceneObject * obj, CElementPlayer::EDirection & dir, C
    SceneObject->addChild(ShadowRight);
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
+
+   CurrentLookPosition = SVector2f(0.0f, 0.0f);
 } 
 
-void CPlayerView::setCabbageScale(SVector3 sc) {
+void CPlayerView::setCabbageScale(SVector3f sc) {
    CabbageSceneObject->setScale(sc);
 }
 
 void CPlayerView::updateShadow(float time) {
-   ShadowLeft->setTranslation(SVector3(Area.getCenter().X, yLeftShadow + 0.01f, 0));
+   ShadowLeft->setTranslation(SVector3f(Area.getCenter().X, yLeftShadow + 0.01f, 0));
    LeftShadowStartValue = 0.f;
    LeftShadowCutoffValue = cutOffPoint;
 
-   ShadowRight->setTranslation(SVector3(Area.getCenter().X, yRightShadow + 0.01f, 0));
+   ShadowRight->setTranslation(SVector3f(Area.getCenter().X, yRightShadow + 0.01f, 0));
    RightShadowStartValue = cutOffPoint;
    RightShadowCutoffValue = 1.0f;
 
    Light->setTranslation(CabbageSceneObject->getTranslation());
+}
+
+
+void CPlayerView::setTilt(float t) {
+   tiltValue = t;
 }
 
 void CPlayerView::addLeaf() {
@@ -138,7 +157,7 @@ void CPlayerView::setShadowHeights(float l, float r) {
    yRightShadow = r;
 }
 
-void CPlayerView::setCutoffPoint(SRect2 left, SRect2 right) {
+void CPlayerView::setCutoffPoint(SRect2f left, SRect2f right) {
    ShadowLeft->setVisible(left.Size.X != 0.0f);
    ShadowRight->setVisible(right.Size.X != 0.0f);
    bool equal = false;
@@ -177,15 +196,33 @@ T CubicInterpolate(
    return (a0*mu*mu2+a1*mu2+a2*mu+a3);
 }
 
+#define MIN(x,y) (x < y ? x : y)
+#define MAX(x,y) (x > y ? x : y)
+#define NEWTON_CAMERA_TILT 0.35f
+#define NEWTON_CAMERA_LOOKAHEAD 1.0f
+
+////CurrentCameraPosition.X += newtonianAdjustment/2.0f; // The target has opposite newtonian as the camera pos, so subtract.
+   //SVector2f camTargetXY(Area.getCenter().X, MAX(Area.getCenter().Y/1.5f, Area.getCenter().Y - 2.5f));
+   //camTargetXY = (camTargetXY + CurrentCameraPosition)/2.0f;
+
+   //SVector3f camPos = SVector3f(CurrentCameraPosition, 10);
+   //SVector3f camTargetPos = SVector3f(camTargetXY, 0.0f);
+
+   //camPos.X += newtonianLookahead;//3.0f*newtonianAdjustment;
+   //camTargetPos.X += newtonianLookahead;//3.0f*newtonianAdjustment;
+   ////SVector3f(CurrentCameraPosition.X, CurrentCameraPosition.Y/2.0f, 10)
+
+   //SVector3f targetPos(CurrentCameraPosition, 0.0f);
+
 void CPlayerView::updateCameraPosition(float const ElapsedTime)
 {
+   float newtonianAdjustment = (Direction == CElementPlayer::Left ? NEWTON_CAMERA_TILT : -NEWTON_CAMERA_TILT);
    if(!UseCamera)
       return;
-	TargetCameraPosition = SVector2(Area.getCenter().X + (Direction == CElementPlayer::Right ? 1.75f : -1.75f), Area.getCenter().Y + 1.3f);
+   TargetCameraPosition = SVector2f(Area.getCenter().X + newtonianAdjustment, Area.getCenter().Y + 0.7f + MIN(Area.getCenter().Y * 0.2f, 2.0f));
 
-	if (TargetCameraPosition != CurrentCameraPosition)
-	{
-		float const DistanceToGo = TargetCameraPosition.getDistanceFrom(CurrentCameraPosition);
+   if (TargetCameraPosition != CurrentCameraPosition) {
+        float const DistanceToGo = TargetCameraPosition.getDistanceFrom(CurrentCameraPosition);
         float const MoveVelocity = max(2.f * DistanceToGo + 0.2f, 1.f * DistanceToGo * DistanceToGo);
         float const Movement = MoveVelocity * ElapsedTime;
         
@@ -193,10 +230,29 @@ void CPlayerView::updateCameraPosition(float const ElapsedTime)
                 CurrentCameraPosition = TargetCameraPosition.getInterpolated(CurrentCameraPosition, Movement/DistanceToGo);
         else
                 CurrentCameraPosition = TargetCameraPosition;
+   }
 
-	}
+   float newtonianLookahead = (Direction == CElementPlayer::Right ? NEWTON_CAMERA_LOOKAHEAD : -NEWTON_CAMERA_LOOKAHEAD);
+    TargetLookPosition = SVector2f(Area.getCenter().X + newtonianLookahead, MAX(Area.getCenter().Y/1.5f, Area.getCenter().Y));
 
-	CApplication::get().getSceneManager().getActiveCamera()->setPosition(SVector3(CurrentCameraPosition, 10) + ShakeFactor);
+   if (TargetLookPosition != CurrentLookPosition) {
+        float const DistanceToGo = TargetLookPosition.getDistanceFrom(CurrentLookPosition);
+        float const MoveVelocity = max(1.f * DistanceToGo + 0.2f, 1.f * DistanceToGo * DistanceToGo);
+        float const Movement = MoveVelocity * ElapsedTime;
+        
+        if (DistanceToGo > Movement)
+                CurrentLookPosition = TargetLookPosition.getInterpolated(CurrentLookPosition, Movement/DistanceToGo);
+        else
+                CurrentLookPosition = TargetLookPosition;
+   }
+
+   //cout << "LookPosition: " << CurrentLookPosition.X << ", " << CurrentLookPosition.Y << "; Dir: " << endl;
+   
+   SVector3f camPos(SVector3f(CurrentCameraPosition, 10.0f));
+   SVector3f lookPos(SVector3f(CurrentLookPosition, 0.0f));
+
+   CApplication::get().getSceneManager().getActiveCamera()->setPosition(camPos + ShakeFactor);
+   CApplication::get().getSceneManager().getActiveCamera()->setLookDirection((lookPos - camPos).getNormalized()/* + ShakeFactor*/);
 }
 
 int CPlayerView::getSubView() {
@@ -207,7 +263,7 @@ void CPlayerView::useSubView(int subView) {
    UseSubView = subView;
    if(UseSubView == 0) {
       UseCamera = 1;
-      CApplication::get().getSceneManager().getActiveCamera()->setLookDirection(SVector3(0, 0, -1.0f));
+      CApplication::get().getSceneManager().getActiveCamera()->setLookDirection(SVector3f(0, 0, -1.0f));
    }
    else {
       UseCamera = 0;
@@ -216,38 +272,47 @@ void CPlayerView::useSubView(int subView) {
 
 void CPlayerView::updateView(float time) {
    updateCameraPosition(time);
+   if(Bubbles) {
+      Bubbles->setCenterPos(SVector3f(Area.getCenter(), 0.0f) + (Direction == CElementPlayer::Right ? SVector3f(0.4f, 0.3f, -0.2f) : SVector3f(0.3f, 0.3f, 0.3f)));
+      Bubbles->step(time);
+   }
 
    if(!UseCamera && UseSubView) {
-      SVector3 camPos;
+      SVector3f camPos;
       switch(UseSubView) {
       case 1: //Overhead
-         camPos = SVector3(Area.getCenter().X, Area.getCenter().Y + 10.0f, 0.5f);
+         camPos = SVector3f(Area.getCenter().X, Area.getCenter().Y + 10.0f, 0.5f);
          break;
       case 2: //Left halfover
-         camPos = SVector3(Area.getCenter().X - 5.0f, Area.getCenter().Y + 5.0f, 5.0f);
+         camPos = SVector3f(Area.getCenter().X - 5.0f, Area.getCenter().Y + 5.0f, 5.0f);
          break;
       case 3: //Right halfover
-         camPos = SVector3(Area.getCenter().X + 5.0f, Area.getCenter().Y + 5.0f, 5.0f);
+         camPos = SVector3f(Area.getCenter().X + 5.0f, Area.getCenter().Y + 5.0f, 5.0f);
          break;
       case 4: //Quarterover
-         camPos = SVector3(Area.getCenter().X, Area.getCenter().Y + 2.5f, 2.5f);
+         camPos = SVector3f(Area.getCenter().X, Area.getCenter().Y + 2.5f, 2.5f);
+         break;
+      case 5: //Quarterlevel
+         camPos = SVector3f(Area.getCenter().X, Area.getCenter().Y, 2.5f);
          break;
       }
+      SVector3f lookTarget = SVector3f(Area.getCenter(), 0.0f);
       CApplication::get().getSceneManager().getActiveCamera()->setPosition(camPos + ShakeFactor);
-      CApplication::get().getSceneManager().getActiveCamera()->setLookDirection((SVector3(Area.getCenter(), 0.0f) - camPos).getNormalized());
+      //CApplication::get().getSceneManager().getActiveCamera()->setPosition(camPos + ShakeFactor);
+      CApplication::get().getSceneManager().getActiveCamera()->setLookDirection((lookTarget - camPos).getNormalized());
    }
 
    updateShadow(time);
 
    float rotateX = 15*sin(ySineValue/2)-90.f;
 
-   CabbageSceneObject->setRotation(SVector3(rotateX, 0, Direction == CElementPlayer::Right ? 80.0f : 0.0f));
+   CabbageSceneObject->setRotation(SVector3f(rotateX, Direction == CElementPlayer::Right ? tiltValue : -tiltValue , Direction == CElementPlayer::Right ? 80.0f : 0.0f));
 
    translateCabbage(time);
 
    float ySineAmount = 0.065f*sin(ySineValue);
 
-   CabbageSceneObject->setTranslation(SVector3(Area.getCenter().X, Area.getCenter().Y + ySineAmount, 0));
+   CabbageSceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.getCenter().Y + ySineAmount - 0.02f, 0));
 }
 
 void CPlayerView::setHurt(bool b) {
@@ -266,18 +331,19 @@ void CPlayerView::setVisible(bool b) {
    SceneObject->setVisible(b);
 }
 
+#define SASHAY_FACTOR 1.5f
 
 void CPlayerView::translateCabbage(float time) {
    //Verify we aren't moving vertically.
    if (PhysicsEngineObject->getVelocity().Y < .01f && PhysicsEngineObject->getVelocity().Y > -.01f) {
       if (Action == CElementPlayer::Standing)
-         ySineValue += 5.f*time;
+         ySineValue += (SASHAY_FACTOR*5.f)*time;
 
       else if (Action == CElementPlayer::Walking && Direction == CElementPlayer::Left)
-         ySineValue +=10.f*time;
+         ySineValue += (SASHAY_FACTOR*10.f)*time;
 
       else if (Action == CElementPlayer::Walking && Direction == CElementPlayer::Right)
-         ySineValue -=10.f*time;
+         ySineValue -= (SASHAY_FACTOR*10.f)*time;
    }
 
    //If we are moving vertically, stop dancing and revert to our normal position.

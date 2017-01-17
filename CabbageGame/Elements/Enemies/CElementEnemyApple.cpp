@@ -1,14 +1,14 @@
 #include "CElementEnemyApple.h"
 #include "CGameLevel.h"
 
-CElementEnemyApple::CElementEnemyApple(SRect2 nArea) :
+CElementEnemyApple::CElementEnemyApple(SRect2f nArea) :
    CElementEnemy(nArea, Enemies::APPLE), PositiveScale(false), ScaleMult(0.0f), Roll(None), Rotate(0.0f), ISquishable(1.0f, 1.0f) {
 
 }
 
 void CElementEnemyApple::setupPhysicsEngineObject() {
    PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
+   PhysicsEngineObject->getActorAttributes().MaxWalk = 2.2f;
 
    CElementEnemy::setupPhysicsEngineObject();
 }
@@ -26,13 +26,12 @@ void CElementEnemyApple::setupSceneObject() {
    }
    else if (Level.getEnvironment() == Env::WATER)
       mesh = CMeshLoader::load3dsMesh("Base/water_apple.3ds");
-   //LevelEditor has no environment
    else
       mesh = CMeshLoader::load3dsMesh("Base/appleEnemy.3ds");
 
    if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(1));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
 
@@ -42,26 +41,21 @@ void CElementEnemyApple::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   SceneObject->setTranslation(SVector3((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y-1))/2, 0));
-   SceneObject->setScale(SVector3(1, 1, 1));
-   SceneObject->setRotation(SVector3(-90, 0, 0));
+   SceneObject->setTranslation(SVector3f((Area.Position.X+(Area.Position.X+1))/2, (Area.Position.Y+(Area.Position.Y-1))/2, 0));
+   SceneObject->setScale(SVector3f(1, 1, 1));
+   SceneObject->setRotation(SVector3f(-90, 0, 0));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
-/*
-void CElementEnemyApple::OnCollision(CCollideable *Object) {
-   if(Object == Level.getPlayer().getPhysicsEngineObject())
-      printf("Touched an apple\n");
-   //Optional code: setImpulse to other object away from this object, lower their health?
-}
-*/
-                                                            
 //CGameplayElement has an attribute called ElapsedTime, which is updated by CGameplayElement's update function.
 
 //This is where the AI would be updated for more complex enemies
 void CElementEnemyApple::updatePhysicsEngineObject(float time) {
-   SVector2 PlayerPosition = Level.getPlayer().getArea().Position;
+   CElementEnemy::updatePhysicsEngineObject(time);
+   if(TimeToDeath > 0.0f)
+      return;
+   SVector2f PlayerPosition = Level.getPlayer().getArea().Position;
    //TODO: Make some class singleton so we can get the player's location
    if (PlayerPosition.X < Area.getCenter().X && (Roll == None))
       PhysicsEngineObject->setAction(CCollisionActor::EActionType::MoveLeft);
@@ -77,9 +71,9 @@ void CElementEnemyApple::updatePhysicsEngineObject(float time) {
          else
             Roll = Right;
          if (Level.getEnv() != Env::WATER)
-                  PhysicsEngineObject->getAttributes().MaxWalk = 6.0f;
+                  PhysicsEngineObject->getActorAttributes().MaxWalk = 6.0f;
                else
-                  PhysicsEngineObject->getAttributes().MaxWalk = 3.0f;
+                  PhysicsEngineObject->getActorAttributes().MaxWalk = 3.0f;
       }
    }
 
@@ -87,31 +81,35 @@ void CElementEnemyApple::updatePhysicsEngineObject(float time) {
       Rotate = 0;
       Roll = None;
       if (Level.getEnv() != Env::WATER)
-         PhysicsEngineObject->getAttributes().MaxWalk = 2.2f;
+         PhysicsEngineObject->getActorAttributes().MaxWalk = 2.2f;
       else
-         PhysicsEngineObject->getAttributes().MaxWalk = 1.1f;
-      PhysicsEngineObject->setVelocity(SVector2(2.2f, 0.0f));
+         PhysicsEngineObject->getActorAttributes().MaxWalk = 1.1f;
+      PhysicsEngineObject->setVelocity(SVector2f(2.2f, 0.0f));
    }
 }
 
 //This is where the renderable would be updated for the more complex enemies
 void CElementEnemyApple::updateSceneObject(float time) {
-   SceneObject->setTranslation(SVector3(Area.getCenter().X,Area.getCenter().Y, 0));
+   SceneObject->setTranslation(SVector3f(Area.getCenter().X,Area.getCenter().Y, 0));
    if(ParticleEngine) {
-      SceneObject->setTranslation(SVector3(Area.getCenter().X, Area.Position.Y, 0));
-      SceneObject->setRotation(SVector3(-90, 0, 0));
-      SceneObject->setScale(SVector3(1.0f, 1.0f, 0.3f));
+      SceneObject->setTranslation(SVector3f(Area.getCenter().X, Area.Position.Y, 0));
+      SceneObject->setRotation(SVector3f(-90, 0, 0));
+      SceneObject->setScale(SVector3f(1.0f, 1.0f, 0.3f));
+      return;
+   }
+   if(TimeToDeath > 0.0f) {
+      CElementEnemy::updateSceneObject(time);
       return;
    }
 
    switch(Roll) {
    case Left:
       Rotate -= (.6f *  1000 * time);
-      SceneObject->setRotation(SVector3(-90, Rotate, 0));
+      SceneObject->setRotation(SVector3f(-90, Rotate, 0));
       break;
    case Right:
       Rotate += (.6f * 1000 * time);
-      SceneObject->setRotation(SVector3(-90, Rotate, 0));
+      SceneObject->setRotation(SVector3f(-90, Rotate, 0));
       break;
    default:
       break;
@@ -135,15 +133,15 @@ void CElementEnemyApple::updateSceneObject(float time) {
 
    if (Roll == None && PhysicsEngineObject->getVelocity().Y < .01f && PhysicsEngineObject->getVelocity().Y > -.01f) {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)
-         SceneObject->setScale(SVector3(-Scale.X,Scale.X,Scale.Y));
+         SceneObject->setScale(SVector3f(-Scale.X,Scale.X,Scale.Y));
       else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-         SceneObject->setScale(SVector3(Scale.X,Scale.X,Scale.Y));
+         SceneObject->setScale(SVector3f(Scale.X,Scale.X,Scale.Y));
    }
    else {
       if(PhysicsEngineObject->getVelocity().X < -0.01f)
-         SceneObject->setScale(SVector3(-1,1,1));
+         SceneObject->setScale(SVector3f(-1,1,1));
       else if(PhysicsEngineObject->getVelocity().X > 0.01f)
-         SceneObject->setScale(SVector3(1,1,1));
+         SceneObject->setScale(SVector3f(1,1,1));
    }
 }
 

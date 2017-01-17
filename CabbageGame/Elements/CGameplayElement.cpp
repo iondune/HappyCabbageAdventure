@@ -1,16 +1,20 @@
 #include "CGameplayElement.h"
 #include "CGameLevel.h"
 
-CGameplayElement::CGameplayElement(CCollideable *& c, ISceneObject *& s, SRect2 a) :
+CGameplayElement::CGameplayElement(CCollideable *& c, ISceneObject *& s, SRect2f a) :
 SceneObject(s), PhysicsEngineObject(c), Level(CGameLevelLoader::getLatestLevel()), Area(a), Dead(true), ParticleEngine(NULL)
 {
 }
 
-SRect2 & CGameplayElement::getArea() {
+CGameLevel & CGameplayElement::getLevel() {
+   return Level;
+}
+
+SRect2f & CGameplayElement::getArea() {
    return Area;
 }
 
-void CGameplayElement::setArea(SRect2 r) {
+void CGameplayElement::setArea(SRect2f r) {
    Area = r;
    PhysicsEngineObject->setArea(r);
 }
@@ -38,12 +42,12 @@ void CGameplayElement::update(float time) {
 void CGameplayElement::setupObjects() {
    setupPhysicsEngineObject();
    if(Level.isLoaded()) {
-      PhysicsEngineObject->setCollisionResponder(this);
-      PhysicsEngineObject->setElement(this);
+      PhysicsEngineObject->OnCollision.connect(this, &CGameplayElement::OnCollision);
+      PhysicsEngineObject->setGameplayElement(this);
    }
    else {
       Level.getPhysicsEngine().remove(PhysicsEngineObject);
-      Level.getPhysicsEngine().update(0.01f);
+      //Level.getPhysicsEngine().update(0.01f);
    }
    if(Level.shouldRender())
       setupSceneObject();
@@ -79,7 +83,6 @@ void CGameplayElement::removeFromGame() {
          delete ParticleEngine;
          ParticleEngine = NULL;
       }
-      delete PhysicsEngineObject;
       delete SceneObject;
       Dead = true;
    }

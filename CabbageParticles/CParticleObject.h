@@ -7,11 +7,11 @@
 class CParticleObject : public CSceneObject
 {
 protected:
-   bool OnlyRenderLights;
+   bool OnlyRenderLights, RenderLights;
    CRenderable * particlesRenderable;
    CBufferObject<float> PositionBuffer, ColorBuffer, SizeBuffer;
    CBufferObject<unsigned short> IndexBuffer;
-   std::vector<SVector3*> positionsArr;
+   std::vector<SVector3f*> positionsArr;
    std::vector<CPointLightSceneObject*> LightsArr;
    std::vector<CDirectionalLightSceneObject*> LightsDArr;
    bool updated, AlwaysRender;
@@ -24,14 +24,16 @@ protected:
 public:
    CRenderable * getParticlesRenderable();
    CParticleObject();
-   void setup(std::vector<SVector3*> vectorArr, std::vector<SVector3*> colorArr, std::vector<float> sizeArr, int num, const char*);
-   void setPositions(std::vector<SVector3*> vectorArr);
+   void setup(std::vector<SVector3f*> vectorArr, std::vector<SVector3f*> colorArr, std::vector<float> sizeArr, int num, const char*);
+   void setPositions(std::vector<SVector3f*> vectorArr);
    void setAlwaysRender();
    void setSizeFactor(float f);
    void update();
    void draw(CScene const * const scene, ERenderPass const Pass);
    void setOnlyRenderLights(bool);
    bool getOnlyRenderLights();
+   void setRenderLights(bool);
+   bool getRenderLights();
 };
 
 #endif

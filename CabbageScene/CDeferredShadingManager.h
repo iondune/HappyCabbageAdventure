@@ -6,6 +6,8 @@
 class CDeferredShadingManager : public CSceneEffectManager
 {
 
+	int DebugCounter;
+
 public:
 
 	CFrameBufferObject * DeferredOutputTarget;
@@ -17,13 +19,25 @@ public:
 	CTexture * LightPassColorOutput;
 
 	CShader * FinalBlendShader;
+	CShader * OverlayShader;
 
 	CDeferredShadingManager(CSceneManager * sceneManager);
 
 	virtual void apply();
 
+	SColor OverlayColor;
+
+   /*
 	virtual void setEffectEnabled(ESceneEffect const Effect, bool const Enabled);
 	virtual bool const isEffectEnabled(ESceneEffect const Effect);
+   */
+
+	void cycleDebug();
+
+	virtual bool const isDeferred() const
+	{
+		return true;
+	}
 
 };
 

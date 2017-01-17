@@ -17,7 +17,6 @@
 #include "../StateLWIB/CLWIBState.h"
 //#include "../Base/CGameState.h"
 #include "../StateOverworld/COverworldState.h"
-#include "../CabbageSound/sound.h"
 #include "../CabbageGUI/CabbageGUI.h"
 //#include "../Base/CGameplayManager.h"
 
@@ -30,7 +29,6 @@ class CMainMenuState : public CState<CMainMenuState>
 
 
       ICamera *Camera;
-      Mix_Music *Soundtrack;
 
       CTexture * WoodTexture, * BackgroundTexture;
       CMesh *LogoMesh, *CubeMesh;

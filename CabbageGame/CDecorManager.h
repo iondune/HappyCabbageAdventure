@@ -30,9 +30,12 @@ class CDecorManager : public IUpdater {
       std::vector<CParticleEngine*> DecorativeParticleEngines;
 
       //These functions setup and add things to the scene manager
-      ISceneObject *SetupObject(float,float,float,float,CMesh*);
+      ISceneObject *SetupObject(float,float,float,float, CMesh*, float = -1.0f);
+      ISceneObject *OceanSetupObject(float,float,float,float, CMesh*, float = -1.0f);
+
       void GenerateForestPlants(CGroundBlock*);
       void GenerateDesertPlants(CGroundBlock*, bool genTree);
+      void GenerateWaterPlants(CGroundBlock*);
       void SetupSky();
       void SetupClouds();
 
@@ -43,7 +46,9 @@ class CDecorManager : public IUpdater {
       CMesh *basicTreeMesh, *cabbageMesh, *cabbageDamage, *christmasTreeMesh, *cubeMesh, *discMesh,
             *blueFlwrMesh, *whiteFlwrMesh, *ficusMesh, *fernMesh, *enemyMesh, *flagMesh, *derpMesh,
             *purpleFlwrMesh, *yellowFlwrMesh, *tealFlwrMesh, *whiteSunflwrMesh, *cactus1Mesh,
-            *cactusBushMesh, *cactusBush2Mesh, *cactus2Mesh;
+            *cactusBushMesh, *cactusBush2Mesh, *cactus2Mesh, *coral1Mesh, *coral2Mesh, *coral3Mesh,
+            *coral4Mesh, *coral5Mesh, *coral6Mesh, *seaweed1Mesh, *seaweed2Mesh, *seaweed3Mesh, *seaweed4Mesh,
+            *searock1Mesh, *searock2Mesh;
 
       CShader *Shader, *Flat, *Diffuse, *BlackShader, *DiffuseTexture, *normalColor, *Toon, *ToonTexture, *ToonBright;
       CShader *DeferredToon, *DeferredTexture, *DeferredDiffuse, *DeferredToonBright, *DeferredToonTexture , *DeferredFlat;

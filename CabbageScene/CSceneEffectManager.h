@@ -9,10 +9,12 @@
 
 enum ESceneEffect
 {
+	ESE_ALL = 0,
 	ESE_SSAO = 1,
 	ESE_SSAO_BLUR = 2,
 	ESE_BLOOM = 4,
-	ESE_HEAT_WAVE = 8
+	ESE_HEAT_WAVE = 8,
+	ESE_WATER_DISTORT = 16
 };
 
 class CSceneManager;
@@ -23,7 +25,6 @@ class CSceneEffectManager
 protected:
 
 	CSceneManager * SceneManager;
-
 	int EnabledEffects;
 
 	// SSAO Stuff
@@ -56,6 +57,10 @@ protected:
 	CTexture * HeatOffsetTexture;
 	CShader * HeatCopy;
 
+	CTexture * WaterOffsetTexture;
+
+	float Timer;
+
 public:
 
 	CSceneEffectManager(CSceneManager * sceneManager);
@@ -70,6 +75,9 @@ public:
 
 		bool const operator == (SRenderPass const & rhs);
 	
+      SRenderPass() : Target(0), Pass(ERP_DEFAULT) {
+         
+      }
 	};
 
 	class SPostProcessPass
@@ -85,6 +93,7 @@ public:
 		std::map<std::string, float> Floats;
 		std::map<std::string, int> Ints;
 		std::map<std::string, CTexture *> Textures;
+		std::map<std::string, SColor> Colors;
 
 		void doPass();
 
@@ -103,6 +112,11 @@ public:
 
 	virtual void setEffectEnabled(ESceneEffect const Effect, bool const Enabled);
 	virtual bool const isEffectEnabled(ESceneEffect const Effect);
+
+	virtual bool const isDeferred() const
+	{
+		return false;
+	}
 
 };
 

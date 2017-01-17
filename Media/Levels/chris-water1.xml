@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<envVar env="2" dayNight="0">
+</envVar>
+<CBlock X ="-23" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="-18" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="-13" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="-8" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CCabbage X ="-18" Y ="6" height ="1" width ="1">
+</CCabbage>
+<CBlock X ="-25" Y ="0" height ="7" width ="2" depth ="1" texture ="2">
+</CBlock>
+<CBlock X ="-25" Y ="-6" height ="7" width ="2" depth ="1" texture ="2">
+</CBlock>
+<CBlock X ="-25" Y ="6" height ="7" width ="2" depth ="1" texture ="2">
+</CBlock>
+<CBlock X ="-1" Y ="3" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="6" Y ="-2" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="12" Y ="3" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CEnemy X ="-5" Y ="2" height ="1" width ="1" type ="0">
+</CEnemy>
+<CBlock X ="16" Y ="-0" height ="4" width ="1" depth ="1" texture ="1">
+</CBlock>
+<CBlock X ="16" Y ="-3" height ="4" width ="1" depth ="1" texture ="1">
+</CBlock>
+<CBlock X ="16" Y ="-3" height ="3" width ="6" depth ="1" texture ="1">
+</CBlock>
+<CBlock X ="21" Y ="-3" height ="3" width ="6" depth ="1" texture ="1">
+</CBlock>
+<CBlock X ="26" Y ="-3" height ="3" width ="5" depth ="1" texture ="1">
+</CBlock>
+<CBlock X ="30" Y ="-3" height ="3" width ="5" depth ="1" texture ="1">
+</CBlock>
+<CBlock X ="30" Y ="-1" height ="3" width ="5" depth ="1" texture ="1">
+</CBlock>
+
+<CBlock X ="38" Y ="1" height ="1" width ="1" depth ="1" texture ="1">
+</CBlock>
+<CBlock X ="39" Y ="1" height ="1" width ="1" depth ="1" texture ="1">
+</CBlock>
+
+<CBlock X ="40" Y ="1" height ="1" width ="1" depth ="1" texture ="1">
+</CBlock>
+<CBlock X ="48" Y ="1" height ="1" width ="1" depth ="1" texture ="1">
+</CBlock>
+
+
+<CEnemy X ="23" Y ="0" height ="3" width ="3" type ="8">
+</CEnemy>
+
+<CEnemy X ="-10" Y = "2" height = "1" width "1" type = "3">

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<envVar env="2" dayNight="0">
+</envVar>
+<CBlock X ="-25" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="-20" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="-15" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="-10" Y ="0" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="-4" Y ="3" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="2" Y ="6" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="7" Y ="1" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="-25" Y ="0" height ="10" width ="4" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-25" Y ="7" height ="10" width ="4" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="-22" Y ="6" height ="1" width ="3" depth ="1" texture ="0">
+</CBlock>
+<CCabbage X ="-21" Y ="7" height ="1" width ="1">
+</CCabbage>
+<CBlock X ="12" Y ="1" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="17" Y ="1" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>
+<CBlock X ="21" Y ="1" height ="4" width ="4" depth ="1" texture ="2">
+</CBlock>
+<CBlock X ="21" Y ="4" height ="4" width ="4" depth ="1" texture ="2">
+</CBlock>
+<CBlock X ="24" Y ="4" height ="4" width ="4" depth ="1" texture ="2">
+</CBlock>
+<CBlock X ="3" Y ="7" height ="2" width ="3" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="4" Y ="8" height ="2" width ="1" depth ="1" texture ="0">
+</CBlock>
+<CBlock X ="0" Y ="0" height ="7" width ="8" depth ="1" texture ="0">
+</CBlock>
+<CEnemy X ="20" Y ="3" height ="1" width ="1" type ="1">
+</CEnemy>
+<CEnemy X ="-7" Y ="2" height ="1" width ="1" type ="9">
+</CEnemy>
+<CBlock X ="32" Y ="4" height ="4" width ="8" depth ="1" texture ="2">
+</CBlock>
+<CBlock X ="27" Y ="4" height ="3" width ="7" depth ="1" texture ="2">
+</CBlock>
+<CEnemy X ="29" Y ="7" height ="1" width ="1" type ="15">
+</CEnemy>
+<CBlock X ="40" Y ="6" height ="2" width ="5" depth ="5" texture ="-5">
+</CBlock>

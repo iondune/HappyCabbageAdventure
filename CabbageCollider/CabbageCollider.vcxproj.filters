@@ -5,11 +5,18 @@
     <ClInclude Include="CCollisionEngine.h" />
     <ClInclude Include="CCollisionObject.h" />
     <ClInclude Include="CCollisionActor.h" />
+    <ClInclude Include="CCollisionElevator.h" />
+    <ClInclude Include="CCollisionInteractor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCollideable.cpp" />
     <ClCompile Include="CCollisionEngine.cpp" />
     <ClCompile Include="CCollisionObject.cpp" />
     <ClCompile Include="CCollisionActor.cpp" />
+    <ClCompile Include="CCollisionElevator.cpp" />
+    <ClCompile Include="CCollisionInteractor.cpp" />
+    <ClCompile Include="CCollisionActor.EActionType.cpp" />
+    <ClCompile Include="CCollisionActor.SAttributes.cpp" />
+    <ClCompile Include="CCollisionActor.UpdateMethods.cpp" />
   </ItemGroup>
 </Project>

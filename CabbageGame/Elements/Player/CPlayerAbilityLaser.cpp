@@ -1,4 +1,5 @@
 #include "CPlayerAbilityLaser.h"
+#include "CGameLevel.h"
 #include "CElementPlayer.h"
 #include "CPlayerView.h"
 float const CPlayerAbilityLaser::LASER_CHARGE_DURATION = 1.0f;
@@ -7,12 +8,16 @@ int const CPlayerAbilityLaser::LASER_CHARGE_PARTICLE_COUNT =  700;
 int const CPlayerAbilityLaser::LASER_FIRING_PARTICLE_COUNT = 1000;
 
 #include "CGameLevel.h"
+
+#define CHARGE_LASER_1_SOUND "chargeLaser1.wav"
+#define CHARGE_LASER_2_SOUND "chargeLaser2.wav"
+#define FIRE_LASER_SOUND "fireLaser3.wav"
 void CPlayerAbilityLaser::inUpdatePhysicsEngineObject(float time) {
    if(Dead)
       return;
    TemporaryTimeVariable += time;
    if(LaserState == FIRING) {
-      SRect2 FiringRange = Player.Area;
+      SRect2f FiringRange = Player.Area;
       if(Player.Direction == CElementPlayer::Right) {
          FiringRange.Size.X += 5.0f;
       }
@@ -22,8 +27,8 @@ void CPlayerAbilityLaser::inUpdatePhysicsEngineObject(float time) {
       }
       std::vector<CCollideable*> InRange = Player.Level.getPhysicsEngine().getAllInBound(FiringRange);
       for(unsigned int i = 0; i < InRange.size(); i++) {
-         if(InRange[i]->getElement())
-            InRange[i]->getElement()->reactToAbility(Abilities::LASER);
+         if(InRange[i]->getGameplayElement())
+            InRange[i]->getGameplayElement()->reactToAbility(Abilities::LASER);
       }
    }
    return;
@@ -35,25 +40,27 @@ void CPlayerAbilityLaser::inUpdateSceneObject(float time) {
    if(ParticleEngine) {
       //Update the particles
       if(LaserState == CHARGED) {
-         ParticleEngine->setCenterPos(SVector3(Player.getArea().getCenter().X, Player.getArea().Position.Y, 0.0f));
+         ParticleEngine->setCenterPos(SVector3f(Player.getArea().getCenter().X, Player.getArea().Position.Y, 0.0f));
       }
       else
-         ParticleEngine->setCenterPos(SVector3(Player.getArea().getCenter(), 0.0f));
+         ParticleEngine->setCenterPos(SVector3f(Player.getArea().getCenter(), 0.0f));
       ParticleEngine->step(time);
    }
    if(LaserState == FIRING)
       Player.View->setVisible(true);
 }
 
-void CPlayerAbilityLaser::inOnCollision(CCollideable * collider) {
+void CPlayerAbilityLaser::inOnCollision(const SCollisionEvent& Event) {
    return;
 }
 
 CPlayerAbilityLaser::CPlayerAbilityLaser(CElementPlayer & p) : CPlayerAbility(p, Abilities::LASER), LaserState(CHARGING), TemporaryTimeVariable(0.0f) {
    EnergyUsed = 33;
 
-   if (Player.Stats.Energy >= EnergyUsed)
-      ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), LASER_CHARGE_PARTICLE_COUNT, LASER_CHARGE_DURATION, LASER_CHARGING_PARTICLE);
+   if (Player.Stats.Energy >= EnergyUsed) {
+      ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), LASER_CHARGE_PARTICLE_COUNT, LASER_CHARGE_DURATION, LASER_CHARGING_PARTICLE, Player.Level.isNight());
+      CApplication::get().getSoundManager().registerAndPlaySound(CHARGE_LASER_1_SOUND);
+   }
    else
       Dead = true;
 }
@@ -78,47 +85,49 @@ void CPlayerAbilityLaser::checkKey(bool keyDown) {
          return;
       }
       if(TemporaryTimeVariable >= LASER_CHARGE_DURATION) {
+         CApplication::get().getSoundManager().stopSound(CHARGE_LASER_1_SOUND);
          Player.Stats.Energy -= EnergyUsed;
          Player.AllowMovement = true;
          ParticleEngine->deconstruct();
          delete ParticleEngine;
-         ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), 20, -1, LASER_CHARGED_PARTICLE);
+         ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), 20, -1, LASER_CHARGED_PARTICLE, Player.Level.isNight());
          LaserState = CHARGED;
+         CApplication::get().getSoundManager().registerAndPlaySound(CHARGE_LASER_2_SOUND, -1);
          return;
       }
    }
    else if(LaserState == CHARGED) {
       if(!keyDown) {
+         CApplication::get().getSoundManager().stopSound(CHARGE_LASER_2_SOUND);
+         CApplication::get().getSoundManager().registerAndPlaySound(FIRE_LASER_SOUND);
          ParticleEngine->deconstruct();
          delete ParticleEngine;
          Player.AllowMovement = false;
-         ParticleEngine = new CParticleEngine(SVector3(0, 1, 0), LASER_FIRING_PARTICLE_COUNT, LASER_FIRING_DURATION, LASER_FIRING_PARTICLE);
+         ParticleEngine = new CParticleEngine(SVector3f(0, 1, 0), LASER_FIRING_PARTICLE_COUNT, LASER_FIRING_DURATION, LASER_FIRING_PARTICLE, Player.Level.isNight());
          ParticleEngine->setLookRight(Player.Direction == CElementPlayer::Right);
          LaserState = FIRING;
          TemporaryTimeVariable = 0;
          TemporaryArea = Player.getArea();
          Player.setShaking(1.2f, 0.3f);
-         tempGrav = ((CCollisionActor *)Player.getPhysicsEngineObject())->getGravity();
          return;
       }
    }
    else if(LaserState == FIRING) {
-      Mix_PlayChannel(-1, Player.fireLaser, 0);
       Player.Recovering = 5.0f;
       Player.View->setVisible(true);
       Player.View->setHurt(false);
       Player.getPhysicsEngineObject()->setArea(TemporaryArea);
-      ((CCollisionActor *)Player.getPhysicsEngineObject())->setVelocity(SVector2(0.0f));
-      ((CCollisionActor *)Player.getPhysicsEngineObject())->setGravity(0.0f);
+      ((CCollisionActor *)Player.getPhysicsEngineObject())->setVelocity(SVector2f(0.0f));
+	  ((CCollisionActor *)Player.getPhysicsEngineObject())->setGravityEnabled(false);
       Player.AllowMovement = false;
       if(TemporaryTimeVariable >= LASER_FIRING_DURATION) {
          ParticleEngine->deconstruct();
          delete ParticleEngine;
          Dead = true;
          LaserState = FIRED;
-         ((CCollisionActor *)Player.getPhysicsEngineObject())->setImpulse(SVector2((Player.Direction == CElementPlayer::Right ? -1.0f : 1.0f)*15.0f, 0.0f), 0.1f);
+         ((CCollisionActor *)Player.getPhysicsEngineObject())->addImpulse(SVector2f((Player.Direction == CElementPlayer::Right ? -1.0f : 1.0f)*15.0f, 0.0f));
          Player.AllowMovement = true;
-         ((CCollisionActor *)Player.getPhysicsEngineObject())->setGravity(tempGrav);
+         ((CCollisionActor *)Player.getPhysicsEngineObject())->setGravityEnabled(true);
          Player.View->setVisible(true);
          Player.View->setHurt(false);
          Player.Recovering = 0.0f;

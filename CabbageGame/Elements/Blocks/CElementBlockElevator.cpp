@@ -1,32 +1,42 @@
 #include "CElementBlockElevator.h"
 #include "CGameLevel.h"
 
-CElementBlockElevator::CElementBlockElevator(SRect2 nArea, int D, int T, float R, float S)
-: CElementBlock(nArea, D, T), Range(R), Speed(S) {
+CElementBlockElevator::CElementBlockElevator(SRect2f nArea, int D, int T,float R, float S, int style)
+: CElementBlock(nArea, D, T), Range(R), Speed(S), Style(style), OriginalArea(nArea.Position, nArea.Size) {
 }
 
-void CElementBlockElevator::OnCollision(CCollideable *Object) {
+void CElementBlockElevator::OnCollision(const SCollisionEvent& Event) {
    return;
 }
 
-void CElementBlockElevator::update(float t) {
-   CGameplayElement::update(t);
+void CElementBlockElevator::update(float time) {
+   ElapsedTime += time;
+   if(!Dead) {
+      Area = PhysicsEngineObject->getArea();
+      if(Level.shouldRender()) {
+         updateSceneObject(time);
+      }
+   }
 }
 
 void CElementBlockElevator::writeXML(xmlwriter *l) {
-   std::stringstream xValue, yValue, widthValue, heightValue, tagValue, rangeValue, speedValue, depthValue, textureType;
-   xValue << Area.Position.X;
-   yValue << Area.Position.Y;
-   widthValue << Area.Size.X;
-   heightValue << Area.Size.Y;
+   std::stringstream xValue, yValue, widthValue, heightValue, tagValue, rangeValue, speedValue, depthValue, textureType, eleType,moving;
+   xValue << OriginalArea.Position.X;
+   yValue << OriginalArea.Position.Y;
+   widthValue << OriginalArea.Size.X;
+   heightValue << OriginalArea.Size.Y;
    depthValue << Depth;
    textureType << Texture;
-   speedValue << 1;
-
+   speedValue << Speed;
+   rangeValue << Range;
+   eleType << Style;
+   moving << 1;
 
    tagValue << "CBlock";
-
-   l->AddAtributes("isMoving ", speedValue.str());
+   l->AddAtributes("Style", eleType.str());
+   l->AddAtributes("speed ", speedValue.str());
+   l->AddAtributes("range ", rangeValue.str());
+   l->AddAtributes("isMoving ", moving.str());
    l->AddAtributes("texture ", textureType.str());
    l->AddAtributes("depth ", depthValue.str());
    l->AddAtributes("width ", widthValue.str());
@@ -38,19 +48,22 @@ void CElementBlockElevator::writeXML(xmlwriter *l) {
 }
 
 void CElementBlockElevator::setupPhysicsEngineObject() {
-   CElevator *Ele;
+   CCollisionElevator *Ele;
    PhysicsEngineObject = Ele = Level.getPhysicsEngine().addElevator();
    PhysicsEngineObject->setArea(Area);
-
+   
+   Ele->Style = (EElevatorType)Style; // 0 horizontal, 1 vertical, 2 circular  
    Ele->Range = Range;
    Ele->Speed = Speed;
 }
 
 void CElementBlockElevator::updateSceneObject(float time) {
-   SceneObject->setTranslation(SVector3((Area.Position.X+(Area.Position.X+Area.Size.X))/2, (Area.Position.Y+(Area.Position.Y+Area.Size.Y))/2, 0));
+   SceneObject->setTranslation(SVector3f((Area.Position.X+(Area.Position.X+Area.Size.X))/2, (Area.Position.Y+(Area.Position.Y+Area.Size.Y))/2, 0));
 }
 
 void CElementBlockElevator::setupSceneObject() {
+   if(!Level.isLoaded())
+      setupPhysicsEngineObject();
    CElementBlock::setupSceneObject();
    CApplication::get().getSceneManager().removeSceneObject(SceneObject);
    CApplication::get().getSceneManager().addSceneObject(SceneObject);

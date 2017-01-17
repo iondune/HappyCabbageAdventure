@@ -2,7 +2,6 @@
 #define _CABBAGECOLLIDER_COBJECT_H_INCLUDED_
 
 #include "CCollideable.h"
-#include "../CabbageScene/CSceneObject.h"
 
 class CCollisionObject : public CCollideable
 {
@@ -11,34 +10,14 @@ protected:
 
 	friend class CCollisionEngine;
 
-	CCollisionObject();
+	CCollisionObject(CCollisionEngine * collisionEngine);
 
 public:
 
 	~CCollisionObject();
 
-	virtual SVector2 performMovement(float const TickTime);
-};
+	virtual SVec2 performMovement(CollisionReal const TickTime);
 
-class CElevator : public CCollisionObject
-{
-
-	float Timer;
-	CSceneObject *Renderable;
-
-public:
-
-	CElevator();
-
-	virtual SVector2 performMovement(float const TickTime);
-
-	CSceneObject * getRenderable();
-	void setRenderable(CSceneObject *);
-	float Speed;
-
-	float InitialDirection;
-
-	float Range;
 };
 
 #endif

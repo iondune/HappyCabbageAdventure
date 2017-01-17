@@ -1,28 +1,17 @@
 #include "CElementItemHealth.h"
 #include "CGameLevel.h"
 
-CElementItemHealth::CElementItemHealth(SRect2 nArea) :
+CElementItemHealth::CElementItemHealth(SRect2f nArea) :
    CElementItem(nArea, Items::HEALTH) {
 
-}
-
-void CElementItemHealth::setupPhysicsEngineObject() {
-   /* Set up the actor (not actually an actor, since this one doesn't move its position) */
-   PhysicsEngineObject = Level.getPhysicsEngine().addActor();
-   PhysicsEngineObject->setArea(Area);
-
-   //Set actor attributes
-   PhysicsEngineObject->CollideableType = COLLIDEABLE_TYPE_ITEM;
-   PhysicsEngineObject->CollideableLevel = INTERACTOR_ITEMS;
-   PhysicsEngineObject->CanCollideWith = INTERACTOR_BLOCKS | INTERACTOR_SUPERACTORS;
 }
 
 void CElementItemHealth::setupSceneObject() {
    SceneObject = new CMeshSceneObject();
    CMesh *mesh = CMeshLoader::load3dsMesh("Base/healthboost.3ds");
    if(mesh) {
-      mesh->resizeMesh(SVector3(1));
-      mesh->centerMeshByExtents(SVector3(0));
+      mesh->resizeMesh(SVector3f(1));
+      mesh->centerMeshByExtents(SVector3f(0));
       mesh->calculateNormalsPerFace();
    }
    else
@@ -31,15 +20,15 @@ void CElementItemHealth::setupSceneObject() {
    SceneObject->setMesh(mesh);
    SceneObject->setShader(ERP_DEFAULT, "Toon");
    SceneObject->setShader(ERP_DEFERRED_OBJECTS, "Deferred/Toon");
-   //SceneObject->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2 + 10.6f, 0));
-   //SceneObject->setTranslation(SVector3((x+(x+1))/2, (y+(y-1))/2, 0));
-   SceneObject->setScale(SVector3(.8f));
+   SceneObject->setTranslation(SVector3f(PhysicsEngineObject->getArea().getCenter(), 0));
+   SceneObject->setScale(SVector3f(.8f));
 
    CApplication::get().getSceneManager().addSceneObject(SceneObject);
 }
 
-void CElementItemHealth::OnCollision(CCollideable *Object) {
-   if(!Dead && Object == Level.getPlayer().getPhysicsEngineObject() && !Level.getPlayer().used(Abilities::SHIELD)) {
+void CElementItemHealth::OnCollision(const SCollisionEvent& Event) {
+   if(!Dead && Event.Other == Level.getPlayer().getPhysicsEngineObject() && !Level.getPlayer().used(Abilities::SHIELD)) {
+         CApplication::get().getSoundManager().registerAndPlaySound(ITEM_PICKUP_SOUND);
          Level.getPlayer().incrementHealth();
          removeFromGame();
          Dead = true;
@@ -55,8 +44,8 @@ void CElementItemHealth::updatePhysicsEngineObject(float time) {
 
 //This is where the renderable would be updated for the more complex enemies
 void CElementItemHealth::updateSceneObject(float time) {
-   SceneObject->setTranslation(SVector3(PhysicsEngineObject->getArea().getCenter(), 0));
-   SceneObject->setRotation(SVector3(-90, 0, 90 + 140*ElapsedTime));
+   SceneObject->setTranslation(SVector3f(PhysicsEngineObject->getArea().getCenter(), 0));
+   SceneObject->setRotation(SVector3f(-90, 0, 90 + 140*ElapsedTime));
 }
 
 void CElementItemHealth::printInformation() {

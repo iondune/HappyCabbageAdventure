@@ -36,7 +36,7 @@ static inline void printShaderInfoLog(GLuint shaderHandle)
         GLint charsWritten = 0;
         glGetShaderInfoLog(shaderHandle, infoLogLength, & charsWritten, infoLog);
         std::cout << "Shader Info Log:" << std::endl << infoLog << std::endl;
-        delete infoLog;
+        delete[] infoLog;
     }
 }
 
@@ -52,8 +52,8 @@ static inline void printProgramInfoLog(GLuint programHandle)
         GLchar * infoLog = new GLchar[infoLogLength];
         GLint charsWritten = 0;
         glGetProgramInfoLog(programHandle, infoLogLength, & charsWritten, infoLog);
-        std::cout << "Program Info Log:" << std::endl << infoLog << std::endl;
-        delete infoLog;
+        //std::cout << "Program Info Log:" << std::endl << infoLog << std::endl;
+        delete[] infoLog;
     }
 }
 
@@ -134,6 +134,7 @@ CShader * const CShaderLoader::loadShader(std::string const & vertName, std::str
     // Compile Shader
 	std::cout << "--- Compiling Shader ----------------------------------------------------------" << std::endl;
     {
+		std::cout << "Vertex shader: " << vertFileName << std::endl;
         glCompileShader(VS);
         GLint vCompiled;
         glGetShaderiv(VS, GL_COMPILE_STATUS, & vCompiled);
@@ -150,6 +151,7 @@ CShader * const CShaderLoader::loadShader(std::string const & vertName, std::str
     }
 
     {
+		std::cout << "Frag shader: " << fragFileName << std::endl;
         glCompileShader(FS);
         GLint fCompiled;
         glGetShaderiv(FS, GL_COMPILE_STATUS, & fCompiled);
@@ -196,7 +198,7 @@ CShader * const CShaderLoader::loadShader(std::string const & vertName, std::str
         nameBuffer[nameLenth] = 0;
         GLuint variableLocation = glGetAttribLocation(Shader->Handle, nameBuffer);
         Shader->AttributeHandles[nameBuffer] = SShaderVariable(variableLocation, dataType);
-        delete nameBuffer;
+        delete[] nameBuffer;
     }
 
     // Load all uniforms and save handles
@@ -213,7 +215,7 @@ CShader * const CShaderLoader::loadShader(std::string const & vertName, std::str
         nameBuffer[nameLenth] = 0;
         GLuint variableLocation = glGetUniformLocation(Shader->Handle, nameBuffer);
         Shader->UniformHandles[nameBuffer] = SShaderVariable(variableLocation, dataType);
-        delete nameBuffer;
+        delete[] nameBuffer;
     }
 
     LoadedShaders[ShaderLabel] = Shader;

@@ -18,6 +18,7 @@ void CApplication::setupRenderContext()
 {
     SDL_VideoInfo const * video;
 
+
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
         fprintf(stderr, "Couldn't initialize SDL: %s\n", SDL_GetError());
@@ -35,13 +36,19 @@ void CApplication::setupRenderContext()
         exit(2);
     }
 
+	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 5);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-    if(! SDL_SetVideoMode(WindowSize.X, WindowSize.Y, video->vfmt->BitsPerPixel, SDL_OPENGL))
+    SDL_Surface *icon = SDL_LoadBMP("../Media/cabbage icon.bmp");
+    SDL_WM_SetIcon(icon, NULL);
+
+    if(! SDL_SetVideoMode(WindowSize.X, WindowSize.Y, video->vfmt->BitsPerPixel, SDL_OPENGL/* | SDL_FULLSCREEN*/))
     {
         fprintf(stderr, "Couldn't set video mode: %s\n", SDL_GetError());
         waitForUser();
@@ -70,6 +77,8 @@ void CApplication::setupRenderContext()
     std::cerr << "Your OpenGL Version Number: " << std::setprecision(2) << VersionNumber << std::endl << std::endl;
 
     glViewport(0, 0, (GLsizei)(WindowSize.X), (GLsizei)(WindowSize.Y));
+
+    SDL_WM_SetCaption("Happy Cabbage Adventure", "Happy Cabbage Adventure");
 }
 
 
@@ -82,7 +91,8 @@ void CApplication::init(SPosition2 const & windowSize)
     EventManager = new CEventManager();
     StateManager = new CStateManager();
     SceneManager = new CSceneManager(windowSize);
-	GUIEngine = new CGUIEngine(windowSize);
+	 GUIEngine = new CGUIEngine(windowSize);
+    SoundManager = new CSoundManager();
 }
 
 CApplication & CApplication::get()
@@ -112,6 +122,10 @@ CGUIEngine & CApplication::getGUIEngine()
 	return * GUIEngine;
 }
 
+CSoundManager & CApplication::getSoundManager() {
+   return * SoundManager;
+}
+
 void CApplication::skipElapsedTime()
 {
     Time0 = SDL_GetTicks();
@@ -127,7 +141,7 @@ void CApplication::updateTime()
 
 void CApplication::run()
 {
-    Running = true;
+   Running = true;
 
 	Time0 = SDL_GetTicks();
 
@@ -152,7 +166,7 @@ void CApplication::run()
 					SMouseEvent MouseEvent;
 					MouseEvent.Type = SMouseEvent::EType::Click;
 					MouseEvent.Location = EventManager->MouseLocation;
-					MouseEvent.RelativeLocation = SVector2(MouseEvent.Location.X / (float) WindowSize.X,
+					MouseEvent.RelativeLocation = SVector2f(MouseEvent.Location.X / (float) WindowSize.X,
 						MouseEvent.Location.Y / (float) WindowSize.Y);
 					MouseEvent.Pressed = Event.button.state == SDL_PRESSED;
 
@@ -192,7 +206,7 @@ void CApplication::run()
                     SMouseEvent MouseEvent;
                     MouseEvent.Type = SMouseEvent::EType::Move;
                     MouseEvent.Location = EventManager->MousePositionState = SPosition2(Event.motion.x, Event.motion.y);
-					MouseEvent.RelativeLocation = SVector2(MouseEvent.Location.X / (float) WindowSize.X,
+					MouseEvent.RelativeLocation = SVector2f(MouseEvent.Location.X / (float) WindowSize.X,
 						MouseEvent.Location.Y / (float) WindowSize.Y);
                     MouseEvent.Movement = SPosition2(Event.motion.xrel, Event.motion.yrel);
                     EventManager->OnMouseEvent(MouseEvent);

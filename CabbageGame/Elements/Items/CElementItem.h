@@ -3,13 +3,15 @@
 #include "../CGameplayElement.h"
 #include "CElementPlayer.h"
 
+#define ITEM_PICKUP_SOUND "smb2_cherry.wav"
+
 namespace Items {
    enum EItemType {
-      HEALTH			   = 0,
-      ENERGY				= 1,
-      LIFE					= 2,
-      SEED					= 3,
-      POWERUP				= 4
+      HEALTH            = 0,
+      ENERGY            = 1,
+      LIFE               = 2,
+      SEED               = 3,
+      POWERUP            = 4
    };
 }
 
@@ -23,10 +25,10 @@ class CElementItem : public CGameplayElement {
       Items::EItemType Type;
 
    public:
-      virtual void OnCollision(CCollideable *Object);
+      virtual void OnCollision(const SCollisionEvent& Event);
       virtual void writeXML(xmlwriter *l);
 
-      virtual void setupPhysicsEngineObject()=0;
+      virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject()=0;
 
       virtual void updatePhysicsEngineObject(float time);
@@ -35,13 +37,13 @@ class CElementItem : public CGameplayElement {
 
       Items::EItemType getItemType();
 
-      CElementItem(SRect2 nArea, Items::EItemType type);
+      CElementItem(SRect2f nArea, Items::EItemType type);
 
       virtual void printInformation();
 };
 
 class CItemLoader {
    public:
-      static CElementItem *LoadItem(SRect2 nArea, Items::EItemType type); 
+      static CElementItem *LoadItem(SRect2f nArea, Items::EItemType type); 
 };
 #endif

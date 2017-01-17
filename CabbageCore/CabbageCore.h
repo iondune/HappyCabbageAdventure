@@ -1,5 +1,6 @@
 #ifndef _CABBAGE_CORE_H_INCLUDED_
 #define _CABBAGE_CORE_H_INCLUDED_
+#define _ENABLED_CABBAGE_SOUND_
 
 #include "SColor.h"
 #include "SPosition2.h"

@@ -10,14 +10,20 @@ class CElementEnemyKiwi : public CElementEnemy
       bool bombDropped;
       int Direction;
 
+      float ZDepth, ZTimer;
+      int ZNeg;
+      bool InZ;
+
    public:
-      CElementEnemyKiwi(SRect2 nArea, int direction);
+      CElementEnemyKiwi(SRect2f nArea, int direction);
 
       virtual void setupPhysicsEngineObject();
       virtual void setupSceneObject();
 
       virtual void updatePhysicsEngineObject(float time);
       virtual void updateSceneObject(float time);
+      void OnPhaseBegin(const SCollisionEvent& Event);
+      void OnPhaseEnd(const SCollisionEvent& Event);
 
       virtual void printInformation();
 

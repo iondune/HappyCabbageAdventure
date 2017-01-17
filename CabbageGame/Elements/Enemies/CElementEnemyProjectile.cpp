@@ -5,26 +5,26 @@
 #include "CElementEnemyProjectileKiwi.h"
 
 //Generic enemy, for usage in the LWIB, I guess.
-CElementEnemyProjectile::CElementEnemyProjectile(SRect2 nArea, Enemies::EEnemyType type)
+CElementEnemyProjectile::CElementEnemyProjectile(SRect2f nArea, Enemies::EEnemyType type)
 : CElementEnemy(nArea, type) {
-   Mix_PlayChannel(-1, Level.projectile, 0);
+   CApplication::get().getSoundManager().registerAndPlaySound(PROJECTILE_SOUND);
 }
 
-void CElementEnemyProjectile::OnCollision(CCollideable *Object) {
+void CElementEnemyProjectile::OnCollision(const SCollisionEvent& Event) {
    if (!Dead) {
       removeFromGame();
       Dead = true;
 
-      if (Object == Level.getPlayer().getPhysicsEngineObject()) {
+      if (Event.Other == Level.getPlayer().getPhysicsEngineObject()) {
          CCollisionActor *PlayerActor = ((CCollisionActor *)Level.getPlayer().getPhysicsEngineObject());
 
          if (Level.getPlayer().decrementHealth()) {
 
            if(PlayerActor->getArea().getCenter().X > Area.getCenter().X)
-              PlayerActor->setImpulse(SVector2(4.f, 2.f), 0.1f);
+              PlayerActor->addImpulse(SVector2f(4.f, 2.f));
            
            else
-              PlayerActor->setImpulse(SVector2(-4.f, 2.f), 0.1f);
+              PlayerActor->addImpulse(SVector2f(-4.f, 2.f));
          
            Level.getPlayer().setShaking(1.0f, 3.0f);
          }
@@ -33,6 +33,7 @@ void CElementEnemyProjectile::OnCollision(CCollideable *Object) {
 }
 
 void CElementEnemyProjectile::updatePhysicsEngineObject(float time) {
+   CElementEnemy::updatePhysicsEngineObject(time);
    return;
 }
 

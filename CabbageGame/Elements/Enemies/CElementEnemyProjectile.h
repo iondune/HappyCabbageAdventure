@@ -4,6 +4,8 @@
 #include "CElementPlayer.h"
 #include "CElementEnemy.h"
 
+#define PROJECTILE_SOUND "smb2_cherry.wav"
+
 namespace Projectile {
    enum EDirection {
       LEFT, RIGHT
@@ -17,7 +19,7 @@ class CElementEnemyProjectile : public CElementEnemy {
       Projectile::EDirection Direction;
 
    public:
-      virtual void OnCollision(CCollideable *Object);
+      virtual void OnCollision(const SCollisionEvent& Event);
 
       virtual void setupPhysicsEngineObject()=0;
       virtual void setupSceneObject()=0;
@@ -28,7 +30,7 @@ class CElementEnemyProjectile : public CElementEnemy {
 
       void setDirection (Projectile::EDirection direction);
 
-      CElementEnemyProjectile(SRect2 nArea, Enemies::EEnemyType type);
+      CElementEnemyProjectile(SRect2f nArea, Enemies::EEnemyType type);
 
       virtual void printInformation();
 };

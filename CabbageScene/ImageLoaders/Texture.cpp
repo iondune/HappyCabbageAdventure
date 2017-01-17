@@ -1,7 +1,10 @@
+#define  _CRT_SECURE_NO_WARNINGS
+
 // http://nehe.gamedev.net/data/lessons/lesson.asp?lesson=33
 
 #include "Texture.h"
 #include <string.h>
+#include <iostream>
 
 TGAHeader tgaheader;									// TGA header
 TGA tga;												// TGA image data
@@ -104,7 +107,7 @@ bool LoadUncompressedTGA(Texture * texture, char const * filename, FILE * fTGA)	
 	}
 
 	// Byte Swapping Optimized By Steve Thomas
-	for(GLuint cswap = 0; cswap < (int)tga.imageSize; cswap += tga.bytesPerPixel)
+	for(GLuint cswap = 0; cswap < (unsigned int)tga.imageSize - 2; cswap += tga.bytesPerPixel)
 	{
 		texture->imageData[cswap] ^= texture->imageData[cswap+2] ^=
 		texture->imageData[cswap] ^= texture->imageData[cswap+2];
@@ -163,6 +166,11 @@ bool LoadCompressedTGA(Texture * texture, char const * filename, FILE * fTGA)		/
 	GLuint currentpixel	= 0;												// Current pixel being read
 	GLuint currentbyte	= 0;												// Current byte 
 	GLubyte * colorbuffer = (GLubyte *)malloc(tga.bytesPerPixel);			// Storage for 1 pixel
+
+   if(colorbuffer == NULL) {
+      std::cerr << "Malloc call failed (returned 0) on colorbuffer" << std::endl;
+      return false;
+   }
 
 	do
 	{

@@ -8,6 +8,7 @@
 #include "../StateMainMenu/CMainMenuState.h"
 #include "../CabbageGame/Elements/Enemies/CElementEnemy.h"
 #include "../CabbageGame/Elements/Blocks/CElementBlock.h"
+#include "../CabbageGame/Elements/Blocks/CElementBlockElevator.h"
 #include "../CabbageGame/Elements/Player/CElementPlayer.h"
 #include "../CabbageGame/Elements/Blocks/CElementBlockBreakable.h"
 #include "../CabbageGame/Elements/Blocks/CElementBlockDeath.h"
@@ -48,14 +49,20 @@ class CLWIBState : public CState<CLWIBState>
    int enemyType, textureType, itemType, friendType;
    int uniType;
    int WindowWidth, WindowHeight;
+   int eleStyle;
+   int eleSpeed, eleRange;
    //stuff for textures
    CTexture *grass,*dirt,*rock,*ground,*cabbageImage,*apple,*orange,*kiwi,*fire,*blade, *alien;
    CTexture *leaf, *heart, *derp;
    CTexture *blockRight, *blockLeft, *blockUp, *blockDown, *blockIn, *blockOut, *flagImg;
-   CTexture *grape, *banana, *pear, *cherry, *pineapple, *strawberry, *pomegrante, *circleArrow;
+   CTexture *grape, *banana, *pear, *cherry, *pineapple, *strawberry, *pomegrante, *circleArrow, *lemon;
+   CTexture *sun, *moon, *forest, *desert, *water, *iceMountain, *night; 
    // GUIImageWidget
    CGUIFontWidget *block1, *block2, *block3;
    CGUIFontWidget *help;
+
+   CMeshSceneObject *tempBlock;
+   CMeshSceneObject *cutOffBlock;
 
    // GUIImagewidgets
    CGUIImageWidget *leftArrow, *rightArrow, *cabbage, *flag;
@@ -74,7 +81,7 @@ class CLWIBState : public CState<CLWIBState>
    CLWIBState();
    void begin();
    CPerspectiveCamera *Camera;
-   SVector3 eye, look;
+   SVector3f eye, look;
 
    int blockWidth, blockHeight,blockDepth;
    void OnRenderStart(float const Elapsed);
@@ -100,7 +107,7 @@ class CLWIBState : public CState<CLWIBState>
    void prepHud();
    void stepCamera(float delta);
    void changeTiles();
-   void removeObject();
+   void removeCollideable();
    void undoObjects();
    void OnWidgetClick(CGUIWidget * Widget);
    void OnWidgetHover(CGUIWidget * Widget);

@@ -36,9 +36,16 @@ void CGameLevel::incrementXmlCount() {
    XmlCount++;
 }
 
+std::vector<CGameplayElement*> & CGameLevel::getGameplayElements() {
+   return Elements;
+}
+
+
 std::vector<CGameplayElement*> & CGameLevel::getElements() {
    return Elements;
 }
+
+
 std::vector<CElementBlock*> & CGameLevel::getBlocks() {
    return Blocks;
 }
@@ -89,17 +96,13 @@ int CGameLevel::getXmlCount() {
    return XmlCount;
 }
 
-Mix_Music* CGameLevel::getSoundtrack() {
-   return Soundtrack;
-}
-
 std::vector<CBiggerBlock*> & CGameLevel::getConsolidatedBlocks() {
    return blocksFinal;
 }
 
 CElementPlayer & CGameLevel::getPlayer() {
    if(PlayerElement == NULL)
-      PlayerElement = new CElementPlayer(SRect2(-100, 0, 1, 1));
+      PlayerElement = new CElementPlayer(SRect2f(-100, 0, 1, 1));
    return *PlayerElement;
 }
 
@@ -149,7 +152,7 @@ void CGameLevel::addItem(CElementItem* Item) {
    Elements.push_back(Item);
 }
 
-void CGameLevel::removeObject(CGameplayElement* Object) {
+void CGameLevel::removeCollideable(CGameplayElement* Object) {
    Elements.erase(std::remove(Elements.begin(), Elements.end(), Object), Elements.end());
    Blocks.erase(std::remove(Blocks.begin(), Blocks.end(), Object), Blocks.end());
    Enemies.erase(std::remove(Enemies.begin(), Enemies.end(), Object), Enemies.end());
@@ -166,53 +169,22 @@ void CGameLevel::addObject(CGameplayElement* Object) {
 
 
 void CGameLevel::setupSoundtrack() {
-   std::string temp;
-
-   if(Mix_OpenAudio(22050, AUDIO_S16, 2, 4096))
-      printf("Could not open audio!\n");
-
-   std::string MusicDirectory = "../Media/Music/";
-
-
    //Pre-load pointers
-
    if (env == Env::FOREST) {
       if (!night)
-         temp = MusicDirectory + "Soundtracks/Forest.wav";
+         CApplication::get().getSoundManager().registerAndSwapTrack("Soundtracks/510318_happy-days-final-ed.ogg");
       else
-         temp = MusicDirectory + "Soundtracks/ForestNight.mp3";
+         CApplication::get().getSoundManager().registerAndSwapTrack("Soundtracks/533863_Parasite-Maya.ogg");
    }
 
    else if (env == Env::DESERT) {
       if (!night)
-         temp = MusicDirectory + "Soundtracks/Desert.mp3";
+         CApplication::get().getSoundManager().registerAndSwapTrack("Soundtracks/465983_Impossibility.ogg");
       else
-         temp = MusicDirectory + "Soundtracks/DesertNight.mp3";
+         CApplication::get().getSoundManager().registerAndSwapTrack("Soundtracks/533887_Lost-In-The-Sands.ogg");
    }
    else if (env == Env::WATER)
-      temp = MusicDirectory + "Soundtracks/Water.mp3";
-
-   Soundtrack = Mix_LoadMUS(temp.c_str());
-
-   if (!Soundtrack)
-         fprintf(stderr, "Soundtrack, Mix_LoadMUS: %s\n", Mix_GetError());
-
-   Mix_PlayMusic(Soundtrack, -1);
-
-   //Load Enemy Sounds
-   if(Mix_OpenAudio(22050, AUDIO_S16, 2, 2048))
-         fprintf(stderr, "Could not open audio!\n");
-
-      temp = MusicDirectory + "hitEnemy.wav";
-      dmgEnemy = Mix_LoadWAV(temp.c_str());
-
-      if (!dmgEnemy) {
-         printf("Mix_LoadWAV: %s\n", Mix_GetError());
-         exit(1);
-      }
-
-      temp = MusicDirectory + "smb2_cherry.wav";
-      projectile = Mix_LoadWAV(temp.c_str());
+      CApplication::get().getSoundManager().registerAndSwapTrack("Soundtracks/177697_underwaterdraft1.ogg");
 }
 
 void CGameLevel::setPlayerInformation(Cabbage::PlayerInformation info) {

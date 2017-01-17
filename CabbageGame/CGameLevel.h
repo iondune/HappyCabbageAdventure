@@ -14,9 +14,9 @@ class CBiggerBlock;
 
 class CCollisionEngine;
 
+#include "../CabbageCore/CabbageCore.h"
 #include "CabbageGameInformation.h"
 #include "CGameLevelLoader.h"
-#include "sound.h"
 
 namespace Env {
    enum Type {
@@ -28,18 +28,18 @@ namespace Env {
 }
 
 class CGameLevel {
-   friend CGameLevel & CGameLevelLoader::loadLevel(std::string, bool);
+   friend CGameLevelLoader;
 
    public:
-      Mix_Chunk *dmgEnemy;
-      Mix_Chunk *projectile;
 
    private:
       bool night, Loaded, Render;
       int env, numBlocks;
       int XmlCount;
-      Mix_Music *Soundtrack;
 
+      CCollisionEngine *PhysicsEngine;
+
+      CElementPlayer *PlayerElement;
       std::vector<CGameplayElement*> ToDelete;
       std::vector<CGameplayElement*> Elements;
       std::vector<CElementBlock*> Blocks;
@@ -50,18 +50,14 @@ class CGameLevel {
       std::vector<CElementItem*> Items;
       std::vector<CElementBlockFlag*> Flags; 
       std::vector<CElementBlockElevator*> Elevators; 
-      /*
-      std::vector<CFriends*> Friends;
-      */
-
       void toggleLoaded(); // Only available for CGameLevelLoader::loadLevel().
       void incrementXmlCount();
-      CElementPlayer *PlayerElement;
-
-      CCollisionEngine *PhysicsEngine;
-
    public:
+
       std::vector<CGameplayElement*> & getElements();
+
+
+      std::vector<CGameplayElement*> & getGameplayElements();
       std::vector<CElementBlock*> & getBlocks();
       std::vector<CGroundBlock*> & getGroundBlocks();
       std::vector<CBiggerBlock*> & getConsolidatedBlocks();
@@ -84,7 +80,6 @@ class CGameLevel {
       int getEnvironment();
       int getEnv();
       int  getXmlCount();
-      Mix_Music* getSoundtrack();
 
       CElementPlayer & getPlayer();
       void setPlayerInformation(Cabbage::PlayerInformation info);
@@ -99,7 +94,7 @@ class CGameLevel {
       void addEnemy(CElementEnemy *Enemy);
       void removeItem(CElementItem* Item);
       void addItem(CElementItem* Item);
-      void removeObject(CGameplayElement *Object);
+      void removeCollideable(CGameplayElement *Object);
       void addObject(CGameplayElement *Object);
 };
 
