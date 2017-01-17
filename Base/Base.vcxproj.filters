@@ -4,12 +4,6 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="resource.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Base.rc" />
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="..\Media\cabbage.ico" />
   </ItemGroup>
 </Project>

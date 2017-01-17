@@ -3,6 +3,7 @@
 
 #include "SVector3.h"
 #include "SLine3.h"
+#include <algorithm>
 
 class SBoundingBox3
 {

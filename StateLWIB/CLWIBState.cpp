@@ -4,11 +4,6 @@
 #include <cmath>
 
 #ifdef _WIN32
-static inline float round(float r)
-{
-    return (r > 0.f) ? floor(r + 0.5f) : ceil(r - 0.5f);
-
-}
 #define M_PI 3.14159f
 #endif
 

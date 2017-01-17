@@ -2,6 +2,7 @@
 
 #include "CCollisionEngine.h"
 
+#include <algorithm>
 
 void CCollisionInteractor::updateVectors(CollisionReal const TickTime)
 {

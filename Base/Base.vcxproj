@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -22,12 +22,6 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="resource.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Base.rc" />
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="..\Media\cabbage.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -39,23 +33,27 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(VisualStudioVersion)'=='11.0'" Label="Configuration">
     <PlatformToolset>v110</PlatformToolset>
@@ -78,7 +76,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <IncludePath>
-      ;$(VisualStudioDir)\Projects\glew-1.7.0\include;
+      ;$(VisualStudioDir)\Projects\HappyCabbageAdventure\Deps\glew-2.0.0\include;
       ;$(VisualStudioDir)\Projects\SDL-1.2.15\include;
       ;$(VisualStudioDir)\Projects\freetype-2.4.2\include;
       ;$(SolutionDir)\CabbageCore;
@@ -99,24 +97,27 @@
       ;$(IncludePath);
     </IncludePath>
     <LibraryPath>
-      ;$(VisualStudioDir)\Projects\glew-1.7.0\lib;
       ;$(VisualStudioDir)\Projects\SDL-1.2.15\lib\x86;
       ;$(VisualStudioDir)\Projects\freetype-2.4.2\lib;
       ;$(LibraryPath);
     </LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      ;$(VisualStudioDir)\Projects\HappyCabbageAdventure\Deps\glew-2.0.0\lib\Debug\Win32;
       ;$(SolutionDir)\Debug;
       ;$(LibraryPath);
     </LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      ;$(VisualStudioDir)\Projects\HappyCabbageAdventure\Deps\glew-2.0.0\lib\Debug\x64;
       ;$(SolutionDir)\Debug;
       ;$(LibraryPath);
     </LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      ;$(VisualStudioDir)\Projects\HappyCabbageAdventure\Deps\glew-2.0.0\lib\Release\Win32;
       ;$(SolutionDir)\Release;
       ;$(LibraryPath);
     </LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      ;$(VisualStudioDir)\Projects\HappyCabbageAdventure\Deps\glew-2.0.0\lib\Release\x64;
       ;$(SolutionDir)\Release;
       ;$(LibraryPath);
     </LibraryPath>

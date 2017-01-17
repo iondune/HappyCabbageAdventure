@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -27,23 +27,27 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(VisualStudioVersion)'=='11.0'" Label="Configuration">
     <PlatformToolset>v110</PlatformToolset>
@@ -66,7 +70,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <IncludePath>
-        ;$(VisualStudioDir)\Projects\glew-1.7.0\include;
+        ;$(VisualStudioDir)\Projects\HappyCabbageAdventure\Deps\glew-2.0.0\include;
         ;$(VisualStudioDir)\Projects\SDL-1.2.15\include;
         ;$(VisualStudioDir)\Projects\freetype-2.4.8\include;
         ;$(SolutionDir)\CabbageCore;
@@ -88,7 +92,7 @@
         ;$(IncludePath);
     </IncludePath>
     <LibraryPath>
-        ;$(VisualStudioDir)\Projects\glew-1.7.0\lib;
+        ;$(VisualStudioDir)\Projects\HappyCabbageAdventure\Deps\glew-2.0.0\lib;
         ;$(VisualStudioDir)\Projects\SDL-1.2.15\lib\x86;
         ;$(VisualStudioDir)\Projects\freetype-2.4.8\lib;
         ;$(LibraryPath);
